@@ -1,0 +1,28 @@
+{
+  "name": "manifesto",
+  "version": "0.1.0",
+  "description": "Manipulate IIIF Manifests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edsilv/manifesto.git"
+  },
+  "keywords": [
+    "IIIF"
+  ],
+  "author": "Edward Silverton <e.silverton@gmail.com> (http://edsilv.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edsilv/manifesto/issues"
+  },
+  "homepage": "https://github.com/edsilv/manifesto",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "gulp": "^3.8.11",
+    "gulp-mocha": "^2.0.1",
+    "mocha": "^2.2.4"
+  }
+}
