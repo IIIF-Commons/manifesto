@@ -1,5 +1,5 @@
 var should = require('chai').should(),
-    manifesto = require('../index'),
+    manifesto = require('../dist/Index'),
     escape = manifesto.escape,
     unescape = manifesto.unescape;
 
