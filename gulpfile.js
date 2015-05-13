@@ -3,6 +3,7 @@ var mocha = require('gulp-mocha');
 var eventStream = require('event-stream');
 var ts = require('gulp-typescript');
 var browserify = require('gulp-browserify');
+var rename = require('gulp-rename');
 
 var metadata = require('./package');
 var header = '// ' + metadata.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
@@ -14,7 +15,7 @@ gulp.task('test', function () {
 });
 
 gulp.task('build', function() {
-    var tsResult = gulp.src(['src/*.ts', '!src/*.d.ts'])
+    var tsResult = gulp.src(['src/*.ts', 'typings/*.ts', '!test'])
         .pipe(ts({
             declarationFiles: true,
             noExternalResolve: true,
@@ -33,6 +34,6 @@ gulp.task('browserify', function (callback) {
         .pipe(browserify({
             //transform: ['deamdify']
         }))
-        //.pipe(rename('PixelPalette.b.js'))
+        .pipe(rename('bundle.js'))
         .pipe(gulp.dest(dist));
 });
