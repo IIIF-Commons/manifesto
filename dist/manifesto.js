@@ -17,11 +17,11 @@ module.exports = {
         return "Hello, " + name;
     },
     load: function (manifestUri, callback, useJSONP) {
+        var _this = this;
         http.get({
             path: manifestUri
         }, function (res) {
-            var _this = this;
-            //res.setEncoding('utf8');
+            res.setEncoding('utf8');
             var result = "";
             res.on('data', function (chunk) {
                 result += chunk;
