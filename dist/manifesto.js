@@ -21,7 +21,7 @@ module.exports = {
             path: manifestUri
         }, function (res) {
             var _this = this;
-            res.setEncoding('utf8');
+            //res.setEncoding('utf8');
             var result = "";
             res.on('data', function (chunk) {
                 result += chunk;

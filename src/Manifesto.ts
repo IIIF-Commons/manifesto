@@ -15,7 +15,7 @@ module.exports = <IManifesto>{
         http.get({
             path: manifestUri
         }, function(res) {
-            res.setEncoding('utf8');
+            //res.setEncoding('utf8');
             var result = "";
             res.on('data', (chunk) => {
                 result += chunk;
