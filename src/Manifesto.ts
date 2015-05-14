@@ -12,20 +12,18 @@ module.exports = <IManifesto>{
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
 
-        var that = this;
-
         http.get({
             path: manifestUri
         }, function(res) {
             res.setEncoding('utf8');
             var result = "";
-            res.on('data', function(chunk) {
+            res.on('data', (chunk) => {
                 result += chunk;
             });
-            res.on('end', function() {
-                that.parseManifest(result, callback);
+            res.on('end', () => {
+                this.parseManifest(result, callback);
             });
-        }).on('error', function(e) {
+        }).on('error', (e) => {
             console.log(e.message);
         });
     },

@@ -18,17 +18,17 @@ module.exports = {
         return "Hello, " + name;
     },
     load: function (manifestUri, callback, useJSONP) {
-        var that = this;
         http.get({
             path: manifestUri
         }, function (res) {
+            var _this = this;
             res.setEncoding('utf8');
             var result = "";
             res.on('data', function (chunk) {
                 result += chunk;
             });
             res.on('end', function () {
-                that.parseManifest(result, callback);
+                _this.parseManifest(result, callback);
             });
         }).on('error', function (e) {
             console.log(e.message);
