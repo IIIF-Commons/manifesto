@@ -14,21 +14,6 @@ gulp.task('test', function () {
         .pipe(mocha({reporter: 'nyan'}));
 });
 
-//gulp.task('build', function() {
-//    var tsResult = gulp.src(['src/*.ts', 'typings/*.ts', '!test'])
-//        .pipe(ts({
-//            declarationFiles: true,
-//            noExternalResolve: true,
-//            module: 'commonjs',
-//            sortOutput: true
-//        }));
-//
-//    return eventStream.merge(
-//        tsResult.dts.pipe(gulp.dest(dist)),
-//        tsResult.js.pipe(gulp.dest(dist))
-//    );
-//});
-
 gulp.task('clean:dist', function (cb) {
     del([
         config.dist + '/*'
@@ -56,7 +41,7 @@ gulp.task('browserify', function (callback) {
         .pipe(browserify({
             //transform: ['deamdify']
         }))
-        .pipe(rename('bundle.js'))
+        .pipe(rename('manifesto.browser.js'))
         .pipe(gulp.dest(config.dist));
 });
 
