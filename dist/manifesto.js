@@ -21,6 +21,7 @@ module.exports = {
         http.get({
             path: manifestUri
         }, function (res) {
+            res.setEncoding('utf8');
             var result = "";
             res.on('data', function (chunk) {
                 result += chunk;
