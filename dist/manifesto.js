@@ -11,6 +11,9 @@ var Manifest = (function () {
 module.exports = {
     manifestCallback: null,
     manifest: null,
+    sayHello: function (name) {
+        return "Hello, " + name;
+    },
     load: function (manifestUri, callback, useJSONP) {
         var _this = this;
         if (!useJSONP) {
@@ -35,9 +38,6 @@ module.exports = {
     // todo
     parseManifest: function (manifest, callback) {
         callback(manifest);
-    },
-    sayHello: function (name) {
-        return "Hello, " + name;
     }
 };
 var Sequence = (function () {

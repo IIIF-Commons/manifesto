@@ -4,6 +4,10 @@ module.exports = <IManifesto>{
     manifestCallback: null,
     manifest: null,
 
+    sayHello: function(name: string): string {
+        return "Hello, " + name;
+    },
+
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
         if (!useJSONP){
             $.getJSON(manifestUri, (manifest) => {
@@ -29,33 +33,5 @@ module.exports = <IManifesto>{
     // todo
     parseManifest: function(manifest: any, callback: (manifest: Manifest) => void): void {
         callback(manifest);
-    },
-
-    sayHello: function(name: string): string {
-        return "Hello, " + name;
     }
-
-    //escape: function(html) {
-    //    return String(html)
-    //        .replace(/&/g, '&amp;')
-    //        .replace(/"/g, '&quot;')
-    //        .replace(/'/g, '&#39;')
-    //        .replace(/</g, '&lt;')
-    //        .replace(/>/g, '&gt;');
-    //},
-    //
-    ///**
-    // * Unescape special characters in the given string of html.
-    // *
-    // * @param  {String} html
-    // * @return {String}
-    // */
-    //unescape: function(html) {
-    //    return String(html)
-    //        .replace(/&amp;/g, '&')
-    //        .replace(/&quot;/g, '"')
-    //        .replace(/&#39;/g, '\'')
-    //        .replace(/&lt;/g, '<')
-    //        .replace(/&gt;/g, '>');
-    //}
 };
