@@ -3,6 +3,11 @@ var Canvas = (function () {
     }
     return Canvas;
 })();
+var Manifest = (function () {
+    function Manifest() {
+    }
+    return Manifest;
+})();
 module.exports = {
     manifestCallback: null,
     manifest: null,
@@ -32,14 +37,9 @@ module.exports = {
         callback(manifest);
     },
     sayHello: function (name) {
-        return "hello " + name;
+        return "Hello, " + name;
     }
 };
-var Manifest = (function () {
-    function Manifest() {
-    }
-    return Manifest;
-})();
 var Sequence = (function () {
     function Sequence() {
     }

@@ -1,5 +1,5 @@
 
-module.exports = <IManifestoAPI>{
+module.exports = <IManifesto>{
 
     manifestCallback: null,
     manifest: null,
@@ -32,7 +32,7 @@ module.exports = <IManifestoAPI>{
     },
 
     sayHello: function(name: string): string {
-        return "hello " + name;
+        return "Hello, " + name;
     }
 
     //escape: function(html) {
