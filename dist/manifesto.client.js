@@ -11,9 +11,8 @@ var Manifest = (function () {
 })();
 var http = _dereq_("http");
 module.exports = {
-    manifestCallback: null,
     manifest: null,
-    // todo: remove - just to test mocha
+    // todo: remove
     sayHello: function (name) {
         return "Hello, " + name;
     },
@@ -22,20 +21,20 @@ module.exports = {
         http.get({
             path: manifestUri
         }, function (res) {
-            res.setEncoding('utf8');
+            //res.setEncoding('utf8');
             var result = "";
             res.on('data', function (chunk) {
                 result += chunk;
             });
             res.on('end', function () {
-                _this.parseManifest(result, callback);
+                _this.parse(result, callback);
             });
         }).on('error', function (e) {
             console.log(e.message);
         });
     },
     // todo
-    parseManifest: function (manifest, callback) {
+    parse: function (manifest, callback) {
         callback(manifest);
     }
 };

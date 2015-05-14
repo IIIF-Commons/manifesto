@@ -2,10 +2,9 @@ var http = require("http");
 
 module.exports = <IManifesto>{
 
-    manifestCallback: null,
     manifest: null,
 
-    // todo: remove - just to test mocha
+    // todo: remove
     sayHello: function(name: string): string {
         return "Hello, " + name;
     },
@@ -15,13 +14,13 @@ module.exports = <IManifesto>{
         http.get({
             path: manifestUri
         }, (res) => {
-            res.setEncoding('utf8');
+            //res.setEncoding('utf8');
             var result = "";
             res.on('data', (chunk) => {
                 result += chunk;
             });
             res.on('end', () => {
-                this.parseManifest(result, callback);
+                this.parse(result, callback);
             });
         }).on('error', (e) => {
             console.log(e.message);
@@ -29,7 +28,7 @@ module.exports = <IManifesto>{
     },
 
     // todo
-    parseManifest: function(manifest: any, callback: (manifest: Manifest) => void): void {
+    parse: function(manifest: any, callback: (manifest: Manifest) => void): void {
         callback(manifest);
     }
 };
