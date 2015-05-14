@@ -46,4 +46,4 @@ gulp.task('browserify', function (callback) {
         .pipe(gulp.dest(config.dist));
 });
 
-gulp.task('default', ['clean:dist', 'build']);
+gulp.task('default', ['clean:dist', 'build', 'browserify', 'test']);
