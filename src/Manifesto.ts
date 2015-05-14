@@ -12,6 +12,8 @@ module.exports = <IManifesto>{
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
 
+        var that = this;
+        
         http.get({
             path: manifestUri
         }, function(res) {
@@ -20,7 +22,7 @@ module.exports = <IManifesto>{
                 result += chunk;
             });
             res.on('end', function() {
-                this.parseManifest(result, callback);
+                that.parseManifest(result, callback);
             });
         });
     },

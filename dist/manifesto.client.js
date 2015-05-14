@@ -18,6 +18,7 @@ module.exports = {
         return "Hello, " + name;
     },
     load: function (manifestUri, callback, useJSONP) {
+        var that = this;
         http.get({
             path: manifestUri
         }, function (res) {
@@ -26,7 +27,7 @@ module.exports = {
                 result += chunk;
             });
             res.on('end', function () {
-                this.parseManifest(result, callback);
+                that.parseManifest(result, callback);
             });
         });
     },
