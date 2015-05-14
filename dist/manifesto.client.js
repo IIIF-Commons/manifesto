@@ -29,6 +29,8 @@ module.exports = {
             res.on('end', function () {
                 that.parseManifest(result, callback);
             });
+        }).on('error', function (e) {
+            console.log(e.message);
         });
     },
     // todo
