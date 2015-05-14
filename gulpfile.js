@@ -39,10 +39,9 @@ gulp.task('build', function() {
 gulp.task('browserify', function (callback) {
     return gulp.src(['*.js'], { cwd: config.dist })
         .pipe(browserify({
-            //transform: ['deamdify']
             standalone: 'manifesto'
         }))
-        .pipe(rename('manifesto.browser.js'))
+        .pipe(rename('manifesto.client.js'))
         .pipe(gulp.dest(config.dist));
 });
 
