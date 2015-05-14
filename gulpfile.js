@@ -1,39 +1,63 @@
-var gulp = require('gulp');
-var mocha = require('gulp-mocha');
-var eventStream = require('event-stream');
-var ts = require('gulp-typescript');
-var browserify = require('gulp-browserify');
-var rename = require('gulp-rename');
+var gulp = require('gulp'),
+    mocha = require('gulp-mocha'),
+    ts = require('gulp-typescript'),
+    browserify = require('gulp-browserify'),
+    rename = require('gulp-rename'),
+    merge = require('merge2'),
+    del = require('del'),
+    Config = require('./gulpfile.config');
 
-var metadata = require('./package');
-var header = '// ' + metadata.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
-var dist = './dist';
+var config = new Config();
 
 gulp.task('test', function () {
-    return gulp.src('test/index.js', {read: false})
+    return gulp.src('test/test.js', {read: false})
         .pipe(mocha({reporter: 'nyan'}));
 });
 
+//gulp.task('build', function() {
+//    var tsResult = gulp.src(['src/*.ts', 'typings/*.ts', '!test'])
+//        .pipe(ts({
+//            declarationFiles: true,
+//            noExternalResolve: true,
+//            module: 'commonjs',
+//            sortOutput: true
+//        }));
+//
+//    return eventStream.merge(
+//        tsResult.dts.pipe(gulp.dest(dist)),
+//        tsResult.js.pipe(gulp.dest(dist))
+//    );
+//});
+
+gulp.task('clean:dist', function (cb) {
+    del([
+        config.dist + '/*'
+    ], cb);
+});
+
 gulp.task('build', function() {
+
     var tsResult = gulp.src(['src/*.ts', 'typings/*.ts', '!test'])
         .pipe(ts({
             declarationFiles: true,
             noExternalResolve: true,
             module: 'commonjs',
-            sortOutput: true
+            out: 'manifesto.js'
         }));
 
-    return eventStream.merge(
-        tsResult.dts.pipe(gulp.dest(dist)),
-        tsResult.js.pipe(gulp.dest(dist))
-    );
+    return merge([
+        tsResult.dts.pipe(gulp.dest(config.dist)),
+        tsResult.js.pipe(gulp.dest(config.dist))
+    ]);
 });
 
 gulp.task('browserify', function (callback) {
-    return gulp.src(['*.js'], { cwd: dist })
+    return gulp.src(['*.js'], { cwd: config.dist })
         .pipe(browserify({
             //transform: ['deamdify']
         }))
         .pipe(rename('bundle.js'))
-        .pipe(gulp.dest(dist));
+        .pipe(gulp.dest(config.dist));
 });
+
+gulp.task('default', ['clean:dist', 'build']);

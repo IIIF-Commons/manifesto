@@ -1,6 +1,11 @@
+var Canvas = (function () {
+    function Canvas() {
+    }
+    return Canvas;
+})();
 module.exports = {
-    manifestCallback: Object,
-    manifest: Manifest,
+    manifestCallback: null,
+    manifest: null,
     load: function (manifestUri, callback, useJSONP) {
         var _this = this;
         if (!useJSONP) {
@@ -25,5 +30,28 @@ module.exports = {
     // todo
     parseManifest: function (manifest, callback) {
         callback(manifest);
+    },
+    sayHello: function (name) {
+        return "hello " + name;
     }
 };
+var Manifest = (function () {
+    function Manifest() {
+    }
+    return Manifest;
+})();
+var Sequence = (function () {
+    function Sequence() {
+    }
+    return Sequence;
+})();
+var Service = (function () {
+    function Service() {
+    }
+    return Service;
+})();
+var Structure = (function () {
+    function Structure() {
+    }
+    return Structure;
+})();

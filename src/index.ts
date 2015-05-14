@@ -1,8 +1,8 @@
 
-module.exports = {
+module.exports = <IManifestoAPI>{
 
-    manifestCallback: Object,
-    manifest: Manifest,
+    manifestCallback: null,
+    manifest: null,
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
         if (!useJSONP){
@@ -27,8 +27,12 @@ module.exports = {
     },
 
     // todo
-    parseManifest: function(manifest: any, callback: (manifest: Manifest) => void) {
+    parseManifest: function(manifest: any, callback: (manifest: Manifest) => void): void {
         callback(manifest);
+    },
+
+    sayHello: function(name: string): string {
+        return "hello " + name;
     }
 
     //escape: function(html) {
