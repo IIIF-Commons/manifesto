@@ -1,5 +1,5 @@
 # manifesto
 
-Unify front and back end IIIF Presentation API workflow.
+IIIF Presentation API client and server utility library.
 
 (Work in progress)
