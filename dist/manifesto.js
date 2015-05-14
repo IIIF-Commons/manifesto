@@ -12,8 +12,8 @@ var http = require("http");
 module.exports = {
     manifest: null,
     // todo: remove
-    sayHello: function (name) {
-        return "Hello, " + name;
+    sayHello: function (msg) {
+        return "hello " + msg;
     },
     load: function (manifestUri, callback, useJSONP) {
         var _this = this;

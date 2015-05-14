@@ -4,6 +4,6 @@ var should = require('chai').should(),
 
 describe('#sayHello', function() {
     it('says hello', function () {
-        sayHello('IIIF').should.equal('Hello, IIIF');
+        sayHello('IIIF').should.equal('hello IIIF');
     });
 });

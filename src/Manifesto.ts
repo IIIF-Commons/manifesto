@@ -5,8 +5,8 @@ module.exports = <IManifesto>{
     manifest: null,
 
     // todo: remove
-    sayHello: function(name: string): string {
-        return "Hello, " + name;
+    sayHello: function(msg: string): string {
+        return "hello " + msg;
     },
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
