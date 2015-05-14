@@ -13,7 +13,7 @@ module.exports = <IManifesto>{
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
 
         var that = this;
-        
+
         http.get({
             path: manifestUri
         }, function(res) {

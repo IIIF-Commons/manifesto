@@ -1,0 +1,24 @@
+{
+  "name": "manifesto",
+  "version": "0.0.0",
+  "homepage": "https://github.com/edsilv/manifesto",
+  "authors": [
+    "edsilv <e.silverton@gmail.com>"
+  ],
+  "description": "IIIF Presentation API utility library for client and server",
+  "main": "/dist/manifesto.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "IIIF"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
