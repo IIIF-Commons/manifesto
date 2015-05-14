@@ -1,33 +1,32 @@
+var http = require("http");
 
 module.exports = <IManifesto>{
 
     manifestCallback: null,
     manifest: null,
 
+    // todo: remove - just to test mocha
     sayHello: function(name: string): string {
         return "Hello, " + name;
     },
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
-        if (!useJSONP){
-            $.getJSON(manifestUri, (manifest) => {
-                this.parseManifest(manifest, callback);
+
+        http.request({
+            //host: "host.com",
+            port: 80,
+            path: manifestUri,
+            method: 'GET',
+            withCredentials: false
+        }, function(res) {
+            var result = "";
+            res.on('data', function(chunk) {
+                result += chunk;
             });
-        } else {
-            var settings: JQueryAjaxSettings = <JQueryAjaxSettings>{
-                url: manifestUri,
-                type: 'GET',
-                dataType: 'jsonp',
-                jsonp: 'callback',
-                jsonpCallback: 'manifestCallback'
-            };
-
-            $.ajax(settings);
-
-            this.manifestCallback = (manifest: any) => {
-                this.parseManifest(manifest, callback);
-            };
-        }
+            res.on('end', function() {
+                this.parseManifest(result, callback);
+            });
+        });
     },
 
     // todo

@@ -8,6 +8,7 @@ interface IManifesto {
 }
 declare class Manifest {
 }
+declare var http: any;
 declare class Sequence {
 }
 declare class Service {

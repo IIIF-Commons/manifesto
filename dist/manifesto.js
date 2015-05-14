@@ -8,32 +8,30 @@ var Manifest = (function () {
     }
     return Manifest;
 })();
+var http = require("http");
 module.exports = {
     manifestCallback: null,
     manifest: null,
+    // todo: remove - just to test mocha
     sayHello: function (name) {
         return "Hello, " + name;
     },
     load: function (manifestUri, callback, useJSONP) {
-        var _this = this;
-        if (!useJSONP) {
-            $.getJSON(manifestUri, function (manifest) {
-                _this.parseManifest(manifest, callback);
+        http.request({
+            //host: "host.com",
+            port: 80,
+            path: manifestUri,
+            method: 'GET',
+            withCredentials: false
+        }, function (res) {
+            var result = "";
+            res.on('data', function (chunk) {
+                result += chunk;
             });
-        }
-        else {
-            var settings = {
-                url: manifestUri,
-                type: 'GET',
-                dataType: 'jsonp',
-                jsonp: 'callback',
-                jsonpCallback: 'manifestCallback'
-            };
-            $.ajax(settings);
-            this.manifestCallback = function (manifest) {
-                _this.parseManifest(manifest, callback);
-            };
-        }
+            res.on('end', function () {
+                this.parseManifest(result, callback);
+            });
+        });
     },
     // todo
     parseManifest: function (manifest, callback) {
