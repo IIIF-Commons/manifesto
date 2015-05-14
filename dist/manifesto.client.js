@@ -16,7 +16,7 @@ module.exports = {
     sayHello: function (msg) {
         return "hello " + msg;
     },
-    load: function (manifestUri, callback, useJSONP) {
+    load: function (manifestUri, callback) {
         var _this = this;
         http.get({
             path: manifestUri

@@ -9,7 +9,7 @@ module.exports = <IManifesto>{
         return "hello " + msg;
     },
 
-    load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
+    load: function (manifestUri: string, callback: (manifest: Manifest) => void): void {
 
         http.get({
             path: manifestUri
