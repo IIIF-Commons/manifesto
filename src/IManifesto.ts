@@ -1,3 +1,4 @@
+
 interface IManifesto {
     manifest: Manifest;
     load: (manifestUri: string, callback: (manifest: Manifest) => void) => void;

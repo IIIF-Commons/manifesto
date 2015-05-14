@@ -52,3 +52,28 @@ var Structure = (function () {
     }
     return Structure;
 })();
+var Thumb = (function () {
+    function Thumb(index, uri, label, width, height, visible) {
+        this.index = index;
+        this.uri = uri;
+        this.label = label;
+        this.width = width;
+        this.height = height;
+        this.visible = visible;
+    }
+    return Thumb;
+})();
+var TreeNode = (function () {
+    function TreeNode(label, data) {
+        this.label = label;
+        this.data = data;
+        this.nodes = [];
+        if (!data)
+            this.data = {};
+    }
+    TreeNode.prototype.addNode = function (node) {
+        this.nodes.push(node);
+        node.parentNode = this;
+    };
+    return TreeNode;
+})();

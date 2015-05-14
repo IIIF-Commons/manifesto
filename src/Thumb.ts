@@ -16,5 +16,3 @@ class Thumb {
         this.visible = visible;
     }
 }
-
-export = Thumb;

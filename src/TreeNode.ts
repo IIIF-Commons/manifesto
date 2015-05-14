@@ -16,5 +16,3 @@ class TreeNode {
         node.parentNode = this;
     }
 }
-
-export = TreeNode;
