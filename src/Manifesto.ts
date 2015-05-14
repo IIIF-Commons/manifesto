@@ -12,12 +12,8 @@ module.exports = <IManifesto>{
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void, useJSONP?: boolean): void {
 
-        http.request({
-            //host: "host.com",
-            port: 80,
-            path: manifestUri,
-            method: 'GET',
-            withCredentials: false
+        http.get({
+            path: manifestUri
         }, function(res) {
             var result = "";
             res.on('data', function(chunk) {

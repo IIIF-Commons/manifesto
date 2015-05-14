@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     merge = require('merge2'),
     del = require('del'),
+    runSequence = require('run-sequence'),
     Config = require('./gulpfile.config');
 
 var config = new Config();
@@ -45,4 +46,6 @@ gulp.task('browserify', function (callback) {
         .pipe(gulp.dest(config.dist));
 });
 
-gulp.task('default', ['clean:dist', 'build', 'browserify', 'test']);
+gulp.task('default', function(callback) {
+    runSequence('clean:dist', 'build', 'browserify', 'test', callback);
+});
