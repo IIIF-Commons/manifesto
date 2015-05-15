@@ -9,6 +9,7 @@ var Manifest = (function () {
     return Manifest;
 })();
 var http = require("http");
+var url = require("url");
 module.exports = {
     manifest: null,
     // todo: remove
@@ -17,11 +18,14 @@ module.exports = {
     },
     load: function (manifestUri, callback) {
         var _this = this;
-        http.get({
-            path: manifestUri,
+        var url = url.parse(manifestUri);
+        var fetch = http.request({
+            host: url.hostname,
+            port: url.port || 80,
+            path: url.pathname,
+            method: "GET",
             withCredentials: false
         }, function (res) {
-            //res.setEncoding('utf8');
             var result = "";
             res.on('data', function (chunk) {
                 result += chunk;
@@ -29,9 +33,23 @@ module.exports = {
             res.on('end', function () {
                 _this.parse(result, callback);
             });
-        }).on('error', function (e) {
-            console.log(e.message);
         });
+        fetch.end();
+        //http.get({
+        //    path: manifestUri,
+        //    withCredentials: false
+        //}, (res) => {
+        //    //res.setEncoding('utf8');
+        //    var result = "";
+        //    res.on('data', (chunk) => {
+        //        result += chunk;
+        //    });
+        //    res.on('end', () => {
+        //        this.parse(result, callback);
+        //    });
+        //}).on('error', (e) => {
+        //    console.log(e.message);
+        //});
     },
     // todo
     parse: function (manifest, callback) {
