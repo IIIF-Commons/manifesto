@@ -19,7 +19,8 @@ module.exports = {
     load: function (manifestUri, callback) {
         var _this = this;
         http.get({
-            path: manifestUri
+            path: manifestUri,
+            withCredentials: false
         }, function (res) {
             //res.setEncoding('utf8');
             var result = "";

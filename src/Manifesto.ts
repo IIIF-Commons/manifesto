@@ -12,7 +12,8 @@ module.exports = <IManifesto>{
     load: function (manifestUri: string, callback: (manifest: Manifest) => void): void {
 
         http.get({
-            path: manifestUri
+            path: manifestUri,
+            withCredentials: false
         }, (res) => {
             //res.setEncoding('utf8');
             var result = "";
