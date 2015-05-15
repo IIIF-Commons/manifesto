@@ -12,12 +12,12 @@ module.exports = <IManifesto>{
 
     load: function (manifestUri: string, callback: (manifest: Manifest) => void): void {
 
-        var url = url.parse(manifestUri);
+        var u = url.parse(manifestUri);
 
         var fetch = http.request({
-            host: url.hostname,
-            port: url.port || 80,
-            path: url.pathname,
+            host: u.hostname,
+            port: u.port || 80,
+            path: u.pathname,
             method: "GET",
             withCredentials: false
         }, (res) => {

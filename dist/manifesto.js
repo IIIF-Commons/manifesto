@@ -18,11 +18,11 @@ module.exports = {
     },
     load: function (manifestUri, callback) {
         var _this = this;
-        var url = url.parse(manifestUri);
+        var u = url.parse(manifestUri);
         var fetch = http.request({
-            host: url.hostname,
-            port: url.port || 80,
-            path: url.pathname,
+            host: u.hostname,
+            port: u.port || 80,
+            path: u.pathname,
             method: "GET",
             withCredentials: false
         }, function (res) {
