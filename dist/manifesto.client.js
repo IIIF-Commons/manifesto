@@ -1,14 +1,4 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.manifesto=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-var Canvas = (function () {
-    function Canvas() {
-    }
-    return Canvas;
-})();
-var Manifest = (function () {
-    function Manifest() {
-    }
-    return Manifest;
-})();
 var http = _dereq_("http");
 var url = _dereq_("url");
 module.exports = {
@@ -37,26 +27,30 @@ module.exports = {
         });
         fetch.end();
     },
-    // todo
+    getRootRange: function () {
+        // loop through structures looking for viewingHint="top"
+        if (this.manifest.structures) {
+            for (var i = 0; i < this.manifest.structures.length; i++) {
+                var s = this.manifest.structures[i];
+                if (s.viewingHint == "top") {
+                    this.rootStructure = s;
+                    break;
+                }
+            }
+        }
+        if (!this.rootStructure) {
+            this.rootStructure = {
+                path: "",
+                ranges: this.manifest.structures
+            };
+        }
+        return this.rootStructure;
+    },
     parse: function (manifest, callback) {
+        this.manifest = JSON.parse(manifest);
         callback(manifest);
     }
 };
-var Sequence = (function () {
-    function Sequence() {
-    }
-    return Sequence;
-})();
-var Service = (function () {
-    function Service() {
-    }
-    return Service;
-})();
-var Structure = (function () {
-    function Structure() {
-    }
-    return Structure;
-})();
 var Thumb = (function () {
     function Thumb(index, uri, label, width, height, visible) {
         this.index = index;
@@ -82,6 +76,21 @@ var TreeNode = (function () {
     };
     return TreeNode;
 })();
+var ViewingDirection;
+(function (ViewingDirection) {
+    ViewingDirection[ViewingDirection["leftToRight"] = 0] = "leftToRight";
+    ViewingDirection[ViewingDirection["rightToLeft"] = 1] = "rightToLeft";
+    ViewingDirection[ViewingDirection["topToBottom"] = 2] = "topToBottom";
+    ViewingDirection[ViewingDirection["bottomToTop"] = 3] = "bottomToTop";
+})(ViewingDirection || (ViewingDirection = {}));
+var ViewingHint;
+(function (ViewingHint) {
+    ViewingHint[ViewingHint["individuals"] = 0] = "individuals";
+    ViewingHint[ViewingHint["paged"] = 1] = "paged";
+    ViewingHint[ViewingHint["continuous"] = 2] = "continuous";
+    ViewingHint[ViewingHint["nonPaged"] = 3] = "nonPaged";
+    ViewingHint[ViewingHint["top"] = 4] = "top";
+})(ViewingHint || (ViewingHint = {}));
 
 },{"http":6,"url":24}],2:[function(_dereq_,module,exports){
 /*!

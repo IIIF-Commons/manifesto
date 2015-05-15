@@ -1,4 +1,4 @@
 
-class Service {
+export class Service implements IService{
 
 }

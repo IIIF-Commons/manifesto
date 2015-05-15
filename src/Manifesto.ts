@@ -10,7 +10,7 @@ module.exports = <IManifesto>{
         return "hello " + msg;
     },
 
-    load: function (manifestUri: string, callback: (manifest: Manifest) => void): void {
+    load: function (manifestUri: string, callback: (manifest: IManifest) => void): void {
 
         var u = url.parse(manifestUri);
 
@@ -21,7 +21,7 @@ module.exports = <IManifesto>{
             method: "GET",
             withCredentials: false
         }, (res) => {
-            var result = ""
+            var result = "";
             res.on('data', (chunk) => {
                 result += chunk;
             });
@@ -33,8 +33,32 @@ module.exports = <IManifesto>{
         fetch.end();
     },
 
-    // todo
-    parse: function(manifest: any, callback: (manifest: Manifest) => void): void {
+    getRootRange: function() {
+
+        // loop through structures looking for viewingHint="top"
+        if (this.manifest.structures){
+            for (var i = 0; i < this.manifest.structures.length; i++){
+                var s = this.manifest.structures[i];
+                if (s.viewingHint == "top"){
+                    this.rootStructure = s;
+                    break;
+                }
+            }
+        }
+
+        if (!this.rootStructure){
+            this.rootStructure = {
+                path: "",
+                ranges: this.manifest.structures
+            };
+        }
+
+        return this.rootStructure;
+    },
+
+    parse: function(manifest: any, callback: (manifest: IManifest) => void): void {
+        this.manifest = <IManifest>JSON.parse(manifest);
+
         callback(manifest);
     }
 };

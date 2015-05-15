@@ -1,4 +1,4 @@
 
-class Canvas {
+export class Canvas implements ICanvas {
 
 }

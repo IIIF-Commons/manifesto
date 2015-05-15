@@ -1,13 +1,3 @@
-var Canvas = (function () {
-    function Canvas() {
-    }
-    return Canvas;
-})();
-var Manifest = (function () {
-    function Manifest() {
-    }
-    return Manifest;
-})();
 var http = require("http");
 var url = require("url");
 module.exports = {
@@ -36,26 +26,30 @@ module.exports = {
         });
         fetch.end();
     },
-    // todo
+    getRootRange: function () {
+        // loop through structures looking for viewingHint="top"
+        if (this.manifest.structures) {
+            for (var i = 0; i < this.manifest.structures.length; i++) {
+                var s = this.manifest.structures[i];
+                if (s.viewingHint == "top") {
+                    this.rootStructure = s;
+                    break;
+                }
+            }
+        }
+        if (!this.rootStructure) {
+            this.rootStructure = {
+                path: "",
+                ranges: this.manifest.structures
+            };
+        }
+        return this.rootStructure;
+    },
     parse: function (manifest, callback) {
+        this.manifest = JSON.parse(manifest);
         callback(manifest);
     }
 };
-var Sequence = (function () {
-    function Sequence() {
-    }
-    return Sequence;
-})();
-var Service = (function () {
-    function Service() {
-    }
-    return Service;
-})();
-var Structure = (function () {
-    function Structure() {
-    }
-    return Structure;
-})();
 var Thumb = (function () {
     function Thumb(index, uri, label, width, height, visible) {
         this.index = index;
@@ -81,3 +75,18 @@ var TreeNode = (function () {
     };
     return TreeNode;
 })();
+var ViewingDirection;
+(function (ViewingDirection) {
+    ViewingDirection[ViewingDirection["leftToRight"] = 0] = "leftToRight";
+    ViewingDirection[ViewingDirection["rightToLeft"] = 1] = "rightToLeft";
+    ViewingDirection[ViewingDirection["topToBottom"] = 2] = "topToBottom";
+    ViewingDirection[ViewingDirection["bottomToTop"] = 3] = "bottomToTop";
+})(ViewingDirection || (ViewingDirection = {}));
+var ViewingHint;
+(function (ViewingHint) {
+    ViewingHint[ViewingHint["individuals"] = 0] = "individuals";
+    ViewingHint[ViewingHint["paged"] = 1] = "paged";
+    ViewingHint[ViewingHint["continuous"] = 2] = "continuous";
+    ViewingHint[ViewingHint["nonPaged"] = 3] = "nonPaged";
+    ViewingHint[ViewingHint["top"] = 4] = "top";
+})(ViewingHint || (ViewingHint = {}));
