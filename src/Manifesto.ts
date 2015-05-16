@@ -7,8 +7,6 @@ import ICanvas = Manifesto.ICanvas;
 import IRange = Manifesto.IRange;
 import ISequence = Manifesto.ISequence;
 import IService = Manifesto.IService;
-import ViewingDirection = Manifesto.ViewingDirection;
-import ViewingHint = Manifesto.ViewingHint;
 
 module.exports = <IManifesto>{
 
@@ -120,7 +118,7 @@ module.exports = <IManifesto>{
         if (this.manifest.structures){
             for (var i = 0; i < this.manifest.structures.length; i++){
                 var r:IRange = this.manifest.structures[i];
-                if (r.viewingHint === ViewingHint.top){
+                if (r.viewingHint === Manifesto.ViewingHint.top){
                     this.manifest.rootRange = r;
                     break;
                 }

@@ -69,8 +69,6 @@ import ICanvas = Manifesto.ICanvas;
 import IRange = Manifesto.IRange;
 import ISequence = Manifesto.ISequence;
 import IService = Manifesto.IService;
-import ViewingDirection = Manifesto.ViewingDirection;
-import ViewingHint = Manifesto.ViewingHint;
 declare module Manifesto {
     class Range implements IRange {
         canvases: ICanvas[];

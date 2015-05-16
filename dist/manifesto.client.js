@@ -21,8 +21,6 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 var http = _dereq_("http");
 var url = _dereq_("url");
-var ViewingDirection = Manifesto.ViewingDirection;
-var ViewingHint = Manifesto.ViewingHint;
 module.exports = {
     manifest: null,
     canvasIndex: 0,
@@ -107,7 +105,7 @@ module.exports = {
         if (this.manifest.structures) {
             for (var i = 0; i < this.manifest.structures.length; i++) {
                 var r = this.manifest.structures[i];
-                if (r.viewingHint === ViewingHint.top) {
+                if (r.viewingHint === Manifesto.ViewingHint.top) {
                     this.manifest.rootRange = r;
                     break;
                 }
