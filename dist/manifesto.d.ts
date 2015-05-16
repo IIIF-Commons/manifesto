@@ -16,7 +16,7 @@ interface IManifesto {
     getCanvasById(id: string): ICanvas;
     getRootRange(): IRange;
     manifest: IManifest;
-    load: (manifestUri: string, callback: (manifest: IManifest) => void) => void;
+    load: (manifestUri: string, callback: (manifest: any) => void) => void;
     parse: (manifest: any, callback: (manifest: IManifest) => void) => void;
     sequenceIndex: number;
 }

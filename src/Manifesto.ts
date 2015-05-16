@@ -12,7 +12,7 @@ module.exports = <IManifesto>{
         return "hello " + msg;
     },
 
-    load: function (manifestUri: string, callback: (manifest: IManifest) => void): void {
+    load: function (manifestUri: string, callback: (manifest: any) => void): void {
 
         var u = url.parse(manifestUri);
 
@@ -28,7 +28,7 @@ module.exports = <IManifesto>{
                 result += chunk;
             });
             res.on('end', () => {
-                this.parse(result, callback);
+                callback(result);
             });
         });
 

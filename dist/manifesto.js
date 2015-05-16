@@ -9,7 +9,6 @@ module.exports = {
         return "hello " + msg;
     },
     load: function (manifestUri, callback) {
-        var _this = this;
         var u = url.parse(manifestUri);
         var fetch = http.request({
             host: u.hostname,
@@ -23,7 +22,7 @@ module.exports = {
                 result += chunk;
             });
             res.on('end', function () {
-                _this.parse(result, callback);
+                callback(result);
             });
         });
         fetch.end();
