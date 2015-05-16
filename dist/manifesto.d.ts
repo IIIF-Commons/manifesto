@@ -36,6 +36,16 @@ interface IService {
 }
 declare var http: any;
 declare var url: any;
+declare module Manifesto {
+    class Range implements IRange {
+        canvases: ICanvas[];
+        path: string;
+        parentRange: IRange;
+        ranges: IRange[];
+        viewingHint: ViewingHint;
+        viewingDirection: ViewingDirection;
+    }
+}
 declare class ViewingDirection {
     value: string;
     constructor(value: string);

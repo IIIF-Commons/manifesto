@@ -27,6 +27,7 @@ gulp.task('build', function() {
         .pipe(ts({
             declarationFiles: true,
             noExternalResolve: true,
+            noLib: false,
             module: 'commonjs',
             out: 'manifesto.js'
         }));

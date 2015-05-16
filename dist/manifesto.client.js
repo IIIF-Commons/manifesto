@@ -93,7 +93,7 @@ module.exports = {
             }
         }
         if (!this.manifest.rootRange) {
-            this.manifest.rootRange = new Range();
+            this.manifest.rootRange = new Manifesto.Range();
             this.manifest.rootRange.path = "";
             this.manifest.rootRange.ranges = this.manifest.structures;
         }
@@ -119,6 +119,15 @@ module.exports = {
         return null;
     }
 };
+var Manifesto;
+(function (Manifesto) {
+    var Range = (function () {
+        function Range() {
+        }
+        return Range;
+    })();
+    Manifesto.Range = Range;
+})(Manifesto || (Manifesto = {}));
 var ViewingDirection = (function () {
     function ViewingDirection(value) {
         this.value = value;

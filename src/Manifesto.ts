@@ -119,7 +119,7 @@ module.exports = <IManifesto>{
         }
 
         if (!this.manifest.rootRange){
-            this.manifest.rootRange = new Range();
+            this.manifest.rootRange = new Manifesto.Range();
             this.manifest.rootRange.path = "";
             this.manifest.rootRange.ranges = this.manifest.structures;
         }
