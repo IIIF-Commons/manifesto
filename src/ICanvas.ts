@@ -1,4 +1,6 @@
 
-interface ICanvas {
-    ranges: IRange[];
+module Manifesto {
+    export interface ICanvas {
+        ranges: IRange[];
+    }
 }

@@ -1,5 +1,7 @@
 
-interface ISequence {
-    viewingDirection: ViewingDirection;
-    canvases: ICanvas[];
+module Manifesto {
+    export interface ISequence {
+        viewingDirection: ViewingDirection;
+        canvases: ICanvas[];
+    }
 }

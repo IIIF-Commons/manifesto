@@ -1,4 +1,6 @@
 
-interface IService {
+module Manifesto {
+    export interface IService {
 
+    }
 }

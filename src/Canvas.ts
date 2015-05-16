@@ -1,4 +1,6 @@
 
-export class Canvas implements ICanvas {
-    ranges: IRange[];
+module Manifesto {
+    export class Canvas implements ICanvas {
+        ranges:IRange[];
+    }
 }

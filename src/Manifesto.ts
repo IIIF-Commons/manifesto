@@ -1,6 +1,15 @@
 var http = require("http");
 var url = require("url");
 
+import IManifesto = Manifesto.IManifesto;
+import IManifest = Manifesto.IManifest;
+import ICanvas = Manifesto.ICanvas;
+import IRange = Manifesto.IRange;
+import ISequence = Manifesto.ISequence;
+import IService = Manifesto.IService;
+import ViewingDirection = Manifesto.ViewingDirection;
+import ViewingHint = Manifesto.ViewingHint;
+
 module.exports = <IManifesto>{
 
     manifest: null,
