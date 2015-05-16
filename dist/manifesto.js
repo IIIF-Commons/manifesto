@@ -2,6 +2,8 @@ var http = require("http");
 var url = require("url");
 module.exports = {
     manifest: null,
+    canvasIndex: 0,
+    sequenceIndex: 0,
     // todo: remove
     sayHello: function (msg) {
         return "hello " + msg;
@@ -26,67 +28,120 @@ module.exports = {
         });
         fetch.end();
     },
+    parse: function (manifest, callback) {
+        this.manifest = JSON.parse(manifest);
+        if (this.manifest.structures && this.manifest.structures.length) {
+            this.parseRanges(this.getRootRange(), '');
+        }
+        callback(this.manifest);
+    },
+    // gives each canvas a collection of ranges it belongs to.
+    // also builds a 'path' string property for each range
+    parseRanges: function (range, path) {
+        range.path = path;
+        if (range.canvases) {
+            for (var j = 0; j < range.canvases.length; j++) {
+                var canvas = range.canvases[j];
+                if (typeof (canvas) === "string") {
+                    canvas = this.getCanvasById(canvas);
+                }
+                if (!canvas) {
+                    // canvas not found - json invalid.
+                    range.canvases[j] = null;
+                    continue;
+                }
+                if (!canvas.ranges)
+                    canvas.ranges = [];
+                canvas.ranges.push(range);
+                // create two-way relationship
+                range.canvases[j] = canvas;
+            }
+        }
+        if (range.ranges) {
+            range.ranges = [];
+            for (var k = 0; k < range.ranges.length; k++) {
+                var r = range.ranges[k];
+                // if it's a url ref
+                if (typeof (r) === "string") {
+                    r = this.getRangeById(r);
+                }
+                // if this range already has a parent, continue.
+                if (r.parentRange)
+                    continue;
+                r.parentRange = range;
+                range.ranges.push(r);
+                this.parseRanges(r, path + '/' + k);
+            }
+        }
+    },
+    getCurrentCanvas: function () {
+        return this.getCurrentSequence().canvases[this.canvasIndex];
+    },
+    getCurrentSequence: function () {
+        return this.manifest.sequences[this.sequenceIndex];
+    },
     getRootRange: function () {
-        // loop through structures looking for viewingHint="top"
+        // loop through ranges looking for viewingHint="top"
         if (this.manifest.structures) {
             for (var i = 0; i < this.manifest.structures.length; i++) {
-                var s = this.manifest.structures[i];
-                if (s.viewingHint == "top") {
-                    this.rootStructure = s;
+                var r = this.manifest.structures[i];
+                if (r.viewingHint === ViewingHint.top) {
+                    this.manifest.rootRange = r;
                     break;
                 }
             }
         }
-        if (!this.rootStructure) {
-            this.rootStructure = {
-                path: "",
-                ranges: this.manifest.structures
-            };
+        if (!this.manifest.rootRange) {
+            this.manifest.rootRange = new Range();
+            this.manifest.rootRange.path = "";
+            this.manifest.rootRange.ranges = this.manifest.structures;
         }
-        return this.rootStructure;
+        return this.manifest.rootRange;
     },
-    parse: function (manifest, callback) {
-        this.manifest = JSON.parse(manifest);
-        callback(manifest);
+    getCanvasById: function (id) {
+        var sequence = this.getCurrentSequence();
+        for (var i = 0; i < sequence.canvases.length; i++) {
+            var c = sequence.canvases[i];
+            if (c['@id'] === id) {
+                return c;
+            }
+        }
+        return null;
+    },
+    getRangeById: function (id) {
+        for (var i = 0; i < this.manifest.structures.length; i++) {
+            var r = this.manifest.structures[i];
+            if (r['@id'] === id) {
+                return r;
+            }
+        }
+        return null;
     }
 };
-var Thumb = (function () {
-    function Thumb(index, uri, label, width, height, visible) {
-        this.index = index;
-        this.uri = uri;
-        this.label = label;
-        this.width = width;
-        this.height = height;
-        this.visible = visible;
+var ViewingDirection = (function () {
+    function ViewingDirection(value) {
+        this.value = value;
     }
-    return Thumb;
-})();
-var TreeNode = (function () {
-    function TreeNode(label, data) {
-        this.label = label;
-        this.data = data;
-        this.nodes = [];
-        if (!data)
-            this.data = {};
-    }
-    TreeNode.prototype.addNode = function (node) {
-        this.nodes.push(node);
-        node.parentNode = this;
+    ViewingDirection.prototype.toString = function () {
+        return this.value;
     };
-    return TreeNode;
+    ViewingDirection.leftToRight = new ViewingDirection("left-to-right");
+    ViewingDirection.rightToLeft = new ViewingDirection("right-to-left");
+    ViewingDirection.topToBottom = new ViewingDirection("top-to-bottom");
+    ViewingDirection.bottomToTop = new ViewingDirection("bottom-to-top");
+    return ViewingDirection;
 })();
-var ViewingDirection;
-(function (ViewingDirection) {
-    ViewingDirection[ViewingDirection["leftToRight"] = 0] = "leftToRight";
-    ViewingDirection[ViewingDirection["rightToLeft"] = 1] = "rightToLeft";
-    ViewingDirection[ViewingDirection["topToBottom"] = 2] = "topToBottom";
-    ViewingDirection[ViewingDirection["bottomToTop"] = 3] = "bottomToTop";
-})(ViewingDirection || (ViewingDirection = {}));
-var ViewingHint;
-(function (ViewingHint) {
-    ViewingHint[ViewingHint["individuals"] = 0] = "individuals";
-    ViewingHint[ViewingHint["paged"] = 1] = "paged";
-    ViewingHint[ViewingHint["continuous"] = 2] = "continuous";
-    ViewingHint[ViewingHint["nonPaged"] = 3] = "nonPaged";
-    ViewingHint[ViewingHint["top"] = 4] = "top";
-})(ViewingHint || (ViewingHint = {}));
+var ViewingHint = (function () {
+    function ViewingHint(value) {
+        this.value = value;
+    }
+    ViewingHint.prototype.toString = function () {
+        return this.value;
+    };
+    ViewingHint.individuals = new ViewingHint("individuals");
+    ViewingHint.paged = new ViewingHint("paged");
+    ViewingHint.continuous = new ViewingHint("continuous");
+    ViewingHint.nonPaged = new ViewingHint("non-paged");
+    ViewingHint.top = new ViewingHint("top");
+    return ViewingHint;
+})();

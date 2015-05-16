@@ -1,5 +1,5 @@
 
-class TreeNode {
+export class TreeNode {
 
     public nodes: TreeNode[];
     public selected: boolean;

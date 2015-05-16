@@ -1,5 +1,5 @@
 
-class Thumb {
+export class Thumb {
     public index: number;
     public uri: string;
     public label: string;

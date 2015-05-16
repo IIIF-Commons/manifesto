@@ -1,4 +1,4 @@
 
 interface ICanvas {
-
+    ranges: IRange[];
 }

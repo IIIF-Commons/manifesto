@@ -1,59 +1,57 @@
 interface ICanvas {
+    ranges: IRange[];
 }
 interface IManifest {
     label: string | any[];
+    rootRange: IRange;
     sequences: ISequence[];
     structures: IRange[];
     viewingDirection: ViewingDirection;
     viewingHint: ViewingHint;
 }
 interface IManifesto {
+    canvasIndex: number;
+    getCurrentCanvas(): ICanvas;
+    getCurrentSequence(): ISequence;
+    getCanvasById(id: string): ICanvas;
+    getRootRange(): IRange;
     manifest: IManifest;
     load: (manifestUri: string, callback: (manifest: IManifest) => void) => void;
     parse: (manifest: any, callback: (manifest: IManifest) => void) => void;
+    sequenceIndex: number;
 }
 interface IRange {
+    canvases: ICanvas[];
+    parentRange: IRange;
+    path: string;
+    ranges: IRange[];
     viewingHint: ViewingHint;
     viewingDirection: ViewingDirection;
-    ranges: IRange[];
-    canvases: ICanvas[];
 }
 interface ISequence {
     viewingDirection: ViewingDirection;
+    canvases: ICanvas[];
 }
 interface IService {
 }
 declare var http: any;
 declare var url: any;
-declare class Thumb {
-    index: number;
-    uri: string;
-    label: string;
-    width: number;
-    height: number;
-    visible: boolean;
-    constructor(index: number, uri: string, label: string, width: number, height: number, visible: boolean);
+declare class ViewingDirection {
+    value: string;
+    constructor(value: string);
+    toString(): string;
+    static leftToRight: ViewingDirection;
+    static rightToLeft: ViewingDirection;
+    static topToBottom: ViewingDirection;
+    static bottomToTop: ViewingDirection;
 }
-declare class TreeNode {
-    label: string;
-    data: any;
-    nodes: TreeNode[];
-    selected: boolean;
-    expanded: boolean;
-    parentNode: TreeNode;
-    constructor(label?: string, data?: any);
-    addNode(node: TreeNode): void;
-}
-declare enum ViewingDirection {
-    leftToRight = 0,
-    rightToLeft = 1,
-    topToBottom = 2,
-    bottomToTop = 3,
-}
-declare enum ViewingHint {
-    individuals = 0,
-    paged = 1,
-    continuous = 2,
-    nonPaged = 3,
-    top = 4,
+declare class ViewingHint {
+    value: string;
+    constructor(value: string);
+    toString(): string;
+    static individuals: ViewingHint;
+    static paged: ViewingHint;
+    static continuous: ViewingHint;
+    static nonPaged: ViewingHint;
+    static top: ViewingHint;
 }

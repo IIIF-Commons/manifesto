@@ -4,6 +4,8 @@ var url = require("url");
 module.exports = <IManifesto>{
 
     manifest: null,
+    canvasIndex: 0,
+    sequenceIndex: 0,
 
     // todo: remove
     sayHello: function(msg: string): string {
@@ -33,32 +35,120 @@ module.exports = <IManifesto>{
         fetch.end();
     },
 
-    getRootRange: function() {
+    parse: function(manifest: any, callback: (manifest: IManifest) => void): void {
+        this.manifest = <IManifest>JSON.parse(manifest);
 
-        // loop through structures looking for viewingHint="top"
+        if (this.manifest.structures && this.manifest.structures.length){
+            this.parseRanges(this.getRootRange(), '');
+        }
+
+        callback(this.manifest);
+    },
+
+    // gives each canvas a collection of ranges it belongs to.
+    // also builds a 'path' string property for each range
+    parseRanges: function(range: IRange, path: string): void {
+        range.path = path;
+
+        if (range.canvases){
+            // loop through canvases and associate with matching @id
+            for (var j = 0; j < range.canvases.length; j++){
+
+                var canvas = range.canvases[j];
+
+                if (typeof(canvas) === "string"){
+                    canvas = this.getCanvasById(canvas);
+                }
+
+                if (!canvas){
+                    // canvas not found - json invalid.
+                    range.canvases[j] = null;
+                    continue;
+                }
+
+                if (!canvas.ranges) canvas.ranges = [];
+
+                canvas.ranges.push(range);
+                // create two-way relationship
+                range.canvases[j] = canvas;
+            }
+        }
+
+        if (range.ranges) {
+            range.ranges = [];
+
+            for (var k = 0; k < range.ranges.length; k++) {
+                var r = range.ranges[k];
+
+                // if it's a url ref
+                if (typeof(r) === "string"){
+                    r = this.getRangeById(r);
+                }
+
+                // if this range already has a parent, continue.
+                if (r.parentRange) continue;
+
+                r.parentRange = range;
+
+                range.ranges.push(r);
+
+                this.parseRanges(r, path + '/' + k);
+            }
+        }
+    },
+
+    getCurrentCanvas: function(): ICanvas {
+        return this.getCurrentSequence().canvases[this.canvasIndex];
+    },
+
+    getCurrentSequence: function(): ISequence {
+        return this.manifest.sequences[this.sequenceIndex];
+    },
+
+    getRootRange: function(): IRange {
+
+        // loop through ranges looking for viewingHint="top"
         if (this.manifest.structures){
             for (var i = 0; i < this.manifest.structures.length; i++){
-                var s = this.manifest.structures[i];
-                if (s.viewingHint == "top"){
-                    this.rootStructure = s;
+                var r:IRange = this.manifest.structures[i];
+                if (r.viewingHint === ViewingHint.top){
+                    this.manifest.rootRange = r;
                     break;
                 }
             }
         }
 
-        if (!this.rootStructure){
-            this.rootStructure = {
-                path: "",
-                ranges: this.manifest.structures
-            };
+        if (!this.manifest.rootRange){
+            this.manifest.rootRange = new Range();
+            this.manifest.rootRange.path = "";
+            this.manifest.rootRange.ranges = this.manifest.structures;
         }
 
-        return this.rootStructure;
+        return this.manifest.rootRange;
     },
 
-    parse: function(manifest: any, callback: (manifest: IManifest) => void): void {
-        this.manifest = <IManifest>JSON.parse(manifest);
+    getCanvasById: function(id: string): ICanvas{
+        var sequence: ISequence = this.getCurrentSequence();
+        for (var i = 0; i < sequence.canvases.length; i++) {
+            var c = sequence.canvases[i];
 
-        callback(manifest);
+            if (c['@id'] === id){
+                return c;
+            }
+        }
+
+        return null;
+    },
+
+    getRangeById: function(id: string): IRange {
+        for (var i = 0; i < this.manifest.structures.length; i++) {
+            var r = this.manifest.structures[i];
+
+            if (r['@id'] === id){
+                return r;
+            }
+        }
+
+        return null;
     }
 };
