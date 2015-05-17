@@ -26,10 +26,6 @@ module.exports = {
     manifest: null,
     canvasIndex: 0,
     sequenceIndex: 0,
-    // todo: remove
-    sayHello: function (msg) {
-        return "hello " + msg;
-    },
     load: function (manifestUri, callback) {
         var u = url.parse(manifestUri);
         var fetch = http.request({

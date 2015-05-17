@@ -9,11 +9,6 @@ module.exports = <M.IManifesto>{
     canvasIndex: 0,
     sequenceIndex: 0,
 
-    // todo: remove
-    sayHello: function(msg: string): string {
-        return "hello " + msg;
-    },
-
     load: function (manifestUri: string, callback: (manifest: any) => void): void {
 
         var u = url.parse(manifestUri);
