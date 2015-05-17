@@ -1,14 +1,9 @@
 var http = require("http");
 var url = require("url");
 
-import IManifesto = Manifesto.IManifesto;
-import IManifest = Manifesto.IManifest;
-import ICanvas = Manifesto.ICanvas;
-import IRange = Manifesto.IRange;
-import ISequence = Manifesto.ISequence;
-import IService = Manifesto.IService;
+import M = Manifesto;
 
-module.exports = <IManifesto>{
+module.exports = <M.IManifesto>{
 
     manifest: null,
     canvasIndex: 0,
@@ -42,8 +37,8 @@ module.exports = <IManifesto>{
         fetch.end();
     },
 
-    parse: function(manifest: any, callback: (manifest: IManifest) => void): void {
-        this.manifest = <IManifest>JSON.parse(manifest);
+    parse: function(manifest: any, callback: (manifest: M.Manifest) => void): void {
+        this.manifest = JSON.parse(manifest);
 
         if (this.manifest.structures && this.manifest.structures.length){
             this.parseRanges(this.getRootRange(), '');
@@ -54,7 +49,7 @@ module.exports = <IManifesto>{
 
     // gives each canvas a collection of ranges it belongs to.
     // also builds a 'path' string property for each range
-    parseRanges: function(range: IRange, path: string): void {
+    parseRanges: function(range: M.Range, path: string): void {
         range.path = path;
 
         if (range.canvases){
@@ -64,7 +59,7 @@ module.exports = <IManifesto>{
                 var canvas = range.canvases[j];
 
                 if (typeof(canvas) === "string"){
-                    canvas = this.getCanvasById(canvas);
+                    canvas = this.getCanvasById(<string>canvas);
                 }
 
                 if (!canvas){
@@ -104,21 +99,21 @@ module.exports = <IManifesto>{
         }
     },
 
-    getCurrentCanvas: function(): ICanvas {
+    getCurrentCanvas: function(): M.Canvas {
         return this.getCurrentSequence().canvases[this.canvasIndex];
     },
 
-    getCurrentSequence: function(): ISequence {
+    getCurrentSequence: function(): M.Sequence {
         return this.manifest.sequences[this.sequenceIndex];
     },
 
-    getRootRange: function(): IRange {
+    getRootRange: function(): M.Range {
 
         // loop through ranges looking for viewingHint="top"
         if (this.manifest.structures){
             for (var i = 0; i < this.manifest.structures.length; i++){
-                var r:IRange = this.manifest.structures[i];
-                if (r.viewingHint === Manifesto.ViewingHint.top){
+                var r: M.Range = this.manifest.structures[i];
+                if (r.viewingHint === M.ViewingHint.top){
                     this.manifest.rootRange = r;
                     break;
                 }
@@ -126,7 +121,7 @@ module.exports = <IManifesto>{
         }
 
         if (!this.manifest.rootRange){
-            this.manifest.rootRange = new Manifesto.Range();
+            this.manifest.rootRange = new M.Range();
             this.manifest.rootRange.path = "";
             this.manifest.rootRange.ranges = this.manifest.structures;
         }
@@ -134,8 +129,8 @@ module.exports = <IManifesto>{
         return this.manifest.rootRange;
     },
 
-    getCanvasById: function(id: string): ICanvas{
-        var sequence: ISequence = this.getCurrentSequence();
+    getCanvasById: function(id: string): M.Canvas{
+        var sequence: M.Sequence = this.getCurrentSequence();
         for (var i = 0; i < sequence.canvases.length; i++) {
             var c = sequence.canvases[i];
 
@@ -147,7 +142,7 @@ module.exports = <IManifesto>{
         return null;
     },
 
-    getRangeById: function(id: string): IRange {
+    getRangeById: function(id: string): M.Range {
         for (var i = 0; i < this.manifest.structures.length; i++) {
             var r = this.manifest.structures[i];
 

@@ -1,10 +1,10 @@
 
 module Manifesto {
-    export class Range implements IRange {
-        canvases: ICanvas[];
+    export class Range {
+        canvases: any[]; // todo: can be a string or a canvas
         path: string;
-        parentRange: IRange;
-        ranges: IRange[];
+        parentRange: Range;
+        ranges: Range[];
         viewingHint: ViewingHint;
         viewingDirection: ViewingDirection;
     }

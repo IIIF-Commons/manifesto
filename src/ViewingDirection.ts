@@ -1,7 +1,7 @@
 
 module Manifesto {
     export class ViewingDirection {
-        constructor(public value:string) {
+        constructor(public value: string) {
         }
 
         toString() {

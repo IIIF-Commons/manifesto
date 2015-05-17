@@ -1,92 +1,52 @@
 declare module Manifesto {
-    class Canvas implements ICanvas {
-        ranges: IRange[];
-    }
-}
-declare module Manifesto {
-    interface ICanvas {
-        ranges: IRange[];
-    }
-}
-declare module Manifesto {
-    interface IManifest {
-        label: string | any[];
-        rootRange: IRange;
-        sequences: ISequence[];
-        structures: IRange[];
-        viewingDirection: ViewingDirection;
-        viewingHint: ViewingHint;
+    class Canvas {
+        ranges: Range[];
     }
 }
 declare module Manifesto {
     interface IManifesto {
         canvasIndex: number;
-        getCurrentCanvas(): ICanvas;
-        getCurrentSequence(): ISequence;
-        getCanvasById(id: string): ICanvas;
-        getRootRange(): IRange;
-        manifest: IManifest;
+        getCurrentCanvas(): Canvas;
+        getCurrentSequence(): Sequence;
+        getCanvasById(id: string): Canvas;
+        getRootRange(): Range;
+        manifest: Manifest;
         load: (manifestUri: string, callback: (manifest: any) => void) => void;
-        parse: (manifest: any, callback: (manifest: IManifest) => void) => void;
+        parse: (manifest: any, callback: (manifest: Manifest) => void) => void;
         sequenceIndex: number;
     }
 }
 declare module Manifesto {
-    interface IRange {
-        canvases: ICanvas[];
-        parentRange: IRange;
-        path: string;
-        ranges: IRange[];
-        viewingHint: ViewingHint;
-        viewingDirection: ViewingDirection;
-    }
-}
-declare module Manifesto {
-    interface ISequence {
-        viewingDirection: ViewingDirection;
-        canvases: ICanvas[];
-    }
-}
-declare module Manifesto {
-    interface IService {
-    }
-}
-declare module Manifesto {
-    class Manifest implements IManifest {
+    class Manifest {
         label: string | any[];
-        rootRange: IRange;
-        sequences: ISequence[];
-        structures: IRange[];
+        rootRange: Range;
+        sequences: Sequence[];
+        structures: Range[];
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
     }
 }
 declare var http: any;
 declare var url: any;
-import IManifesto = Manifesto.IManifesto;
-import IManifest = Manifesto.IManifest;
-import ICanvas = Manifesto.ICanvas;
-import IRange = Manifesto.IRange;
-import ISequence = Manifesto.ISequence;
-import IService = Manifesto.IService;
+import M = Manifesto;
 declare module Manifesto {
-    class Range implements IRange {
-        canvases: ICanvas[];
+    class Range {
+        canvases: any[];
         path: string;
-        parentRange: IRange;
-        ranges: IRange[];
+        parentRange: Range;
+        ranges: Range[];
         viewingHint: ViewingHint;
         viewingDirection: ViewingDirection;
     }
 }
 declare module Manifesto {
-    class Sequence implements ISequence {
+    class Sequence {
         viewingDirection: ViewingDirection;
-        canvases: ICanvas[];
+        canvases: Canvas[];
     }
 }
 declare module Manifesto {
-    class Service implements IService {
+    class Service {
     }
 }
 declare module Manifesto {

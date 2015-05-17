@@ -1,7 +1,7 @@
 
 module Manifesto {
-    export class Sequence implements ISequence {
-        viewingDirection:ViewingDirection;
-        canvases:ICanvas[] = [];
+    export class Sequence {
+        viewingDirection: ViewingDirection;
+        canvases: Canvas[] = [];
     }
 }

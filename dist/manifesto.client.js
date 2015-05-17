@@ -21,6 +21,7 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 var http = _dereq_("http");
 var url = _dereq_("url");
+var M = Manifesto;
 module.exports = {
     manifest: null,
     canvasIndex: 0,
@@ -105,14 +106,14 @@ module.exports = {
         if (this.manifest.structures) {
             for (var i = 0; i < this.manifest.structures.length; i++) {
                 var r = this.manifest.structures[i];
-                if (r.viewingHint === Manifesto.ViewingHint.top) {
+                if (r.viewingHint === M.ViewingHint.top) {
                     this.manifest.rootRange = r;
                     break;
                 }
             }
         }
         if (!this.manifest.rootRange) {
-            this.manifest.rootRange = new Manifesto.Range();
+            this.manifest.rootRange = new M.Range();
             this.manifest.rootRange.path = "";
             this.manifest.rootRange.ranges = this.manifest.structures;
         }

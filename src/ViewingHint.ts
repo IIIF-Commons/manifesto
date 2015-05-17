@@ -1,7 +1,7 @@
 
 module Manifesto {
     export class ViewingHint {
-        constructor(public value:string) {
+        constructor(public value: string) {
         }
 
         toString() {
