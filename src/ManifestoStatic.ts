@@ -1,3 +1,4 @@
+declare var M: ManifestoStatic;
 
 interface ManifestoStatic {
 

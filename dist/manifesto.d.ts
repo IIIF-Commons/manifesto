@@ -5,6 +5,7 @@ declare module Manifesto {
         label: string;
         ranges: Range[];
         width: number;
+        getRange(): Range;
     }
 }
 declare module Manifesto {
@@ -21,7 +22,9 @@ declare var http: any;
 declare var url: any;
 declare var path: any;
 declare var _: any;
+declare var M: ManifestoStatic;
 import m = Manifesto;
+declare var M: ManifestoStatic;
 interface ManifestoStatic {
     canvasIndex: number;
     locale: string;

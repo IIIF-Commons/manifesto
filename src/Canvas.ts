@@ -5,8 +5,8 @@ module Manifesto {
         label: string;
         ranges: Range[];
         width: number;
-        //getRange() {
-        //    return M.getCanvasRange(this);
-        //}
+        getRange() {
+            return M.getCanvasRange(this);
+        }
     }
 }

@@ -3,6 +3,9 @@ var Manifesto;
     var Canvas = (function () {
         function Canvas() {
         }
+        Canvas.prototype.getRange = function () {
+            return M.getCanvasRange(this);
+        };
         return Canvas;
     })();
     Manifesto.Canvas = Canvas;
@@ -22,8 +25,9 @@ var http = require("http");
 var url = require("url");
 var path = require("path");
 var _ = require("lodash");
+var M;
 var m = Manifesto;
-module.exports = {
+module.exports = M = {
     manifest: null,
     canvasIndex: 0,
     sequenceIndex: 0,
