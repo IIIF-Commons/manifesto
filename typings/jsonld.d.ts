@@ -1,6 +1,2 @@
 
-// http://www.w3.org/TR/json-ld/#dfn-language-map
-//interface LanguageMap {
-//    language: string;
-//    value: string;
-//}
+// todo: http://www.w3.org/TR/json-ld/#dfn-language-map
