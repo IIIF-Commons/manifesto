@@ -5,6 +5,8 @@ var _ = require("lodash");
 
 import m = Manifesto;
 
+declare var M: ManifestoStatic;
+
 module.exports = M = <ManifestoStatic>{
 
     manifest: null,
@@ -498,5 +500,3 @@ module.exports = M = <ManifestoStatic>{
         return this.getTotalCanvases() % 2 === 0;
     }
 };
-
-export var M: ManifestoStatic;
