@@ -2,10 +2,11 @@ var http = require("http");
 var url = require("url");
 var path = require("path");
 var _ = require("lodash");
+export var M: ManifestoStatic;
 
 import m = Manifesto;
 
-export var M = <ManifestoStatic>{
+module.exports = M = <ManifestoStatic>{
 
     manifest: null,
     canvasIndex: 0,
