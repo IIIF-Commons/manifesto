@@ -2,7 +2,6 @@ var http = require("http");
 var url = require("url");
 var path = require("path");
 var _ = require("lodash");
-export var M: ManifestoStatic;
 
 import m = Manifesto;
 
@@ -499,3 +498,5 @@ module.exports = M = <ManifestoStatic>{
         return this.getTotalCanvases() % 2 === 0;
     }
 };
+
+export var M: ManifestoStatic;
