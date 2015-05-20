@@ -1,5 +1,6 @@
 declare module Manifesto {
-    class Canvas {
+    class Canvas implements JsonLD.resource {
+        id: string;
         height: number;
         label: string;
         ranges: Range[];
@@ -8,7 +9,8 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Manifest {
+    class Manifest implements JsonLD.resource {
+        id: string;
         label: string | any[];
         rootRange: Range;
         sequences: Sequence[];
@@ -28,6 +30,7 @@ interface ManifestoStatic {
     canvasIndex: number;
     locale: string;
     manifest: Manifesto.Manifest;
+    originalManifest: any;
     sequenceIndex: number;
     load: (manifestUri: string, callback: (manifest: any) => void) => void;
     parse: (manifest: any) => Manifesto.Manifest;
@@ -50,7 +53,6 @@ interface ManifestoStatic {
     getRangeByCanvasIndex(canvasIndex: number): Manifesto.Range;
     getRangeById(id: string): Manifesto.Range;
     getRangeByPath(path: string): Manifesto.Range;
-    getRootRange(): Manifesto.Range;
     getSeeAlso(): any;
     getService(resource: any, profile: string): Manifesto.Service;
     getStartCanvasIndex(): number;
@@ -68,7 +70,8 @@ interface ManifestoStatic {
     isTotalCanvasesEven(): boolean;
 }
 declare module Manifesto {
-    class Range {
+    class Range implements JsonLD.resource {
+        id: string;
         canvases: any[];
         path: string;
         parentRange: Range;
@@ -78,13 +81,27 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Sequence {
+    class Sequence implements JsonLD.resource {
+        id: string;
         viewingDirection: ViewingDirection;
+        viewingHint: ViewingHint;
         canvases: Canvas[];
     }
 }
 declare module Manifesto {
-    class Service {
+    class Serialiser {
+        static deserialised: Manifest;
+        static deserialise(manifest: any): Manifest;
+        static deserialiseSequences(manifest: any): void;
+        static deserialiseCanvases(s: any): Canvas[];
+        static getRootRange(manifest: any): Range;
+        static deserialiseRanges(range: Range, path: string): void;
+        static serialise(manifest: Manifest): string;
+    }
+}
+declare module Manifesto {
+    class Service implements JsonLD.resource {
+        id: string;
     }
 }
 declare module Manifesto {
@@ -113,23 +130,23 @@ declare module Manifesto {
 declare module Manifesto {
     class ViewingDirection {
         value: string;
-        constructor(value: string);
-        toString(): string;
         static leftToRight: ViewingDirection;
         static rightToLeft: ViewingDirection;
         static topToBottom: ViewingDirection;
         static bottomToTop: ViewingDirection;
+        constructor(value: string);
+        toString(): string;
     }
 }
 declare module Manifesto {
     class ViewingHint {
         value: string;
-        constructor(value: string);
-        toString(): string;
         static individuals: ViewingHint;
         static paged: ViewingHint;
         static continuous: ViewingHint;
         static nonPaged: ViewingHint;
         static top: ViewingHint;
+        constructor(value: string);
+        toString(): string;
     }
 }

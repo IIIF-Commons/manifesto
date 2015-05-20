@@ -2,17 +2,16 @@ var http = require("http");
 var url = require("url");
 var path = require("path");
 var _ = require("lodash");
-
 import m = Manifesto;
-
 declare var M: ManifestoStatic;
 
 module.exports = M = <ManifestoStatic>{
 
-    manifest: null,
     canvasIndex: 0,
-    sequenceIndex: 0,
     locale: "en-GB",
+    manifest: null,
+    originalManifest: null,
+    sequenceIndex: 0,
 
     load: function (manifestUri: string, callback: (manifest: any) => void): void {
 
@@ -37,64 +36,9 @@ module.exports = M = <ManifestoStatic>{
         fetch.end();
     },
 
-    parse: function(manifest: any): m.Manifest {
-        this.manifest = JSON.parse(manifest);
-
-        if (this.manifest.structures && this.manifest.structures.length){
-            this.parseRanges(this.getRootRange(), '');
-        }
-
-        return this.manifest;
-    },
-
-    parseRanges: function(range: m.Range, path: string): void {
-        range.path = path;
-
-        if (range.canvases){
-            // loop through canvases and associate with matching @id
-            for (var j = 0; j < range.canvases.length; j++){
-
-                var canvas = range.canvases[j];
-
-                if (typeof(canvas) === "string"){
-                    canvas = this.getCanvasById(<string>canvas);
-                }
-
-                if (!canvas){
-                    // canvas not found - json invalid.
-                    range.canvases[j] = null;
-                    continue;
-                }
-
-                if (!canvas.ranges) canvas.ranges = [];
-
-                canvas.ranges.push(range);
-                // create two-way relationship
-                range.canvases[j] = canvas;
-            }
-        }
-
-        if (range.ranges) {
-            //range.ranges = [];
-
-            for (var k = 0; k < range.ranges.length; k++) {
-                var r = range.ranges[k];
-
-                // if it's a url ref
-                if (typeof(r) === "string"){
-                    r = this.getRangeById(r);
-                }
-
-                // if this range already has a parent, continue.
-                if (r.parentRange) continue;
-
-                r.parentRange = range;
-
-                //range.ranges.push(r);
-
-                this.parseRanges(r, path + '/' + k);
-            }
-        }
+    parse: function(manifest: string): m.Manifest {
+        this.originalManifest = manifest;
+        return this.manifest = m.Deserialiser.parse(this.originalManifest);
     },
 
     getAttribution: function(): string {
@@ -354,28 +298,6 @@ module.exports = M = <ManifestoStatic>{
         }
 
         return null;
-    },
-
-    getRootRange: function(): m.Range {
-
-        // loop through ranges looking for viewingHint="top"
-        if (this.manifest.structures){
-            for (var i = 0; i < this.manifest.structures.length; i++){
-                var r: m.Range = this.manifest.structures[i];
-                if (r.viewingHint === m.ViewingHint.top){
-                    this.manifest.rootRange = r;
-                    break;
-                }
-            }
-        }
-
-        if (!this.manifest.rootRange){
-            this.manifest.rootRange = new m.Range();
-            this.manifest.rootRange.path = "";
-            this.manifest.rootRange.ranges = this.manifest.structures;
-        }
-
-        return this.manifest.rootRange;
     },
 
     getSeeAlso(): any {

@@ -10,9 +10,9 @@ var GulpConfig = (function () {
         this.header = '// ' + metadata.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
         this.tsOut = 'manifesto.js';
         this.tsSrc = [
-            './src/*.ts',
-            './typings/*.ts',
-            './node_modules/extensions/typings/*.d.ts',
+            'src/*.ts',
+            'typings/*.ts',
+            'node_modules/extensions/typings/*.d.ts',
             '!test'];
         this.test = 'test/test.js';
     }

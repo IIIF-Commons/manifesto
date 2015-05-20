@@ -2,6 +2,7 @@ var Manifesto;
 (function (Manifesto) {
     var Canvas = (function () {
         function Canvas() {
+            this.ranges = [];
         }
         Canvas.prototype.getRange = function () {
             return M.getCanvasRange(this);
@@ -27,10 +28,12 @@ var path = require("path");
 var _ = require("lodash");
 var m = Manifesto;
 module.exports = M = {
-    manifest: null,
     canvasIndex: 0,
-    sequenceIndex: 0,
     locale: "en-GB",
+    manifest: null,
+    originalManifest: null,
+    sequenceIndex: 0,
+    serialiser: m.Serialiser,
     load: function (manifestUri, callback) {
         var u = url.parse(manifestUri);
         var fetch = http.request({
@@ -51,47 +54,8 @@ module.exports = M = {
         fetch.end();
     },
     parse: function (manifest) {
-        this.manifest = JSON.parse(manifest);
-        if (this.manifest.structures && this.manifest.structures.length) {
-            this.parseRanges(this.getRootRange(), '');
-        }
-        return this.manifest;
-    },
-    parseRanges: function (range, path) {
-        range.path = path;
-        if (range.canvases) {
-            for (var j = 0; j < range.canvases.length; j++) {
-                var canvas = range.canvases[j];
-                if (typeof (canvas) === "string") {
-                    canvas = this.getCanvasById(canvas);
-                }
-                if (!canvas) {
-                    // canvas not found - json invalid.
-                    range.canvases[j] = null;
-                    continue;
-                }
-                if (!canvas.ranges)
-                    canvas.ranges = [];
-                canvas.ranges.push(range);
-                // create two-way relationship
-                range.canvases[j] = canvas;
-            }
-        }
-        if (range.ranges) {
-            for (var k = 0; k < range.ranges.length; k++) {
-                var r = range.ranges[k];
-                // if it's a url ref
-                if (typeof (r) === "string") {
-                    r = this.getRangeById(r);
-                }
-                // if this range already has a parent, continue.
-                if (r.parentRange)
-                    continue;
-                r.parentRange = range;
-                //range.ranges.push(r);
-                this.parseRanges(r, path + '/' + k);
-            }
-        }
+        this.originalManifest = JSON.parse(manifest);
+        return this.serialiser.deserialise(this.originalManifest);
     },
     getAttribution: function () {
         return this.getLocalisedValue(this.manifest.attribution);
@@ -295,24 +259,6 @@ module.exports = M = {
         }
         return null;
     },
-    getRootRange: function () {
-        // loop through ranges looking for viewingHint="top"
-        if (this.manifest.structures) {
-            for (var i = 0; i < this.manifest.structures.length; i++) {
-                var r = this.manifest.structures[i];
-                if (r.viewingHint === m.ViewingHint.top) {
-                    this.manifest.rootRange = r;
-                    break;
-                }
-            }
-        }
-        if (!this.manifest.rootRange) {
-            this.manifest.rootRange = new m.Range();
-            this.manifest.rootRange.path = "";
-            this.manifest.rootRange.ranges = this.manifest.structures;
-        }
-        return this.manifest.rootRange;
-    },
     getSeeAlso: function () {
         return this.manifest.seeAlso;
     },
@@ -431,6 +377,98 @@ var Manifesto;
         return Sequence;
     })();
     Manifesto.Sequence = Sequence;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var Serialiser = (function () {
+        function Serialiser() {
+        }
+        Serialiser.deserialise = function (manifest) {
+            this.deserialiseSequences(manifest);
+            if (manifest.structures && manifest.structures.length) {
+                this.deserialiseRanges(this.getRootRange(manifest), '');
+            }
+            return this.deserialised;
+        };
+        Serialiser.deserialiseSequences = function (manifest) {
+            for (var i = 0; i < manifest.sequences.length; i++) {
+                var s = manifest.sequences[i];
+                var sequence = new Manifesto.Sequence();
+                sequence.id = s['@id'];
+                sequence.viewingDirection = new Manifesto.ViewingDirection(s.viewingDirection);
+                sequence.viewingHint = new Manifesto.ViewingHint(s.viewingHint);
+                sequence.canvases = this.deserialiseCanvases(s);
+            }
+        };
+        Serialiser.deserialiseCanvases = function (s) {
+            var canvases = [];
+            for (var i = 0; i < s.canvases.length; i++) {
+                var c = s.canvases[i];
+                var canvas = new Manifesto.Canvas();
+                canvas.id = c['@id'];
+                canvas.height = c.height;
+                canvas.label = c.label;
+                canvas.width = c.width;
+                canvases.push(canvas);
+            }
+            return canvases;
+        };
+        Serialiser.getRootRange = function (manifest) {
+            // loop through ranges looking for viewingHint="top"
+            if (manifest.structures) {
+                for (var i = 0; i < manifest.structures.length; i++) {
+                    var r = manifest.structures[i];
+                    if (r.viewingHint === Manifesto.ViewingHint.top) {
+                        manifest.rootRange = r;
+                        break;
+                    }
+                }
+            }
+            if (!manifest.rootRange) {
+                manifest.rootRange = new Manifesto.Range();
+                manifest.rootRange.path = "";
+                manifest.rootRange.ranges = manifest.structures;
+            }
+            return manifest.rootRange;
+        };
+        Serialiser.deserialiseRanges = function (range, path) {
+            range.path = path;
+            if (range.canvases) {
+                for (var j = 0; j < range.canvases.length; j++) {
+                    var canvas = range.canvases[j];
+                    if (typeof (canvas) === "string") {
+                    }
+                    if (!canvas) {
+                        // canvas not found - json invalid.
+                        range.canvases[j] = null;
+                        continue;
+                    }
+                    if (!canvas.ranges)
+                        canvas.ranges = [];
+                    canvas.ranges.push(range);
+                    // create two-way relationship
+                    range.canvases[j] = canvas;
+                }
+            }
+            if (range.ranges) {
+                for (var k = 0; k < range.ranges.length; k++) {
+                    var r = range.ranges[k];
+                    // if it's a url ref
+                    if (typeof (r) === "string") {
+                    }
+                    // if this range already has a parent, continue.
+                    if (r.parentRange)
+                        continue;
+                    r.parentRange = range;
+                }
+            }
+        };
+        Serialiser.serialise = function (manifest) {
+            return "";
+        };
+        return Serialiser;
+    })();
+    Manifesto.Serialiser = Serialiser;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {

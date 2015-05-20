@@ -1,2 +1,6 @@
 
-// todo: http://www.w3.org/TR/json-ld/#dfn-language-map
+declare module JsonLD{
+    export interface resource{
+        id: string;
+    }
+}

@@ -5,15 +5,13 @@ interface ManifestoStatic {
     // properties
     canvasIndex: number;
     locale: string;
-    manifest: Manifesto.Manifest; // todo: remove pending collections support
+    manifest: Manifesto.Manifest;
+    originalManifest: any;
     sequenceIndex: number;
 
     // initialisers
-    load: (manifestUri: string, callback: (manifest: any) => void) => void;
-
-    // Gives each Canvas a collection of Ranges that it belongs to.
-    // Gives each Range a parentRange and path property.
-    parse: (manifest: any) => Manifesto.Manifest;
+    load: (manifestUri: string, callback: (manifest: string) => void) => void;
+    parse: (manifest: string) => Manifesto.Manifest;
 
     // getters
     getAttribution(): string;
@@ -36,7 +34,6 @@ interface ManifestoStatic {
     getRangeByCanvasIndex(canvasIndex: number): Manifesto.Range;
     getRangeById(id: string): Manifesto.Range;
     getRangeByPath(path: string): Manifesto.Range;
-    getRootRange(): Manifesto.Range;
     getSeeAlso(): any;
     getService(resource: any, profile: string): Manifesto.Service;
     getStartCanvasIndex(): number;
