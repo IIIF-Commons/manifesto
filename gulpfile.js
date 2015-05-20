@@ -11,8 +11,8 @@ var gulp = require('gulp'),
 var config = new Config();
 
 gulp.task('test', function () {
-    return gulp.src('test/test.js', {read: false})
-        .pipe(mocha({reporter: 'nyan'}));
+    return gulp.src(config.test, {read: false})
+        .pipe(mocha());
 });
 
 gulp.task('clean:dist', function (cb) {
@@ -23,13 +23,13 @@ gulp.task('clean:dist', function (cb) {
 
 gulp.task('build', function() {
 
-    var tsResult = gulp.src(['src/*.ts', 'typings/*.ts', '!test'])
+    var tsResult = gulp.src(config.tsSrc)
         .pipe(ts({
             declarationFiles: true,
             noExternalResolve: true,
             noLib: false,
             module: 'commonjs',
-            out: 'manifesto.js'
+            out: config.tsOut
         }));
 
     return merge([
@@ -39,11 +39,11 @@ gulp.task('build', function() {
 });
 
 gulp.task('browserify', function (callback) {
-    return gulp.src(['*.js'], { cwd: config.dist })
+    return gulp.src(config.browserifySrc)
         .pipe(browserify({
-            standalone: 'manifesto'
+            standalone: config.browserifyStandalone
         }))
-        .pipe(rename('manifesto.client.js'))
+        .pipe(rename(config.browserifyOut))
         .pipe(gulp.dest(config.dist));
 });
 

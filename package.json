@@ -4,7 +4,7 @@
   "description": "Manipulate IIIF Manifests",
   "main": "dist/manifesto.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "test/test.js"
   },
   "repository": {
     "type": "git",
@@ -23,10 +23,12 @@
     "chai": "^2.3.0",
     "deamdify": "^0.1.1",
     "del": "^1.1.1",
+    "extensions": "git://github.com/edsilv/extensions.git",
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
     "gulp-mocha": "^2.0.1",
     "gulp-rename": "^1.2.2",
+    "gulp-typescript": "^2.7.4",
     "merge2": "^0.3.5",
     "mocha": "^2.2.4",
     "run-sequence": "^1.1.0"

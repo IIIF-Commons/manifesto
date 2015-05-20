@@ -205,7 +205,7 @@ module.exports = M = {
         return this.manifest.license;
     },
     getNextPageIndex: function (canvasIndex, pagingEnabled) {
-        if (typeof (canvasIndex) === 'undefined')
+        if (_.isUndefined(canvasIndex))
             canvasIndex = this.canvasIndex;
         var index;
         if (pagingEnabled) {
@@ -226,7 +226,7 @@ module.exports = M = {
         return index;
     },
     getPagedIndices: function (canvasIndex, pagingEnabled) {
-        if (typeof (canvasIndex) === 'undefined')
+        if (_.isUndefined(canvasIndex))
             canvasIndex = this.canvasIndex;
         var indices = [];
         if (!pagingEnabled) {
@@ -249,7 +249,7 @@ module.exports = M = {
         return indices;
     },
     getPrevPageIndex: function (canvasIndex, pagingEnabled) {
-        if (typeof (canvasIndex) === 'undefined')
+        if (_.isUndefined(canvasIndex))
             canvasIndex = this.canvasIndex;
         var index;
         if (pagingEnabled) {
@@ -392,13 +392,14 @@ module.exports = M = {
         return canvasIndex > this.getTotalCanvases() - 1;
     },
     isFirstCanvas: function (canvasIndex) {
-        if (typeof (canvasIndex) === 'undefined')
+        if (_.isUndefined(canvasIndex))
             canvasIndex = this.canvasIndex;
         return canvasIndex === 0;
     },
     isLastCanvas: function (canvasIndex) {
-        if (typeof (canvasIndex) === 'undefined')
+        if (_.isUndefined(canvasIndex))
             canvasIndex = this.canvasIndex;
+        var test = String.format("{0}", "test");
         return canvasIndex === this.getTotalCanvases() - 1;
     },
     isMultiCanvas: function () {
@@ -473,13 +474,6 @@ var Manifesto;
     })();
     Manifesto.TreeNode = TreeNode;
 })(Manifesto || (Manifesto = {}));
-/// <reference path="../typings/utils.d.ts"/>
-if (!Array.prototype.last) {
-    Array.prototype.last = function () {
-        return this[this.length - 1];
-    };
-}
-;
 var Manifesto;
 (function (Manifesto) {
     var ViewingDirection = (function () {

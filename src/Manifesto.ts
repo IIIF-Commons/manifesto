@@ -251,7 +251,7 @@ module.exports = M = <ManifestoStatic>{
     },
 
     getNextPageIndex: function(canvasIndex?: number, pagingEnabled?: boolean): number {
-        if (typeof(canvasIndex) === 'undefined') canvasIndex = this.canvasIndex;
+        if (_.isUndefined(canvasIndex)) canvasIndex = this.canvasIndex;
 
         var index;
 
@@ -275,7 +275,7 @@ module.exports = M = <ManifestoStatic>{
     },
 
     getPagedIndices: function(canvasIndex?: number, pagingEnabled?: boolean): number[]{
-        if (typeof(canvasIndex) === 'undefined') canvasIndex = this.canvasIndex;
+        if (_.isUndefined(canvasIndex)) canvasIndex = this.canvasIndex;
 
         var indices = [];
 
@@ -299,7 +299,7 @@ module.exports = M = <ManifestoStatic>{
     },
 
     getPrevPageIndex: function(canvasIndex?: number, pagingEnabled?: boolean): number {
-        if (typeof(canvasIndex) === 'undefined') canvasIndex = this.canvasIndex;
+        if (_.isUndefined(canvasIndex)) canvasIndex = this.canvasIndex;
 
         var index;
 
@@ -478,12 +478,13 @@ module.exports = M = <ManifestoStatic>{
     },
 
     isFirstCanvas: function(canvasIndex?: number): boolean {
-        if (typeof(canvasIndex) === 'undefined') canvasIndex = this.canvasIndex;
+        if (_.isUndefined(canvasIndex)) canvasIndex = this.canvasIndex;
         return canvasIndex === 0;
     },
 
     isLastCanvas: function(canvasIndex?: number): boolean {
-        if (typeof(canvasIndex) === 'undefined') canvasIndex = this.canvasIndex;
+        if (_.isUndefined(canvasIndex)) canvasIndex = this.canvasIndex;
+        var test = String.format("{0}", "test");
         return canvasIndex === this.getTotalCanvases() - 1;
     },
 

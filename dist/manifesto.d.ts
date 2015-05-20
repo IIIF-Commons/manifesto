@@ -1,4 +1,3 @@
-/// <reference path="c:/Users/edward.silverton/github/edsilv/manifesto/typings/utils.d.ts" />
 declare module Manifesto {
     class Canvas {
         height: number;
