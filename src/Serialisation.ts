@@ -1,8 +1,9 @@
+var jmespath = require('jmespath');
 
 module Manifesto {
     export class Deserialiser {
         static manifest: Manifest;
-        static originalManifest: Manifest;
+        static originalManifest: any;
 
         static parse(manifest: string): Manifest {
 
@@ -12,7 +13,7 @@ module Manifesto {
             this.parseSequences();
 
             if (this.originalManifest.structures && this.originalManifest.structures.length) {
-                this.parseRanges(this.getRootRange(), '');
+                this.parseRanges(JsonUtils.getRootRange(this.originalManifest), '');
             }
 
             return this.manifest;
@@ -48,75 +49,42 @@ module Manifesto {
             return canvases;
         }
 
-        static parseRanges(range: Range, path: string): void {
+        static parseRanges(r: any, path: string, parentRange?: Range): void {
+
+            var range: Range = new Range();
+            range.id = r['@id'];
+            range.label = r.label;
+            range.parentRange = parentRange;
             range.path = path;
 
-            if (range.canvases){
-                // loop through canvases and associate with matching @id
-                for (var j = 0; j < range.canvases.length; j++){
-
-                    var canvas = range.canvases[j];
-
-                    if (typeof(canvas) === "string"){
-                        canvas = this.getResourceById(<string>canvas);
-                    }
-
-                    if (!canvas){
-                        // canvas not found - json invalid.
-                        range.canvases[j] = null;
-                        continue;
-                    }
-
-                    if (!canvas.ranges) canvas.ranges = [];
-
+            if (r.canvases){
+                // create two-way relationship
+                for (var i = 0; i < r.canvases.length; i++){
+                    var canvas: Canvas = this.getCanvasById(r.canvases[i]);
                     canvas.ranges.push(range);
-                    // create two-way relationship
-                    range.canvases[j] = canvas;
+                    range.canvases.push(canvas);
                 }
             }
 
-            if (range.ranges) {
-
-                for (var k = 0; k < range.ranges.length; k++) {
-                    var r = range.ranges[k];
-
-                    // if it's a url ref
-                    if (typeof(r) === "string"){
-                        r = this.getResourceById(<string>r, this.originalManifest.structures);
-                    }
-
-                    // if this range already has a parent, continue.
-                    if (r.parentRange) continue;
-
-                    r.parentRange = range;
-
-                    ////range.ranges.push(r);
-
-                    this.parseRanges(r, path + '/' + k);
+            if (r.ranges) {
+                for (var j = 0; j < r.ranges.length; j++) {
+                    this.parseRanges(r.ranges[j], path + '/' + j, range);
                 }
             }
         }
 
-        static getRootRange(): any {
-            // loop through ranges looking for viewingHint="top"
-            if (this.originalManifest.structures){
-                for (var i = 0; i < this.originalManifest.structures.length; i++){
-                    var r = this.originalManifest.structures[i];
-                    if (r.viewingHint === ViewingHint.top){
-                        return r;
+        static getCanvasById(id: string): Canvas {
+
+            for (var i = 0; i < this.manifest.sequences.length; i++){
+                var sequence = this.manifest.sequences[i];
+
+                for (var j = 0; j < sequence.canvases.length; j++){
+                    var canvas = sequence.canvases[j];
+
+                    if (canvas.id === id){
+                        return canvas;
                     }
                 }
-            }
-
-            return null;
-        }
-
-        static getResourceById(id: string, parentObj?: any): any {
-            // todo use jmespath
-            var results = Utils.getObjects(parentObj || this.originalManifest, "@id", id);
-
-            if(results.length) {
-                return results[0];
             }
 
             return null;
@@ -130,19 +98,27 @@ module Manifesto {
         }
     }
 
-    // todo: move to utils module
-    class Utils {
-        static getObjects(obj, key, val): any[] {
-            var objects: any[] = [];
-            for (var i in obj) {
-                if (!obj.hasOwnProperty(i)) continue;
-                if (typeof obj[i] == 'object') {
-                    objects = objects.concat(this.getObjects(obj[i], key, val));
-                } else if (i == key && obj[key] == val) {
-                    objects.push(obj);
-                }
-            }
-            return objects;
+    class JsonUtils {
+        static getCanvasById(manifest: any, id: string): any {
+            var result = jmespath.search(manifest, "sequences[].canvases[?\"@id\"=='" + id + "'][]");
+            if (result.length) return result[0];
+            return null;
+        }
+
+        static getRangeById(manifest: any, id: string): any {
+            var result = jmespath.search(manifest, "structures[?\"@id\"=='" + id + "'][]");
+            if (result.length) return result[0];
+            return null;
+        }
+
+        static getRootRange(manifest: any): any {
+            var result = jmespath.search(manifest, "structures[?viewingHint=='top'][]");
+            if (result.length) return result[0];
+
+            var rootRange: any = {};
+            rootRange.ranges = manifest.structures;
+
+            return rootRange;
         }
     }
 }

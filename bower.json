@@ -22,6 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "extensions": "edsilv/extensions"
+    "extensions": "edsilv/extensions",
+    "jmespath.js": "~0.12.0"
   }
 }

@@ -7,7 +7,9 @@ declare var M: ManifestoStatic;
 
 module.exports = M = <ManifestoStatic>{
 
+    // todo: should manifesto have sequenceIndex, canvasIndex, locale, or should state be managed by the consuming application?
     canvasIndex: 0,
+    defaultLabel: '-',
     locale: "en-GB",
     manifest: null,
     originalManifest: null,
@@ -50,7 +52,7 @@ module.exports = M = <ManifestoStatic>{
         for (var i = 0; i < this.getTotalCanvases(); i++) {
             var canvas = this.getCanvasByIndex(i);
 
-            if (canvas['@id'] === id){
+            if (canvas.id === id){
                 return canvas;
             }
         }
@@ -67,7 +69,7 @@ module.exports = M = <ManifestoStatic>{
         for (var i = 0; i < this.getTotalCanvases(); i++) {
             var canvas = this.getCanvasByIndex(i);
 
-            if (canvas['@id'] === id){
+            if (canvas.id === id){
                 return i;
             }
         }
@@ -146,13 +148,14 @@ module.exports = M = <ManifestoStatic>{
         }
 
         // none exists, so return '-'.
-        return '-';
+        return this.defaultLabel;
     },
 
     getLastPageIndex: function(): number {
         return this.getTotalCanvases() - 1;
     },
 
+    // todo: this shouldn't use jsonld values
     getLocalisedValue: function(prop: any, locale?: string): string {
 
         if (!_.isArray(prop)){
@@ -273,7 +276,7 @@ module.exports = M = <ManifestoStatic>{
         for (var i = 0; i < this.manifest.structures.length; i++) {
             var range = this.manifest.structures[i];
 
-            if (range['@id'] === id){
+            if (range.id === id){
                 return range;
             }
         }
@@ -285,8 +288,6 @@ module.exports = M = <ManifestoStatic>{
 
         for (var i = 0; i < this.getTotalCanvases(); i++) {
             var canvas: m.Canvas = this.getCanvasByIndex(i);
-
-            if (!canvas.ranges) continue;
 
             for (var j = 0; j < canvas.ranges.length; j++) {
                 var range: m.Range = canvas.ranges[j];
@@ -300,6 +301,7 @@ module.exports = M = <ManifestoStatic>{
         return null;
     },
 
+    // todo: is this needed?
     getSeeAlso(): any {
         return this.manifest.seeAlso;
     },
@@ -331,7 +333,7 @@ module.exports = M = <ManifestoStatic>{
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
 
-                if (canvas["@id"] === sequence.startCanvas) return i;
+                if (canvas.id === sequence.startCanvas) return i;
             }
         }
 
@@ -339,6 +341,7 @@ module.exports = M = <ManifestoStatic>{
         return 0;
     },
 
+    // todo: is this needed?
     getTitle(): string {
         return this.manifest.label;
     },
@@ -378,9 +381,9 @@ module.exports = M = <ManifestoStatic>{
         var uri;
 
         if (canvas.resources){
-            uri = canvas.resources[0].resource.service['@id'];
+            uri = canvas.resources[0].resource.service.id;
         } else if (canvas.images && canvas.images[0].resource.service){
-            uri = canvas.images[0].resource.service['@id'];
+            uri = canvas.images[0].resource.service.id;
         } else {
             return null;
         }
@@ -406,7 +409,6 @@ module.exports = M = <ManifestoStatic>{
 
     isLastCanvas: function(canvasIndex?: number): boolean {
         if (_.isUndefined(canvasIndex)) canvasIndex = this.canvasIndex;
-        var test = String.format("{0}", "test");
         return canvasIndex === this.getTotalCanvases() - 1;
     },
 

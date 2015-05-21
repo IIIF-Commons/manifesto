@@ -32,8 +32,8 @@ interface ManifestoStatic {
     manifest: Manifesto.Manifest;
     originalManifest: any;
     sequenceIndex: number;
-    load: (manifestUri: string, callback: (manifest: any) => void) => void;
-    parse: (manifest: any) => Manifesto.Manifest;
+    load: (manifestUri: string, callback: (manifest: string) => void) => void;
+    parse: (manifest: string) => Manifesto.Manifest;
     getAttribution(): string;
     getCanvasById(id: string): Manifesto.Canvas;
     getCanvasByIndex(canvasIndex: number): Manifesto.Canvas;
@@ -73,6 +73,7 @@ declare module Manifesto {
     class Range implements JsonLD.resource {
         id: string;
         canvases: any[];
+        label: string;
         path: string;
         parentRange: Range;
         ranges: Range[];
@@ -88,14 +89,18 @@ declare module Manifesto {
         canvases: Canvas[];
     }
 }
+declare var jmespath: any;
 declare module Manifesto {
+    class Deserialiser {
+        static manifest: Manifest;
+        static originalManifest: any;
+        static parse(manifest: string): Manifest;
+        static parseSequences(): void;
+        static parseCanvases(sequence: any): Canvas[];
+        static parseRanges(r: any, path: string, parentRange?: Range): void;
+        static getCanvasById(id: string): Canvas;
+    }
     class Serialiser {
-        static deserialised: Manifest;
-        static deserialise(manifest: any): Manifest;
-        static deserialiseSequences(manifest: any): void;
-        static deserialiseCanvases(s: any): Canvas[];
-        static getRootRange(manifest: any): Range;
-        static deserialiseRanges(range: Range, path: string): void;
         static serialise(manifest: Manifest): string;
     }
 }
