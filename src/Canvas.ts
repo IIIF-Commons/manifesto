@@ -8,7 +8,7 @@ module Manifesto {
         ranges: Range[] = [];
         width: number;
         getRange() {
-            return M.getCanvasRange(this);
+            //return M.getCanvasRange(this);
         }
     }
 }

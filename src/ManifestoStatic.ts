@@ -1,7 +1,5 @@
-import RenderingFormat = require("./RenderingFormat");
-import ServiceProfile = require("./ServiceProfile");
-
-declare var M: ManifestoStatic;
+//
+//declare var M: ManifestoStatic;
 
 interface ManifestoStatic {
 
@@ -38,9 +36,9 @@ interface ManifestoStatic {
     getRangeByCanvasIndex(canvasIndex: number): Manifesto.Range;
     getRangeById(id: string): Manifesto.Range;
     getRangeByPath(path: string): Manifesto.Range;
-    getRendering(resource: any, format: RenderingFormat): Manifesto.Rendering;
+    getRendering(resource: any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
     getSeeAlso(): any;
-    getService(resource: any, profile: ServiceProfile): Manifesto.Service;
+    getService(resource: any, profile: Manifesto.ServiceProfile): Manifesto.Service;
     getStartCanvasIndex(): number;
     getTitle(): string;
     getTotalCanvases(): number;
