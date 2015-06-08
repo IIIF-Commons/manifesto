@@ -21,7 +21,6 @@
   "homepage": "https://github.com/edsilv/manifesto",
   "devDependencies": {
     "chai": "^2.3.0",
-    "deamdify": "^0.1.1",
     "del": "^1.1.1",
     "extensions": "git://github.com/edsilv/extensions.git",
     "gulp": "^3.8.11",
