@@ -45,15 +45,7 @@ var url = _dereq_("url");
 var path = _dereq_("path");
 var _ = _dereq_("lodash");
 var m = Manifesto;
-//declare var M: ManifestoStatic;
 module.exports = {
-    //// todo: should manifesto have sequenceIndex, canvasIndex, locale, or should state be managed by the consuming application?
-    //canvasIndex: 0,
-    //defaultLabel: '-',
-    //locale: "en-GB",
-    //manifest: null,
-    //originalManifest: null,
-    //sequenceIndex: 0,
     load: function (manifestUri, callback) {
         var u = url.parse(manifestUri);
         var fetch = http.request({
@@ -74,8 +66,7 @@ module.exports = {
         fetch.end();
     },
     parse: function (manifest) {
-        this.originalManifest = manifest;
-        return this.manifest = m.Deserialiser.parse(this.originalManifest);
+        return m.Deserialiser.parse(manifest);
     }
 };
 var Manifesto;

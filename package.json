@@ -1,6 +1,6 @@
 {
   "name": "manifesto",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Manipulate IIIF Manifests",
   "main": "dist/manifesto.js",
   "scripts": {
