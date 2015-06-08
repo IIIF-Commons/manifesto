@@ -8,5 +8,7 @@ module Manifesto {
         structures: Range[] = [];
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
+
+        // todo: helper methods go here?
     }
 }

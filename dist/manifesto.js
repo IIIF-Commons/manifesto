@@ -45,8 +45,15 @@ var path = require("path");
 var _ = require("lodash");
 var m = Manifesto;
 //declare var M: ManifestoStatic;
-module.exports = function () {
-    var load = function (manifestUri, callback) {
+module.exports = {
+    //// todo: should manifesto have sequenceIndex, canvasIndex, locale, or should state be managed by the consuming application?
+    //canvasIndex: 0,
+    //defaultLabel: '-',
+    //locale: "en-GB",
+    //manifest: null,
+    //originalManifest: null,
+    //sequenceIndex: 0,
+    load: function (manifestUri, callback) {
         var u = url.parse(manifestUri);
         var fetch = http.request({
             host: u.hostname,
@@ -64,14 +71,12 @@ module.exports = function () {
             });
         });
         fetch.end();
-    };
-    var parse = function (manifest) {
+    },
+    parse: function (manifest) {
         this.originalManifest = manifest;
         return this.manifest = m.Deserialiser.parse(this.originalManifest);
-    };
+    }
 };
-//
-//declare var M: ManifestoStatic;
 var Manifesto;
 (function (Manifesto) {
     var Range = (function () {

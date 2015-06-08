@@ -65,10 +65,9 @@ gulp.task('build', function() {
 
 gulp.task('browserify', function (cb) {
     return gulp.src(config.browserifySrc)
-        //.pipe(browserify({
-        //    standalone: config.browserifyStandalone
-        //}))
-        .pipe(browserify())
+        .pipe(browserify({
+            standalone: config.browserifyStandalone
+        }))
         .pipe(rename(config.browserifyOut))
         .pipe(gulp.dest(config.dist));
 });
