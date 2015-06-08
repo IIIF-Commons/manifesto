@@ -2,11 +2,11 @@
 module Manifesto {
     export class Range implements JsonLD.resource {
         id: string;
-        canvases: any[]; // todo: can be a string or a canvas
+        canvases: any[] = [];
         label: string;
         path: string;
         parentRange: Range;
-        ranges: Range[];
+        ranges: Range[] = [];
         viewingHint: ViewingHint;
         viewingDirection: ViewingDirection;
     }
