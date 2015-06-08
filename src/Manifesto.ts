@@ -127,6 +127,11 @@ module.exports = M = <ManifestoStatic>{
         return null;
     },
 
+    getCanvasType: function(canvas?: m.Canvas): m.CanvasType {
+        if (!canvas) canvas = this.getCurrentCanvas();
+        return canvas.type;
+    },
+
     getCurrentCanvas: function(): m.Canvas {
         return this.getCanvasByIndex(this.canvasIndex);
     },

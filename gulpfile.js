@@ -1,14 +1,39 @@
-var gulp = require('gulp'),
-    mocha = require('gulp-mocha'),
-    ts = require('gulp-typescript'),
+var argv = require('yargs').argv,
+    bump = require('gulp-bump'),
     browserify = require('gulp-browserify'),
-    rename = require('gulp-rename'),
-    merge = require('merge2'),
+    Config = require('./gulpfile.config'),
     del = require('del'),
+    exec = require('child_process').exec,
+    merge = require('merge2'),
+    mocha = require('gulp-mocha'),
+    rename = require('gulp-rename'),
     runSequence = require('run-sequence'),
-    Config = require('./gulpfile.config');
+    ts = require('gulp-typescript'),
+    gulp = require('gulp');
 
 var config = new Config();
+
+gulp.task('bump', function(){
+    var bumpType = argv.type || 'patch'; // major.minor.patch
+
+    gulp.src(['./bower.json', './package.json'])
+        .pipe(bump({type: bumpType}))
+        .pipe(gulp.dest('./'));
+});
+
+// requires global gulp-cli
+gulp.task('bump:minor', function(cb){
+    exec('gulp bump --type minor', function (err, stdout, stderr) {
+        cb();
+    });
+});
+
+// requires global gulp-cli
+gulp.task('bump:major', function(cb){
+    exec('gulp bump --type major', function (err, stdout, stderr) {
+        cb();
+    });
+});
 
 gulp.task('test', function () {
     return gulp.src(config.test, {read: false})
@@ -38,7 +63,7 @@ gulp.task('build', function() {
     ]);
 });
 
-gulp.task('browserify', function (callback) {
+gulp.task('browserify', function (cb) {
     return gulp.src(config.browserifySrc)
         .pipe(browserify({
             standalone: config.browserifyStandalone
@@ -47,6 +72,6 @@ gulp.task('browserify', function (callback) {
         .pipe(gulp.dest(config.dist));
 });
 
-gulp.task('default', function(callback) {
-    runSequence('clean:dist', 'build', 'browserify', 'test', callback);
+gulp.task('default', function(cb) {
+    runSequence('clean:dist', 'build', 'bump', 'browserify', 'test', cb);
 });

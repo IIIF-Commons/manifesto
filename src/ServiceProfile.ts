@@ -1,4 +1,3 @@
-
 module Manifesto {
     export class ServiceProfile {
         static autoComplete = new ServiceProfile("http://iiif.io/api/autocomplete/1/");

@@ -1,12 +1,12 @@
-class RenderingFormat {
-    static pdf = new RenderingFormat("application/pdf");
+module Manifesto {
+    export class RenderingFormat {
+        static pdf = new RenderingFormat("application/pdf");
 
-    constructor(public value: string) {
-    }
+        constructor(public value:string) {
+        }
 
-    toString() {
-        return this.value;
+        toString() {
+            return this.value;
+        }
     }
 }
-
-export = RenderingFormat;

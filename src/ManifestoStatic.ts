@@ -23,6 +23,7 @@ interface ManifestoStatic {
     getCanvasIndexById(id: string): number;
     getCanvasIndexByLabel(label: string): number;
     getCanvasRange(canvas: Manifesto.Canvas): Manifesto.Range;
+    getCanvasType(canvas?: Manifesto.Canvas): Manifesto.CanvasType;
     getCurrentCanvas(): Manifesto.Canvas;
     //getCurrentManifest(): IManifest; todo pending collections support
     getCurrentSequence(): Manifesto.Sequence;
