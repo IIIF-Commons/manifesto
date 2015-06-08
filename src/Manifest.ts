@@ -1,18 +1,29 @@
 
 module Manifesto {
-    export class Manifest implements JsonLD.resource {
-        id: string;
-        label: string | any[]; // todo: define in jsonld.d.ts
-        rootRange: Range;
-        sequences: Sequence[] = [];
-        structures: Range[] = [];
-        viewingDirection: ViewingDirection;
-        viewingHint: ViewingHint;
+    export class Manifest {
+
+        public jsonld: any;
+
+        //private _id: string;
+        //private _label: string;
+        private _rootRange: Range;
+        public sequences: Sequence[] = [];
+        public structures: Range[] = [];
+        //private _viewingDirection: ViewingDirection;
+        //private _viewingHint: ViewingHint;
 
         //canvasIndex: 0,
         //defaultLabel: '-',
-        //locale: "en-GB",
+        public locale: string = "en-GB";
         //sequenceIndex: 0,
+
+        constructor(jsonld: any) {
+            this.jsonld = jsonld;
+        }
+
+        getLabel(): string {
+            return this.getLocalisedValue(this.jsonld.label);
+        }
 
         //getAttribution: function(): string {
         //    return <string>this.getLocalisedValue(this.manifest.attribution);
@@ -131,39 +142,39 @@ module Manifesto {
         //    return this.getTotalCanvases() - 1;
         //},
         //
-        //// todo: this shouldn't use jsonld values
-        //getLocalisedValue: function(prop: any, locale?: string): string {
-        //
-        //    if (!_.isArray(prop)){
-        //        return prop;
-        //    }
-        //
-        //    if (!locale) locale = this.locale;
-        //
-        //    // test for exact match
-        //    for (var i = 0; i < prop.length; i++){
-        //        var value = prop[i];
-        //        var language = value['@language'];
-        //
-        //        if (locale === language){
-        //            return <string>value['@value'];
-        //        }
-        //    }
-        //
-        //    // test for inexact match
-        //    var match = locale.substr(0, locale.indexOf('-'));
-        //
-        //    for (var i = 0; i < prop.length; i++){
-        //        var value = prop[i];
-        //        var language = value['@language'];
-        //
-        //        if (language === match){
-        //            return <string>value['@value'];
-        //        }
-        //    }
-        //
-        //    return null;
-        //},
+
+        getLocalisedValue(prop: any, locale?: string): string {
+
+            if (!_.isArray(prop)){
+                return prop;
+            }
+
+            if (!locale) locale = this.locale;
+
+            // test for exact match
+            for (var i = 0; i < prop.length; i++){
+                var value = prop[i];
+                var language = value['@language'];
+
+                if (locale === language){
+                    return <string>value['@value'];
+                }
+            }
+
+            // test for inexact match
+            var match = locale.substr(0, locale.indexOf('-'));
+
+            for (var i = 0; i < prop.length; i++){
+                var value = prop[i];
+                var language = value['@language'];
+
+                if (language === match){
+                    return <string>value['@value'];
+                }
+            }
+
+            return null;
+        }
         //
         //getLogo(): string {
         //    return this.manifest.logo;

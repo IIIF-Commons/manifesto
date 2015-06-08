@@ -1,6 +1,6 @@
 
 module Manifesto {
-    export class Sequence implements JsonLD.resource {
+    export class Sequence {
         id: string;
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;

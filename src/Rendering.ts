@@ -1,6 +1,6 @@
 
 module Manifesto {
-    export class Rendering implements JsonLD.resource {
+    export class Rendering {
         id: string;
     }
 }

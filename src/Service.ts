@@ -1,6 +1,6 @@
 
 module Manifesto {
-    export class Service implements JsonLD.resource {
+    export class Service {
         id: string;
     }
 }

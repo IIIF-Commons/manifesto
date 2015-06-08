@@ -54,7 +54,8 @@ gulp.task('build', function() {
             noExternalResolve: true,
             noLib: false,
             module: 'commonjs',
-            out: config.tsOut
+            out: config.tsOut,
+            target: config.tsTarget
         }));
 
     return merge([

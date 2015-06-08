@@ -1,5 +1,5 @@
 declare module Manifesto {
-    class Canvas implements JsonLD.resource {
+    class Canvas {
         id: string;
         type: CanvasType;
         height: number;
@@ -25,14 +25,15 @@ interface IManifesto {
     parse: (manifest: string) => Manifesto.Manifest;
 }
 declare module Manifesto {
-    class Manifest implements JsonLD.resource {
-        id: string;
-        label: string | any[];
-        rootRange: Range;
+    class Manifest {
+        jsonld: any;
+        private _rootRange;
         sequences: Sequence[];
         structures: Range[];
-        viewingDirection: ViewingDirection;
-        viewingHint: ViewingHint;
+        locale: string;
+        constructor(jsonld: any);
+        getLabel(): string;
+        getLocalisedValue(prop: any, locale?: string): string;
     }
 }
 declare var http: any;
@@ -41,7 +42,7 @@ declare var path: any;
 declare var _: any;
 import m = Manifesto;
 declare module Manifesto {
-    class Range implements JsonLD.resource {
+    class Range {
         id: string;
         canvases: any[];
         label: string;
@@ -53,7 +54,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Rendering implements JsonLD.resource {
+    class Rendering {
         id: string;
     }
 }
@@ -66,7 +67,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Sequence implements JsonLD.resource {
+    class Sequence {
         id: string;
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
@@ -77,7 +78,6 @@ declare var jmespath: any;
 declare module Manifesto {
     class Deserialiser {
         static manifest: Manifest;
-        static originalManifest: any;
         static parse(manifest: string): Manifest;
         static parseSequences(): void;
         static parseCanvases(sequence: any): Canvas[];
@@ -89,7 +89,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Service implements JsonLD.resource {
+    class Service {
         id: string;
     }
 }

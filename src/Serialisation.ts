@@ -3,25 +3,23 @@ var jmespath = require('jmespath');
 module Manifesto {
     export class Deserialiser {
         static manifest: Manifest;
-        static originalManifest: any;
 
         static parse(manifest: string): Manifest {
 
-            this.manifest = new Manifest();
-            this.originalManifest = JSON.parse(manifest);
+            this.manifest = new Manifest(JSON.parse(manifest));
 
             this.parseSequences();
 
-            if (this.originalManifest.structures && this.originalManifest.structures.length) {
-                this.parseRanges(JsonUtils.getRootRange(this.originalManifest), '');
+            if (this.manifest.jsonld.structures && this.manifest.jsonld.structures.length) {
+                this.parseRanges(JsonUtils.getRootRange(this.manifest.jsonld), '');
             }
 
             return this.manifest;
         }
 
         static parseSequences(): void {
-            for (var i = 0; i < this.originalManifest.sequences.length; i++){
-                var s = this.originalManifest.sequences[i];
+            for (var i = 0; i < this.manifest.jsonld.sequences.length; i++){
+                var s = this.manifest.jsonld.sequences[i];
                 var sequence = new Sequence();
                 sequence.id = s['@id'];
                 sequence.viewingDirection = new ViewingDirection(s.viewingDirection);

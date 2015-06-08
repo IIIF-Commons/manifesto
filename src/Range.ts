@@ -1,6 +1,6 @@
 
 module Manifesto {
-    export class Range implements JsonLD.resource {
+    export class Range {
         id: string;
         canvases: any[] = [];
         label: string;

@@ -1,6 +1,6 @@
 
 module Manifesto {
-    export class Canvas implements JsonLD.resource {
+    export class Canvas {
         id: string;
         type: CanvasType;
         height: number;

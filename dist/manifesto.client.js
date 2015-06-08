@@ -32,10 +32,161 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function () {
-        function Manifest() {
+        //sequenceIndex: 0,
+        function Manifest(jsonld) {
             this.sequences = [];
             this.structures = [];
+            //private _viewingDirection: ViewingDirection;
+            //private _viewingHint: ViewingHint;
+            //canvasIndex: 0,
+            //defaultLabel: '-',
+            this.locale = "en-GB";
+            this.jsonld = jsonld;
         }
+        Manifest.prototype.getLabel = function () {
+            return this.getLocalisedValue(this.jsonld.label);
+        };
+        //getAttribution: function(): string {
+        //    return <string>this.getLocalisedValue(this.manifest.attribution);
+        //},
+        //
+        //getCanvasById: function(id: string): m.Canvas{
+        //
+        //    for (var i = 0; i < this.getTotalCanvases(); i++) {
+        //        var canvas = this.getCanvasByIndex(i);
+        //
+        //        if (canvas.id === id){
+        //            return canvas;
+        //        }
+        //    }
+        //
+        //    return null;
+        //},
+        //
+        //getCanvasByIndex: function(index: number): any {
+        //    return this.getCurrentSequence().canvases[index];
+        //},
+        //
+        //getCanvasIndexById(id: string): number {
+        //
+        //    for (var i = 0; i < this.getTotalCanvases(); i++) {
+        //        var canvas = this.getCanvasByIndex(i);
+        //
+        //        if (canvas.id === id){
+        //            return i;
+        //        }
+        //    }
+        //
+        //    return null;
+        //},
+        //
+        //getCanvasIndexByLabel: function(label: string): number {
+        //    label = label.trim();
+        //
+        //    // trim any preceding zeros.
+        //    if (_.isNumber(label)) {
+        //        label = parseInt(label, 10).toString();
+        //    }
+        //
+        //    var doublePageRegExp = /(\d*)\D+(\d*)/;
+        //    var match, regExp, regStr, labelPart1, labelPart2;
+        //
+        //    for (var i = 0; i < this.getTotalCanvases(); i++) {
+        //        var canvas: m.Canvas = this.getCanvasByIndex(i);
+        //
+        //        // check if there's a literal match
+        //        if (canvas.label === label) {
+        //            return i;
+        //        }
+        //
+        //        // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
+        //        match = doublePageRegExp.exec(label);
+        //
+        //        if (!match) continue;
+        //
+        //        labelPart1 = match[1];
+        //        labelPart2 = match[2];
+        //
+        //        if (!labelPart2) continue;
+        //
+        //        regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
+        //
+        //        regExp = new RegExp(regStr);
+        //
+        //        if (regExp.test(canvas.label)) {
+        //            return i;
+        //        }
+        //    }
+        //
+        //    return -1;
+        //},
+        //
+        //getCanvasRange: function(canvas: m.Canvas): m.Range {
+        //    // get the deepest Range that this Canvas belongs to.
+        //    if (canvas.ranges){
+        //        return canvas.ranges.last();
+        //    }
+        //
+        //    return null;
+        //},
+        //
+        //getCanvasType: function(canvas?: m.Canvas): m.CanvasType {
+        //    if (!canvas) canvas = this.getCurrentCanvas();
+        //    return canvas.type;
+        //},
+        //
+        //getCurrentCanvas: function(): m.Canvas {
+        //    return this.getCanvasByIndex(this.canvasIndex);
+        //},
+        //
+        //getCurrentSequence: function(): m.Sequence {
+        //    return this.manifest.sequences[this.sequenceIndex];
+        //},
+        //
+        //getLastCanvasLabel: function(): string {
+        //    // get the last label that isn't empty or '-'.
+        //    for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
+        //        var canvas: m.Canvas = this.getCanvasByIndex(i);
+        //
+        //        var regExp = /\d/;
+        //
+        //        if (regExp.test(canvas.label)) {
+        //            return this.getLocalisedValue(canvas.label);
+        //        }
+        //    }
+        //
+        //    // none exists, so return '-'.
+        //    return this.defaultLabel;
+        //},
+        //
+        //getLastPageIndex: function(): number {
+        //    return this.getTotalCanvases() - 1;
+        //},
+        //
+        Manifest.prototype.getLocalisedValue = function (prop, locale) {
+            if (!_.isArray(prop)) {
+                return prop;
+            }
+            if (!locale)
+                locale = this.locale;
+            for (var i = 0; i < prop.length; i++) {
+                var value = prop[i];
+                var language = value['@language'];
+                if (locale === language) {
+                    return value['@value'];
+                }
+            }
+            // test for inexact match
+            var match = locale.substr(0, locale.indexOf('-'));
+            for (var i = 0; i < prop.length; i++) {
+                var value = prop[i];
+                var language = value['@language'];
+                if (language === match) {
+                    return value['@value'];
+                }
+            }
+            return null;
+        };
         return Manifest;
     })();
     Manifesto.Manifest = Manifest;
@@ -120,17 +271,16 @@ var Manifesto;
         function Deserialiser() {
         }
         Deserialiser.parse = function (manifest) {
-            this.manifest = new Manifesto.Manifest();
-            this.originalManifest = JSON.parse(manifest);
+            this.manifest = new Manifesto.Manifest(JSON.parse(manifest));
             this.parseSequences();
-            if (this.originalManifest.structures && this.originalManifest.structures.length) {
-                this.parseRanges(JsonUtils.getRootRange(this.originalManifest), '');
+            if (this.manifest.jsonld.structures && this.manifest.jsonld.structures.length) {
+                this.parseRanges(JsonUtils.getRootRange(this.manifest.jsonld), '');
             }
             return this.manifest;
         };
         Deserialiser.parseSequences = function () {
-            for (var i = 0; i < this.originalManifest.sequences.length; i++) {
-                var s = this.originalManifest.sequences[i];
+            for (var i = 0; i < this.manifest.jsonld.sequences.length; i++) {
+                var s = this.manifest.jsonld.sequences[i];
                 var sequence = new Manifesto.Sequence();
                 sequence.id = s['@id'];
                 sequence.viewingDirection = new Manifesto.ViewingDirection(s.viewingDirection);
