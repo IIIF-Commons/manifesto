@@ -29,7 +29,7 @@ declare module Manifesto {
         jsonld: any;
         private _rootRange;
         sequences: Sequence[];
-        structures: Range[];
+        rootRange: Range;
         locale: string;
         constructor(jsonld: any);
         getLabel(): string;

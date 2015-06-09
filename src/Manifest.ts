@@ -8,7 +8,7 @@ module Manifesto {
         //private _label: string;
         private _rootRange: Range;
         public sequences: Sequence[] = [];
-        public structures: Range[] = [];
+        public rootRange: Range;
         //private _viewingDirection: ViewingDirection;
         //private _viewingHint: ViewingHint;
 

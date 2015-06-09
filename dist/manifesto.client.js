@@ -35,7 +35,6 @@ var Manifesto;
         //sequenceIndex: 0,
         function Manifest(jsonld) {
             this.sequences = [];
-            this.structures = [];
             //private _viewingDirection: ViewingDirection;
             //private _viewingHint: ViewingHint;
             //canvasIndex: 0,
@@ -304,9 +303,16 @@ var Manifesto;
         };
         Deserialiser.parseRanges = function (r, path, parentRange) {
             var range = new Manifesto.Range();
+            // if no parent range is passed, assign the new range to manifest.rootRange
+            if (!parentRange) {
+                this.manifest.rootRange = range;
+            }
+            else {
+                parentRange.ranges.push(range);
+                range.parentRange = parentRange;
+            }
             range.id = r['@id'];
             range.label = r.label;
-            range.parentRange = parentRange;
             range.path = path;
             if (r.canvases) {
                 for (var i = 0; i < r.canvases.length; i++) {

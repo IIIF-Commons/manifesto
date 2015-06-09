@@ -50,9 +50,17 @@ module Manifesto {
         static parseRanges(r: any, path: string, parentRange?: Range): void {
 
             var range: Range = new Range();
+
+            // if no parent range is passed, assign the new range to manifest.rootRange
+            if (!parentRange){
+                this.manifest.rootRange = range;
+            } else {
+                range.parentRange = parentRange;
+                parentRange.ranges.push(range);
+            }
+
             range.id = r['@id'];
             range.label = r.label;
-            range.parentRange = parentRange;
             range.path = path;
 
             if (r.canvases){
