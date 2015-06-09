@@ -1,12 +1,15 @@
 declare module Manifesto {
-    class Canvas {
+    class Canvas implements ICanvas {
         id: string;
+        jsonld: any;
+        manifest: IManifest;
+        ranges: IRange[];
         type: CanvasType;
-        height: number;
-        label: string;
-        ranges: Range[];
-        width: number;
-        getRange(): void;
+        getHeight(): number;
+        getLabel(): string;
+        getRange(): IRange;
+        getThumbUri(width: number, height: number): string;
+        getWidth(): number;
     }
 }
 declare module Manifesto {
@@ -20,20 +23,116 @@ declare module Manifesto {
         toString(): string;
     }
 }
+declare module Manifesto {
+    interface ICanvas {
+        id: string;
+        jsonld: any;
+        manifest: IManifest;
+        ranges: Range[];
+        type: CanvasType;
+        getHeight(): number;
+        getLabel(): string;
+        getRange(): IRange;
+        getThumbUri(width: number, height: number): string;
+        getWidth(): number;
+    }
+}
+declare module Manifesto {
+    interface IManifest {
+        defaultLabel: string;
+        id: string;
+        jsonld: any;
+        getAttribution(): string;
+        getLocalisedValue(prop: any, locale?: string): string;
+        getLabel(): string;
+        getLogo(): string;
+        getLicense(): string;
+        getRangeById(id: string): Manifesto.Range;
+        getRangeByPath(path: string): Manifesto.Range;
+        getRendering(resource: any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
+        getSeeAlso(): any;
+        getService(resource: any, profile: Manifesto.ServiceProfile): Manifesto.Service;
+        getTitle(): string;
+        getTotalSequences(): number;
+        isMultiSequence(): boolean;
+    }
+}
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
     parse: (manifest: string) => Manifesto.Manifest;
 }
 declare module Manifesto {
-    class Manifest {
+    interface IRange {
+        canvases: any[];
+        id: string;
         jsonld: any;
-        private _rootRange;
-        sequences: Sequence[];
-        rootRange: Range;
+        label: string;
+        manifest: Manifesto.Manifest;
+        parentRange: Range;
+        path: string;
+        ranges: Range[];
+        viewingDirection: ViewingDirection;
+        viewingHint: ViewingHint;
+        getLabel(): string;
+    }
+}
+declare module Manifesto {
+    interface ISequence {
+        id: string;
+        jsonld: any;
+        manifest: IManifest;
+        getCanvasById(id: string): ICanvas;
+        getCanvasByIndex(canvasIndex: number): ICanvas;
+        getCanvasIndexById(id: string): number;
+        getCanvasIndexByLabel(label: string): number;
+        getLastCanvasLabel(): string;
+        getLastPageIndex(): number;
+        getNextPageIndex(canvasIndex: number): number;
+        getPagedIndices(canvasIndex: number): number[];
+        getPrevPageIndex(canvasIndex: number): number;
+        getStartCanvasIndex(): number;
+        getTotalCanvases(): number;
+        getThumbs(width: number, height: number): Manifesto.Thumb[];
+        getViewingDirection(): Manifesto.ViewingDirection;
+        isCanvasIndexOutOfRange(canvasIndex: number): boolean;
+        isFirstCanvas(canvasIndex: number): boolean;
+        isLastCanvas(canvasIndex: number): boolean;
+        isMultiCanvas(): boolean;
+        isTotalCanvasesEven(): boolean;
+    }
+}
+declare module Manifesto {
+    interface IService {
+        id: string;
+        jsonld: any;
+        manifest: Manifesto.Manifest;
+    }
+}
+declare module Manifesto {
+    class Manifest implements IManifest {
+        defaultLabel: string;
+        id: string;
+        jsonld: any;
         locale: string;
+        manifest: IManifest;
+        rootRange: Range;
+        sequences: Sequence[];
         constructor(jsonld: any);
+        getAttribution(): string;
         getLabel(): string;
         getLocalisedValue(prop: any, locale?: string): string;
+        getLogo(): string;
+        getLicense(): string;
+        getRanges(): IRange[];
+        getRangeById(id: string): IRange;
+        getRangeByPath(path: string): IRange;
+        getRendering(resource: any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
+        getSeeAlso(): any;
+        getService(resource: any, profile: Manifesto.ServiceProfile): IService;
+        getSequenceByIndex(sequenceIndex: number): ISequence;
+        getTitle(): string;
+        getTotalSequences(): number;
+        isMultiSequence(): boolean;
     }
 }
 declare var http: any;
@@ -42,15 +141,18 @@ declare var path: any;
 declare var _: any;
 import m = Manifesto;
 declare module Manifesto {
-    class Range {
-        id: string;
+    class Range implements IRange {
         canvases: any[];
+        id: string;
+        jsonld: any;
         label: string;
-        path: string;
+        manifest: Manifesto.Manifest;
         parentRange: Range;
+        path: string;
         ranges: Range[];
         viewingHint: ViewingHint;
         viewingDirection: ViewingDirection;
+        getLabel(): string;
     }
 }
 declare module Manifesto {
@@ -67,11 +169,32 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Sequence {
+    class Sequence implements ISequence {
+        canvases: Canvas[];
         id: string;
+        jsonld: any;
+        manifest: IManifest;
+        startCanvas: string;
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
-        canvases: Canvas[];
+        getCanvasById(id: string): ICanvas;
+        getCanvasByIndex(canvasIndex: number): any;
+        getCanvasIndexById(id: string): number;
+        getCanvasIndexByLabel(label: string): number;
+        getLastCanvasLabel(): string;
+        getLastPageIndex(): number;
+        getNextPageIndex(canvasIndex: number, pagingEnabled?: boolean): number;
+        getPagedIndices(canvasIndex: number, pagingEnabled?: boolean): number[];
+        getPrevPageIndex(canvasIndex: number, pagingEnabled?: boolean): number;
+        getStartCanvasIndex(): number;
+        getThumbs(width: number, height?: number): Manifesto.Thumb[];
+        getTotalCanvases(): number;
+        getViewingDirection(): Manifesto.ViewingDirection;
+        isCanvasIndexOutOfRange(canvasIndex: number): boolean;
+        isFirstCanvas(canvasIndex: number): boolean;
+        isLastCanvas(canvasIndex: number): boolean;
+        isMultiCanvas(): boolean;
+        isTotalCanvasesEven(): boolean;
     }
 }
 declare var jmespath: any;

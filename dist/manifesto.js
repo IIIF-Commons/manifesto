@@ -4,8 +4,37 @@ var Manifesto;
         function Canvas() {
             this.ranges = [];
         }
+        Canvas.prototype.getHeight = function () {
+            return this.jsonld.height;
+        };
+        Canvas.prototype.getLabel = function () {
+            var regExp = /\d/;
+            if (regExp.test(this.jsonld.label)) {
+                return this.manifest.getLocalisedValue(this.jsonld.label);
+            }
+            return null;
+        };
         Canvas.prototype.getRange = function () {
-            //return M.getCanvasRange(this);
+            // get the deepest Range that this Canvas belongs to.
+            return this.ranges.last();
+        };
+        Canvas.prototype.getThumbUri = function (width, height) {
+            var uri;
+            if (this.jsonld.resources) {
+                uri = this.jsonld.resources[0].resource.service.id;
+            }
+            else if (this.jsonld.images && this.jsonld.images[0].resource.service) {
+                uri = this.jsonld.images[0].resource.service.id;
+            }
+            else {
+                return null;
+            }
+            // todo: allow region, rotation, quality, and format as parameters?
+            var tile = 'full/' + width + ',' + height + '/0/default.jpg';
+            return path.join(uri, tile);
+        };
+        Canvas.prototype.getWidth = function () {
+            return this.jsonld.width;
         };
         return Canvas;
     })();
@@ -31,136 +60,18 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function () {
-        //sequenceIndex: 0,
         function Manifest(jsonld) {
+            this.defaultLabel = "-";
+            this.locale = "en-GB"; // todo: pass in constructor?
             this.sequences = [];
-            //private _viewingDirection: ViewingDirection;
-            //private _viewingHint: ViewingHint;
-            //canvasIndex: 0,
-            //defaultLabel: '-',
-            this.locale = "en-GB";
             this.jsonld = jsonld;
         }
+        Manifest.prototype.getAttribution = function () {
+            return this.getLocalisedValue(this.jsonld.attribution);
+        };
         Manifest.prototype.getLabel = function () {
             return this.getLocalisedValue(this.jsonld.label);
         };
-        //getAttribution: function(): string {
-        //    return <string>this.getLocalisedValue(this.manifest.attribution);
-        //},
-        //
-        //getCanvasById: function(id: string): m.Canvas{
-        //
-        //    for (var i = 0; i < this.getTotalCanvases(); i++) {
-        //        var canvas = this.getCanvasByIndex(i);
-        //
-        //        if (canvas.id === id){
-        //            return canvas;
-        //        }
-        //    }
-        //
-        //    return null;
-        //},
-        //
-        //getCanvasByIndex: function(index: number): any {
-        //    return this.getCurrentSequence().canvases[index];
-        //},
-        //
-        //getCanvasIndexById(id: string): number {
-        //
-        //    for (var i = 0; i < this.getTotalCanvases(); i++) {
-        //        var canvas = this.getCanvasByIndex(i);
-        //
-        //        if (canvas.id === id){
-        //            return i;
-        //        }
-        //    }
-        //
-        //    return null;
-        //},
-        //
-        //getCanvasIndexByLabel: function(label: string): number {
-        //    label = label.trim();
-        //
-        //    // trim any preceding zeros.
-        //    if (_.isNumber(label)) {
-        //        label = parseInt(label, 10).toString();
-        //    }
-        //
-        //    var doublePageRegExp = /(\d*)\D+(\d*)/;
-        //    var match, regExp, regStr, labelPart1, labelPart2;
-        //
-        //    for (var i = 0; i < this.getTotalCanvases(); i++) {
-        //        var canvas: m.Canvas = this.getCanvasByIndex(i);
-        //
-        //        // check if there's a literal match
-        //        if (canvas.label === label) {
-        //            return i;
-        //        }
-        //
-        //        // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
-        //        match = doublePageRegExp.exec(label);
-        //
-        //        if (!match) continue;
-        //
-        //        labelPart1 = match[1];
-        //        labelPart2 = match[2];
-        //
-        //        if (!labelPart2) continue;
-        //
-        //        regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
-        //
-        //        regExp = new RegExp(regStr);
-        //
-        //        if (regExp.test(canvas.label)) {
-        //            return i;
-        //        }
-        //    }
-        //
-        //    return -1;
-        //},
-        //
-        //getCanvasRange: function(canvas: m.Canvas): m.Range {
-        //    // get the deepest Range that this Canvas belongs to.
-        //    if (canvas.ranges){
-        //        return canvas.ranges.last();
-        //    }
-        //
-        //    return null;
-        //},
-        //
-        //getCanvasType: function(canvas?: m.Canvas): m.CanvasType {
-        //    if (!canvas) canvas = this.getCurrentCanvas();
-        //    return canvas.type;
-        //},
-        //
-        //getCurrentCanvas: function(): m.Canvas {
-        //    return this.getCanvasByIndex(this.canvasIndex);
-        //},
-        //
-        //getCurrentSequence: function(): m.Sequence {
-        //    return this.manifest.sequences[this.sequenceIndex];
-        //},
-        //
-        //getLastCanvasLabel: function(): string {
-        //    // get the last label that isn't empty or '-'.
-        //    for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
-        //        var canvas: m.Canvas = this.getCanvasByIndex(i);
-        //
-        //        var regExp = /\d/;
-        //
-        //        if (regExp.test(canvas.label)) {
-        //            return this.getLocalisedValue(canvas.label);
-        //        }
-        //    }
-        //
-        //    // none exists, so return '-'.
-        //    return this.defaultLabel;
-        //},
-        //
-        //getLastPageIndex: function(): number {
-        //    return this.getTotalCanvases() - 1;
-        //},
-        //
         Manifest.prototype.getLocalisedValue = function (prop, locale) {
             if (!_.isArray(prop)) {
                 return prop;
@@ -184,6 +95,84 @@ var Manifesto;
                 }
             }
             return null;
+        };
+        Manifest.prototype.getLogo = function () {
+            return this.jsonld.logo;
+        };
+        Manifest.prototype.getLicense = function () {
+            return this.getLocalisedValue(this.jsonld.license);
+        };
+        Manifest.prototype.getRanges = function () {
+            // todo: use exjs to flatten tree
+            return null;
+        };
+        Manifest.prototype.getRangeById = function (id) {
+            var ranges = this.getRanges();
+            for (var i = 0; i < ranges.length; i++) {
+                var range = ranges[i];
+                if (range.id === id) {
+                    return range;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getRangeByPath = function (path) {
+            var ranges = this.getRanges();
+            for (var i = 0; i < ranges.length; i++) {
+                var range = ranges[i];
+                if (range.path === path) {
+                    return range;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getRendering = function (resource, format) {
+            if (!resource.rendering)
+                return null;
+            var renderings = resource.rendering;
+            if (!_.isArray(renderings)) {
+                renderings = [renderings];
+            }
+            for (var i = 0; i < renderings.length; i++) {
+                var rendering = renderings[i];
+                if (rendering.format && rendering.format === format.toString()) {
+                    return rendering;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getSeeAlso = function () {
+            return this.getLocalisedValue(this.jsonld.seeAlso);
+        };
+        Manifest.prototype.getService = function (resource, profile) {
+            if (!resource.service)
+                return null;
+            if (_.isArray(resource.service)) {
+                for (var i = 0; i < resource.service.length; i++) {
+                    var service = resource.service[i];
+                    if (service.profile && service.profile === profile) {
+                        return service;
+                    }
+                }
+            }
+            else {
+                if (resource.service.profile && resource.service.profile === profile) {
+                    return resource.service;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
+            return this.sequences[sequenceIndex];
+        };
+        Manifest.prototype.getTitle = function () {
+            return this.getLocalisedValue(this.jsonld.label);
+        };
+        Manifest.prototype.getTotalSequences = function () {
+            return this.sequences.length;
+        };
+        Manifest.prototype.isMultiSequence = function () {
+            return this.getTotalSequences() > 1;
         };
         return Manifest;
     })();
@@ -225,6 +214,13 @@ var Manifesto;
             this.canvases = [];
             this.ranges = [];
         }
+        Range.prototype.getLabel = function () {
+            var regExp = /\d/;
+            if (regExp.test(this.jsonld.label)) {
+                return this.manifest.getLocalisedValue(this.jsonld.label);
+            }
+            return null;
+        };
         return Range;
     })();
     Manifesto.Range = Range;
@@ -258,6 +254,172 @@ var Manifesto;
         function Sequence() {
             this.canvases = [];
         }
+        Sequence.prototype.getCanvasById = function (id) {
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                if (canvas.id === id) {
+                    return canvas;
+                }
+            }
+            return null;
+        };
+        Sequence.prototype.getCanvasByIndex = function (canvasIndex) {
+            return this.canvases[canvasIndex];
+        };
+        Sequence.prototype.getCanvasIndexById = function (id) {
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                if (canvas.id === id) {
+                    return i;
+                }
+            }
+            return null;
+        };
+        Sequence.prototype.getCanvasIndexByLabel = function (label) {
+            label = label.trim();
+            // trim any preceding zeros.
+            if (_.isNumber(label)) {
+                label = parseInt(label, 10).toString();
+            }
+            var doublePageRegExp = /(\d*)\D+(\d*)/;
+            var match, regExp, regStr, labelPart1, labelPart2;
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                // check if there's a literal match
+                if (canvas.getLabel() === label) {
+                    return i;
+                }
+                // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
+                match = doublePageRegExp.exec(label);
+                if (!match)
+                    continue;
+                labelPart1 = match[1];
+                labelPart2 = match[2];
+                if (!labelPart2)
+                    continue;
+                regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
+                regExp = new RegExp(regStr);
+                if (regExp.test(canvas.getLabel())) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+        Sequence.prototype.getLastCanvasLabel = function () {
+            for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
+                var canvas = this.getCanvasByIndex(i);
+                return canvas.getLabel();
+            }
+            // none exists, so return '-'.
+            return this.manifest.defaultLabel;
+        };
+        Sequence.prototype.getLastPageIndex = function () {
+            return this.getTotalCanvases() - 1;
+        };
+        Sequence.prototype.getNextPageIndex = function (canvasIndex, pagingEnabled) {
+            var index;
+            if (pagingEnabled) {
+                var indices = this.getPagedIndices(canvasIndex);
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                    index = indices[0] + 1;
+                }
+                else {
+                    index = indices.last() + 1;
+                }
+            }
+            else {
+                index = canvasIndex + 1;
+            }
+            if (index > this.getLastPageIndex()) {
+                return -1;
+            }
+            return index;
+        };
+        Sequence.prototype.getPagedIndices = function (canvasIndex, pagingEnabled) {
+            var indices = [];
+            if (!pagingEnabled) {
+                indices.push(canvasIndex);
+            }
+            else {
+                if (this.isFirstCanvas(canvasIndex) || this.isLastCanvas(canvasIndex)) {
+                    indices = [canvasIndex];
+                }
+                else if (canvasIndex % 2) {
+                    indices = [canvasIndex, canvasIndex + 1];
+                }
+                else {
+                    indices = [canvasIndex - 1, canvasIndex];
+                }
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                    indices = indices.reverse();
+                }
+            }
+            return indices;
+        };
+        Sequence.prototype.getPrevPageIndex = function (canvasIndex, pagingEnabled) {
+            var index;
+            if (pagingEnabled) {
+                var indices = this.getPagedIndices(canvasIndex);
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                    index = indices.last() - 1;
+                }
+                else {
+                    index = indices[0] - 1;
+                }
+            }
+            else {
+                index = canvasIndex - 1;
+            }
+            return index;
+        };
+        Sequence.prototype.getStartCanvasIndex = function () {
+            if (this.startCanvas) {
+                for (var i = 0; i < this.getTotalCanvases(); i++) {
+                    var canvas = this.getCanvasByIndex(i);
+                    if (canvas.id === this.startCanvas)
+                        return i;
+                }
+            }
+            // default to first canvas.
+            return 0;
+        };
+        Sequence.prototype.getThumbs = function (width, height) {
+            var thumbs = [];
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                if (!_.isNumber(height)) {
+                    var heightRatio = canvas.getHeight() / canvas.getWidth();
+                    if (heightRatio) {
+                        height = Math.floor(width * heightRatio);
+                    }
+                }
+                var uri = canvas.getThumbUri(width, height);
+                thumbs.push(new Manifesto.Thumb(i, uri, this.manifest.getLocalisedValue(canvas.getLabel()), width, height, true));
+            }
+            return thumbs;
+        };
+        Sequence.prototype.getTotalCanvases = function () {
+            return this.canvases.length;
+        };
+        Sequence.prototype.getViewingDirection = function () {
+            return this.viewingDirection || Manifesto.ViewingDirection.leftToRight;
+        };
+        Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
+            return canvasIndex > this.getTotalCanvases() - 1;
+        };
+        Sequence.prototype.isFirstCanvas = function (canvasIndex) {
+            return canvasIndex === 0;
+        };
+        Sequence.prototype.isLastCanvas = function (canvasIndex) {
+            return canvasIndex === this.getTotalCanvases() - 1;
+        };
+        Sequence.prototype.isMultiCanvas = function () {
+            return this.getTotalCanvases() > 1;
+        };
+        // checks if the number of canvases is even - therefore has a front and back cover
+        Sequence.prototype.isTotalCanvasesEven = function () {
+            return this.getTotalCanvases() % 2 === 0;
+        };
         return Sequence;
     })();
     Manifesto.Sequence = Sequence;
@@ -281,6 +443,8 @@ var Manifesto;
                 var s = this.manifest.jsonld.sequences[i];
                 var sequence = new Manifesto.Sequence();
                 sequence.id = s['@id'];
+                sequence.jsonld = s;
+                sequence.manifest = this.manifest;
                 sequence.viewingDirection = new Manifesto.ViewingDirection(s.viewingDirection);
                 sequence.viewingHint = new Manifesto.ViewingHint(s.viewingHint);
                 sequence.canvases = this.parseCanvases(s);
@@ -293,9 +457,8 @@ var Manifesto;
                 var c = sequence.canvases[i];
                 var canvas = new Manifesto.Canvas();
                 canvas.id = c['@id'];
-                canvas.height = c.height;
-                canvas.label = c.label;
-                canvas.width = c.width;
+                canvas.jsonld = c;
+                canvas.manifest = this.manifest;
                 canvases.push(canvas);
             }
             return canvases;
@@ -307,11 +470,12 @@ var Manifesto;
                 this.manifest.rootRange = range;
             }
             else {
-                parentRange.ranges.push(range);
                 range.parentRange = parentRange;
+                parentRange.ranges.push(range);
             }
             range.id = r['@id'];
-            range.label = r.label;
+            range.jsonld = r;
+            range.manifest = this.manifest;
             range.path = path;
             if (r.canvases) {
                 for (var i = 0; i < r.canvases.length; i++) {

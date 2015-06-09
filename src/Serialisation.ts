@@ -22,6 +22,8 @@ module Manifesto {
                 var s = this.manifest.jsonld.sequences[i];
                 var sequence = new Sequence();
                 sequence.id = s['@id'];
+                sequence.jsonld = s;
+                sequence.manifest = this.manifest;
                 sequence.viewingDirection = new ViewingDirection(s.viewingDirection);
                 sequence.viewingHint = new ViewingHint(s.viewingHint);
                 sequence.canvases = this.parseCanvases(s);
@@ -37,9 +39,8 @@ module Manifesto {
 
                 var canvas: Canvas = new Canvas();
                 canvas.id = c['@id'];
-                canvas.height = c.height;
-                canvas.label = c.label;
-                canvas.width = c.width;
+                canvas.jsonld = c;
+                canvas.manifest = this.manifest;
 
                 canvases.push(canvas);
             }
@@ -60,7 +61,8 @@ module Manifesto {
             }
 
             range.id = r['@id'];
-            range.label = r.label;
+            range.jsonld = r;
+            range.manifest = this.manifest;
             range.path = path;
 
             if (r.canvases){
