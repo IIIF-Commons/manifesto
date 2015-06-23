@@ -1,28 +1,29 @@
 {
-  "name": "manifesto",
-  "version": "0.0.24",
-  "homepage": "https://github.com/edsilv/manifesto",
-  "authors": [
-    "edsilv <e.silverton@gmail.com>"
-  ],
-  "description": "IIIF Presentation API utility library for client and server",
-  "main": "/dist/manifesto.js",
-  "moduleType": [
-    "globals"
-  ],
-  "keywords": [
-    "IIIF"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "extensions": "edsilv/extensions",
-    "jmespath.js": "~0.12.0"
-  }
+    "name": "manifesto",
+    "version": "0.0.25",
+    "homepage": "https://github.com/edsilv/manifesto",
+    "authors": [
+        "edsilv <e.silverton@gmail.com>"
+    ],
+    "description": "IIIF Presentation API utility library for client and server",
+    "main": "/dist/manifesto.js",
+    "moduleType": [
+        "globals"
+    ],
+    "keywords": [
+        "IIIF"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "exjs": "BSick7/exjs",
+        "extensions": "edsilv/extensions",
+        "jmespath.js": "~0.12.0"
+    }
 }

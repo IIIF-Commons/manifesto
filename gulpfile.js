@@ -7,33 +7,13 @@ var argv = require('yargs').argv,
     merge = require('merge2'),
     mocha = require('gulp-mocha'),
     rename = require('gulp-rename'),
+    requireDir = require('require-dir'),
     runSequence = require('run-sequence'),
+    tasks = requireDir('./tasks'),
     ts = require('gulp-typescript'),
     gulp = require('gulp');
 
 var config = new Config();
-
-gulp.task('bump', function(){
-    var bumpType = argv.type || 'patch'; // major.minor.patch
-
-    gulp.src(['./bower.json', './package.json'])
-        .pipe(bump({type: bumpType}))
-        .pipe(gulp.dest('./'));
-});
-
-// requires global gulp-cli
-gulp.task('bump:minor', function(cb){
-    exec('gulp bump --type minor', function (err, stdout, stderr) {
-        cb();
-    });
-});
-
-// requires global gulp-cli
-gulp.task('bump:major', function(cb){
-    exec('gulp bump --type major', function (err, stdout, stderr) {
-        cb();
-    });
-});
 
 gulp.task('test', function () {
     return gulp.src(config.test, {read: false})
