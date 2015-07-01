@@ -3,7 +3,7 @@ module Manifesto {
         id: string;
         jsonld: any;
         manifest: IManifest;
-        ranges: Range[];
+        ranges: IRange[];
         type: CanvasType;
         getHeight(): number;
         getLabel(): string;

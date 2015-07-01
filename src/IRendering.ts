@@ -1,6 +1,5 @@
-
 module Manifesto {
-    export class Rendering {
+    export interface IRendering {
         id: string;
         format: string;
     }

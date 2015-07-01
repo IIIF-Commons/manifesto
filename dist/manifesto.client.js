@@ -50,13 +50,63 @@ var Manifesto;
         CanvasType.prototype.toString = function () {
             return this.value;
         };
-        CanvasType.audio = new CanvasType("ixif:audio");
         CanvasType.canvas = new CanvasType("sc:canvas");
-        CanvasType.pdf = new CanvasType("ixif:pdf");
-        CanvasType.video = new CanvasType("ixif:video");
         return CanvasType;
     })();
     Manifesto.CanvasType = CanvasType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var Element = (function () {
+        function Element() {
+        }
+        Element.prototype.getLabel = function () {
+            var regExp = /\d/;
+            if (regExp.test(this.jsonld.label)) {
+                return this.manifest.getLocalisedValue(this.jsonld.label);
+            }
+            return null;
+        };
+        Element.prototype.getRenderings = function () {
+            var renderings = [];
+            if (this.jsonld.rendering) {
+                var rendering = this.jsonld.rendering;
+                if (!_.isArray(rendering)) {
+                    rendering = [rendering];
+                }
+                _.each(rendering, function (r) {
+                    var rend = new Manifesto.Rendering();
+                    rend.id = r['@id'];
+                    rend.format = r.format;
+                    renderings.push(rend);
+                });
+                return renderings;
+            }
+            // no renderings provided, default to element.
+            var rend = new Manifesto.Rendering();
+            rend.id = this.jsonld['@id'];
+            rend.format = this.jsonld.format;
+            return [rend];
+        };
+        return Element;
+    })();
+    Manifesto.Element = Element;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ElementType = (function () {
+        function ElementType(value) {
+            this.value = value;
+        }
+        ElementType.prototype.toString = function () {
+            return this.value;
+        };
+        ElementType.document = new Manifesto.CanvasType("foaf:Document");
+        ElementType.movingimage = new Manifesto.CanvasType("dctypes:MovingImage");
+        ElementType.sound = new Manifesto.CanvasType("dctypes:Sound");
+        return ElementType;
+    })();
+    Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {

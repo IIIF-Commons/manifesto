@@ -15,10 +15,27 @@ declare module Manifesto {
 declare module Manifesto {
     class CanvasType {
         value: string;
-        static audio: CanvasType;
         static canvas: CanvasType;
-        static pdf: CanvasType;
-        static video: CanvasType;
+        constructor(value: string);
+        toString(): string;
+    }
+}
+declare module Manifesto {
+    class Element implements IElement {
+        id: string;
+        jsonld: any;
+        manifest: IManifest;
+        type: ElementType;
+        getLabel(): string;
+        getRenderings(): IRendering[];
+    }
+}
+declare module Manifesto {
+    class ElementType {
+        value: string;
+        static document: CanvasType;
+        static movingimage: CanvasType;
+        static sound: CanvasType;
         constructor(value: string);
         toString(): string;
     }
@@ -28,13 +45,23 @@ declare module Manifesto {
         id: string;
         jsonld: any;
         manifest: IManifest;
-        ranges: Range[];
+        ranges: IRange[];
         type: CanvasType;
         getHeight(): number;
         getLabel(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
         getWidth(): number;
+    }
+}
+declare module Manifesto {
+    interface IElement {
+        id: string;
+        jsonld: any;
+        manifest: IManifest;
+        type: ElementType;
+        getLabel(): string;
+        getRenderings(): IRendering[];
     }
 }
 declare module Manifesto {
@@ -74,6 +101,12 @@ declare module Manifesto {
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
         getLabel(): string;
+    }
+}
+declare module Manifesto {
+    interface IRendering {
+        id: string;
+        format: string;
     }
 }
 declare module Manifesto {
@@ -158,6 +191,7 @@ declare module Manifesto {
 declare module Manifesto {
     class Rendering {
         id: string;
+        format: string;
     }
 }
 declare module Manifesto {
