@@ -254,8 +254,11 @@ declare module Manifesto {
     class ServiceProfile {
         value: string;
         static autoComplete: ServiceProfile;
+        static login: ServiceProfile;
+        static logout: ServiceProfile;
         static otherManifestations: ServiceProfile;
         static searchWithin: ServiceProfile;
+        static token: ServiceProfile;
         constructor(value: string);
         toString(): string;
     }
