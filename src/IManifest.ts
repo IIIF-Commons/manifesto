@@ -8,9 +8,9 @@ module Manifesto {
         getLicense(): string;
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: any, format: Manifesto.RenderingFormat): IRendering;
+        getRendering(resource: any, format: RenderingFormat): IRendering;
         getSeeAlso(): any;
-        getService(resource: any, profile: Manifesto.ServiceProfile): IService;
+        getService(resource: any, profile: ServiceProfile): IService;
         getTitle(): string;
         getTotalSequences(): number;
         isMultiSequence(): boolean;

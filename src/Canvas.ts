@@ -1,4 +1,3 @@
-
 module Manifesto {
     export class Canvas implements ICanvas{
         id: string;

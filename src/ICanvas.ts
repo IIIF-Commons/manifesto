@@ -5,7 +5,7 @@ module Manifesto {
         getHeight(): number;
         getLabel(): string;
         getRange(): IRange;
-        getThumbUri(width:number, height:number): string;
+        getThumbUri(width: number, height: number): string;
         getWidth(): number;
     }
 }
