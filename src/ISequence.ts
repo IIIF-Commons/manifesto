@@ -1,8 +1,5 @@
 module Manifesto {
-    export interface ISequence {
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    export interface ISequence extends IManifestResource {
         getCanvasById(id:string): ICanvas;
         getCanvasByIndex(canvasIndex:number): ICanvas;
         getCanvasIndexById(id:string): number;

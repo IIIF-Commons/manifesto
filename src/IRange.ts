@@ -1,10 +1,7 @@
 module Manifesto {
-    export interface IRange {
+    export interface IRange extends IManifestResource {
         canvases: any[];
-        id: string;
-        jsonld: any;
         label: string;
-        manifest: Manifesto.Manifest;
         parentRange: Range;
         path: string;
         ranges: Range[];

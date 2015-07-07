@@ -1,7 +1,5 @@
 module Manifesto {
-    export interface IService {
-        id: string;
-        jsonld: any;
-        manifest: Manifesto.Manifest;
+    export interface IService extends IManifestResource {
+
     }
 }

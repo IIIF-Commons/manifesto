@@ -1,6 +1,5 @@
 module Manifesto {
-    export interface IRendering {
-        id: string;
+    export interface IRendering extends IManifestResource {
         format: string;
     }
 }

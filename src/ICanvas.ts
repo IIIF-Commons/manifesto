@@ -1,8 +1,5 @@
 module Manifesto {
-    export interface ICanvas {
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    export interface ICanvas extends IManifestResource {
         ranges: IRange[];
         type: CanvasType;
         getHeight(): number;

@@ -1,8 +1,5 @@
 module Manifesto {
-    export interface IElement {
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    export interface IElement extends IManifestResource{
         type: ElementType;
         getLabel(): string;
         getRenderings(): IRendering[];

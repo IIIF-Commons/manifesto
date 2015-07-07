@@ -26,7 +26,7 @@ module Manifesto {
                 }
 
                 _.each(rendering, (r: any) => {
-                    var rend = new Rendering();
+                    var rend: IRendering = new Rendering();
                     rend.id = r['@id'];
                     rend.format = r.format;
                     renderings.push(rend);

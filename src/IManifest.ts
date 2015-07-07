@@ -1,18 +1,16 @@
 module Manifesto {
-    export interface IManifest {
+    export interface IManifest extends IResource {
         defaultLabel: string;
-        id: string;
-        jsonld: any;
         getAttribution(): string;
-        getLocalisedValue(prop:any, locale?: string): string;
+        getLocalisedValue(prop: any, locale?: string): string;
         getLabel(): string;
         getLogo(): string;
         getLicense(): string;
-        getRangeById(id: string): Manifesto.Range;
-        getRangeByPath(path: string): Manifesto.Range;
-        getRendering(resource:any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
+        getRangeById(id: string): IRange;
+        getRangeByPath(path: string): IRange;
+        getRendering(resource: any, format: Manifesto.RenderingFormat): IRendering;
         getSeeAlso(): any;
-        getService(resource: any, profile: Manifesto.ServiceProfile): Manifesto.Service;
+        getService(resource: any, profile: Manifesto.ServiceProfile): IService;
         getTitle(): string;
         getTotalSequences(): number;
         isMultiSequence(): boolean;

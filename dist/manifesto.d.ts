@@ -41,10 +41,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface ICanvas {
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    interface ICanvas extends IManifestResource {
         ranges: IRange[];
         type: CanvasType;
         getHeight(): number;
@@ -55,33 +52,33 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IElement {
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    interface IElement extends IManifestResource {
         type: ElementType;
         getLabel(): string;
         getRenderings(): IRendering[];
     }
 }
 declare module Manifesto {
-    interface IManifest {
+    interface IManifest extends IResource {
         defaultLabel: string;
-        id: string;
-        jsonld: any;
         getAttribution(): string;
         getLocalisedValue(prop: any, locale?: string): string;
         getLabel(): string;
         getLogo(): string;
         getLicense(): string;
-        getRangeById(id: string): Manifesto.Range;
-        getRangeByPath(path: string): Manifesto.Range;
-        getRendering(resource: any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
+        getRangeById(id: string): IRange;
+        getRangeByPath(path: string): IRange;
+        getRendering(resource: any, format: Manifesto.RenderingFormat): IRendering;
         getSeeAlso(): any;
-        getService(resource: any, profile: Manifesto.ServiceProfile): Manifesto.Service;
+        getService(resource: any, profile: Manifesto.ServiceProfile): IService;
         getTitle(): string;
         getTotalSequences(): number;
         isMultiSequence(): boolean;
+    }
+}
+declare module Manifesto {
+    interface IManifestResource extends IResource {
+        manifest: IManifest;
     }
 }
 interface IManifesto {
@@ -89,12 +86,9 @@ interface IManifesto {
     parse: (manifest: string) => Manifesto.Manifest;
 }
 declare module Manifesto {
-    interface IRange {
+    interface IRange extends IManifestResource {
         canvases: any[];
-        id: string;
-        jsonld: any;
         label: string;
-        manifest: Manifesto.Manifest;
         parentRange: Range;
         path: string;
         ranges: Range[];
@@ -104,16 +98,18 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IRendering {
-        id: string;
+    interface IRendering extends IManifestResource {
         format: string;
     }
 }
 declare module Manifesto {
-    interface ISequence {
+    interface IResource {
         id: string;
         jsonld: any;
-        manifest: IManifest;
+    }
+}
+declare module Manifesto {
+    interface ISequence extends IManifestResource {
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(canvasIndex: number): ICanvas;
         getCanvasIndexById(id: string): number;
@@ -135,10 +131,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IService {
-        id: string;
-        jsonld: any;
-        manifest: Manifesto.Manifest;
+    interface IService extends IManifestResource {
     }
 }
 declare module Manifesto {
@@ -189,9 +182,11 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Rendering {
-        id: string;
+    class Rendering implements IRendering {
         format: string;
+        id: string;
+        jsonld: any;
+        manifest: IManifest;
     }
 }
 declare module Manifesto {
