@@ -22,7 +22,7 @@
         "tests"
     ],
     "dependencies": {
-        "extensions": "edsilv/extensions",
-        "jmespath": "edsilv/jmespath.js"
+        "extensions": "git@github.com:edsilv/extensions.git",
+        "jmespath": "git@github.com:edsilv/jmespath.js.git#0.12.1"
     }
 }
