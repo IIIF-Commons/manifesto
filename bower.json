@@ -1,6 +1,6 @@
 {
     "name": "manifesto",
-    "version": "0.0.44",
+    "version": "0.0.51",
     "homepage": "https://github.com/edsilv/manifesto",
     "authors": [
         "edsilv <e.silverton@gmail.com>"
@@ -22,8 +22,7 @@
         "tests"
     ],
     "dependencies": {
-        "exjs": "BSick7/exjs",
         "extensions": "edsilv/extensions",
-        "jmespath.js": "~0.12.0"
+        "jmespath.js": "edsilv/jmespath.js"
     }
 }

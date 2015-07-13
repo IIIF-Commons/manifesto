@@ -1,6 +1,6 @@
 {
   "name": "manifesto",
-  "version": "0.0.44",
+  "version": "0.0.51",
   "description": "Manipulate IIIF Manifests",
   "main": "dist/manifesto.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "gulp-mocha": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-typescript": "^2.7.4",
+    "lodash": "^3.10.0",
     "merge2": "^0.3.5",
     "mocha": "^2.2.4",
     "require-dir": "^0.3.0",
@@ -35,9 +36,7 @@
     "yargs": "^3.10.0"
   },
   "dependencies": {
-    "exjs": "BSick7/exjs",
     "extensions": "edsilv/extensions.git",
-    "jmespath": "^0.12.0",
-    "lodash": "^3.10.0"
+    "jmespath.js": "edsilv/jmespath.js.git"
   }
 }
