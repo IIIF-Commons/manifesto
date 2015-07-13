@@ -1,6 +1,6 @@
 {
   "name": "manifesto",
-  "version": "0.0.54",
+  "version": "0.0.60",
   "description": "Manipulate IIIF Manifests",
   "main": "dist/manifesto.js",
   "scripts": {
@@ -35,8 +35,8 @@
     "yargs": "^3.10.0"
   },
   "dependencies": {
-    "extensions": "edsilv/extensions.git",
-    "jmespath": "edsilv/jmespath.js.git",
+    "extensions": "edsilv/extensions",
+    "jmespath": "edsilv/jmespath.js",
     "lodash": "^3.10.0"
   }
 }
