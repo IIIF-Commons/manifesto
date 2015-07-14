@@ -1,6 +1,6 @@
 {
     "name": "manifesto",
-    "version": "0.0.62",
+    "version": "0.0.66",
     "homepage": "https://github.com/edsilv/manifesto",
     "authors": [
         "edsilv <e.silverton@gmail.com>"
@@ -23,6 +23,6 @@
     ],
     "dependencies": {
         "extensions": "git@github.com:edsilv/extensions.git",
-        "jmespath": "git@github.com:edsilv/jmespath.js.git#0.12.2"
+        "jmespath": "git@github.com:edsilv/jmespath.js.git#~0.12.2"
     }
 }

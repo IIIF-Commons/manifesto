@@ -54,5 +54,5 @@ gulp.task('browserify', function (cb) {
 });
 
 gulp.task('default', function(cb) {
-    runSequence('clean:dist', 'build', 'bump', 'browserify', 'test', cb);
+    runSequence('bump', 'clean:dist', 'build', 'browserify', 'test', cb);
 });
