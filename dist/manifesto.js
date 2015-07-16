@@ -18,6 +18,9 @@ var Manifesto;
             // get the deepest Range that this Canvas belongs to.
             return this.ranges.last();
         };
+        // todo: if a specific thumbnail service is provided use that
+        // Prefer thumbnail service to image service if supplied and if
+        // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
             var uri;
             if (this.jsonld.resources) {
