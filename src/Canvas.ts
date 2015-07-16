@@ -25,6 +25,9 @@ module Manifesto {
             return this.ranges.last();
         }
 
+        // todo: if a specific thumbnail service is provided use that
+        // Prefer thumbnail service to image service if supplied and if
+        // the thumbnail service can provide a satisfactory size +/- x pixels.
         getThumbUri(width: number, height: number): string {
 
             var uri;
