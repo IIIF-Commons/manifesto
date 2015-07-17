@@ -1,8 +1,8 @@
 module Manifesto {
     export class ElementType {
-        static document = new CanvasType("foaf:Document");
-        static movingimage = new CanvasType("dctypes:MovingImage");
-        static sound = new CanvasType("dctypes:Sound");
+        public static document = new CanvasType("foaf:Document");
+        public static movingimage = new CanvasType("dctypes:MovingImage");
+        public static sound = new CanvasType("dctypes:Sound");
 
         constructor(public value?: string) {
 

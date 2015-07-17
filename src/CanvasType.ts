@@ -1,6 +1,6 @@
 module Manifesto {
     export class CanvasType {
-        static canvas = new CanvasType("sc:canvas");
+        public static canvas = new CanvasType("sc:canvas");
 
         constructor(public value?: string) {
         }

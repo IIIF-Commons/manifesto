@@ -1,11 +1,11 @@
 
 module Manifesto {
     export class ViewingHint {
-        static individuals = new ViewingHint("individuals");
-        static paged = new ViewingHint("paged");
-        static continuous = new ViewingHint("continuous");
-        static nonPaged = new ViewingHint("non-paged");
-        static top = new ViewingHint("top");
+        public static individuals = new ViewingHint("individuals");
+        public static paged = new ViewingHint("paged");
+        public static continuous = new ViewingHint("continuous");
+        public static nonPaged = new ViewingHint("non-paged");
+        public static top = new ViewingHint("top");
 
         constructor(public value?: string) {
         }
