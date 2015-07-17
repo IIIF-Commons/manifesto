@@ -519,6 +519,9 @@ var Manifesto;
         Sequence.prototype.isMultiCanvas = function () {
             return this.getTotalCanvases() > 1;
         };
+        Sequence.prototype.isPagingEnabled = function () {
+            return this.viewingHint && (this.viewingHint.toString() === "paged");
+        };
         // checks if the number of canvases is even - therefore has a front and back cover
         Sequence.prototype.isTotalCanvasesEven = function () {
             return this.getTotalCanvases() % 2 === 0;

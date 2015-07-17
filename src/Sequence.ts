@@ -221,6 +221,10 @@ module Manifesto {
             return this.getTotalCanvases() > 1;
         }
 
+        isPagingEnabled(): boolean{
+            return this.viewingHint && (this.viewingHint.toString() === "paged");
+        }
+
         // checks if the number of canvases is even - therefore has a front and back cover
         isTotalCanvasesEven(): boolean {
             return this.getTotalCanvases() % 2 === 0;

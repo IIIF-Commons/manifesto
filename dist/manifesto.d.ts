@@ -117,22 +117,23 @@ declare module Manifesto {
 declare module Manifesto {
     interface ISequence extends IManifestResource {
         getCanvasById(id: string): ICanvas;
-        getCanvasByIndex(canvasIndex: number): ICanvas;
+        getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
         getCanvasIndexByLabel(label: string): number;
         getLastCanvasLabel(): string;
         getLastPageIndex(): number;
-        getNextPageIndex(canvasIndex: number): number;
-        getPagedIndices(canvasIndex: number): number[];
-        getPrevPageIndex(canvasIndex: number): number;
+        getNextPageIndex(index: number): number;
+        getPagedIndices(index: number): number[];
+        getPrevPageIndex(index: number): number;
         getStartCanvasIndex(): number;
         getTotalCanvases(): number;
         getThumbs(width: number, height: number): Manifesto.Thumb[];
         getViewingDirection(): Manifesto.ViewingDirection;
-        isCanvasIndexOutOfRange(canvasIndex: number): boolean;
-        isFirstCanvas(canvasIndex: number): boolean;
-        isLastCanvas(canvasIndex: number): boolean;
+        isCanvasIndexOutOfRange(index: number): boolean;
+        isFirstCanvas(index: number): boolean;
+        isLastCanvas(index: number): boolean;
         isMultiCanvas(): boolean;
+        isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
     }
 }
@@ -236,6 +237,7 @@ declare module Manifesto {
         isFirstCanvas(canvasIndex: number): boolean;
         isLastCanvas(canvasIndex: number): boolean;
         isMultiCanvas(): boolean;
+        isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
     }
 }

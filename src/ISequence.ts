@@ -1,25 +1,23 @@
 module Manifesto {
     export interface ISequence extends IManifestResource {
-        getCanvasById(id:string): ICanvas;
-        getCanvasByIndex(canvasIndex:number): ICanvas;
-        getCanvasIndexById(id:string): number;
-        getCanvasIndexByLabel(label:string): number;
-        //getCanvasRange(canvas: ICanvas): IRange;
-        //getCanvasType(canvas: ICanvas): ICanvasType;
+        getCanvasById(id: string): ICanvas;
+        getCanvasByIndex(index: number): ICanvas;
+        getCanvasIndexById(id: string): number;
+        getCanvasIndexByLabel(label: string): number;
         getLastCanvasLabel(): string;
         getLastPageIndex(): number;
-        getNextPageIndex(canvasIndex:number): number;
-        getPagedIndices(canvasIndex:number): number[];
-        getPrevPageIndex(canvasIndex:number): number;
-        //getRangeByCanvasIndex(canvasIndex: number): IRange;
+        getNextPageIndex(index: number): number;
+        getPagedIndices(index: number): number[];
+        getPrevPageIndex(index: number): number;
         getStartCanvasIndex(): number;
         getTotalCanvases(): number;
-        getThumbs(width:number, height:number): Manifesto.Thumb[];
+        getThumbs(width: number, height: number): Manifesto.Thumb[];
         getViewingDirection(): Manifesto.ViewingDirection;
-        isCanvasIndexOutOfRange(canvasIndex:number): boolean;
-        isFirstCanvas(canvasIndex:number): boolean;
-        isLastCanvas(canvasIndex:number): boolean;
+        isCanvasIndexOutOfRange(index: number): boolean;
+        isFirstCanvas(index: number): boolean;
+        isLastCanvas(index: number): boolean;
         isMultiCanvas(): boolean;
+        isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
     }
 }
