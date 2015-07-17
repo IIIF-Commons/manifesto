@@ -309,41 +309,6 @@ var Manifesto;
     })();
     Manifesto.Manifest = Manifest;
 })(Manifesto || (Manifesto = {}));
-var http = _dereq_("http");
-var url = _dereq_("url");
-var path = _dereq_("path");
-var _ = _dereq_("lodash");
-var m = Manifesto;
-module.exports = {
-    CanvasType: new Manifesto.CanvasType(),
-    ElementType: new Manifesto.ElementType(),
-    RenderingFormat: new Manifesto.RenderingFormat(),
-    ServiceProfile: new Manifesto.ServiceProfile(),
-    ViewingDirection: new Manifesto.ViewingDirection(),
-    ViewingHint: new Manifesto.ViewingHint(),
-    load: function (manifestUri, callback) {
-        var u = url.parse(manifestUri);
-        var fetch = http.request({
-            host: u.hostname,
-            port: u.port || 80,
-            path: u.pathname,
-            method: "GET",
-            withCredentials: false
-        }, function (res) {
-            var result = "";
-            res.on('data', function (chunk) {
-                result += chunk;
-            });
-            res.on('end', function () {
-                callback(result);
-            });
-        });
-        fetch.end();
-    },
-    parse: function (manifest) {
-        return m.Deserialiser.parse(manifest);
-    }
-};
 var Manifesto;
 (function (Manifesto) {
     var Range = (function () {
@@ -781,6 +746,68 @@ var Manifesto;
     })();
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
+/// <reference path="./Canvas.ts" />
+/// <reference path="./CanvasType.ts" />
+/// <reference path="./Element.ts" />
+/// <reference path="./ElementType.ts" />
+/// <reference path="./ICanvas.ts" />
+/// <reference path="./IElement.ts" />
+/// <reference path="./IJSONLDResource.ts" />
+/// <reference path="./IManifest.ts" />
+/// <reference path="./IManifesto.ts" />
+/// <reference path="./IManifestResource.ts" />
+/// <reference path="./IRange.ts" />
+/// <reference path="./IRendering.ts" />
+/// <reference path="./ISequence.ts" />
+/// <reference path="./IService.ts" />
+/// <reference path="./Manifest.ts" />
+/// <reference path="./Range.ts" />
+/// <reference path="./Rendering.ts" />
+/// <reference path="./RenderingFormat.ts" />
+/// <reference path="./Sequence.ts" />
+/// <reference path="./Serialisation.ts" />
+/// <reference path="./Service.ts" />
+/// <reference path="./ServiceProfile.ts" />
+/// <reference path="./Thumb.ts" />
+/// <reference path="./TreeNode.ts" />
+/// <reference path="./ViewingDirection.ts" />
+/// <reference path="./ViewingHint.ts" />
+/// <reference path="./Manifesto.ts" /> 
+/// <reference path="./_references.ts" />
+var http = _dereq_("http");
+var url = _dereq_("url");
+var path = _dereq_("path");
+var _ = _dereq_("lodash");
+module.exports = {
+    CanvasType: new Manifesto.CanvasType(),
+    ElementType: new Manifesto.ElementType(),
+    RenderingFormat: new Manifesto.RenderingFormat(),
+    ServiceProfile: new Manifesto.ServiceProfile(),
+    ViewingDirection: new Manifesto.ViewingDirection(),
+    ViewingHint: new Manifesto.ViewingHint(),
+    load: function (manifestUri, cb) {
+        var u = url.parse(manifestUri);
+        var fetch = http.request({
+            host: u.hostname,
+            port: u.port || 80,
+            path: u.pathname,
+            method: "GET",
+            withCredentials: false
+        }, function (res) {
+            var result = "";
+            res.on('data', function (chunk) {
+                result += chunk;
+            });
+            res.on('end', function () {
+                cb(result);
+            });
+        });
+        fetch.end();
+    },
+    parse: function (manifest) {
+        return Manifesto.Deserialiser.parse(manifest);
+    }
+};
 
 },{"http":6,"jmespath":28,"lodash":29,"path":11,"url":25}],2:[function(_dereq_,module,exports){
 /*!

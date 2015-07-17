@@ -180,11 +180,6 @@ declare module Manifesto {
         isMultiSequence(): boolean;
     }
 }
-declare var http: any;
-declare var url: any;
-declare var path: any;
-declare var _: any;
-import m = Manifesto;
 declare module Manifesto {
     class Range implements IRange {
         canvases: any[];
@@ -327,3 +322,7 @@ declare module Manifesto {
         toString(): string;
     }
 }
+declare var http: any;
+declare var url: any;
+declare var path: any;
+declare var _: any;

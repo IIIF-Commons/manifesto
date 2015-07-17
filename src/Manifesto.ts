@@ -1,8 +1,8 @@
+/// <reference path="./_references.ts" />
 var http = require("http");
 var url = require("url");
 var path = require("path");
 var _ = require("lodash");
-import m = Manifesto;
 
 module.exports = <IManifesto>{
 
@@ -13,7 +13,7 @@ module.exports = <IManifesto>{
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
 
-    load: function (manifestUri: string, callback: (manifest: any) => void): void {
+    load: function (manifestUri: string, cb: (manifest: any) => void): void {
 
         var u = url.parse(manifestUri);
 
@@ -29,14 +29,14 @@ module.exports = <IManifesto>{
                 result += chunk;
             });
             res.on('end', () => {
-                callback(result);
+                cb(result);
             });
         });
 
         fetch.end();
     },
 
-    parse: function(manifest: string): m.Manifest {
-        return m.Deserialiser.parse(manifest);
+    parse: function(manifest: string): Manifesto.Manifest {
+        return Manifesto.Deserialiser.parse(manifest);
     }
 };
