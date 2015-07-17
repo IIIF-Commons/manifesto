@@ -225,6 +225,36 @@ var Manifesto;
         Manifest.prototype.getTotalSequences = function () {
             return this.sequences.length;
         };
+        Manifest.prototype.getTree = function () {
+            this.treeRoot = new Manifesto.TreeNode('root');
+            this.treeRoot.label = "root";
+            this.treeRoot.data = this.rootRange;
+            this.treeRoot.data.type = "manifest";
+            this.rootRange.treeNode = this.treeRoot;
+            if (this.rootRange.ranges) {
+                for (var i = 0; i < this.rootRange.ranges.length; i++) {
+                    var range = this.rootRange.ranges[i];
+                    var node = new Manifesto.TreeNode();
+                    this.treeRoot.addNode(node);
+                    this.parseTreeNode(node, range);
+                }
+            }
+            return this.treeRoot;
+        };
+        Manifest.prototype.parseTreeNode = function (node, range) {
+            node.label = this.getLocalisedValue(range.label);
+            node.data = range;
+            node.data.type = "range";
+            range.treeNode = node;
+            if (range.ranges) {
+                for (var i = 0; i < range.ranges.length; i++) {
+                    var childRange = range.ranges[i];
+                    var childNode = new Manifesto.TreeNode();
+                    node.addNode(childNode);
+                    this.parseTreeNode(childNode, childRange);
+                }
+            }
+        };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
         };

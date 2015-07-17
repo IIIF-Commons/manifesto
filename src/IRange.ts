@@ -8,5 +8,6 @@ module Manifesto {
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
         getLabel(): string;
+        treeNode: TreeNode;
     }
 }

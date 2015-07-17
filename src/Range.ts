@@ -9,6 +9,7 @@ module Manifesto {
         parentRange: Range;
         path: string;
         ranges: Range[] = [];
+        treeNode: TreeNode;
         viewingHint: ViewingHint;
         viewingDirection: ViewingDirection;
 

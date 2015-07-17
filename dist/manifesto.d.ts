@@ -73,8 +73,10 @@ declare module Manifesto {
         getService(resource: any, profile: ServiceProfile): IService;
         getTitle(): string;
         getTotalSequences(): number;
+        getTree(): TreeNode;
         isMultiSequence(): boolean;
         rootRange: IRange;
+        treeRoot: TreeNode;
     }
 }
 declare module Manifesto {
@@ -96,6 +98,7 @@ declare module Manifesto {
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
         getLabel(): string;
+        treeNode: TreeNode;
     }
 }
 declare module Manifesto {
@@ -142,8 +145,9 @@ declare module Manifesto {
         jsonld: any;
         locale: string;
         manifest: IManifest;
-        rootRange: Range;
+        rootRange: IRange;
         sequences: Sequence[];
+        treeRoot: TreeNode;
         constructor(jsonld: any);
         getAttribution(): string;
         getLabel(): string;
@@ -159,6 +163,8 @@ declare module Manifesto {
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTitle(): string;
         getTotalSequences(): number;
+        getTree(): TreeNode;
+        parseTreeNode(node: TreeNode, range: any): void;
         isMultiSequence(): boolean;
     }
 }
@@ -177,6 +183,7 @@ declare module Manifesto {
         parentRange: Range;
         path: string;
         ranges: Range[];
+        treeNode: TreeNode;
         viewingHint: ViewingHint;
         viewingDirection: ViewingDirection;
         getLabel(): string;

@@ -13,7 +13,9 @@ module Manifesto {
         getService(resource: any, profile: ServiceProfile): IService;
         getTitle(): string;
         getTotalSequences(): number;
+        getTree(): TreeNode;
         isMultiSequence(): boolean;
         rootRange: IRange;
+        treeRoot: TreeNode;
     }
 }

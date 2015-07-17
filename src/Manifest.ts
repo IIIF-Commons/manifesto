@@ -6,8 +6,9 @@ module Manifesto {
         public jsonld: any;
         public locale: string = "en-GB"; // todo: pass in constructor?
         public manifest: IManifest;
-        public rootRange: Range;
+        public rootRange: IRange;
         public sequences: Sequence[] = [];
+        public treeRoot: TreeNode;
 
         constructor(jsonld: any) {
             this.jsonld = jsonld;
@@ -147,6 +148,47 @@ module Manifesto {
 
         getTotalSequences(): number{
             return this.sequences.length;
+        }
+
+        getTree(): TreeNode{
+
+            this.treeRoot = new TreeNode('root');
+            this.treeRoot.label = "root";
+            this.treeRoot.data = this.rootRange;
+            this.treeRoot.data.type = "manifest";
+            this.rootRange.treeNode = this.treeRoot;
+
+            if (this.rootRange.ranges){
+                for (var i = 0; i < this.rootRange.ranges.length; i++){
+                    var range = this.rootRange.ranges[i];
+
+                    var node = new TreeNode();
+                    this.treeRoot.addNode(node);
+
+                    this.parseTreeNode(node, range);
+                }
+            }
+
+            return this.treeRoot;
+        }
+
+        parseTreeNode(node: TreeNode, range: any): void {
+            node.label = this.getLocalisedValue(range.label);
+            node.data = range;
+            node.data.type = "range";
+            range.treeNode = node;
+
+            if (range.ranges) {
+
+                for (var i = 0; i < range.ranges.length; i++) {
+                    var childRange = range.ranges[i];
+
+                    var childNode = new TreeNode();
+                    node.addNode(childNode);
+
+                    this.parseTreeNode(childNode, childRange);
+                }
+            }
         }
 
         isMultiSequence(): boolean{
