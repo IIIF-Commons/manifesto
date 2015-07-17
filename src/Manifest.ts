@@ -165,14 +165,14 @@ module Manifesto {
                     var node = new TreeNode();
                     this.treeRoot.addNode(node);
 
-                    this.parseTreeNode(node, range);
+                    this._parseTreeNode(node, range);
                 }
             }
 
             return this.treeRoot;
         }
 
-        parseTreeNode(node: TreeNode, range: any): void {
+        private _parseTreeNode(node: TreeNode, range: any): void {
             node.label = this.getLocalisedValue(range.label);
             node.data = range;
             node.data.type = "range";
@@ -186,7 +186,7 @@ module Manifesto {
                     var childNode = new TreeNode();
                     node.addNode(childNode);
 
-                    this.parseTreeNode(childNode, childRange);
+                    this._parseTreeNode(childNode, childRange);
                 }
             }
         }

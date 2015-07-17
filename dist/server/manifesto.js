@@ -235,12 +235,12 @@ var Manifesto;
                     var range = this.rootRange.ranges[i];
                     var node = new Manifesto.TreeNode();
                     this.treeRoot.addNode(node);
-                    this.parseTreeNode(node, range);
+                    this._parseTreeNode(node, range);
                 }
             }
             return this.treeRoot;
         };
-        Manifest.prototype.parseTreeNode = function (node, range) {
+        Manifest.prototype._parseTreeNode = function (node, range) {
             node.label = this.getLocalisedValue(range.label);
             node.data = range;
             node.data.type = "range";
@@ -250,7 +250,7 @@ var Manifesto;
                     var childRange = range.ranges[i];
                     var childNode = new Manifesto.TreeNode();
                     node.addNode(childNode);
-                    this.parseTreeNode(childNode, childRange);
+                    this._parseTreeNode(childNode, childRange);
                 }
             }
         };
@@ -558,6 +558,7 @@ var Manifesto;
             }
             range.id = r['@id'];
             range.jsonld = r;
+            range.label = r.label;
             range.manifest = this.manifest;
             range.path = path;
             if (r.canvases) {

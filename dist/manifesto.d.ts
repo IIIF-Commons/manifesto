@@ -164,7 +164,7 @@ declare module Manifesto {
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;
-        parseTreeNode(node: TreeNode, range: any): void;
+        private _parseTreeNode(node, range);
         isMultiSequence(): boolean;
     }
 }
