@@ -779,12 +779,12 @@ var url = _dereq_("url");
 var path = _dereq_("path");
 var _ = _dereq_("lodash");
 module.exports = {
-    CanvasType: new Manifesto.CanvasType(),
-    ElementType: new Manifesto.ElementType(),
-    RenderingFormat: new Manifesto.RenderingFormat(),
-    ServiceProfile: new Manifesto.ServiceProfile(),
-    ViewingDirection: new Manifesto.ViewingDirection(),
-    ViewingHint: new Manifesto.ViewingHint(),
+    //CanvasType: new Manifesto.CanvasType(),
+    //ElementType: new Manifesto.ElementType(),
+    //RenderingFormat: new Manifesto.RenderingFormat(),
+    //ServiceProfile: new Manifesto.ServiceProfile(),
+    //ViewingDirection: new Manifesto.ViewingDirection(),
+    //ViewingHint: new Manifesto.ViewingHint(),
     load: function (manifestUri, cb) {
         var u = url.parse(manifestUri);
         var fetch = http.request({

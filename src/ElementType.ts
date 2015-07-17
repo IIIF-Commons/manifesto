@@ -4,7 +4,7 @@ module Manifesto {
         public static movingimage = new CanvasType("dctypes:MovingImage");
         public static sound = new CanvasType("dctypes:Sound");
 
-        constructor(public value?: string) {
+        constructor(public value: string) {
 
         }
 

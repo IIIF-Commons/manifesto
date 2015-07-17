@@ -7,7 +7,7 @@ module Manifesto {
         public static searchWithin = new ServiceProfile("http://iiif.io/api/search/1/");
         public static token = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
 
-        constructor(public value?: string) {
+        constructor(public value: string) {
         }
 
         toString() {

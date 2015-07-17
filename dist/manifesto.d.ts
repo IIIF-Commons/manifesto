@@ -16,7 +16,7 @@ declare module Manifesto {
     class CanvasType {
         value: string;
         static canvas: CanvasType;
-        constructor(value?: string);
+        constructor(value: string);
         toString(): string;
     }
 }
@@ -36,7 +36,7 @@ declare module Manifesto {
         static document: CanvasType;
         static movingimage: CanvasType;
         static sound: CanvasType;
-        constructor(value?: string);
+        constructor(value: string);
         toString(): string;
     }
 }
@@ -75,10 +75,10 @@ declare module Manifesto {
         getMetadata(includeRootProperties?: boolean): any;
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: any, format: RenderingFormat): IRendering;
+        getRendering(resource: any, format: RenderingFormat | string): IRendering;
         getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
-        getService(resource: IJSONLDResource, profile: ServiceProfile): IService;
+        getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getSequenceByIndex(index: number): ISequence;
         getTitle(): string;
         getTotalSequences(): number;
@@ -96,12 +96,6 @@ declare module Manifesto {
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
     parse: (manifest: string) => Manifesto.Manifest;
-    CanvasType: Manifesto.CanvasType;
-    ElementType: Manifesto.ElementType;
-    RenderingFormat: Manifesto.RenderingFormat;
-    ServiceProfile: Manifesto.ServiceProfile;
-    ViewingDirection: Manifesto.ViewingDirection;
-    ViewingHint: Manifesto.ViewingHint;
 }
 declare module Manifesto {
     interface IRange extends IManifestResource {
@@ -210,7 +204,7 @@ declare module Manifesto {
         static pdf: RenderingFormat;
         static doc: RenderingFormat;
         static docx: RenderingFormat;
-        constructor(value?: string);
+        constructor(value: string);
         toString(): string;
     }
 }
@@ -272,7 +266,7 @@ declare module Manifesto {
         static otherManifestations: ServiceProfile;
         static searchWithin: ServiceProfile;
         static token: ServiceProfile;
-        constructor(value?: string);
+        constructor(value: string);
         toString(): string;
     }
 }
@@ -306,7 +300,7 @@ declare module Manifesto {
         static rightToLeft: ViewingDirection;
         static topToBottom: ViewingDirection;
         static bottomToTop: ViewingDirection;
-        constructor(value?: string);
+        constructor(value: string);
         toString(): string;
     }
 }
@@ -318,7 +312,7 @@ declare module Manifesto {
         static continuous: ViewingHint;
         static nonPaged: ViewingHint;
         static top: ViewingHint;
-        constructor(value?: string);
+        constructor(value: string);
         toString(): string;
     }
 }

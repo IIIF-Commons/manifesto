@@ -6,12 +6,12 @@ var _ = require("lodash");
 
 module.exports = <IManifesto>{
 
-    CanvasType: new Manifesto.CanvasType(),
-    ElementType: new Manifesto.ElementType(),
-    RenderingFormat: new Manifesto.RenderingFormat(),
-    ServiceProfile: new Manifesto.ServiceProfile(),
-    ViewingDirection: new Manifesto.ViewingDirection(),
-    ViewingHint: new Manifesto.ViewingHint(),
+    //CanvasType: new Manifesto.CanvasType(),
+    //ElementType: new Manifesto.ElementType(),
+    //RenderingFormat: new Manifesto.RenderingFormat(),
+    //ServiceProfile: new Manifesto.ServiceProfile(),
+    //ViewingDirection: new Manifesto.ViewingDirection(),
+    //ViewingHint: new Manifesto.ViewingHint(),
 
     load: function (manifestUri: string, cb: (manifest: any) => void): void {
 

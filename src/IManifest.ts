@@ -9,10 +9,10 @@ module Manifesto {
         getMetadata(includeRootProperties?: boolean): any
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: any, format: RenderingFormat): IRendering;
+        getRendering(resource: any, format: RenderingFormat | string): IRendering;
         getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
-        getService(resource: IJSONLDResource, profile: ServiceProfile): IService;
+        getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getSequenceByIndex(index: number): ISequence;
         getTitle(): string;
         getTotalSequences(): number;

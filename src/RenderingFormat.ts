@@ -4,7 +4,7 @@ module Manifesto {
         public static doc = new RenderingFormat("application/msword");
         public static docx = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
-        constructor(public value?: string) {
+        constructor(public value: string) {
         }
 
         toString() {
