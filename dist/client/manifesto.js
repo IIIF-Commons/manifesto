@@ -3084,8 +3084,8 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,_dereq_("VCmEsw"))
-},{"VCmEsw":12}],12:[function(_dereq_,module,exports){
+}).call(this,_dereq_("ngpmcQ"))
+},{"ngpmcQ":12}],12:[function(_dereq_,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5077,8 +5077,8 @@ function indexOf (xs, x) {
   return -1;
 }
 
-}).call(this,_dereq_("VCmEsw"))
-},{"./index.js":18,"VCmEsw":12,"buffer":2,"events":5,"inherits":10,"process/browser.js":19,"string_decoder":24}],22:[function(_dereq_,module,exports){
+}).call(this,_dereq_("ngpmcQ"))
+},{"./index.js":18,"buffer":2,"events":5,"inherits":10,"ngpmcQ":12,"process/browser.js":19,"string_decoder":24}],22:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7170,8 +7170,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,_dereq_("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":26,"VCmEsw":12,"inherits":10}],28:[function(_dereq_,module,exports){
+}).call(this,_dereq_("ngpmcQ"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":26,"inherits":10,"ngpmcQ":12}],28:[function(_dereq_,module,exports){
 var _ = _dereq_("lodash");
 
 (function(exports) {

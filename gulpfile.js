@@ -1,9 +1,7 @@
-var argv = require('yargs').argv,
-    bump = require('gulp-bump'),
+var bump = require('gulp-bump'),
     browserify = require('gulp-browserify'),
     Config = require('./gulpfile.config'),
     del = require('del'),
-    exec = require('child_process').exec,
     merge = require('merge2'),
     mocha = require('gulp-mocha'),
     rename = require('gulp-rename'),
@@ -40,7 +38,7 @@ gulp.task('build', function() {
 
     return merge([
         tsResult.dts.pipe(gulp.dest(config.dist)),
-        tsResult.js.pipe(gulp.dest(config.dist))
+        tsResult.js.pipe(gulp.dest(config.server))
     ]);
 });
 
@@ -50,7 +48,7 @@ gulp.task('browserify', function (cb) {
             standalone: config.browserifyStandalone
         }))
         .pipe(rename(config.browserifyOut))
-        .pipe(gulp.dest(config.dist));
+        .pipe(gulp.dest(config.client));
 });
 
 gulp.task('default', function(cb) {

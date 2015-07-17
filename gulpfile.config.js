@@ -1,14 +1,17 @@
-
 var metadata = require('./package');
+var path = require('path');
 
 var GulpConfig = (function () {
     function GulpConfig() {
+        this.lib = 'manifesto.js';
         this.dist = './dist';
-        this.browserifyOut = 'manifesto.client.js';
-        this.browserifySrc = [this.dist + '/*.js'];
+        this.client = path.join(this.dist, '/client/');
+        this.server = path.join(this.dist, '/server/');
+        this.browserifyOut = this.lib;
+        this.browserifySrc = [path.join(this.server, '/*.js')];
         this.browserifyStandalone = 'manifesto';
         this.header = '// ' + metadata.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
-        this.tsOut = 'manifesto.js';
+        this.tsOut = this.lib;
         this.tsSrc = [
             'src/*.ts',
             'typings/*.ts',
