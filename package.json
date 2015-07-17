@@ -1,7 +1,7 @@
 {
   "name": "manifesto",
   "version": "0.0.74",
-  "description": "Manipulate IIIF Manifests",
+  "description": "IIIF Presentation API utility library for client and server",
   "main": "dist/server/manifesto.js",
   "scripts": {
     "test": "test/test.js"
