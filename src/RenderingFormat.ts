@@ -1,6 +1,8 @@
 module Manifesto {
     export class RenderingFormat {
         static pdf = new RenderingFormat("application/pdf");
+        static doc = new RenderingFormat("application/msword");
+        static docx = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
         constructor(public value:string) {
         }

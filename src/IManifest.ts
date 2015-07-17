@@ -9,6 +9,7 @@ module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: any, format: RenderingFormat): IRendering;
+        getRenderings(resource: any): any[];
         getSeeAlso(): any;
         getService(resource: any, profile: ServiceProfile): IService;
         getSequenceByIndex(index: number): ISequence;

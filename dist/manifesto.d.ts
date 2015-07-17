@@ -69,6 +69,7 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: any, format: RenderingFormat): IRendering;
+        getRenderings(resource: any): any[];
         getSeeAlso(): any;
         getService(resource: any, profile: ServiceProfile): IService;
         getSequenceByIndex(index: number): ISequence;
@@ -159,6 +160,7 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
+        getRenderings(resource: any): any[];
         getSeeAlso(): any;
         getService(resource: any, profile: Manifesto.ServiceProfile): IService;
         getSequenceByIndex(sequenceIndex: number): ISequence;
@@ -202,6 +204,8 @@ declare module Manifesto {
     class RenderingFormat {
         value: string;
         static pdf: RenderingFormat;
+        static doc: RenderingFormat;
+        static docx: RenderingFormat;
         constructor(value: string);
         toString(): string;
     }

@@ -124,6 +124,21 @@ module Manifesto {
             return null;
         }
 
+        getRenderings(resource: any): any[] {
+            if (resource.rendering){
+                var renderings = resource.rendering;
+
+                if (!_.isArray(renderings)){
+                    renderings = [renderings];
+                }
+
+                return renderings;
+            }
+
+            // no renderings provided, default to resource.
+            return [resource];
+        }
+
         getSeeAlso(): any {
             return this.getLocalisedValue(this.jsonld.seeAlso);
         }

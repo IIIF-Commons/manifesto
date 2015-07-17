@@ -201,6 +201,17 @@ var Manifesto;
             }
             return null;
         };
+        Manifest.prototype.getRenderings = function (resource) {
+            if (resource.rendering) {
+                var renderings = resource.rendering;
+                if (!_.isArray(renderings)) {
+                    renderings = [renderings];
+                }
+                return renderings;
+            }
+            // no renderings provided, default to resource.
+            return [resource];
+        };
         Manifest.prototype.getSeeAlso = function () {
             return this.getLocalisedValue(this.jsonld.seeAlso);
         };
@@ -334,6 +345,8 @@ var Manifesto;
             return this.value;
         };
         RenderingFormat.pdf = new RenderingFormat("application/pdf");
+        RenderingFormat.doc = new RenderingFormat("application/msword");
+        RenderingFormat.docx = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         return RenderingFormat;
     })();
     Manifesto.RenderingFormat = RenderingFormat;
