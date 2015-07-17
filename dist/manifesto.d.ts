@@ -66,6 +66,7 @@ declare module Manifesto {
         getLabel(): string;
         getLogo(): string;
         getLicense(): string;
+        getMetadata(includeRootProperties?: boolean): any;
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: any, format: RenderingFormat): IRendering;
@@ -157,6 +158,7 @@ declare module Manifesto {
         getLocalisedValue(prop: any, locale?: string): string;
         getLogo(): string;
         getLicense(): string;
+        getMetadata(includeRootProperties?: boolean): any;
         getRanges(): IRange[];
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;

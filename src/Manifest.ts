@@ -63,6 +63,38 @@ module Manifesto {
             return this.getLocalisedValue(this.jsonld.license);
         }
 
+        getMetadata(includeRootProperties?: boolean): any{
+            var metadata: Object[] = this.manifest.jsonld.metadata;
+
+            if (metadata && includeRootProperties){
+                if (this.manifest.jsonld.description){
+                    metadata.push({
+                        "label": "description",
+                        "value": this.getLocalisedValue(this.manifest.jsonld.description)
+                    });
+                }
+                if (this.manifest.jsonld.attribution){
+                    metadata.push({
+                        "label": "attribution",
+                        "value": this.getLocalisedValue(this.manifest.jsonld.attribution)
+                    });
+                }
+                if (this.manifest.jsonld.license){
+                    metadata.push({
+                        "label": "license",
+                        "value": this.getLocalisedValue(this.manifest.jsonld.license)
+                    });
+                }
+                if (this.manifest.jsonld.logo){
+                    metadata.push({
+                        "label": "logo",
+                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>'});
+                }
+            }
+
+            return metadata;
+        }
+
         // todo: use jmespath to flatten tree?
         getRanges(): IRange[] {
 
