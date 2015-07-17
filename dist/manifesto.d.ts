@@ -96,6 +96,12 @@ declare module Manifesto {
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
     parse: (manifest: string) => Manifesto.Manifest;
+    CanvasType: any;
+    ElementType: any;
+    RenderingFormat: any;
+    ServiceProfile: any;
+    ViewingDirection: any;
+    ViewingHint: any;
 }
 declare module Manifesto {
     interface IRange extends IManifestResource {
