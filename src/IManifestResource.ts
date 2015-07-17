@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IManifestResource extends IResource {
+    export interface IManifestResource extends IJSONLDResource {
         manifest: IManifest;
     }
 }

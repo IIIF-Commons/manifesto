@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IResource {
+    export interface IJSONLDResource {
         id: string;
         jsonld: any;
     }

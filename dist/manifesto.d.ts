@@ -59,7 +59,13 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IManifest extends IResource {
+    interface IJSONLDResource {
+        id: string;
+        jsonld: any;
+    }
+}
+declare module Manifesto {
+    interface IManifest extends IJSONLDResource {
         defaultLabel: string;
         getAttribution(): string;
         getLocalisedValue(prop: any, locale?: string): string;
@@ -83,7 +89,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IManifestResource extends IResource {
+    interface IManifestResource extends IJSONLDResource {
         manifest: IManifest;
     }
 }
@@ -107,12 +113,6 @@ declare module Manifesto {
 declare module Manifesto {
     interface IRendering extends IManifestResource {
         format: string;
-    }
-}
-declare module Manifesto {
-    interface IResource {
-        id: string;
-        jsonld: any;
     }
 }
 declare module Manifesto {

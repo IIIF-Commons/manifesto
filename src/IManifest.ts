@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IManifest extends IResource {
+    export interface IManifest extends IJSONLDResource {
         defaultLabel: string;
         getAttribution(): string;
         getLocalisedValue(prop: any, locale?: string): string;
