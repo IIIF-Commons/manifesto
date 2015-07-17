@@ -22,17 +22,17 @@ module Manifesto {
             return this.getLocalisedValue(this.jsonld.label);
         }
 
-        getLocalisedValue(prop: any, locale?: string): string {
+        getLocalisedValue(resource: any, locale?: string): string {
 
-            if (!_.isArray(prop)){
-                return prop;
+            if (!_.isArray(resource)){
+                return resource;
             }
 
             if (!locale) locale = this.locale;
 
             // test for exact match
-            for (var i = 0; i < prop.length; i++){
-                var value = prop[i];
+            for (var i = 0; i < resource.length; i++){
+                var value = resource[i];
                 var language = value['@language'];
 
                 if (locale === language){
@@ -43,8 +43,8 @@ module Manifesto {
             // test for inexact match
             var match = locale.substr(0, locale.indexOf('-'));
 
-            for (var i = 0; i < prop.length; i++){
-                var value = prop[i];
+            for (var i = 0; i < resource.length; i++){
+                var value = resource[i];
                 var language = value['@language'];
 
                 if (language === match){
@@ -156,7 +156,7 @@ module Manifesto {
             return null;
         }
 
-        getRenderings(resource: any): any[] {
+        getRenderings(resource: any): IRendering[] {
             if (resource.rendering){
                 var renderings = resource.rendering;
 

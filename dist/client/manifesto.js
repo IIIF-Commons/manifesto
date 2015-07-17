@@ -126,14 +126,14 @@ var Manifesto;
         Manifest.prototype.getLabel = function () {
             return this.getLocalisedValue(this.jsonld.label);
         };
-        Manifest.prototype.getLocalisedValue = function (prop, locale) {
-            if (!_.isArray(prop)) {
-                return prop;
+        Manifest.prototype.getLocalisedValue = function (resource, locale) {
+            if (!_.isArray(resource)) {
+                return resource;
             }
             if (!locale)
                 locale = this.locale;
-            for (var i = 0; i < prop.length; i++) {
-                var value = prop[i];
+            for (var i = 0; i < resource.length; i++) {
+                var value = resource[i];
                 var language = value['@language'];
                 if (locale === language) {
                     return value['@value'];
@@ -141,8 +141,8 @@ var Manifesto;
             }
             // test for inexact match
             var match = locale.substr(0, locale.indexOf('-'));
-            for (var i = 0; i < prop.length; i++) {
-                var value = prop[i];
+            for (var i = 0; i < resource.length; i++) {
+                var value = resource[i];
                 var language = value['@language'];
                 if (language === match) {
                     return value['@value'];
