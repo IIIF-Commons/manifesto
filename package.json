@@ -2,7 +2,7 @@
   "name": "manifesto",
   "version": "0.0.74",
   "description": "Manipulate IIIF Manifests",
-  "main": "dist/manifesto.js",
+  "main": "dist/server/manifesto.js",
   "scripts": {
     "test": "test/test.js"
   },

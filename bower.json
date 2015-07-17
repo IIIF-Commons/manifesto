@@ -6,7 +6,7 @@
         "edsilv <e.silverton@gmail.com>"
     ],
     "description": "IIIF Presentation API utility library for client and server",
-    "main": "/dist/manifesto.js",
+    "main": "/dist/client/manifesto.js",
     "moduleType": [
         "globals"
     ],
