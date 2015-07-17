@@ -6,7 +6,7 @@ module Manifesto {
         static topToBottom = new ViewingDirection("top-to-bottom");
         static bottomToTop = new ViewingDirection("bottom-to-top");
 
-        constructor(public value: string) {
+        constructor(public value?: string) {
         }
 
         toString() {

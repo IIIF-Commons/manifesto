@@ -6,12 +6,12 @@ import m = Manifesto;
 
 module.exports = <IManifesto>{
 
-    CanvasType: Manifesto.CanvasType,
-    ElementType: Manifesto.ElementType,
-    RenderingFormat: Manifesto.RenderingFormat,
-    ServiceProfile: Manifesto.ServiceProfile,
-    ViewingDirection: Manifesto.ViewingDirection,
-    ViewingHint: Manifesto.ViewingHint,
+    CanvasType: new Manifesto.CanvasType(),
+    ElementType: new Manifesto.ElementType(),
+    RenderingFormat: new Manifesto.RenderingFormat(),
+    ServiceProfile: new Manifesto.ServiceProfile(),
+    ViewingDirection: new Manifesto.ViewingDirection(),
+    ViewingHint: new Manifesto.ViewingHint(),
 
     load: function (manifestUri: string, callback: (manifest: any) => void): void {
 

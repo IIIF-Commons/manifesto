@@ -315,12 +315,12 @@ var path = _dereq_("path");
 var _ = _dereq_("lodash");
 var m = Manifesto;
 module.exports = {
-    CanvasType: Manifesto.CanvasType,
-    ElementType: Manifesto.ElementType,
-    RenderingFormat: Manifesto.RenderingFormat,
-    ServiceProfile: Manifesto.ServiceProfile,
-    ViewingDirection: Manifesto.ViewingDirection,
-    ViewingHint: Manifesto.ViewingHint,
+    CanvasType: new Manifesto.CanvasType(),
+    ElementType: new Manifesto.ElementType(),
+    RenderingFormat: new Manifesto.RenderingFormat(),
+    ServiceProfile: new Manifesto.ServiceProfile(),
+    ViewingDirection: new Manifesto.ViewingDirection(),
+    ViewingHint: new Manifesto.ViewingHint(),
     load: function (manifestUri, callback) {
         var u = url.parse(manifestUri);
         var fetch = http.request({

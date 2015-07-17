@@ -7,7 +7,7 @@ module Manifesto {
         static nonPaged = new ViewingHint("non-paged");
         static top = new ViewingHint("top");
 
-        constructor(public value: string) {
+        constructor(public value?: string) {
         }
 
         toString() {
