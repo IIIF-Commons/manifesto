@@ -63,7 +63,7 @@ module Manifesto {
             return this.getLocalisedValue(this.jsonld.license);
         }
 
-        // todo:
+        // todo: use jmespath to flatten tree?
         getRanges(): IRange[] {
 
             var ranges: IRange[] = [];

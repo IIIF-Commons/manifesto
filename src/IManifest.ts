@@ -11,6 +11,7 @@ module Manifesto {
         getRendering(resource: any, format: RenderingFormat): IRendering;
         getSeeAlso(): any;
         getService(resource: any, profile: ServiceProfile): IService;
+        getSequenceByIndex(index: number): ISequence;
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;

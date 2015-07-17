@@ -155,7 +155,7 @@ var Manifesto;
         Manifest.prototype.getLicense = function () {
             return this.getLocalisedValue(this.jsonld.license);
         };
-        // todo:
+        // todo: use jmespath to flatten tree?
         Manifest.prototype.getRanges = function () {
             var ranges = [];
             if (!this.jsonld.structures && !this.jsonld.structures.length)
