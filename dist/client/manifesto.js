@@ -156,9 +156,15 @@ var Manifesto;
         Manifest.prototype.getLicense = function () {
             return this.getLocalisedValue(this.jsonld.license);
         };
+        // todo:
         Manifest.prototype.getRanges = function () {
-            // todo: use jmespath to flatten tree
-            return null;
+            var ranges = [];
+            if (!this.jsonld.structures && !this.jsonld.structures.length)
+                return ranges;
+            _.each(this.jsonld.structures, function (range) {
+                ranges.push(range.parsed);
+            });
+            return ranges;
         };
         Manifest.prototype.getRangeById = function (id) {
             var ranges = this.getRanges();
@@ -559,6 +565,7 @@ var Manifesto;
             }
             range.id = r['@id'];
             range.jsonld = r;
+            r.parsed = range;
             range.label = r.label;
             range.manifest = this.manifest;
             range.path = path;

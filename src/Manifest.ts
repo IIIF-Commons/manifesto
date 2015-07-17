@@ -63,9 +63,18 @@ module Manifesto {
             return this.getLocalisedValue(this.jsonld.license);
         }
 
+        // todo:
         getRanges(): IRange[] {
-            // todo: use jmespath to flatten tree
-            return null;
+
+            var ranges: IRange[] = [];
+
+            if (!this.jsonld.structures && !this.jsonld.structures.length) return ranges;
+
+            _.each(this.jsonld.structures, (range: any) => {
+                ranges.push(range.parsed);
+            });
+
+            return ranges;
         }
 
         getRangeById(id: string): IRange {

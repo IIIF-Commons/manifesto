@@ -62,6 +62,7 @@ module Manifesto {
 
             range.id = r['@id'];
             range.jsonld = r;
+            r.parsed = range;
             range.label = r.label;
             range.manifest = this.manifest;
             range.path = path;
