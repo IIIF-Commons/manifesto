@@ -14,5 +14,6 @@ module Manifesto {
         getTitle(): string;
         getTotalSequences(): number;
         isMultiSequence(): boolean;
+        rootRange: IRange;
     }
 }

@@ -63,7 +63,7 @@ module Manifesto {
         }
 
         getRanges(): IRange[] {
-            // todo: use exjs to flatten tree
+            // todo: use jmespath to flatten tree
             return null;
         }
 

@@ -74,6 +74,7 @@ declare module Manifesto {
         getTitle(): string;
         getTotalSequences(): number;
         isMultiSequence(): boolean;
+        rootRange: IRange;
     }
 }
 declare module Manifesto {

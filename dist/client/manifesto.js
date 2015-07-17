@@ -157,7 +157,7 @@ var Manifesto;
             return this.getLocalisedValue(this.jsonld.license);
         };
         Manifest.prototype.getRanges = function () {
-            // todo: use exjs to flatten tree
+            // todo: use jmespath to flatten tree
             return null;
         };
         Manifest.prototype.getRangeById = function (id) {
