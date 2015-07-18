@@ -20,6 +20,7 @@ declare module Manifesto {
         toString(): string;
     }
 }
+declare var isArray: any;
 declare module Manifesto {
     class Element implements IElement {
         id: string;
@@ -142,6 +143,7 @@ declare module Manifesto {
     interface IService extends IManifestResource {
     }
 }
+declare var isArray: any;
 declare module Manifesto {
     class Manifest implements IManifest {
         defaultLabel: string;
@@ -208,6 +210,7 @@ declare module Manifesto {
         toString(): string;
     }
 }
+declare var isNumber: any;
 declare module Manifesto {
     class Sequence implements ISequence {
         canvases: Canvas[];
@@ -319,4 +322,3 @@ declare module Manifesto {
 declare var http: any;
 declare var url: any;
 declare var path: any;
-declare var _: any;

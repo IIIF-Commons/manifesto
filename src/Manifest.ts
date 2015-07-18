@@ -1,3 +1,4 @@
+var isArray = require("lodash.isarray");
 
 module Manifesto {
     export class Manifest implements IManifest {
@@ -24,7 +25,7 @@ module Manifesto {
 
         getLocalisedValue(resource: any, locale?: string): string {
 
-            if (!_.isArray(resource)){
+            if (!isArray(resource)){
                 return resource;
             }
 
@@ -102,9 +103,10 @@ module Manifesto {
 
             if (!this.jsonld.structures && !this.jsonld.structures.length) return ranges;
 
-            _.each(this.jsonld.structures, (range: any) => {
+            for (var i = 0; i < this.jsonld.structures.length; i++){
+                var range = this.jsonld.structures[i];
                 ranges.push(range.parsed);
-            });
+            }
 
             return ranges;
         }
@@ -142,7 +144,7 @@ module Manifesto {
 
             var renderings = resource.rendering;
 
-            if (!_.isArray(renderings)){
+            if (!isArray(renderings)){
                 renderings = [renderings];
             }
 
@@ -160,7 +162,7 @@ module Manifesto {
             if (resource.rendering){
                 var renderings = resource.rendering;
 
-                if (!_.isArray(renderings)){
+                if (!isArray(renderings)){
                     renderings = [renderings];
                 }
 
@@ -178,7 +180,7 @@ module Manifesto {
         getService(resource: any, profile: Manifesto.ServiceProfile): IService {
             if (!resource.service) return null;
 
-            if (_.isArray(resource.service)){
+            if (isArray(resource.service)){
                 for (var i = 0; i < resource.service.length; i++){
                     var service = resource.service[i];
                     if (service.profile && service.profile === profile) {

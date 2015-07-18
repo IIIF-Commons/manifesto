@@ -2,7 +2,6 @@
 var http = require("http");
 var url = require("url");
 var path = require("path");
-var _ = require("lodash");
 
 module.exports = <IManifesto>{
 

@@ -1,3 +1,5 @@
+var isArray = require("lodash.isarray");
+
 module Manifesto {
     export class Element implements IElement {
         id: string;
@@ -21,16 +23,17 @@ module Manifesto {
             if (this.jsonld.rendering){
                 var rendering = this.jsonld.rendering;
 
-                if (!_.isArray(rendering)){
+                if (!isArray(rendering)){
                     rendering = [rendering];
                 }
 
-                _.each(rendering, (r: any) => {
+                for (var i = 0; i < rendering.length; i++){
+                    var r = rendering[i];
                     var rend: IRendering = new Rendering();
                     rend.id = r['@id'];
                     rend.format = r.format;
                     renderings.push(rend);
-                });
+                }
 
                 return renderings;
             }

@@ -57,6 +57,7 @@ var Manifesto;
     })();
     Manifesto.CanvasType = CanvasType;
 })(Manifesto || (Manifesto = {}));
+var isArray = require("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
     var Element = (function () {
@@ -73,15 +74,16 @@ var Manifesto;
             var renderings = [];
             if (this.jsonld.rendering) {
                 var rendering = this.jsonld.rendering;
-                if (!_.isArray(rendering)) {
+                if (!isArray(rendering)) {
                     rendering = [rendering];
                 }
-                _.each(rendering, function (r) {
+                for (var i = 0; i < rendering.length; i++) {
+                    var r = rendering[i];
                     var rend = new Manifesto.Rendering();
                     rend.id = r['@id'];
                     rend.format = r.format;
                     renderings.push(rend);
-                });
+                }
                 return renderings;
             }
             // no renderings provided, default to element.
@@ -110,6 +112,7 @@ var Manifesto;
     })();
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
+var isArray = require("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function () {
@@ -126,7 +129,7 @@ var Manifesto;
             return this.getLocalisedValue(this.jsonld.label);
         };
         Manifest.prototype.getLocalisedValue = function (resource, locale) {
-            if (!_.isArray(resource)) {
+            if (!isArray(resource)) {
                 return resource;
             }
             if (!locale)
@@ -190,9 +193,10 @@ var Manifesto;
             var ranges = [];
             if (!this.jsonld.structures && !this.jsonld.structures.length)
                 return ranges;
-            _.each(this.jsonld.structures, function (range) {
+            for (var i = 0; i < this.jsonld.structures.length; i++) {
+                var range = this.jsonld.structures[i];
                 ranges.push(range.parsed);
-            });
+            }
             return ranges;
         };
         Manifest.prototype.getRangeById = function (id) {
@@ -219,7 +223,7 @@ var Manifesto;
             if (!resource.rendering)
                 return null;
             var renderings = resource.rendering;
-            if (!_.isArray(renderings)) {
+            if (!isArray(renderings)) {
                 renderings = [renderings];
             }
             for (var i = 0; i < renderings.length; i++) {
@@ -233,7 +237,7 @@ var Manifesto;
         Manifest.prototype.getRenderings = function (resource) {
             if (resource.rendering) {
                 var renderings = resource.rendering;
-                if (!_.isArray(renderings)) {
+                if (!isArray(renderings)) {
                     renderings = [renderings];
                 }
                 return renderings;
@@ -247,7 +251,7 @@ var Manifesto;
         Manifest.prototype.getService = function (resource, profile) {
             if (!resource.service)
                 return null;
-            if (_.isArray(resource.service)) {
+            if (isArray(resource.service)) {
                 for (var i = 0; i < resource.service.length; i++) {
                     var service = resource.service[i];
                     if (service.profile && service.profile === profile) {
@@ -351,6 +355,7 @@ var Manifesto;
     })();
     Manifesto.RenderingFormat = RenderingFormat;
 })(Manifesto || (Manifesto = {}));
+var isNumber = require("lodash.isnumber");
 var Manifesto;
 (function (Manifesto) {
     var Sequence = (function () {
@@ -381,7 +386,7 @@ var Manifesto;
         Sequence.prototype.getCanvasIndexByLabel = function (label) {
             label = label.trim();
             // trim any preceding zeros.
-            if (_.isNumber(label)) {
+            if (isNumber(label)) {
                 label = parseInt(label, 10).toString();
             }
             var doublePageRegExp = /(\d*)\D+(\d*)/;
@@ -490,7 +495,7 @@ var Manifesto;
             var thumbs = [];
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
-                if (!_.isNumber(height)) {
+                if (!isNumber(height)) {
                     var heightRatio = canvas.getHeight() / canvas.getWidth();
                     if (heightRatio) {
                         height = Math.floor(width * heightRatio);
@@ -776,7 +781,6 @@ var Manifesto;
 var http = require("http");
 var url = require("url");
 var path = require("path");
-var _ = require("lodash");
 module.exports = {
     //CanvasType: new Manifesto.CanvasType(),
     //ElementType: new Manifesto.ElementType(),

@@ -1,3 +1,4 @@
+var isNumber = require("lodash.isnumber");
 
 module Manifesto {
     export class Sequence implements ISequence {
@@ -43,7 +44,7 @@ module Manifesto {
             label = label.trim();
 
             // trim any preceding zeros.
-            if (_.isNumber(label)) {
+            if (isNumber(label)) {
                 label = parseInt(label, 10).toString();
             }
 
@@ -181,7 +182,7 @@ module Manifesto {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
 
-                if (!_.isNumber(height)) {
+                if (!isNumber(height)) {
                     var heightRatio = canvas.getHeight() / canvas.getWidth();
 
                     if (heightRatio) {
