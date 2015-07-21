@@ -1,7 +1,6 @@
 /// <reference path="./_references.ts" />
 var http = require("http");
 var url = require("url");
-var path = require("path");
 
 module.exports = <IManifesto>{
 

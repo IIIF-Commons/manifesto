@@ -1,3 +1,5 @@
+var path = require("path");
+
 module Manifesto {
     export class Canvas implements ICanvas{
         id: string;

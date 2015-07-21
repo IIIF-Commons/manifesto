@@ -1,3 +1,4 @@
+declare var path: any;
 declare module Manifesto {
     class Canvas implements ICanvas {
         id: string;
@@ -20,7 +21,7 @@ declare module Manifesto {
         toString(): string;
     }
 }
-declare var isArray: any;
+declare var _isArray: any;
 declare module Manifesto {
     class Element implements IElement {
         id: string;
@@ -143,7 +144,7 @@ declare module Manifesto {
     interface IService extends IManifestResource {
     }
 }
-declare var isArray: any;
+declare var _isArray: any;
 declare module Manifesto {
     class Manifest implements IManifest {
         defaultLabel: string;
@@ -210,7 +211,7 @@ declare module Manifesto {
         toString(): string;
     }
 }
-declare var isNumber: any;
+declare var _isNumber: any;
 declare module Manifesto {
     class Sequence implements ISequence {
         canvases: Canvas[];
@@ -321,4 +322,3 @@ declare module Manifesto {
 }
 declare var http: any;
 declare var url: any;
-declare var path: any;

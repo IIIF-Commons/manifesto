@@ -1,4 +1,4 @@
-var isArray = require("lodash.isarray");
+var _isArray = require("lodash.isarray");
 
 module Manifesto {
     export class Element implements IElement {
@@ -23,7 +23,7 @@ module Manifesto {
             if (this.jsonld.rendering){
                 var rendering = this.jsonld.rendering;
 
-                if (!isArray(rendering)){
+                if (!_isArray(rendering)){
                     rendering = [rendering];
                 }
 
