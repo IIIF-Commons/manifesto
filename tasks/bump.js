@@ -11,7 +11,7 @@ gulp.task('bump', function(){
     gulp.src(['./bower.json', './package.json'])
         .pipe(bump({type: bumpType}))
         .pipe(gulp.dest('./'))
-        .pipe(filter('./package.json'))
+        .pipe(filter('package.json'))
         .pipe(tag());
 });
 
