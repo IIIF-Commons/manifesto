@@ -1,6 +1,5 @@
 module Manifesto {
     export interface IManifest extends IJSONLDResource {
-        defaultLabel: string;
         getAttribution(): string;
         getLocalisedValue(resource: any, locale?: string): string;
         getLabel(): string;
@@ -18,6 +17,7 @@ module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         isMultiSequence(): boolean;
+        options: IManifestoOptions;
         rootRange: IRange;
         treeRoot: TreeNode;
     }

@@ -114,14 +114,15 @@ var Manifesto;
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var _isArray = require("lodash.isarray");
+var objectAssign = require('object-assign');
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function () {
-        function Manifest(jsonld) {
-            this.defaultLabel = "-";
-            this.locale = "en-GB"; // todo: pass in constructor?
+        // todo: use destructor for default options
+        function Manifest(jsonld, options) {
             this.sequences = [];
             this.jsonld = jsonld;
+            this.options = objectAssign({ defaultLabel: '-', locale: 'en-GB' }, options);
         }
         Manifest.prototype.getAttribution = function () {
             return this.getLocalisedValue(this.jsonld.attribution);
@@ -134,7 +135,8 @@ var Manifesto;
                 return resource;
             }
             if (!locale)
-                locale = this.locale;
+                locale = this.options.locale;
+            // test for exact match
             for (var i = 0; i < resource.length; i++) {
                 var value = resource[i];
                 var language = value['@language'];
@@ -183,8 +185,7 @@ var Manifesto;
                 if (this.manifest.jsonld.logo) {
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>'
-                    });
+                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>' });
                 }
             }
             return metadata;
@@ -415,12 +416,13 @@ var Manifesto;
             return -1;
         };
         Sequence.prototype.getLastCanvasLabel = function () {
+            // get the last label that isn't empty or '-'.
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas = this.getCanvasByIndex(i);
                 return canvas.getLabel();
             }
             // none exists, so return '-'.
-            return this.manifest.defaultLabel;
+            return this.manifest.options.defaultLabel;
         };
         Sequence.prototype.getLastPageIndex = function () {
             return this.getTotalCanvases() - 1;
@@ -483,6 +485,7 @@ var Manifesto;
         };
         Sequence.prototype.getStartCanvasIndex = function () {
             if (this.startCanvas) {
+                // if there's a startCanvas attribute, loop through the canvases and return the matching index.
                 for (var i = 0; i < this.getTotalCanvases(); i++) {
                     var canvas = this.getCanvasByIndex(i);
                     if (canvas.id === this.startCanvas)
@@ -592,6 +595,7 @@ var Manifesto;
             range.manifest = this.manifest;
             range.path = path;
             if (r.canvases) {
+                // create two-way relationship
                 for (var i = 0; i < r.canvases.length; i++) {
                     var canvas = this.getCanvasById(r.canvases[i]);
                     canvas.ranges.push(range);

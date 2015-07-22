@@ -89,7 +89,7 @@ module Manifesto {
             }
 
             // none exists, so return '-'.
-            return this.manifest.defaultLabel;
+            return this.manifest.options.defaultLabel;
         }
 
         getLastPageIndex(): number {

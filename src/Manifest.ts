@@ -1,18 +1,20 @@
 var _isArray = require("lodash.isarray");
+var objectAssign = require('object-assign');
 
 module Manifesto {
     export class Manifest implements IManifest {
-        public defaultLabel: string = "-";
         public id: string;
+        public options: IManifestoOptions;
         public jsonld: any;
-        public locale: string = "en-GB"; // todo: pass in constructor?
         public manifest: IManifest;
         public rootRange: IRange;
         public sequences: Sequence[] = [];
         public treeRoot: TreeNode;
 
-        constructor(jsonld: any) {
+        // todo: use destructor for default options
+        constructor(jsonld: any, options?: IManifestoOptions) {
             this.jsonld = jsonld;
+            this.options = objectAssign({defaultLabel: '-', locale: 'en-GB'}, options);
         }
 
         getAttribution(): string {
@@ -29,7 +31,7 @@ module Manifesto {
                 return resource;
             }
 
-            if (!locale) locale = this.locale;
+            if (!locale) locale = this.options.locale;
 
             // test for exact match
             for (var i = 0; i < resource.length; i++){

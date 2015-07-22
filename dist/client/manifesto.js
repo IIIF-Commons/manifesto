@@ -115,14 +115,15 @@ var Manifesto;
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var _isArray = _dereq_("lodash.isarray");
+var objectAssign = _dereq_('object-assign');
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function () {
-        function Manifest(jsonld) {
-            this.defaultLabel = "-";
-            this.locale = "en-GB"; // todo: pass in constructor?
+        // todo: use destructor for default options
+        function Manifest(jsonld, options) {
             this.sequences = [];
             this.jsonld = jsonld;
+            this.options = objectAssign({ defaultLabel: '-', locale: 'en-GB' }, options);
         }
         Manifest.prototype.getAttribution = function () {
             return this.getLocalisedValue(this.jsonld.attribution);
@@ -135,7 +136,8 @@ var Manifesto;
                 return resource;
             }
             if (!locale)
-                locale = this.locale;
+                locale = this.options.locale;
+            // test for exact match
             for (var i = 0; i < resource.length; i++) {
                 var value = resource[i];
                 var language = value['@language'];
@@ -184,8 +186,7 @@ var Manifesto;
                 if (this.manifest.jsonld.logo) {
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>'
-                    });
+                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>' });
                 }
             }
             return metadata;
@@ -416,12 +417,13 @@ var Manifesto;
             return -1;
         };
         Sequence.prototype.getLastCanvasLabel = function () {
+            // get the last label that isn't empty or '-'.
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas = this.getCanvasByIndex(i);
                 return canvas.getLabel();
             }
             // none exists, so return '-'.
-            return this.manifest.defaultLabel;
+            return this.manifest.options.defaultLabel;
         };
         Sequence.prototype.getLastPageIndex = function () {
             return this.getTotalCanvases() - 1;
@@ -484,6 +486,7 @@ var Manifesto;
         };
         Sequence.prototype.getStartCanvasIndex = function () {
             if (this.startCanvas) {
+                // if there's a startCanvas attribute, loop through the canvases and return the matching index.
                 for (var i = 0; i < this.getTotalCanvases(); i++) {
                     var canvas = this.getCanvasByIndex(i);
                     if (canvas.id === this.startCanvas)
@@ -593,6 +596,7 @@ var Manifesto;
             range.manifest = this.manifest;
             range.path = path;
             if (r.canvases) {
+                // create two-way relationship
                 for (var i = 0; i < r.canvases.length; i++) {
                     var canvas = this.getCanvasById(r.canvases[i]);
                     canvas.ranges.push(range);
@@ -813,7 +817,7 @@ module.exports = {
     }
 };
 
-},{"http":6,"jmespath":28,"lodash.isarray":41,"lodash.isnumber":42,"path":11,"url":25}],2:[function(_dereq_,module,exports){
+},{"http":6,"jmespath":28,"lodash.isarray":41,"lodash.isnumber":42,"object-assign":43,"path":11,"url":25}],2:[function(_dereq_,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -7293,12 +7297,12 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,_dereq_("ngpmcQ"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./support/isBuffer":26,"inherits":10,"ngpmcQ":12}],28:[function(_dereq_,module,exports){
-var indexOf = _dereq_("lodash.indexof");
-var isArray = _dereq_("lodash.isarray");
-var isObject = _dereq_("lodash.isobject");
-var keys = _dereq_("lodash.keys");
-var lastIndexOf = _dereq_("lodash.lastindexof");
-var toString = _dereq_("lodash._basetostring");
+var _indexOf = _dereq_("lodash.indexof");
+var _isArray = _dereq_("lodash.isarray");
+var _isObject = _dereq_("lodash.isobject");
+var _keys = _dereq_("lodash.keys");
+var _lastIndexOf = _dereq_("lodash.lastindexof");
+var _toString = _dereq_("lodash._basetostring");
 
 (function(exports) {
   "use strict";
@@ -7310,13 +7314,13 @@ var toString = _dereq_("lodash._basetostring");
     }
 
     // Check if they are the same type.
-    var firstType = toString(first);// toString.call(first);
-    if (firstType !== toString(second)){// toString.call(second)) {
+    var firstType = _toString(first);// toString.call(first);
+    if (firstType !== _toString(second)){// toString.call(second)) {
       return false;
     }
     // We know that first and second have the same type so we can just check the
     // first type from now on.
-    if (isArray(first) === true) {
+    if (_isArray(first) === true) {
       // Short circuit if they're not the same length;
       if (first.length !== second.length) {
         return false;
@@ -7328,7 +7332,7 @@ var toString = _dereq_("lodash._basetostring");
       }
       return true;
     }
-    if (isObject(first) === true) {
+    if (_isObject(first) === true) {
       // An object is equal if it has the same key/value pairs.
       var keysSeen = {};
       for (var key in first) {
@@ -7365,10 +7369,10 @@ var toString = _dereq_("lodash._basetostring");
     // First check the scalar values.
     if (obj === "" || obj === false || obj === null) {
         return true;
-    } else if (isArray(obj) && obj.length === 0) {
+    } else if (_isArray(obj) && obj.length === 0) {
         // Check for an empty array.
         return true;
-    } else if (isObject(obj)) {
+    } else if (_isObject(obj)) {
         // Check for an empty object.
         for (var key in obj) {
             // If there are any keys, then
@@ -7385,7 +7389,7 @@ var toString = _dereq_("lodash._basetostring");
   }
 
   function objValues(obj) {
-    var keys = keys(obj);
+    var keys = _keys(obj);
     var values = [];
     for (var i = 0; i < keys.length; i++) {
       values.push(obj[keys[i]]);
@@ -7674,11 +7678,11 @@ var toString = _dereq_("lodash._basetostring");
 
           if (literalString === "") {
               return false;
-          } else if (indexOf(startingChars, literalString[0]) >= 0) {
+          } else if (_indexOf(startingChars, literalString[0]) >= 0) {
               return true;
-          } else if (indexOf(jsonLiterals, literalString) >= 0) {
+          } else if (_indexOf(jsonLiterals, literalString) >= 0) {
               return true;
-          } else if (indexOf(numberLooking, literalString[0]) >= 0) {
+          } else if (_indexOf(numberLooking, literalString[0]) >= 0) {
               try {
                   JSON.parse(literalString);
                   return true;
@@ -8027,7 +8031,7 @@ var toString = _dereq_("lodash._basetostring");
       parseDotRHS: function(rbp) {
           var lookahead = this.lookahead(0);
           var exprTokens = ["UnquotedIdentifier", "QuotedIdentifier", "Star"];
-          if (indexOf(exprTokens, lookahead) >= 0) {
+          if (_indexOf(exprTokens, lookahead) >= 0) {
               return this.expression(rbp);
           } else if (lookahead === "Lbracket") {
               this.match("Lbracket");
@@ -8081,7 +8085,7 @@ var toString = _dereq_("lodash._basetostring");
         var keyToken, keyName, value, node;
         for (;;) {
           keyToken = this.lookaheadToken(0);
-          if (indexOf(identifierTypes, keyToken.type) < 0) {
+          if (_indexOf(identifierTypes, keyToken.type) < 0) {
             throw new Error("Expecting an identifier token, got: " +
                             keyToken.type);
           }
@@ -8123,7 +8127,7 @@ var toString = _dereq_("lodash._basetostring");
       visitField: function(node, value) {
           if (value === null ) {
               return null;
-          } else if (isObject(value)) {
+          } else if (_isObject(value)) {
               var field = value[node.name];
               if (field === undefined) {
                   return null;
@@ -8153,7 +8157,7 @@ var toString = _dereq_("lodash._basetostring");
       },
 
       visitIndex: function(node, value) {
-        if (!isArray(value)) {
+        if (!_isArray(value)) {
           return null;
         }
         var index = node.value;
@@ -8168,7 +8172,7 @@ var toString = _dereq_("lodash._basetostring");
       },
 
       visitSlice: function(node, value) {
-        if (!isArray(value)) {
+        if (!_isArray(value)) {
           return null;
         }
         var sliceParams = node.children.slice(0);
@@ -8236,7 +8240,7 @@ var toString = _dereq_("lodash._basetostring");
       visitProjection: function(node, value) {
         // Evaluate left child.
         var base = this.visit(node.children[0], value);
-        if (!isArray(base)) {
+        if (!_isArray(base)) {
           return null;
         }
         var collected = [];
@@ -8252,7 +8256,7 @@ var toString = _dereq_("lodash._basetostring");
       visitValueProjection: function(node, value) {
         // Evaluate left child.
         var base = this.visit(node.children[0], value);
-        if (!isObject(base)) {
+        if (!_isObject(base)) {
           return null;
         }
         var collected = [];
@@ -8268,7 +8272,7 @@ var toString = _dereq_("lodash._basetostring");
 
       visitFilterProjection: function(node, value) {
         var base = this.visit(node.children[0], value);
-        if (!isArray(base)) {
+        if (!_isArray(base)) {
           return null;
         }
         var filtered = [];
@@ -8320,13 +8324,13 @@ var toString = _dereq_("lodash._basetostring");
 
       visitFlatten: function(node, value) {
         var original = this.visit(node.children[0], value);
-        if (!isArray(original)) {
+        if (!_isArray(original)) {
           return null;
         }
         var merged = [];
         for (var i = 0; i < original.length; i++) {
           var current = original[i];
-          if (isArray(current)) {
+          if (_isArray(current)) {
             merged.push.apply(merged, current);
           } else {
             merged.push(current);
@@ -8537,14 +8541,14 @@ var toString = _dereq_("lodash._basetostring");
         if (expected === "any") {
             return true;
         }
-        if (indexOf(expected, "array") === 0) {
+        if (_indexOf(expected, "array") === 0) {
             // The expected type can either just be array,
             // or it can require a specific subtype (array of numbers).
             //
             // The simplest case is if "array" with no subtype is specified.
             if (expected === "array") {
-                return indexOf(actual, "array") === 0;
-            } else if (indexOf(actual, "array") === 0) {
+                return _indexOf(actual, "array") === 0;
+            } else if (_indexOf(actual, "array") === 0) {
                 // Otherwise we need to check subtypes.
                 // I think this has potential to be improved.
                 var subtype = expected.split("-")[1];
@@ -8563,7 +8567,7 @@ var toString = _dereq_("lodash._basetostring");
     },
     getTypeName: function(obj) {
         //switch (toString.call(obj)) {
-        switch (toString(obj)) {
+        switch (_toString(obj)) {
             case "[object String]":
               return "string";
             case "[object Number]":
@@ -8586,13 +8590,13 @@ var toString = _dereq_("lodash._basetostring");
     },
 
     functionStartsWith: function(resolvedArgs) {
-        return lastIndexOf(resolvedArgs[0], resolvedArgs[1]) === 0;
+        return _lastIndexOf(resolvedArgs[0], resolvedArgs[1]) === 0;
     },
 
     functionEndsWith: function(resolvedArgs) {
         var searchStr = resolvedArgs[0];
         var suffix = resolvedArgs[1];
-        return indexOf(suffix, searchStr.length - suffix.length) !== -1;
+        return _indexOf(suffix, searchStr.length - suffix.length) !== -1;
     },
 
     functionReverse: function(resolvedArgs) {
@@ -8629,7 +8633,7 @@ var toString = _dereq_("lodash._basetostring");
     },
 
     functionContains: function(resolvedArgs) {
-        return indexOf(resolvedArgs[0], resolvedArgs[1]) >= 0;
+        return _indexOf(resolvedArgs[0], resolvedArgs[1]) >= 0;
     },
 
     functionFloor: function(resolvedArgs) {
@@ -8637,12 +8641,12 @@ var toString = _dereq_("lodash._basetostring");
     },
 
     functionLength: function(resolvedArgs) {
-       if (!isObject(resolvedArgs[0])) {
+       if (!_isObject(resolvedArgs[0])) {
          return resolvedArgs[0].length;
        } else {
          // As far as I can tell, there's no way to get the length
          // of an object without O(n) iteration through the object.
-         return keys(resolvedArgs[0]).length;
+         return _keys(resolvedArgs[0]).length;
        }
     },
 
@@ -8711,12 +8715,12 @@ var toString = _dereq_("lodash._basetostring");
     },
 
     functionKeys: function(resolvedArgs) {
-        return keys(resolvedArgs[0]);
+        return _keys(resolvedArgs[0]);
     },
 
     functionValues: function(resolvedArgs) {
         var obj = resolvedArgs[0];
-        var keys = keys(obj);
+        var keys = _keys(obj);
         var values = [];
         for (var i = 0; i < keys.length; i++) {
             values.push(obj[keys[i]]);
@@ -8784,7 +8788,7 @@ var toString = _dereq_("lodash._basetostring");
         var exprefNode = resolvedArgs[1];
         var requiredType = this.getTypeName(
             interpreter.visit(exprefNode, sortedArray[0]));
-        if (indexOf(["number", "string"], requiredType) < 0) {
+        if (_indexOf(["number", "string"], requiredType) < 0) {
             throw new Error("TypeError");
         }
         var that = this;
@@ -8868,7 +8872,7 @@ var toString = _dereq_("lodash._basetostring");
       var interpreter = this.interpreter;
       var keyFunc = function(x) {
         var current = interpreter.visit(exprefNode, x);
-        if (indexOf(allowedTypes, that.getTypeName(current)) < 0) {
+        if (_indexOf(allowedTypes, that.getTypeName(current)) < 0) {
           var msg = "TypeError: expected one of " + allowedTypes +
                     ", received " + that.getTypeName(current);
           throw new Error(msg);
@@ -10053,6 +10057,47 @@ function isNumber(value) {
 }
 
 module.exports = isNumber;
+
+},{}],43:[function(_dereq_,module,exports){
+'use strict';
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function ToObject(val) {
+	if (val == null) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function ownEnumerableKeys(obj) {
+	var keys = Object.getOwnPropertyNames(obj);
+
+	if (Object.getOwnPropertySymbols) {
+		keys = keys.concat(Object.getOwnPropertySymbols(obj));
+	}
+
+	return keys.filter(function (key) {
+		return propIsEnumerable.call(obj, key);
+	});
+}
+
+module.exports = Object.assign || function (target, source) {
+	var from;
+	var keys;
+	var to = ToObject(target);
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = arguments[s];
+		keys = ownEnumerableKeys(Object(from));
+
+		for (var i = 0; i < keys.length; i++) {
+			to[keys[i]] = from[keys[i]];
+		}
+	}
+
+	return to;
+};
 
 },{}]},{},[1])
 (1)

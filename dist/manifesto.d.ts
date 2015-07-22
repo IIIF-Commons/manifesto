@@ -68,7 +68,6 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IManifest extends IJSONLDResource {
-        defaultLabel: string;
         getAttribution(): string;
         getLocalisedValue(resource: any, locale?: string): string;
         getLabel(): string;
@@ -86,6 +85,7 @@ declare module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         isMultiSequence(): boolean;
+        options: IManifestoOptions;
         rootRange: IRange;
         treeRoot: TreeNode;
     }
@@ -98,6 +98,11 @@ declare module Manifesto {
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
     parse: (manifest: string) => Manifesto.Manifest;
+}
+interface IManifestoOptions {
+    defaultLabel: string;
+    locale: string;
+    pessimisticAccessControl: boolean;
 }
 declare module Manifesto {
     interface IRange extends IManifestResource {
@@ -145,17 +150,17 @@ declare module Manifesto {
     }
 }
 declare var _isArray: any;
+declare var objectAssign: any;
 declare module Manifesto {
     class Manifest implements IManifest {
-        defaultLabel: string;
         id: string;
+        options: IManifestoOptions;
         jsonld: any;
-        locale: string;
         manifest: IManifest;
         rootRange: IRange;
         sequences: Sequence[];
         treeRoot: TreeNode;
-        constructor(jsonld: any);
+        constructor(jsonld: any, options?: IManifestoOptions);
         getAttribution(): string;
         getLabel(): string;
         getLocalisedValue(resource: any, locale?: string): string;
