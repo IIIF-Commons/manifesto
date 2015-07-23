@@ -170,10 +170,10 @@ declare module Manifesto {
         getRanges(): IRange[];
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: any, format: Manifesto.RenderingFormat): Manifesto.Rendering;
+        getRendering(resource: any, format: Manifesto.RenderingFormat | string): Manifesto.Rendering;
         getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
-        getService(resource: any, profile: Manifesto.ServiceProfile): IService;
+        getService(resource: any, profile: Manifesto.ServiceProfile | string): IService;
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTitle(): string;
         getTotalSequences(): number;

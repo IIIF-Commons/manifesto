@@ -183,7 +183,7 @@ module Manifesto {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
 
                 if (!_isNumber(height)) {
-                    var heightRatio = canvas.getHeight() / canvas.getWidth();
+                    var heightRatio = canvas.height / canvas.width;
 
                     if (heightRatio) {
                         height = Math.floor(width * heightRatio);

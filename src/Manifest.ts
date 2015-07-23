@@ -140,7 +140,7 @@ module Manifesto {
             return null;
         }
 
-        getRendering(resource:any, format: Manifesto.RenderingFormat): Manifesto.Rendering {
+        getRendering(resource: any, format: Manifesto.RenderingFormat | string): Manifesto.Rendering {
             if (!resource.rendering) return null;
 
             var renderings = resource.rendering;
@@ -178,7 +178,7 @@ module Manifesto {
             return this.getLocalisedValue(this.jsonld.seeAlso);
         }
 
-        getService(resource: any, profile: Manifesto.ServiceProfile): IService {
+        getService(resource: any, profile: Manifesto.ServiceProfile | string): IService {
             if (!resource.service) return null;
 
             if (_isArray(resource.service)){

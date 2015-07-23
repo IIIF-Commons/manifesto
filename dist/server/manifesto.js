@@ -28,8 +28,7 @@ var Manifesto;
             }
             else if (this.jsonld.resources) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.manifest.getService();
-                this.jsonld.resources[0].resource.service['@id'];
+                uri = this.jsonld.resources[0].resource.service['@id'];
             }
             else if (this.jsonld.images && this.jsonld.images[0].resource.service) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
@@ -501,7 +500,7 @@ var Manifesto;
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
                 if (!_isNumber(height)) {
-                    var heightRatio = canvas.getHeight() / canvas.getWidth();
+                    var heightRatio = canvas.height / canvas.width;
                     if (heightRatio) {
                         height = Math.floor(width * heightRatio);
                     }
