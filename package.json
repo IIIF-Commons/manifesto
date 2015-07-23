@@ -1,6 +1,6 @@
 {
   "name": "manifesto",
-  "version": "0.0.138",
+  "version": "0.0.140",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "dist/server/manifesto.js",
   "scripts": {
@@ -33,7 +33,6 @@
     "lodash": "^3.10.0",
     "merge2": "^0.3.5",
     "mocha": "^2.2.4",
-    "object-assign": "^3.0.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.0",
     "yargs": "^3.10.0"
@@ -41,6 +40,7 @@
   "dependencies": {
     "extensions": "edsilv/extensions",
     "jmespath": "git://github.com/edsilv/jmespath.js.git",
+    "lodash.assign": "^3.2.0",
     "lodash.isarray": "^3.0.4",
     "lodash.isnumber": "^3.0.1"
   }

@@ -1,5 +1,5 @@
+var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
-var objectAssign = require('object-assign');
 
 module Manifesto {
     export class Manifest implements IManifest {
@@ -11,10 +11,9 @@ module Manifesto {
         public sequences: Sequence[] = [];
         public treeRoot: TreeNode;
 
-        // todo: use destructor for default options
         constructor(jsonld: any, options?: IManifestoOptions) {
             this.jsonld = jsonld;
-            this.options = objectAssign({defaultLabel: '-', locale: 'en-GB'}, options);
+            this.options = _assign({defaultLabel: '-', locale: 'en-GB'}, options);
         }
 
         getAttribution(): string {

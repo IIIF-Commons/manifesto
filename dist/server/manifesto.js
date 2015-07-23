@@ -113,16 +113,15 @@ var Manifesto;
     })();
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
+var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
-var objectAssign = require('object-assign');
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function () {
-        // todo: use destructor for default options
         function Manifest(jsonld, options) {
             this.sequences = [];
             this.jsonld = jsonld;
-            this.options = objectAssign({ defaultLabel: '-', locale: 'en-GB' }, options);
+            this.options = _assign({ defaultLabel: '-', locale: 'en-GB' }, options);
         }
         Manifest.prototype.getAttribution = function () {
             return this.getLocalisedValue(this.jsonld.attribution);

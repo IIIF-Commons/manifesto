@@ -149,8 +149,8 @@ declare module Manifesto {
     interface IService extends IManifestResource {
     }
 }
+declare var _assign: any;
 declare var _isArray: any;
-declare var objectAssign: any;
 declare module Manifesto {
     class Manifest implements IManifest {
         id: string;
