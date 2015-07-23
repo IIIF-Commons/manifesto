@@ -41,6 +41,9 @@ module Manifesto {
                 canvas.id = c['@id'];
                 canvas.jsonld = c;
                 canvas.manifest = this.manifest;
+                canvas.type = new CanvasType(c['@type'].toLowerCase());
+                canvas.width = c.width;
+                canvas.height = c.height;
 
                 canvases.push(canvas);
             }

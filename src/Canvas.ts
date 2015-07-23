@@ -7,10 +7,8 @@ module Manifesto {
         manifest: IManifest;
         ranges: IRange[] = [];
         type: CanvasType;
-
-        getHeight(): number {
-            return this.jsonld.height;
-        }
+        width: number = 0;
+        height: number = 0;
 
         getLabel(): string {
             var regExp = /\d/;
@@ -50,10 +48,6 @@ module Manifesto {
             var tile = 'full/' + width + ',' + height + '/0/default.jpg';
 
             return path.join(uri, tile);
-        }
-
-        getWidth(): number {
-            return this.jsonld.width;
         }
     }
 }
