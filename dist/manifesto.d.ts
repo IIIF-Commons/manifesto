@@ -134,15 +134,17 @@ declare module Manifesto {
         getPagedIndices(index: number): number[];
         getPrevPageIndex(index: number): number;
         getStartCanvasIndex(): number;
-        getTotalCanvases(): number;
         getThumbs(width: number, height: number): Manifesto.Thumb[];
-        getViewingDirection(): Manifesto.ViewingDirection;
+        getTotalCanvases(): number;
         isCanvasIndexOutOfRange(index: number): boolean;
         isFirstCanvas(index: number): boolean;
         isLastCanvas(index: number): boolean;
         isMultiCanvas(): boolean;
         isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
+        startCanvas: string;
+        viewingDirection: Manifesto.ViewingDirection;
+        viewingHint: Manifesto.ViewingHint;
     }
 }
 declare module Manifesto {
@@ -238,7 +240,6 @@ declare module Manifesto {
         getStartCanvasIndex(): number;
         getThumbs(width: number, height?: number): Manifesto.Thumb[];
         getTotalCanvases(): number;
-        getViewingDirection(): Manifesto.ViewingDirection;
         isCanvasIndexOutOfRange(canvasIndex: number): boolean;
         isFirstCanvas(canvasIndex: number): boolean;
         isLastCanvas(canvasIndex: number): boolean;

@@ -24,8 +24,18 @@ module Manifesto {
                 sequence.id = s['@id'];
                 sequence.jsonld = s;
                 sequence.manifest = this.manifest;
-                sequence.viewingDirection = new ViewingDirection(s.viewingDirection);
-                sequence.viewingHint = new ViewingHint(s.viewingHint);
+                sequence.startCanvas = s.startCanvas;
+
+                if (s.viewingDirection){
+                    sequence.viewingDirection = new ViewingDirection(s.viewingDirection);
+                } else {
+                    sequence.viewingDirection = Manifesto.ViewingDirection.leftToRight;
+                }
+
+                if (s.viewingHint){
+                    sequence.viewingHint = new ViewingHint(s.viewingHint);
+                }
+                
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
             }

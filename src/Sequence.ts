@@ -103,7 +103,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
+                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft){
                     index = indices[0] + 1;
                 } else {
                     index = indices.last() + 1;
@@ -134,7 +134,7 @@ module Manifesto {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
 
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
+                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft){
                     indices = indices.reverse();
                 }
             }
@@ -149,7 +149,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
+                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft){
                     index = indices.last() - 1;
                 } else {
                     index = indices[0] - 1;
@@ -202,10 +202,6 @@ module Manifesto {
             return this.canvases.length;
         }
 
-        getViewingDirection(): Manifesto.ViewingDirection {
-            return this.viewingDirection || Manifesto.ViewingDirection.leftToRight;
-        }
-
         isCanvasIndexOutOfRange(canvasIndex: number): boolean {
             return canvasIndex > this.getTotalCanvases() - 1;
         }
@@ -223,7 +219,7 @@ module Manifesto {
         }
 
         isPagingEnabled(): boolean{
-            return this.viewingHint && (this.viewingHint.toString() === "paged");
+            return this.viewingHint && (this.viewingHint === ViewingHint.paged);
         }
 
         // checks if the number of canvases is even - therefore has a front and back cover

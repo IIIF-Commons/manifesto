@@ -439,7 +439,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft) {
                     index = indices[0] + 1;
                 }
                 else {
@@ -469,7 +469,7 @@ var Manifesto;
                 else {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft) {
                     indices = indices.reverse();
                 }
             }
@@ -479,7 +479,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft) {
                     index = indices.last() - 1;
                 }
                 else {
@@ -521,9 +521,6 @@ var Manifesto;
         Sequence.prototype.getTotalCanvases = function () {
             return this.canvases.length;
         };
-        Sequence.prototype.getViewingDirection = function () {
-            return this.viewingDirection || Manifesto.ViewingDirection.leftToRight;
-        };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;
         };
@@ -537,7 +534,7 @@ var Manifesto;
             return this.getTotalCanvases() > 1;
         };
         Sequence.prototype.isPagingEnabled = function () {
-            return this.viewingHint && (this.viewingHint.toString() === "paged");
+            return this.viewingHint && (this.viewingHint === Manifesto.ViewingHint.paged);
         };
         // checks if the number of canvases is even - therefore has a front and back cover
         Sequence.prototype.isTotalCanvasesEven = function () {
@@ -568,8 +565,16 @@ var Manifesto;
                 sequence.id = s['@id'];
                 sequence.jsonld = s;
                 sequence.manifest = this.manifest;
-                sequence.viewingDirection = new Manifesto.ViewingDirection(s.viewingDirection);
-                sequence.viewingHint = new Manifesto.ViewingHint(s.viewingHint);
+                sequence.startCanvas = s.startCanvas;
+                if (s.viewingDirection) {
+                    sequence.viewingDirection = new Manifesto.ViewingDirection(s.viewingDirection);
+                }
+                else {
+                    sequence.viewingDirection = Manifesto.ViewingDirection.leftToRight;
+                }
+                if (s.viewingHint) {
+                    sequence.viewingHint = new Manifesto.ViewingHint(s.viewingHint);
+                }
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
             }

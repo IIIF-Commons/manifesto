@@ -10,14 +10,16 @@ module Manifesto {
         getPagedIndices(index: number): number[];
         getPrevPageIndex(index: number): number;
         getStartCanvasIndex(): number;
-        getTotalCanvases(): number;
         getThumbs(width: number, height: number): Manifesto.Thumb[];
-        getViewingDirection(): Manifesto.ViewingDirection;
+        getTotalCanvases(): number;
         isCanvasIndexOutOfRange(index: number): boolean;
         isFirstCanvas(index: number): boolean;
         isLastCanvas(index: number): boolean;
         isMultiCanvas(): boolean;
         isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
+        startCanvas: string;
+        viewingDirection: Manifesto.ViewingDirection;
+        viewingHint: Manifesto.ViewingHint;
     }
 }
