@@ -35,7 +35,7 @@ module Manifesto {
                 if (s.viewingHint){
                     sequence.viewingHint = new ViewingHint(s.viewingHint);
                 }
-                
+
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
             }

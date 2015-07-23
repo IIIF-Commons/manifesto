@@ -192,7 +192,7 @@ module Manifesto {
 
                 var uri = canvas.getThumbUri(width, height);
 
-                thumbs.push(new Manifesto.Thumb(i, uri, this.manifest.getLocalisedValue(canvas.getLabel()), width, height, true));
+                thumbs.push(new Manifesto.Thumb(i, uri, canvas.getLabel(), width, height, true));
             }
 
             return thumbs;
