@@ -22,6 +22,7 @@ declare module Manifesto {
     class Canvas extends JSONLDResource implements ICanvas {
         ranges: IRange[];
         constructor(jsonld: any);
+        getImageUri(): string;
         getLabel(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
@@ -61,6 +62,7 @@ declare module Manifesto {
 declare module Manifesto {
     interface ICanvas extends IJSONLDResource {
         getHeight(): number;
+        getImageUri(): string;
         getLabel(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;

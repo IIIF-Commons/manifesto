@@ -31,6 +31,20 @@ var Manifesto;
             _super.call(this, jsonld);
             this.ranges = [];
         }
+        Canvas.prototype.getImageUri = function () {
+            var imageUri;
+            if (this.jsonld.resources) {
+                imageUri = this.jsonld.resources[0].resource.service['@id'];
+            }
+            else if (this.jsonld.images && this.jsonld.images[0].resource.service) {
+                imageUri = this.jsonld.images[0].resource.service['@id'];
+            }
+            if (!imageUri.endsWith('/')) {
+                imageUri += '/';
+            }
+            imageUri += 'info.json';
+            return imageUri;
+        };
         Canvas.prototype.getLabel = function () {
             var regExp = /\d/;
             if (regExp.test(this.jsonld.label)) {
