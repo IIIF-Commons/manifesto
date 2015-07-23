@@ -2,17 +2,14 @@ var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
 
 module Manifesto {
-    export class Manifest implements IManifest {
-        public id: string;
+    export class Manifest extends JSONLDResource implements IManifest {
         public options: IManifestoOptions;
-        public jsonld: any;
-        public manifest: IManifest;
         public rootRange: IRange;
         public sequences: Sequence[] = [];
         public treeRoot: TreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
-            this.jsonld = jsonld;
+            super(jsonld);
             this.options = _assign({defaultLabel: '-', locale: 'en-GB'}, options);
         }
 
@@ -66,31 +63,31 @@ module Manifesto {
         }
 
         getMetadata(includeRootProperties?: boolean): any{
-            var metadata: Object[] = this.manifest.jsonld.metadata;
+            var metadata: Object[] = this.jsonld.metadata;
 
             if (metadata && includeRootProperties){
-                if (this.manifest.jsonld.description){
+                if (this.jsonld.description){
                     metadata.push({
                         "label": "description",
-                        "value": this.getLocalisedValue(this.manifest.jsonld.description)
+                        "value": this.getLocalisedValue(this.jsonld.description)
                     });
                 }
-                if (this.manifest.jsonld.attribution){
+                if (this.jsonld.attribution){
                     metadata.push({
                         "label": "attribution",
-                        "value": this.getLocalisedValue(this.manifest.jsonld.attribution)
+                        "value": this.getLocalisedValue(this.jsonld.attribution)
                     });
                 }
-                if (this.manifest.jsonld.license){
+                if (this.jsonld.license){
                     metadata.push({
                         "label": "license",
-                        "value": this.getLocalisedValue(this.manifest.jsonld.license)
+                        "value": this.getLocalisedValue(this.jsonld.license)
                     });
                 }
-                if (this.manifest.jsonld.logo){
+                if (this.jsonld.logo){
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>'});
+                        "value": '<img src="' + this.jsonld.logo + '"/>'});
                 }
             }
 
@@ -196,12 +193,12 @@ module Manifesto {
                 for (var i = 0; i < resource.service.length; i++){
                     var service = resource.service[i];
                     if (service.profile && service.profile.toString() === profile) {
-                        return service;
+                        return new Service(service);
                     }
                 }
             } else {
                 if (resource.service.profile && resource.service.profile.toString() === profile){
-                    return resource.service;
+                    return new Service(resource.service);
                 }
             }
 

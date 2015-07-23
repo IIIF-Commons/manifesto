@@ -20,22 +20,8 @@ module Manifesto {
         static parseSequences(): void {
             for (var i = 0; i < this.manifest.jsonld.sequences.length; i++){
                 var s = this.manifest.jsonld.sequences[i];
-                var sequence = new Sequence();
-                sequence.id = s['@id'];
-                sequence.jsonld = s;
-                sequence.manifest = this.manifest;
-                sequence.startCanvas = s.startCanvas;
-
-                if (s.viewingDirection){
-                    sequence.viewingDirection = new ViewingDirection(s.viewingDirection);
-                } else {
-                    sequence.viewingDirection = Manifesto.ViewingDirection.leftToRight;
-                }
-
-                if (s.viewingHint){
-                    sequence.viewingHint = new ViewingHint(s.viewingHint);
-                }
-
+                s.manifest = this.manifest;
+                var sequence = new Sequence(s);
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
             }
@@ -46,15 +32,8 @@ module Manifesto {
 
             for (var i = 0; i < sequence.canvases.length; i++) {
                 var c = sequence.canvases[i];
-
-                var canvas: Canvas = new Canvas();
-                canvas.id = c['@id'];
-                canvas.jsonld = c;
-                canvas.manifest = this.manifest;
-                canvas.type = new CanvasType(c['@type'].toLowerCase());
-                canvas.width = c.width;
-                canvas.height = c.height;
-
+                c.manifest = this.manifest;
+                var canvas: Canvas = new Canvas(c);
                 canvases.push(canvas);
             }
 
@@ -63,7 +42,8 @@ module Manifesto {
 
         static parseRanges(r: any, path: string, parentRange?: Range): void {
 
-            var range: Range = new Range();
+            r.manifest = this.manifest;
+            var range: Range = new Range(r);
 
             // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange){
@@ -73,11 +53,7 @@ module Manifesto {
                 parentRange.ranges.push(range);
             }
 
-            range.id = r['@id'];
-            range.jsonld = r;
             r.parsed = range;
-            range.label = r.label;
-            range.manifest = this.manifest;
             range.path = path;
 
             if (r.canvases){

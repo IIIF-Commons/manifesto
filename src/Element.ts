@@ -1,17 +1,19 @@
 var _isArray = require("lodash.isarray");
 
 module Manifesto {
-    export class Element implements IElement {
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    export class Element extends JSONLDResource implements IElement {
+
         type: ElementType;
+
+        constructor(jsonld: any){
+            super(jsonld);
+        }
 
         getLabel(): string {
             var regExp = /\d/;
 
             if (regExp.test(this.jsonld.label)) {
-                return this.manifest.getLocalisedValue(this.jsonld.label);
+                return this.getManifest().getLocalisedValue(this.jsonld.label);
             }
 
             return null;
@@ -29,8 +31,7 @@ module Manifesto {
 
                 for (var i = 0; i < rendering.length; i++){
                     var r = rendering[i];
-                    var rend: IRendering = new Rendering();
-                    rend.id = r['@id'];
+                    var rend: IRendering = new Rendering(r);
                     rend.format = r.format;
                     renderings.push(rend);
                 }
@@ -39,10 +40,13 @@ module Manifesto {
             }
 
             // no renderings provided, default to element.
-            var rend = new Rendering();
-            rend.id = this.jsonld['@id'];
+            var rend: IRendering = new Rendering(this.jsonld);
             rend.format = this.jsonld.format;
             return [rend];
+        }
+
+        getType(): ElementType {
+            return new ElementType(this.jsonld['@type']);
         }
     }
 }

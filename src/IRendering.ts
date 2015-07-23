@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IRendering extends IManifestResource {
+    export interface IRendering extends IJSONLDResource {
         format: string;
     }
 }

@@ -1,7 +1,7 @@
 module Manifesto {
-    export interface IElement extends IManifestResource{
-        type: ElementType;
+    export interface IElement extends IJSONLDResource{
         getLabel(): string;
         getRenderings(): IRendering[];
+        getType(): ElementType;
     }
 }

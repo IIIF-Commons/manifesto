@@ -1,20 +1,19 @@
 var path = require("path");
 
 module Manifesto {
-    export class Canvas implements ICanvas{
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+    export class Canvas extends JSONLDResource implements ICanvas{
+
         ranges: IRange[] = [];
-        type: CanvasType;
-        width: number = 0;
-        height: number = 0;
+
+        constructor(jsonld: any){
+            super(jsonld);
+        }
 
         getLabel(): string {
             var regExp = /\d/;
 
             if (regExp.test(this.jsonld.label)) {
-                return this.manifest.getLocalisedValue(this.jsonld.label);
+                return this.getManifest().getLocalisedValue(this.jsonld.label);
             }
 
             return null;
@@ -48,6 +47,18 @@ module Manifesto {
             var tile = 'full/' + width + ',' + height + '/0/default.jpg';
 
             return path.join(uri, tile);
+        }
+
+        getType(): CanvasType {
+            return new CanvasType(this.jsonld['@type'].toLowerCase());
+        }
+
+        getWidth(): number {
+            return this.jsonld.width;
+        }
+
+        getHeight(): number {
+            return this.jsonld.height;
         }
     }
 }

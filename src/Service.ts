@@ -1,6 +1,8 @@
 
 module Manifesto {
-    export class Service {
-        id: string;
+    export class Service extends JSONLDResource implements IService {
+        constructor(resource: any){
+            super(resource);
+        }
     }
 }

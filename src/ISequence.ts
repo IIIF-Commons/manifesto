@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface ISequence extends IManifestResource {
+    export interface ISequence extends IJSONLDResource {
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
@@ -9,17 +9,17 @@ module Manifesto {
         getNextPageIndex(index: number): number;
         getPagedIndices(index: number): number[];
         getPrevPageIndex(index: number): number;
+        getStartCanvas(): string;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height: number): Manifesto.Thumb[];
         getTotalCanvases(): number;
+        getViewingDirection(): Manifesto.ViewingDirection;
+        getViewingHint(): Manifesto.ViewingHint;
         isCanvasIndexOutOfRange(index: number): boolean;
         isFirstCanvas(index: number): boolean;
         isLastCanvas(index: number): boolean;
         isMultiCanvas(): boolean;
         isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
-        startCanvas: string;
-        viewingDirection: Manifesto.ViewingDirection;
-        viewingHint: Manifesto.ViewingHint;
     }
 }

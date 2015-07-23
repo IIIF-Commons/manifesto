@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IService extends IManifestResource {
+    export interface IService extends IJSONLDResource {
 
     }
 }

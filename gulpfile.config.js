@@ -13,6 +13,7 @@ var GulpConfig = (function () {
         this.header = '// ' + metadata.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
         this.tsOut = this.lib;
         this.tsSrc = [
+            'src/_references.ts',
             'src/*.ts',
             'typings/*.ts',
             'node_modules/extensions/typings/*.d.ts',

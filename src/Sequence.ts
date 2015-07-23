@@ -1,14 +1,16 @@
 var _isNumber = require("lodash.isnumber");
 
 module Manifesto {
-    export class Sequence implements ISequence {
+    export class Sequence extends JSONLDResource implements ISequence {
         canvases: Canvas[] = [];
-        id: string;
-        jsonld: any;
         manifest: IManifest;
         startCanvas: string;
         viewingDirection: ViewingDirection;
         viewingHint: ViewingHint;
+
+        constructor(jsonld: any){
+            super(jsonld);
+        }
 
         getCanvasById(id: string): ICanvas{
 
@@ -183,7 +185,7 @@ module Manifesto {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
 
                 if (!_isNumber(height)) {
-                    var heightRatio = canvas.height / canvas.width;
+                    var heightRatio = canvas.getHeight() / canvas.getWidth();
 
                     if (heightRatio) {
                         height = Math.floor(width * heightRatio);
@@ -198,8 +200,28 @@ module Manifesto {
             return thumbs;
         }
 
+        getStartCanvas(): string {
+            return this.jsonld.startCanvas;
+        }
+
         getTotalCanvases(): number{
             return this.canvases.length;
+        }
+
+        getViewingDirection(): ViewingDirection {
+            if (this.jsonld.viewingDirection){
+                return new ViewingDirection(this.jsonld.viewingDirection);
+            }
+
+            return Manifesto.ViewingDirection.leftToRight;
+        }
+
+        getViewingHint(): ViewingHint {
+            if (this.jsonld.viewingHint){
+                return new ViewingHint(this.jsonld.viewingHint);
+            }
+
+            return null;
         }
 
         isCanvasIndexOutOfRange(canvasIndex: number): boolean {

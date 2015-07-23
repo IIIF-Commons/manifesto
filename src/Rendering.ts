@@ -1,9 +1,10 @@
 
 module Manifesto {
-    export class Rendering implements IRendering {
+    export class Rendering extends JSONLDResource implements IRendering {
         format: string;
-        id: string;
-        jsonld: any;
-        manifest: IManifest;
+
+        constructor(jsonld: any){
+            super(jsonld);
+        }
     }
 }

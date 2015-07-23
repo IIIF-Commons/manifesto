@@ -1,16 +1,40 @@
+var Manifesto;
+(function (Manifesto) {
+    var JSONLDResource = (function () {
+        function JSONLDResource(jsonld) {
+            this.jsonld = jsonld;
+            this.context = this.jsonld['@context'];
+            this.id = this.jsonld['@id'];
+            this.label = this.jsonld['@label'];
+            // the serializer stores a reference to the manifest on the jsonld resource for convenience
+            this.manifest = this.jsonld.manifest;
+        }
+        JSONLDResource.prototype.getManifest = function () {
+            return this.manifest;
+        };
+        return JSONLDResource;
+    })();
+    Manifesto.JSONLDResource = JSONLDResource;
+})(Manifesto || (Manifesto = {}));
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var path = require("path");
 var Manifesto;
 (function (Manifesto) {
-    var Canvas = (function () {
-        function Canvas() {
+    var Canvas = (function (_super) {
+        __extends(Canvas, _super);
+        function Canvas(jsonld) {
+            _super.call(this, jsonld);
             this.ranges = [];
-            this.width = 0;
-            this.height = 0;
         }
         Canvas.prototype.getLabel = function () {
             var regExp = /\d/;
             if (regExp.test(this.jsonld.label)) {
-                return this.manifest.getLocalisedValue(this.jsonld.label);
+                return this.getManifest().getLocalisedValue(this.jsonld.label);
             }
             return null;
         };
@@ -41,8 +65,17 @@ var Manifesto;
             var tile = 'full/' + width + ',' + height + '/0/default.jpg';
             return path.join(uri, tile);
         };
+        Canvas.prototype.getType = function () {
+            return new Manifesto.CanvasType(this.jsonld['@type'].toLowerCase());
+        };
+        Canvas.prototype.getWidth = function () {
+            return this.jsonld.width;
+        };
+        Canvas.prototype.getHeight = function () {
+            return this.jsonld.height;
+        };
         return Canvas;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -62,13 +95,15 @@ var Manifesto;
 var _isArray = require("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
-    var Element = (function () {
-        function Element() {
+    var Element = (function (_super) {
+        __extends(Element, _super);
+        function Element(jsonld) {
+            _super.call(this, jsonld);
         }
         Element.prototype.getLabel = function () {
             var regExp = /\d/;
             if (regExp.test(this.jsonld.label)) {
-                return this.manifest.getLocalisedValue(this.jsonld.label);
+                return this.getManifest().getLocalisedValue(this.jsonld.label);
             }
             return null;
         };
@@ -81,21 +116,22 @@ var Manifesto;
                 }
                 for (var i = 0; i < rendering.length; i++) {
                     var r = rendering[i];
-                    var rend = new Manifesto.Rendering();
-                    rend.id = r['@id'];
+                    var rend = new Manifesto.Rendering(r);
                     rend.format = r.format;
                     renderings.push(rend);
                 }
                 return renderings;
             }
             // no renderings provided, default to element.
-            var rend = new Manifesto.Rendering();
-            rend.id = this.jsonld['@id'];
+            var rend = new Manifesto.Rendering(this.jsonld);
             rend.format = this.jsonld.format;
             return [rend];
         };
+        Element.prototype.getType = function () {
+            return new Manifesto.ElementType(this.jsonld['@type']);
+        };
         return Element;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Element = Element;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -118,10 +154,11 @@ var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
-    var Manifest = (function () {
+    var Manifest = (function (_super) {
+        __extends(Manifest, _super);
         function Manifest(jsonld, options) {
+            _super.call(this, jsonld);
             this.sequences = [];
-            this.jsonld = jsonld;
             this.options = _assign({ defaultLabel: '-', locale: 'en-GB' }, options);
         }
         Manifest.prototype.getAttribution = function () {
@@ -162,30 +199,30 @@ var Manifesto;
             return this.getLocalisedValue(this.jsonld.license);
         };
         Manifest.prototype.getMetadata = function (includeRootProperties) {
-            var metadata = this.manifest.jsonld.metadata;
+            var metadata = this.jsonld.metadata;
             if (metadata && includeRootProperties) {
-                if (this.manifest.jsonld.description) {
+                if (this.jsonld.description) {
                     metadata.push({
                         "label": "description",
-                        "value": this.getLocalisedValue(this.manifest.jsonld.description)
+                        "value": this.getLocalisedValue(this.jsonld.description)
                     });
                 }
-                if (this.manifest.jsonld.attribution) {
+                if (this.jsonld.attribution) {
                     metadata.push({
                         "label": "attribution",
-                        "value": this.getLocalisedValue(this.manifest.jsonld.attribution)
+                        "value": this.getLocalisedValue(this.jsonld.attribution)
                     });
                 }
-                if (this.manifest.jsonld.license) {
+                if (this.jsonld.license) {
                     metadata.push({
                         "label": "license",
-                        "value": this.getLocalisedValue(this.manifest.jsonld.license)
+                        "value": this.getLocalisedValue(this.jsonld.license)
                     });
                 }
-                if (this.manifest.jsonld.logo) {
+                if (this.jsonld.logo) {
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.manifest.jsonld.logo + '"/>' });
+                        "value": '<img src="' + this.jsonld.logo + '"/>' });
                 }
             }
             return metadata;
@@ -265,13 +302,13 @@ var Manifesto;
                 for (var i = 0; i < resource.service.length; i++) {
                     var service = resource.service[i];
                     if (service.profile && service.profile.toString() === profile) {
-                        return service;
+                        return new Manifesto.Service(service);
                     }
                 }
             }
             else {
                 if (resource.service.profile && resource.service.profile.toString() === profile) {
-                    return resource.service;
+                    return new Manifesto.Service(resource.service);
                 }
             }
             return null;
@@ -319,13 +356,15 @@ var Manifesto;
             return this.getTotalSequences() > 1;
         };
         return Manifest;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Manifest = Manifest;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var Range = (function () {
-        function Range() {
+    var Range = (function (_super) {
+        __extends(Range, _super);
+        function Range(jsonld) {
+            _super.call(this, jsonld);
             this.canvases = [];
             this.ranges = [];
         }
@@ -336,17 +375,31 @@ var Manifesto;
             }
             return null;
         };
+        Range.prototype.getViewingDirection = function () {
+            if (this.jsonld.viewingDirection) {
+                return new Manifesto.ViewingDirection(this.jsonld.viewingDirection);
+            }
+            return null;
+        };
+        Range.prototype.getViewingHint = function () {
+            if (this.jsonld.viewingHint) {
+                return new Manifesto.ViewingHint(this.jsonld.viewingHint);
+            }
+            return null;
+        };
         return Range;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Range = Range;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var Rendering = (function () {
-        function Rendering() {
+    var Rendering = (function (_super) {
+        __extends(Rendering, _super);
+        function Rendering(jsonld) {
+            _super.call(this, jsonld);
         }
         return Rendering;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -368,8 +421,10 @@ var Manifesto;
 var _isNumber = require("lodash.isnumber");
 var Manifesto;
 (function (Manifesto) {
-    var Sequence = (function () {
-        function Sequence() {
+    var Sequence = (function (_super) {
+        __extends(Sequence, _super);
+        function Sequence(jsonld) {
+            _super.call(this, jsonld);
             this.canvases = [];
         }
         Sequence.prototype.getCanvasById = function (id) {
@@ -508,7 +563,7 @@ var Manifesto;
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
                 if (!_isNumber(height)) {
-                    var heightRatio = canvas.height / canvas.width;
+                    var heightRatio = canvas.getHeight() / canvas.getWidth();
                     if (heightRatio) {
                         height = Math.floor(width * heightRatio);
                     }
@@ -518,8 +573,23 @@ var Manifesto;
             }
             return thumbs;
         };
+        Sequence.prototype.getStartCanvas = function () {
+            return this.jsonld.startCanvas;
+        };
         Sequence.prototype.getTotalCanvases = function () {
             return this.canvases.length;
+        };
+        Sequence.prototype.getViewingDirection = function () {
+            if (this.jsonld.viewingDirection) {
+                return new Manifesto.ViewingDirection(this.jsonld.viewingDirection);
+            }
+            return Manifesto.ViewingDirection.leftToRight;
+        };
+        Sequence.prototype.getViewingHint = function () {
+            if (this.jsonld.viewingHint) {
+                return new Manifesto.ViewingHint(this.jsonld.viewingHint);
+            }
+            return null;
         };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;
@@ -541,7 +611,7 @@ var Manifesto;
             return this.getTotalCanvases() % 2 === 0;
         };
         return Sequence;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Sequence = Sequence;
 })(Manifesto || (Manifesto = {}));
 var jmespath = require('jmespath');
@@ -561,20 +631,8 @@ var Manifesto;
         Deserialiser.parseSequences = function () {
             for (var i = 0; i < this.manifest.jsonld.sequences.length; i++) {
                 var s = this.manifest.jsonld.sequences[i];
-                var sequence = new Manifesto.Sequence();
-                sequence.id = s['@id'];
-                sequence.jsonld = s;
-                sequence.manifest = this.manifest;
-                sequence.startCanvas = s.startCanvas;
-                if (s.viewingDirection) {
-                    sequence.viewingDirection = new Manifesto.ViewingDirection(s.viewingDirection);
-                }
-                else {
-                    sequence.viewingDirection = Manifesto.ViewingDirection.leftToRight;
-                }
-                if (s.viewingHint) {
-                    sequence.viewingHint = new Manifesto.ViewingHint(s.viewingHint);
-                }
+                s.manifest = this.manifest;
+                var sequence = new Manifesto.Sequence(s);
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
             }
@@ -583,19 +641,15 @@ var Manifesto;
             var canvases = [];
             for (var i = 0; i < sequence.canvases.length; i++) {
                 var c = sequence.canvases[i];
-                var canvas = new Manifesto.Canvas();
-                canvas.id = c['@id'];
-                canvas.jsonld = c;
-                canvas.manifest = this.manifest;
-                canvas.type = new Manifesto.CanvasType(c['@type'].toLowerCase());
-                canvas.width = c.width;
-                canvas.height = c.height;
+                c.manifest = this.manifest;
+                var canvas = new Manifesto.Canvas(c);
                 canvases.push(canvas);
             }
             return canvases;
         };
         Deserialiser.parseRanges = function (r, path, parentRange) {
-            var range = new Manifesto.Range();
+            r.manifest = this.manifest;
+            var range = new Manifesto.Range(r);
             // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange) {
                 this.manifest.rootRange = range;
@@ -604,11 +658,7 @@ var Manifesto;
                 range.parentRange = parentRange;
                 parentRange.ranges.push(range);
             }
-            range.id = r['@id'];
-            range.jsonld = r;
             r.parsed = range;
-            range.label = r.label;
-            range.manifest = this.manifest;
             range.path = path;
             if (r.canvases) {
                 // create two-way relationship
@@ -677,11 +727,13 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var Service = (function () {
-        function Service() {
+    var Service = (function (_super) {
+        __extends(Service, _super);
+        function Service(resource) {
+            _super.call(this, resource);
         }
         return Service;
-    })();
+    })(Manifesto.JSONLDResource);
     Manifesto.Service = Service;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -771,33 +823,6 @@ var Manifesto;
     })();
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
-/// <reference path="./Canvas.ts" />
-/// <reference path="./CanvasType.ts" />
-/// <reference path="./Element.ts" />
-/// <reference path="./ElementType.ts" />
-/// <reference path="./ICanvas.ts" />
-/// <reference path="./IElement.ts" />
-/// <reference path="./IJSONLDResource.ts" />
-/// <reference path="./IManifest.ts" />
-/// <reference path="./IManifesto.ts" />
-/// <reference path="./IManifestResource.ts" />
-/// <reference path="./IRange.ts" />
-/// <reference path="./IRendering.ts" />
-/// <reference path="./ISequence.ts" />
-/// <reference path="./IService.ts" />
-/// <reference path="./Manifest.ts" />
-/// <reference path="./Range.ts" />
-/// <reference path="./Rendering.ts" />
-/// <reference path="./RenderingFormat.ts" />
-/// <reference path="./Sequence.ts" />
-/// <reference path="./Serialisation.ts" />
-/// <reference path="./Service.ts" />
-/// <reference path="./ServiceProfile.ts" />
-/// <reference path="./Thumb.ts" />
-/// <reference path="./TreeNode.ts" />
-/// <reference path="./ViewingDirection.ts" />
-/// <reference path="./ViewingHint.ts" />
-/// <reference path="./Manifesto.ts" /> 
 /// <reference path="./_references.ts" />
 var http = require("http");
 var url = require("url");
@@ -831,3 +856,31 @@ module.exports = {
         return Manifesto.Deserialiser.parse(manifest);
     }
 };
+/// <reference path="./IJSONLDResource.ts" />
+/// <reference path="./JSONLDResource.ts" />
+/// <reference path="./Canvas.ts" />
+/// <reference path="./CanvasType.ts" />
+/// <reference path="./Element.ts" />
+/// <reference path="./ElementType.ts" />
+/// <reference path="./ICanvas.ts" />
+/// <reference path="./IElement.ts" />
+/// <reference path="./IManifest.ts" />
+/// <reference path="./IManifesto.ts" />
+/// <reference path="./IManifestoOptions.ts" />
+/// <reference path="./IRange.ts" />
+/// <reference path="./IRendering.ts" />
+/// <reference path="./ISequence.ts" />
+/// <reference path="./IService.ts" />
+/// <reference path="./Manifest.ts" />
+/// <reference path="./Range.ts" />
+/// <reference path="./Rendering.ts" />
+/// <reference path="./RenderingFormat.ts" />
+/// <reference path="./Sequence.ts" />
+/// <reference path="./Serialisation.ts" />
+/// <reference path="./Service.ts" />
+/// <reference path="./ServiceProfile.ts" />
+/// <reference path="./Thumb.ts" />
+/// <reference path="./TreeNode.ts" />
+/// <reference path="./ViewingDirection.ts" />
+/// <reference path="./ViewingHint.ts" />
+/// <reference path="./Manifesto.ts" /> 
