@@ -143,6 +143,11 @@ module Manifesto {
         getRendering(resource: any, format: Manifesto.RenderingFormat | string): Manifesto.Rendering {
             if (!resource.rendering) return null;
 
+            // normalise format to string
+            if (typeof format !== 'string'){
+                format = (<Manifesto.RenderingFormat>format).toString();
+            }
+
             var renderings = resource.rendering;
 
             if (!_isArray(renderings)){
@@ -151,7 +156,8 @@ module Manifesto {
 
             for (var i = 0; i < renderings.length; i++){
                 var rendering = renderings[i];
-                if (rendering.format && rendering.format === format.toString()) {
+
+                if (rendering.format && rendering.format === format) {
                     return rendering;
                 }
             }
@@ -181,15 +187,20 @@ module Manifesto {
         getService(resource: any, profile: Manifesto.ServiceProfile | string): IService {
             if (!resource.service) return null;
 
+            // normalise profile to string
+            if (typeof profile !== 'string'){
+                profile = (<Manifesto.ServiceProfile>profile).toString();
+            }
+
             if (_isArray(resource.service)){
                 for (var i = 0; i < resource.service.length; i++){
                     var service = resource.service[i];
-                    if (service.profile && service.profile === profile) {
+                    if (service.profile && service.profile.toString() === profile) {
                         return service;
                     }
                 }
             } else {
-                if (resource.service.profile && resource.service.profile === profile){
+                if (resource.service.profile && resource.service.profile.toString() === profile){
                     return resource.service;
                 }
             }
