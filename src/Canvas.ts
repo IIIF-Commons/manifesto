@@ -50,9 +50,10 @@ module Manifesto {
 
             var uri;
 
-            if(this.jsonld.thumbnail){
-                return this.jsonld.thumbnail;
-            } else if (this.jsonld.resources){
+            //if(this.jsonld.thumbnail){
+            //    return this.jsonld.thumbnail;
+            //} else if (this.jsonld.resources){
+            if (this.jsonld.resources){
                 // todo: create thumbnail serviceprofile and use manifest.getService
                 uri = this.jsonld.resources[0].resource.service['@id'];
             } else if (this.jsonld.images && this.jsonld.images[0].resource.service){

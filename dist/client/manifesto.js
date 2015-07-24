@@ -66,10 +66,10 @@ var Manifesto;
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
             var uri;
-            if (this.jsonld.thumbnail) {
-                return this.jsonld.thumbnail;
-            }
-            else if (this.jsonld.resources) {
+            //if(this.jsonld.thumbnail){
+            //    return this.jsonld.thumbnail;
+            //} else if (this.jsonld.resources){
+            if (this.jsonld.resources) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
                 uri = this.jsonld.resources[0].resource.service['@id'];
             }
