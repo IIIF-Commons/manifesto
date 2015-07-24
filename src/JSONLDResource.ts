@@ -10,7 +10,7 @@ module Manifesto{
             this.jsonld = jsonld;
             this.context = this.jsonld['@context'];
             this.id = this.jsonld['@id'];
-            this._label = this.jsonld['@label'];
+            this._label = this.jsonld.label;
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
             this._manifest = this.jsonld.manifest;
         }
@@ -20,7 +20,7 @@ module Manifesto{
         }
 
         getLabel(): string {
-            // todo: why would you want to test if it's a digit?
+            // todo: why test if it's a digit?
             //var regExp = /\d/;
 
             //if (regExp.test(this._label)) {

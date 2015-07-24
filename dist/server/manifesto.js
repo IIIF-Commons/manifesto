@@ -5,7 +5,7 @@ var Manifesto;
             this.jsonld = jsonld;
             this.context = this.jsonld['@context'];
             this.id = this.jsonld['@id'];
-            this._label = this.jsonld['@label'];
+            this._label = this.jsonld.label;
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
             this._manifest = this.jsonld.manifest;
         }
