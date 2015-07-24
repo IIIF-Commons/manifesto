@@ -53,7 +53,6 @@ module Manifesto {
                 parentRange.ranges.push(range);
             }
 
-            r.parsed = range;
             range.path = path;
 
             if (r.canvases){

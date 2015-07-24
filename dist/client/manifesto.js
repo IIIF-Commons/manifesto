@@ -9,6 +9,8 @@ var Manifesto;
             this._label = this.jsonld.label;
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
             this._manifest = this.jsonld.manifest;
+            // store a reference to the parsed object in the jsonld for convenience.
+            this.jsonld.__parsed = this;
         }
         JSONLDResource.prototype.getManifest = function () {
             return this._manifest;
@@ -243,8 +245,8 @@ var Manifesto;
             if (!this.jsonld.structures && !this.jsonld.structures.length)
                 return ranges;
             for (var i = 0; i < this.jsonld.structures.length; i++) {
-                var range = this.jsonld.structures[i];
-                ranges.push(range.parsed);
+                var r = this.jsonld.structures[i];
+                ranges.push(r.__parsed);
             }
             return ranges;
         };
@@ -671,7 +673,6 @@ var Manifesto;
                 range.parentRange = parentRange;
                 parentRange.ranges.push(range);
             }
-            r.parsed = range;
             range.path = path;
             if (r.canvases) {
                 // create two-way relationship

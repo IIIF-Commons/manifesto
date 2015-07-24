@@ -99,8 +99,8 @@ module Manifesto {
             if (!this.jsonld.structures && !this.jsonld.structures.length) return ranges;
 
             for (var i = 0; i < this.jsonld.structures.length; i++){
-                var range = this.jsonld.structures[i];
-                ranges.push(range.parsed);
+                var r = this.jsonld.structures[i];
+                ranges.push(r.__parsed);
             }
 
             return ranges;

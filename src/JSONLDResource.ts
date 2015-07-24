@@ -13,6 +13,8 @@ module Manifesto{
             this._label = this.jsonld.label;
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
             this._manifest = this.jsonld.manifest;
+            // store a reference to the parsed object in the jsonld for convenience.
+            this.jsonld.__parsed = this;
         }
 
         getManifest(): IManifest {
