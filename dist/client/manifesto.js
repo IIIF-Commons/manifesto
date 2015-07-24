@@ -574,12 +574,12 @@ var Manifesto;
             var thumbs = [];
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
-                if (!_isNumber(height)) {
-                    var heightRatio = canvas.getHeight() / canvas.getWidth();
-                    if (heightRatio) {
-                        height = Math.floor(width * heightRatio);
-                    }
+                //if (!_isNumber(height)) {
+                var heightRatio = canvas.getHeight() / canvas.getWidth();
+                if (heightRatio) {
+                    height = Math.floor(width * heightRatio);
                 }
+                //}
                 var uri = canvas.getThumbUri(width, height);
                 thumbs.push(new Manifesto.Thumb(i, uri, canvas.getLabel(), width, height, true));
             }

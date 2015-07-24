@@ -184,13 +184,13 @@ module Manifesto {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
 
-                if (!_isNumber(height)) {
+                //if (!_isNumber(height)) {
                     var heightRatio = canvas.getHeight() / canvas.getWidth();
 
                     if (heightRatio) {
                         height = Math.floor(width * heightRatio);
                     }
-                }
+                //}
 
                 var uri = canvas.getThumbUri(width, height);
 
