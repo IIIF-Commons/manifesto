@@ -77,9 +77,12 @@ var Manifesto;
             else {
                 return null;
             }
+            if (!uri.endsWith('/')) {
+                uri += '/';
+            }
             // todo: allow region, rotation, quality, and format as parameters?
             var tile = 'full/' + width + ',' + height + '/0/default.jpg';
-            return path.join(uri, tile);
+            return uri + tile;
         };
         Canvas.prototype.getType = function () {
             return new Manifesto.CanvasType(this.jsonld['@type'].toLowerCase());
@@ -234,6 +237,7 @@ var Manifesto;
             return metadata;
         };
         // todo: use jmespath to flatten tree?
+        // https://github.com/jmespath/jmespath.js/issues/6
         Manifest.prototype.getRanges = function () {
             var ranges = [];
             if (!this.jsonld.structures && !this.jsonld.structures.length)

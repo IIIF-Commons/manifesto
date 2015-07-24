@@ -53,10 +53,14 @@ module Manifesto {
                 return null;
             }
 
+            if (!uri.endsWith('/')){
+                uri += '/';
+            }
+
             // todo: allow region, rotation, quality, and format as parameters?
             var tile = 'full/' + width + ',' + height + '/0/default.jpg';
 
-            return path.join(uri, tile);
+            return uri + tile;
         }
 
         getType(): CanvasType {

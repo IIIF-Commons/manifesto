@@ -91,6 +91,7 @@ module Manifesto {
         }
 
         // todo: use jmespath to flatten tree?
+        // https://github.com/jmespath/jmespath.js/issues/6
         getRanges(): IRange[] {
 
             var ranges: IRange[] = [];
