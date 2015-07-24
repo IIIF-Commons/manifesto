@@ -271,15 +271,10 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getRendering = function (resource, format) {
-            if (!resource.rendering)
-                return null;
+            var renderings = this.getRenderings(resource);
             // normalise format to string
             if (typeof format !== 'string') {
                 format = format.toString();
-            }
-            var renderings = resource.rendering;
-            if (!_isArray(renderings)) {
-                renderings = [renderings];
             }
             for (var i = 0; i < renderings.length; i++) {
                 var rendering = renderings[i];
@@ -290,8 +285,8 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getRenderings = function (resource) {
-            if (resource.rendering) {
-                var renderings = resource.rendering;
+            var renderings = resource.jsonld.rendering;
+            if (renderings) {
                 if (!_isArray(renderings)) {
                     renderings = [renderings];
                 }
@@ -304,23 +299,24 @@ var Manifesto;
             return this.getLocalisedValue(this.jsonld.seeAlso);
         };
         Manifest.prototype.getService = function (resource, profile) {
-            if (!resource.service)
+            var service = resource.jsonld.service;
+            if (!service)
                 return null;
             // normalise profile to string
             if (typeof profile !== 'string') {
                 profile = profile.toString();
             }
-            if (_isArray(resource.service)) {
-                for (var i = 0; i < resource.service.length; i++) {
-                    var service = resource.service[i];
-                    if (service.profile && service.profile.toString() === profile) {
-                        return new Manifesto.Service(service);
+            if (_isArray(service)) {
+                for (var i = 0; i < service.length; i++) {
+                    var s = service[i];
+                    if (s.profile && s.profile === profile) {
+                        return new Manifesto.Service(s);
                     }
                 }
             }
             else {
-                if (resource.service.profile && resource.service.profile.toString() === profile) {
-                    return new Manifesto.Service(resource.service);
+                if (service.profile && service.profile === profile) {
+                    return new Manifesto.Service(service);
                 }
             }
             return null;

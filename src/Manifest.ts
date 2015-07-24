@@ -134,22 +134,16 @@ module Manifesto {
             return null;
         }
 
-        getRendering(resource: any, format: Manifesto.RenderingFormat | string): Manifesto.Rendering {
-            if (!resource.rendering) return null;
+        getRendering(resource: IJSONLDResource, format: Manifesto.RenderingFormat | string): IRendering {
+            var renderings = this.getRenderings(resource);
 
             // normalise format to string
             if (typeof format !== 'string'){
-                format = (<Manifesto.RenderingFormat>format).toString();
-            }
-
-            var renderings = resource.rendering;
-
-            if (!_isArray(renderings)){
-                renderings = [renderings];
+                format = (<RenderingFormat>format).toString();
             }
 
             for (var i = 0; i < renderings.length; i++){
-                var rendering = renderings[i];
+                var rendering: IRendering = renderings[i];
 
                 if (rendering.format && rendering.format.toString() === format) {
                     return rendering;
@@ -159,9 +153,10 @@ module Manifesto {
             return null;
         }
 
-        getRenderings(resource: any): IRendering[] {
-            if (resource.rendering){
-                var renderings = resource.rendering;
+        getRenderings(resource: IJSONLDResource): IRendering[] {
+            var renderings = resource.jsonld.rendering;
+
+            if (renderings){
 
                 if (!_isArray(renderings)){
                     renderings = [renderings];
@@ -171,31 +166,33 @@ module Manifesto {
             }
 
             // no renderings provided, default to resource.
-            return [resource];
+            return [<IRendering>resource];
         }
 
         getSeeAlso(): any {
             return this.getLocalisedValue(this.jsonld.seeAlso);
         }
 
-        getService(resource: any, profile: Manifesto.ServiceProfile | string): IService {
-            if (!resource.service) return null;
+        getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
+            var service = resource.jsonld.service;
+
+            if (!service) return null;
 
             // normalise profile to string
             if (typeof profile !== 'string'){
-                profile = (<Manifesto.ServiceProfile>profile).toString();
+                profile = (<ServiceProfile>profile).toString();
             }
 
-            if (_isArray(resource.service)){
-                for (var i = 0; i < resource.service.length; i++){
-                    var service = resource.service[i];
-                    if (service.profile && service.profile.toString() === profile) {
-                        return new Service(service);
+            if (_isArray(service)){
+                for (var i = 0; i < service.length; i++){
+                    var s = service[i];
+                    if (s.profile && s.profile === profile) {
+                        return new Service(s);
                     }
                 }
             } else {
-                if (resource.service.profile && resource.service.profile.toString() === profile){
-                    return new Service(resource.service);
+                if (service.profile && service.profile === profile){
+                    return new Service(service);
                 }
             }
 
