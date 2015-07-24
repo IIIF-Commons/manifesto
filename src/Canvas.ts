@@ -11,10 +11,10 @@ module Manifesto {
         getImageUri(): string {
             var imageUri;
 
-            if (this.jsonld.resources){
-                imageUri = this.jsonld.resources[0].resource.service['@id'];
-            } else if (this.jsonld.images && this.jsonld.images[0].resource.service){
-                imageUri = this.jsonld.images[0].resource.service['@id'];
+            if (this.__jsonld.resources){
+                imageUri = this.__jsonld.resources[0].resource.service['@id'];
+            } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
+                imageUri = this.__jsonld.images[0].resource.service['@id'];
             }
 
             if (!imageUri.endsWith('/')) {
@@ -38,15 +38,15 @@ module Manifesto {
 
             var uri;
 
-            //if(this.jsonld.thumbnail){
-            //    return this.jsonld.thumbnail;
-            //} else if (this.jsonld.resources){
-            if (this.jsonld.resources){
+            //if(this.__jsonld.thumbnail){
+            //    return this.__jsonld.thumbnail;
+            //} else if (this.__jsonld.resources){
+            if (this.__jsonld.resources){
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.jsonld.resources[0].resource.service['@id'];
-            } else if (this.jsonld.images && this.jsonld.images[0].resource.service){
+                uri = this.__jsonld.resources[0].resource.service['@id'];
+            } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.jsonld.images[0].resource.service['@id'];
+                uri = this.__jsonld.images[0].resource.service['@id'];
             } else {
                 return null;
             }
@@ -62,15 +62,15 @@ module Manifesto {
         }
 
         getType(): CanvasType {
-            return new CanvasType(this.jsonld['@type'].toLowerCase());
+            return new CanvasType(this.__jsonld['@type'].toLowerCase());
         }
 
         getWidth(): number {
-            return this.jsonld.width;
+            return this.__jsonld.width;
         }
 
         getHeight(): number {
-            return this.jsonld.height;
+            return this.__jsonld.height;
         }
     }
 }

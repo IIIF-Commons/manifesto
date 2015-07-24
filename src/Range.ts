@@ -14,24 +14,24 @@ module Manifesto {
         //getLabel(): string {
         //    var regExp = /\d/;
         //
-        //    if (regExp.test(this.jsonld.label)) {
-        //        return this.manifest.getLocalisedValue(this.jsonld.label);
+        //    if (regExp.test(this.__jsonld.label)) {
+        //        return this.manifest.getLocalisedValue(this.__jsonld.label);
         //    }
         //
         //    return null;
         //}
 
         getViewingDirection(): ViewingDirection {
-            if (this.jsonld.viewingDirection){
-                return new ViewingDirection(this.jsonld.viewingDirection);
+            if (this.__jsonld.viewingDirection){
+                return new ViewingDirection(this.__jsonld.viewingDirection);
             }
 
             return null;
         }
 
         getViewingHint(): ViewingHint {
-            if (this.jsonld.viewingHint){
-                return new ViewingHint(this.jsonld.viewingHint);
+            if (this.__jsonld.viewingHint){
+                return new ViewingHint(this.__jsonld.viewingHint);
             }
 
             return null;

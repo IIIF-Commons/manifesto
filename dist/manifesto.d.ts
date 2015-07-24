@@ -2,7 +2,7 @@ declare module Manifesto {
     interface IJSONLDResource {
         context: string;
         id: string;
-        jsonld: any;
+        __jsonld: any;
         getLabel(): string;
     }
 }
@@ -10,7 +10,7 @@ declare module Manifesto {
     class JSONLDResource implements IJSONLDResource {
         context: string;
         id: string;
-        jsonld: any;
+        __jsonld: any;
         private _label;
         private _manifest;
         constructor(jsonld: any);

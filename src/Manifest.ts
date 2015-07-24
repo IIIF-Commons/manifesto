@@ -14,7 +14,7 @@ module Manifesto {
         }
 
         getAttribution(): string {
-            return this.getLocalisedValue(this.jsonld.attribution);
+            return this.getLocalisedValue(this.__jsonld.attribution);
         }
 
         getLocalisedValue(resource: any, locale?: string): string {
@@ -51,39 +51,39 @@ module Manifesto {
         }
 
         getLogo(): string {
-            return this.jsonld.logo;
+            return this.__jsonld.logo;
         }
 
         getLicense(): string {
-            return this.getLocalisedValue(this.jsonld.license);
+            return this.getLocalisedValue(this.__jsonld.license);
         }
 
         getMetadata(includeRootProperties?: boolean): any{
-            var metadata: Object[] = this.jsonld.metadata;
+            var metadata: Object[] = this.__jsonld.metadata;
 
             if (metadata && includeRootProperties){
-                if (this.jsonld.description){
+                if (this.__jsonld.description){
                     metadata.push({
                         "label": "description",
-                        "value": this.getLocalisedValue(this.jsonld.description)
+                        "value": this.getLocalisedValue(this.__jsonld.description)
                     });
                 }
-                if (this.jsonld.attribution){
+                if (this.__jsonld.attribution){
                     metadata.push({
                         "label": "attribution",
-                        "value": this.getLocalisedValue(this.jsonld.attribution)
+                        "value": this.getLocalisedValue(this.__jsonld.attribution)
                     });
                 }
-                if (this.jsonld.license){
+                if (this.__jsonld.license){
                     metadata.push({
                         "label": "license",
-                        "value": this.getLocalisedValue(this.jsonld.license)
+                        "value": this.getLocalisedValue(this.__jsonld.license)
                     });
                 }
-                if (this.jsonld.logo){
+                if (this.__jsonld.logo){
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.jsonld.logo + '"/>'});
+                        "value": '<img src="' + this.__jsonld.logo + '"/>'});
                 }
             }
 
@@ -96,10 +96,10 @@ module Manifesto {
 
             var ranges: IRange[] = [];
 
-            if (!this.jsonld.structures && !this.jsonld.structures.length) return ranges;
+            if (!this.__jsonld.structures && !this.__jsonld.structures.length) return ranges;
 
-            for (var i = 0; i < this.jsonld.structures.length; i++){
-                var r = this.jsonld.structures[i];
+            for (var i = 0; i < this.__jsonld.structures.length; i++){
+                var r = this.__jsonld.structures[i];
                 ranges.push(r.__parsed);
             }
 
@@ -154,7 +154,7 @@ module Manifesto {
         }
 
         getRenderings(resource: IJSONLDResource): IRendering[] {
-            var renderings = resource.jsonld.rendering;
+            var renderings = resource.__jsonld.rendering;
 
             if (renderings){
 
@@ -170,7 +170,7 @@ module Manifesto {
         }
 
         getSeeAlso(): any {
-            return this.getLocalisedValue(this.jsonld.seeAlso);
+            return this.getLocalisedValue(this.__jsonld.seeAlso);
         }
 
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
@@ -178,8 +178,8 @@ module Manifesto {
 
             // if passing a parsed object, use the jsonld.service property,
             // otherwise look for a service property
-            if (resource.jsonld){
-                service = resource.jsonld.service;
+            if (resource.__jsonld){
+                service = resource.__jsonld.service;
             } else {
                 service = (<any>resource).service;
             }
@@ -212,7 +212,7 @@ module Manifesto {
         }
 
         getTitle(): string {
-            return this.getLocalisedValue(this.jsonld.label);
+            return this.getLocalisedValue(this.__jsonld.label);
         }
 
         getTotalSequences(): number{

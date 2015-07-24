@@ -3,14 +3,14 @@ var Manifesto;
 (function (Manifesto) {
     var JSONLDResource = (function () {
         function JSONLDResource(jsonld) {
-            this.jsonld = jsonld;
-            this.context = this.jsonld['@context'];
-            this.id = this.jsonld['@id'];
-            this._label = this.jsonld.label;
+            this.__jsonld = jsonld;
+            this.context = this.__jsonld['@context'];
+            this.id = this.__jsonld['@id'];
+            this._label = this.__jsonld.label;
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
-            this._manifest = this.jsonld.manifest;
+            this._manifest = this.__jsonld.manifest;
             // store a reference to the parsed object in the jsonld for convenience.
-            this.jsonld.__parsed = this;
+            this.__jsonld.__parsed = this;
         }
         JSONLDResource.prototype.getManifest = function () {
             return this._manifest;
@@ -44,11 +44,11 @@ var Manifesto;
         // todo: add support for default images and multiple images.
         Canvas.prototype.getImageUri = function () {
             var imageUri;
-            if (this.jsonld.resources) {
-                imageUri = this.jsonld.resources[0].resource.service['@id'];
+            if (this.__jsonld.resources) {
+                imageUri = this.__jsonld.resources[0].resource.service['@id'];
             }
-            else if (this.jsonld.images && this.jsonld.images[0].resource.service) {
-                imageUri = this.jsonld.images[0].resource.service['@id'];
+            else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
+                imageUri = this.__jsonld.images[0].resource.service['@id'];
             }
             if (!imageUri.endsWith('/')) {
                 imageUri += '/';
@@ -65,16 +65,16 @@ var Manifesto;
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
             var uri;
-            //if(this.jsonld.thumbnail){
-            //    return this.jsonld.thumbnail;
-            //} else if (this.jsonld.resources){
-            if (this.jsonld.resources) {
+            //if(this.__jsonld.thumbnail){
+            //    return this.__jsonld.thumbnail;
+            //} else if (this.__jsonld.resources){
+            if (this.__jsonld.resources) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.jsonld.resources[0].resource.service['@id'];
+                uri = this.__jsonld.resources[0].resource.service['@id'];
             }
-            else if (this.jsonld.images && this.jsonld.images[0].resource.service) {
+            else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.jsonld.images[0].resource.service['@id'];
+                uri = this.__jsonld.images[0].resource.service['@id'];
             }
             else {
                 return null;
@@ -87,13 +87,13 @@ var Manifesto;
             return uri + tile;
         };
         Canvas.prototype.getType = function () {
-            return new Manifesto.CanvasType(this.jsonld['@type'].toLowerCase());
+            return new Manifesto.CanvasType(this.__jsonld['@type'].toLowerCase());
         };
         Canvas.prototype.getWidth = function () {
-            return this.jsonld.width;
+            return this.__jsonld.width;
         };
         Canvas.prototype.getHeight = function () {
-            return this.jsonld.height;
+            return this.__jsonld.height;
         };
         return Canvas;
     })(Manifesto.JSONLDResource);
@@ -123,8 +123,8 @@ var Manifesto;
         }
         Element.prototype.getRenderings = function () {
             var renderings = [];
-            if (this.jsonld.rendering) {
-                var rendering = this.jsonld.rendering;
+            if (this.__jsonld.rendering) {
+                var rendering = this.__jsonld.rendering;
                 if (!_isArray(rendering)) {
                     rendering = [rendering];
                 }
@@ -137,12 +137,12 @@ var Manifesto;
                 return renderings;
             }
             // no renderings provided, default to element.
-            var rend = new Manifesto.Rendering(this.jsonld);
-            rend.format = this.jsonld.format;
+            var rend = new Manifesto.Rendering(this.__jsonld);
+            rend.format = this.__jsonld.format;
             return [rend];
         };
         Element.prototype.getType = function () {
-            return new Manifesto.ElementType(this.jsonld['@type']);
+            return new Manifesto.ElementType(this.__jsonld['@type']);
         };
         return Element;
     })(Manifesto.JSONLDResource);
@@ -176,7 +176,7 @@ var Manifesto;
             this.options = _assign({ defaultLabel: '-', locale: 'en-GB' }, options);
         }
         Manifest.prototype.getAttribution = function () {
-            return this.getLocalisedValue(this.jsonld.attribution);
+            return this.getLocalisedValue(this.__jsonld.attribution);
         };
         Manifest.prototype.getLocalisedValue = function (resource, locale) {
             if (!_isArray(resource)) {
@@ -204,36 +204,36 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getLogo = function () {
-            return this.jsonld.logo;
+            return this.__jsonld.logo;
         };
         Manifest.prototype.getLicense = function () {
-            return this.getLocalisedValue(this.jsonld.license);
+            return this.getLocalisedValue(this.__jsonld.license);
         };
         Manifest.prototype.getMetadata = function (includeRootProperties) {
-            var metadata = this.jsonld.metadata;
+            var metadata = this.__jsonld.metadata;
             if (metadata && includeRootProperties) {
-                if (this.jsonld.description) {
+                if (this.__jsonld.description) {
                     metadata.push({
                         "label": "description",
-                        "value": this.getLocalisedValue(this.jsonld.description)
+                        "value": this.getLocalisedValue(this.__jsonld.description)
                     });
                 }
-                if (this.jsonld.attribution) {
+                if (this.__jsonld.attribution) {
                     metadata.push({
                         "label": "attribution",
-                        "value": this.getLocalisedValue(this.jsonld.attribution)
+                        "value": this.getLocalisedValue(this.__jsonld.attribution)
                     });
                 }
-                if (this.jsonld.license) {
+                if (this.__jsonld.license) {
                     metadata.push({
                         "label": "license",
-                        "value": this.getLocalisedValue(this.jsonld.license)
+                        "value": this.getLocalisedValue(this.__jsonld.license)
                     });
                 }
-                if (this.jsonld.logo) {
+                if (this.__jsonld.logo) {
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.jsonld.logo + '"/>' });
+                        "value": '<img src="' + this.__jsonld.logo + '"/>' });
                 }
             }
             return metadata;
@@ -242,10 +242,10 @@ var Manifesto;
         // https://github.com/jmespath/jmespath.js/issues/6
         Manifest.prototype.getRanges = function () {
             var ranges = [];
-            if (!this.jsonld.structures && !this.jsonld.structures.length)
+            if (!this.__jsonld.structures && !this.__jsonld.structures.length)
                 return ranges;
-            for (var i = 0; i < this.jsonld.structures.length; i++) {
-                var r = this.jsonld.structures[i];
+            for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                var r = this.__jsonld.structures[i];
                 ranges.push(r.__parsed);
             }
             return ranges;
@@ -285,7 +285,7 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getRenderings = function (resource) {
-            var renderings = resource.jsonld.rendering;
+            var renderings = resource.__jsonld.rendering;
             if (renderings) {
                 if (!_isArray(renderings)) {
                     renderings = [renderings];
@@ -296,14 +296,14 @@ var Manifesto;
             return [resource];
         };
         Manifest.prototype.getSeeAlso = function () {
-            return this.getLocalisedValue(this.jsonld.seeAlso);
+            return this.getLocalisedValue(this.__jsonld.seeAlso);
         };
         Manifest.prototype.getService = function (resource, profile) {
             var service;
             // if passing a parsed object, use the jsonld.service property,
             // otherwise look for a service property
-            if (resource.jsonld) {
-                service = resource.jsonld.service;
+            if (resource.__jsonld) {
+                service = resource.__jsonld.service;
             }
             else {
                 service = resource.service;
@@ -333,7 +333,7 @@ var Manifesto;
             return this.sequences[sequenceIndex];
         };
         Manifest.prototype.getTitle = function () {
-            return this.getLocalisedValue(this.jsonld.label);
+            return this.getLocalisedValue(this.__jsonld.label);
         };
         Manifest.prototype.getTotalSequences = function () {
             return this.sequences.length;
@@ -387,21 +387,21 @@ var Manifesto;
         //getLabel(): string {
         //    var regExp = /\d/;
         //
-        //    if (regExp.test(this.jsonld.label)) {
-        //        return this.manifest.getLocalisedValue(this.jsonld.label);
+        //    if (regExp.test(this.__jsonld.label)) {
+        //        return this.manifest.getLocalisedValue(this.__jsonld.label);
         //    }
         //
         //    return null;
         //}
         Range.prototype.getViewingDirection = function () {
-            if (this.jsonld.viewingDirection) {
-                return new Manifesto.ViewingDirection(this.jsonld.viewingDirection);
+            if (this.__jsonld.viewingDirection) {
+                return new Manifesto.ViewingDirection(this.__jsonld.viewingDirection);
             }
             return null;
         };
         Range.prototype.getViewingHint = function () {
-            if (this.jsonld.viewingHint) {
-                return new Manifesto.ViewingHint(this.jsonld.viewingHint);
+            if (this.__jsonld.viewingHint) {
+                return new Manifesto.ViewingHint(this.__jsonld.viewingHint);
             }
             return null;
         };
@@ -594,20 +594,20 @@ var Manifesto;
             return thumbs;
         };
         Sequence.prototype.getStartCanvas = function () {
-            return this.jsonld.startCanvas;
+            return this.__jsonld.startCanvas;
         };
         Sequence.prototype.getTotalCanvases = function () {
             return this.canvases.length;
         };
         Sequence.prototype.getViewingDirection = function () {
-            if (this.jsonld.viewingDirection) {
-                return new Manifesto.ViewingDirection(this.jsonld.viewingDirection);
+            if (this.__jsonld.viewingDirection) {
+                return new Manifesto.ViewingDirection(this.__jsonld.viewingDirection);
             }
             return Manifesto.ViewingDirection.leftToRight;
         };
         Sequence.prototype.getViewingHint = function () {
-            if (this.jsonld.viewingHint) {
-                return new Manifesto.ViewingHint(this.jsonld.viewingHint);
+            if (this.__jsonld.viewingHint) {
+                return new Manifesto.ViewingHint(this.__jsonld.viewingHint);
             }
             return null;
         };
@@ -643,14 +643,14 @@ var Manifesto;
         Deserialiser.parse = function (manifest) {
             this.manifest = new Manifesto.Manifest(JSON.parse(manifest));
             this.parseSequences();
-            if (this.manifest.jsonld.structures && this.manifest.jsonld.structures.length) {
-                this.parseRanges(JsonUtils.getRootRange(this.manifest.jsonld), '');
+            if (this.manifest.__jsonld.structures && this.manifest.__jsonld.structures.length) {
+                this.parseRanges(JsonUtils.getRootRange(this.manifest.__jsonld), '');
             }
             return this.manifest;
         };
         Deserialiser.parseSequences = function () {
-            for (var i = 0; i < this.manifest.jsonld.sequences.length; i++) {
-                var s = this.manifest.jsonld.sequences[i];
+            for (var i = 0; i < this.manifest.__jsonld.sequences.length; i++) {
+                var s = this.manifest.__jsonld.sequences[i];
                 s.manifest = this.manifest;
                 var sequence = new Manifesto.Sequence(s);
                 sequence.canvases = this.parseCanvases(s);

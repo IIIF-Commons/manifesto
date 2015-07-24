@@ -2,19 +2,19 @@ module Manifesto{
     export class JSONLDResource implements IJSONLDResource {
         context: string;
         id: string;
-        jsonld: any;
+        __jsonld: any;
         private _label: string;
         private _manifest: IManifest;
 
         constructor(jsonld: any){
-            this.jsonld = jsonld;
-            this.context = this.jsonld['@context'];
-            this.id = this.jsonld['@id'];
-            this._label = this.jsonld.label;
+            this.__jsonld = jsonld;
+            this.context = this.__jsonld['@context'];
+            this.id = this.__jsonld['@id'];
+            this._label = this.__jsonld.label;
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
-            this._manifest = this.jsonld.manifest;
+            this._manifest = this.__jsonld.manifest;
             // store a reference to the parsed object in the jsonld for convenience.
-            this.jsonld.__parsed = this;
+            this.__jsonld.__parsed = this;
         }
 
         getManifest(): IManifest {

@@ -10,16 +10,16 @@ module Manifesto {
 
             this.parseSequences();
 
-            if (this.manifest.jsonld.structures && this.manifest.jsonld.structures.length) {
-                this.parseRanges(JsonUtils.getRootRange(this.manifest.jsonld), '');
+            if (this.manifest.__jsonld.structures && this.manifest.__jsonld.structures.length) {
+                this.parseRanges(JsonUtils.getRootRange(this.manifest.__jsonld), '');
             }
 
             return this.manifest;
         }
 
         static parseSequences(): void {
-            for (var i = 0; i < this.manifest.jsonld.sequences.length; i++){
-                var s = this.manifest.jsonld.sequences[i];
+            for (var i = 0; i < this.manifest.__jsonld.sequences.length; i++){
+                var s = this.manifest.__jsonld.sequences[i];
                 s.manifest = this.manifest;
                 var sequence = new Sequence(s);
                 sequence.canvases = this.parseCanvases(s);

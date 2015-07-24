@@ -12,8 +12,8 @@ module Manifesto {
         getRenderings(): IRendering[] {
             var renderings: IRendering[] = [];
 
-            if (this.jsonld.rendering){
-                var rendering = this.jsonld.rendering;
+            if (this.__jsonld.rendering){
+                var rendering = this.__jsonld.rendering;
 
                 if (!_isArray(rendering)){
                     rendering = [rendering];
@@ -30,13 +30,13 @@ module Manifesto {
             }
 
             // no renderings provided, default to element.
-            var rend: IRendering = new Rendering(this.jsonld);
-            rend.format = this.jsonld.format;
+            var rend: IRendering = new Rendering(this.__jsonld);
+            rend.format = this.__jsonld.format;
             return [rend];
         }
 
         getType(): ElementType {
-            return new ElementType(this.jsonld['@type']);
+            return new ElementType(this.__jsonld['@type']);
         }
     }
 }

@@ -2,7 +2,7 @@ module Manifesto {
     export interface IJSONLDResource {
         context: string;
         id: string;
-        jsonld: any;
+        __jsonld: any;
         getLabel(): string;
     }
 }
