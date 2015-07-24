@@ -11,15 +11,15 @@ module Manifesto {
             super(jsonld);
         }
 
-        getLabel(): string {
-            var regExp = /\d/;
-
-            if (regExp.test(this.jsonld.label)) {
-                return this.manifest.getLocalisedValue(this.jsonld.label);
-            }
-
-            return null;
-        }
+        //getLabel(): string {
+        //    var regExp = /\d/;
+        //
+        //    if (regExp.test(this.jsonld.label)) {
+        //        return this.manifest.getLocalisedValue(this.jsonld.label);
+        //    }
+        //
+        //    return null;
+        //}
 
         getViewingDirection(): ViewingDirection {
             if (this.jsonld.viewingDirection){

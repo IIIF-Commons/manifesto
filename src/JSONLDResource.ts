@@ -3,24 +3,24 @@ module Manifesto{
         context: string;
         id: string;
         jsonld: any;
-        label: string;
-        manifest: IManifest;
+        private _label: string;
+        private _manifest: IManifest;
 
         constructor(jsonld: any){
             this.jsonld = jsonld;
             this.context = this.jsonld['@context'];
             this.id = this.jsonld['@id'];
-            this.label = this.jsonld['@label'];
+            this._label = this.jsonld['@label'];
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
-            this.manifest = this.jsonld.manifest;
+            this._manifest = this.jsonld.manifest;
         }
 
         getManifest(): IManifest {
-            return this.manifest;
+            return this._manifest;
         }
 
         getLabel(): string {
-            return this.getManifest().getLocalisedValue(this.label);
+            return this.getManifest().getLocalisedValue(this._label);
         }
     }
 }

@@ -3,7 +3,6 @@ module Manifesto {
         context: string;
         id: string;
         jsonld: any;
-        label: string;
         getLabel(): string;
     }
 }

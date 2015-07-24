@@ -3,7 +3,6 @@ declare module Manifesto {
         context: string;
         id: string;
         jsonld: any;
-        label: string;
         getLabel(): string;
     }
 }
@@ -12,8 +11,8 @@ declare module Manifesto {
         context: string;
         id: string;
         jsonld: any;
-        label: string;
-        manifest: IManifest;
+        private _label;
+        private _manifest;
         constructor(jsonld: any);
         getManifest(): IManifest;
         getLabel(): string;
@@ -198,7 +197,6 @@ declare module Manifesto {
         ranges: Range[];
         treeNode: TreeNode;
         constructor(jsonld: any);
-        getLabel(): string;
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
     }

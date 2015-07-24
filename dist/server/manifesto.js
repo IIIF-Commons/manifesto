@@ -5,15 +5,15 @@ var Manifesto;
             this.jsonld = jsonld;
             this.context = this.jsonld['@context'];
             this.id = this.jsonld['@id'];
-            this.label = this.jsonld['@label'];
+            this._label = this.jsonld['@label'];
             // the serializer stores a reference to the manifest on the jsonld resource for convenience
-            this.manifest = this.jsonld.manifest;
+            this._manifest = this.jsonld.manifest;
         }
         JSONLDResource.prototype.getManifest = function () {
-            return this.manifest;
+            return this._manifest;
         };
         JSONLDResource.prototype.getLabel = function () {
-            return this.getManifest().getLocalisedValue(this.label);
+            return this.getManifest().getLocalisedValue(this._label);
         };
         return JSONLDResource;
     })();
@@ -386,13 +386,15 @@ var Manifesto;
             this.canvases = [];
             this.ranges = [];
         }
-        Range.prototype.getLabel = function () {
-            var regExp = /\d/;
-            if (regExp.test(this.jsonld.label)) {
-                return this.manifest.getLocalisedValue(this.jsonld.label);
-            }
-            return null;
-        };
+        //getLabel(): string {
+        //    var regExp = /\d/;
+        //
+        //    if (regExp.test(this.jsonld.label)) {
+        //        return this.manifest.getLocalisedValue(this.jsonld.label);
+        //    }
+        //
+        //    return null;
+        //}
         Range.prototype.getViewingDirection = function () {
             if (this.jsonld.viewingDirection) {
                 return new Manifesto.ViewingDirection(this.jsonld.viewingDirection);
