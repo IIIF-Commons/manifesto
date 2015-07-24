@@ -193,8 +193,9 @@ module Manifesto {
                 //}
 
                 var uri = canvas.getThumbUri(width, height);
+                var label = canvas.getLabel();
 
-                thumbs.push(new Manifesto.Thumb(i, uri, canvas.getLabel(), width, height, true));
+                thumbs.push(new Manifesto.Thumb(i, uri, label, width, height, true));
             }
 
             return thumbs;

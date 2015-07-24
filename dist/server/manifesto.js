@@ -580,7 +580,8 @@ var Manifesto;
                 }
                 //}
                 var uri = canvas.getThumbUri(width, height);
-                thumbs.push(new Manifesto.Thumb(i, uri, canvas.getLabel(), width, height, true));
+                var label = canvas.getLabel();
+                thumbs.push(new Manifesto.Thumb(i, uri, label, width, height, true));
             }
             return thumbs;
         };
