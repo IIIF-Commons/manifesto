@@ -18,7 +18,6 @@ declare module Manifesto {
         getLabel(): string;
     }
 }
-declare var path: any;
 declare module Manifesto {
     class Canvas extends JSONLDResource implements ICanvas {
         ranges: IRange[];

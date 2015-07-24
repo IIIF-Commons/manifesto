@@ -30,7 +30,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var path = require("path");
 var Manifesto;
 (function (Manifesto) {
     var Canvas = (function (_super) {

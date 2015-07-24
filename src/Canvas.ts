@@ -1,5 +1,3 @@
-var path = require("path");
-
 module Manifesto {
     export class Canvas extends JSONLDResource implements ICanvas{
 

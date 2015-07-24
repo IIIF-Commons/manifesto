@@ -31,7 +31,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var path = _dereq_("path");
 var Manifesto;
 (function (Manifesto) {
     var Canvas = (function (_super) {
@@ -898,7 +897,7 @@ module.exports = {
 /// <reference path="./ViewingHint.ts" />
 /// <reference path="./Manifesto.ts" /> 
 
-},{"http":6,"jmespath":28,"lodash.assign":41,"lodash.isarray":51,"lodash.isnumber":52,"path":11,"url":25}],2:[function(_dereq_,module,exports){
+},{"http":6,"jmespath":27,"lodash.assign":40,"lodash.isarray":50,"lodash.isnumber":51,"url":24}],2:[function(_dereq_,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -2663,7 +2662,7 @@ http.STATUS_CODES = {
     510 : 'Not Extended',               // RFC 2774
     511 : 'Network Authentication Required' // RFC 6585
 };
-},{"./lib/request":7,"events":5,"url":25}],7:[function(_dereq_,module,exports){
+},{"./lib/request":7,"events":5,"url":24}],7:[function(_dereq_,module,exports){
 var Stream = _dereq_('stream');
 var Response = _dereq_('./response');
 var Base64 = _dereq_('Base64');
@@ -2854,7 +2853,7 @@ var indexOf = function (xs, x) {
     return -1;
 };
 
-},{"./response":8,"Base64":9,"inherits":10,"stream":18}],8:[function(_dereq_,module,exports){
+},{"./response":8,"Base64":9,"inherits":10,"stream":17}],8:[function(_dereq_,module,exports){
 var Stream = _dereq_('stream');
 var util = _dereq_('util');
 
@@ -2976,7 +2975,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":18,"util":27}],9:[function(_dereq_,module,exports){
+},{"stream":17,"util":26}],9:[function(_dereq_,module,exports){
 ;(function () {
 
   var object = typeof exports != 'undefined' ? exports : this; // #8: web workers
@@ -3064,234 +3063,6 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],11:[function(_dereq_,module,exports){
-(function (process){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// resolves . and .. elements in a path array with directory names there
-// must be no slashes, empty elements, or device names (c:\) in the array
-// (so also no leading and trailing slashes - it does not distinguish
-// relative and absolute paths)
-function normalizeArray(parts, allowAboveRoot) {
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = parts.length - 1; i >= 0; i--) {
-    var last = parts[i];
-    if (last === '.') {
-      parts.splice(i, 1);
-    } else if (last === '..') {
-      parts.splice(i, 1);
-      up++;
-    } else if (up) {
-      parts.splice(i, 1);
-      up--;
-    }
-  }
-
-  // if the path is allowed to go above the root, restore leading ..s
-  if (allowAboveRoot) {
-    for (; up--; up) {
-      parts.unshift('..');
-    }
-  }
-
-  return parts;
-}
-
-// Split a filename into [root, dir, basename, ext], unix version
-// 'root' is just a slash, or nothing.
-var splitPathRe =
-    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-var splitPath = function(filename) {
-  return splitPathRe.exec(filename).slice(1);
-};
-
-// path.resolve([from ...], to)
-// posix version
-exports.resolve = function() {
-  var resolvedPath = '',
-      resolvedAbsolute = false;
-
-  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-    var path = (i >= 0) ? arguments[i] : process.cwd();
-
-    // Skip empty and invalid entries
-    if (typeof path !== 'string') {
-      throw new TypeError('Arguments to path.resolve must be strings');
-    } else if (!path) {
-      continue;
-    }
-
-    resolvedPath = path + '/' + resolvedPath;
-    resolvedAbsolute = path.charAt(0) === '/';
-  }
-
-  // At this point the path should be resolved to a full absolute path, but
-  // handle relative paths to be safe (might happen when process.cwd() fails)
-
-  // Normalize the path
-  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
-    return !!p;
-  }), !resolvedAbsolute).join('/');
-
-  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-};
-
-// path.normalize(path)
-// posix version
-exports.normalize = function(path) {
-  var isAbsolute = exports.isAbsolute(path),
-      trailingSlash = substr(path, -1) === '/';
-
-  // Normalize the path
-  path = normalizeArray(filter(path.split('/'), function(p) {
-    return !!p;
-  }), !isAbsolute).join('/');
-
-  if (!path && !isAbsolute) {
-    path = '.';
-  }
-  if (path && trailingSlash) {
-    path += '/';
-  }
-
-  return (isAbsolute ? '/' : '') + path;
-};
-
-// posix version
-exports.isAbsolute = function(path) {
-  return path.charAt(0) === '/';
-};
-
-// posix version
-exports.join = function() {
-  var paths = Array.prototype.slice.call(arguments, 0);
-  return exports.normalize(filter(paths, function(p, index) {
-    if (typeof p !== 'string') {
-      throw new TypeError('Arguments to path.join must be strings');
-    }
-    return p;
-  }).join('/'));
-};
-
-
-// path.relative(from, to)
-// posix version
-exports.relative = function(from, to) {
-  from = exports.resolve(from).substr(1);
-  to = exports.resolve(to).substr(1);
-
-  function trim(arr) {
-    var start = 0;
-    for (; start < arr.length; start++) {
-      if (arr[start] !== '') break;
-    }
-
-    var end = arr.length - 1;
-    for (; end >= 0; end--) {
-      if (arr[end] !== '') break;
-    }
-
-    if (start > end) return [];
-    return arr.slice(start, end - start + 1);
-  }
-
-  var fromParts = trim(from.split('/'));
-  var toParts = trim(to.split('/'));
-
-  var length = Math.min(fromParts.length, toParts.length);
-  var samePartsLength = length;
-  for (var i = 0; i < length; i++) {
-    if (fromParts[i] !== toParts[i]) {
-      samePartsLength = i;
-      break;
-    }
-  }
-
-  var outputParts = [];
-  for (var i = samePartsLength; i < fromParts.length; i++) {
-    outputParts.push('..');
-  }
-
-  outputParts = outputParts.concat(toParts.slice(samePartsLength));
-
-  return outputParts.join('/');
-};
-
-exports.sep = '/';
-exports.delimiter = ':';
-
-exports.dirname = function(path) {
-  var result = splitPath(path),
-      root = result[0],
-      dir = result[1];
-
-  if (!root && !dir) {
-    // No dirname whatsoever
-    return '.';
-  }
-
-  if (dir) {
-    // It has a dirname, strip trailing slash
-    dir = dir.substr(0, dir.length - 1);
-  }
-
-  return root + dir;
-};
-
-
-exports.basename = function(path, ext) {
-  var f = splitPath(path)[2];
-  // TODO: make this comparison case-insensitive on windows?
-  if (ext && f.substr(-1 * ext.length) === ext) {
-    f = f.substr(0, f.length - ext.length);
-  }
-  return f;
-};
-
-
-exports.extname = function(path) {
-  return splitPath(path)[3];
-};
-
-function filter (xs, f) {
-    if (xs.filter) return xs.filter(f);
-    var res = [];
-    for (var i = 0; i < xs.length; i++) {
-        if (f(xs[i], i, xs)) res.push(xs[i]);
-    }
-    return res;
-}
-
-// String.prototype.substr - negative index don't work in IE8
-var substr = 'ab'.substr(-1) === 'b'
-    ? function (str, start, len) { return str.substr(start, len) }
-    : function (str, start, len) {
-        if (start < 0) start = str.length + start;
-        return str.substr(start, len);
-    }
-;
-
-}).call(this,_dereq_("ngpmcQ"))
-},{"ngpmcQ":12}],12:[function(_dereq_,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -3356,7 +3127,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],13:[function(_dereq_,module,exports){
+},{}],12:[function(_dereq_,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.4 by @mathias */
 ;(function(root) {
@@ -3867,7 +3638,7 @@ process.chdir = function (dir) {
 }(this));
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],14:[function(_dereq_,module,exports){
+},{}],13:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3953,7 +3724,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],15:[function(_dereq_,module,exports){
+},{}],14:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4040,13 +3811,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],16:[function(_dereq_,module,exports){
+},{}],15:[function(_dereq_,module,exports){
 'use strict';
 
 exports.decode = exports.parse = _dereq_('./decode');
 exports.encode = exports.stringify = _dereq_('./encode');
 
-},{"./decode":14,"./encode":15}],17:[function(_dereq_,module,exports){
+},{"./decode":13,"./encode":14}],16:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4120,7 +3891,7 @@ function onend() {
   });
 }
 
-},{"./readable.js":21,"./writable.js":23,"inherits":10,"process/browser.js":19}],18:[function(_dereq_,module,exports){
+},{"./readable.js":20,"./writable.js":22,"inherits":10,"process/browser.js":18}],17:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4249,7 +4020,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"./duplex.js":17,"./passthrough.js":20,"./readable.js":21,"./transform.js":22,"./writable.js":23,"events":5,"inherits":10}],19:[function(_dereq_,module,exports){
+},{"./duplex.js":16,"./passthrough.js":19,"./readable.js":20,"./transform.js":21,"./writable.js":22,"events":5,"inherits":10}],18:[function(_dereq_,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -4304,7 +4075,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],20:[function(_dereq_,module,exports){
+},{}],19:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4347,7 +4118,7 @@ PassThrough.prototype._transform = function(chunk, encoding, cb) {
   cb(null, chunk);
 };
 
-},{"./transform.js":22,"inherits":10}],21:[function(_dereq_,module,exports){
+},{"./transform.js":21,"inherits":10}],20:[function(_dereq_,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5284,7 +5055,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,_dereq_("ngpmcQ"))
-},{"./index.js":18,"buffer":2,"events":5,"inherits":10,"ngpmcQ":12,"process/browser.js":19,"string_decoder":24}],22:[function(_dereq_,module,exports){
+},{"./index.js":17,"buffer":2,"events":5,"inherits":10,"ngpmcQ":11,"process/browser.js":18,"string_decoder":23}],21:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5490,7 +5261,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./duplex.js":17,"inherits":10}],23:[function(_dereq_,module,exports){
+},{"./duplex.js":16,"inherits":10}],22:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5878,7 +5649,7 @@ function endWritable(stream, state, cb) {
   state.ended = true;
 }
 
-},{"./index.js":18,"buffer":2,"inherits":10,"process/browser.js":19}],24:[function(_dereq_,module,exports){
+},{"./index.js":17,"buffer":2,"inherits":10,"process/browser.js":18}],23:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6071,7 +5842,7 @@ function base64DetectIncompleteChar(buffer) {
   return incomplete;
 }
 
-},{"buffer":2}],25:[function(_dereq_,module,exports){
+},{"buffer":2}],24:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6780,14 +6551,14 @@ function isNullOrUndefined(arg) {
   return  arg == null;
 }
 
-},{"punycode":13,"querystring":16}],26:[function(_dereq_,module,exports){
+},{"punycode":12,"querystring":15}],25:[function(_dereq_,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],27:[function(_dereq_,module,exports){
+},{}],26:[function(_dereq_,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7377,7 +7148,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,_dereq_("ngpmcQ"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":26,"inherits":10,"ngpmcQ":12}],28:[function(_dereq_,module,exports){
+},{"./support/isBuffer":25,"inherits":10,"ngpmcQ":11}],27:[function(_dereq_,module,exports){
 var _indexOf = _dereq_("lodash.indexof");
 var _isArray = _dereq_("lodash.isarray");
 var _isObject = _dereq_("lodash.isobject");
@@ -8995,7 +8766,7 @@ var _toString = _dereq_("lodash._basetostring");
   exports.strictDeepEqual = strictDeepEqual;
 })(typeof exports === "undefined" ? this.jmespath = {} : exports);
 
-},{"lodash._basetostring":29,"lodash.indexof":30,"lodash.isarray":51,"lodash.isobject":34,"lodash.keys":35,"lodash.lastindexof":38}],29:[function(_dereq_,module,exports){
+},{"lodash._basetostring":28,"lodash.indexof":29,"lodash.isarray":50,"lodash.isobject":33,"lodash.keys":34,"lodash.lastindexof":37}],28:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9019,7 +8790,7 @@ function baseToString(value) {
 
 module.exports = baseToString;
 
-},{}],30:[function(_dereq_,module,exports){
+},{}],29:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9082,7 +8853,7 @@ function indexOf(array, value, fromIndex) {
 
 module.exports = indexOf;
 
-},{"lodash._baseindexof":31,"lodash._binaryindex":32}],31:[function(_dereq_,module,exports){
+},{"lodash._baseindexof":30,"lodash._binaryindex":31}],30:[function(_dereq_,module,exports){
 /**
  * lodash 3.1.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9141,7 +8912,7 @@ function indexOfNaN(array, fromIndex, fromRight) {
 
 module.exports = baseIndexOf;
 
-},{}],32:[function(_dereq_,module,exports){
+},{}],31:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9208,7 +8979,7 @@ function identity(value) {
 
 module.exports = binaryIndex;
 
-},{"lodash._binaryindexby":33}],33:[function(_dereq_,module,exports){
+},{"lodash._binaryindexby":32}],32:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9276,7 +9047,7 @@ function binaryIndexBy(array, value, iteratee, retHighest) {
 
 module.exports = binaryIndexBy;
 
-},{}],34:[function(_dereq_,module,exports){
+},{}],33:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9315,7 +9086,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],35:[function(_dereq_,module,exports){
+},{}],34:[function(_dereq_,module,exports){
 /**
  * lodash 3.1.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9553,7 +9324,7 @@ function keysIn(object) {
 
 module.exports = keys;
 
-},{"lodash._getnative":36,"lodash.isarguments":37,"lodash.isarray":51}],36:[function(_dereq_,module,exports){
+},{"lodash._getnative":35,"lodash.isarguments":36,"lodash.isarray":50}],35:[function(_dereq_,module,exports){
 /**
  * lodash 3.9.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9692,7 +9463,7 @@ function isNative(value) {
 
 module.exports = getNative;
 
-},{}],37:[function(_dereq_,module,exports){
+},{}],36:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9800,7 +9571,7 @@ function isArguments(value) {
 
 module.exports = isArguments;
 
-},{}],38:[function(_dereq_,module,exports){
+},{}],37:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9892,11 +9663,11 @@ function lastIndexOf(array, value, fromIndex) {
 
 module.exports = lastIndexOf;
 
-},{"lodash._binaryindex":39}],39:[function(_dereq_,module,exports){
+},{"lodash._binaryindex":38}],38:[function(_dereq_,module,exports){
+module.exports=_dereq_(31)
+},{"lodash._binaryindexby":39}],39:[function(_dereq_,module,exports){
 module.exports=_dereq_(32)
-},{"lodash._binaryindexby":40}],40:[function(_dereq_,module,exports){
-module.exports=_dereq_(33)
-},{}],41:[function(_dereq_,module,exports){
+},{}],40:[function(_dereq_,module,exports){
 /**
  * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9978,7 +9749,7 @@ var assign = createAssigner(function(object, source, customizer) {
 
 module.exports = assign;
 
-},{"lodash._baseassign":42,"lodash._createassigner":44,"lodash.keys":48}],42:[function(_dereq_,module,exports){
+},{"lodash._baseassign":41,"lodash._createassigner":43,"lodash.keys":47}],41:[function(_dereq_,module,exports){
 /**
  * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10007,7 +9778,7 @@ function baseAssign(object, source) {
 
 module.exports = baseAssign;
 
-},{"lodash._basecopy":43,"lodash.keys":48}],43:[function(_dereq_,module,exports){
+},{"lodash._basecopy":42,"lodash.keys":47}],42:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10041,7 +9812,7 @@ function baseCopy(source, props, object) {
 
 module.exports = baseCopy;
 
-},{}],44:[function(_dereq_,module,exports){
+},{}],43:[function(_dereq_,module,exports){
 /**
  * lodash 3.1.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10095,7 +9866,7 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"lodash._bindcallback":45,"lodash._isiterateecall":46,"lodash.restparam":47}],45:[function(_dereq_,module,exports){
+},{"lodash._bindcallback":44,"lodash._isiterateecall":45,"lodash.restparam":46}],44:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10162,7 +9933,7 @@ function identity(value) {
 
 module.exports = bindCallback;
 
-},{}],46:[function(_dereq_,module,exports){
+},{}],45:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.9 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10296,7 +10067,7 @@ function isObject(value) {
 
 module.exports = isIterateeCall;
 
-},{}],47:[function(_dereq_,module,exports){
+},{}],46:[function(_dereq_,module,exports){
 /**
  * lodash 3.6.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10365,13 +10136,13 @@ function restParam(func, start) {
 
 module.exports = restParam;
 
-},{}],48:[function(_dereq_,module,exports){
+},{}],47:[function(_dereq_,module,exports){
+module.exports=_dereq_(34)
+},{"lodash._getnative":48,"lodash.isarguments":49,"lodash.isarray":50}],48:[function(_dereq_,module,exports){
 module.exports=_dereq_(35)
-},{"lodash._getnative":49,"lodash.isarguments":50,"lodash.isarray":51}],49:[function(_dereq_,module,exports){
+},{}],49:[function(_dereq_,module,exports){
 module.exports=_dereq_(36)
 },{}],50:[function(_dereq_,module,exports){
-module.exports=_dereq_(37)
-},{}],51:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10553,7 +10324,7 @@ function isNative(value) {
 
 module.exports = isArray;
 
-},{}],52:[function(_dereq_,module,exports){
+},{}],51:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
