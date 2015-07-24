@@ -13,7 +13,7 @@ var Manifesto;
             return this._manifest;
         };
         JSONLDResource.prototype.getLabel = function () {
-            // todo: why would you want to test if it's a digit?
+            // todo: why test if it's a digit?
             //var regExp = /\d/;
             //if (regExp.test(this._label)) {
             return this.getManifest().getLocalisedValue(this._label);
@@ -348,7 +348,7 @@ var Manifesto;
             return this.treeRoot;
         };
         Manifest.prototype._parseTreeNode = function (node, range) {
-            node.label = this.getLocalisedValue(range.label);
+            node.label = range.getLabel();
             node.data = range;
             node.data.type = "range";
             range.treeNode = node;

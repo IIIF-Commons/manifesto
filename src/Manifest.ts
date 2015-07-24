@@ -224,9 +224,9 @@ module Manifesto {
 
             if (this.rootRange.ranges){
                 for (var i = 0; i < this.rootRange.ranges.length; i++){
-                    var range = this.rootRange.ranges[i];
+                    var range: IRange = this.rootRange.ranges[i];
 
-                    var node = new TreeNode();
+                    var node: TreeNode = new TreeNode();
                     this.treeRoot.addNode(node);
 
                     this._parseTreeNode(node, range);
@@ -236,8 +236,8 @@ module Manifesto {
             return this.treeRoot;
         }
 
-        private _parseTreeNode(node: TreeNode, range: any): void {
-            node.label = this.getLocalisedValue(range.label);
+        private _parseTreeNode(node: TreeNode, range: IRange): void {
+            node.label = range.getLabel();
             node.data = range;
             node.data.type = "range";
             range.treeNode = node;
