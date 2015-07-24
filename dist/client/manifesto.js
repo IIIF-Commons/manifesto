@@ -299,7 +299,15 @@ var Manifesto;
             return this.getLocalisedValue(this.jsonld.seeAlso);
         };
         Manifest.prototype.getService = function (resource, profile) {
-            var service = resource.jsonld.service;
+            var service;
+            // if passing a parsed object, use the jsonld.service property,
+            // otherwise look for a service property
+            if (resource.jsonld) {
+                service = resource.jsonld.service;
+            }
+            else {
+                service = resource.service;
+            }
             if (!service)
                 return null;
             // normalise profile to string

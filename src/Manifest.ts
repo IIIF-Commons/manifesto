@@ -174,7 +174,15 @@ module Manifesto {
         }
 
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
-            var service = resource.jsonld.service;
+            var service;
+
+            // if passing a parsed object, use the jsonld.service property,
+            // otherwise look for a service property
+            if (resource.jsonld){
+                service = resource.jsonld.service;
+            } else {
+                service = (<any>resource).service;
+            }
 
             if (!service) return null;
 

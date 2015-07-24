@@ -2,16 +2,16 @@ module Manifesto {
     export interface IManifest extends IJSONLDResource {
         getAttribution(): string;
         getLicense(): string;
-        getLocalisedValue(resource: any, locale?: string): string;
+        getLocalisedValue(resource: IJSONLDResource | string, locale?: string): string;
         getLogo(): string;
         getMetadata(includeRootProperties?: boolean): any
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: any, format: RenderingFormat | string): IRendering;
-        getRenderings(resource: any): IRendering[];
+        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
+        getRenderings(resource: IJSONLDResource): IRendering[];
         getSeeAlso(): any;
         getSequenceByIndex(index: number): ISequence;
-        getService(resource: any, profile: ServiceProfile | string): IService;
+        getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;
