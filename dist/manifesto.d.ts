@@ -24,7 +24,6 @@ declare module Manifesto {
         ranges: IRange[];
         constructor(jsonld: any);
         getImageUri(): string;
-        getLabel(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;
@@ -45,7 +44,6 @@ declare module Manifesto {
     class Element extends JSONLDResource implements IElement {
         type: ElementType;
         constructor(jsonld: any);
-        getLabel(): string;
         getRenderings(): IRendering[];
         getType(): ElementType;
     }
@@ -64,7 +62,6 @@ declare module Manifesto {
     interface ICanvas extends IJSONLDResource {
         getHeight(): number;
         getImageUri(): string;
-        getLabel(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;
@@ -74,7 +71,6 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IElement extends IJSONLDResource {
-        getLabel(): string;
         getRenderings(): IRendering[];
         getType(): ElementType;
     }
@@ -82,7 +78,6 @@ declare module Manifesto {
 declare module Manifesto {
     interface IManifest extends IJSONLDResource {
         getAttribution(): string;
-        getLabel(): string;
         getLicense(): string;
         getLocalisedValue(resource: any, locale?: string): string;
         getLogo(): string;
@@ -115,8 +110,6 @@ interface IManifestoOptions {
 declare module Manifesto {
     interface IRange extends IJSONLDResource {
         canvases: any[];
-        getLabel(): string;
-        getLabel(): string;
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         parentRange: Range;
@@ -169,7 +162,6 @@ declare module Manifesto {
         treeRoot: TreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
         getAttribution(): string;
-        getLabel(): string;
         getLocalisedValue(resource: any, locale?: string): string;
         getLogo(): string;
         getLicense(): string;

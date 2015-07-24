@@ -20,7 +20,14 @@ module Manifesto{
         }
 
         getLabel(): string {
-            return this.getManifest().getLocalisedValue(this._label);
+            // todo: why would you want to test if it's a digit?
+            //var regExp = /\d/;
+
+            //if (regExp.test(this._label)) {
+                return this.getManifest().getLocalisedValue(this._label);
+            //}
+
+            //return null;
         }
     }
 }

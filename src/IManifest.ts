@@ -1,7 +1,6 @@
 module Manifesto {
     export interface IManifest extends IJSONLDResource {
         getAttribution(): string;
-        getLabel(): string;
         getLicense(): string;
         getLocalisedValue(resource: any, locale?: string): string;
         getLogo(): string;

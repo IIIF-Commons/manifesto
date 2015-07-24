@@ -14,7 +14,12 @@ var Manifesto;
             return this._manifest;
         };
         JSONLDResource.prototype.getLabel = function () {
+            // todo: why would you want to test if it's a digit?
+            //var regExp = /\d/;
+            //if (regExp.test(this._label)) {
             return this.getManifest().getLocalisedValue(this._label);
+            //}
+            //return null;
         };
         return JSONLDResource;
     })();
@@ -49,13 +54,6 @@ var Manifesto;
             }
             imageUri += 'info.json';
             return imageUri;
-        };
-        Canvas.prototype.getLabel = function () {
-            var regExp = /\d/;
-            if (regExp.test(this.jsonld.label)) {
-                return this.getManifest().getLocalisedValue(this.jsonld.label);
-            }
-            return null;
         };
         Canvas.prototype.getRange = function () {
             // get the deepest Range that this Canvas belongs to.
@@ -119,13 +117,6 @@ var Manifesto;
         function Element(jsonld) {
             _super.call(this, jsonld);
         }
-        Element.prototype.getLabel = function () {
-            var regExp = /\d/;
-            if (regExp.test(this.jsonld.label)) {
-                return this.getManifest().getLocalisedValue(this.jsonld.label);
-            }
-            return null;
-        };
         Element.prototype.getRenderings = function () {
             var renderings = [];
             if (this.jsonld.rendering) {
@@ -182,9 +173,6 @@ var Manifesto;
         }
         Manifest.prototype.getAttribution = function () {
             return this.getLocalisedValue(this.jsonld.attribution);
-        };
-        Manifest.prototype.getLabel = function () {
-            return this.getLocalisedValue(this.jsonld.label);
         };
         Manifest.prototype.getLocalisedValue = function (resource, locale) {
             if (!_isArray(resource)) {

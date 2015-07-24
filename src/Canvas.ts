@@ -28,16 +28,6 @@ module Manifesto {
             return imageUri;
         }
 
-        getLabel(): string {
-            var regExp = /\d/;
-
-            if (regExp.test(this.jsonld.label)) {
-                return this.getManifest().getLocalisedValue(this.jsonld.label);
-            }
-
-            return null;
-        }
-
         getRange(): IRange {
             // get the deepest Range that this Canvas belongs to.
             return this.ranges.last();

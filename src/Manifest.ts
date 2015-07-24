@@ -17,10 +17,6 @@ module Manifesto {
             return this.getLocalisedValue(this.jsonld.attribution);
         }
 
-        getLabel(): string {
-            return this.getLocalisedValue(this.jsonld.label);
-        }
-
         getLocalisedValue(resource: any, locale?: string): string {
 
             if (!_isArray(resource)){

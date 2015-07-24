@@ -9,16 +9,6 @@ module Manifesto {
             super(jsonld);
         }
 
-        getLabel(): string {
-            var regExp = /\d/;
-
-            if (regExp.test(this.jsonld.label)) {
-                return this.getManifest().getLocalisedValue(this.jsonld.label);
-            }
-
-            return null;
-        }
-
         getRenderings(): IRendering[] {
             var renderings: IRendering[] = [];
 
