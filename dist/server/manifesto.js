@@ -12,6 +12,9 @@ var Manifesto;
         JSONLDResource.prototype.getManifest = function () {
             return this.manifest;
         };
+        JSONLDResource.prototype.getLabel = function () {
+            return this.getManifest().getLocalisedValue(this.label);
+        };
         return JSONLDResource;
     })();
     Manifesto.JSONLDResource = JSONLDResource;
@@ -31,6 +34,7 @@ var Manifesto;
             _super.call(this, jsonld);
             this.ranges = [];
         }
+        // todo: add support for default images and multiple images.
         Canvas.prototype.getImageUri = function () {
             var imageUri;
             if (this.jsonld.resources) {

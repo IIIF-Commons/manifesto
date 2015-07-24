@@ -12,7 +12,7 @@ module Manifesto {
         getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
         getSequenceByIndex(index: number): ISequence;
-        getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
+        getService(resource: any, profile: ServiceProfile | string): IService;
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;

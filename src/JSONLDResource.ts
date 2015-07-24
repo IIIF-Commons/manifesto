@@ -18,5 +18,9 @@ module Manifesto{
         getManifest(): IManifest {
             return this.manifest;
         }
+
+        getLabel(): string {
+            return this.getManifest().getLocalisedValue(this.label);
+        }
     }
 }
