@@ -101,7 +101,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()){
                     index = indices[0] + 1;
                 } else {
                     index = indices.last() + 1;
@@ -132,7 +132,7 @@ module Manifesto {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
 
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()){
                     indices = indices.reverse();
                 }
             }
@@ -147,7 +147,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()){
                     index = indices.last() - 1;
                 } else {
                     index = indices[0] - 1;
@@ -240,7 +240,7 @@ module Manifesto {
         }
 
         isPagingEnabled(): boolean{
-            return this.getViewingHint() === ViewingHint.paged;
+            return this.getViewingHint().toString() === Manifesto.ViewingHint.paged.toString();
         }
 
         // checks if the number of canvases is even - therefore has a front and back cover

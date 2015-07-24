@@ -151,7 +151,7 @@ module Manifesto {
             for (var i = 0; i < renderings.length; i++){
                 var rendering = renderings[i];
 
-                if (rendering.format && rendering.format === format) {
+                if (rendering.format && rendering.format.toString() === format) {
                     return rendering;
                 }
             }

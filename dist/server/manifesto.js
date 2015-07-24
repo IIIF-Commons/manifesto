@@ -282,7 +282,7 @@ var Manifesto;
             }
             for (var i = 0; i < renderings.length; i++) {
                 var rendering = renderings[i];
-                if (rendering.format && rendering.format === format) {
+                if (rendering.format && rendering.format.toString() === format) {
                     return rendering;
                 }
             }
@@ -507,7 +507,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()) {
                     index = indices[0] + 1;
                 }
                 else {
@@ -537,7 +537,7 @@ var Manifesto;
                 else {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()) {
                     indices = indices.reverse();
                 }
             }
@@ -547,7 +547,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()) {
                     index = indices.last() - 1;
                 }
                 else {
@@ -619,7 +619,7 @@ var Manifesto;
             return this.getTotalCanvases() > 1;
         };
         Sequence.prototype.isPagingEnabled = function () {
-            return this.getViewingHint() === Manifesto.ViewingHint.paged;
+            return this.getViewingHint().toString() === Manifesto.ViewingHint.paged.toString();
         };
         // checks if the number of canvases is even - therefore has a front and back cover
         Sequence.prototype.isTotalCanvasesEven = function () {
