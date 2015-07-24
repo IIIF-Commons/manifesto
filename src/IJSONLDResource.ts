@@ -4,5 +4,6 @@ module Manifesto {
         id: string;
         jsonld: any;
         label: string;
+        getLabel(): string;
     }
 }
