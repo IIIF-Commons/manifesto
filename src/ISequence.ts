@@ -1,5 +1,6 @@
 module Manifesto {
     export interface ISequence extends IJSONLDResource {
+        canvases: ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;

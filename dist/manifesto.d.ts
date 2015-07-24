@@ -94,6 +94,7 @@ declare module Manifesto {
         isMultiSequence(): boolean;
         options: IManifestoOptions;
         rootRange: IRange;
+        sequences: ISequence[];
         treeRoot: TreeNode;
     }
 }
@@ -124,6 +125,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface ISequence extends IJSONLDResource {
+        canvases: ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
@@ -211,11 +213,7 @@ declare module Manifesto {
 declare var _isNumber: any;
 declare module Manifesto {
     class Sequence extends JSONLDResource implements ISequence {
-        canvases: Canvas[];
-        manifest: IManifest;
-        startCanvas: string;
-        viewingDirection: ViewingDirection;
-        viewingHint: ViewingHint;
+        canvases: ICanvas[];
         constructor(jsonld: any);
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(canvasIndex: number): any;
@@ -243,12 +241,12 @@ declare module Manifesto {
 declare var jmespath: any;
 declare module Manifesto {
     class Deserialiser {
-        static manifest: Manifest;
-        static parse(manifest: string): Manifest;
+        static manifest: IManifest;
+        static parse(manifest: string): IManifest;
         static parseSequences(): void;
         static parseCanvases(sequence: any): Canvas[];
         static parseRanges(r: any, path: string, parentRange?: Range): void;
-        static getCanvasById(id: string): Canvas;
+        static getCanvasById(id: string): ICanvas;
     }
     class Serialiser {
         static serialise(manifest: Manifest): string;

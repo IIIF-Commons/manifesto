@@ -18,6 +18,7 @@ module Manifesto {
         isMultiSequence(): boolean;
         options: IManifestoOptions;
         rootRange: IRange;
+        sequences: ISequence[];
         treeRoot: TreeNode;
     }
 }

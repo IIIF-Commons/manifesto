@@ -2,9 +2,9 @@ var jmespath = require('jmespath');
 
 module Manifesto {
     export class Deserialiser {
-        static manifest: Manifest;
+        static manifest: IManifest;
 
-        static parse(manifest: string): Manifest {
+        static parse(manifest: string): IManifest {
 
             this.manifest = new Manifest(JSON.parse(manifest));
 
@@ -58,7 +58,7 @@ module Manifesto {
             if (r.canvases){
                 // create two-way relationship
                 for (var i = 0; i < r.canvases.length; i++){
-                    var canvas: Canvas = this.getCanvasById(r.canvases[i]);
+                    var canvas: ICanvas = this.getCanvasById(r.canvases[i]);
                     canvas.ranges.push(range);
                     range.canvases.push(canvas);
                 }
@@ -71,13 +71,13 @@ module Manifesto {
             }
         }
 
-        static getCanvasById(id: string): Canvas {
+        static getCanvasById(id: string): ICanvas {
 
             for (var i = 0; i < this.manifest.sequences.length; i++){
-                var sequence = this.manifest.sequences[i];
+                var sequence: ISequence = this.manifest.sequences[i];
 
                 for (var j = 0; j < sequence.canvases.length; j++){
-                    var canvas = sequence.canvases[j];
+                    var canvas: ICanvas = sequence.canvases[j];
 
                     if (canvas.id === id){
                         return canvas;

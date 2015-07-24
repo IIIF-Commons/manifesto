@@ -1,4 +1,3 @@
-/// <reference path="./_references.ts" />
 var http = require("http");
 var url = require("url");
 
@@ -34,7 +33,7 @@ module.exports = <IManifesto>{
         fetch.end();
     },
 
-    parse: function(manifest: string): Manifesto.Manifest {
+    parse: function(manifest: string): Manifesto.IManifest {
         return Manifesto.Deserialiser.parse(manifest);
     }
 };

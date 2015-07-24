@@ -498,7 +498,7 @@ var Manifesto;
                 return canvas.getLabel();
             }
             // none exists, so return '-'.
-            return this.manifest.options.defaultLabel;
+            return this.getManifest().options.defaultLabel;
         };
         Sequence.prototype.getLastPageIndex = function () {
             return this.getTotalCanvases() - 1;
@@ -507,7 +507,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
                     index = indices[0] + 1;
                 }
                 else {
@@ -537,7 +537,7 @@ var Manifesto;
                 else {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
-                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
                     indices = indices.reverse();
                 }
             }
@@ -547,7 +547,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft) {
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft) {
                     index = indices.last() - 1;
                 }
                 else {
@@ -560,11 +560,12 @@ var Manifesto;
             return index;
         };
         Sequence.prototype.getStartCanvasIndex = function () {
-            if (this.startCanvas) {
+            var startCanvas = this.getStartCanvas();
+            if (startCanvas) {
                 // if there's a startCanvas attribute, loop through the canvases and return the matching index.
                 for (var i = 0; i < this.getTotalCanvases(); i++) {
                     var canvas = this.getCanvasByIndex(i);
-                    if (canvas.id === this.startCanvas)
+                    if (canvas.id === startCanvas)
                         return i;
                 }
             }
@@ -618,7 +619,7 @@ var Manifesto;
             return this.getTotalCanvases() > 1;
         };
         Sequence.prototype.isPagingEnabled = function () {
-            return this.viewingHint && (this.viewingHint === Manifesto.ViewingHint.paged);
+            return this.getViewingHint() === Manifesto.ViewingHint.paged;
         };
         // checks if the number of canvases is even - therefore has a front and back cover
         Sequence.prototype.isTotalCanvasesEven = function () {
@@ -836,7 +837,6 @@ var Manifesto;
     })();
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
-/// <reference path="./_references.ts" />
 var http = require("http");
 var url = require("url");
 module.exports = {

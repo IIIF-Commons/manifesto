@@ -2,11 +2,7 @@ var _isNumber = require("lodash.isnumber");
 
 module Manifesto {
     export class Sequence extends JSONLDResource implements ISequence {
-        canvases: Canvas[] = [];
-        manifest: IManifest;
-        startCanvas: string;
-        viewingDirection: ViewingDirection;
-        viewingHint: ViewingHint;
+        canvases: ICanvas[] = [];
 
         constructor(jsonld: any){
             super(jsonld);
@@ -91,7 +87,7 @@ module Manifesto {
             }
 
             // none exists, so return '-'.
-            return this.manifest.options.defaultLabel;
+            return this.getManifest().options.defaultLabel;
         }
 
         getLastPageIndex(): number {
@@ -105,7 +101,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft){
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
                     index = indices[0] + 1;
                 } else {
                     index = indices.last() + 1;
@@ -136,7 +132,7 @@ module Manifesto {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
 
-                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft){
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
                     indices = indices.reverse();
                 }
             }
@@ -151,7 +147,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.viewingDirection === Manifesto.ViewingDirection.rightToLeft){
+                if (this.getViewingDirection() === Manifesto.ViewingDirection.rightToLeft){
                     index = indices.last() - 1;
                 } else {
                     index = indices[0] - 1;
@@ -165,12 +161,14 @@ module Manifesto {
         }
 
         getStartCanvasIndex(): number {
-            if (this.startCanvas) {
+            var startCanvas = this.getStartCanvas();
+
+            if (startCanvas) {
                 // if there's a startCanvas attribute, loop through the canvases and return the matching index.
                 for (var i = 0; i < this.getTotalCanvases(); i++) {
                     var canvas = this.getCanvasByIndex(i);
 
-                    if (canvas.id === this.startCanvas) return i;
+                    if (canvas.id === startCanvas) return i;
                 }
             }
 
@@ -242,7 +240,7 @@ module Manifesto {
         }
 
         isPagingEnabled(): boolean{
-            return this.viewingHint && (this.viewingHint === ViewingHint.paged);
+            return this.getViewingHint() === ViewingHint.paged;
         }
 
         // checks if the number of canvases is even - therefore has a front and back cover
