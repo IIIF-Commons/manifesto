@@ -57,7 +57,7 @@ gulp.task('build', function() {
 gulp.task('browserify', function () {
 
     var b = browserify({
-        entries: './dist/server/manifesto.js',
+        entries: config.browserifySrc,
         debug: true
     });
 
