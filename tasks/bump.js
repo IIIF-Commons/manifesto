@@ -8,7 +8,7 @@ var argv = require('yargs').argv,
 gulp.task('bump', function(){
     var bumpType = argv.type || 'patch'; // major.minor.patch
 
-    gulp.src(['./bower.json', './package.json'])
+    return gulp.src(['./bower.json', './package.json'])
         .pipe(bump({type: bumpType}))
         .pipe(gulp.dest('./'))
         .pipe(filter('package.json'))

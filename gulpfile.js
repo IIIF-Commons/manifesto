@@ -1,15 +1,18 @@
-var bump = require('gulp-bump'),
-    browserify = require('gulp-browserify'),
+var browserify = require('browserify'),
+    buffer = require('vinyl-buffer'),
+    bump = require('gulp-bump'),
     Config = require('./gulpfile.config'),
     del = require('del'),
+    gulp = require('gulp'),
+    gutil = require('gulp-util'),
     merge = require('merge2'),
     mocha = require('gulp-mocha'),
     rename = require('gulp-rename'),
     requireDir = require('require-dir'),
     runSequence = require('run-sequence'),
+    source = require('vinyl-source-stream'),
     tasks = requireDir('./tasks'),
-    ts = require('gulp-typescript'),
-    gulp = require('gulp');
+    ts = require('gulp-typescript');
 
 var config = new Config();
 
@@ -18,7 +21,7 @@ gulp.task('test', function () {
         .pipe(mocha());
 });
 
-gulp.task('clean:dist', function (cb) {
+gulp.task('clean', function (cb) {
     del([
         config.dist + '/*'
     ], cb);
@@ -42,15 +45,35 @@ gulp.task('build', function() {
     ]);
 });
 
-gulp.task('browserify', function (cb) {
-    return gulp.src(config.browserifySrc)
-        .pipe(browserify({
-            standalone: config.browserifyStandalone
-        }))
-        .pipe(rename(config.browserifyOut))
+//gulp.task('browserify', function (cb) {
+//    return gulp.src(config.browserifySrc)
+//        .pipe(browserify({
+//            standalone: config.browserifyStandalone
+//        }))
+//        .pipe(rename(config.browserifyOut))
+//        .pipe(gulp.dest(config.client));
+//});
+
+gulp.task('browserify', function () {
+
+    var b = browserify({
+        entries: './dist/server/manifesto.js',
+        debug: true
+    });
+
+    return b.bundle()
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+        .pipe(source(config.browserifyOut))
+        .pipe(buffer())
+        //.pipe(sourcemaps.init({loadMaps: true}))
+        // Add transformation tasks to the pipeline here.
+        //.pipe(uglify())
+        //.on('error', gutil.log)
+        //.pipe(sourcemaps.write('./'))
+        //.pipe(rename(config.browserifyOut))
         .pipe(gulp.dest(config.client));
 });
 
 gulp.task('default', function(cb) {
-    runSequence('bump', 'clean:dist', 'build', 'browserify', 'test', cb);
+    runSequence('clean', 'build', 'browserify', 'test', 'bump', cb);
 });

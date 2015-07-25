@@ -1,5 +1,105 @@
 var Manifesto;
 (function (Manifesto) {
+    var CanvasType = (function () {
+        function CanvasType(value) {
+            this.value = value;
+        }
+        CanvasType.prototype.toString = function () {
+            return this.value;
+        };
+        CanvasType.canvas = new CanvasType("sc:canvas");
+        return CanvasType;
+    })();
+    Manifesto.CanvasType = CanvasType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ElementType = (function () {
+        function ElementType(value) {
+            this.value = value;
+        }
+        ElementType.prototype.toString = function () {
+            return this.value;
+        };
+        ElementType.document = new Manifesto.CanvasType("foaf:Document");
+        ElementType.movingimage = new Manifesto.CanvasType("dctypes:MovingImage");
+        ElementType.sound = new Manifesto.CanvasType("dctypes:Sound");
+        return ElementType;
+    })();
+    Manifesto.ElementType = ElementType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var RenderingFormat = (function () {
+        function RenderingFormat(value) {
+            this.value = value;
+        }
+        RenderingFormat.prototype.toString = function () {
+            return this.value;
+        };
+        RenderingFormat.pdf = new RenderingFormat("application/pdf");
+        RenderingFormat.doc = new RenderingFormat("application/msword");
+        RenderingFormat.docx = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        return RenderingFormat;
+    })();
+    Manifesto.RenderingFormat = RenderingFormat;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ServiceProfile = (function () {
+        function ServiceProfile(value) {
+            this.value = value;
+        }
+        ServiceProfile.prototype.toString = function () {
+            return this.value;
+        };
+        ServiceProfile.autoComplete = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        ServiceProfile.login = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
+        ServiceProfile.logout = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
+        ServiceProfile.otherManifestations = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+        ServiceProfile.searchWithin = new ServiceProfile("http://iiif.io/api/search/1/");
+        ServiceProfile.token = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
+        return ServiceProfile;
+    })();
+    Manifesto.ServiceProfile = ServiceProfile;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ViewingDirection = (function () {
+        function ViewingDirection(value) {
+            this.value = value;
+        }
+        ViewingDirection.prototype.toString = function () {
+            return this.value;
+        };
+        ViewingDirection.leftToRight = new ViewingDirection("left-to-right");
+        ViewingDirection.rightToLeft = new ViewingDirection("right-to-left");
+        ViewingDirection.topToBottom = new ViewingDirection("top-to-bottom");
+        ViewingDirection.bottomToTop = new ViewingDirection("bottom-to-top");
+        return ViewingDirection;
+    })();
+    Manifesto.ViewingDirection = ViewingDirection;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ViewingHint = (function () {
+        function ViewingHint(value) {
+            this.value = value;
+        }
+        ViewingHint.prototype.toString = function () {
+            return this.value;
+        };
+        ViewingHint.individuals = new ViewingHint("individuals");
+        ViewingHint.paged = new ViewingHint("paged");
+        ViewingHint.continuous = new ViewingHint("continuous");
+        ViewingHint.nonPaged = new ViewingHint("non-paged");
+        ViewingHint.top = new ViewingHint("top");
+        return ViewingHint;
+    })();
+    Manifesto.ViewingHint = ViewingHint;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
     var JSONLDResource = (function () {
         function JSONLDResource(jsonld) {
             this.__jsonld = jsonld;
@@ -98,20 +198,6 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
-    var CanvasType = (function () {
-        function CanvasType(value) {
-            this.value = value;
-        }
-        CanvasType.prototype.toString = function () {
-            return this.value;
-        };
-        CanvasType.canvas = new CanvasType("sc:canvas");
-        return CanvasType;
-    })();
-    Manifesto.CanvasType = CanvasType;
-})(Manifesto || (Manifesto = {}));
 var _isArray = require("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
@@ -146,22 +232,6 @@ var Manifesto;
         return Element;
     })(Manifesto.JSONLDResource);
     Manifesto.Element = Element;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
-    var ElementType = (function () {
-        function ElementType(value) {
-            this.value = value;
-        }
-        ElementType.prototype.toString = function () {
-            return this.value;
-        };
-        ElementType.document = new Manifesto.CanvasType("foaf:Document");
-        ElementType.movingimage = new Manifesto.CanvasType("dctypes:MovingImage");
-        ElementType.sound = new Manifesto.CanvasType("dctypes:Sound");
-        return ElementType;
-    })();
-    Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
@@ -418,22 +488,6 @@ var Manifesto;
         return Rendering;
     })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
-    var RenderingFormat = (function () {
-        function RenderingFormat(value) {
-            this.value = value;
-        }
-        RenderingFormat.prototype.toString = function () {
-            return this.value;
-        };
-        RenderingFormat.pdf = new RenderingFormat("application/pdf");
-        RenderingFormat.doc = new RenderingFormat("application/msword");
-        RenderingFormat.docx = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        return RenderingFormat;
-    })();
-    Manifesto.RenderingFormat = RenderingFormat;
 })(Manifesto || (Manifesto = {}));
 var _isNumber = require("lodash.isnumber");
 var Manifesto;
@@ -756,25 +810,6 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ServiceProfile = (function () {
-        function ServiceProfile(value) {
-            this.value = value;
-        }
-        ServiceProfile.prototype.toString = function () {
-            return this.value;
-        };
-        ServiceProfile.autoComplete = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
-        ServiceProfile.login = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
-        ServiceProfile.logout = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
-        ServiceProfile.otherManifestations = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
-        ServiceProfile.searchWithin = new ServiceProfile("http://iiif.io/api/search/1/");
-        ServiceProfile.token = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
-        return ServiceProfile;
-    })();
-    Manifesto.ServiceProfile = ServiceProfile;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
     var Thumb = (function () {
         function Thumb(index, uri, label, width, height, visible) {
             this.index = index;
@@ -805,41 +840,6 @@ var Manifesto;
         return TreeNode;
     })();
     Manifesto.TreeNode = TreeNode;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
-    var ViewingDirection = (function () {
-        function ViewingDirection(value) {
-            this.value = value;
-        }
-        ViewingDirection.prototype.toString = function () {
-            return this.value;
-        };
-        ViewingDirection.leftToRight = new ViewingDirection("left-to-right");
-        ViewingDirection.rightToLeft = new ViewingDirection("right-to-left");
-        ViewingDirection.topToBottom = new ViewingDirection("top-to-bottom");
-        ViewingDirection.bottomToTop = new ViewingDirection("bottom-to-top");
-        return ViewingDirection;
-    })();
-    Manifesto.ViewingDirection = ViewingDirection;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
-    var ViewingHint = (function () {
-        function ViewingHint(value) {
-            this.value = value;
-        }
-        ViewingHint.prototype.toString = function () {
-            return this.value;
-        };
-        ViewingHint.individuals = new ViewingHint("individuals");
-        ViewingHint.paged = new ViewingHint("paged");
-        ViewingHint.continuous = new ViewingHint("continuous");
-        ViewingHint.nonPaged = new ViewingHint("non-paged");
-        ViewingHint.top = new ViewingHint("top");
-        return ViewingHint;
-    })();
-    Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
 var http = require("http");
 var url = require("url");
@@ -873,12 +873,16 @@ module.exports = {
         return Manifesto.Deserialiser.parse(manifest);
     }
 };
+/// <reference path="./CanvasType.ts" />
+/// <reference path="./ElementType.ts" />
+/// <reference path="./RenderingFormat.ts" />
+/// <reference path="./ServiceProfile.ts" />
+/// <reference path="./ViewingDirection.ts" />
+/// <reference path="./ViewingHint.ts" />
 /// <reference path="./IJSONLDResource.ts" />
 /// <reference path="./JSONLDResource.ts" />
 /// <reference path="./Canvas.ts" />
-/// <reference path="./CanvasType.ts" />
 /// <reference path="./Element.ts" />
-/// <reference path="./ElementType.ts" />
 /// <reference path="./ICanvas.ts" />
 /// <reference path="./IElement.ts" />
 /// <reference path="./IManifest.ts" />
@@ -891,13 +895,9 @@ module.exports = {
 /// <reference path="./Manifest.ts" />
 /// <reference path="./Range.ts" />
 /// <reference path="./Rendering.ts" />
-/// <reference path="./RenderingFormat.ts" />
 /// <reference path="./Sequence.ts" />
 /// <reference path="./Serialisation.ts" />
 /// <reference path="./Service.ts" />
-/// <reference path="./ServiceProfile.ts" />
 /// <reference path="./Thumb.ts" />
 /// <reference path="./TreeNode.ts" />
-/// <reference path="./ViewingDirection.ts" />
-/// <reference path="./ViewingHint.ts" />
 /// <reference path="./Manifesto.ts" /> 
