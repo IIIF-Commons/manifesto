@@ -115,12 +115,10 @@ declare module Manifesto {
         getHeight(): number;
     }
 }
-declare var _isArray: any;
 declare module Manifesto {
     class Element extends JSONLDResource implements IElement {
         type: ElementType;
         constructor(jsonld: any);
-        getRenderings(): IRendering[];
         getType(): ElementType;
     }
 }
@@ -137,7 +135,6 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IElement extends IJSONLDResource {
-        getRenderings(): IRendering[];
         getType(): ElementType;
     }
 }
@@ -151,7 +148,7 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
-        getRenderings(resource: IJSONLDResource): IRendering[];
+        getRenderings(resource: IJSONLDResource): any[];
         getSeeAlso(): any;
         getSequenceByIndex(index: number): ISequence;
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
@@ -193,7 +190,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IRendering extends IJSONLDResource {
-        format: string;
+        getFormat(): RenderingFormat;
     }
 }
 declare module Manifesto {
@@ -244,7 +241,7 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: IJSONLDResource, format: Manifesto.RenderingFormat | string): IRendering;
-        getRenderings(resource: IJSONLDResource): IRendering[];
+        getRenderings(resource: IJSONLDResource): any[];
         getSeeAlso(): any;
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService;
         getSequenceByIndex(sequenceIndex: number): ISequence;
@@ -269,8 +266,8 @@ declare module Manifesto {
 }
 declare module Manifesto {
     class Rendering extends JSONLDResource implements IRendering {
-        format: string;
         constructor(jsonld: any);
+        getFormat(): RenderingFormat;
     }
 }
 declare var _isNumber: any;
@@ -345,3 +342,8 @@ declare module Manifesto {
 }
 declare var http: any;
 declare var url: any;
+declare module Manifesto {
+    interface IAnnotation extends IJSONLDResource {
+        getMotivation(): string;
+    }
+}

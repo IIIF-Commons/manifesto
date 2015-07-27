@@ -136,7 +136,7 @@ module Manifesto {
         }
 
         getRendering(resource: IJSONLDResource, format: Manifesto.RenderingFormat | string): IRendering {
-            var renderings = this.getRenderings(resource);
+            var renderings: IRendering[] = this.getRenderings(resource);
 
             // normalise format to string
             if (typeof format !== 'string'){
@@ -144,9 +144,10 @@ module Manifesto {
             }
 
             for (var i = 0; i < renderings.length; i++){
-                var rendering: IRendering = renderings[i];
+                var r: any = renderings[i];
+                var rendering: IRendering = new Rendering(r);
 
-                if (rendering.format && rendering.format.toString() === format) {
+                if (rendering.getFormat().toString() === format) {
                     return rendering;
                 }
             }
@@ -154,7 +155,7 @@ module Manifesto {
             return null;
         }
 
-        getRenderings(resource: IJSONLDResource): IRendering[] {
+        getRenderings(resource: IJSONLDResource): any[] {
             var renderings = resource.__jsonld.rendering;
 
             if (renderings){
@@ -167,7 +168,7 @@ module Manifesto {
             }
 
             // no renderings provided, default to resource.
-            return [<IRendering>resource];
+            return [resource];
         }
 
         getSeeAlso(): any {

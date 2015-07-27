@@ -211,10 +211,14 @@ var Manifesto;
             _super.call(this, jsonld);
             this.ranges = [];
         }
-        // todo: add support for default images and multiple images.
+        //getImages(): IAnnotation[] {
+        //
+        //}
+        // todo: use getImages instead.
         Canvas.prototype.getImageUri = function () {
             var imageUri;
             if (this.__jsonld.resources) {
+                // todo: create image serviceprofile and use manifest.getService
                 imageUri = this.__jsonld.resources[0].resource.service['@id'];
             }
             else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
@@ -269,7 +273,6 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
-var _isArray = _dereq_("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
     var Element = (function (_super) {
@@ -277,26 +280,6 @@ var Manifesto;
         function Element(jsonld) {
             _super.call(this, jsonld);
         }
-        Element.prototype.getRenderings = function () {
-            var renderings = [];
-            if (this.__jsonld.rendering) {
-                var rendering = this.__jsonld.rendering;
-                if (!_isArray(rendering)) {
-                    rendering = [rendering];
-                }
-                for (var i = 0; i < rendering.length; i++) {
-                    var r = rendering[i];
-                    var rend = new Manifesto.Rendering(r);
-                    rend.format = r.format;
-                    renderings.push(rend);
-                }
-                return renderings;
-            }
-            // no renderings provided, default to element.
-            var rend = new Manifesto.Rendering(this.__jsonld);
-            rend.format = this.__jsonld.format;
-            return [rend];
-        };
         Element.prototype.getType = function () {
             return new Manifesto.ElementType(this.__jsonld['@type']);
         };
@@ -418,8 +401,9 @@ var Manifesto;
                 format = format.toString();
             }
             for (var i = 0; i < renderings.length; i++) {
-                var rendering = renderings[i];
-                if (rendering.format && rendering.format.toString() === format) {
+                var r = renderings[i];
+                var rendering = new Manifesto.Rendering(r);
+                if (rendering.getFormat().toString() === format) {
                     return rendering;
                 }
             }
@@ -557,6 +541,9 @@ var Manifesto;
         function Rendering(jsonld) {
             _super.call(this, jsonld);
         }
+        Rendering.prototype.getFormat = function () {
+            return new Manifesto.RenderingFormat(this.__jsonld.format);
+        };
         return Rendering;
     })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;

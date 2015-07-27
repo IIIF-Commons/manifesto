@@ -7,11 +7,16 @@ module Manifesto {
             super(jsonld);
         }
 
-        // todo: add support for default images and multiple images.
+        //getImages(): IAnnotation[] {
+        //
+        //}
+
+        // todo: use getImages instead.
         getImageUri(): string {
             var imageUri;
 
             if (this.__jsonld.resources){
+                // todo: create image serviceprofile and use manifest.getService
                 imageUri = this.__jsonld.resources[0].resource.service['@id'];
             } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
                 imageUri = this.__jsonld.images[0].resource.service['@id'];
