@@ -33,10 +33,11 @@ declare module Manifesto {
         static login: ServiceProfile;
         static logout: ServiceProfile;
         static otherManifestations: ServiceProfile;
-        static searchWithin: ServiceProfile;
+        static searchWithin: () => any;
         static token: ServiceProfile;
-        constructor(value: string);
+        constructor(value?: string);
         toString(): string;
+        searchWithin(): ServiceProfile;
     }
 }
 declare module Manifesto {
@@ -76,7 +77,6 @@ declare module Manifesto {
         id: string;
         __jsonld: any;
         private _label;
-        private _manifest;
         constructor(jsonld: any);
         getManifest(): IManifest;
         getLabel(): string;
@@ -147,6 +147,7 @@ declare module Manifesto {
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
     parse: (manifest: string) => Manifesto.Manifest;
+    ServiceProfile: Manifesto.ServiceProfile;
 }
 interface IManifestoOptions {
     defaultLabel: string;

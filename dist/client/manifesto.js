@@ -54,11 +54,14 @@ var Manifesto;
         ServiceProfile.prototype.toString = function () {
             return this.value;
         };
+        ServiceProfile.prototype.searchWithin = function () {
+            return new ServiceProfile("http://iiif.io/api/search/1/");
+        };
         ServiceProfile.autoComplete = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
         ServiceProfile.login = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
         ServiceProfile.logout = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
         ServiceProfile.otherManifestations = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
-        ServiceProfile.searchWithin = new ServiceProfile("http://iiif.io/api/search/1/");
+        ServiceProfile.searchWithin = function () { return ServiceProfile.searchWithin(); };
         ServiceProfile.token = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
         return ServiceProfile;
     })();
@@ -107,13 +110,11 @@ var Manifesto;
             this.context = this.__jsonld['@context'];
             this.id = this.__jsonld['@id'];
             this._label = this.__jsonld.label;
-            // the serializer stores a reference to the manifest on the jsonld resource for convenience
-            this._manifest = this.__jsonld.manifest;
             // store a reference to the parsed object in the jsonld for convenience.
             this.__jsonld.__parsed = this;
         }
         JSONLDResource.prototype.getManifest = function () {
-            return this._manifest;
+            return this.__jsonld.__manifest;
         };
         JSONLDResource.prototype.getLabel = function () {
             // todo: why test if it's a digit?
@@ -243,6 +244,7 @@ var Manifesto;
         function Manifest(jsonld, options) {
             _super.call(this, jsonld);
             this.sequences = [];
+            jsonld.__manifest = this;
             this.options = _assign({ defaultLabel: '-', locale: 'en-GB' }, options);
         }
         Manifest.prototype.getAttribution = function () {
@@ -370,7 +372,7 @@ var Manifesto;
         };
         Manifest.prototype.getService = function (resource, profile) {
             var service;
-            // if passing a parsed object, use the jsonld.service property,
+            // if passing a parsed object, use the __jsonld.service property,
             // otherwise look for a service property
             if (resource.__jsonld) {
                 service = resource.__jsonld.service;
@@ -551,12 +553,10 @@ var Manifesto;
             return -1;
         };
         Sequence.prototype.getLastCanvasLabel = function () {
-            // get the last label that isn't empty or '-'.
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas = this.getCanvasByIndex(i);
                 return canvas.getLabel();
             }
-            // none exists, so return '-'.
             return this.getManifest().options.defaultLabel;
         };
         Sequence.prototype.getLastPageIndex = function () {
@@ -695,7 +695,8 @@ var Manifesto;
         function Deserialiser() {
         }
         Deserialiser.parse = function (manifest) {
-            this.manifest = new Manifesto.Manifest(JSON.parse(manifest));
+            var m = JSON.parse(manifest);
+            this.manifest = new Manifesto.Manifest(m);
             this.parseSequences();
             if (this.manifest.__jsonld.structures && this.manifest.__jsonld.structures.length) {
                 this.parseRanges(JsonUtils.getRootRange(this.manifest.__jsonld), '');
@@ -705,7 +706,7 @@ var Manifesto;
         Deserialiser.parseSequences = function () {
             for (var i = 0; i < this.manifest.__jsonld.sequences.length; i++) {
                 var s = this.manifest.__jsonld.sequences[i];
-                s.manifest = this.manifest;
+                s.__manifest = this.manifest;
                 var sequence = new Manifesto.Sequence(s);
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
@@ -715,14 +716,14 @@ var Manifesto;
             var canvases = [];
             for (var i = 0; i < sequence.canvases.length; i++) {
                 var c = sequence.canvases[i];
-                c.manifest = this.manifest;
+                c.__manifest = this.manifest;
                 var canvas = new Manifesto.Canvas(c);
                 canvases.push(canvas);
             }
             return canvases;
         };
         Deserialiser.parseRanges = function (r, path, parentRange) {
-            r.manifest = this.manifest;
+            r.__manifest = this.manifest;
             var range = new Manifesto.Range(r);
             // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange) {
@@ -849,6 +850,7 @@ module.exports = {
     //ElementType: new Manifesto.ElementType(),
     //RenderingFormat: new Manifesto.RenderingFormat(),
     //ServiceProfile: new Manifesto.ServiceProfile(),
+    ServiceProfile: new Manifesto.ServiceProfile(),
     //ViewingDirection: new Manifesto.ViewingDirection(),
     //ViewingHint: new Manifesto.ViewingHint(),
     load: function (manifestUri, cb) {

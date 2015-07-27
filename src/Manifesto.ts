@@ -7,6 +7,7 @@ module.exports = <IManifesto>{
     //ElementType: new Manifesto.ElementType(),
     //RenderingFormat: new Manifesto.RenderingFormat(),
     //ServiceProfile: new Manifesto.ServiceProfile(),
+    ServiceProfile: new Manifesto.ServiceProfile(),
     //ViewingDirection: new Manifesto.ViewingDirection(),
     //ViewingHint: new Manifesto.ViewingHint(),
 

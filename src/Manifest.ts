@@ -10,6 +10,7 @@ module Manifesto {
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld);
+            jsonld.__manifest = this;
             this.options = _assign({defaultLabel: '-', locale: 'en-GB'}, options);
         }
 
@@ -174,9 +175,10 @@ module Manifesto {
         }
 
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
+
             var service;
 
-            // if passing a parsed object, use the jsonld.service property,
+            // if passing a parsed object, use the __jsonld.service property,
             // otherwise look for a service property
             if (resource.__jsonld){
                 service = resource.__jsonld.service;

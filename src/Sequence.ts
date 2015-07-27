@@ -80,13 +80,11 @@ module Manifesto {
         }
 
         getLastCanvasLabel(): string {
-            // get the last label that isn't empty or '-'.
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
                 return canvas.getLabel();
             }
 
-            // none exists, so return '-'.
             return this.getManifest().options.defaultLabel;
         }
 

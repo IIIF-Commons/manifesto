@@ -4,21 +4,18 @@ module Manifesto{
         id: string;
         __jsonld: any;
         private _label: string;
-        private _manifest: IManifest;
 
         constructor(jsonld: any){
             this.__jsonld = jsonld;
             this.context = this.__jsonld['@context'];
             this.id = this.__jsonld['@id'];
             this._label = this.__jsonld.label;
-            // the serializer stores a reference to the manifest on the jsonld resource for convenience
-            this._manifest = this.__jsonld.manifest;
             // store a reference to the parsed object in the jsonld for convenience.
             this.__jsonld.__parsed = this;
         }
 
         getManifest(): IManifest {
-            return this._manifest;
+            return this.__jsonld.__manifest;
         }
 
         getLabel(): string {

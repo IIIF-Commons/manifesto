@@ -6,7 +6,8 @@ module Manifesto {
 
         static parse(manifest: string): IManifest {
 
-            this.manifest = new Manifest(JSON.parse(manifest));
+            var m = JSON.parse(manifest);
+            this.manifest = new Manifest(m);
 
             this.parseSequences();
 
@@ -20,7 +21,7 @@ module Manifesto {
         static parseSequences(): void {
             for (var i = 0; i < this.manifest.__jsonld.sequences.length; i++){
                 var s = this.manifest.__jsonld.sequences[i];
-                s.manifest = this.manifest;
+                s.__manifest = this.manifest;
                 var sequence = new Sequence(s);
                 sequence.canvases = this.parseCanvases(s);
                 this.manifest.sequences.push(sequence);
@@ -32,7 +33,7 @@ module Manifesto {
 
             for (var i = 0; i < sequence.canvases.length; i++) {
                 var c = sequence.canvases[i];
-                c.manifest = this.manifest;
+                c.__manifest = this.manifest;
                 var canvas: Canvas = new Canvas(c);
                 canvases.push(canvas);
             }
@@ -42,7 +43,7 @@ module Manifesto {
 
         static parseRanges(r: any, path: string, parentRange?: Range): void {
 
-            r.manifest = this.manifest;
+            r.__manifest = this.manifest;
             var range: Range = new Range(r);
 
             // if no parent range is passed, assign the new range to manifest.rootRange

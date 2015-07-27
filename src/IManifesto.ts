@@ -4,7 +4,7 @@ interface IManifesto {
     //CanvasType: Manifesto.CanvasType;
     //ElementType: Manifesto.ElementType;
     //RenderingFormat: Manifesto.RenderingFormat;
-    //ServiceProfile: Manifesto.ServiceProfile;
+    ServiceProfile: Manifesto.ServiceProfile;
     //ViewingDirection: Manifesto.ViewingDirection;
     //ViewingHint: Manifesto.ViewingHint;
 }

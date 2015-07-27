@@ -45,7 +45,7 @@ gulp.task('build', function() {
     ]);
 });
 
-gulp.task('browserify', function (cb) {
+gulp.task('browserify', function () {
     return gulp.src(config.browserifySrc)
         .pipe(browserify({
             standalone: config.browserifyStandalone
