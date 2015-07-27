@@ -117,21 +117,21 @@ var Manifesto;
         };
         // todo: use getters when ES3 target is no longer required.
         ViewingDirection.prototype.leftToRight = function () {
-            return new ViewingDirection("left-to-right");
+            return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
         };
         ViewingDirection.prototype.rightToLeft = function () {
-            return new ViewingDirection("right-to-left");
+            return new ViewingDirection(ViewingDirection.RIGHTTOLEFT.toString());
         };
         ViewingDirection.prototype.topToBottom = function () {
-            return new ViewingDirection("top-to-bottom");
+            return new ViewingDirection(ViewingDirection.TOPTOBOTTOM.toString());
         };
         ViewingDirection.prototype.bottomToTop = function () {
-            return new ViewingDirection("bottom-to-top");
+            return new ViewingDirection(ViewingDirection.BOTTOMTOTOP.toString());
         };
-        ViewingDirection.leftToRight = function () { return ViewingDirection.leftToRight(); };
-        ViewingDirection.rightToLeft = function () { return ViewingDirection.rightToLeft(); };
-        ViewingDirection.topToBottom = function () { return ViewingDirection.topToBottom(); };
-        ViewingDirection.bottomToTop = function () { return ViewingDirection.bottomToTop(); };
+        ViewingDirection.LEFTTORIGHT = new ViewingDirection("left-to-right");
+        ViewingDirection.RIGHTTOLEFT = new ViewingDirection("right-to-left");
+        ViewingDirection.TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
+        ViewingDirection.BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
         return ViewingDirection;
     })();
     Manifesto.ViewingDirection = ViewingDirection;
@@ -634,7 +634,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()) {
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
                     index = indices[0] + 1;
                 }
                 else {
@@ -664,7 +664,7 @@ var Manifesto;
                 else {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()) {
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
                     indices = indices.reverse();
                 }
             }
@@ -674,7 +674,7 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()) {
+                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
                     index = indices.last() - 1;
                 }
                 else {
@@ -725,7 +725,7 @@ var Manifesto;
             if (this.__jsonld.viewingDirection) {
                 return new Manifesto.ViewingDirection(this.__jsonld.viewingDirection);
             }
-            return Manifesto.ViewingDirection.leftToRight();
+            return Manifesto.ViewingDirection.LEFTTORIGHT;
         };
         Sequence.prototype.getViewingHint = function () {
             if (this.__jsonld.viewingHint) {

@@ -55,10 +55,10 @@ declare module Manifesto {
 declare module Manifesto {
     class ViewingDirection {
         value: string;
-        static leftToRight: () => any;
-        static rightToLeft: () => any;
-        static topToBottom: () => any;
-        static bottomToTop: () => any;
+        static LEFTTORIGHT: ViewingDirection;
+        static RIGHTTOLEFT: ViewingDirection;
+        static TOPTOBOTTOM: ViewingDirection;
+        static BOTTOMTOTOP: ViewingDirection;
         constructor(value?: string);
         toString(): string;
         leftToRight(): ViewingDirection;

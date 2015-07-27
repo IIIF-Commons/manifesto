@@ -99,7 +99,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()){
+                if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     index = indices[0] + 1;
                 } else {
                     index = indices.last() + 1;
@@ -130,7 +130,7 @@ module Manifesto {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
 
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()){
+                if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     indices = indices.reverse();
                 }
             }
@@ -145,7 +145,7 @@ module Manifesto {
             if (pagingEnabled){
                 var indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.rightToLeft.toString()){
+                if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     index = indices.last() - 1;
                 } else {
                     index = indices[0] - 1;
@@ -210,7 +210,7 @@ module Manifesto {
                 return new ViewingDirection(this.__jsonld.viewingDirection);
             }
 
-            return ViewingDirection.leftToRight();
+            return ViewingDirection.LEFTTORIGHT;
         }
 
         getViewingHint(): ViewingHint {

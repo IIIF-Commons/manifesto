@@ -1,10 +1,10 @@
 
 module Manifesto {
     export class ViewingDirection {
-        public static leftToRight = () => { return ViewingDirection.leftToRight() };
-        public static rightToLeft = () => { return ViewingDirection.rightToLeft() };
-        public static topToBottom = () => { return ViewingDirection.topToBottom() };
-        public static bottomToTop = () => { return ViewingDirection.bottomToTop() };
+        public static LEFTTORIGHT = new ViewingDirection("left-to-right");
+        public static RIGHTTOLEFT = new ViewingDirection("right-to-left");
+        public static TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
+        public static BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
 
         constructor(public value?: string) {
         }
@@ -16,19 +16,19 @@ module Manifesto {
         // todo: use getters when ES3 target is no longer required.
 
         leftToRight(): ViewingDirection {
-            return new ViewingDirection("left-to-right");
+            return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
         }
 
         rightToLeft(): ViewingDirection {
-            return new ViewingDirection("right-to-left");
+            return new ViewingDirection(ViewingDirection.RIGHTTOLEFT.toString());
         }
 
         topToBottom(): ViewingDirection {
-            return new ViewingDirection("top-to-bottom");
+            return new ViewingDirection(ViewingDirection.TOPTOBOTTOM.toString());
         }
 
         bottomToTop(): ViewingDirection {
-            return new ViewingDirection("bottom-to-top");
+            return new ViewingDirection(ViewingDirection.BOTTOMTOTOP.toString());
         }
     }
 }
