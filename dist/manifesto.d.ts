@@ -1,7 +1,7 @@
 declare module Manifesto {
     class CanvasType {
         value: string;
-        static canvas: () => any;
+        static CANVAS: CanvasType;
         constructor(value?: string);
         toString(): string;
         canvas(): CanvasType;
@@ -10,9 +10,9 @@ declare module Manifesto {
 declare module Manifesto {
     class ElementType {
         value: string;
-        static document: () => any;
-        static movingimage: () => any;
-        static sound: () => any;
+        static DOCUMENT: ElementType;
+        static MOVINGIMAGE: ElementType;
+        static SOUND: ElementType;
         constructor(value?: string);
         toString(): string;
         document(): ElementType;
@@ -23,9 +23,9 @@ declare module Manifesto {
 declare module Manifesto {
     class RenderingFormat {
         value: string;
-        static pdf: () => any;
-        static doc: () => any;
-        static docx: () => any;
+        static PDF: RenderingFormat;
+        static DOC: RenderingFormat;
+        static DOCX: RenderingFormat;
         constructor(value?: string);
         toString(): string;
         pdf(): RenderingFormat;
@@ -36,12 +36,12 @@ declare module Manifesto {
 declare module Manifesto {
     class ServiceProfile {
         value: string;
-        static autoComplete: () => any;
-        static login: () => any;
-        static logout: () => any;
-        static otherManifestations: () => any;
-        static searchWithin: () => any;
-        static token: () => any;
+        static AUTOCOMPLETE: ServiceProfile;
+        static LOGIN: ServiceProfile;
+        static LOGOUT: ServiceProfile;
+        static OTHERMANIFESTATIONS: ServiceProfile;
+        static SEARCHWITHIN: ServiceProfile;
+        static TOKEN: ServiceProfile;
         constructor(value?: string);
         toString(): string;
         autoComplete(): ServiceProfile;
@@ -70,11 +70,11 @@ declare module Manifesto {
 declare module Manifesto {
     class ViewingHint {
         value: string;
-        static individuals: () => any;
-        static paged: () => any;
-        static continuous: () => any;
-        static nonPaged: () => any;
-        static top: () => any;
+        static INDIVIDUALS: ViewingHint;
+        static PAGED: ViewingHint;
+        static CONTINUOUS: ViewingHint;
+        static NONPAGED: ViewingHint;
+        static TOP: ViewingHint;
         constructor(value?: string);
         toString(): string;
         individuals(): ViewingHint;

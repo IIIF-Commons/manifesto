@@ -10,9 +10,9 @@ var Manifesto;
         };
         // todo: use getters when ES3 target is no longer required.
         CanvasType.prototype.canvas = function () {
-            return new CanvasType("sc:canvas");
+            return new CanvasType(CanvasType.CANVAS.toString());
         };
-        CanvasType.canvas = function () { return CanvasType.canvas(); };
+        CanvasType.CANVAS = new CanvasType("sc:canvas");
         return CanvasType;
     })();
     Manifesto.CanvasType = CanvasType;
@@ -28,17 +28,17 @@ var Manifesto;
         };
         // todo: use getters when ES3 target is no longer required.
         ElementType.prototype.document = function () {
-            return new ElementType("foaf:Document");
+            return new ElementType(ElementType.DOCUMENT.toString());
         };
         ElementType.prototype.movingimage = function () {
-            return new ElementType("dctypes:MovingImage");
+            return new ElementType(ElementType.MOVINGIMAGE.toString());
         };
         ElementType.prototype.sound = function () {
-            return new ElementType("dctypes:Sound");
+            return new ElementType(ElementType.SOUND.toString());
         };
-        ElementType.document = function () { return ElementType.document(); };
-        ElementType.movingimage = function () { return ElementType.movingimage(); };
-        ElementType.sound = function () { return ElementType.sound(); };
+        ElementType.DOCUMENT = new ElementType("foaf:Document");
+        ElementType.MOVINGIMAGE = new ElementType("dctypes:MovingImage");
+        ElementType.SOUND = new ElementType("dctypes:Sound");
         return ElementType;
     })();
     Manifesto.ElementType = ElementType;
@@ -54,17 +54,17 @@ var Manifesto;
         };
         // todo: use getters when ES3 target is no longer required.
         RenderingFormat.prototype.pdf = function () {
-            return new RenderingFormat("application/pdf");
+            return new RenderingFormat(RenderingFormat.PDF.toString());
         };
         RenderingFormat.prototype.doc = function () {
-            return new RenderingFormat("application/msword");
+            return new RenderingFormat(RenderingFormat.DOC.toString());
         };
         RenderingFormat.prototype.docx = function () {
-            return new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            return new RenderingFormat(RenderingFormat.DOCX.toString());
         };
-        RenderingFormat.pdf = function () { return RenderingFormat.pdf(); };
-        RenderingFormat.doc = function () { return RenderingFormat.doc(); };
-        RenderingFormat.docx = function () { return RenderingFormat.docx(); };
+        RenderingFormat.PDF = new RenderingFormat("application/pdf");
+        RenderingFormat.DOC = new RenderingFormat("application/msword");
+        RenderingFormat.DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         return RenderingFormat;
     })();
     Manifesto.RenderingFormat = RenderingFormat;
@@ -80,29 +80,29 @@ var Manifesto;
         };
         // todo: use getters when ES3 target is no longer required.
         ServiceProfile.prototype.autoComplete = function () {
-            return new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+            return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
         };
         ServiceProfile.prototype.login = function () {
-            return new ServiceProfile("http://iiif.io/api/image/2/auth/login");
+            return new ServiceProfile(ServiceProfile.LOGIN.toString());
         };
         ServiceProfile.prototype.logout = function () {
-            return new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
+            return new ServiceProfile(ServiceProfile.LOGOUT.toString());
         };
         ServiceProfile.prototype.otherManifestations = function () {
-            return new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+            return new ServiceProfile(ServiceProfile.OTHERMANIFESTATIONS.toString());
         };
         ServiceProfile.prototype.searchWithin = function () {
-            return new ServiceProfile("http://iiif.io/api/search/1/");
+            return new ServiceProfile(ServiceProfile.SEARCHWITHIN.toString());
         };
         ServiceProfile.prototype.token = function () {
-            return new ServiceProfile("http://iiif.io/api/image/2/auth/token");
+            return new ServiceProfile(ServiceProfile.TOKEN.toString());
         };
-        ServiceProfile.autoComplete = function () { return ServiceProfile.autoComplete(); };
-        ServiceProfile.login = function () { return ServiceProfile.login(); };
-        ServiceProfile.logout = function () { return ServiceProfile.logout(); };
-        ServiceProfile.otherManifestations = function () { return ServiceProfile.otherManifestations(); };
-        ServiceProfile.searchWithin = function () { return ServiceProfile.searchWithin(); };
-        ServiceProfile.token = function () { return ServiceProfile.token(); };
+        ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
+        ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
+        ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+        ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
+        ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
         return ServiceProfile;
     })();
     Manifesto.ServiceProfile = ServiceProfile;
@@ -148,25 +148,25 @@ var Manifesto;
         };
         // todo: use getters when ES3 target is no longer required.
         ViewingHint.prototype.individuals = function () {
-            return new ViewingHint("individuals");
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
         };
         ViewingHint.prototype.paged = function () {
-            return new ViewingHint("paged");
+            return new ViewingHint(ViewingHint.PAGED.toString());
         };
         ViewingHint.prototype.continuous = function () {
-            return new ViewingHint("continuous");
+            return new ViewingHint(ViewingHint.CONTINUOUS.toString());
         };
         ViewingHint.prototype.nonPaged = function () {
-            return new ViewingHint("non-paged");
+            return new ViewingHint(ViewingHint.NONPAGED.toString());
         };
         ViewingHint.prototype.top = function () {
-            return new ViewingHint("top");
+            return new ViewingHint(ViewingHint.TOP.toString());
         };
-        ViewingHint.individuals = function () { return ViewingHint.individuals(); };
-        ViewingHint.paged = function () { return ViewingHint.paged(); };
-        ViewingHint.continuous = function () { return ViewingHint.continuous(); };
-        ViewingHint.nonPaged = function () { return ViewingHint.nonPaged(); };
-        ViewingHint.top = function () { return ViewingHint.top(); };
+        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
+        ViewingHint.PAGED = new ViewingHint("paged");
+        ViewingHint.CONTINUOUS = new ViewingHint("continuous");
+        ViewingHint.NONPAGED = new ViewingHint("non-paged");
+        ViewingHint.TOP = new ViewingHint("top");
         return ViewingHint;
     })();
     Manifesto.ViewingHint = ViewingHint;
@@ -747,7 +747,7 @@ var Manifesto;
             return this.getTotalCanvases() > 1;
         };
         Sequence.prototype.isPagingEnabled = function () {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.paged.toString();
+            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
         };
         // checks if the number of canvases is even - therefore has a front and back cover
         Sequence.prototype.isTotalCanvasesEven = function () {

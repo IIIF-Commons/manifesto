@@ -1,8 +1,8 @@
 module Manifesto {
     export class ElementType {
-        public static document = () => { return ElementType.document() };
-        public static movingimage = () => { return ElementType.movingimage() };
-        public static sound = () => { return ElementType.sound() };
+        public static DOCUMENT = new ElementType("foaf:Document");
+        public static MOVINGIMAGE = new ElementType("dctypes:MovingImage");
+        public static SOUND = new ElementType("dctypes:Sound");
 
         constructor(public value?: string) {
 
@@ -15,15 +15,15 @@ module Manifesto {
         // todo: use getters when ES3 target is no longer required.
 
         document(): ElementType {
-            return new ElementType("foaf:Document");
+            return new ElementType(ElementType.DOCUMENT.toString());
         }
 
         movingimage(): ElementType {
-            return new ElementType("dctypes:MovingImage");
+            return new ElementType(ElementType.MOVINGIMAGE.toString());
         }
 
         sound(): ElementType {
-            return new ElementType("dctypes:Sound");
+            return new ElementType(ElementType.SOUND.toString());
         }
     }
 }

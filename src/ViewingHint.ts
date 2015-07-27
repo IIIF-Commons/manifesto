@@ -1,11 +1,11 @@
 
 module Manifesto {
     export class ViewingHint {
-        public static individuals = () => { return ViewingHint.individuals() };
-        public static paged = () => { return ViewingHint.paged() };
-        public static continuous = () => { return ViewingHint.continuous() };
-        public static nonPaged = () => { return ViewingHint.nonPaged() };
-        public static top = () => { return ViewingHint.top() };
+        public static INDIVIDUALS = new ViewingHint("individuals");
+        public static PAGED = new ViewingHint("paged");
+        public static CONTINUOUS = new ViewingHint("continuous");
+        public static NONPAGED = new ViewingHint("non-paged");
+        public static TOP = new ViewingHint("top");
 
         constructor(public value?: string) {
         }
@@ -17,23 +17,23 @@ module Manifesto {
         // todo: use getters when ES3 target is no longer required.
 
         individuals(): ViewingHint {
-            return new ViewingHint("individuals");
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
         }
 
         paged(): ViewingHint {
-            return new ViewingHint("paged");
+            return new ViewingHint(ViewingHint.PAGED.toString());
         }
 
         continuous(): ViewingHint {
-            return new ViewingHint("continuous");
+            return new ViewingHint(ViewingHint.CONTINUOUS.toString());
         }
 
         nonPaged(): ViewingHint {
-            return new ViewingHint("non-paged");
+            return new ViewingHint(ViewingHint.NONPAGED.toString());
         }
 
         top(): ViewingHint {
-            return new ViewingHint("top");
+            return new ViewingHint(ViewingHint.TOP.toString());
         }
     }
 }

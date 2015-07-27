@@ -1,8 +1,8 @@
 module Manifesto {
     export class RenderingFormat {
-        public static pdf = () => { return RenderingFormat.pdf() };
-        public static doc = () => { return RenderingFormat.doc() };
-        public static docx = () => { return RenderingFormat.docx() };
+        public static PDF = new RenderingFormat("application/pdf");
+        public static DOC = new RenderingFormat("application/msword");
+        public static DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
         constructor(public value?: string) {
         }
@@ -14,15 +14,15 @@ module Manifesto {
         // todo: use getters when ES3 target is no longer required.
 
         pdf(): RenderingFormat {
-            return new RenderingFormat("application/pdf");
+            return new RenderingFormat(RenderingFormat.PDF.toString());
         }
 
         doc(): RenderingFormat {
-            return new RenderingFormat("application/msword");
+            return new RenderingFormat(RenderingFormat.DOC.toString());
         }
 
         docx(): RenderingFormat {
-            return new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            return new RenderingFormat(RenderingFormat.DOCX.toString());
         }
     }
 }

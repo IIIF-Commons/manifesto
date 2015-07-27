@@ -1,6 +1,6 @@
 module Manifesto {
     export class CanvasType {
-        public static canvas = () => { return CanvasType.canvas() };
+        public static CANVAS = new CanvasType("sc:canvas");
 
         constructor(public value?: string) {
         }
@@ -12,7 +12,7 @@ module Manifesto {
         // todo: use getters when ES3 target is no longer required.
 
         canvas(): CanvasType {
-            return new CanvasType("sc:canvas");
+            return new CanvasType(CanvasType.CANVAS.toString());
         }
     }
 }

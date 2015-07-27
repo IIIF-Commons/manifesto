@@ -238,7 +238,7 @@ module Manifesto {
         }
 
         isPagingEnabled(): boolean{
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.paged.toString();
+            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
         }
 
         // checks if the number of canvases is even - therefore has a front and back cover
