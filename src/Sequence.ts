@@ -210,7 +210,7 @@ module Manifesto {
                 return new ViewingDirection(this.__jsonld.viewingDirection);
             }
 
-            return Manifesto.ViewingDirection.leftToRight;
+            return ViewingDirection.leftToRight();
         }
 
         getViewingHint(): ViewingHint {

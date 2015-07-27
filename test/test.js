@@ -1,10 +1,9 @@
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
-var ServiceProfile = require('../dist/server/manifesto');
 var should = require('chai').should();
 
 var testManifest = "http://wellcomelibrary.org/iiif/b18035978/manifest";
-var manifest;
+var manifest, sequence;
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
@@ -39,7 +38,14 @@ describe('#hasSearchWithinService', function() {
 
 describe('#hasSequence', function() {
     it('has a sequence', function () {
-        var sequence = manifest.getSequenceByIndex(0);
+        sequence = manifest.getSequenceByIndex(0);
         expect(sequence).to.exist;
+    });
+});
+
+describe('#hasViewingHint', function() {
+    it('sequence has a viewingHint', function () {
+        var viewingHint = sequence.getViewingHint();
+        viewingHint.toString().should.equal('paged');
     });
 });

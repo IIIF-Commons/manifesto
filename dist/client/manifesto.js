@@ -8,7 +8,11 @@ var Manifesto;
         CanvasType.prototype.toString = function () {
             return this.value;
         };
-        CanvasType.canvas = new CanvasType("sc:canvas");
+        // todo: use getters when ES3 target is no longer required.
+        CanvasType.prototype.canvas = function () {
+            return new CanvasType("sc:canvas");
+        };
+        CanvasType.canvas = function () { return CanvasType.canvas(); };
         return CanvasType;
     })();
     Manifesto.CanvasType = CanvasType;
@@ -22,9 +26,19 @@ var Manifesto;
         ElementType.prototype.toString = function () {
             return this.value;
         };
-        ElementType.document = new Manifesto.CanvasType("foaf:Document");
-        ElementType.movingimage = new Manifesto.CanvasType("dctypes:MovingImage");
-        ElementType.sound = new Manifesto.CanvasType("dctypes:Sound");
+        // todo: use getters when ES3 target is no longer required.
+        ElementType.prototype.document = function () {
+            return new ElementType("foaf:Document");
+        };
+        ElementType.prototype.movingimage = function () {
+            return new ElementType("dctypes:MovingImage");
+        };
+        ElementType.prototype.sound = function () {
+            return new ElementType("dctypes:Sound");
+        };
+        ElementType.document = function () { return ElementType.document(); };
+        ElementType.movingimage = function () { return ElementType.movingimage(); };
+        ElementType.sound = function () { return ElementType.sound(); };
         return ElementType;
     })();
     Manifesto.ElementType = ElementType;
@@ -38,9 +52,19 @@ var Manifesto;
         RenderingFormat.prototype.toString = function () {
             return this.value;
         };
-        RenderingFormat.pdf = new RenderingFormat("application/pdf");
-        RenderingFormat.doc = new RenderingFormat("application/msword");
-        RenderingFormat.docx = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        // todo: use getters when ES3 target is no longer required.
+        RenderingFormat.prototype.pdf = function () {
+            return new RenderingFormat("application/pdf");
+        };
+        RenderingFormat.prototype.doc = function () {
+            return new RenderingFormat("application/msword");
+        };
+        RenderingFormat.prototype.docx = function () {
+            return new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        };
+        RenderingFormat.pdf = function () { return RenderingFormat.pdf(); };
+        RenderingFormat.doc = function () { return RenderingFormat.doc(); };
+        RenderingFormat.docx = function () { return RenderingFormat.docx(); };
         return RenderingFormat;
     })();
     Manifesto.RenderingFormat = RenderingFormat;
@@ -54,15 +78,31 @@ var Manifesto;
         ServiceProfile.prototype.toString = function () {
             return this.value;
         };
+        // todo: use getters when ES3 target is no longer required.
+        ServiceProfile.prototype.autoComplete = function () {
+            return new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        };
+        ServiceProfile.prototype.login = function () {
+            return new ServiceProfile("http://iiif.io/api/image/2/auth/login");
+        };
+        ServiceProfile.prototype.logout = function () {
+            return new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
+        };
+        ServiceProfile.prototype.otherManifestations = function () {
+            return new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+        };
         ServiceProfile.prototype.searchWithin = function () {
             return new ServiceProfile("http://iiif.io/api/search/1/");
         };
-        ServiceProfile.autoComplete = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
-        ServiceProfile.login = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
-        ServiceProfile.logout = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
-        ServiceProfile.otherManifestations = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+        ServiceProfile.prototype.token = function () {
+            return new ServiceProfile("http://iiif.io/api/image/2/auth/token");
+        };
+        ServiceProfile.autoComplete = function () { return ServiceProfile.autoComplete(); };
+        ServiceProfile.login = function () { return ServiceProfile.login(); };
+        ServiceProfile.logout = function () { return ServiceProfile.logout(); };
+        ServiceProfile.otherManifestations = function () { return ServiceProfile.otherManifestations(); };
         ServiceProfile.searchWithin = function () { return ServiceProfile.searchWithin(); };
-        ServiceProfile.token = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
+        ServiceProfile.token = function () { return ServiceProfile.token(); };
         return ServiceProfile;
     })();
     Manifesto.ServiceProfile = ServiceProfile;
@@ -76,10 +116,23 @@ var Manifesto;
         ViewingDirection.prototype.toString = function () {
             return this.value;
         };
-        ViewingDirection.leftToRight = new ViewingDirection("left-to-right");
-        ViewingDirection.rightToLeft = new ViewingDirection("right-to-left");
-        ViewingDirection.topToBottom = new ViewingDirection("top-to-bottom");
-        ViewingDirection.bottomToTop = new ViewingDirection("bottom-to-top");
+        // todo: use getters when ES3 target is no longer required.
+        ViewingDirection.prototype.leftToRight = function () {
+            return new ViewingDirection("left-to-right");
+        };
+        ViewingDirection.prototype.rightToLeft = function () {
+            return new ViewingDirection("right-to-left");
+        };
+        ViewingDirection.prototype.topToBottom = function () {
+            return new ViewingDirection("top-to-bottom");
+        };
+        ViewingDirection.prototype.bottomToTop = function () {
+            return new ViewingDirection("bottom-to-top");
+        };
+        ViewingDirection.leftToRight = function () { return ViewingDirection.leftToRight(); };
+        ViewingDirection.rightToLeft = function () { return ViewingDirection.rightToLeft(); };
+        ViewingDirection.topToBottom = function () { return ViewingDirection.topToBottom(); };
+        ViewingDirection.bottomToTop = function () { return ViewingDirection.bottomToTop(); };
         return ViewingDirection;
     })();
     Manifesto.ViewingDirection = ViewingDirection;
@@ -93,11 +146,27 @@ var Manifesto;
         ViewingHint.prototype.toString = function () {
             return this.value;
         };
-        ViewingHint.individuals = new ViewingHint("individuals");
-        ViewingHint.paged = new ViewingHint("paged");
-        ViewingHint.continuous = new ViewingHint("continuous");
-        ViewingHint.nonPaged = new ViewingHint("non-paged");
-        ViewingHint.top = new ViewingHint("top");
+        // todo: use getters when ES3 target is no longer required.
+        ViewingHint.prototype.individuals = function () {
+            return new ViewingHint("individuals");
+        };
+        ViewingHint.prototype.paged = function () {
+            return new ViewingHint("paged");
+        };
+        ViewingHint.prototype.continuous = function () {
+            return new ViewingHint("continuous");
+        };
+        ViewingHint.prototype.nonPaged = function () {
+            return new ViewingHint("non-paged");
+        };
+        ViewingHint.prototype.top = function () {
+            return new ViewingHint("top");
+        };
+        ViewingHint.individuals = function () { return ViewingHint.individuals(); };
+        ViewingHint.paged = function () { return ViewingHint.paged(); };
+        ViewingHint.continuous = function () { return ViewingHint.continuous(); };
+        ViewingHint.nonPaged = function () { return ViewingHint.nonPaged(); };
+        ViewingHint.top = function () { return ViewingHint.top(); };
         return ViewingHint;
     })();
     Manifesto.ViewingHint = ViewingHint;
@@ -657,7 +726,7 @@ var Manifesto;
             if (this.__jsonld.viewingDirection) {
                 return new Manifesto.ViewingDirection(this.__jsonld.viewingDirection);
             }
-            return Manifesto.ViewingDirection.leftToRight;
+            return Manifesto.ViewingDirection.leftToRight();
         };
         Sequence.prototype.getViewingHint = function () {
             if (this.__jsonld.viewingHint) {
@@ -846,13 +915,12 @@ var Manifesto;
 var http = _dereq_("http");
 var url = _dereq_("url");
 module.exports = {
-    //CanvasType: new Manifesto.CanvasType(),
-    //ElementType: new Manifesto.ElementType(),
-    //RenderingFormat: new Manifesto.RenderingFormat(),
-    //ServiceProfile: new Manifesto.ServiceProfile(),
+    CanvasType: new Manifesto.CanvasType(),
+    ElementType: new Manifesto.ElementType(),
+    RenderingFormat: new Manifesto.RenderingFormat(),
     ServiceProfile: new Manifesto.ServiceProfile(),
-    //ViewingDirection: new Manifesto.ViewingDirection(),
-    //ViewingHint: new Manifesto.ViewingHint(),
+    ViewingDirection: new Manifesto.ViewingDirection(),
+    ViewingHint: new Manifesto.ViewingHint(),
     load: function (manifestUri, cb) {
         var u = url.parse(manifestUri);
         var fetch = http.request({

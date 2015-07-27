@@ -1,66 +1,87 @@
 declare module Manifesto {
     class CanvasType {
         value: string;
-        static canvas: CanvasType;
-        constructor(value: string);
+        static canvas: () => any;
+        constructor(value?: string);
         toString(): string;
+        canvas(): CanvasType;
     }
 }
 declare module Manifesto {
     class ElementType {
         value: string;
-        static document: CanvasType;
-        static movingimage: CanvasType;
-        static sound: CanvasType;
-        constructor(value: string);
+        static document: () => any;
+        static movingimage: () => any;
+        static sound: () => any;
+        constructor(value?: string);
         toString(): string;
+        document(): ElementType;
+        movingimage(): ElementType;
+        sound(): ElementType;
     }
 }
 declare module Manifesto {
     class RenderingFormat {
         value: string;
-        static pdf: RenderingFormat;
-        static doc: RenderingFormat;
-        static docx: RenderingFormat;
-        constructor(value: string);
+        static pdf: () => any;
+        static doc: () => any;
+        static docx: () => any;
+        constructor(value?: string);
         toString(): string;
+        pdf(): RenderingFormat;
+        doc(): RenderingFormat;
+        docx(): RenderingFormat;
     }
 }
 declare module Manifesto {
     class ServiceProfile {
         value: string;
-        static autoComplete: ServiceProfile;
-        static login: ServiceProfile;
-        static logout: ServiceProfile;
-        static otherManifestations: ServiceProfile;
+        static autoComplete: () => any;
+        static login: () => any;
+        static logout: () => any;
+        static otherManifestations: () => any;
         static searchWithin: () => any;
-        static token: ServiceProfile;
+        static token: () => any;
         constructor(value?: string);
         toString(): string;
+        autoComplete(): ServiceProfile;
+        login(): ServiceProfile;
+        logout(): ServiceProfile;
+        otherManifestations(): ServiceProfile;
         searchWithin(): ServiceProfile;
+        token(): ServiceProfile;
     }
 }
 declare module Manifesto {
     class ViewingDirection {
         value: string;
-        static leftToRight: ViewingDirection;
-        static rightToLeft: ViewingDirection;
-        static topToBottom: ViewingDirection;
-        static bottomToTop: ViewingDirection;
-        constructor(value: string);
+        static leftToRight: () => any;
+        static rightToLeft: () => any;
+        static topToBottom: () => any;
+        static bottomToTop: () => any;
+        constructor(value?: string);
         toString(): string;
+        leftToRight(): ViewingDirection;
+        rightToLeft(): ViewingDirection;
+        topToBottom(): ViewingDirection;
+        bottomToTop(): ViewingDirection;
     }
 }
 declare module Manifesto {
     class ViewingHint {
         value: string;
-        static individuals: ViewingHint;
-        static paged: ViewingHint;
-        static continuous: ViewingHint;
-        static nonPaged: ViewingHint;
-        static top: ViewingHint;
-        constructor(value: string);
+        static individuals: () => any;
+        static paged: () => any;
+        static continuous: () => any;
+        static nonPaged: () => any;
+        static top: () => any;
+        constructor(value?: string);
         toString(): string;
+        individuals(): ViewingHint;
+        paged(): ViewingHint;
+        continuous(): ViewingHint;
+        nonPaged(): ViewingHint;
+        top(): ViewingHint;
     }
 }
 declare module Manifesto {
@@ -147,7 +168,12 @@ declare module Manifesto {
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
     parse: (manifest: string) => Manifesto.Manifest;
+    CanvasType: Manifesto.CanvasType;
+    ElementType: Manifesto.ElementType;
+    RenderingFormat: Manifesto.RenderingFormat;
     ServiceProfile: Manifesto.ServiceProfile;
+    ViewingDirection: Manifesto.ViewingDirection;
+    ViewingHint: Manifesto.ViewingHint;
 }
 interface IManifestoOptions {
     defaultLabel: string;
