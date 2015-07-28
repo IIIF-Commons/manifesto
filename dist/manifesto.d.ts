@@ -165,7 +165,7 @@ declare module Manifesto {
 }
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
-    create: (manifest: string, options?: IManifestoOptions) => Manifesto.Manifest;
+    create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.Manifest;
     CanvasType: Manifesto.CanvasType;
     ElementType: Manifesto.ElementType;
     RenderingFormat: Manifesto.RenderingFormat;
@@ -173,10 +173,12 @@ interface IManifesto {
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }
-interface IManifestoOptions {
-    defaultLabel: string;
-    locale: string;
-    pessimisticAccessControl: boolean;
+declare module Manifesto {
+    interface IManifestoOptions {
+        defaultLabel: string;
+        locale: string;
+        pessimisticAccessControl: boolean;
+    }
 }
 declare module Manifesto {
     interface IRange extends IJSONLDResource {

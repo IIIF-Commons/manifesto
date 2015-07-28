@@ -33,7 +33,7 @@ module.exports = <IManifesto>{
         fetch.end();
     },
 
-    create: function(manifest: string, options?: IManifestoOptions): Manifesto.IManifest {
+    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IManifest {
         return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
