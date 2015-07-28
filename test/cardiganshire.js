@@ -5,7 +5,7 @@ var manifests = require('./data/manifests');
 
 var manifest, sequence;
 
-describe('#loadsWelsh', function() {
+describe('#loadsCardiganshire', function() {
     it('loads successfully', function (done) {
         manifesto.load(manifests.cardiganshire, function(data) {
             manifest = manifesto.create(data, {locale: "cy-GB"});

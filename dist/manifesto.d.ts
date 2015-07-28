@@ -75,6 +75,7 @@ declare module Manifesto {
         static CONTINUOUS: ViewingHint;
         static NONPAGED: ViewingHint;
         static TOP: ViewingHint;
+        static NONE: ViewingHint;
         constructor(value?: string);
         toString(): string;
         individuals(): ViewingHint;
@@ -82,6 +83,7 @@ declare module Manifesto {
         continuous(): ViewingHint;
         nonPaged(): ViewingHint;
         top(): ViewingHint;
+        none(): ViewingHint;
     }
 }
 declare module Manifesto {

@@ -162,11 +162,15 @@ var Manifesto;
         ViewingHint.prototype.top = function () {
             return new ViewingHint(ViewingHint.TOP.toString());
         };
+        ViewingHint.prototype.none = function () {
+            return new ViewingHint(ViewingHint.NONE.toString());
+        };
         ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
         ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.CONTINUOUS = new ViewingHint("continuous");
         ViewingHint.NONPAGED = new ViewingHint("non-paged");
         ViewingHint.TOP = new ViewingHint("top");
+        ViewingHint.NONE = new ViewingHint("");
         return ViewingHint;
     })();
     Manifesto.ViewingHint = ViewingHint;
@@ -748,7 +752,7 @@ var Manifesto;
             if (this.__jsonld.viewingHint) {
                 return new Manifesto.ViewingHint(this.__jsonld.viewingHint);
             }
-            return null;
+            return Manifesto.ViewingHint.NONE;
         };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;

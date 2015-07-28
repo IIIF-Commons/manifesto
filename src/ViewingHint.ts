@@ -6,6 +6,7 @@ module Manifesto {
         public static CONTINUOUS = new ViewingHint("continuous");
         public static NONPAGED = new ViewingHint("non-paged");
         public static TOP = new ViewingHint("top");
+        public static NONE = new ViewingHint("");
 
         constructor(public value?: string) {
         }
@@ -34,6 +35,10 @@ module Manifesto {
 
         top(): ViewingHint {
             return new ViewingHint(ViewingHint.TOP.toString());
+        }
+
+        none(): ViewingHint {
+            return new ViewingHint(ViewingHint.NONE.toString());
         }
     }
 }

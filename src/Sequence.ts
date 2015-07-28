@@ -218,7 +218,7 @@ module Manifesto {
                 return new ViewingHint(this.__jsonld.viewingHint);
             }
 
-            return null;
+            return ViewingHint.NONE;
         }
 
         isCanvasIndexOutOfRange(canvasIndex: number): boolean {
