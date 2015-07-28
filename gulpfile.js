@@ -54,6 +54,7 @@ gulp.task('browserify', function () {
         .pipe(gulp.dest(config.client));
 });
 
+// todo: gulp-browserify is no longer supported. Use browserify directly.
 //gulp.task('browserify', function () {
 //
 //    var b = browserify({
