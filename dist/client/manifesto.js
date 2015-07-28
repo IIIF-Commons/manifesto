@@ -303,6 +303,7 @@ var Manifesto;
             return this.getLocalisedValue(this.__jsonld.attribution);
         };
         Manifest.prototype.getLocalisedValue = function (resource, locale) {
+            // if the resource is not an array of translations, return the string.
             if (!_isArray(resource)) {
                 return resource;
             }
@@ -335,6 +336,12 @@ var Manifesto;
         };
         Manifest.prototype.getMetadata = function (includeRootProperties) {
             var metadata = this.__jsonld.metadata;
+            // get localised value for each metadata item.
+            for (var i = 0; i < metadata.length; i++) {
+                var item = metadata[i];
+                item.label = this.getLocalisedValue(item.label);
+                item.value = this.getLocalisedValue(item.value);
+            }
             if (metadata && includeRootProperties) {
                 if (this.__jsonld.description) {
                     metadata.push({
@@ -770,9 +777,9 @@ var Manifesto;
     var Deserialiser = (function () {
         function Deserialiser() {
         }
-        Deserialiser.parse = function (manifest) {
+        Deserialiser.parse = function (manifest, options) {
             var m = JSON.parse(manifest);
-            this.manifest = new Manifesto.Manifest(m);
+            this.manifest = new Manifesto.Manifest(m, options);
             this.parseSequences();
             if (this.manifest.__jsonld.structures && this.manifest.__jsonld.structures.length) {
                 this.parseRanges(JsonUtils.getRootRange(this.manifest.__jsonld), '');
@@ -950,8 +957,8 @@ module.exports = {
         });
         fetch.end();
     },
-    parse: function (manifest) {
-        return Manifesto.Deserialiser.parse(manifest);
+    create: function (manifest, options) {
+        return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
 /// <reference path="./CanvasType.ts" />

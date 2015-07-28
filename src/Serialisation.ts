@@ -4,10 +4,10 @@ module Manifesto {
     export class Deserialiser {
         static manifest: IManifest;
 
-        static parse(manifest: string): IManifest {
+        static parse(manifest: string, options?: IManifestoOptions): IManifest {
 
             var m = JSON.parse(manifest);
-            this.manifest = new Manifest(m);
+            this.manifest = new Manifest(m, options);
 
             this.parseSequences();
 

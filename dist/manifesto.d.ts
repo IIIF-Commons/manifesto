@@ -165,7 +165,7 @@ declare module Manifesto {
 }
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
-    parse: (manifest: string) => Manifesto.Manifest;
+    create: (manifest: string, options: IManifestoOptions) => Manifesto.Manifest;
     CanvasType: Manifesto.CanvasType;
     ElementType: Manifesto.ElementType;
     RenderingFormat: Manifesto.RenderingFormat;
@@ -305,7 +305,7 @@ declare var jmespath: any;
 declare module Manifesto {
     class Deserialiser {
         static manifest: IManifest;
-        static parse(manifest: string): IManifest;
+        static parse(manifest: string, options?: IManifestoOptions): IManifest;
         static parseSequences(): void;
         static parseCanvases(sequence: any): Canvas[];
         static parseRanges(r: any, path: string, parentRange?: Range): void;

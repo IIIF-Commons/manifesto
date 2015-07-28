@@ -19,7 +19,7 @@ var GulpConfig = (function () {
             'node_modules/extensions/typings/*.d.ts',
             '!test'];
         this.tsTarget = "es3";
-        this.test = 'test/test.js';
+        this.test = 'test/*.js';
     }
     return GulpConfig;
 })();

@@ -20,6 +20,7 @@ module Manifesto {
 
         getLocalisedValue(resource: any, locale?: string): string {
 
+            // if the resource is not an array of translations, return the string.
             if (!_isArray(resource)){
                 return resource;
             }
@@ -61,6 +62,14 @@ module Manifesto {
 
         getMetadata(includeRootProperties?: boolean): any{
             var metadata: Object[] = this.__jsonld.metadata;
+
+            // get localised value for each metadata item.
+            for (var i = 0; i < metadata.length; i++) {
+                var item: any = metadata[i];
+
+                item.label = this.getLocalisedValue(item.label);
+                item.value  = this.getLocalisedValue(item.value);
+            }
 
             if (metadata && includeRootProperties){
                 if (this.__jsonld.description){

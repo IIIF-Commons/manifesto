@@ -1,16 +1,14 @@
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
+var manifests = require('./data/manifests');
 
-var biocratsManifest = "http://wellcomelibrary.org/iiif/b18035978/manifest";
-var wellcomeApocalypseManifest = "http://wellcomelibrary.org/iiif/b19684915/manifest";
-var wunderManifest = "http://wellcomelibrary.org/iiif/b18035723/manifest";
 var manifest, sequence;
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
-        manifesto.load(biocratsManifest, function(data) {
-            manifest = manifesto.parse(data);
+        manifesto.load(manifests.biocrats, function(data) {
+            manifest = manifesto.create(data);
             done();
         });
     });
