@@ -23,4 +23,11 @@ describe('#hasTranslatedMetadata', function() {
     });
 });
 
+describe('#hasTree', function() {
+    it('has a tree', function () {
+        var tree = manifest.getTree();
+        expect(tree).to.exist;
+    });
+});
+
 

@@ -263,6 +263,9 @@ module Manifesto {
 
             this.treeRoot = new TreeNode('root');
             this.treeRoot.label = "root";
+
+            if (!this.rootRange) return this.treeRoot;
+
             this.treeRoot.data = this.rootRange;
             this.treeRoot.data.type = "manifest";
             this.rootRange.treeNode = this.treeRoot;
