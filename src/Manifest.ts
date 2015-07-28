@@ -60,6 +60,8 @@ module Manifesto {
             return this.getLocalisedValue(this.__jsonld.license);
         }
 
+        // todo: remove includeRootProperties
+        // todo: any resource may have metadata, add resource param
         getMetadata(includeRootProperties?: boolean): any{
             var metadata: Object[] = this.__jsonld.metadata;
 

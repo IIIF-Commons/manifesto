@@ -29,7 +29,7 @@ describe('#hasViewingHint', function() {
 });
 
 describe('#hasThumbnail', function() {
-    it('canvas has thumbnail', function () {
+    it('canvas has a thumbnail', function () {
         var canvas = sequence.getCanvasByIndex(0);
         var thumbnail = canvas.getProperty('thumbnail');
         expect(thumbnail).to.exist;
