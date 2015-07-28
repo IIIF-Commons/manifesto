@@ -144,8 +144,7 @@ module Manifesto {
             }
 
             for (var i = 0; i < renderings.length; i++){
-                var r: any = renderings[i];
-                var rendering: IRendering = new Rendering(r);
+                var rendering: IRendering = renderings[i];
 
                 if (rendering.getFormat().toString() === format) {
                     return rendering;
@@ -155,8 +154,9 @@ module Manifesto {
             return null;
         }
 
-        getRenderings(resource: IJSONLDResource): any[] {
+        getRenderings(resource: IJSONLDResource): IRendering[] {
             var renderings = resource.__jsonld.rendering;
+            var parsed = [];
 
             if (renderings){
 
@@ -164,11 +164,17 @@ module Manifesto {
                     renderings = [renderings];
                 }
 
-                return renderings;
+                for (var i = 0; i < renderings.length; i++){
+                    var r: any = renderings[i];
+                    var rendering: IRendering = new Rendering(r);
+                    parsed.push(rendering);
+                }
+
+                return parsed;
             }
 
             // no renderings provided, default to resource.
-            return [resource];
+            return [new Rendering(resource)];
         }
 
         getSeeAlso(): any {

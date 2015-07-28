@@ -401,8 +401,7 @@ var Manifesto;
                 format = format.toString();
             }
             for (var i = 0; i < renderings.length; i++) {
-                var r = renderings[i];
-                var rendering = new Manifesto.Rendering(r);
+                var rendering = renderings[i];
                 if (rendering.getFormat().toString() === format) {
                     return rendering;
                 }
@@ -411,14 +410,20 @@ var Manifesto;
         };
         Manifest.prototype.getRenderings = function (resource) {
             var renderings = resource.__jsonld.rendering;
+            var parsed = [];
             if (renderings) {
                 if (!_isArray(renderings)) {
                     renderings = [renderings];
                 }
-                return renderings;
+                for (var i = 0; i < renderings.length; i++) {
+                    var r = renderings[i];
+                    var rendering = new Manifesto.Rendering(r);
+                    parsed.push(rendering);
+                }
+                return parsed;
             }
             // no renderings provided, default to resource.
-            return [resource];
+            return [new Manifesto.Rendering(resource)];
         };
         Manifest.prototype.getSeeAlso = function () {
             return this.getLocalisedValue(this.__jsonld.seeAlso);

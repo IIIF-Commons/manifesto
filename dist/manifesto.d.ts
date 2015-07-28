@@ -241,7 +241,7 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: IJSONLDResource, format: Manifesto.RenderingFormat | string): IRendering;
-        getRenderings(resource: IJSONLDResource): any[];
+        getRenderings(resource: IJSONLDResource): IRendering[];
         getSeeAlso(): any;
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService;
         getSequenceByIndex(sequenceIndex: number): ISequence;
