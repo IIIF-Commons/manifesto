@@ -2,12 +2,14 @@ var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
 
-var testManifest = "http://wellcomelibrary.org/iiif/b18035978/manifest";
+var biocratsManifest = "http://wellcomelibrary.org/iiif/b18035978/manifest";
+var wellcomeApocalypseManifest = "http://wellcomelibrary.org/iiif/b19684915/manifest";
+var wunderManifest = "http://wellcomelibrary.org/iiif/b18035723/manifest";
 var manifest, sequence;
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
-        manifesto.load(testManifest, function(data) {
+        manifesto.load(biocratsManifest, function(data) {
             manifest = manifesto.parse(data);
             done();
         });
@@ -47,5 +49,12 @@ describe('#hasViewingHint', function() {
     it('sequence has a viewingHint', function () {
         var viewingHint = sequence.getViewingHint();
         viewingHint.toString().should.equal('paged');
+    });
+});
+
+describe('#hasRendering', function() {
+    it('sequence has a rendering', function () {
+        var rendering = manifest.getRendering(sequence, manifesto.RenderingFormat.pdf());
+        rendering.getFormat().toString().should.equal('application/pdf');
     });
 });

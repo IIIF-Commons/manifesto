@@ -407,7 +407,7 @@ var Manifesto;
             }
             return null;
         };
-        // todo: should resources be parsed in the serialiser?
+        // todo: should renderings be parsed in the serialiser?
         Manifest.prototype.getRenderings = function (resource) {
             var renderings = resource.__jsonld.rendering;
             var parsed = [];
