@@ -1,9 +1,7 @@
 var argv = require('yargs').argv,
     bump = require('gulp-bump'),
     exec = require('child_process').exec,
-    filter = require('gulp-filter'),
-    gulp = require('gulp'),
-    tag = require('gulp-tag-version');
+    gulp = require('gulp');
 
 gulp.task('bump', function(){
     var bumpType = argv.type || 'patch'; // major.minor.patch

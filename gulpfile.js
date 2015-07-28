@@ -11,6 +11,7 @@ var browserify = require('gulp-browserify'),
     requireDir = require('require-dir'),
     runSequence = require('run-sequence'),
     source = require('vinyl-source-stream'),
+    tag = require('gulp-tag-version'),
     tasks = requireDir('./tasks'),
     ts = require('gulp-typescript');
 
@@ -74,6 +75,11 @@ gulp.task('browserify', function () {
 //        //.pipe(rename(config.browserifyOut))
 //        .pipe(gulp.dest(config.client));
 //});
+
+gulp.task('tag', function(){
+    return gulp.src('./package.json')
+        .pipe(tag());
+});
 
 gulp.task('default', function(cb) {
     runSequence('clean', 'build', 'browserify', 'test', 'bump', cb);
