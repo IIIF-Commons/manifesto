@@ -8,10 +8,11 @@ module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
-        getRenderings(resource: IJSONLDResource): IRendering[];
+        getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
         getSequenceByIndex(index: number): ISequence;
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
+        getServices(resource: any): IService[];
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;

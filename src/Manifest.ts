@@ -154,77 +154,87 @@ module Manifesto {
             return null;
         }
 
-        getRenderings(resource: IJSONLDResource): IRendering[] {
+        getRenderings(resource: any): IRendering[] {
             var rendering;
 
             // if passing a parsed object, use the __jsonld.rendering property,
             // otherwise look for a rendering property
-            if (resource.__jsonld){
+            //if (resource.__jsonld){
                 rendering = resource.__jsonld.rendering;
-            } else {
-                rendering = (<any>resource).rendering;
+            //} else {
+            //    rendering = (<any>resource).rendering;
+            //}
+
+            var parsed: IRendering[] = [];
+
+            if (!rendering) return parsed;
+
+            if (!_isArray(rendering)){
+                rendering = [rendering];
             }
 
-            var parsed = [];
-
-            if (rendering){
-
-                if (!_isArray(rendering)){
-                    rendering = [rendering];
-                }
-
-                for (var i = 0; i < rendering.length; i++){
-                    var r: any = rendering[i];
-                    r.__manifest = this;
-                    parsed.push(new Rendering(r));
-                }
-
-                return parsed;
+            for (var i = 0; i < rendering.length; i++){
+                var r: any = rendering[i];
+                r.__manifest = this;
+                parsed.push(new Rendering(r));
             }
+
+            return parsed;
 
             // no renderings provided, default to resource.
             //return [new Rendering(resource)];
-            return null;
         }
 
         getSeeAlso(): any {
             return this.getLocalisedValue(this.__jsonld.seeAlso);
         }
 
-        // todo: create getServices and use that to enumerate (like getRendering)
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
 
-            var service;
-
-            // if passing a parsed object, use the __jsonld.service property,
-            // otherwise look for a service property
-            if (resource.__jsonld){
-                service = resource.__jsonld.service;
-            } else {
-                service = (<any>resource).service;
-            }
-
-            if (!service) return null;
+            var services: IService[] = this.getServices(resource);
 
             // normalise profile to string
             if (typeof profile !== 'string'){
                 profile = (<ServiceProfile>profile).toString();
             }
 
-            if (_isArray(service)){
-                for (var i = 0; i < service.length; i++){
-                    var s = service[i];
-                    if (s.profile && s.profile === profile) {
-                        return new Service(s);
-                    }
-                }
-            } else {
-                if (service.profile && service.profile === profile){
-                    return new Service(service);
+            for (var i = 0; i < services.length; i++){
+                var service: IService = services[i];
+
+                if (service.getProfile().toString() === profile) {
+                    return service;
                 }
             }
 
             return null;
+        }
+
+        getServices(resource: any): IService[] {
+            var service;
+
+            // if passing a parsed object, use the __jsonld.service property,
+            // otherwise look for a service property
+            //if (resource.__jsonld){
+                service = resource.__jsonld.service;
+            //} else {
+            //    service = (<any>resource).service;
+            //}
+
+            var parsed: IService[] = [];
+
+            if (!service) return parsed;
+
+            if (!_isArray(service)){
+                service = [service];
+            }
+
+            for (var i = 0; i < service.length; i++){
+                var s: any = service[i];
+                s.__manifest = this;
+                parsed.push(new Service(s));
+            }
+
+            return parsed;
         }
 
         getSequenceByIndex(sequenceIndex: number): ISequence {

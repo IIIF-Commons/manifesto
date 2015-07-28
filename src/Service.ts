@@ -4,5 +4,9 @@ module Manifesto {
         constructor(resource: any){
             super(resource);
         }
+
+        getProfile(): ServiceProfile{
+            return new ServiceProfile(this.__jsonld.profile);
+        }
     }
 }
