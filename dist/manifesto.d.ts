@@ -165,7 +165,7 @@ declare module Manifesto {
 }
 interface IManifesto {
     load: (manifestUri: string, callback: (manifest: string) => void) => void;
-    create: (manifest: string, options: IManifestoOptions) => Manifesto.Manifest;
+    create: (manifest: string, options?: IManifestoOptions) => Manifesto.Manifest;
     CanvasType: Manifesto.CanvasType;
     ElementType: Manifesto.ElementType;
     RenderingFormat: Manifesto.RenderingFormat;
