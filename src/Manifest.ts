@@ -191,6 +191,7 @@ module Manifesto {
             return this.getLocalisedValue(this.__jsonld.seeAlso);
         }
 
+        // todo: create getServices and use that to enumerate (like getRendering)
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
 
             var service;
