@@ -11,7 +11,12 @@ module Manifesto {
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld);
             jsonld.__manifest = this;
-            this.options = _assign({defaultLabel: '-', locale: 'en-GB'}, options);
+            var defaultOptions: IManifestoOptions = {
+                defaultLabel: '-',
+                locale: 'en-GB',
+                pessimisticAccessControl: false
+            };
+            this.options = _assign(defaultOptions, options);
         }
 
         getAttribution(): string {
@@ -307,6 +312,146 @@ module Manifesto {
 
         isMultiSequence(): boolean{
             return this.getTotalSequences() > 1;
+        }
+
+        loadResource(resource: IResource,
+                     login: (loginService: string) => Promise<void>,
+                     getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                     storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                     getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>,
+                     handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any> {
+
+            var options: IManifestoOptions = this.options;
+
+            return new Promise<any>((resolve, reject) => {
+
+                if (options.pessimisticAccessControl){
+
+                    // pessimistic: access control cookies may have been deleted.
+                    // always request the access token for every access controlled info.json request
+                    // returned access tokens are not stored, therefore the login window flashes for every request.
+
+                    resource.getData().then(() => {
+
+                        if (resource.isAccessControlled){
+                            login(resource.loginService).then(() => {
+                                getAccessToken(resource.tokenService).then((token: IAccessToken) => {
+                                    resource.getData(token).then(() => {
+                                        resolve(handleResourceResponse(resource));
+                                    });
+                                });
+                            });
+                        } else {
+                            // this info.json isn't access controlled, therefore no need to request an access token
+                            resolve(resource);
+                        }
+                    });
+                } else {
+
+                    // optimistic: access control cookies may not have been deleted.
+                    // store access tokens to avoid login window flashes.
+                    // if cookies are deleted a page refresh is required.
+
+                    // try loading the resource using an access token that matches the info.json domain.
+                    // if an access token is found, request the resource using it regardless of whether it is access controlled.
+                    getStoredAccessToken(resource.dataUri).then((storedAccessToken: IAccessToken) => {
+                        if (storedAccessToken) {
+                            // try using the stored access token
+                            resource.getData(storedAccessToken).then(() => {
+                                // if the info.json loaded using the stored access token
+                                if (resource.status === 200){
+                                    resolve(handleResourceResponse(resource));
+                                } else {
+                                    // otherwise, load the resource data to determine the correct access control services.
+                                    // if access controlled, do login.
+                                    this.authorize(
+                                        resource,
+                                        login,
+                                        getAccessToken,
+                                        storeAccessToken,
+                                        getStoredAccessToken).then(() => {
+                                            resolve(handleResourceResponse(resource));
+                                        });
+                                }
+                            });
+                        } else {
+                            this.authorize(
+                                resource,
+                                login,
+                                getAccessToken,
+                                storeAccessToken,
+                                getStoredAccessToken).then(() => {
+                                    resolve(handleResourceResponse(resource));
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
+        authorize(resource: IResource,
+                  login: (loginService: string) => Promise<void>,
+                  getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                  storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                  getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>): Promise<IResource> {
+
+            return new Promise<IResource>((resolve, reject) => {
+
+                resource.getData().then(() => {
+                    if (resource.isAccessControlled) {
+                        getStoredAccessToken(resource.tokenService).then((storedAccessToken: IAccessToken) => {
+                            if (storedAccessToken) {
+                                // try using the stored access token
+                                resource.getData(storedAccessToken).then(() => {
+                                    resolve(resource);
+                                });
+                            } else {
+                                // get an access token
+                                login(resource.loginService).then(() => {
+                                    getAccessToken(resource.tokenService).then((accessToken) => {
+                                        storeAccessToken(resource, accessToken).then(() => {
+                                            resource.getData(accessToken).then(() => {
+                                                resolve(resource);
+                                            });
+                                        });
+                                    });
+                                });
+                            }
+                        });
+                    } else {
+                        // this info.json isn't access controlled, therefore there's no need to request an access token
+                        resolve(resource);
+                    }
+                });
+            });
+        }
+
+        loadResources(resources: IResource[],
+                      login: (loginService: string) => Promise<void>,
+                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                      storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                      getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>,
+                      handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]> {
+
+            var that = this;
+
+            return new Promise<IResource[]>((resolve) => {
+
+                var promises = _.map(resources, (resource: IResource) => {
+                    return that.loadResource(
+                        resource,
+                        login,
+                        getAccessToken,
+                        storeAccessToken,
+                        getStoredAccessToken,
+                        handleResourceResponse);
+                });
+
+                Promise.all(promises)
+                    .then(() => {
+                        resolve(resources)
+                    });
+            });
         }
     }
 }

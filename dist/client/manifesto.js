@@ -316,7 +316,12 @@ var Manifesto;
             _super.call(this, jsonld);
             this.sequences = [];
             jsonld.__manifest = this;
-            this.options = _assign({ defaultLabel: '-', locale: 'en-GB' }, options);
+            var defaultOptions = {
+                defaultLabel: '-',
+                locale: 'en-GB',
+                pessimisticAccessControl: false
+            };
+            this.options = _assign(defaultOptions, options);
         }
         Manifest.prototype.getAttribution = function () {
             return this.getLocalisedValue(this.__jsonld.attribution);
@@ -353,6 +358,8 @@ var Manifesto;
         Manifest.prototype.getLicense = function () {
             return this.getLocalisedValue(this.__jsonld.license);
         };
+        // todo: remove includeRootProperties
+        // todo: any resource may have metadata, add resource param
         Manifest.prototype.getMetadata = function (includeRootProperties) {
             var metadata = this.__jsonld.metadata;
             // get localised value for each metadata item.
@@ -543,6 +550,106 @@ var Manifesto;
         };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
+        };
+        Manifest.prototype.loadResource = function (resource, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+            var _this = this;
+            var options = this.options;
+            return new Promise(function (resolve, reject) {
+                if (options.pessimisticAccessControl) {
+                    // pessimistic: access control cookies may have been deleted.
+                    // always request the access token for every access controlled info.json request
+                    // returned access tokens are not stored, therefore the login window flashes for every request.
+                    resource.getData().then(function () {
+                        if (resource.isAccessControlled) {
+                            login(resource.loginService).then(function () {
+                                getAccessToken(resource.tokenService).then(function (token) {
+                                    resource.getData(token).then(function () {
+                                        resolve(handleResourceResponse(resource));
+                                    });
+                                });
+                            });
+                        }
+                        else {
+                            // this info.json isn't access controlled, therefore no need to request an access token
+                            resolve(resource);
+                        }
+                    });
+                }
+                else {
+                    // optimistic: access control cookies may not have been deleted.
+                    // store access tokens to avoid login window flashes.
+                    // if cookies are deleted a page refresh is required.
+                    // try loading the resource using an access token that matches the info.json domain.
+                    // if an access token is found, request the resource using it regardless of whether it is access controlled.
+                    getStoredAccessToken(resource.dataUri).then(function (storedAccessToken) {
+                        if (storedAccessToken) {
+                            // try using the stored access token
+                            resource.getData(storedAccessToken).then(function () {
+                                // if the info.json loaded using the stored access token
+                                if (resource.status === 200) {
+                                    resolve(handleResourceResponse(resource));
+                                }
+                                else {
+                                    // otherwise, load the resource data to determine the correct access control services.
+                                    // if access controlled, do login.
+                                    _this.authorize(resource, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                        resolve(handleResourceResponse(resource));
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            _this.authorize(resource, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                resolve(handleResourceResponse(resource));
+                            });
+                        }
+                    });
+                }
+            });
+        };
+        Manifest.prototype.authorize = function (resource, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
+            return new Promise(function (resolve, reject) {
+                resource.getData().then(function () {
+                    if (resource.isAccessControlled) {
+                        getStoredAccessToken(resource.tokenService).then(function (storedAccessToken) {
+                            if (storedAccessToken) {
+                                // try using the stored access token
+                                resource.getData(storedAccessToken).then(function () {
+                                    resolve(resource);
+                                });
+                            }
+                            else {
+                                // get an access token
+                                login(resource.loginService).then(function () {
+                                    getAccessToken(resource.tokenService).then(function (accessToken) {
+                                        storeAccessToken(resource, accessToken).then(function () {
+                                            resource.getData(accessToken).then(function () {
+                                                resolve(resource);
+                                            });
+                                        });
+                                    });
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        // this info.json isn't access controlled, therefore there's no need to request an access token
+                        resolve(resource);
+                    }
+                });
+            });
+        };
+        Manifest.prototype.loadResources = function (resources, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+            var that = this;
+            return new Promise(function (resolve) {
+                var promises = _.map(resources, function (resource) {
+                    return that.loadResource(resource, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                });
+            });
         };
         return Manifest;
     })(Manifesto.JSONLDResource);

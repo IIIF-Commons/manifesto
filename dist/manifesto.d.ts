@@ -259,6 +259,9 @@ declare module Manifesto {
         getTree(): TreeNode;
         private _parseTreeNode(node, range);
         isMultiSequence(): boolean;
+        loadResource(resource: IResource, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any>;
+        authorize(resource: IResource, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>): Promise<IResource>;
+        loadResources(resources: IResource[], login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
     }
 }
 declare module Manifesto {
@@ -353,7 +356,27 @@ declare module Manifesto {
 declare var http: any;
 declare var url: any;
 declare module Manifesto {
+    interface IAccessToken {
+        accessToken: string;
+        tokenType: string;
+        expiresIn: number;
+    }
+}
+declare module Manifesto {
     interface IAnnotation extends IJSONLDResource {
         getMotivation(): string;
+    }
+}
+declare module Manifesto {
+    interface IResource {
+        data: any;
+        dataUri: string;
+        error: any;
+        isAccessControlled: boolean;
+        loginService: string;
+        logoutService: string;
+        status: number;
+        tokenService: string;
+        getData(accessToken?: IAccessToken): Promise<IResource>;
     }
 }
