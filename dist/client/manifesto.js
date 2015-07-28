@@ -408,24 +408,31 @@ var Manifesto;
             }
             return null;
         };
-        // todo: should renderings be parsed in the serialiser?
         Manifest.prototype.getRenderings = function (resource) {
-            var renderings = resource.__jsonld.rendering;
+            var rendering;
+            // if passing a parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld) {
+                rendering = resource.__jsonld.rendering;
+            }
+            else {
+                rendering = resource.rendering;
+            }
             var parsed = [];
-            if (renderings) {
-                if (!_isArray(renderings)) {
-                    renderings = [renderings];
+            if (rendering) {
+                if (!_isArray(rendering)) {
+                    rendering = [rendering];
                 }
-                for (var i = 0; i < renderings.length; i++) {
-                    var r = renderings[i];
+                for (var i = 0; i < rendering.length; i++) {
+                    var r = rendering[i];
                     r.__manifest = this;
-                    var rendering = new Manifesto.Rendering(r);
-                    parsed.push(rendering);
+                    parsed.push(new Manifesto.Rendering(r));
                 }
                 return parsed;
             }
             // no renderings provided, default to resource.
-            return [new Manifesto.Rendering(resource)];
+            //return [new Rendering(resource)];
+            return null;
         };
         Manifest.prototype.getSeeAlso = function () {
             return this.getLocalisedValue(this.__jsonld.seeAlso);
