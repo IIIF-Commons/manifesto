@@ -5,6 +5,7 @@ module Manifesto {
         public static DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
         constructor(public value?: string) {
+            if (value) this.value = value.toLowerCase();
         }
 
         toString() {

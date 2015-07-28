@@ -7,6 +7,7 @@ module Manifesto {
         public static BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
 
         constructor(public value?: string) {
+            if (value) this.value = value.toLowerCase();
         }
 
         toString() {

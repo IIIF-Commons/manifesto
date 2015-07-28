@@ -1,11 +1,11 @@
 module Manifesto {
     export class ElementType {
-        public static DOCUMENT = new ElementType("foaf:Document");
-        public static MOVINGIMAGE = new ElementType("dctypes:MovingImage");
-        public static SOUND = new ElementType("dctypes:Sound");
+        public static DOCUMENT = new ElementType("foaf:document");
+        public static MOVINGIMAGE = new ElementType("dctypes:movingimage");
+        public static SOUND = new ElementType("dctypes:sound");
 
         constructor(public value?: string) {
-
+            if (value) this.value = value.toLowerCase();
         }
 
         toString() {

@@ -3,6 +3,7 @@ module Manifesto {
         public static CANVAS = new CanvasType("sc:canvas");
 
         constructor(public value?: string) {
+            if (value) this.value = value.toLowerCase();
         }
 
         toString() {

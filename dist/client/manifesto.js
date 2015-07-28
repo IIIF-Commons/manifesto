@@ -4,6 +4,8 @@ var Manifesto;
     var CanvasType = (function () {
         function CanvasType(value) {
             this.value = value;
+            if (value)
+                this.value = value.toLowerCase();
         }
         CanvasType.prototype.toString = function () {
             return this.value;
@@ -22,6 +24,8 @@ var Manifesto;
     var ElementType = (function () {
         function ElementType(value) {
             this.value = value;
+            if (value)
+                this.value = value.toLowerCase();
         }
         ElementType.prototype.toString = function () {
             return this.value;
@@ -36,9 +40,9 @@ var Manifesto;
         ElementType.prototype.sound = function () {
             return new ElementType(ElementType.SOUND.toString());
         };
-        ElementType.DOCUMENT = new ElementType("foaf:Document");
-        ElementType.MOVINGIMAGE = new ElementType("dctypes:MovingImage");
-        ElementType.SOUND = new ElementType("dctypes:Sound");
+        ElementType.DOCUMENT = new ElementType("foaf:document");
+        ElementType.MOVINGIMAGE = new ElementType("dctypes:movingimage");
+        ElementType.SOUND = new ElementType("dctypes:sound");
         return ElementType;
     })();
     Manifesto.ElementType = ElementType;
@@ -48,6 +52,8 @@ var Manifesto;
     var RenderingFormat = (function () {
         function RenderingFormat(value) {
             this.value = value;
+            if (value)
+                this.value = value.toLowerCase();
         }
         RenderingFormat.prototype.toString = function () {
             return this.value;
@@ -74,6 +80,8 @@ var Manifesto;
     var ServiceProfile = (function () {
         function ServiceProfile(value) {
             this.value = value;
+            if (value)
+                this.value = value.toLowerCase();
         }
         ServiceProfile.prototype.toString = function () {
             return this.value;
@@ -112,6 +120,8 @@ var Manifesto;
     var ViewingDirection = (function () {
         function ViewingDirection(value) {
             this.value = value;
+            if (value)
+                this.value = value.toLowerCase();
         }
         ViewingDirection.prototype.toString = function () {
             return this.value;
@@ -142,6 +152,8 @@ var Manifesto;
     var ViewingHint = (function () {
         function ViewingHint(value) {
             this.value = value;
+            if (value)
+                this.value = value.toLowerCase();
         }
         ViewingHint.prototype.toString = function () {
             return this.value;

@@ -8,6 +8,7 @@ module Manifesto {
         public static TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
 
         constructor(public value?: string) {
+            if (value) this.value = value.toLowerCase();
         }
 
         toString() {

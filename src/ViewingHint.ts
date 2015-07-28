@@ -9,6 +9,7 @@ module Manifesto {
         public static NONE = new ViewingHint("");
 
         constructor(public value?: string) {
+            if (value) this.value = value.toLowerCase();
         }
 
         toString() {
