@@ -159,15 +159,19 @@ module Manifesto {
 
             // if passing a parsed object, use the __jsonld.rendering property,
             // otherwise look for a rendering property
-            //if (resource.__jsonld){
+            if (resource.__jsonld){
                 rendering = resource.__jsonld.rendering;
-            //} else {
-            //    rendering = (<any>resource).rendering;
-            //}
+            } else {
+                rendering = resource.rendering;
+            }
 
             var parsed: IRendering[] = [];
 
-            if (!rendering) return parsed;
+            if (!rendering){
+                // no renderings provided, default to resource.
+                //return [new Rendering(resource)];
+                return parsed;
+            }
 
             if (!_isArray(rendering)){
                 rendering = [rendering];
@@ -180,9 +184,6 @@ module Manifesto {
             }
 
             return parsed;
-
-            // no renderings provided, default to resource.
-            //return [new Rendering(resource)];
         }
 
         getSeeAlso(): any {
@@ -214,11 +215,11 @@ module Manifesto {
 
             // if passing a parsed object, use the __jsonld.service property,
             // otherwise look for a service property
-            //if (resource.__jsonld){
+            if (resource.__jsonld){
                 service = resource.__jsonld.service;
-            //} else {
-            //    service = (<any>resource).service;
-            //}
+            } else {
+                service = (<any>resource).service;
+            }
 
             var parsed: IService[] = [];
 

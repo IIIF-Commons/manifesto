@@ -418,25 +418,39 @@ var Manifesto;
                 rendering = resource.rendering;
             }
             var parsed = [];
-            if (rendering) {
-                if (!_isArray(rendering)) {
-                    rendering = [rendering];
-                }
-                for (var i = 0; i < rendering.length; i++) {
-                    var r = rendering[i];
-                    r.__manifest = this;
-                    parsed.push(new Manifesto.Rendering(r));
-                }
+            if (!rendering) {
+                // no renderings provided, default to resource.
+                //return [new Rendering(resource)];
                 return parsed;
             }
-            // no renderings provided, default to resource.
-            //return [new Rendering(resource)];
-            return null;
+            if (!_isArray(rendering)) {
+                rendering = [rendering];
+            }
+            for (var i = 0; i < rendering.length; i++) {
+                var r = rendering[i];
+                r.__manifest = this;
+                parsed.push(new Manifesto.Rendering(r));
+            }
+            return parsed;
         };
         Manifest.prototype.getSeeAlso = function () {
             return this.getLocalisedValue(this.__jsonld.seeAlso);
         };
         Manifest.prototype.getService = function (resource, profile) {
+            var services = this.getServices(resource);
+            // normalise profile to string
+            if (typeof profile !== 'string') {
+                profile = profile.toString();
+            }
+            for (var i = 0; i < services.length; i++) {
+                var service = services[i];
+                if (service.getProfile().toString() === profile) {
+                    return service;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getServices = function (resource) {
             var service;
             // if passing a parsed object, use the __jsonld.service property,
             // otherwise look for a service property
@@ -446,26 +460,18 @@ var Manifesto;
             else {
                 service = resource.service;
             }
+            var parsed = [];
             if (!service)
-                return null;
-            // normalise profile to string
-            if (typeof profile !== 'string') {
-                profile = profile.toString();
+                return parsed;
+            if (!_isArray(service)) {
+                service = [service];
             }
-            if (_isArray(service)) {
-                for (var i = 0; i < service.length; i++) {
-                    var s = service[i];
-                    if (s.profile && s.profile === profile) {
-                        return new Manifesto.Service(s);
-                    }
-                }
+            for (var i = 0; i < service.length; i++) {
+                var s = service[i];
+                s.__manifest = this;
+                parsed.push(new Manifesto.Service(s));
             }
-            else {
-                if (service.profile && service.profile === profile) {
-                    return new Manifesto.Service(service);
-                }
-            }
-            return null;
+            return parsed;
         };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
             return this.sequences[sequenceIndex];
@@ -875,6 +881,9 @@ var Manifesto;
         function Service(resource) {
             _super.call(this, resource);
         }
+        Service.prototype.getProfile = function () {
+            return new Manifesto.ServiceProfile(this.__jsonld.profile);
+        };
         return Service;
     })(Manifesto.JSONLDResource);
     Manifesto.Service = Service;

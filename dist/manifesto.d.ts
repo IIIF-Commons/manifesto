@@ -148,10 +148,11 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
-        getRenderings(resource: IJSONLDResource): IRendering[];
+        getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
         getSequenceByIndex(index: number): ISequence;
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
+        getServices(resource: any): IService[];
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;
@@ -221,6 +222,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IService extends IJSONLDResource {
+        getProfile(): ServiceProfile;
     }
 }
 declare var _assign: any;
@@ -241,9 +243,10 @@ declare module Manifesto {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getRendering(resource: IJSONLDResource, format: Manifesto.RenderingFormat | string): IRendering;
-        getRenderings(resource: IJSONLDResource): IRendering[];
+        getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService;
+        getServices(resource: any): IService[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTitle(): string;
         getTotalSequences(): number;
@@ -315,6 +318,7 @@ declare module Manifesto {
 declare module Manifesto {
     class Service extends JSONLDResource implements IService {
         constructor(resource: any);
+        getProfile(): ServiceProfile;
     }
 }
 declare module Manifesto {
