@@ -92,6 +92,7 @@ declare module Manifesto {
         id: string;
         __jsonld: any;
         getLabel(): string;
+        getProperty(name: string): any;
     }
 }
 declare module Manifesto {
@@ -103,6 +104,7 @@ declare module Manifesto {
         constructor(jsonld: any);
         getManifest(): IManifest;
         getLabel(): string;
+        getProperty(name: string): any;
     }
 }
 declare module Manifesto {

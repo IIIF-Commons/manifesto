@@ -27,3 +27,11 @@ describe('#hasViewingHint', function() {
         viewingHint.toString().should.equal('');
     });
 });
+
+describe('#hasThumbnail', function() {
+    it('canvas has thumbnail', function () {
+        var canvas = sequence.getCanvasByIndex(0);
+        var thumbnail = canvas.getProperty('thumbnail');
+        expect(thumbnail).to.exist;
+    });
+});

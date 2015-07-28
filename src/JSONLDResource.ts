@@ -28,5 +28,9 @@ module Manifesto{
 
             //return null;
         }
+
+        getProperty(name: string): any {
+            return this.__jsonld[name];
+        }
     }
 }

@@ -209,6 +209,9 @@ var Manifesto;
             //}
             //return null;
         };
+        JSONLDResource.prototype.getProperty = function (name) {
+            return this.__jsonld[name];
+        };
         return JSONLDResource;
     })();
     Manifesto.JSONLDResource = JSONLDResource;
