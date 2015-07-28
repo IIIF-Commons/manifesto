@@ -17,6 +17,18 @@ module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         isMultiSequence(): boolean;
+        loadResource(resource: IResource,
+                     login: (loginService: string) => Promise<void>,
+                     getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                     storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                     getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>,
+                     handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource>;
+        loadResources(resources: IResource[],
+                      login: (loginService: string) => Promise<void>,
+                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                      storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                      getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>,
+                      handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
         options: IManifestoOptions;
         rootRange: IRange;
         sequences: ISequence[];
