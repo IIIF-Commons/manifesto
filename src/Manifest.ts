@@ -154,6 +154,7 @@ module Manifesto {
             return null;
         }
 
+        // todo: should resources be parsed in the serialiser?
         getRenderings(resource: IJSONLDResource): IRendering[] {
             var renderings = resource.__jsonld.rendering;
             var parsed = [];
@@ -166,6 +167,7 @@ module Manifesto {
 
                 for (var i = 0; i < renderings.length; i++){
                     var r: any = renderings[i];
+                    r.__manifest = this;
                     var rendering: IRendering = new Rendering(r);
                     parsed.push(rendering);
                 }
