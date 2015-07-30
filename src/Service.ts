@@ -8,5 +8,9 @@ module Manifesto {
         getProfile(): ServiceProfile{
             return new ServiceProfile(this.__jsonld.profile);
         }
+
+        getDescription(): string {
+            return this.getManifest().getLocalisedValue(this.__jsonld.description);
+        }
     }
 }

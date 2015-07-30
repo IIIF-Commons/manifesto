@@ -225,6 +225,7 @@ declare module Manifesto {
     class Service extends JSONLDResource implements IService {
         constructor(resource: any);
         getProfile(): ServiceProfile;
+        getDescription(): string;
     }
 }
 declare module Manifesto {

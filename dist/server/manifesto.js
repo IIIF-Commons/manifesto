@@ -1023,6 +1023,9 @@ var Manifesto;
         Service.prototype.getProfile = function () {
             return new Manifesto.ServiceProfile(this.__jsonld.profile);
         };
+        Service.prototype.getDescription = function () {
+            return this.getManifest().getLocalisedValue(this.__jsonld.description);
+        };
         return Service;
     })(Manifesto.JSONLDResource);
     Manifesto.Service = Service;
