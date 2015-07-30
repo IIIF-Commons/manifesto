@@ -25,7 +25,7 @@
         "typings"
     ],
     "dependencies": {
-        "extensions": "https://github.com/edsilv/extensions.git#~0.1.5",
-        "jmespath.js": "https://github.com/edsilv/jmespath.js.git#~0.12.5"
+        "extensions": "edsilv/extensions#~0.1.5",
+        "jmespath.js": "edsilv/jmespath.js#~0.12.5"
     }
 }
