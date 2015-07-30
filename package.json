@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "extensions": "edsilv/extensions",
-    "jmespath": "git://github.com/edsilv/jmespath.js.git",
+    "jmespath": "edsilv/jmespath.js",
     "lodash.assign": "^3.2.0",
     "lodash.isarray": "^3.0.4",
     "lodash.isnumber": "^3.0.1"
