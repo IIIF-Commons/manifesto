@@ -37,6 +37,7 @@ declare module Manifesto {
     class ServiceProfile {
         value: string;
         static AUTOCOMPLETE: ServiceProfile;
+        static CLICKTHROUGH: ServiceProfile;
         static LOGIN: ServiceProfile;
         static LOGOUT: ServiceProfile;
         static OTHERMANIFESTATIONS: ServiceProfile;
@@ -45,6 +46,7 @@ declare module Manifesto {
         constructor(value?: string);
         toString(): string;
         autoComplete(): ServiceProfile;
+        clickThrough(): ServiceProfile;
         login(): ServiceProfile;
         logout(): ServiceProfile;
         otherManifestations(): ServiceProfile;

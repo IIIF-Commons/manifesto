@@ -1,6 +1,7 @@
 module Manifesto {
     export class ServiceProfile {
         public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        public static CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         public static LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
         public static LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
         public static OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
@@ -19,6 +20,10 @@ module Manifesto {
 
         autoComplete(): ServiceProfile {
             return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
+        }
+
+        clickThrough(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
         }
 
         login(): ServiceProfile {

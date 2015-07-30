@@ -90,6 +90,9 @@ var Manifesto;
         ServiceProfile.prototype.autoComplete = function () {
             return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
         };
+        ServiceProfile.prototype.clickThrough = function () {
+            return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
+        };
         ServiceProfile.prototype.login = function () {
             return new ServiceProfile(ServiceProfile.LOGIN.toString());
         };
@@ -106,6 +109,7 @@ var Manifesto;
             return new ServiceProfile(ServiceProfile.TOKEN.toString());
         };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
         ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
         ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");

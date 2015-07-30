@@ -82,5 +82,5 @@ gulp.task('tag', function(){
 });
 
 gulp.task('default', function(cb) {
-    runSequence('clean', 'build', 'browserify', 'test', 'bump', cb);
+    runSequence('clean', 'build', 'browserify', 'bump', cb);
 });
