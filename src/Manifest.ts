@@ -385,20 +385,15 @@ module Manifesto {
 
                             });
                         } else {
-                            // if the resource has a click through service, use that.
-                            if (resource.clickThroughService){
-                                resolve(clickThrough(resource));
-                            } else {
-                                this.authorize(
-                                    resource,
-                                    clickThrough,
-                                    login,
-                                    getAccessToken,
-                                    storeAccessToken,
-                                    getStoredAccessToken).then(() => {
-                                        resolve(handleResourceResponse(resource));
-                                    });
-                            }
+                            this.authorize(
+                                resource,
+                                clickThrough,
+                                login,
+                                getAccessToken,
+                                storeAccessToken,
+                                getStoredAccessToken).then(() => {
+                                    resolve(handleResourceResponse(resource));
+                                });
                         }
                     });
                 }

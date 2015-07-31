@@ -611,15 +611,9 @@ var Manifesto;
                             });
                         }
                         else {
-                            // if the resource has a click through service, use that.
-                            if (resource.clickThroughService) {
-                                resolve(clickThrough(resource));
-                            }
-                            else {
-                                _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
-                                    resolve(handleResourceResponse(resource));
-                                });
-                            }
+                            _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                resolve(handleResourceResponse(resource));
+                            });
                         }
                     });
                 }
