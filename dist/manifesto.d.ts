@@ -156,9 +156,9 @@ declare module Manifesto {
         getTree(): TreeNode;
         private _parseTreeNode(node, range);
         isMultiSequence(): boolean;
-        loadResource(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any>;
-        authorize(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>): Promise<IResource>;
-        loadResources(resources: IResource[], clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
+        loadResource(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any>;
+        authorize(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IResource>;
+        loadResources(resources: IResource[], clickThrough: (resource: IResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
     }
 }
 declare module Manifesto {
@@ -300,8 +300,8 @@ declare module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         isMultiSequence(): boolean;
-        loadResource(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource>;
-        loadResources(resources: IResource[], clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
+        loadResource(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource>;
+        loadResources(resources: IResource[], clickThrough: (resource: IResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
         options: IManifestoOptions;
         rootRange: IRange;
         sequences: ISequence[];
@@ -343,15 +343,15 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IResource {
-        clickThroughService: string;
+        clickThroughService: IService;
         data: any;
         dataUri: string;
         error: any;
         isAccessControlled: boolean;
-        loginService: string;
-        logoutService: string;
+        loginService: IService;
+        logoutService: IService;
         status: number;
-        tokenService: string;
+        tokenService: IService;
         getData(accessToken?: IAccessToken): Promise<IResource>;
     }
 }

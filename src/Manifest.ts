@@ -319,10 +319,10 @@ module Manifesto {
 
         loadResource(resource: IResource,
                      clickThrough: (resource: IResource) => void,
-                     login: (loginService: string) => Promise<void>,
+                     login: (loginServiceUrl: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                      storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
-                     getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>,
+                     getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                      handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any> {
 
             var options: IManifestoOptions = this.options;
@@ -341,8 +341,8 @@ module Manifesto {
                             if (resource.clickThroughService){
                                 resolve(clickThrough(resource));
                             } else {
-                                login(resource.loginService).then(() => {
-                                    getAccessToken(resource.tokenService).then((token: IAccessToken) => {
+                                login(resource.loginService.id).then(() => {
+                                    getAccessToken(resource.tokenService.id).then((token: IAccessToken) => {
                                         resource.getData(token).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         });
@@ -407,16 +407,16 @@ module Manifesto {
 
         authorize(resource: IResource,
                   clickThrough: (resource: IResource) => void,
-                  login: (loginService: string) => Promise<void>,
+                  login: (loginServiceUrl: string) => Promise<void>,
                   getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                   storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
-                  getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>): Promise<IResource> {
+                  getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IResource> {
 
             return new Promise<IResource>((resolve, reject) => {
 
                 resource.getData().then(() => {
                     if (resource.isAccessControlled) {
-                        getStoredAccessToken(resource.tokenService).then((storedAccessToken: IAccessToken) => {
+                        getStoredAccessToken(resource.tokenService.id).then((storedAccessToken: IAccessToken) => {
                             if (storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
@@ -428,8 +428,8 @@ module Manifesto {
                                     clickThrough(resource);
                                 } else {
                                     // get an access token
-                                    login(resource.loginService).then(() => {
-                                        getAccessToken(resource.tokenService).then((accessToken) => {
+                                    login(resource.loginService.id).then(() => {
+                                        getAccessToken(resource.tokenService.id).then((accessToken) => {
                                             storeAccessToken(resource, accessToken).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
@@ -450,10 +450,10 @@ module Manifesto {
 
         loadResources(resources: IResource[],
                       clickThrough: (resource: IResource) => void,
-                      login: (loginService: string) => Promise<void>,
+                      login: (loginServiceUrl: string) => Promise<void>,
                       getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                       storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
-                      getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>,
+                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                       handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]> {
 
             var that = this;

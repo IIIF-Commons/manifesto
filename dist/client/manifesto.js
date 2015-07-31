@@ -572,8 +572,8 @@ var Manifesto;
                                 resolve(clickThrough(resource));
                             }
                             else {
-                                login(resource.loginService).then(function () {
-                                    getAccessToken(resource.tokenService).then(function (token) {
+                                login(resource.loginService.id).then(function () {
+                                    getAccessToken(resource.tokenService.id).then(function (token) {
                                         resource.getData(token).then(function () {
                                             resolve(handleResourceResponse(resource));
                                         });
@@ -629,7 +629,7 @@ var Manifesto;
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
                     if (resource.isAccessControlled) {
-                        getStoredAccessToken(resource.tokenService).then(function (storedAccessToken) {
+                        getStoredAccessToken(resource.tokenService.id).then(function (storedAccessToken) {
                             if (storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(function () {
@@ -643,8 +643,8 @@ var Manifesto;
                                 }
                                 else {
                                     // get an access token
-                                    login(resource.loginService).then(function () {
-                                        getAccessToken(resource.tokenService).then(function (accessToken) {
+                                    login(resource.loginService.id).then(function () {
+                                        getAccessToken(resource.tokenService.id).then(function (accessToken) {
                                             storeAccessToken(resource, accessToken).then(function () {
                                                 resource.getData(accessToken).then(function () {
                                                     resolve(resource);

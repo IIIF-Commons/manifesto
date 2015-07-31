@@ -1,14 +1,14 @@
 module Manifesto {
     export interface IResource {
-        clickThroughService: string;
+        clickThroughService: IService;
         data: any;
         dataUri: string;
         error: any;
         isAccessControlled: boolean;
-        loginService: string;
-        logoutService: string;
+        loginService: IService;
+        logoutService: IService;
         status: number;
-        tokenService: string;
+        tokenService: IService;
 
         getData(accessToken?: IAccessToken): Promise<IResource>;
     }
