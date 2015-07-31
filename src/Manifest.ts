@@ -366,36 +366,39 @@ module Manifesto {
                         if (storedAccessToken) {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService){
-                                    resolve(clickThrough(resource));
+                                // if the info.json loaded using the stored access token
+                                if (resource.status === 200) {
+                                    resolve(handleResourceResponse(resource));
                                 } else {
-                                    // if the info.json loaded using the stored access token
-                                    if (resource.status === 200) {
-                                        resolve(handleResourceResponse(resource));
-                                    } else {
-                                        // otherwise, load the resource data to determine the correct access control services.
-                                        // if access controlled, do login.
-                                        this.authorize(
-                                            resource,
-                                            login,
-                                            getAccessToken,
-                                            storeAccessToken,
-                                            getStoredAccessToken).then(() => {
-                                                resolve(handleResourceResponse(resource));
-                                            });
-                                    }
+                                    // otherwise, load the resource data to determine the correct access control services.
+                                    // if access controlled, do login.
+                                    this.authorize(
+                                        resource,
+                                        clickThrough,
+                                        login,
+                                        getAccessToken,
+                                        storeAccessToken,
+                                        getStoredAccessToken).then(() => {
+                                            resolve(handleResourceResponse(resource));
+                                        });
                                 }
+
                             });
                         } else {
-                            this.authorize(
-                                resource,
-                                login,
-                                getAccessToken,
-                                storeAccessToken,
-                                getStoredAccessToken).then(() => {
-                                    resolve(handleResourceResponse(resource));
-                                });
+                            // if the resource has a click through service, use that.
+                            if (resource.clickThroughService){
+                                resolve(clickThrough(resource));
+                            } else {
+                                this.authorize(
+                                    resource,
+                                    clickThrough,
+                                    login,
+                                    getAccessToken,
+                                    storeAccessToken,
+                                    getStoredAccessToken).then(() => {
+                                        resolve(handleResourceResponse(resource));
+                                    });
+                            }
                         }
                     });
                 }
@@ -403,6 +406,7 @@ module Manifesto {
         }
 
         authorize(resource: IResource,
+                  clickThrough: (resource: IResource) => void,
                   login: (loginService: string) => Promise<void>,
                   getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                   storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
@@ -419,16 +423,21 @@ module Manifesto {
                                     resolve(resource);
                                 });
                             } else {
-                                // get an access token
-                                login(resource.loginService).then(() => {
-                                    getAccessToken(resource.tokenService).then((accessToken) => {
-                                        storeAccessToken(resource, accessToken).then(() => {
-                                            resource.getData(accessToken).then(() => {
-                                                resolve(resource);
+                                // if the resource has a click through service, use that.
+                                if (resource.clickThroughService){
+                                    clickThrough(resource);
+                                } else {
+                                    // get an access token
+                                    login(resource.loginService).then(() => {
+                                        getAccessToken(resource.tokenService).then((accessToken) => {
+                                            storeAccessToken(resource, accessToken).then(() => {
+                                                resource.getData(accessToken).then(() => {
+                                                    resolve(resource);
+                                                });
                                             });
                                         });
                                     });
-                                });
+                                }
                             }
                         });
                     } else {

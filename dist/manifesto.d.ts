@@ -157,7 +157,7 @@ declare module Manifesto {
         private _parseTreeNode(node, range);
         isMultiSequence(): boolean;
         loadResource(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any>;
-        authorize(resource: IResource, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>): Promise<IResource>;
+        authorize(resource: IResource, clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>): Promise<IResource>;
         loadResources(resources: IResource[], clickThrough: (resource: IResource) => void, login: (loginService: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenService: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
     }
 }

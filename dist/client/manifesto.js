@@ -597,35 +597,35 @@ var Manifesto;
                         if (storedAccessToken) {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(function () {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService) {
-                                    resolve(clickThrough(resource));
+                                // if the info.json loaded using the stored access token
+                                if (resource.status === 200) {
+                                    resolve(handleResourceResponse(resource));
                                 }
                                 else {
-                                    // if the info.json loaded using the stored access token
-                                    if (resource.status === 200) {
+                                    // otherwise, load the resource data to determine the correct access control services.
+                                    // if access controlled, do login.
+                                    _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
-                                    }
-                                    else {
-                                        // otherwise, load the resource data to determine the correct access control services.
-                                        // if access controlled, do login.
-                                        _this.authorize(resource, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
-                                            resolve(handleResourceResponse(resource));
-                                        });
-                                    }
+                                    });
                                 }
                             });
                         }
                         else {
-                            _this.authorize(resource, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
-                                resolve(handleResourceResponse(resource));
-                            });
+                            // if the resource has a click through service, use that.
+                            if (resource.clickThroughService) {
+                                resolve(clickThrough(resource));
+                            }
+                            else {
+                                _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                    resolve(handleResourceResponse(resource));
+                                });
+                            }
                         }
                     });
                 }
             });
         };
-        Manifest.prototype.authorize = function (resource, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
+        Manifest.prototype.authorize = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
                     if (resource.isAccessControlled) {
@@ -637,16 +637,22 @@ var Manifesto;
                                 });
                             }
                             else {
-                                // get an access token
-                                login(resource.loginService).then(function () {
-                                    getAccessToken(resource.tokenService).then(function (accessToken) {
-                                        storeAccessToken(resource, accessToken).then(function () {
-                                            resource.getData(accessToken).then(function () {
-                                                resolve(resource);
+                                // if the resource has a click through service, use that.
+                                if (resource.clickThroughService) {
+                                    clickThrough(resource);
+                                }
+                                else {
+                                    // get an access token
+                                    login(resource.loginService).then(function () {
+                                        getAccessToken(resource.tokenService).then(function (accessToken) {
+                                            storeAccessToken(resource, accessToken).then(function () {
+                                                resource.getData(accessToken).then(function () {
+                                                    resolve(resource);
+                                                });
                                             });
                                         });
                                     });
-                                });
+                                }
                             }
                         });
                     }
