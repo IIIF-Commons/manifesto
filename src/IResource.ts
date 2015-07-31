@@ -1,5 +1,6 @@
 module Manifesto {
     export interface IResource {
+        clickThroughService: string;
         data: any;
         dataUri: string;
         error: any;

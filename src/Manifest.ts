@@ -20,7 +20,7 @@ module Manifesto {
         }
 
         getAttribution(): string {
-            return this.getLocalisedValue(this.__jsonld.attribution);
+            return this.getLocalisedValue(this.getProperty('attribution'));
         }
 
         getLocalisedValue(resource: any, locale?: string): string {
@@ -58,17 +58,17 @@ module Manifesto {
         }
 
         getLogo(): string {
-            return this.__jsonld.logo;
+            return this.getProperty('logo');
         }
 
         getLicense(): string {
-            return this.getLocalisedValue(this.__jsonld.license);
+            return this.getLocalisedValue(this.getProperty('license'));
         }
 
         // todo: remove includeRootProperties
         // todo: any resource may have metadata, add resource param
         getMetadata(includeRootProperties?: boolean): any{
-            var metadata: Object[] = this.__jsonld.metadata;
+            var metadata: Object[] = this.getProperty('metadata');
 
             // get localised value for each metadata item.
             for (var i = 0; i < metadata.length; i++) {
@@ -79,28 +79,28 @@ module Manifesto {
             }
 
             if (metadata && includeRootProperties){
-                if (this.__jsonld.description){
+                if (this.getProperty('description')){
                     metadata.push({
                         "label": "description",
-                        "value": this.getLocalisedValue(this.__jsonld.description)
+                        "value": this.getLocalisedValue(this.getProperty('description'))
                     });
                 }
-                if (this.__jsonld.attribution){
+                if (this.getProperty('attribution')){
                     metadata.push({
                         "label": "attribution",
-                        "value": this.getLocalisedValue(this.__jsonld.attribution)
+                        "value": this.getLocalisedValue(this.getProperty('attribution'))
                     });
                 }
-                if (this.__jsonld.license){
+                if (this.getProperty('license')){
                     metadata.push({
                         "label": "license",
-                        "value": this.getLocalisedValue(this.__jsonld.license)
+                        "value": this.getLocalisedValue(this.getProperty('license'))
                     });
                 }
-                if (this.__jsonld.logo){
+                if (this.getProperty('logo')){
                     metadata.push({
                         "label": "logo",
-                        "value": '<img src="' + this.__jsonld.logo + '"/>'});
+                        "value": '<img src="' + this.getProperty('logo') + '"/>'});
                 }
             }
 
@@ -109,14 +109,17 @@ module Manifesto {
 
         // todo: use jmespath to flatten tree?
         // https://github.com/jmespath/jmespath.js/issues/6
+        // using r.__parsed in the meantime
         getRanges(): IRange[] {
 
             var ranges: IRange[] = [];
 
-            if (!this.__jsonld.structures && !this.__jsonld.structures.length) return ranges;
+            var structures = this.getProperty('structures');
 
-            for (var i = 0; i < this.__jsonld.structures.length; i++){
-                var r = this.__jsonld.structures[i];
+            if (!structures && !structures.length) return ranges;
+
+            for (var i = 0; i < structures.length; i++){
+                var r = structures[i];
                 ranges.push(r.__parsed);
             }
 
@@ -203,7 +206,7 @@ module Manifesto {
         }
 
         getSeeAlso(): any {
-            return this.getLocalisedValue(this.__jsonld.seeAlso);
+            return this.getLocalisedValue(this.getProperty('seeAlso'));
         }
 
         getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
@@ -259,7 +262,7 @@ module Manifesto {
         }
 
         getTitle(): string {
-            return this.getLocalisedValue(this.__jsonld.label);
+            return this.getLocalisedValue(this.getProperty('label'));
         }
 
         getTotalSequences(): number{
@@ -315,6 +318,7 @@ module Manifesto {
         }
 
         loadResource(resource: IResource,
+                     clickThrough: (resource: IResource) => void,
                      login: (loginService: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                      storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
@@ -332,15 +336,19 @@ module Manifesto {
                     // returned access tokens are not stored, therefore the login window flashes for every request.
 
                     resource.getData().then(() => {
-
                         if (resource.isAccessControlled){
-                            login(resource.loginService).then(() => {
-                                getAccessToken(resource.tokenService).then((token: IAccessToken) => {
-                                    resource.getData(token).then(() => {
-                                        resolve(handleResourceResponse(resource));
+                            // if the resource has a click through service, use that.
+                            if (resource.clickThroughService){
+                                resolve(clickThrough(resource));
+                            } else {
+                                login(resource.loginService).then(() => {
+                                    getAccessToken(resource.tokenService).then((token: IAccessToken) => {
+                                        resource.getData(token).then(() => {
+                                            resolve(handleResourceResponse(resource));
+                                        });
                                     });
                                 });
-                            });
+                            }
                         } else {
                             // this info.json isn't access controlled, therefore no need to request an access token
                             resolve(resource);
@@ -358,20 +366,25 @@ module Manifesto {
                         if (storedAccessToken) {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
-                                // if the info.json loaded using the stored access token
-                                if (resource.status === 200){
-                                    resolve(handleResourceResponse(resource));
+                                // if the resource has a click through service, use that.
+                                if (resource.clickThroughService){
+                                    resolve(clickThrough(resource));
                                 } else {
-                                    // otherwise, load the resource data to determine the correct access control services.
-                                    // if access controlled, do login.
-                                    this.authorize(
-                                        resource,
-                                        login,
-                                        getAccessToken,
-                                        storeAccessToken,
-                                        getStoredAccessToken).then(() => {
-                                            resolve(handleResourceResponse(resource));
-                                        });
+                                    // if the info.json loaded using the stored access token
+                                    if (resource.status === 200) {
+                                        resolve(handleResourceResponse(resource));
+                                    } else {
+                                        // otherwise, load the resource data to determine the correct access control services.
+                                        // if access controlled, do login.
+                                        this.authorize(
+                                            resource,
+                                            login,
+                                            getAccessToken,
+                                            storeAccessToken,
+                                            getStoredAccessToken).then(() => {
+                                                resolve(handleResourceResponse(resource));
+                                            });
+                                    }
                                 }
                             });
                         } else {
@@ -427,6 +440,7 @@ module Manifesto {
         }
 
         loadResources(resources: IResource[],
+                      clickThrough: (resource: IResource) => void,
                       login: (loginService: string) => Promise<void>,
                       getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                       storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
@@ -440,6 +454,7 @@ module Manifesto {
                 var promises = _.map(resources, (resource: IResource) => {
                     return that.loadResource(
                         resource,
+                        clickThrough,
                         login,
                         getAccessToken,
                         storeAccessToken,

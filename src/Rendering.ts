@@ -6,7 +6,7 @@ module Manifesto {
         }
 
         getFormat(): RenderingFormat{
-            return new RenderingFormat(this.__jsonld.format);
+            return new RenderingFormat(this.getProperty('format'));
         }
     }
 }

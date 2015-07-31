@@ -6,11 +6,11 @@ module Manifesto {
         }
 
         getProfile(): ServiceProfile{
-            return new ServiceProfile(this.__jsonld.profile);
+            return new ServiceProfile(this.getProperty('profile'));
         }
 
         getDescription(): string {
-            return this.getManifest().getLocalisedValue(this.__jsonld.description);
+            return this.getManifest().getLocalisedValue(this.getProperty('description'));
         }
     }
 }

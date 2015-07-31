@@ -22,16 +22,16 @@ module Manifesto {
         //}
 
         getViewingDirection(): ViewingDirection {
-            if (this.__jsonld.viewingDirection){
-                return new ViewingDirection(this.__jsonld.viewingDirection);
+            if (this.getProperty('viewingDirection')){
+                return new ViewingDirection(this.getProperty('viewingDirection'));
             }
 
             return null;
         }
 
         getViewingHint(): ViewingHint {
-            if (this.__jsonld.viewingHint){
-                return new ViewingHint(this.__jsonld.viewingHint);
+            if (this.getProperty('viewingHint')){
+                return new ViewingHint(this.getProperty('viewingHint'));
             }
 
             return null;

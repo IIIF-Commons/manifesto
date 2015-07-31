@@ -67,15 +67,15 @@ module Manifesto {
         }
 
         getType(): CanvasType {
-            return new CanvasType(this.__jsonld['@type'].toLowerCase());
+            return new CanvasType(this.getProperty('@type').toLowerCase());
         }
 
         getWidth(): number {
-            return this.__jsonld.width;
+            return this.getProperty('width');
         }
 
         getHeight(): number {
-            return this.__jsonld.height;
+            return this.getProperty('height');
         }
     }
 }

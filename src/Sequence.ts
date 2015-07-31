@@ -198,7 +198,7 @@ module Manifesto {
         }
 
         getStartCanvas(): string {
-            return this.__jsonld.startCanvas;
+            return this.getProperty('startCanvas');
         }
 
         getTotalCanvases(): number{
@@ -206,16 +206,16 @@ module Manifesto {
         }
 
         getViewingDirection(): ViewingDirection {
-            if (this.__jsonld.viewingDirection){
-                return new ViewingDirection(this.__jsonld.viewingDirection);
+            if (this.getProperty('viewingDirection')){
+                return new ViewingDirection(this.getProperty('viewingDirection'));
             }
 
             return ViewingDirection.LEFTTORIGHT;
         }
 
         getViewingHint(): ViewingHint {
-            if (this.__jsonld.viewingHint){
-                return new ViewingHint(this.__jsonld.viewingHint);
+            if (this.getProperty('viewingHint')){
+                return new ViewingHint(this.getProperty('viewingHint'));
             }
 
             return ViewingHint.NONE;

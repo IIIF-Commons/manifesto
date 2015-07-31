@@ -8,7 +8,7 @@ module Manifesto {
         }
 
         getType(): ElementType {
-            return new ElementType(this.__jsonld['@type']);
+            return new ElementType(this.getProperty('@type'));
         }
     }
 }
