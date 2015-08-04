@@ -17,6 +17,7 @@ module Manifesto {
         //}
 
         // todo: use getImages instead. the client must decide which to use.
+        // each service has a getInfoUri method.
         getInfoUri(): string {
             var infoUri;
 
