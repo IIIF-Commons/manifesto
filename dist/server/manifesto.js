@@ -254,6 +254,8 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.ManifestResource = ManifestResource;
 })(Manifesto || (Manifesto = {}));
+var _endsWith = require("lodash.endswith");
+var _last = require("lodash.last");
 var Manifesto;
 (function (Manifesto) {
     var Canvas = (function (_super) {
@@ -276,7 +278,7 @@ var Manifesto;
             else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
                 infoUri = this.__jsonld.images[0].resource.service['@id'];
             }
-            if (!infoUri.endsWith('/')) {
+            if (!_endsWith(infoUri, '/')) {
                 infoUri += '/';
             }
             infoUri += 'info.json';
@@ -284,7 +286,7 @@ var Manifesto;
         };
         Canvas.prototype.getRange = function () {
             // get the deepest Range that this Canvas belongs to.
-            return this.ranges.last();
+            return _last(this.ranges);
         };
         // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
@@ -304,7 +306,7 @@ var Manifesto;
             else {
                 return null;
             }
-            if (!uri.endsWith('/')) {
+            if (!_endsWith(uri, '/')) {
                 uri += '/';
             }
             // todo: allow region, rotation, quality, and format as parameters?
@@ -751,6 +753,7 @@ var Manifesto;
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
 var _isNumber = require("lodash.isnumber");
+var _last = require("lodash.last");
 var Manifesto;
 (function (Manifesto) {
     var Sequence = (function (_super) {
@@ -828,7 +831,7 @@ var Manifesto;
                     index = indices[0] + 1;
                 }
                 else {
-                    index = indices.last() + 1;
+                    index = _last(indices) + 1;
                 }
             }
             else {
@@ -865,7 +868,7 @@ var Manifesto;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
                 if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
-                    index = indices.last() - 1;
+                    index = _last(indices) - 1;
                 }
                 else {
                     index = indices[0] - 1;
@@ -1061,6 +1064,7 @@ var Manifesto;
         return JsonUtils;
     })();
 })(Manifesto || (Manifesto = {}));
+var _endsWith = require("lodash.endswith");
 var Manifesto;
 (function (Manifesto) {
     var Service = (function (_super) {
@@ -1073,6 +1077,14 @@ var Manifesto;
         };
         Service.prototype.getDescription = function () {
             return this.getManifest().getLocalisedValue(this.getProperty('description'));
+        };
+        Service.prototype.getInfoUri = function () {
+            var infoUri = this.id;
+            if (!_endsWith(infoUri, '/')) {
+                infoUri += '/';
+            }
+            infoUri += 'info.json';
+            return infoUri;
         };
         return Service;
     })(Manifesto.JSONLDResource);

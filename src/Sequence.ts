@@ -1,4 +1,5 @@
 var _isNumber = require("lodash.isnumber");
+var _last = require("lodash.last");
 
 module Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
@@ -102,7 +103,7 @@ module Manifesto {
                 if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     index = indices[0] + 1;
                 } else {
-                    index = indices.last() + 1;
+                    index = _last(indices) + 1;
                 }
             } else {
                 index = canvasIndex + 1;
@@ -146,7 +147,7 @@ module Manifesto {
                 var indices = this.getPagedIndices(canvasIndex);
 
                 if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
-                    index = indices.last() - 1;
+                    index = _last(indices) - 1;
                 } else {
                     index = indices[0] - 1;
                 }

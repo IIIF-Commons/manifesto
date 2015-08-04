@@ -1,3 +1,6 @@
+var _endsWith = require("lodash.endswith");
+var _last = require("lodash.last");
+
 module Manifesto {
     export class Canvas extends ManifestResource implements ICanvas{
 
@@ -23,7 +26,7 @@ module Manifesto {
                 infoUri = this.__jsonld.images[0].resource.service['@id'];
             }
 
-            if (!infoUri.endsWith('/')) {
+            if (!_endsWith(infoUri, '/')) {
                 infoUri += '/';
             }
 
@@ -34,7 +37,7 @@ module Manifesto {
 
         getRange(): IRange {
             // get the deepest Range that this Canvas belongs to.
-            return this.ranges.last();
+            return _last(this.ranges);
         }
 
         // todo: Prefer thumbnail service to image service if supplied and if
@@ -56,7 +59,7 @@ module Manifesto {
                 return null;
             }
 
-            if (!uri.endsWith('/')){
+            if (!_endsWith(uri, '/')){
                 uri += '/';
             }
 

@@ -1,3 +1,4 @@
+var _endsWith = require("lodash.endswith");
 
 module Manifesto {
     export class Service extends JSONLDResource implements IService {
@@ -11,6 +12,19 @@ module Manifesto {
 
         getDescription(): string {
             return this.getManifest().getLocalisedValue(this.getProperty('description'));
+        }
+
+        getInfoUri(): string {
+
+            var infoUri = this.id;
+
+            if (!_endsWith(infoUri, '/')) {
+                infoUri += '/';
+            }
+
+            infoUri += 'info.json';
+
+            return infoUri;
         }
     }
 }

@@ -111,6 +111,8 @@ declare module Manifesto {
         getService(profile: ServiceProfile | string): IService;
     }
 }
+declare var _endsWith: any;
+declare var _last: any;
 declare module Manifesto {
     class Canvas extends ManifestResource implements ICanvas {
         ranges: IRange[];
@@ -183,6 +185,7 @@ declare module Manifesto {
     }
 }
 declare var _isNumber: any;
+declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {
         canvases: ICanvas[];
@@ -224,11 +227,13 @@ declare module Manifesto {
         static serialise(manifest: Manifest): string;
     }
 }
+declare var _endsWith: any;
 declare module Manifesto {
     class Service extends JSONLDResource implements IService {
         constructor(resource: any);
         getProfile(): ServiceProfile;
         getDescription(): string;
+        getInfoUri(): string;
     }
 }
 declare module Manifesto {
@@ -402,5 +407,7 @@ declare module Manifesto {
 declare module Manifesto {
     interface IService extends IJSONLDResource {
         getProfile(): ServiceProfile;
+        getDescription(): string;
+        getInfoUri(): string;
     }
 }
