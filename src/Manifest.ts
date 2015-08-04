@@ -324,7 +324,7 @@ module Manifesto {
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                     handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<any> {
+                     handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource> {
 
             var options: IManifestoOptions = this.options;
 
