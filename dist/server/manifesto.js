@@ -21,6 +21,7 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var ElementType = (function () {
+        // todo: Should IIIFIMAGE go here?
         function ElementType(value) {
             this.value = value;
             if (value)
@@ -92,6 +93,15 @@ var Manifesto;
         ServiceProfile.prototype.clickThrough = function () {
             return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
         };
+        ServiceProfile.prototype.iiifImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.iiifImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL2.toString());
+        };
+        ServiceProfile.prototype.ixif = function () {
+            return new ServiceProfile(ServiceProfile.IXIF.toString());
+        };
         ServiceProfile.prototype.login = function () {
             return new ServiceProfile(ServiceProfile.LOGIN.toString());
         };
@@ -109,6 +119,9 @@ var Manifesto;
         };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
+        ServiceProfile.IIIFIMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
+        ServiceProfile.IIIFIMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
+        ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
         ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
         ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
         ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
@@ -195,14 +208,14 @@ var Manifesto;
     var JSONLDResource = (function () {
         function JSONLDResource(jsonld) {
             this.__jsonld = jsonld;
-            this.context = this.__jsonld['@context'];
-            this.id = this.__jsonld['@id'];
-            this._label = this.__jsonld.label;
             // store a reference to the parsed object in the jsonld for convenience.
             this.__jsonld.__parsed = this;
+            this.context = this.getProperty('@context');
+            this.id = this.getProperty('@id');
+            this._label = this.getProperty('label');
         }
         JSONLDResource.prototype.getManifest = function () {
-            return this.__jsonld.__manifest;
+            return this.getProperty('__manifest');
         };
         JSONLDResource.prototype.getLabel = function () {
             // todo: why test if it's a digit?
@@ -227,37 +240,53 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Manifesto;
 (function (Manifesto) {
+    var ManifestResource = (function (_super) {
+        __extends(ManifestResource, _super);
+        function ManifestResource() {
+            _super.apply(this, arguments);
+        }
+        // todo: add getMetadata
+        ManifestResource.prototype.getService = function (profile) {
+            var m = this.getManifest();
+            return m.getService(this, profile);
+        };
+        return ManifestResource;
+    })(Manifesto.JSONLDResource);
+    Manifesto.ManifestResource = ManifestResource;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
     var Canvas = (function (_super) {
         __extends(Canvas, _super);
         function Canvas(jsonld) {
             _super.call(this, jsonld);
             this.ranges = [];
         }
-        //getImages(): IAnnotation[] {
+        // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
+        // https://github.com/UniversalViewer/universalviewer/issues/119
+        //getImages(): IService[] {
         //
         //}
-        // todo: use getImages instead.
-        Canvas.prototype.getImageUri = function () {
-            var imageUri;
+        // todo: use getImages instead. the client must decide which to use.
+        Canvas.prototype.getInfoUri = function () {
+            var infoUri;
             if (this.__jsonld.resources) {
-                // todo: create image serviceprofile and use manifest.getService
-                imageUri = this.__jsonld.resources[0].resource.service['@id'];
+                infoUri = this.__jsonld.resources[0].resource.service['@id'];
             }
             else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
-                imageUri = this.__jsonld.images[0].resource.service['@id'];
+                infoUri = this.__jsonld.images[0].resource.service['@id'];
             }
-            if (!imageUri.endsWith('/')) {
-                imageUri += '/';
+            if (!infoUri.endsWith('/')) {
+                infoUri += '/';
             }
-            imageUri += 'info.json';
-            return imageUri;
+            infoUri += 'info.json';
+            return infoUri;
         };
         Canvas.prototype.getRange = function () {
             // get the deepest Range that this Canvas belongs to.
             return this.ranges.last();
         };
-        // todo: if a specific thumbnail service is provided use that
-        // Prefer thumbnail service to image service if supplied and if
+        // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
             var uri;
@@ -292,7 +321,7 @@ var Manifesto;
             return this.getProperty('height');
         };
         return Canvas;
-    })(Manifesto.JSONLDResource);
+    })(Manifesto.ManifestResource);
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -306,11 +335,12 @@ var Manifesto;
             return new Manifesto.ElementType(this.getProperty('@type'));
         };
         return Element;
-    })(Manifesto.JSONLDResource);
+    })(Manifesto.ManifestResource);
     Manifesto.Element = Element;
 })(Manifesto || (Manifesto = {}));
 var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
+var _map = require("lodash.map");
 var Manifesto;
 (function (Manifesto) {
     var Manifest = (function (_super) {
@@ -458,10 +488,9 @@ var Manifesto;
             }
             var parsed = [];
             if (!rendering) {
-                // no renderings provided, default to resource.
-                //return [new Rendering(resource)];
                 return parsed;
             }
+            // normalise to array
             if (!_isArray(rendering)) {
                 rendering = [rendering];
             }
@@ -502,6 +531,7 @@ var Manifesto;
             var parsed = [];
             if (!service)
                 return parsed;
+            // normalise to array
             if (!_isArray(service)) {
                 service = [service];
             }
@@ -659,7 +689,7 @@ var Manifesto;
         Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
             var that = this;
             return new Promise(function (resolve) {
-                var promises = _.map(resources, function (resource) {
+                var promises = _map(resources, function (resource) {
                     return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
                 });
                 Promise.all(promises)
@@ -913,7 +943,7 @@ var Manifesto;
             return this.getTotalCanvases() % 2 === 0;
         };
         return Sequence;
-    })(Manifesto.JSONLDResource);
+    })(Manifesto.ManifestResource);
     Manifesto.Sequence = Sequence;
 })(Manifesto || (Manifesto = {}));
 var jmespath = require('jmespath');
@@ -932,8 +962,10 @@ var Manifesto;
             return this.manifest;
         };
         Deserialiser.parseSequences = function () {
-            for (var i = 0; i < this.manifest.__jsonld.sequences.length; i++) {
-                var s = this.manifest.__jsonld.sequences[i];
+            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
+            var children = this.manifest.__jsonld.mediaSequences || this.manifest.__jsonld.sequences;
+            for (var i = 0; i < children.length; i++) {
+                var s = children[i];
                 s.__manifest = this.manifest;
                 var sequence = new Manifesto.Sequence(s);
                 sequence.canvases = this.parseCanvases(s);
@@ -942,8 +974,10 @@ var Manifesto;
         };
         Deserialiser.parseCanvases = function (sequence) {
             var canvases = [];
-            for (var i = 0; i < sequence.canvases.length; i++) {
-                var c = sequence.canvases[i];
+            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
+            var children = sequence.elements || sequence.canvases;
+            for (var i = 0; i < children.length; i++) {
+                var c = children[i];
                 c.__manifest = this.manifest;
                 var canvas = new Manifesto.Canvas(c);
                 canvases.push(canvas);
@@ -1115,8 +1149,8 @@ module.exports = {
 /// <reference path="./ServiceProfile.ts" />
 /// <reference path="./ViewingDirection.ts" />
 /// <reference path="./ViewingHint.ts" />
-/// <reference path="./IJSONLDResource.ts" />
 /// <reference path="./JSONLDResource.ts" />
+/// <reference path="./ManifestResource.ts" />
 /// <reference path="./Canvas.ts" />
 /// <reference path="./Element.ts" />
 /// <reference path="./Manifest.ts" />

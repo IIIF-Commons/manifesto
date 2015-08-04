@@ -1,5 +1,5 @@
 module Manifesto {
-    export class Canvas extends JSONLDResource implements ICanvas{
+    export class Canvas extends ManifestResource implements ICanvas{
 
         ranges: IRange[] = [];
 
@@ -7,28 +7,29 @@ module Manifesto {
             super(jsonld);
         }
 
-        //getImages(): IAnnotation[] {
+        // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
+        // https://github.com/UniversalViewer/universalviewer/issues/119
+        //getImages(): IService[] {
         //
         //}
 
-        // todo: use getImages instead.
-        getImageUri(): string {
-            var imageUri;
+        // todo: use getImages instead. the client must decide which to use.
+        getInfoUri(): string {
+            var infoUri;
 
             if (this.__jsonld.resources){
-                // todo: create image serviceprofile and use manifest.getService
-                imageUri = this.__jsonld.resources[0].resource.service['@id'];
+                infoUri = this.__jsonld.resources[0].resource.service['@id'];
             } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-                imageUri = this.__jsonld.images[0].resource.service['@id'];
+                infoUri = this.__jsonld.images[0].resource.service['@id'];
             }
 
-            if (!imageUri.endsWith('/')) {
-                imageUri += '/';
+            if (!infoUri.endsWith('/')) {
+                infoUri += '/';
             }
 
-            imageUri += 'info.json';
+            infoUri += 'info.json';
 
-            return imageUri;
+            return infoUri;
         }
 
         getRange(): IRange {
@@ -36,8 +37,7 @@ module Manifesto {
             return this.ranges.last();
         }
 
-        // todo: if a specific thumbnail service is provided use that
-        // Prefer thumbnail service to image service if supplied and if
+        // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         getThumbUri(width: number, height: number): string {
 

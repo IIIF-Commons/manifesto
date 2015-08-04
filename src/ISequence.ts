@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface ISequence extends IJSONLDResource {
+    export interface ISequence extends IManifestResource {
         canvases: ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
@@ -10,6 +10,7 @@ module Manifesto {
         getNextPageIndex(index: number): number;
         getPagedIndices(index: number): number[];
         getPrevPageIndex(index: number): number;
+        getService(profile: Manifesto.ServiceProfile | string): IService;
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height: number): Manifesto.Thumb[];

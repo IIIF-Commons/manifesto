@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IElement extends IJSONLDResource{
+    export interface IElement extends IManifestResource{
         getType(): ElementType;
     }
 }

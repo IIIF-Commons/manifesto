@@ -1,7 +1,7 @@
 var _isNumber = require("lodash.isnumber");
 
 module Manifesto {
-    export class Sequence extends JSONLDResource implements ISequence {
+    export class Sequence extends ManifestResource implements ISequence {
         canvases: ICanvas[] = [];
 
         constructor(jsonld: any){

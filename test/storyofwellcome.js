@@ -3,7 +3,7 @@ var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
 var manifests = require('./data/manifests');
 
-var manifest, sequence;
+var manifest, sequence, element;
 
 describe('#loadsStoryOfWellcome', function() {
     it('loads successfully', function (done) {
@@ -29,9 +29,18 @@ describe('#hasViewingHint', function() {
 });
 
 describe('#hasThumbnail', function() {
-    it('canvas has a thumbnail', function () {
-        var canvas = sequence.getCanvasByIndex(0);
-        var thumbnail = canvas.getProperty('thumbnail');
+    it('element has a thumbnail', function () {
+        element = sequence.getCanvasByIndex(0);
+        var thumbnail = element.getProperty('thumbnail');
         expect(thumbnail).to.exist;
     });
 });
+
+describe('#hasService', function() {
+    it('element has an IxIF service (used for auth)', function () {
+        var profile = manifesto.ServiceProfile.ixif();
+        var service = element.getService(profile);
+        expect(service).to.exist;
+    });
+});
+

@@ -1,8 +1,8 @@
 module Manifesto {
-    export interface ICanvas extends IJSONLDResource {
+    export interface ICanvas extends IManifestResource {
         getHeight(): number;
         //getImages(): IAnnotation[];
-        getImageUri(): string; // todo: deprecate - use getImages instead
+        getInfoUri(): string; // todo: deprecate - use getService instead
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;

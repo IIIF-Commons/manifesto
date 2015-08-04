@@ -1,5 +1,5 @@
 module Manifesto {
-    export interface IResource {
+    export interface IExternalResource {
         clickThroughService: IService;
         data: any;
         dataUri: string;
@@ -10,6 +10,6 @@ module Manifesto {
         status: number;
         tokenService: IService;
 
-        getData(accessToken?: IAccessToken): Promise<IResource>;
+        getData(accessToken?: IAccessToken): Promise<IExternalResource>;
     }
 }

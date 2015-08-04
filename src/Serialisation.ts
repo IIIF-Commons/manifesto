@@ -19,8 +19,11 @@ module Manifesto {
         }
 
         static parseSequences(): void {
-            for (var i = 0; i < this.manifest.__jsonld.sequences.length; i++){
-                var s = this.manifest.__jsonld.sequences[i];
+            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
+            var children = this.manifest.__jsonld.mediaSequences || this.manifest.__jsonld.sequences;
+
+            for (var i = 0; i < children.length; i++){
+                var s = children[i];
                 s.__manifest = this.manifest;
                 var sequence = new Sequence(s);
                 sequence.canvases = this.parseCanvases(s);
@@ -31,8 +34,11 @@ module Manifesto {
         static parseCanvases(sequence: any): Canvas[] {
             var canvases: Canvas[] = [];
 
-            for (var i = 0; i < sequence.canvases.length; i++) {
-                var c = sequence.canvases[i];
+            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
+            var children = sequence.elements || sequence.canvases;
+
+            for (var i = 0; i < children.length; i++) {
+                var c = children[i];
                 c.__manifest = this.manifest;
                 var canvas: Canvas = new Canvas(c);
                 canvases.push(canvas);

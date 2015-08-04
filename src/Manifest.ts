@@ -1,5 +1,6 @@
 var _assign = require("lodash.assign");
 var _isArray = require("lodash.isarray");
+var _map = require("lodash.map");
 
 module Manifesto {
     export class Manifest extends JSONLDResource implements IManifest {
@@ -154,7 +155,7 @@ module Manifesto {
             return null;
         }
 
-        getRendering(resource: IJSONLDResource, format: Manifesto.RenderingFormat | string): IRendering {
+        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering {
             var renderings: IRendering[] = this.getRenderings(resource);
 
             // normalise format to string
@@ -187,11 +188,10 @@ module Manifesto {
             var parsed: IRendering[] = [];
 
             if (!rendering){
-                // no renderings provided, default to resource.
-                //return [new Rendering(resource)];
                 return parsed;
             }
 
+            // normalise to array
             if (!_isArray(rendering)){
                 rendering = [rendering];
             }
@@ -209,7 +209,7 @@ module Manifesto {
             return this.getLocalisedValue(this.getProperty('seeAlso'));
         }
 
-        getService(resource: IJSONLDResource, profile: Manifesto.ServiceProfile | string): IService {
+        getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService {
 
             var services: IService[] = this.getServices(resource);
 
@@ -244,6 +244,7 @@ module Manifesto {
 
             if (!service) return parsed;
 
+            // normalise to array
             if (!_isArray(service)){
                 service = [service];
             }
@@ -317,13 +318,13 @@ module Manifesto {
             return this.getTotalSequences() > 1;
         }
 
-        loadResource(resource: IResource,
-                     clickThrough: (resource: IResource) => void,
+        loadResource(resource: IExternalResource,
+                     clickThrough: (resource: IExternalResource) => void,
                      login: (loginServiceUrl: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                     storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                     storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                     handleResourceResponse: (resource: IResource) => Promise<any>): Promise<any> {
+                     handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<any> {
 
             var options: IManifestoOptions = this.options;
 
@@ -400,14 +401,14 @@ module Manifesto {
             });
         }
 
-        authorize(resource: IResource,
-                  clickThrough: (resource: IResource) => void,
+        authorize(resource: IExternalResource,
+                  clickThrough: (resource: IExternalResource) => void,
                   login: (loginServiceUrl: string) => Promise<void>,
                   getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                  storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
-                  getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IResource> {
+                  storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
+                  getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IExternalResource> {
 
-            return new Promise<IResource>((resolve, reject) => {
+            return new Promise<IExternalResource>((resolve, reject) => {
 
                 resource.getData().then(() => {
                     if (resource.isAccessControlled) {
@@ -443,19 +444,19 @@ module Manifesto {
             });
         }
 
-        loadResources(resources: IResource[],
-                      clickThrough: (resource: IResource) => void,
+        loadResources(resources: IExternalResource[],
+                      clickThrough: (resource: IExternalResource) => void,
                       login: (loginServiceUrl: string) => Promise<void>,
                       getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                      storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
                       getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                      handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]> {
+                      handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource[]> {
 
             var that = this;
 
-            return new Promise<IResource[]>((resolve) => {
+            return new Promise<IExternalResource[]>((resolve) => {
 
-                var promises = _.map(resources, (resource: IResource) => {
+                var promises = _map(resources, (resource: IExternalResource) => {
                     return that.loadResource(
                         resource,
                         clickThrough,

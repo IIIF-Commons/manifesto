@@ -1,5 +1,5 @@
 module Manifesto {
-    export class Element extends JSONLDResource implements IElement {
+    export class Element extends ManifestResource implements IElement {
 
         type: ElementType;
 

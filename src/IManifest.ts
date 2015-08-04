@@ -17,20 +17,20 @@ module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         isMultiSequence(): boolean;
-        loadResource(resource: IResource,
-                     clickThrough: (resource: IResource) => void,
+        loadResource(resource: IExternalResource,
+                     clickThrough: (resource: IExternalResource) => void,
                      login: (loginServiceUrl: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                     storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                     storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                     handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource>;
-        loadResources(resources: IResource[],
-                      clickThrough: (resource: IResource) => void,
+                     handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource>;
+        loadResources(resources: IExternalResource[],
+                      clickThrough: (resource: IExternalResource) => void,
                       login: (loginServiceUrl: string) => Promise<void>,
                       getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                      storeAccessToken: (resource: IResource, token: IAccessToken) => Promise<void>,
+                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
                       getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                      handleResourceResponse: (resource: IResource) => Promise<any>): Promise<IResource[]>;
+                      handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource[]>;
         options: IManifestoOptions;
         rootRange: IRange;
         sequences: ISequence[];
