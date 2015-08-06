@@ -18,7 +18,6 @@ module Manifesto {
         getTree(): TreeNode;
         isMultiSequence(): boolean;
         loadResource(resource: IExternalResource,
-                     redirected: (resource: IExternalResource) => void,
                      clickThrough: (resource: IExternalResource) => void,
                      login: (loginServiceUrl: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
@@ -26,7 +25,6 @@ module Manifesto {
                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
                      handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource>;
         loadResources(resources: IExternalResource[],
-                      redirected: (resource: IExternalResource) => void,
                       clickThrough: (resource: IExternalResource) => void,
                       login: (loginServiceUrl: string) => Promise<void>,
                       getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,

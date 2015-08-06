@@ -319,7 +319,6 @@ module Manifesto {
         }
 
         loadResource(resource: IExternalResource,
-                     redirected: (resource: IExternalResource) => void,
                      clickThrough: (resource: IExternalResource) => void,
                      login: (loginServiceUrl: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
@@ -376,7 +375,6 @@ module Manifesto {
                                     // if access controlled, do login.
                                     this.authorize(
                                         resource,
-                                        redirected,
                                         clickThrough,
                                         login,
                                         getAccessToken,
@@ -390,7 +388,6 @@ module Manifesto {
                         } else {
                             this.authorize(
                                 resource,
-                                redirected,
                                 clickThrough,
                                 login,
                                 getAccessToken,
@@ -405,7 +402,6 @@ module Manifesto {
         }
 
         loadResources(resources: IExternalResource[],
-                      redirected: (resource: IExternalResource) => void,
                       clickThrough: (resource: IExternalResource) => void,
                       login: (loginServiceUrl: string) => Promise<void>,
                       getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
@@ -420,7 +416,6 @@ module Manifesto {
                 var promises = _map(resources, (resource: IExternalResource) => {
                     return that.loadResource(
                         resource,
-                        redirected,
                         clickThrough,
                         login,
                         getAccessToken,
@@ -437,7 +432,6 @@ module Manifesto {
         }
 
         authorize(resource: IExternalResource,
-                  redirected: (resource: IExternalResource) => void,
                   clickThrough: (resource: IExternalResource) => void,
                   login: (loginServiceUrl: string) => Promise<void>,
                   getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
@@ -455,10 +449,9 @@ module Manifesto {
                                     resolve(resource);
                                 });
                             } else {
-                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && redirected) {
-                                    // if the resource was redirected to a degraded version and a redirected
-                                    // handler method was passed.
-                                    redirected(resource);
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                                    // if the resource was redirected to a degraded version.
+                                    resolve(resource);
                                 } else if (resource.clickThroughService){
                                     // if the resource has a click through service, use that.
                                     clickThrough(resource);

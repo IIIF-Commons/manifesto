@@ -589,7 +589,7 @@ var Manifesto;
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
         };
-        Manifest.prototype.loadResource = function (resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+        Manifest.prototype.loadResource = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
             var _this = this;
             var options = this.options;
             return new Promise(function (resolve, reject) {
@@ -636,14 +636,14 @@ var Manifesto;
                                 else {
                                     // otherwise, load the resource data to determine the correct access control services.
                                     // if access controlled, do login.
-                                    _this.authorize(resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                    _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     });
                                 }
                             });
                         }
                         else {
-                            _this.authorize(resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                            _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                 resolve(handleResourceResponse(resource));
                             });
                         }
@@ -651,11 +651,11 @@ var Manifesto;
                 }
             });
         };
-        Manifest.prototype.loadResources = function (resources, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+        Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
             var that = this;
             return new Promise(function (resolve) {
                 var promises = _map(resources, function (resource) {
-                    return that.loadResource(resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
+                    return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
                 });
                 Promise.all(promises)
                     .then(function () {
@@ -663,7 +663,7 @@ var Manifesto;
                 });
             });
         };
-        Manifest.prototype.authorize = function (resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
+        Manifest.prototype.authorize = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
                     if (resource.isAccessControlled) {
@@ -675,10 +675,9 @@ var Manifesto;
                                 });
                             }
                             else {
-                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && redirected) {
-                                    // if the resource was redirected to a degraded version and a redirected
-                                    // handler method was passed.
-                                    redirected(resource);
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                                    // if the resource was redirected to a degraded version.
+                                    resolve(resource);
                                 }
                                 else if (resource.clickThroughService) {
                                     // if the resource has a click through service, use that.
