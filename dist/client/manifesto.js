@@ -271,6 +271,7 @@ var Manifesto;
         //
         //}
         // todo: use getImages instead. the client must decide which to use.
+        // each service has a getInfoUri method.
         Canvas.prototype.getInfoUri = function () {
             var infoUri;
             if (this.__jsonld.resources) {
@@ -437,7 +438,7 @@ var Manifesto;
         Manifest.prototype.getRanges = function () {
             var ranges = [];
             var structures = this.getProperty('structures');
-            if (!structures && !structures.length)
+            if (!structures)
                 return ranges;
             for (var i = 0; i < structures.length; i++) {
                 var r = structures[i];
@@ -589,7 +590,7 @@ var Manifesto;
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
         };
-        Manifest.prototype.loadResource = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+        Manifest.prototype.loadResource = function (resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
             var _this = this;
             var options = this.options;
             return new Promise(function (resolve, reject) {
@@ -614,7 +615,7 @@ var Manifesto;
                             }
                         }
                         else {
-                            // this info.json isn't access controlled, therefore no need to request an access token
+                            // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
                     });
@@ -630,20 +631,20 @@ var Manifesto;
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(function () {
                                 // if the info.json loaded using the stored access token
-                                if (resource.status === 200) {
+                                if (resource.status === HTTPStatusCode.OK) {
                                     resolve(handleResourceResponse(resource));
                                 }
                                 else {
                                     // otherwise, load the resource data to determine the correct access control services.
                                     // if access controlled, do login.
-                                    _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                    _this.authorize(resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     });
                                 }
                             });
                         }
                         else {
-                            _this.authorize(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                            _this.authorize(resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                 resolve(handleResourceResponse(resource));
                             });
                         }
@@ -651,7 +652,19 @@ var Manifesto;
                 }
             });
         };
-        Manifest.prototype.authorize = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
+        Manifest.prototype.loadResources = function (resources, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+            var that = this;
+            return new Promise(function (resolve) {
+                var promises = _map(resources, function (resource) {
+                    return that.loadResource(resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                });
+            });
+        };
+        Manifest.prototype.authorize = function (resource, redirected, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
                     if (resource.isAccessControlled) {
@@ -663,8 +676,13 @@ var Manifesto;
                                 });
                             }
                             else {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService) {
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && redirected) {
+                                    // if the resource was redirected to a degraded version and a redirected
+                                    // handler method was passed.
+                                    redirected(resource);
+                                }
+                                else if (resource.clickThroughService) {
+                                    // if the resource has a click through service, use that.
                                     clickThrough(resource);
                                 }
                                 else {
@@ -686,18 +704,6 @@ var Manifesto;
                         // this info.json isn't access controlled, therefore there's no need to request an access token
                         resolve(resource);
                     }
-                });
-            });
-        };
-        Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
-            var that = this;
-            return new Promise(function (resolve) {
-                var promises = _map(resources, function (resource) {
-                    return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
-                });
-                Promise.all(promises)
-                    .then(function () {
-                    resolve(resources);
                 });
             });
         };

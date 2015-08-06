@@ -117,7 +117,7 @@ module Manifesto {
 
             var structures = this.getProperty('structures');
 
-            if (!structures && !structures.length) return ranges;
+            if (!structures) return ranges;
 
             for (var i = 0; i < structures.length; i++){
                 var r = structures[i];
@@ -319,6 +319,7 @@ module Manifesto {
         }
 
         loadResource(resource: IExternalResource,
+                     redirected: (resource: IExternalResource) => void,
                      clickThrough: (resource: IExternalResource) => void,
                      login: (loginServiceUrl: string) => Promise<void>,
                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
@@ -351,7 +352,7 @@ module Manifesto {
                                 });
                             }
                         } else {
-                            // this info.json isn't access controlled, therefore no need to request an access token
+                            // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
                     });
@@ -368,13 +369,14 @@ module Manifesto {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
                                 // if the info.json loaded using the stored access token
-                                if (resource.status === 200) {
+                                if (resource.status === HTTPStatusCode.OK) {
                                     resolve(handleResourceResponse(resource));
                                 } else {
                                     // otherwise, load the resource data to determine the correct access control services.
                                     // if access controlled, do login.
                                     this.authorize(
                                         resource,
+                                        redirected,
                                         clickThrough,
                                         login,
                                         getAccessToken,
@@ -388,6 +390,7 @@ module Manifesto {
                         } else {
                             this.authorize(
                                 resource,
+                                redirected,
                                 clickThrough,
                                 login,
                                 getAccessToken,
@@ -401,7 +404,40 @@ module Manifesto {
             });
         }
 
+        loadResources(resources: IExternalResource[],
+                      redirected: (resource: IExternalResource) => void,
+                      clickThrough: (resource: IExternalResource) => void,
+                      login: (loginServiceUrl: string) => Promise<void>,
+                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
+                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                      handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource[]> {
+
+            var that = this;
+
+            return new Promise<IExternalResource[]>((resolve) => {
+
+                var promises = _map(resources, (resource: IExternalResource) => {
+                    return that.loadResource(
+                        resource,
+                        redirected,
+                        clickThrough,
+                        login,
+                        getAccessToken,
+                        storeAccessToken,
+                        getStoredAccessToken,
+                        handleResourceResponse);
+                });
+
+                Promise.all(promises)
+                    .then(() => {
+                        resolve(resources)
+                    });
+            });
+        }
+
         authorize(resource: IExternalResource,
+                  redirected: (resource: IExternalResource) => void,
                   clickThrough: (resource: IExternalResource) => void,
                   login: (loginServiceUrl: string) => Promise<void>,
                   getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
@@ -419,8 +455,12 @@ module Manifesto {
                                     resolve(resource);
                                 });
                             } else {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService){
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && redirected) {
+                                    // if the resource was redirected to a degraded version and a redirected
+                                    // handler method was passed.
+                                    redirected(resource);
+                                } else if (resource.clickThroughService){
+                                    // if the resource has a click through service, use that.
                                     clickThrough(resource);
                                 } else {
                                     // get an access token
@@ -441,36 +481,6 @@ module Manifesto {
                         resolve(resource);
                     }
                 });
-            });
-        }
-
-        loadResources(resources: IExternalResource[],
-                      clickThrough: (resource: IExternalResource) => void,
-                      login: (loginServiceUrl: string) => Promise<void>,
-                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                      handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource[]> {
-
-            var that = this;
-
-            return new Promise<IExternalResource[]>((resolve) => {
-
-                var promises = _map(resources, (resource: IExternalResource) => {
-                    return that.loadResource(
-                        resource,
-                        clickThrough,
-                        login,
-                        getAccessToken,
-                        storeAccessToken,
-                        getStoredAccessToken,
-                        handleResourceResponse);
-                });
-
-                Promise.all(promises)
-                    .then(() => {
-                        resolve(resources)
-                    });
             });
         }
     }
