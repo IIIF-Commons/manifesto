@@ -4,12 +4,13 @@ module Manifesto {
         data: any;
         dataUri: string;
         error: any;
-        isAccessControlled: boolean;
+        isResponseHandled: boolean;
         loginService: IService;
         logoutService: IService;
         status: number;
         tokenService: IService;
 
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
+        isAccessControlled(): boolean;
     }
 }

@@ -449,8 +449,11 @@ module Manifesto {
                                     resolve(resource);
                                 });
                             } else {
-                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
-                                    // if the resource was redirected to a degraded version.
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                                    // if the resource was redirected to a degraded version
+                                    // and the response hasn't been handled yet.
+                                    // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                                    // and call loadResources() again.
                                     resolve(resource);
                                 } else if (resource.clickThroughService){
                                     // if the resource has a click through service, use that.

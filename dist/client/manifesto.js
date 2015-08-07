@@ -557,11 +557,11 @@ var Manifesto;
         };
         Manifest.prototype.getTree = function () {
             this.treeRoot = new Manifesto.TreeNode('root');
-            this.treeRoot.label = "root";
+            this.treeRoot.label = 'root';
             if (!this.rootRange)
                 return this.treeRoot;
             this.treeRoot.data = this.rootRange;
-            this.treeRoot.data.type = "manifest";
+            this.treeRoot.data.type = 'manifest';
             this.rootRange.treeNode = this.treeRoot;
             if (this.rootRange.ranges) {
                 for (var i = 0; i < this.rootRange.ranges.length; i++) {
@@ -576,7 +576,7 @@ var Manifesto;
         Manifest.prototype._parseTreeNode = function (node, range) {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = "range";
+            node.data.type = 'range';
             range.treeNode = node;
             if (range.ranges) {
                 for (var i = 0; i < range.ranges.length; i++) {
@@ -676,8 +676,11 @@ var Manifesto;
                                 });
                             }
                             else {
-                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
-                                    // if the resource was redirected to a degraded version.
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                                    // if the resource was redirected to a degraded version
+                                    // and the response hasn't been handled yet.
+                                    // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                                    // and call loadResources() again.
                                     resolve(resource);
                                 }
                                 else if (resource.clickThroughService) {
