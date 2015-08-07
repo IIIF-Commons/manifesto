@@ -599,7 +599,7 @@ var Manifesto;
                     // always request the access token for every access controlled info.json request
                     // returned access tokens are not stored, therefore the login window flashes for every request.
                     resource.getData().then(function () {
-                        if (resource.isAccessControlled) {
+                        if (resource.isAccessControlled()) {
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService) {
                                 resolve(clickThrough(resource));
@@ -667,7 +667,7 @@ var Manifesto;
         Manifest.prototype.authorize = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
-                    if (resource.isAccessControlled) {
+                    if (resource.isAccessControlled()) {
                         getStoredAccessToken(resource.tokenService.id).then(function (storedAccessToken) {
                             if (storedAccessToken) {
                                 // try using the stored access token
