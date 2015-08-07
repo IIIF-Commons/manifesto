@@ -273,12 +273,12 @@ module Manifesto {
         getTree(): TreeNode{
 
             this.treeRoot = new TreeNode('root');
-            this.treeRoot.label = "root";
+            this.treeRoot.label = 'root';
 
             if (!this.rootRange) return this.treeRoot;
 
             this.treeRoot.data = this.rootRange;
-            this.treeRoot.data.type = "manifest";
+            this.treeRoot.data.type = 'manifest';
             this.rootRange.treeNode = this.treeRoot;
 
             if (this.rootRange.ranges){
@@ -298,7 +298,7 @@ module Manifesto {
         private _parseTreeNode(node: TreeNode, range: IRange): void {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = "range";
+            node.data.type = 'range';
             range.treeNode = node;
 
             if (range.ranges) {
