@@ -337,7 +337,7 @@ module Manifesto {
                     // returned access tokens are not stored, therefore the login window flashes for every request.
 
                     resource.getData().then(() => {
-                        if (resource.isAccessControlled){
+                        if (resource.isAccessControlled()){
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService){
                                 resolve(clickThrough(resource));
@@ -441,7 +441,7 @@ module Manifesto {
             return new Promise<IExternalResource>((resolve, reject) => {
 
                 resource.getData().then(() => {
-                    if (resource.isAccessControlled) {
+                    if (resource.isAccessControlled()) {
                         getStoredAccessToken(resource.tokenService.id).then((storedAccessToken: IAccessToken) => {
                             if (storedAccessToken) {
                                 // try using the stored access token
