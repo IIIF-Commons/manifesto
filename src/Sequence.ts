@@ -39,12 +39,13 @@ module Manifesto {
             return null;
         }
 
-        getCanvasIndexByLabel(label: string): number {
+        getCanvasIndexByLabel(label: string, foliation?: boolean): number {
             label = label.trim();
 
             // trim any preceding zeros.
             if (_isNumber(label)) {
                 label = parseInt(label, 10).toString();
+                if (foliation) label = 'r' + label; // default to recto
             }
 
             var doublePageRegExp = /(\d*)\D+(\d*)/;
