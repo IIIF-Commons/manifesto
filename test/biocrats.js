@@ -22,6 +22,13 @@ describe('#hasLabel', function() {
     });
 });
 
+describe('#hasManifestType', function() {
+    it('has a manifestType property of ""', function () {
+        var type = manifest.getType();
+        type.toString().should.equal('');
+    });
+});
+
 describe('#hasTree', function() {
     it('has a tree', function () {
         var tree = manifest.getTree();
