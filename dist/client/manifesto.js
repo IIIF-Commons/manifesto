@@ -780,7 +780,6 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
-var _isNumber = _dereq_("lodash.isnumber");
 var _last = _dereq_("lodash.last");
 var Manifesto;
 (function (Manifesto) {
@@ -813,9 +812,8 @@ var Manifesto;
         };
         Sequence.prototype.getCanvasIndexByLabel = function (label, foliated) {
             label = label.trim();
-            // trim any preceding zeros.
-            if (_isNumber(label)) {
-                label = parseInt(label, 10).toString();
+            if (!isNaN(label)) {
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
                 if (foliated)
                     label = 'r' + label; // default to recto
             }
@@ -1208,7 +1206,7 @@ module.exports = {
 /// <reference path="./TreeNode.ts" />
 /// <reference path="./Manifesto.ts" /> 
 
-},{"http":6,"jmespath":27,"lodash.assign":40,"lodash.endswith":50,"lodash.isarray":52,"lodash.isnumber":53,"lodash.last":54,"lodash.map":55,"url":24}],2:[function(_dereq_,module,exports){
+},{"http":6,"jmespath":27,"lodash.assign":40,"lodash.endswith":50,"lodash.isarray":52,"lodash.last":53,"lodash.map":54,"url":24}],2:[function(_dereq_,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -10689,67 +10687,6 @@ module.exports = isArray;
 
 },{}],53:[function(_dereq_,module,exports){
 /**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/** `Object#toString` result references. */
-var numberTag = '[object Number]';
-
-/**
- * Checks if `value` is object-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/**
- * Checks if `value` is classified as a `Number` primitive or object.
- *
- * **Note:** To exclude `Infinity`, `-Infinity`, and `NaN`, which are classified
- * as numbers, use the `_.isFinite` method.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
- * @example
- *
- * _.isNumber(8.4);
- * // => true
- *
- * _.isNumber(NaN);
- * // => true
- *
- * _.isNumber('8.4');
- * // => false
- */
-function isNumber(value) {
-  return typeof value == 'number' || (isObjectLike(value) && objToString.call(value) == numberTag);
-}
-
-module.exports = isNumber;
-
-},{}],54:[function(_dereq_,module,exports){
-/**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
@@ -10778,7 +10715,7 @@ function last(array) {
 
 module.exports = last;
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],54:[function(_dereq_,module,exports){
 /**
  * lodash 3.1.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10930,7 +10867,7 @@ function map(collection, iteratee, thisArg) {
 
 module.exports = map;
 
-},{"lodash._arraymap":56,"lodash._basecallback":57,"lodash._baseeach":62,"lodash.isarray":52}],56:[function(_dereq_,module,exports){
+},{"lodash._arraymap":55,"lodash._basecallback":56,"lodash._baseeach":61,"lodash.isarray":52}],55:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10962,7 +10899,7 @@ function arrayMap(array, iteratee) {
 
 module.exports = arrayMap;
 
-},{}],57:[function(_dereq_,module,exports){
+},{}],56:[function(_dereq_,module,exports){
 /**
  * lodash 3.3.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11386,7 +11323,7 @@ function property(path) {
 
 module.exports = baseCallback;
 
-},{"lodash._baseisequal":58,"lodash._bindcallback":60,"lodash.isarray":52,"lodash.pairs":61}],58:[function(_dereq_,module,exports){
+},{"lodash._baseisequal":57,"lodash._bindcallback":59,"lodash.isarray":52,"lodash.pairs":60}],57:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.7 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11730,7 +11667,7 @@ function isObject(value) {
 
 module.exports = baseIsEqual;
 
-},{"lodash.isarray":52,"lodash.istypedarray":59,"lodash.keys":63}],59:[function(_dereq_,module,exports){
+},{"lodash.isarray":52,"lodash.istypedarray":58,"lodash.keys":62}],58:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11842,9 +11779,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],59:[function(_dereq_,module,exports){
 module.exports=_dereq_(44)
-},{}],61:[function(_dereq_,module,exports){
+},{}],60:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11924,7 +11861,7 @@ function pairs(object) {
 
 module.exports = pairs;
 
-},{"lodash.keys":63}],62:[function(_dereq_,module,exports){
+},{"lodash.keys":62}],61:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12107,11 +12044,11 @@ function isObject(value) {
 
 module.exports = baseEach;
 
-},{"lodash.keys":63}],63:[function(_dereq_,module,exports){
+},{"lodash.keys":62}],62:[function(_dereq_,module,exports){
 module.exports=_dereq_(34)
-},{"lodash._getnative":64,"lodash.isarguments":65,"lodash.isarray":52}],64:[function(_dereq_,module,exports){
+},{"lodash._getnative":63,"lodash.isarguments":64,"lodash.isarray":52}],63:[function(_dereq_,module,exports){
 module.exports=_dereq_(35)
-},{}],65:[function(_dereq_,module,exports){
+},{}],64:[function(_dereq_,module,exports){
 module.exports=_dereq_(36)
 },{}]},{},[1])
 (1)

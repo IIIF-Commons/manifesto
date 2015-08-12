@@ -779,7 +779,6 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
-var _isNumber = require("lodash.isnumber");
 var _last = require("lodash.last");
 var Manifesto;
 (function (Manifesto) {
@@ -812,9 +811,8 @@ var Manifesto;
         };
         Sequence.prototype.getCanvasIndexByLabel = function (label, foliated) {
             label = label.trim();
-            // trim any preceding zeros.
-            if (_isNumber(label)) {
-                label = parseInt(label, 10).toString();
+            if (!isNaN(label)) {
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
                 if (foliated)
                     label = 'r' + label; // default to recto
             }

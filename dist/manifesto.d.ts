@@ -184,7 +184,6 @@ declare module Manifesto {
         getFormat(): RenderingFormat;
     }
 }
-declare var _isNumber: any;
 declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {

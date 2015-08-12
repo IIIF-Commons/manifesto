@@ -1,4 +1,3 @@
-var _isNumber = require("lodash.isnumber");
 var _last = require("lodash.last");
 
 module Manifesto {
@@ -42,9 +41,8 @@ module Manifesto {
         getCanvasIndexByLabel(label: string, foliated?: boolean): number {
             label = label.trim();
 
-            // trim any preceding zeros.
-            if (_isNumber(label)) {
-                label = parseInt(label, 10).toString();
+            if (!isNaN(<any>label)) { // if the label is numeric
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
                 if (foliated) label = 'r' + label; // default to recto
             }
 
