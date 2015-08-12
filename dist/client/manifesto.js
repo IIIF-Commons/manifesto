@@ -1158,6 +1158,7 @@ var url = _dereq_("url");
 module.exports = {
     CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
+    ManifestType: new Manifesto.ManifestType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
     ServiceProfile: new Manifesto.ServiceProfile(),
     ViewingDirection: new Manifesto.ViewingDirection(),

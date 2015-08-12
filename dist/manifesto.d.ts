@@ -351,6 +351,7 @@ interface IManifesto {
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.Manifest;
     CanvasType: Manifesto.CanvasType;
     ElementType: Manifesto.ElementType;
+    ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
     ServiceProfile: Manifesto.ServiceProfile;
     ViewingDirection: Manifesto.ViewingDirection;
