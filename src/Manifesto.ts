@@ -1,6 +1,3 @@
-var http = require("http");
-var url = require("url");
-
 module.exports = <IManifesto>{
 
     CanvasType: new Manifesto.CanvasType(),
@@ -12,26 +9,7 @@ module.exports = <IManifesto>{
     ViewingHint: new Manifesto.ViewingHint(),
 
     load: function (manifestUri: string, cb: (manifest: any) => void): void {
-
-        var u = url.parse(manifestUri);
-
-        var fetch = http.request({
-            host: u.hostname,
-            port: u.port || 80,
-            path: u.pathname,
-            method: "GET",
-            withCredentials: false
-        }, (res) => {
-            var result = "";
-            res.on('data', (chunk) => {
-                result += chunk;
-            });
-            res.on('end', () => {
-                cb(result);
-            });
-        });
-
-        fetch.end();
+        Manifesto.Utils.load(manifestUri, cb);
     },
 
     create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IManifest {
