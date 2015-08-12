@@ -1,36 +1,50 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.manifesto=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 var Manifesto;
 (function (Manifesto) {
-    var CanvasType = (function () {
-        function CanvasType(value) {
-            this.value = value;
-            if (value)
+    var StringValue = (function () {
+        function StringValue(value) {
+            this.value = "";
+            if (value) {
                 this.value = value.toLowerCase();
+            }
         }
-        CanvasType.prototype.toString = function () {
+        StringValue.prototype.toString = function () {
             return this.value;
         };
+        return StringValue;
+    })();
+    Manifesto.StringValue = StringValue;
+})(Manifesto || (Manifesto = {}));
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var Manifesto;
+(function (Manifesto) {
+    var CanvasType = (function (_super) {
+        __extends(CanvasType, _super);
+        function CanvasType() {
+            _super.apply(this, arguments);
+        }
         // todo: use getters when ES3 target is no longer required.
         CanvasType.prototype.canvas = function () {
             return new CanvasType(CanvasType.CANVAS.toString());
         };
         CanvasType.CANVAS = new CanvasType("sc:canvas");
         return CanvasType;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.CanvasType = CanvasType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ElementType = (function () {
-        // todo: Should IIIFIMAGE go here?
-        function ElementType(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ElementType = (function (_super) {
+        __extends(ElementType, _super);
+        function ElementType() {
+            _super.apply(this, arguments);
         }
-        ElementType.prototype.toString = function () {
-            return this.value;
-        };
+        // todo: Should IIIFIMAGE go here?
         // todo: use getters when ES3 target is no longer required.
         ElementType.prototype.document = function () {
             return new ElementType(ElementType.DOCUMENT.toString());
@@ -45,20 +59,40 @@ var Manifesto;
         ElementType.MOVINGIMAGE = new ElementType("dctypes:movingimage");
         ElementType.SOUND = new ElementType("dctypes:sound");
         return ElementType;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var RenderingFormat = (function () {
-        function RenderingFormat(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ManifestType = (function (_super) {
+        __extends(ManifestType, _super);
+        function ManifestType() {
+            _super.apply(this, arguments);
         }
-        RenderingFormat.prototype.toString = function () {
-            return this.value;
+        // todo: use getters when ES3 target is no longer required.
+        ManifestType.prototype.empty = function () {
+            return new ManifestType(ManifestType.EMPTY.toString());
         };
+        ManifestType.prototype.folio = function () {
+            return new ManifestType(ManifestType.FOLIO.toString());
+        };
+        ManifestType.prototype.monograph = function () {
+            return new ManifestType(ManifestType.MONOGRAPH.toString());
+        };
+        ManifestType.EMPTY = new ManifestType("");
+        ManifestType.FOLIO = new ManifestType("folio");
+        ManifestType.MONOGRAPH = new ManifestType("monograph");
+        return ManifestType;
+    })(Manifesto.StringValue);
+    Manifesto.ManifestType = ManifestType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var RenderingFormat = (function (_super) {
+        __extends(RenderingFormat, _super);
+        function RenderingFormat() {
+            _super.apply(this, arguments);
+        }
         // todo: use getters when ES3 target is no longer required.
         RenderingFormat.prototype.pdf = function () {
             return new RenderingFormat(RenderingFormat.PDF.toString());
@@ -73,20 +107,16 @@ var Manifesto;
         RenderingFormat.DOC = new RenderingFormat("application/msword");
         RenderingFormat.DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         return RenderingFormat;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.RenderingFormat = RenderingFormat;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ServiceProfile = (function () {
-        function ServiceProfile(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ServiceProfile = (function (_super) {
+        __extends(ServiceProfile, _super);
+        function ServiceProfile() {
+            _super.apply(this, arguments);
         }
-        ServiceProfile.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
         ServiceProfile.prototype.autoComplete = function () {
             return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
@@ -129,20 +159,16 @@ var Manifesto;
         ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
         return ServiceProfile;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ServiceProfile = ServiceProfile;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ViewingDirection = (function () {
-        function ViewingDirection(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ViewingDirection = (function (_super) {
+        __extends(ViewingDirection, _super);
+        function ViewingDirection() {
+            _super.apply(this, arguments);
         }
-        ViewingDirection.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
         ViewingDirection.prototype.leftToRight = function () {
             return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
@@ -161,47 +187,43 @@ var Manifesto;
         ViewingDirection.TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
         ViewingDirection.BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
         return ViewingDirection;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ViewingDirection = ViewingDirection;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ViewingHint = (function () {
-        function ViewingHint(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ViewingHint = (function (_super) {
+        __extends(ViewingHint, _super);
+        function ViewingHint() {
+            _super.apply(this, arguments);
         }
-        ViewingHint.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
-        ViewingHint.prototype.individuals = function () {
-            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
-        };
-        ViewingHint.prototype.paged = function () {
-            return new ViewingHint(ViewingHint.PAGED.toString());
-        };
         ViewingHint.prototype.continuous = function () {
             return new ViewingHint(ViewingHint.CONTINUOUS.toString());
+        };
+        ViewingHint.prototype.empty = function () {
+            return new ViewingHint(ViewingHint.EMPTY.toString());
+        };
+        ViewingHint.prototype.individuals = function () {
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
         };
         ViewingHint.prototype.nonPaged = function () {
             return new ViewingHint(ViewingHint.NONPAGED.toString());
         };
+        ViewingHint.prototype.paged = function () {
+            return new ViewingHint(ViewingHint.PAGED.toString());
+        };
         ViewingHint.prototype.top = function () {
             return new ViewingHint(ViewingHint.TOP.toString());
         };
-        ViewingHint.prototype.none = function () {
-            return new ViewingHint(ViewingHint.NONE.toString());
-        };
-        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
-        ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.CONTINUOUS = new ViewingHint("continuous");
+        ViewingHint.EMPTY = new ViewingHint("");
+        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
         ViewingHint.NONPAGED = new ViewingHint("non-paged");
+        ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.TOP = new ViewingHint("top");
-        ViewingHint.NONE = new ViewingHint("");
         return ViewingHint;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -233,12 +255,6 @@ var Manifesto;
     })();
     Manifesto.JSONLDResource = JSONLDResource;
 })(Manifesto || (Manifesto = {}));
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Manifesto;
 (function (Manifesto) {
     var ManifestResource = (function (_super) {
@@ -586,6 +602,9 @@ var Manifesto;
                     this._parseTreeNode(childNode, childRange);
                 }
             }
+        };
+        Manifest.prototype.getType = function () {
+            return new Manifesto.ManifestType(this.getProperty('exp:manifestType'));
         };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
@@ -935,7 +954,7 @@ var Manifesto;
             if (this.getProperty('viewingHint')) {
                 return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
             }
-            return Manifesto.ViewingHint.NONE;
+            return Manifesto.ViewingHint.EMPTY;
         };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;
@@ -1166,8 +1185,10 @@ module.exports = {
         return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
+/// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />
 /// <reference path="./ElementType.ts" />
+/// <reference path="./ManifestType.ts" />
 /// <reference path="./RenderingFormat.ts" />
 /// <reference path="./ServiceProfile.ts" />
 /// <reference path="./ViewingDirection.ts" />

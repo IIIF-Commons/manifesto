@@ -1,5 +1,7 @@
+/// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />
 /// <reference path="./ElementType.ts" />
+/// <reference path="./ManifestType.ts" />
 /// <reference path="./RenderingFormat.ts" />
 /// <reference path="./ServiceProfile.ts" />
 /// <reference path="./ViewingDirection.ts" />

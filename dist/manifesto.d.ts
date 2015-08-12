@@ -1,41 +1,48 @@
 declare module Manifesto {
-    class CanvasType {
+    class StringValue {
         value: string;
-        static CANVAS: CanvasType;
         constructor(value?: string);
         toString(): string;
+    }
+}
+declare module Manifesto {
+    class CanvasType extends StringValue {
+        static CANVAS: CanvasType;
         canvas(): CanvasType;
     }
 }
 declare module Manifesto {
-    class ElementType {
-        value: string;
+    class ElementType extends StringValue {
         static DOCUMENT: ElementType;
         static MOVINGIMAGE: ElementType;
         static SOUND: ElementType;
-        constructor(value?: string);
-        toString(): string;
         document(): ElementType;
         movingimage(): ElementType;
         sound(): ElementType;
     }
 }
 declare module Manifesto {
-    class RenderingFormat {
-        value: string;
+    class ManifestType extends StringValue {
+        static EMPTY: ManifestType;
+        static FOLIO: ManifestType;
+        static MONOGRAPH: ManifestType;
+        empty(): ManifestType;
+        folio(): ManifestType;
+        monograph(): ManifestType;
+    }
+}
+declare module Manifesto {
+    class RenderingFormat extends StringValue {
         static PDF: RenderingFormat;
         static DOC: RenderingFormat;
         static DOCX: RenderingFormat;
-        constructor(value?: string);
-        toString(): string;
         pdf(): RenderingFormat;
         doc(): RenderingFormat;
         docx(): RenderingFormat;
     }
 }
 declare module Manifesto {
-    class ServiceProfile {
-        value: string;
+    class ServiceProfile extends StringValue {
         static AUTOCOMPLETE: ServiceProfile;
         static CLICKTHROUGH: ServiceProfile;
         static IIIFIMAGELEVEL1: ServiceProfile;
@@ -46,8 +53,6 @@ declare module Manifesto {
         static OTHERMANIFESTATIONS: ServiceProfile;
         static SEARCHWITHIN: ServiceProfile;
         static TOKEN: ServiceProfile;
-        constructor(value?: string);
-        toString(): string;
         autoComplete(): ServiceProfile;
         clickThrough(): ServiceProfile;
         iiifImageLevel1(): ServiceProfile;
@@ -61,14 +66,11 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class ViewingDirection {
-        value: string;
+    class ViewingDirection extends StringValue {
         static LEFTTORIGHT: ViewingDirection;
         static RIGHTTOLEFT: ViewingDirection;
         static TOPTOBOTTOM: ViewingDirection;
         static BOTTOMTOTOP: ViewingDirection;
-        constructor(value?: string);
-        toString(): string;
         leftToRight(): ViewingDirection;
         rightToLeft(): ViewingDirection;
         topToBottom(): ViewingDirection;
@@ -76,22 +78,19 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class ViewingHint {
-        value: string;
-        static INDIVIDUALS: ViewingHint;
-        static PAGED: ViewingHint;
+    class ViewingHint extends StringValue {
         static CONTINUOUS: ViewingHint;
+        static EMPTY: ViewingHint;
+        static INDIVIDUALS: ViewingHint;
         static NONPAGED: ViewingHint;
+        static PAGED: ViewingHint;
         static TOP: ViewingHint;
-        static NONE: ViewingHint;
-        constructor(value?: string);
-        toString(): string;
-        individuals(): ViewingHint;
-        paged(): ViewingHint;
         continuous(): ViewingHint;
+        empty(): ViewingHint;
+        individuals(): ViewingHint;
         nonPaged(): ViewingHint;
+        paged(): ViewingHint;
         top(): ViewingHint;
-        none(): ViewingHint;
     }
 }
 declare module Manifesto {
@@ -160,6 +159,7 @@ declare module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         private _parseTreeNode(node, range);
+        getType(): ManifestType;
         isMultiSequence(): boolean;
         loadResource(resource: IExternalResource, clickThrough: (resource: IExternalResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource>;
         loadResources(resources: IExternalResource[], clickThrough: (resource: IExternalResource) => void, login: (loginServiceUrl: string) => Promise<void>, getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>): Promise<IExternalResource[]>;

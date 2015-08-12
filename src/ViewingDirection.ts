@@ -1,18 +1,10 @@
 
 module Manifesto {
-    export class ViewingDirection {
+    export class ViewingDirection extends StringValue{
         public static LEFTTORIGHT = new ViewingDirection("left-to-right");
         public static RIGHTTOLEFT = new ViewingDirection("right-to-left");
         public static TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
         public static BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
-
-        constructor(public value?: string) {
-            if (value) this.value = value.toLowerCase();
-        }
-
-        toString() {
-            return this.value;
-        }
 
         // todo: use getters when ES3 target is no longer required.
 

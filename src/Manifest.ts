@@ -314,6 +314,10 @@ module Manifesto {
             }
         }
 
+        getType(): ManifestType {
+            return new ManifestType(this.getProperty('exp:manifestType'));
+        }
+
         isMultiSequence(): boolean{
             return this.getTotalSequences() > 1;
         }
@@ -383,7 +387,6 @@ module Manifesto {
                                             resolve(handleResourceResponse(resource));
                                         });
                                 }
-
                             });
                         } else {
                             this.authorize(

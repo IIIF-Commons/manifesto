@@ -1,45 +1,37 @@
 
 module Manifesto {
-    export class ViewingHint {
-        public static INDIVIDUALS = new ViewingHint("individuals");
-        public static PAGED = new ViewingHint("paged");
+    export class ViewingHint extends StringValue {
         public static CONTINUOUS = new ViewingHint("continuous");
+        public static EMPTY = new ViewingHint("");
+        public static INDIVIDUALS = new ViewingHint("individuals");
         public static NONPAGED = new ViewingHint("non-paged");
+        public static PAGED = new ViewingHint("paged");
         public static TOP = new ViewingHint("top");
-        public static NONE = new ViewingHint("");
-
-        constructor(public value?: string) {
-            if (value) this.value = value.toLowerCase();
-        }
-
-        toString() {
-            return this.value;
-        }
 
         // todo: use getters when ES3 target is no longer required.
 
-        individuals(): ViewingHint {
-            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
-        }
-
-        paged(): ViewingHint {
-            return new ViewingHint(ViewingHint.PAGED.toString());
-        }
-
         continuous(): ViewingHint {
             return new ViewingHint(ViewingHint.CONTINUOUS.toString());
+        }
+
+        empty(): ViewingHint {
+            return new ViewingHint(ViewingHint.EMPTY.toString());
+        }
+
+        individuals(): ViewingHint {
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
         }
 
         nonPaged(): ViewingHint {
             return new ViewingHint(ViewingHint.NONPAGED.toString());
         }
 
-        top(): ViewingHint {
-            return new ViewingHint(ViewingHint.TOP.toString());
+        paged(): ViewingHint {
+            return new ViewingHint(ViewingHint.PAGED.toString());
         }
 
-        none(): ViewingHint {
-            return new ViewingHint(ViewingHint.NONE.toString());
+        top(): ViewingHint {
+            return new ViewingHint(ViewingHint.TOP.toString());
         }
     }
 }

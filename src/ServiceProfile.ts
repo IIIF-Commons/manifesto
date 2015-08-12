@@ -1,5 +1,5 @@
 module Manifesto {
-    export class ServiceProfile {
+    export class ServiceProfile extends StringValue {
         public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
         public static CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         public static IIIFIMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
@@ -10,14 +10,6 @@ module Manifesto {
         public static OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
         public static SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
         public static TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
-
-        constructor(public value?: string) {
-            if (value) this.value = value.toLowerCase();
-        }
-
-        toString() {
-            return this.value;
-        }
 
         // todo: use getters when ES3 target is no longer required.
 

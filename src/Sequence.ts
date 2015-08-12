@@ -220,7 +220,7 @@ module Manifesto {
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
-            return ViewingHint.NONE;
+            return ViewingHint.EMPTY;
         }
 
         isCanvasIndexOutOfRange(canvasIndex: number): boolean {
