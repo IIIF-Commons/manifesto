@@ -815,7 +815,7 @@ var Manifesto;
             if (!isNaN(label)) {
                 label = parseInt(label, 10).toString(); // trim any preceding zeros.
                 if (foliated)
-                    label = 'r' + label; // default to recto
+                    label += 'r'; // default to recto
             }
             var doublePageRegExp = /(\d*)\D+(\d*)/;
             var match, regExp, regStr, labelPart1, labelPart2;

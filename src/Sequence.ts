@@ -43,7 +43,7 @@ module Manifesto {
 
             if (!isNaN(<any>label)) { // if the label is numeric
                 label = parseInt(label, 10).toString(); // trim any preceding zeros.
-                if (foliated) label = 'r' + label; // default to recto
+                if (foliated) label += 'r'; // default to recto
             }
 
             var doublePageRegExp = /(\d*)\D+(\d*)/;
