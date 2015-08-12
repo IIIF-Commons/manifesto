@@ -4,7 +4,7 @@ module Manifesto {
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
-        getCanvasIndexByLabel(label: string): number;
+        getCanvasIndexByLabel(label: string, foliated: boolean): number;
         getLastCanvasLabel(): string;
         getLastPageIndex(): number;
         getNextPageIndex(index: number): number;
