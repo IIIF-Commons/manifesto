@@ -193,7 +193,7 @@ declare module Manifesto {
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(canvasIndex: number): any;
         getCanvasIndexById(id: string): number;
-        getCanvasIndexByLabel(label: string, foliation?: boolean): number;
+        getCanvasIndexByLabel(label: string, foliated?: boolean): number;
         getLastCanvasLabel(): string;
         getLastPageIndex(): number;
         getNextPageIndex(canvasIndex: number, pagingEnabled?: boolean): number;
