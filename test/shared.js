@@ -8,8 +8,8 @@ exports.serve = function(){
         var serve = serveStatic('test/fixtures', {'index': ['index.html', 'index.htm']})
 
         var server = http.createServer(function(req, res){
-            var done = finalhandler(req, res)
-            serve(req, res, done)
+            var final = finalhandler(req, res);
+            serve(req, res, final)
         });
 
         server.listen(3000);
