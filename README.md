@@ -6,6 +6,4 @@ IIIF Presentation API client and server utility library.
 
 (Work in progress)
 
-    npm install maniiifesto
-    
-    bower install maniiifesto
+    bower install manifesto
