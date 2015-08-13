@@ -1,5 +1,5 @@
 {
-  "name": "maniiifesto",
+  "name": "manifesto",
   "version": "0.1.12",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "dist/server/manifesto.js",
