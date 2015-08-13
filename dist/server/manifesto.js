@@ -1,35 +1,49 @@
 var Manifesto;
 (function (Manifesto) {
-    var CanvasType = (function () {
-        function CanvasType(value) {
-            this.value = value;
-            if (value)
+    var StringValue = (function () {
+        function StringValue(value) {
+            this.value = "";
+            if (value) {
                 this.value = value.toLowerCase();
+            }
         }
-        CanvasType.prototype.toString = function () {
+        StringValue.prototype.toString = function () {
             return this.value;
         };
+        return StringValue;
+    })();
+    Manifesto.StringValue = StringValue;
+})(Manifesto || (Manifesto = {}));
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var Manifesto;
+(function (Manifesto) {
+    var CanvasType = (function (_super) {
+        __extends(CanvasType, _super);
+        function CanvasType() {
+            _super.apply(this, arguments);
+        }
         // todo: use getters when ES3 target is no longer required.
         CanvasType.prototype.canvas = function () {
             return new CanvasType(CanvasType.CANVAS.toString());
         };
         CanvasType.CANVAS = new CanvasType("sc:canvas");
         return CanvasType;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.CanvasType = CanvasType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ElementType = (function () {
-        // todo: Should IIIFIMAGE go here?
-        function ElementType(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ElementType = (function (_super) {
+        __extends(ElementType, _super);
+        function ElementType() {
+            _super.apply(this, arguments);
         }
-        ElementType.prototype.toString = function () {
-            return this.value;
-        };
+        // todo: Should IIIFIMAGE go here?
         // todo: use getters when ES3 target is no longer required.
         ElementType.prototype.document = function () {
             return new ElementType(ElementType.DOCUMENT.toString());
@@ -44,20 +58,40 @@ var Manifesto;
         ElementType.MOVINGIMAGE = new ElementType("dctypes:movingimage");
         ElementType.SOUND = new ElementType("dctypes:sound");
         return ElementType;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var RenderingFormat = (function () {
-        function RenderingFormat(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ManifestType = (function (_super) {
+        __extends(ManifestType, _super);
+        function ManifestType() {
+            _super.apply(this, arguments);
         }
-        RenderingFormat.prototype.toString = function () {
-            return this.value;
+        // todo: use getters when ES3 target is no longer required.
+        ManifestType.prototype.empty = function () {
+            return new ManifestType(ManifestType.EMPTY.toString());
         };
+        ManifestType.prototype.folio = function () {
+            return new ManifestType(ManifestType.FOLIO.toString());
+        };
+        ManifestType.prototype.monograph = function () {
+            return new ManifestType(ManifestType.MONOGRAPH.toString());
+        };
+        ManifestType.EMPTY = new ManifestType("");
+        ManifestType.FOLIO = new ManifestType("folio");
+        ManifestType.MONOGRAPH = new ManifestType("monograph");
+        return ManifestType;
+    })(Manifesto.StringValue);
+    Manifesto.ManifestType = ManifestType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var RenderingFormat = (function (_super) {
+        __extends(RenderingFormat, _super);
+        function RenderingFormat() {
+            _super.apply(this, arguments);
+        }
         // todo: use getters when ES3 target is no longer required.
         RenderingFormat.prototype.pdf = function () {
             return new RenderingFormat(RenderingFormat.PDF.toString());
@@ -72,20 +106,16 @@ var Manifesto;
         RenderingFormat.DOC = new RenderingFormat("application/msword");
         RenderingFormat.DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         return RenderingFormat;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.RenderingFormat = RenderingFormat;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ServiceProfile = (function () {
-        function ServiceProfile(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ServiceProfile = (function (_super) {
+        __extends(ServiceProfile, _super);
+        function ServiceProfile() {
+            _super.apply(this, arguments);
         }
-        ServiceProfile.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
         ServiceProfile.prototype.autoComplete = function () {
             return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
@@ -128,20 +158,16 @@ var Manifesto;
         ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
         return ServiceProfile;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ServiceProfile = ServiceProfile;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ViewingDirection = (function () {
-        function ViewingDirection(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ViewingDirection = (function (_super) {
+        __extends(ViewingDirection, _super);
+        function ViewingDirection() {
+            _super.apply(this, arguments);
         }
-        ViewingDirection.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
         ViewingDirection.prototype.leftToRight = function () {
             return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
@@ -160,47 +186,43 @@ var Manifesto;
         ViewingDirection.TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
         ViewingDirection.BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
         return ViewingDirection;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ViewingDirection = ViewingDirection;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ViewingHint = (function () {
-        function ViewingHint(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ViewingHint = (function (_super) {
+        __extends(ViewingHint, _super);
+        function ViewingHint() {
+            _super.apply(this, arguments);
         }
-        ViewingHint.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
-        ViewingHint.prototype.individuals = function () {
-            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
-        };
-        ViewingHint.prototype.paged = function () {
-            return new ViewingHint(ViewingHint.PAGED.toString());
-        };
         ViewingHint.prototype.continuous = function () {
             return new ViewingHint(ViewingHint.CONTINUOUS.toString());
+        };
+        ViewingHint.prototype.empty = function () {
+            return new ViewingHint(ViewingHint.EMPTY.toString());
+        };
+        ViewingHint.prototype.individuals = function () {
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
         };
         ViewingHint.prototype.nonPaged = function () {
             return new ViewingHint(ViewingHint.NONPAGED.toString());
         };
+        ViewingHint.prototype.paged = function () {
+            return new ViewingHint(ViewingHint.PAGED.toString());
+        };
         ViewingHint.prototype.top = function () {
             return new ViewingHint(ViewingHint.TOP.toString());
         };
-        ViewingHint.prototype.none = function () {
-            return new ViewingHint(ViewingHint.NONE.toString());
-        };
-        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
-        ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.CONTINUOUS = new ViewingHint("continuous");
+        ViewingHint.EMPTY = new ViewingHint("");
+        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
         ViewingHint.NONPAGED = new ViewingHint("non-paged");
+        ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.TOP = new ViewingHint("top");
-        ViewingHint.NONE = new ViewingHint("");
         return ViewingHint;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -232,12 +254,6 @@ var Manifesto;
     })();
     Manifesto.JSONLDResource = JSONLDResource;
 })(Manifesto || (Manifesto = {}));
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Manifesto;
 (function (Manifesto) {
     var ManifestResource = (function (_super) {
@@ -270,6 +286,7 @@ var Manifesto;
         //
         //}
         // todo: use getImages instead. the client must decide which to use.
+        // each service has a getInfoUri method.
         Canvas.prototype.getInfoUri = function () {
             var infoUri;
             if (this.__jsonld.resources) {
@@ -436,7 +453,7 @@ var Manifesto;
         Manifest.prototype.getRanges = function () {
             var ranges = [];
             var structures = this.getProperty('structures');
-            if (!structures && !structures.length)
+            if (!structures)
                 return ranges;
             for (var i = 0; i < structures.length; i++) {
                 var r = structures[i];
@@ -555,11 +572,11 @@ var Manifesto;
         };
         Manifest.prototype.getTree = function () {
             this.treeRoot = new Manifesto.TreeNode('root');
-            this.treeRoot.label = "root";
+            this.treeRoot.label = 'root';
             if (!this.rootRange)
                 return this.treeRoot;
             this.treeRoot.data = this.rootRange;
-            this.treeRoot.data.type = "manifest";
+            this.treeRoot.data.type = 'manifest';
             this.rootRange.treeNode = this.treeRoot;
             if (this.rootRange.ranges) {
                 for (var i = 0; i < this.rootRange.ranges.length; i++) {
@@ -574,7 +591,7 @@ var Manifesto;
         Manifest.prototype._parseTreeNode = function (node, range) {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = "range";
+            node.data.type = 'range';
             range.treeNode = node;
             if (range.ranges) {
                 for (var i = 0; i < range.ranges.length; i++) {
@@ -584,6 +601,9 @@ var Manifesto;
                     this._parseTreeNode(childNode, childRange);
                 }
             }
+        };
+        Manifest.prototype.getType = function () {
+            return new Manifesto.ManifestType(this.getProperty('exp:manifestType'));
         };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
@@ -597,7 +617,7 @@ var Manifesto;
                     // always request the access token for every access controlled info.json request
                     // returned access tokens are not stored, therefore the login window flashes for every request.
                     resource.getData().then(function () {
-                        if (resource.isAccessControlled) {
+                        if (resource.isAccessControlled()) {
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService) {
                                 resolve(clickThrough(resource));
@@ -613,7 +633,7 @@ var Manifesto;
                             }
                         }
                         else {
-                            // this info.json isn't access controlled, therefore no need to request an access token
+                            // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
                     });
@@ -629,7 +649,7 @@ var Manifesto;
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(function () {
                                 // if the info.json loaded using the stored access token
-                                if (resource.status === 200) {
+                                if (resource.status === HTTPStatusCode.OK) {
                                     resolve(handleResourceResponse(resource));
                                 }
                                 else {
@@ -650,10 +670,22 @@ var Manifesto;
                 }
             });
         };
+        Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+            var that = this;
+            return new Promise(function (resolve) {
+                var promises = _map(resources, function (resource) {
+                    return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                });
+            });
+        };
         Manifest.prototype.authorize = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
-                    if (resource.isAccessControlled) {
+                    if (resource.isAccessControlled()) {
                         getStoredAccessToken(resource.tokenService.id).then(function (storedAccessToken) {
                             if (storedAccessToken) {
                                 // try using the stored access token
@@ -662,8 +694,15 @@ var Manifesto;
                                 });
                             }
                             else {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService) {
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                                    // if the resource was redirected to a degraded version
+                                    // and the response hasn't been handled yet.
+                                    // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                                    // and call loadResources() again.
+                                    resolve(resource);
+                                }
+                                else if (resource.clickThroughService) {
+                                    // if the resource has a click through service, use that.
                                     clickThrough(resource);
                                 }
                                 else {
@@ -685,18 +724,6 @@ var Manifesto;
                         // this info.json isn't access controlled, therefore there's no need to request an access token
                         resolve(resource);
                     }
-                });
-            });
-        };
-        Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
-            var that = this;
-            return new Promise(function (resolve) {
-                var promises = _map(resources, function (resource) {
-                    return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
-                });
-                Promise.all(promises)
-                    .then(function () {
-                    resolve(resources);
                 });
             });
         };
@@ -752,7 +779,6 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
-var _isNumber = require("lodash.isnumber");
 var _last = require("lodash.last");
 var Manifesto;
 (function (Manifesto) {
@@ -783,11 +809,12 @@ var Manifesto;
             }
             return null;
         };
-        Sequence.prototype.getCanvasIndexByLabel = function (label) {
+        Sequence.prototype.getCanvasIndexByLabel = function (label, foliated) {
             label = label.trim();
-            // trim any preceding zeros.
-            if (_isNumber(label)) {
-                label = parseInt(label, 10).toString();
+            if (!isNaN(label)) {
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
+                if (foliated)
+                    label += 'r'; // default to recto
             }
             var doublePageRegExp = /(\d*)\D+(\d*)/;
             var match, regExp, regStr, labelPart1, labelPart2;
@@ -924,7 +951,7 @@ var Manifesto;
             if (this.getProperty('viewingHint')) {
                 return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
             }
-            return Manifesto.ViewingHint.NONE;
+            return Manifesto.ViewingHint.EMPTY;
         };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;
@@ -1128,6 +1155,7 @@ var url = require("url");
 module.exports = {
     CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
+    ManifestType: new Manifesto.ManifestType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
     ServiceProfile: new Manifesto.ServiceProfile(),
     ViewingDirection: new Manifesto.ViewingDirection(),
@@ -1155,8 +1183,10 @@ module.exports = {
         return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
+/// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />
 /// <reference path="./ElementType.ts" />
+/// <reference path="./ManifestType.ts" />
 /// <reference path="./RenderingFormat.ts" />
 /// <reference path="./ServiceProfile.ts" />
 /// <reference path="./ViewingDirection.ts" />

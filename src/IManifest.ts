@@ -16,6 +16,7 @@ module Manifesto {
         getTitle(): string;
         getTotalSequences(): number;
         getTree(): TreeNode;
+        getType(): ManifestType;
         isMultiSequence(): boolean;
         loadResource(resource: IExternalResource,
                      clickThrough: (resource: IExternalResource) => void,

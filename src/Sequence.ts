@@ -1,4 +1,3 @@
-var _isNumber = require("lodash.isnumber");
 var _last = require("lodash.last");
 
 module Manifesto {
@@ -39,12 +38,12 @@ module Manifesto {
             return null;
         }
 
-        getCanvasIndexByLabel(label: string): number {
+        getCanvasIndexByLabel(label: string, foliated?: boolean): number {
             label = label.trim();
 
-            // trim any preceding zeros.
-            if (_isNumber(label)) {
-                label = parseInt(label, 10).toString();
+            if (!isNaN(<any>label)) { // if the label is numeric
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
+                if (foliated) label += 'r'; // default to recto
             }
 
             var doublePageRegExp = /(\d*)\D+(\d*)/;
@@ -219,7 +218,7 @@ module Manifesto {
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
-            return ViewingHint.NONE;
+            return ViewingHint.EMPTY;
         }
 
         isCanvasIndexOutOfRange(canvasIndex: number): boolean {

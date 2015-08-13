@@ -1,16 +1,8 @@
 module Manifesto {
-    export class RenderingFormat {
+    export class RenderingFormat extends StringValue{
         public static PDF = new RenderingFormat("application/pdf");
         public static DOC = new RenderingFormat("application/msword");
         public static DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-
-        constructor(public value?: string) {
-            if (value) this.value = value.toLowerCase();
-        }
-
-        toString() {
-            return this.value;
-        }
 
         // todo: use getters when ES3 target is no longer required.
 

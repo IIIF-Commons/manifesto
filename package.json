@@ -1,5 +1,5 @@
 {
-  "name": "manifesto",
+  "name": "maniiifesto",
   "version": "0.1.11",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "dist/server/manifesto.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/edsilv/manifesto.git"
+    "url": "git+https://github.com/edsilv/manifesto.git"
   },
   "keywords": [
     "IIIF"
@@ -23,6 +23,7 @@
     "browserify": "^11.0.0",
     "chai": "^2.3.0",
     "del": "^1.1.1",
+    "finalhandler": "^0.4.0",
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
     "gulp-bump": "^0.3.1",
@@ -32,16 +33,19 @@
     "gulp-typescript": "^2.8.0",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
+    "http": "0.0.0",
     "lodash": "^3.10.0",
     "merge2": "^0.3.5",
     "mocha": "^2.2.4",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.0",
+    "serve-static": "^1.10.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "yargs": "^3.10.0"
   },
   "dependencies": {
+    "http-status-codes": "git://github.com/edsilv/http-status-codes.git",
     "jmespath": "git://github.com/edsilv/jmespath.js.git",
     "lodash.assign": "^3.2.0",
     "lodash.endswith": "^3.0.2",
@@ -49,5 +53,8 @@
     "lodash.isnumber": "^3.0.1",
     "lodash.last": "^3.0.0",
     "lodash.map": "^3.1.4"
+  },
+  "directories": {
+    "test": "test"
   }
 }

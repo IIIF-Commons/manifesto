@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./data/manifests');
+var manifests = require('./fixtures/manifests');
 
 var manifest, sequence;
 
@@ -19,6 +19,13 @@ describe('#hasLabel', function() {
         var label = manifest.getLabel();
         label.should.be.a('string');
         label.should.equal('The biocrats');
+    });
+});
+
+describe('#hasManifestType', function() {
+    it('has a manifestType property of ""', function () {
+        var type = manifest.getType();
+        type.toString().should.equal('');
     });
 });
 

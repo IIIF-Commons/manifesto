@@ -1,36 +1,50 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.manifesto=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 var Manifesto;
 (function (Manifesto) {
-    var CanvasType = (function () {
-        function CanvasType(value) {
-            this.value = value;
-            if (value)
+    var StringValue = (function () {
+        function StringValue(value) {
+            this.value = "";
+            if (value) {
                 this.value = value.toLowerCase();
+            }
         }
-        CanvasType.prototype.toString = function () {
+        StringValue.prototype.toString = function () {
             return this.value;
         };
+        return StringValue;
+    })();
+    Manifesto.StringValue = StringValue;
+})(Manifesto || (Manifesto = {}));
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var Manifesto;
+(function (Manifesto) {
+    var CanvasType = (function (_super) {
+        __extends(CanvasType, _super);
+        function CanvasType() {
+            _super.apply(this, arguments);
+        }
         // todo: use getters when ES3 target is no longer required.
         CanvasType.prototype.canvas = function () {
             return new CanvasType(CanvasType.CANVAS.toString());
         };
         CanvasType.CANVAS = new CanvasType("sc:canvas");
         return CanvasType;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.CanvasType = CanvasType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ElementType = (function () {
-        // todo: Should IIIFIMAGE go here?
-        function ElementType(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ElementType = (function (_super) {
+        __extends(ElementType, _super);
+        function ElementType() {
+            _super.apply(this, arguments);
         }
-        ElementType.prototype.toString = function () {
-            return this.value;
-        };
+        // todo: Should IIIFIMAGE go here?
         // todo: use getters when ES3 target is no longer required.
         ElementType.prototype.document = function () {
             return new ElementType(ElementType.DOCUMENT.toString());
@@ -45,20 +59,40 @@ var Manifesto;
         ElementType.MOVINGIMAGE = new ElementType("dctypes:movingimage");
         ElementType.SOUND = new ElementType("dctypes:sound");
         return ElementType;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var RenderingFormat = (function () {
-        function RenderingFormat(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ManifestType = (function (_super) {
+        __extends(ManifestType, _super);
+        function ManifestType() {
+            _super.apply(this, arguments);
         }
-        RenderingFormat.prototype.toString = function () {
-            return this.value;
+        // todo: use getters when ES3 target is no longer required.
+        ManifestType.prototype.empty = function () {
+            return new ManifestType(ManifestType.EMPTY.toString());
         };
+        ManifestType.prototype.folio = function () {
+            return new ManifestType(ManifestType.FOLIO.toString());
+        };
+        ManifestType.prototype.monograph = function () {
+            return new ManifestType(ManifestType.MONOGRAPH.toString());
+        };
+        ManifestType.EMPTY = new ManifestType("");
+        ManifestType.FOLIO = new ManifestType("folio");
+        ManifestType.MONOGRAPH = new ManifestType("monograph");
+        return ManifestType;
+    })(Manifesto.StringValue);
+    Manifesto.ManifestType = ManifestType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var RenderingFormat = (function (_super) {
+        __extends(RenderingFormat, _super);
+        function RenderingFormat() {
+            _super.apply(this, arguments);
+        }
         // todo: use getters when ES3 target is no longer required.
         RenderingFormat.prototype.pdf = function () {
             return new RenderingFormat(RenderingFormat.PDF.toString());
@@ -73,20 +107,16 @@ var Manifesto;
         RenderingFormat.DOC = new RenderingFormat("application/msword");
         RenderingFormat.DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         return RenderingFormat;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.RenderingFormat = RenderingFormat;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ServiceProfile = (function () {
-        function ServiceProfile(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ServiceProfile = (function (_super) {
+        __extends(ServiceProfile, _super);
+        function ServiceProfile() {
+            _super.apply(this, arguments);
         }
-        ServiceProfile.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
         ServiceProfile.prototype.autoComplete = function () {
             return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
@@ -129,20 +159,16 @@ var Manifesto;
         ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
         return ServiceProfile;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ServiceProfile = ServiceProfile;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ViewingDirection = (function () {
-        function ViewingDirection(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ViewingDirection = (function (_super) {
+        __extends(ViewingDirection, _super);
+        function ViewingDirection() {
+            _super.apply(this, arguments);
         }
-        ViewingDirection.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
         ViewingDirection.prototype.leftToRight = function () {
             return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
@@ -161,47 +187,43 @@ var Manifesto;
         ViewingDirection.TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
         ViewingDirection.BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
         return ViewingDirection;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ViewingDirection = ViewingDirection;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var ViewingHint = (function () {
-        function ViewingHint(value) {
-            this.value = value;
-            if (value)
-                this.value = value.toLowerCase();
+    var ViewingHint = (function (_super) {
+        __extends(ViewingHint, _super);
+        function ViewingHint() {
+            _super.apply(this, arguments);
         }
-        ViewingHint.prototype.toString = function () {
-            return this.value;
-        };
         // todo: use getters when ES3 target is no longer required.
-        ViewingHint.prototype.individuals = function () {
-            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
-        };
-        ViewingHint.prototype.paged = function () {
-            return new ViewingHint(ViewingHint.PAGED.toString());
-        };
         ViewingHint.prototype.continuous = function () {
             return new ViewingHint(ViewingHint.CONTINUOUS.toString());
+        };
+        ViewingHint.prototype.empty = function () {
+            return new ViewingHint(ViewingHint.EMPTY.toString());
+        };
+        ViewingHint.prototype.individuals = function () {
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
         };
         ViewingHint.prototype.nonPaged = function () {
             return new ViewingHint(ViewingHint.NONPAGED.toString());
         };
+        ViewingHint.prototype.paged = function () {
+            return new ViewingHint(ViewingHint.PAGED.toString());
+        };
         ViewingHint.prototype.top = function () {
             return new ViewingHint(ViewingHint.TOP.toString());
         };
-        ViewingHint.prototype.none = function () {
-            return new ViewingHint(ViewingHint.NONE.toString());
-        };
-        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
-        ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.CONTINUOUS = new ViewingHint("continuous");
+        ViewingHint.EMPTY = new ViewingHint("");
+        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
         ViewingHint.NONPAGED = new ViewingHint("non-paged");
+        ViewingHint.PAGED = new ViewingHint("paged");
         ViewingHint.TOP = new ViewingHint("top");
-        ViewingHint.NONE = new ViewingHint("");
         return ViewingHint;
-    })();
+    })(Manifesto.StringValue);
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
@@ -233,12 +255,6 @@ var Manifesto;
     })();
     Manifesto.JSONLDResource = JSONLDResource;
 })(Manifesto || (Manifesto = {}));
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 var Manifesto;
 (function (Manifesto) {
     var ManifestResource = (function (_super) {
@@ -271,6 +287,7 @@ var Manifesto;
         //
         //}
         // todo: use getImages instead. the client must decide which to use.
+        // each service has a getInfoUri method.
         Canvas.prototype.getInfoUri = function () {
             var infoUri;
             if (this.__jsonld.resources) {
@@ -437,7 +454,7 @@ var Manifesto;
         Manifest.prototype.getRanges = function () {
             var ranges = [];
             var structures = this.getProperty('structures');
-            if (!structures && !structures.length)
+            if (!structures)
                 return ranges;
             for (var i = 0; i < structures.length; i++) {
                 var r = structures[i];
@@ -556,11 +573,11 @@ var Manifesto;
         };
         Manifest.prototype.getTree = function () {
             this.treeRoot = new Manifesto.TreeNode('root');
-            this.treeRoot.label = "root";
+            this.treeRoot.label = 'root';
             if (!this.rootRange)
                 return this.treeRoot;
             this.treeRoot.data = this.rootRange;
-            this.treeRoot.data.type = "manifest";
+            this.treeRoot.data.type = 'manifest';
             this.rootRange.treeNode = this.treeRoot;
             if (this.rootRange.ranges) {
                 for (var i = 0; i < this.rootRange.ranges.length; i++) {
@@ -575,7 +592,7 @@ var Manifesto;
         Manifest.prototype._parseTreeNode = function (node, range) {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = "range";
+            node.data.type = 'range';
             range.treeNode = node;
             if (range.ranges) {
                 for (var i = 0; i < range.ranges.length; i++) {
@@ -585,6 +602,9 @@ var Manifesto;
                     this._parseTreeNode(childNode, childRange);
                 }
             }
+        };
+        Manifest.prototype.getType = function () {
+            return new Manifesto.ManifestType(this.getProperty('exp:manifestType'));
         };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
@@ -598,7 +618,7 @@ var Manifesto;
                     // always request the access token for every access controlled info.json request
                     // returned access tokens are not stored, therefore the login window flashes for every request.
                     resource.getData().then(function () {
-                        if (resource.isAccessControlled) {
+                        if (resource.isAccessControlled()) {
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService) {
                                 resolve(clickThrough(resource));
@@ -614,7 +634,7 @@ var Manifesto;
                             }
                         }
                         else {
-                            // this info.json isn't access controlled, therefore no need to request an access token
+                            // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
                     });
@@ -630,7 +650,7 @@ var Manifesto;
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(function () {
                                 // if the info.json loaded using the stored access token
-                                if (resource.status === 200) {
+                                if (resource.status === HTTPStatusCode.OK) {
                                     resolve(handleResourceResponse(resource));
                                 }
                                 else {
@@ -651,10 +671,22 @@ var Manifesto;
                 }
             });
         };
+        Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
+            var that = this;
+            return new Promise(function (resolve) {
+                var promises = _map(resources, function (resource) {
+                    return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                });
+            });
+        };
         Manifest.prototype.authorize = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
-                    if (resource.isAccessControlled) {
+                    if (resource.isAccessControlled()) {
                         getStoredAccessToken(resource.tokenService.id).then(function (storedAccessToken) {
                             if (storedAccessToken) {
                                 // try using the stored access token
@@ -663,8 +695,15 @@ var Manifesto;
                                 });
                             }
                             else {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService) {
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                                    // if the resource was redirected to a degraded version
+                                    // and the response hasn't been handled yet.
+                                    // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                                    // and call loadResources() again.
+                                    resolve(resource);
+                                }
+                                else if (resource.clickThroughService) {
+                                    // if the resource has a click through service, use that.
                                     clickThrough(resource);
                                 }
                                 else {
@@ -686,18 +725,6 @@ var Manifesto;
                         // this info.json isn't access controlled, therefore there's no need to request an access token
                         resolve(resource);
                     }
-                });
-            });
-        };
-        Manifest.prototype.loadResources = function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse) {
-            var that = this;
-            return new Promise(function (resolve) {
-                var promises = _map(resources, function (resource) {
-                    return that.loadResource(resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse);
-                });
-                Promise.all(promises)
-                    .then(function () {
-                    resolve(resources);
                 });
             });
         };
@@ -753,7 +780,6 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
-var _isNumber = _dereq_("lodash.isnumber");
 var _last = _dereq_("lodash.last");
 var Manifesto;
 (function (Manifesto) {
@@ -784,11 +810,12 @@ var Manifesto;
             }
             return null;
         };
-        Sequence.prototype.getCanvasIndexByLabel = function (label) {
+        Sequence.prototype.getCanvasIndexByLabel = function (label, foliated) {
             label = label.trim();
-            // trim any preceding zeros.
-            if (_isNumber(label)) {
-                label = parseInt(label, 10).toString();
+            if (!isNaN(label)) {
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
+                if (foliated)
+                    label += 'r'; // default to recto
             }
             var doublePageRegExp = /(\d*)\D+(\d*)/;
             var match, regExp, regStr, labelPart1, labelPart2;
@@ -925,7 +952,7 @@ var Manifesto;
             if (this.getProperty('viewingHint')) {
                 return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
             }
-            return Manifesto.ViewingHint.NONE;
+            return Manifesto.ViewingHint.EMPTY;
         };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;
@@ -1129,6 +1156,7 @@ var url = _dereq_("url");
 module.exports = {
     CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
+    ManifestType: new Manifesto.ManifestType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
     ServiceProfile: new Manifesto.ServiceProfile(),
     ViewingDirection: new Manifesto.ViewingDirection(),
@@ -1156,8 +1184,10 @@ module.exports = {
         return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
+/// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />
 /// <reference path="./ElementType.ts" />
+/// <reference path="./ManifestType.ts" />
 /// <reference path="./RenderingFormat.ts" />
 /// <reference path="./ServiceProfile.ts" />
 /// <reference path="./ViewingDirection.ts" />
@@ -1176,7 +1206,7 @@ module.exports = {
 /// <reference path="./TreeNode.ts" />
 /// <reference path="./Manifesto.ts" /> 
 
-},{"http":6,"jmespath":27,"lodash.assign":40,"lodash.endswith":50,"lodash.isarray":52,"lodash.isnumber":53,"lodash.last":54,"lodash.map":55,"url":24}],2:[function(_dereq_,module,exports){
+},{"http":6,"jmespath":27,"lodash.assign":40,"lodash.endswith":50,"lodash.isarray":52,"lodash.last":53,"lodash.map":54,"url":24}],2:[function(_dereq_,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -10657,67 +10687,6 @@ module.exports = isArray;
 
 },{}],53:[function(_dereq_,module,exports){
 /**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/** `Object#toString` result references. */
-var numberTag = '[object Number]';
-
-/**
- * Checks if `value` is object-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/**
- * Checks if `value` is classified as a `Number` primitive or object.
- *
- * **Note:** To exclude `Infinity`, `-Infinity`, and `NaN`, which are classified
- * as numbers, use the `_.isFinite` method.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
- * @example
- *
- * _.isNumber(8.4);
- * // => true
- *
- * _.isNumber(NaN);
- * // => true
- *
- * _.isNumber('8.4');
- * // => false
- */
-function isNumber(value) {
-  return typeof value == 'number' || (isObjectLike(value) && objToString.call(value) == numberTag);
-}
-
-module.exports = isNumber;
-
-},{}],54:[function(_dereq_,module,exports){
-/**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
@@ -10746,7 +10715,7 @@ function last(array) {
 
 module.exports = last;
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],54:[function(_dereq_,module,exports){
 /**
  * lodash 3.1.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10898,7 +10867,7 @@ function map(collection, iteratee, thisArg) {
 
 module.exports = map;
 
-},{"lodash._arraymap":56,"lodash._basecallback":57,"lodash._baseeach":62,"lodash.isarray":52}],56:[function(_dereq_,module,exports){
+},{"lodash._arraymap":55,"lodash._basecallback":56,"lodash._baseeach":61,"lodash.isarray":52}],55:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10930,7 +10899,7 @@ function arrayMap(array, iteratee) {
 
 module.exports = arrayMap;
 
-},{}],57:[function(_dereq_,module,exports){
+},{}],56:[function(_dereq_,module,exports){
 /**
  * lodash 3.3.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11354,7 +11323,7 @@ function property(path) {
 
 module.exports = baseCallback;
 
-},{"lodash._baseisequal":58,"lodash._bindcallback":60,"lodash.isarray":52,"lodash.pairs":61}],58:[function(_dereq_,module,exports){
+},{"lodash._baseisequal":57,"lodash._bindcallback":59,"lodash.isarray":52,"lodash.pairs":60}],57:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.7 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11698,7 +11667,7 @@ function isObject(value) {
 
 module.exports = baseIsEqual;
 
-},{"lodash.isarray":52,"lodash.istypedarray":59,"lodash.keys":63}],59:[function(_dereq_,module,exports){
+},{"lodash.isarray":52,"lodash.istypedarray":58,"lodash.keys":62}],58:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11810,9 +11779,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{}],60:[function(_dereq_,module,exports){
+},{}],59:[function(_dereq_,module,exports){
 module.exports=_dereq_(44)
-},{}],61:[function(_dereq_,module,exports){
+},{}],60:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11892,7 +11861,7 @@ function pairs(object) {
 
 module.exports = pairs;
 
-},{"lodash.keys":63}],62:[function(_dereq_,module,exports){
+},{"lodash.keys":62}],61:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12075,11 +12044,11 @@ function isObject(value) {
 
 module.exports = baseEach;
 
-},{"lodash.keys":63}],63:[function(_dereq_,module,exports){
+},{"lodash.keys":62}],62:[function(_dereq_,module,exports){
 module.exports=_dereq_(34)
-},{"lodash._getnative":64,"lodash.isarguments":65,"lodash.isarray":52}],64:[function(_dereq_,module,exports){
+},{"lodash._getnative":63,"lodash.isarguments":64,"lodash.isarray":52}],63:[function(_dereq_,module,exports){
 module.exports=_dereq_(35)
-},{}],65:[function(_dereq_,module,exports){
+},{}],64:[function(_dereq_,module,exports){
 module.exports=_dereq_(36)
 },{}]},{},[1])
 (1)

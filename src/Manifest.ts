@@ -117,7 +117,7 @@ module Manifesto {
 
             var structures = this.getProperty('structures');
 
-            if (!structures && !structures.length) return ranges;
+            if (!structures) return ranges;
 
             for (var i = 0; i < structures.length; i++){
                 var r = structures[i];
@@ -273,12 +273,12 @@ module Manifesto {
         getTree(): TreeNode{
 
             this.treeRoot = new TreeNode('root');
-            this.treeRoot.label = "root";
+            this.treeRoot.label = 'root';
 
             if (!this.rootRange) return this.treeRoot;
 
             this.treeRoot.data = this.rootRange;
-            this.treeRoot.data.type = "manifest";
+            this.treeRoot.data.type = 'manifest';
             this.rootRange.treeNode = this.treeRoot;
 
             if (this.rootRange.ranges){
@@ -298,7 +298,7 @@ module Manifesto {
         private _parseTreeNode(node: TreeNode, range: IRange): void {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = "range";
+            node.data.type = 'range';
             range.treeNode = node;
 
             if (range.ranges) {
@@ -312,6 +312,10 @@ module Manifesto {
                     this._parseTreeNode(childNode, childRange);
                 }
             }
+        }
+
+        getType(): ManifestType {
+            return new ManifestType(this.getProperty('exp:manifestType'));
         }
 
         isMultiSequence(): boolean{
@@ -337,7 +341,7 @@ module Manifesto {
                     // returned access tokens are not stored, therefore the login window flashes for every request.
 
                     resource.getData().then(() => {
-                        if (resource.isAccessControlled){
+                        if (resource.isAccessControlled()){
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService){
                                 resolve(clickThrough(resource));
@@ -351,7 +355,7 @@ module Manifesto {
                                 });
                             }
                         } else {
-                            // this info.json isn't access controlled, therefore no need to request an access token
+                            // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
                     });
@@ -368,7 +372,7 @@ module Manifesto {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
                                 // if the info.json loaded using the stored access token
-                                if (resource.status === 200) {
+                                if (resource.status === HTTPStatusCode.OK) {
                                     resolve(handleResourceResponse(resource));
                                 } else {
                                     // otherwise, load the resource data to determine the correct access control services.
@@ -383,7 +387,6 @@ module Manifesto {
                                             resolve(handleResourceResponse(resource));
                                         });
                                 }
-
                             });
                         } else {
                             this.authorize(
@@ -398,49 +401,6 @@ module Manifesto {
                         }
                     });
                 }
-            });
-        }
-
-        authorize(resource: IExternalResource,
-                  clickThrough: (resource: IExternalResource) => void,
-                  login: (loginServiceUrl: string) => Promise<void>,
-                  getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
-                  storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                  getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IExternalResource> {
-
-            return new Promise<IExternalResource>((resolve, reject) => {
-
-                resource.getData().then(() => {
-                    if (resource.isAccessControlled) {
-                        getStoredAccessToken(resource.tokenService.id).then((storedAccessToken: IAccessToken) => {
-                            if (storedAccessToken) {
-                                // try using the stored access token
-                                resource.getData(storedAccessToken).then(() => {
-                                    resolve(resource);
-                                });
-                            } else {
-                                // if the resource has a click through service, use that.
-                                if (resource.clickThroughService){
-                                    clickThrough(resource);
-                                } else {
-                                    // get an access token
-                                    login(resource.loginService.id).then(() => {
-                                        getAccessToken(resource.tokenService.id).then((accessToken) => {
-                                            storeAccessToken(resource, accessToken).then(() => {
-                                                resource.getData(accessToken).then(() => {
-                                                    resolve(resource);
-                                                });
-                                            });
-                                        });
-                                    });
-                                }
-                            }
-                        });
-                    } else {
-                        // this info.json isn't access controlled, therefore there's no need to request an access token
-                        resolve(resource);
-                    }
-                });
             });
         }
 
@@ -471,6 +431,55 @@ module Manifesto {
                     .then(() => {
                         resolve(resources)
                     });
+            });
+        }
+
+        authorize(resource: IExternalResource,
+                  clickThrough: (resource: IExternalResource) => void,
+                  login: (loginServiceUrl: string) => Promise<void>,
+                  getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                  storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
+                  getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IExternalResource> {
+
+            return new Promise<IExternalResource>((resolve, reject) => {
+
+                resource.getData().then(() => {
+                    if (resource.isAccessControlled()) {
+                        getStoredAccessToken(resource.tokenService.id).then((storedAccessToken: IAccessToken) => {
+                            if (storedAccessToken) {
+                                // try using the stored access token
+                                resource.getData(storedAccessToken).then(() => {
+                                    resolve(resource);
+                                });
+                            } else {
+                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                                    // if the resource was redirected to a degraded version
+                                    // and the response hasn't been handled yet.
+                                    // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                                    // and call loadResources() again.
+                                    resolve(resource);
+                                } else if (resource.clickThroughService){
+                                    // if the resource has a click through service, use that.
+                                    clickThrough(resource);
+                                } else {
+                                    // get an access token
+                                    login(resource.loginService.id).then(() => {
+                                        getAccessToken(resource.tokenService.id).then((accessToken) => {
+                                            storeAccessToken(resource, accessToken).then(() => {
+                                                resource.getData(accessToken).then(() => {
+                                                    resolve(resource);
+                                                });
+                                            });
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        // this info.json isn't access controlled, therefore there's no need to request an access token
+                        resolve(resource);
+                    }
+                });
             });
         }
     }
