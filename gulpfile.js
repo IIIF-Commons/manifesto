@@ -6,6 +6,7 @@ var browserify = require('gulp-browserify'),
     gulp = require('gulp'),
     gutil = require('gulp-util'),
     http = require('http'),
+    istanbul = require('gulp-istanbul'),
     merge = require('merge2'),
     mocha = require('gulp-mocha'),
     rename = require('gulp-rename'),
@@ -19,8 +20,14 @@ var browserify = require('gulp-browserify'),
 var config = new Config();
 
 gulp.task('test', function () {
-    return gulp.src(config.test, {read: false})
-        .pipe(mocha());
+    return gulp.src(config.server + config.lib)
+        .pipe(istanbul())
+        .pipe(istanbul.hookRequire())
+        .on('finish', function() {
+            gulp.src(config.test, {read: false})
+                .pipe(mocha())
+                .pipe(istanbul.writeReports());
+        });
 });
 
 gulp.task('clean', function (cb) {
