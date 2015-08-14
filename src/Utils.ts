@@ -3,26 +3,29 @@ var url = require("url");
 
 module Manifesto {
     export class Utils {
-        static load (manifestUri: string, cb: (manifest: any) => void): void {
-            var u = url.parse(manifestUri);
+        static loadManifest (uri: string): Promise<any> {
 
-            var fetch = http.request({
-                host: u.hostname,
-                port: u.port || 80,
-                path: u.pathname,
-                method: "GET",
-                withCredentials: false
-            }, (res) => {
-                var result = "";
-                res.on('data', (chunk) => {
-                    result += chunk;
+            return new Promise<any>((resolve, reject) => {
+                var u = url.parse(uri);
+
+                var fetch = http.request({
+                    host: u.hostname,
+                    port: u.port || 80,
+                    path: u.pathname,
+                    method: "GET",
+                    withCredentials: false
+                }, (res) => {
+                    var result = "";
+                    res.on('data', (chunk) => {
+                        result += chunk;
+                    });
+                    res.on('end', () => {
+                        resolve(result);
+                    });
                 });
-                res.on('end', () => {
-                    cb(result);
-                });
+
+                fetch.end();
             });
-
-            fetch.end();
         }
 
         static loadExternalResource(resource: IExternalResource,

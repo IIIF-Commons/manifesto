@@ -1039,24 +1039,26 @@ var Manifesto;
     var Utils = (function () {
         function Utils() {
         }
-        Utils.load = function (manifestUri, cb) {
-            var u = url.parse(manifestUri);
-            var fetch = http.request({
-                host: u.hostname,
-                port: u.port || 80,
-                path: u.pathname,
-                method: "GET",
-                withCredentials: false
-            }, function (res) {
-                var result = "";
-                res.on('data', function (chunk) {
-                    result += chunk;
+        Utils.loadManifest = function (uri) {
+            return new Promise(function (resolve, reject) {
+                var u = url.parse(uri);
+                var fetch = http.request({
+                    host: u.hostname,
+                    port: u.port || 80,
+                    path: u.pathname,
+                    method: "GET",
+                    withCredentials: false
+                }, function (res) {
+                    var result = "";
+                    res.on('data', function (chunk) {
+                        result += chunk;
+                    });
+                    res.on('end', function () {
+                        resolve(result);
+                    });
                 });
-                res.on('end', function () {
-                    cb(result);
-                });
+                fetch.end();
             });
-            fetch.end();
         };
         Utils.loadExternalResource = function (resource, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
             return new Promise(function (resolve, reject) {
@@ -1187,8 +1189,11 @@ module.exports = {
     ServiceProfile: new Manifesto.ServiceProfile(),
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
-    load: function (manifestUri, cb) {
-        Manifesto.Utils.load(manifestUri, cb);
+    loadManifest: function (uri) {
+        return Manifesto.Utils.loadManifest(uri);
+    },
+    loadExternalResources: function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
+        return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
     create: function (manifest, options) {
         return Manifesto.Deserialiser.parse(manifest, options);

@@ -8,8 +8,19 @@ module.exports = <IManifesto>{
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
 
-    load: function (manifestUri: string, cb: (manifest: any) => void): void {
-        Manifesto.Utils.load(manifestUri, cb);
+    loadManifest: function (uri: string): Promise<any> {
+        return Manifesto.Utils.loadManifest(uri);
+    },
+
+    loadExternalResources: function(resources: Manifesto.IExternalResource[],
+                          clickThrough: (resource: Manifesto.IExternalResource) => void,
+                          login: (loginServiceUrl: string) => Promise<void>,
+                          getAccessToken: (tokenServiceUrl: string) => Promise<Manifesto.IAccessToken>,
+                          storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken) => Promise<void>,
+                          getStoredAccessToken: (tokenServiceUrl: string) => Promise<Manifesto.IAccessToken>,
+                          handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
+                          options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
+        return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
 
     create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IManifest {
