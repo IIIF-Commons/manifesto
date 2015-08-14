@@ -23,7 +23,7 @@ module.exports = <IManifesto>{
         return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
 
-    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IManifest {
+    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource {
         return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
