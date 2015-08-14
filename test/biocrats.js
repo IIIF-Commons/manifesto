@@ -7,7 +7,7 @@ var manifest, sequence;
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
-        manifesto.load(manifests.biocrats, function(data) {
+        manifesto.loadManifest(manifests.biocrats).then(function(data) {
             manifest = manifesto.create(data);
             done();
         });

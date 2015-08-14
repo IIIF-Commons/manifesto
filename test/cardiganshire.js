@@ -7,7 +7,7 @@ var manifest, sequence;
 
 describe('#loadsCardiganshire', function() {
     it('loads successfully', function (done) {
-        manifesto.load(manifests.cardiganshire, function(data) {
+        manifesto.loadManifest(manifests.cardiganshire).then(function(data) {
             manifest = manifesto.create(data, {locale: "cy-GB"});
             done();
         });

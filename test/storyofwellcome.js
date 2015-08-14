@@ -7,7 +7,7 @@ var manifest, sequence, element;
 
 describe('#loadsStoryOfWellcome', function() {
     it('loads successfully', function (done) {
-        manifesto.load(manifests.storyofwellcome, function(data) {
+        manifesto.loadManifest(manifests.storyofwellcome).then(function(data) {
             manifest = manifesto.create(data);
             done();
         });

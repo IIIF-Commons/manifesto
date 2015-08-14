@@ -10,7 +10,7 @@ shared.serve();
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
-        manifesto.load(manifests.pseudoalbert, function(data) {
+        manifesto.loadManifest(manifests.pseudoalbert).then(function(data) {
             manifest = manifesto.create(data);
             done();
         });
