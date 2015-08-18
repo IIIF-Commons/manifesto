@@ -11,6 +11,7 @@ module Manifesto {
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getServices(resource: any): IService[];
         getTitle(): string;
+        getIIIFResourceType(): IIIFResourceType;
         load(): Promise<IIIIFResource>;
     }
 }

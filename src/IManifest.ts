@@ -7,7 +7,7 @@ module Manifesto {
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
-        getType(): ManifestType;
+        getManifestType(): ManifestType;
         isMultiSequence(): boolean;
         rootRange: IRange;
         sequences: ISequence[];

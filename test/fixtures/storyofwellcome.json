@@ -1,0 +1,143 @@
+
+{
+  "@context": [
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://wellcomelibrary.org/ld/iiif-ext/0/context.json",
+    "http://wellcomelibrary.org/ld/ixif/0/context.json"
+  ],
+  "@id": "http://wellcomelibrary.org/iiif/b16659090/manifest",
+  "@type": "sc:Manifest",
+  "label": "The story of the Wellcome Foundation Ltd.",
+  "metadata": [
+    {
+      "label": "Type",
+      "value": "Video"
+    },
+    {
+      "label": "Language",
+      "value": "eng"
+    },
+    {
+      "label": "Date",
+      "value": "1955"
+    },
+    {
+      "label": "Place",
+      "value": "enk"
+    },
+    {
+      "label": "Publisher",
+      "value": "Wellcome Foundation Film Unit"
+    },
+    {
+      "label": "Physical description",
+      "value": "1 encoded moving image (28.27 min.) : sd., col."
+    },
+    {
+      "label": "License",
+      "value": "CC-BY-NC-ND"
+    },
+    {
+      "label": "Volume Number",
+      "value": "-1"
+    },
+    {
+      "label": "Copy Number",
+      "value": "1"
+    }
+  ],
+  "mediaSequences": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b16659090/xsequence/s0",
+      "@type": "ixif:MediaSequence",
+      "label": "XSequence 0",
+      "elements": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b16659090/element/e0",
+          "@type": "dctypes:MovingImage",
+          "label": "The story of the Wellcome Foundation Ltd.",
+          "metadata": [
+            {
+              "label": "length",
+              "value": "28mn 26s"
+            }
+          ],
+          "thumbnail": "http://wellcomelibrary.org/posterimages/0055-0000-3664-0000-0-0000-0000-0.jpg",
+          "rendering": [
+            {
+              "format": "video/mp4",
+              "@id": "https://s3-eu-west-1.amazonaws.com/wdl-video-open/mp4/aa12ea51-8746-4f67-92dc-acc3aad56e28.mp4"
+            },
+            {
+              "format": "video/webm",
+              "@id": "https://s3-eu-west-1.amazonaws.com/wdl-video-open/webm/aa12ea51-8746-4f67-92dc-acc3aad56e28.webm"
+            }
+          ],
+          "service": {
+            "@id": "http://wellcomelibrary.org/iiif-media/b16659090-0/aa12ea51-8746-4f67-92dc-acc3aad56e28",
+            "profile": "http://wellcomelibrary.org/ld/ixif/0/alpha.json"
+          },
+          "height": 0,
+          "width": 0,
+          "resources": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b16659090/transcript/95766191-7d87-4c07-b453-4a8092786b28",
+              "@type": "oa:Annotation",
+              "motivation": "oad:transcribing",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/media/b16659090/1/95766191-7d87-4c07-b453-4a8092786b28.pdf",
+                "@type": "foaf:Document",
+                "format": "application/pdf",
+                "label": "The story of the Wellcome Foundation Ltd",
+                "metadata": [
+                  {
+                    "label": "pages",
+                    "value": "14"
+                  }
+                ],
+                "thumbnail": "http://wellcomelibrary.org/pdfthumbs/b16659090/1/95766191-7d87-4c07-b453-4a8092786b28.jpg",
+                "service": {
+                  "@id": "http://wellcomelibrary.org/iiif-media/b16659090-1/95766191-7d87-4c07-b453-4a8092786b28",
+                  "profile": "http://wellcomelibrary.org/ld/ixif/0/alpha.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b16659090/element/e0"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/ixif-message/sequence/seq",
+      "@type": "sc:Sequence",
+      "label": "Unsupported extension. This manifest is being used as a wrapper for non-IIIF content (e.g., audio, video) and is unfortunately incompatible with IIIF viewers.",
+      "compatibilityHint": "displayIfContentUnsupported",
+      "canvases": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/ixif-message/canvas/c1",
+          "@type": "sc:Canvas",
+          "label": "Placeholder image",
+          "thumbnail": "http://wellcomelibrary.orgplaceholder.jpg",
+          "height": 600,
+          "width": 600,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/ixif-message/imageanno/placeholder",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif/ixif-message-0/res/placeholder",
+                "@type": "dcTypes:Image",
+                "height": 600,
+                "width": 600
+              },
+              "on": "http://wellcomelibrary.org/iiif/ixif-message/canvas/c1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

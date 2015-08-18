@@ -18,8 +18,8 @@ describe('#loads', function() {
 });
 
 describe('#hasManifestType', function() {
-    it('has a manifestType property of "folio"', function () {
-        var type = manifest.getType();
-        type.toString().should.equal('folio');
+    it('has a manifestType property of "manuscript"', function () {
+        var type = manifest.getManifestType();
+        type.toString().should.equal('manuscript');
     });
 });

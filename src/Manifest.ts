@@ -161,7 +161,7 @@ module Manifesto {
             }
         }
 
-        getType(): ManifestType {
+        getManifestType(): ManifestType {
             return new ManifestType(this.getProperty('exp:manifestType'));
         }
 

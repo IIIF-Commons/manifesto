@@ -64,6 +64,26 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
+    var IIIFResourceType = (function (_super) {
+        __extends(IIIFResourceType, _super);
+        function IIIFResourceType() {
+            _super.apply(this, arguments);
+        }
+        // todo: use getters when ES3 target is no longer required.
+        IIIFResourceType.prototype.manifest = function () {
+            return new IIIFResourceType(IIIFResourceType.MANIFEST.toString());
+        };
+        IIIFResourceType.prototype.collection = function () {
+            return new IIIFResourceType(IIIFResourceType.COLLECTION.toString());
+        };
+        IIIFResourceType.MANIFEST = new IIIFResourceType("sc:manifest");
+        IIIFResourceType.COLLECTION = new IIIFResourceType("sc:collection");
+        return IIIFResourceType;
+    })(Manifesto.StringValue);
+    Manifesto.IIIFResourceType = IIIFResourceType;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
     var ManifestType = (function (_super) {
         __extends(ManifestType, _super);
         function ManifestType() {
@@ -73,14 +93,14 @@ var Manifesto;
         ManifestType.prototype.empty = function () {
             return new ManifestType(ManifestType.EMPTY.toString());
         };
-        ManifestType.prototype.folio = function () {
-            return new ManifestType(ManifestType.FOLIO.toString());
+        ManifestType.prototype.manuscript = function () {
+            return new ManifestType(ManifestType.MANUSCRIPT.toString());
         };
         ManifestType.prototype.monograph = function () {
             return new ManifestType(ManifestType.MONOGRAPH.toString());
         };
         ManifestType.EMPTY = new ManifestType("");
-        ManifestType.FOLIO = new ManifestType("folio");
+        ManifestType.MANUSCRIPT = new ManifestType("manuscript");
         ManifestType.MONOGRAPH = new ManifestType("monograph");
         return ManifestType;
     })(Manifesto.StringValue);
@@ -376,6 +396,9 @@ var Manifesto;
         IIIFResource.prototype.getAttribution = function () {
             return this.getLocalisedValue(this.getProperty('attribution'));
         };
+        IIIFResource.prototype.getIIIFResourceType = function () {
+            return new Manifesto.IIIFResourceType(this.getProperty('@type'));
+        };
         IIIFResource.prototype.getLocalisedValue = function (resource, locale) {
             // if the resource is not an array of translations, return the string.
             if (!_isArray(resource)) {
@@ -629,7 +652,7 @@ var Manifesto;
                 }
             }
         };
-        Manifest.prototype.getType = function () {
+        Manifest.prototype.getManifestType = function () {
             return new Manifesto.ManifestType(this.getProperty('exp:manifestType'));
         };
         Manifest.prototype.isMultiSequence = function () {
@@ -1281,6 +1304,7 @@ var Manifesto;
 module.exports = {
     CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
+    IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
     ServiceProfile: new Manifesto.ServiceProfile(),
@@ -1299,6 +1323,7 @@ module.exports = {
 /// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />
 /// <reference path="./ElementType.ts" />
+/// <reference path="./IIIFResourceType.ts" />
 /// <reference path="./ManifestType.ts" />
 /// <reference path="./RenderingFormat.ts" />
 /// <reference path="./ServiceProfile.ts" />

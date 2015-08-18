@@ -19,6 +19,10 @@ module Manifesto {
             return this.getLocalisedValue(this.getProperty('attribution'));
         }
 
+        getIIIFResourceType(): IIIFResourceType {
+            return new IIIFResourceType(this.getProperty('@type'));
+        }
+
         getLocalisedValue(resource: any, locale?: string): string {
 
             // if the resource is not an array of translations, return the string.

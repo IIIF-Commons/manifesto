@@ -22,12 +22,20 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
+    class IIIFResourceType extends StringValue {
+        static MANIFEST: IIIFResourceType;
+        static COLLECTION: IIIFResourceType;
+        manifest(): IIIFResourceType;
+        collection(): IIIFResourceType;
+    }
+}
+declare module Manifesto {
     class ManifestType extends StringValue {
         static EMPTY: ManifestType;
-        static FOLIO: ManifestType;
+        static MANUSCRIPT: ManifestType;
         static MONOGRAPH: ManifestType;
         empty(): ManifestType;
-        folio(): ManifestType;
+        manuscript(): ManifestType;
         monograph(): ManifestType;
     }
 }
@@ -138,6 +146,7 @@ declare module Manifesto {
         isLoaded: boolean;
         constructor(jsonld: any, options?: IManifestoOptions);
         getAttribution(): string;
+        getIIIFResourceType(): IIIFResourceType;
         getLocalisedValue(resource: any, locale?: string): string;
         getLogo(): string;
         getLicense(): string;
@@ -166,7 +175,7 @@ declare module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         private _parseTreeNode(node, range);
-        getType(): ManifestType;
+        getManifestType(): ManifestType;
         isMultiSequence(): boolean;
     }
 }
@@ -353,6 +362,7 @@ declare module Manifesto {
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getServices(resource: any): IService[];
         getTitle(): string;
+        getIIIFResourceType(): IIIFResourceType;
         load(): Promise<IIIIFResource>;
     }
 }
@@ -374,7 +384,7 @@ declare module Manifesto {
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
-        getType(): ManifestType;
+        getManifestType(): ManifestType;
         isMultiSequence(): boolean;
         rootRange: IRange;
         sequences: ISequence[];

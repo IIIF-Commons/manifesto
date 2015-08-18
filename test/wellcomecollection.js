@@ -17,6 +17,13 @@ describe('#loads', function() {
     });
 });
 
+describe('#hasIIIFResourceType', function() {
+    it('has a IIIFResourceType property of "sc:collection"', function () {
+        var type = collection.getIIIFResourceType();
+        type.toString().should.equal('sc:collection');
+    });
+});
+
 describe('#hasCollectionCount', function() {
     it('has a collection count of 255', function () {
         collection.getTotalCollections().should.equal(255);
@@ -27,13 +34,13 @@ describe('#hasTitle', function() {
     it('has a title', function() {
         collection.getTitle().should.equal('The chemist and druggist.');
     })
-})
+});
 
 describe('#firstCollectionHasTitle', function() {
     it('has a first collection with a title', function() {
         collection.getCollectionByIndex(0).getTitle().should.equal('Volume 1, 1859');
     })
-})
+});
 
 describe('#firstCollectionHasManifestCount', function() {
     it('has a first collection which contains 16 manifests', function () {
@@ -54,7 +61,7 @@ describe('#firstCollectionFirstManifestHasTitle', function() {
     it('has a first manifest with a title', function() {
         manifest.getTitle().should.equal('15. September 1859');
     })
-})
+});
 
 describe('#firstCollectionFirstManifestCanBeLoaded', function() {
     it('has a first manifest with no sequences prior to loading', function () {

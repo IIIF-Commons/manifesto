@@ -24,7 +24,7 @@ describe('#hasLabel', function() {
 
 describe('#hasManifestType', function() {
     it('has a manifestType property of ""', function () {
-        var type = manifest.getType();
+        var type = manifest.getManifestType();
         type.toString().should.equal('');
     });
 });
