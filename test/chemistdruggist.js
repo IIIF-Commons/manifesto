@@ -10,7 +10,7 @@ shared.serve();
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
-        manifesto.loadManifest(manifests.wellcomecollection).then(function(data) {
+        manifesto.loadManifest(manifests.chemistdruggist).then(function(data) {
             collection = manifesto.create(data);
             done();
         });

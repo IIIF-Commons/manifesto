@@ -5,5 +5,5 @@ module.exports = {
     "cardiganshire": "http://localhost:3000/cardiganshire.json",
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
-    "wellcomecollection": "http://localhost:3000/wellcomecollection.json"
+    "chemistdruggist": "http://localhost:3000/chemistdruggist.json"
 };
