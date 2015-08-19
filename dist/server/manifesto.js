@@ -281,7 +281,6 @@ var Manifesto;
         function ManifestResource() {
             _super.apply(this, arguments);
         }
-        // todo: add getMetadata
         ManifestResource.prototype.getService = function (profile) {
             var m = this.getManifest();
             return m.getService(this, profile);

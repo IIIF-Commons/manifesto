@@ -2,11 +2,9 @@ var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
 var manifests = require('./fixtures/manifests');
-var shared = require('./shared');
+require('./shared');
 
 var collection, manifest;
-
-shared.serve();
 
 describe('#loads', function() {
     it('loads successfully', function (done) {
