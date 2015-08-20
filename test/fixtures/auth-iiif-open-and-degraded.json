@@ -1,0 +1,123 @@
+{
+  "@context": [
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://wellcomelibrary.org/ld/iiif-ext/0/context.json"
+  ],
+  "@id": "http://wellcomelibrary.org/iiif/singleanddegraded/manifest",
+  "@type": "sc:Manifest",
+  "label": "Contains one open and one degraded image.",
+  "metadata": [
+    {
+      "label": "Type",
+      "value": "Artwork"
+    },
+    {
+      "label": "Classification",
+      "value": "Digitised"
+    },
+    {
+      "label": "Language",
+      "value": "eng"
+    },
+    {
+      "label": "Place",
+      "value": "uk"
+    },
+    {
+      "label": "Publisher",
+      "value": "Wellcome Trust"
+    },
+    {
+      "label": "Physical description",
+      "value": "reformatted digital1 print : etching, with watercolour"
+    },
+    {
+      "label": "License",
+      "value": "CC-BY"
+    },
+    {
+      "label": "Leader 6",
+      "value": "k"
+    },
+    {
+      "label": "Volume Number",
+      "value": "-1"
+    },
+    {
+      "label": "Copy Number",
+      "value": "1"
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b11599820/sequence/s0",
+      "@type": "sc:Sequence",
+      "label": "Sequence s0",
+      "canvases": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b18035978/canvas/c1",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b18035978/0/bc556d06-16f6-4525-b38c-e7203a9188c9.jpg",
+          "height": 4932,
+          "width": 3348,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b18035978/imageanno/bc556d06-16f6-4525-b38c-e7203a9188c9",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b18035978-0/bc556d06-16f6-4525-b38c-e7203a9188c9/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 800,
+                "width": 543,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b18035978-0/bc556d06-16f6-4525-b38c-e7203a9188c9",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b18035978/canvas/c1"
+            }
+          ],
+          "otherContent": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b18035978/contentAsText/1",
+              "@type": "sc:AnnotationList",
+              "label": "Text of this page"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b11599820/canvas/c0",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b11599820/0/3cab2dd3-c56c-4d7e-b6e7-42cc053be2d0.jpg",
+          "height": 6478,
+          "width": 6113,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b11599820/imageanno/3cab2dd3-c56c-4d7e-b6e7-42cc053be2d0",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b11599820-0/3cab2dd3-c56c-4d7e-b6e7-42cc053be2d0/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 800,
+                "width": 754,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b11599820-0/3cab2dd3-c56c-4d7e-b6e7-42cc053be2d0",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b11599820/canvas/c0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
