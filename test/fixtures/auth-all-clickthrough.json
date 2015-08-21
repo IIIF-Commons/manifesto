@@ -1,0 +1,606 @@
+
+{
+  "@context": [
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://wellcomelibrary.org/ld/iiif-ext/0/context.json"
+  ],
+  "@id": "http://wellcomelibrary.org/iiif/b19831213/manifest",
+  "@type": "sc:Manifest",
+  "label": "All clickthrough",
+  "metadata": [
+    {
+      "label": "Type",
+      "value": "Archive"
+    },
+    {
+      "label": "Wellcome Identifier",
+      "value": "FRKN 3/1"
+    },
+    {
+      "label": "Classification",
+      "value": "Digitised"
+    },
+    {
+      "label": "Language",
+      "value": "eng"
+    },
+    {
+      "label": "Date",
+      "value": "1951"
+    },
+    {
+      "label": "Place",
+      "value": "Wellcome Trust"
+    },
+    {
+      "label": "Publisher",
+      "value": "Wellcome Trust"
+    },
+    {
+      "label": "Physical description",
+      "value": "reformatted digital"
+    },
+    {
+      "label": "License",
+      "value": "CC-BY-NC"
+    },
+    {
+      "label": "Leader 6",
+      "value": "t"
+    },
+    {
+      "label": "Volume Number",
+      "value": "-1"
+    },
+    {
+      "label": "Copy Number",
+      "value": "1"
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b19831213/sequence/s0",
+      "@type": "sc:Sequence",
+      "label": "Sequence s0",
+      "rendering": {
+        "format": "application/pdf",
+        "@id": "http://wellcomelibrary.org/pdf/b19831213/0/b19831213_0.pdf",
+        "label": "Download as PDF"
+      },
+      "canvases": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c0",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/d49a76cf-80bd-4ea9-ac6c-45ddcd5edbec.jpg",
+          "height": 2382,
+          "width": 1893,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/d49a76cf-80bd-4ea9-ac6c-45ddcd5edbec",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/d49a76cf-80bd-4ea9-ac6c-45ddcd5edbec/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 800,
+                "width": 635,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/d49a76cf-80bd-4ea9-ac6c-45ddcd5edbec",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c0"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c1",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/588f59b0-dfc0-41fe-b309-3fe8413f1d63.jpg",
+          "height": 2386,
+          "width": 3672,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/588f59b0-dfc0-41fe-b309-3fe8413f1d63",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/588f59b0-dfc0-41fe-b309-3fe8413f1d63/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 519,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/588f59b0-dfc0-41fe-b309-3fe8413f1d63",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c1"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c2",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/8d9976be-8c0b-4085-9960-1819d0fdf37c.jpg",
+          "height": 2346,
+          "width": 3628,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/8d9976be-8c0b-4085-9960-1819d0fdf37c",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/8d9976be-8c0b-4085-9960-1819d0fdf37c/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 517,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/8d9976be-8c0b-4085-9960-1819d0fdf37c",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c2"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c3",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/90b7678f-fcca-464a-9694-4faddb0b3df8.jpg",
+          "height": 2350,
+          "width": 3624,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/90b7678f-fcca-464a-9694-4faddb0b3df8",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/90b7678f-fcca-464a-9694-4faddb0b3df8/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 518,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/90b7678f-fcca-464a-9694-4faddb0b3df8",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c3"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c4",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/fc3566dc-5794-4894-9623-9ac1153eacbf.jpg",
+          "height": 2350,
+          "width": 3621,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/fc3566dc-5794-4894-9623-9ac1153eacbf",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/fc3566dc-5794-4894-9623-9ac1153eacbf/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 519,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/fc3566dc-5794-4894-9623-9ac1153eacbf",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c4"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c5",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/c95e4da6-2ab1-4528-8064-dbf7a3d78aa7.jpg",
+          "height": 2348,
+          "width": 3628,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/c95e4da6-2ab1-4528-8064-dbf7a3d78aa7",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/c95e4da6-2ab1-4528-8064-dbf7a3d78aa7/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 517,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/c95e4da6-2ab1-4528-8064-dbf7a3d78aa7",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c5"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c6",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/603eb039-76ba-4332-b336-0b83d5f5b72c.jpg",
+          "height": 2341,
+          "width": 3620,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/603eb039-76ba-4332-b336-0b83d5f5b72c",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/603eb039-76ba-4332-b336-0b83d5f5b72c/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 517,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/603eb039-76ba-4332-b336-0b83d5f5b72c",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c6"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c7",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/62e9b3fa-9c6f-4cab-91df-04b9b17b56c7.jpg",
+          "height": 2342,
+          "width": 3619,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/62e9b3fa-9c6f-4cab-91df-04b9b17b56c7",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/62e9b3fa-9c6f-4cab-91df-04b9b17b56c7/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 517,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/62e9b3fa-9c6f-4cab-91df-04b9b17b56c7",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c7"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c8",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/08c3c4ac-8a8f-48cb-b3b5-bb8bb05213bb.jpg",
+          "height": 2355,
+          "width": 3618,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/08c3c4ac-8a8f-48cb-b3b5-bb8bb05213bb",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/08c3c4ac-8a8f-48cb-b3b5-bb8bb05213bb/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 520,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/08c3c4ac-8a8f-48cb-b3b5-bb8bb05213bb",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c8"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c9",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/4f2526d2-3a74-4aac-a93a-b891a6fb7c7d.jpg",
+          "height": 2350,
+          "width": 3622,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/4f2526d2-3a74-4aac-a93a-b891a6fb7c7d",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/4f2526d2-3a74-4aac-a93a-b891a6fb7c7d/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 519,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/4f2526d2-3a74-4aac-a93a-b891a6fb7c7d",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c9"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c10",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/a8348d50-1f7c-4850-a820-da378ca76ed2.jpg",
+          "height": 2357,
+          "width": 3632,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/a8348d50-1f7c-4850-a820-da378ca76ed2",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/a8348d50-1f7c-4850-a820-da378ca76ed2/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 519,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/a8348d50-1f7c-4850-a820-da378ca76ed2",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c10"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c11",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/fd044324-7ca1-4acb-89a9-32308d225caa.jpg",
+          "height": 2351,
+          "width": 3620,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/fd044324-7ca1-4acb-89a9-32308d225caa",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/fd044324-7ca1-4acb-89a9-32308d225caa/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 519,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/fd044324-7ca1-4acb-89a9-32308d225caa",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c11"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c12",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/7f816d4b-8041-4211-a258-103a2c09c7d9.jpg",
+          "height": 2355,
+          "width": 3628,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/7f816d4b-8041-4211-a258-103a2c09c7d9",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/7f816d4b-8041-4211-a258-103a2c09c7d9/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 519,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/7f816d4b-8041-4211-a258-103a2c09c7d9",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c12"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c13",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/e6b1c9de-6746-428b-9345-b975cf7985de.jpg",
+          "height": 2347,
+          "width": 3618,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/e6b1c9de-6746-428b-9345-b975cf7985de",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/e6b1c9de-6746-428b-9345-b975cf7985de/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 518,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/e6b1c9de-6746-428b-9345-b975cf7985de",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c13"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c14",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/cdb4af37-d500-4225-b08b-9ab6c34786ca.jpg",
+          "height": 2379,
+          "width": 3716,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/cdb4af37-d500-4225-b08b-9ab6c34786ca",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/cdb4af37-d500-4225-b08b-9ab6c34786ca/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 512,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/cdb4af37-d500-4225-b08b-9ab6c34786ca",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c14"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c15",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/3cce09ec-adfa-4d15-b6fd-d37a3161c2fc.jpg",
+          "height": 2351,
+          "width": 3615,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/3cce09ec-adfa-4d15-b6fd-d37a3161c2fc",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/3cce09ec-adfa-4d15-b6fd-d37a3161c2fc/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 520,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/3cce09ec-adfa-4d15-b6fd-d37a3161c2fc",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c15"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c16",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/b3542e7d-bdac-42b7-b7a9-f964f8d86aae.jpg",
+          "height": 2355,
+          "width": 3617,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/b3542e7d-bdac-42b7-b7a9-f964f8d86aae",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/b3542e7d-bdac-42b7-b7a9-f964f8d86aae/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 520,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/b3542e7d-bdac-42b7-b7a9-f964f8d86aae",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c16"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c17",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/c81ccef1-c700-443e-97b4-35935c63b82f.jpg",
+          "height": 2350,
+          "width": 3614,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/c81ccef1-c700-443e-97b4-35935c63b82f",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/c81ccef1-c700-443e-97b4-35935c63b82f/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 520,
+                "width": 800,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/c81ccef1-c700-443e-97b4-35935c63b82f",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c17"
+            }
+          ]
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b19831213/canvas/c18",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": "http://wellcomelibrary.org/thumbs/b19831213/0/c72a5105-6226-47d6-a2ca-d8d9c0397a5d.jpg",
+          "height": 2328,
+          "width": 1874,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b19831213/imageanno/c72a5105-6226-47d6-a2ca-d8d9c0397a5d",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/c72a5105-6226-47d6-a2ca-d8d9c0397a5d/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 800,
+                "width": 643,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://wellcomelibrary.org/iiif-img/b19831213-0/c72a5105-6226-47d6-a2ca-d8d9c0397a5d",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "http://wellcomelibrary.org/iiif/b19831213/canvas/c18"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
