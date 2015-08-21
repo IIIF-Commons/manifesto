@@ -14,11 +14,11 @@ module.exports = <IManifesto>{
     },
 
     loadExternalResources: function(resources: Manifesto.IExternalResource[],
-                          clickThrough: (resource: Manifesto.IExternalResource) => void,
-                          login: (loginServiceUrl: string) => Promise<void>,
-                          getAccessToken: (tokenServiceUrl: string) => Promise<Manifesto.IAccessToken>,
+                          clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
+                          login: (resource: Manifesto.IExternalResource) => Promise<void>,
+                          getAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
                           storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken) => Promise<void>,
-                          getStoredAccessToken: (tokenServiceUrl: string) => Promise<Manifesto.IAccessToken>,
+                          getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
                           handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
                           options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
         return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
