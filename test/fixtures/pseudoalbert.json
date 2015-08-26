@@ -5,7 +5,7 @@
   ],
   "@id": "http://wellcomelibrary.org/iiif/b19684538/manifest",
   "@type": "sc:Manifest",
-  "exp:manifestType": "folio",
+  "exp:manifestType": "manuscript",
   "label": "Pseudo-Albert the Great, De secretis mulierum",
   "metadata": [
     {

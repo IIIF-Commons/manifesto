@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
 var manifests = require('./fixtures/manifests');
+require('./shared');
 
 var manifest, sequence;
 
@@ -24,7 +25,7 @@ describe('#hasLabel', function() {
 
 describe('#hasManifestType', function() {
     it('has a manifestType property of ""', function () {
-        var type = manifest.getType();
+        var type = manifest.getManifestType();
         type.toString().should.equal('');
     });
 });

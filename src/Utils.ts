@@ -29,11 +29,11 @@ module Manifesto {
         }
 
         static loadExternalResource(resource: IExternalResource,
-                     clickThrough: (resource: IExternalResource) => void,
-                     login: (loginServiceUrl: string) => Promise<void>,
-                     getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                     clickThrough: (resource: IExternalResource) => Promise<void>,
+                     login: (resource: IExternalResource) => Promise<void>,
+                     getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                     getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                     getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
                      handleResourceResponse: (resource: IExternalResource) => Promise<any>,
                      options?: IManifestoOptions): Promise<IExternalResource> {
 
@@ -51,8 +51,8 @@ module Manifesto {
                             if (resource.clickThroughService){
                                 resolve(clickThrough(resource));
                             } else {
-                                login(resource.loginService.id).then(() => {
-                                    getAccessToken(resource.tokenService.id).then((token: IAccessToken) => {
+                                login(resource).then(() => {
+                                    getAccessToken(resource).then((token: IAccessToken) => {
                                         resource.getData(token).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         });
@@ -72,7 +72,7 @@ module Manifesto {
 
                     // try loading the resource using an access token that matches the info.json domain.
                     // if an access token is found, request the resource using it regardless of whether it is access controlled.
-                    getStoredAccessToken(resource.dataUri).then((storedAccessToken: IAccessToken) => {
+                    getStoredAccessToken(resource).then((storedAccessToken: IAccessToken) => {
                         if (storedAccessToken) {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
@@ -110,11 +110,11 @@ module Manifesto {
         }
 
         static loadExternalResources(resources: IExternalResource[],
-                      clickThrough: (resource: IExternalResource) => void,
-                      login: (loginServiceUrl: string) => Promise<void>,
-                      getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                      clickThrough: (resource: IExternalResource) => Promise<void>,
+                      login: (resource: IExternalResource) => Promise<void>,
+                      getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
                       storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                      getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                      getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
                       handleResourceResponse: (resource: IExternalResource) => Promise<any>,
                       options?: IManifestoOptions): Promise<IExternalResource[]> {
 
@@ -140,17 +140,17 @@ module Manifesto {
         }
 
         static authorize(resource: IExternalResource,
-                  clickThrough: (resource: IExternalResource) => void,
-                  login: (loginServiceUrl: string) => Promise<void>,
-                  getAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>,
+                  clickThrough: (resource: IExternalResource) => Promise<void>,
+                  login: (resource: IExternalResource) => Promise<void>,
+                  getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
                   storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                  getStoredAccessToken: (tokenServiceUrl: string) => Promise<IAccessToken>): Promise<IExternalResource> {
+                  getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>): Promise<IExternalResource> {
 
             return new Promise<IExternalResource>((resolve, reject) => {
 
                 resource.getData().then(() => {
                     if (resource.isAccessControlled()) {
-                        getStoredAccessToken(resource.tokenService.id).then((storedAccessToken: IAccessToken) => {
+                        getStoredAccessToken(resource).then((storedAccessToken: IAccessToken) => {
                             if (storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
@@ -163,13 +163,21 @@ module Manifesto {
                                     // if the client wishes to trigger a login, set resource.isResponseHandled to true
                                     // and call loadExternalResources() again.
                                     resolve(resource);
-                                } else if (resource.clickThroughService){
+                                } else if (resource.clickThroughService && !resource.isResponseHandled){
                                     // if the resource has a click through service, use that.
-                                    clickThrough(resource);
+                                    clickThrough(resource).then(() => {
+                                        getAccessToken(resource).then((accessToken) => {
+                                            storeAccessToken(resource, accessToken).then(() => {
+                                                resource.getData(accessToken).then(() => {
+                                                    resolve(resource);
+                                                });
+                                            });
+                                        });
+                                    });
                                 } else {
                                     // get an access token
-                                    login(resource.loginService.id).then(() => {
-                                        getAccessToken(resource.tokenService.id).then((accessToken) => {
+                                    login(resource).then(() => {
+                                        getAccessToken(resource).then((accessToken) => {
                                             storeAccessToken(resource, accessToken).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
