@@ -172,6 +172,7 @@ module Manifesto {
                 } else {
                     var options = that.options;
                     Utils.loadManifest(that.__jsonld['@id']).then(function (data) {
+                        that.isLoaded = true;
                         resolve(Deserialiser.parse(data, options));
                     });
                 }

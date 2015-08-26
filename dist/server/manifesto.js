@@ -519,6 +519,7 @@ var Manifesto;
                 else {
                     var options = that.options;
                     Manifesto.Utils.loadManifest(that.__jsonld['@id']).then(function (data) {
+                        that.isLoaded = true;
                         resolve(Manifesto.Deserialiser.parse(data, options));
                     });
                 }
