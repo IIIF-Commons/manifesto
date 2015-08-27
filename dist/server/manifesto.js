@@ -466,6 +466,44 @@ var Manifesto;
             }
             return metadata;
         };
+        IIIFResource.prototype.getRendering = function (resource, format) {
+            var renderings = this.getRenderings(resource);
+            // normalise format to string
+            if (typeof format !== 'string') {
+                format = format.toString();
+            }
+            for (var i = 0; i < renderings.length; i++) {
+                var rendering = renderings[i];
+                if (rendering.getFormat().toString() === format) {
+                    return rendering;
+                }
+            }
+            return null;
+        };
+        IIIFResource.prototype.getRenderings = function (resource) {
+            var rendering;
+            // if passing a parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld) {
+                rendering = resource.__jsonld.rendering;
+            }
+            else {
+                rendering = resource.rendering;
+            }
+            var parsed = [];
+            if (!rendering) {
+                return parsed;
+            }
+            // normalise to array
+            if (!_isArray(rendering)) {
+                rendering = [rendering];
+            }
+            for (var i = 0; i < rendering.length; i++) {
+                var r = rendering[i];
+                parsed.push(new Manifesto.Rendering(r));
+            }
+            return parsed;
+        };
         IIIFResource.prototype.getSeeAlso = function () {
             return this.getLocalisedValue(this.getProperty('seeAlso'));
         };
@@ -573,45 +611,6 @@ var Manifesto;
                 }
             }
             return null;
-        };
-        Manifest.prototype.getRendering = function (resource, format) {
-            var renderings = this.getRenderings(resource);
-            // normalise format to string
-            if (typeof format !== 'string') {
-                format = format.toString();
-            }
-            for (var i = 0; i < renderings.length; i++) {
-                var rendering = renderings[i];
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-            return null;
-        };
-        Manifest.prototype.getRenderings = function (resource) {
-            var rendering;
-            // if passing a parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (resource.__jsonld) {
-                rendering = resource.__jsonld.rendering;
-            }
-            else {
-                rendering = resource.rendering;
-            }
-            var parsed = [];
-            if (!rendering) {
-                return parsed;
-            }
-            // normalise to array
-            if (!_isArray(rendering)) {
-                rendering = [rendering];
-            }
-            for (var i = 0; i < rendering.length; i++) {
-                var r = rendering[i];
-                r.__manifest = this;
-                parsed.push(new Manifesto.Rendering(r));
-            }
-            return parsed;
         };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
             return this.sequences[sequenceIndex];

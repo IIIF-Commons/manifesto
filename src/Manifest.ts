@@ -59,56 +59,6 @@ module Manifesto {
             return null;
         }
 
-        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering {
-            var renderings: IRendering[] = this.getRenderings(resource);
-
-            // normalise format to string
-            if (typeof format !== 'string'){
-                format = (<RenderingFormat>format).toString();
-            }
-
-            for (var i = 0; i < renderings.length; i++){
-                var rendering: IRendering = renderings[i];
-
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-
-            return null;
-        }
-
-        getRenderings(resource: any): IRendering[] {
-            var rendering;
-
-            // if passing a parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (resource.__jsonld){
-                rendering = resource.__jsonld.rendering;
-            } else {
-                rendering = resource.rendering;
-            }
-
-            var parsed: IRendering[] = [];
-
-            if (!rendering){
-                return parsed;
-            }
-
-            // normalise to array
-            if (!_isArray(rendering)){
-                rendering = [rendering];
-            }
-
-            for (var i = 0; i < rendering.length; i++){
-                var r: any = rendering[i];
-                r.__manifest = this;
-                parsed.push(new Rendering(r));
-            }
-
-            return parsed;
-        }
-
         getSequenceByIndex(sequenceIndex: number): ISequence {
             return this.sequences[sequenceIndex];
         }

@@ -3,7 +3,154 @@ var url = require("url");
 
 module Manifesto {
     export class Utils {
-        static loadManifest (uri: string): Promise<any> {
+
+        static getLocalisedValue(resource: any): string {
+
+            // if the resource is not an array of translations, return the string.
+            if (!_isArray(resource)){
+                return resource;
+            }
+
+            var locale = (<IIIIFResource>resource).options.locale;
+
+            // test for exact match
+            for (var i = 0; i < resource.length; i++){
+                var value = resource[i];
+                var language = value['@language'];
+
+                if (locale === language){
+                    return <string>value['@value'];
+                }
+            }
+
+            // test for inexact match
+            var match = locale.substr(0, locale.indexOf('-'));
+
+            for (var i = 0; i < resource.length; i++){
+                var value = resource[i];
+                var language = value['@language'];
+
+                if (language === match){
+                    return <string>value['@value'];
+                }
+            }
+
+            return null;
+        }
+
+        static getMetadata(resource: IJSONLDResource): any{
+            var metadata: Object[] = resource.getProperty('metadata');
+
+            // get localised value for each metadata item.
+            for (var i = 0; i < metadata.length; i++) {
+                var item: any = metadata[i];
+
+                item.label = this.getLocalisedValue(item.label);
+                item.value  = this.getLocalisedValue(item.value);
+            }
+
+            return metadata;
+        }
+
+        static getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering {
+            var renderings: IRendering[] = this.getRenderings(resource);
+
+            // normalise format to string
+            if (typeof format !== 'string'){
+                format = (<RenderingFormat>format).toString();
+            }
+
+            for (var i = 0; i < renderings.length; i++){
+                var rendering: IRendering = renderings[i];
+
+                if (rendering.getFormat().toString() === format) {
+                    return rendering;
+                }
+            }
+
+            return null;
+        }
+
+        static getRenderings(resource: any): IRendering[] {
+            var rendering;
+
+            // if passing a parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld){
+                rendering = resource.__jsonld.rendering;
+            } else {
+                rendering = resource.rendering;
+            }
+
+            var parsed: IRendering[] = [];
+
+            if (!rendering){
+                return parsed;
+            }
+
+            // normalise to array
+            if (!_isArray(rendering)){
+                rendering = [rendering];
+            }
+
+            for (var i = 0; i < rendering.length; i++){
+                var r: any = rendering[i];
+                parsed.push(new Rendering(r));
+            }
+
+            return parsed;
+        }
+
+        static getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService {
+
+            var services: IService[] = this.getServices(resource);
+
+            // normalise profile to string
+            if (typeof profile !== 'string'){
+                profile = (<ServiceProfile>profile).toString();
+            }
+
+            for (var i = 0; i < services.length; i++){
+                var service: IService = services[i];
+
+                if (service.getProfile().toString() === profile) {
+                    return service;
+                }
+            }
+
+            return null;
+        }
+
+        static getServices(resource: any): IService[] {
+            var service;
+
+            // if passing a parsed object, use the __jsonld.service property,
+            // otherwise look for a service property
+            if (resource.__jsonld){
+                service = resource.__jsonld.service;
+            } else {
+                service = (<any>resource).service;
+            }
+
+            var parsed: IService[] = [];
+
+            if (!service) return parsed;
+
+            // normalise to array
+            if (!_isArray(service)){
+                service = [service];
+            }
+
+            for (var i = 0; i < service.length; i++){
+                var s: any = service[i];
+                s.__manifest = this;
+                parsed.push(new Service(s));
+            }
+
+            return parsed;
+        }
+
+        static loadResource (uri: string): Promise<any> {
 
             return new Promise<any>((resolve, reject) => {
                 var u = url.parse(uri);

@@ -151,6 +151,8 @@ declare module Manifesto {
         getLogo(): string;
         getLicense(): string;
         getMetadata(includeRootProperties?: boolean): any;
+        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
+        getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getServices(resource: any): IService[];
@@ -169,8 +171,6 @@ declare module Manifesto {
         getRanges(): IRange[];
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
-        getRenderings(resource: any): IRendering[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
@@ -358,6 +358,8 @@ declare module Manifesto {
         getLocalisedValue(resource: IJSONLDResource | string, locale?: string): string;
         getLogo(): string;
         getMetadata(includeRootProperties?: boolean): any;
+        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
+        getRenderings(resource: any): IRendering[];
         getSeeAlso(): any;
         getService(resource: IJSONLDResource, profile: ServiceProfile | string): IService;
         getServices(resource: any): IService[];
@@ -379,8 +381,6 @@ declare module Manifesto {
     interface IManifest extends IIIIFResource {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
-        getRendering(resource: IJSONLDResource, format: RenderingFormat | string): IRendering;
-        getRenderings(resource: any): IRendering[];
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;

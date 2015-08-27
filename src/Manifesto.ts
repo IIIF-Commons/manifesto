@@ -10,7 +10,7 @@ module.exports = <IManifesto>{
     ViewingHint: new Manifesto.ViewingHint(),
 
     loadManifest: function (uri: string): Promise<any> {
-        return Manifesto.Utils.loadManifest(uri);
+        return Manifesto.Utils.loadResource(uri);
     },
 
     loadExternalResources: function(resources: Manifesto.IExternalResource[],
