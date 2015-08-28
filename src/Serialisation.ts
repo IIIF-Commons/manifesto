@@ -47,7 +47,7 @@ module Manifesto {
         static parseManifest(json: any, options?: IManifestoOptions): Manifest {
             var manifest: Manifest = new Manifest(json, options);
 
-            this.parseSequences(manifest);
+            this.parseSequences(manifest, options);
 
             if (manifest.__jsonld.structures && manifest.__jsonld.structures.length) {
                 this.parseRanges(manifest, JsonUtils.getRootRange(manifest.__jsonld), '');
@@ -66,40 +66,37 @@ module Manifesto {
             }
         }
 
-        static parseSequences(manifest: Manifest): void {
+        static parseSequences(manifest: Manifest, options: IManifestoOptions): void {
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
             var children = manifest.__jsonld.mediaSequences || manifest.__jsonld.sequences;
             if (children) {
                 for (var i = 0; i < children.length; i++){
                     var s = children[i];
-                    s.__manifest = manifest;
-                    var sequence = new Sequence(s);
-                    sequence.canvases = this.parseCanvases(manifest, s);
+                    var sequence: ISequence = new Sequence(s, options);
+                    sequence.canvases = this.parseCanvases(s, options);
                     manifest.sequences.push(sequence);
                 }
             }
         }
 
-        static parseCanvases(manifest: Manifest, sequence: any): Canvas[] {
-            var canvases: Canvas[] = [];
+        static parseCanvases(sequence: any, options: IManifestoOptions): ICanvas[] {
+            var canvases: ICanvas[] = [];
 
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
             var children = sequence.elements || sequence.canvases;
 
             for (var i = 0; i < children.length; i++) {
                 var c = children[i];
-                c.__manifest = manifest;
-                var canvas: Canvas = new Canvas(c);
+                var canvas: ICanvas = new Canvas(c, options);
                 canvases.push(canvas);
             }
 
             return canvases;
         }
 
-        static parseRanges(manifest: Manifest, r: any, path: string, parentRange?: Range): void {
+        static parseRanges(manifest: Manifest, r: any, path: string, parentRange?: IRange): void {
 
-            r.__manifest = manifest;
-            var range: Range = new Range(r);
+            var range: IRange = new Range(r, manifest.options);
 
             // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange){

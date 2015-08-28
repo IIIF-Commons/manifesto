@@ -5,12 +5,12 @@ module Manifesto {
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
         getCanvasIndexByLabel(label: string, foliated: boolean): number;
-        getLastCanvasLabel(): string;
+        getLastCanvasLabel(digitsOnly?: boolean): string;
         getLastPageIndex(): number;
         getNextPageIndex(index: number): number;
         getPagedIndices(index: number): number[];
         getPrevPageIndex(index: number): number;
-        getService(profile: Manifesto.ServiceProfile | string): IService;
+        getRendering(format: RenderingFormat | string): IRendering;
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height: number): Manifesto.Thumb[];

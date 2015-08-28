@@ -6,8 +6,8 @@ module Manifesto {
 
         ranges: IRange[] = [];
 
-        constructor(jsonld: any){
-            super(jsonld);
+        constructor(jsonld: any, options: IManifestoOptions){
+            super(jsonld, options);
         }
 
         // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile

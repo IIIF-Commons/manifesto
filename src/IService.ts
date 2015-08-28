@@ -1,7 +1,7 @@
 module Manifesto {
     export interface IService extends IJSONLDResource {
         getProfile(): ServiceProfile;
-        getDescription(): string;
+        //getDescription(): string;
         getInfoUri(): string;
     }
 }

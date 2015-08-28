@@ -4,13 +4,44 @@ var _map = require("lodash.map");
 module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public rootRange: IRange;
-        public sequences: Sequence[] = [];
+        public sequences: ISequence[] = [];
         public treeRoot: TreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
             jsonld.__manifest = this;
         }
+
+        //getMetadata(): any {
+        //    var metadata = this.getMetadata();
+        //
+        //    if (this.getLicense()){
+        //        metadata.unshift({
+        //            "label": "license",
+        //            "value": this.getLicense()
+        //        });
+        //    }
+        //
+        //    if (this.getAttribution()){
+        //        metadata.unshift({
+        //            "label": "attribution",
+        //            "value": this.getAttribution()
+        //        });
+        //    }
+        //
+        //    if (this.getDescription()){
+        //        metadata.unshift({
+        //            "label": "description",
+        //            "value": this.getDescription()
+        //        });
+        //    }
+        //
+        //    if (this.getLogo()){
+        //        metadata.pop({
+        //            "label": "logo",
+        //            "value": '<img src="' + this.getLogo() + '"/>'});
+        //    }
+        //}
 
         // todo: use jmespath to flatten tree?
         // https://github.com/jmespath/jmespath.js/issues/6

@@ -3,8 +3,8 @@ module Manifesto {
 
         type: ElementType;
 
-        constructor(jsonld: any){
-            super(jsonld);
+        constructor(jsonld: any, options: IManifestoOptions){
+            super(jsonld, options);
         }
 
         getType(): ElementType {

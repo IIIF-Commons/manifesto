@@ -1,9 +1,9 @@
 module Manifesto {
     export interface IJSONLDResource {
+        //new(jsonld: any);
         context: string;
         id: string;
         __jsonld: any;
-        getLabel(): string;
         getProperty(name: string): any;
     }
 }

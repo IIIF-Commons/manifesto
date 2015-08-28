@@ -10,9 +10,9 @@ module Manifesto {
             return new ServiceProfile(this.getProperty('profile'));
         }
 
-        getDescription(): string {
-            return this.getManifest().getLocalisedValue(this.getProperty('description'));
-        }
+        //getDescription(): string {
+        //    return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        //}
 
         getInfoUri(): string {
 

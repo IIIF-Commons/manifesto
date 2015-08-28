@@ -39,7 +39,7 @@ describe('#hasTree', function() {
 
 describe('#hasSearchWithinService', function() {
     it('has a search within service', function () {
-        var service = manifest.getService(manifest, manifesto.ServiceProfile.searchWithin());
+        var service = manifest.getService(manifesto.ServiceProfile.searchWithin());
         expect(service).to.exist;
     });
 });
@@ -60,7 +60,7 @@ describe('#hasViewingHint', function() {
 
 describe('#hasRendering', function() {
     it('sequence has a rendering', function () {
-        var rendering = manifest.getRendering(sequence, manifesto.RenderingFormat.pdf());
+        var rendering = sequence.getRendering(manifesto.RenderingFormat.pdf());
         rendering.getFormat().toString().should.equal('application/pdf');
     });
 });

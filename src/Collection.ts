@@ -1,9 +1,9 @@
 module Manifesto {
     export class Collection extends IIIFResource implements ICollection {
-        public collections: Collection[] = [];
-        public manifests: Manifest[] = [];
+        public collections: ICollection[] = [];
+        public manifests: IManifest[] = [];
 
-        constructor(jsonld: any, options?: IManifestoOptions) {
+        constructor(jsonld: any, options: IManifestoOptions) {
             super(jsonld, options);
             jsonld.__collection = this;
         }

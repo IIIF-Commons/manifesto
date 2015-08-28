@@ -1,5 +1,165 @@
-
-{        "@context":"http://iiif.io/api/presentation/2/context.json",        "@type":"sc:Manifest",        "@id":"http://dams.llgc.org.uk/iiif/2.0/4389767/manifest.json",                "label":"Cardiganshire Constabulary register of criminals",                "metadata": [            {                "label":[                    { "@value":"Title", "@language": "en"},                    { "@value":"Teitl", "@language": "cy-GB"}                ],                "value":"Cardiganshire Constabulary register of criminals"            },                            {                    "label":[                        { "@value":"Author", "@language": "en"},                        { "@value":"Awdur", "@language": "cy-GB"}                    ],                    "value":"Cardiganshire Constabulary"},                            {"label":[                    { "@value":"Genre", "@language": "en"},                    { "@value":"Genre", "@language": "cy-GB"}                    ],                "value":"biography"},                            {"label":[                { "@value":"Catalogue Number", "@language": "en"},                { "@value":"Rhif Catalog", "@language": "cy-GB"}                ],                "value":"vtls003376871"},                            {"label":[                { "@value":"Period", "@language": "en"},                { "@value":"Cyfnod", "@language": "cy-GB"}                ], "value":"1897-1933"},            {"label":[                        { "@value":"Start Date", "@language": "en"},                        { "@value":"Dyddiad Cychwyn", "@language": "cy-GB"}                        ],                        "value":"1897"},{"label":[                        { "@value":"End Date", "@language": "en"},                        { "@value":"Dyddiad Terfyn", "@language": "cy-GB"}                        ], "value":"1933"},                {                "label":[                { "@value":"Collection", "@language": "en"},                { "@value":"Casgliad", "@language": "cy-GB"}],                     "value":[                        {"@value":"Manuscripts", "@language":"en"},                        {"@value":"LLawysgrifau", "@language":"cy-GB"}                    ]                  },                        {"label":[            { "@value":"Description", "@language": "en"},            { "@value":"Disgrifiad", "@language": "cy-GB"}],            "value":"Register of criminals apprehended by Cardiganshire Constabulary, 1897-1933 with physical descriptions of prisoners and details of previous convictions. Photographs are included of most of those sentenced between 1897 and 1909."},                {"label":[            { "@value":"Reference", "@language": "en"},            { "@value":"Cyfeirnod", "@language": "cy-GB"}],            "value":"http://hdl.handle.net/10107/4389767"},        {"label":[        { "@value":"Digitisation Date", "@language": "en"},        { "@value":"Dyddiad Digido", "@language": "cy-GB"}],        "value":"2013-12-06"},        {            "label":[                { "@value":"Repository", "@language": "en"},                { "@value":"Ystorfa", "@language": "cy-GB"}],            "value":[                { "@value":"This content has been digitised by the National Library of Wales", "@language": "en"},                { "@value":"Digidwyd y cynnwys hwn gan Llyfrgell Genedlaethol Cymru", "@language": "cy-GB"}            ]        }                ],        "description":"Register of criminals apprehended by Cardiganshire Constabulary, 1897-1933 with physical descriptions of prisoners and details of previous convictions. Photographs are included of most of those sentenced between 1897 and 1909.",                "license":"",         "attribution":"Llyfrgell Genedlaethol Cymru - National Library of Wales",         "related":         {             "@id": "http://cat.llgc.org.uk/cgi-bin/gw/chameleon?lng=en&search=KEYWORD&function=CARDSCR&u1=12101&t1=vtls003376871",            "format": "text/html"         },                        "sequences" : [        {                                "@id":"http://dams.llgc.org.uk/iiif/2.0/4389767/sequence/Physical.json",                "@type":"sc:Sequence",                "label":"Current Page Order",                                "viewingDirection":"left-to-right",                "viewingHint":"paged",                                "canvases": [
+{
+  "@context":"http://iiif.io/api/presentation/2/context.json",
+  "@type":"sc:Manifest",
+  "@id":"http://dams.llgc.org.uk/iiif/2.0/4389767/manifest.json",
+  "label":"Cardiganshire Constabulary register of criminals",
+  "metadata": [
+    {
+      "label":[
+        {
+          "@value":"Title",
+          "@language": "en"
+        },
+        {
+          "@value":"Teitl",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"Cardiganshire Constabulary register of criminals"
+    },
+    {
+      "label":[
+        {
+          "@value":"Author",
+          "@language": "en"
+        },
+        {
+          "@value":"Awdur",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"Cardiganshire Constabulary"
+    },
+    {
+      "label":[
+      {
+        "@value":"Genre",
+        "@language": "en"
+      },
+        {
+          "@value":"Genre",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"biography"
+    },
+    {
+      "label":[
+        {
+          "@value":"Catalogue Number",
+          "@language": "en"
+        },
+        {
+          "@value":"Rhif Catalog",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"vtls003376871"
+    },
+    {
+      "label":[
+        {
+          "@value":"Period",
+          "@language": "en"
+        },
+        {
+          "@value":"Cyfnod",
+          "@language": "cy-GB"
+        }
+      ], "value":"1897-1933"
+    },
+    {
+      "label":[
+        {
+          "@value":"Start Date",
+          "@language": "en"
+        },
+        {
+          "@value":"Dyddiad Cychwyn",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"1897"
+    },
+    {
+      "label":[
+        {
+          "@value":"End Date",
+          "@language": "en"
+        },
+        {
+          "@value":"Dyddiad Terfyn",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"1933"
+    },
+    {
+      "label":[
+        {
+          "@value":"Collection",
+          "@language": "en"
+        },
+        {
+          "@value":"Casgliad",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":[
+        {
+          "@value":"Manuscripts",
+          "@language":"en"
+        },
+        {
+          "@value":"LLawysgrifau",
+          "@language":"cy-GB"
+        }
+      ]
+    },
+    {
+      "label":[
+        {
+          "@value":"Description",
+          "@language": "en"
+        },
+        {
+          "@value":"Disgrifiad",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"Register of criminals apprehended by Cardiganshire Constabulary, 1897-1933 with physical descriptions of prisoners and details of previous convictions. Photographs are included of most of those sentenced between 1897 and 1909."
+    },
+    {
+      "label":[
+        {
+          "@value":"Reference",
+          "@language": "en"
+        },
+        {
+          "@value":"Cyfeirnod",
+          "@language": "cy-GB"
+        }
+      ],
+      "value":"http://hdl.handle.net/10107/4389767"
+    },
+    {
+      "label":[
+        {
+          "@value":"Digitisation Date",
+          "@language": "en"
+        },
+        {
+          "@value":"Dyddiad Digido",
+          "@language": "cy-GB"}
+      ],
+      "value":"2013-12-06"
+    },
+    {
+      "label":[
+        {
+          "@value":"Repository",
+          "@language": "en"},
+        { "@value":"Ystorfa", "@language": "cy-GB"}],            "value":[                { "@value":"This content has been digitised by the National Library of Wales", "@language": "en"},                { "@value":"Digidwyd y cynnwys hwn gan Llyfrgell Genedlaethol Cymru", "@language": "cy-GB"}            ]        }                ],        "description":"Register of criminals apprehended by Cardiganshire Constabulary, 1897-1933 with physical descriptions of prisoners and details of previous convictions. Photographs are included of most of those sentenced between 1897 and 1909.",                "license":"",         "attribution":"Llyfrgell Genedlaethol Cymru - National Library of Wales",         "related":         {             "@id": "http://cat.llgc.org.uk/cgi-bin/gw/chameleon?lng=en&search=KEYWORD&function=CARDSCR&u1=12101&t1=vtls003376871",            "format": "text/html"         },                        "sequences" : [        {                                "@id":"http://dams.llgc.org.uk/iiif/2.0/4389767/sequence/Physical.json",                "@type":"sc:Sequence",                "label":"Current Page Order",                                "viewingDirection":"left-to-right",                "viewingHint":"paged",                                "canvases": [
   {
     "@id":"http://dams.llgc.org.uk/iiif/2.0/4389767/canvas/4389768.json",
     "@type":"sc:Canvas",

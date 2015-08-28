@@ -1,26 +1,27 @@
 var _assign = require("lodash.assign");
 
 module Manifesto {
-    export class IIIFResource extends JSONLDResource implements IIIIFResource {
-        public options: IManifestoOptions;
+    export class IIIFResource extends ManifestResource implements IIIIFResource {
         public isLoaded: boolean = false;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
-            super(jsonld);
+            super(jsonld, options);
+
             var defaultOptions: IManifestoOptions = {
                 defaultLabel: '-',
                 locale: 'en-GB',
                 pessimisticAccessControl: false
             };
+
             this.options = _assign(defaultOptions, options);
         }
 
         getAttribution(): string {
-            return Utils.getLocalisedValue(this.getProperty('attribution'));
+            return Utils.getLocalisedValue(this.getProperty('attribution'), this.options.locale);
         }
 
         getDescription(): string {
-            return Utils.getLocalisedValue(this.getProperty('description'));
+            return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
         }
 
         getIIIFResourceType(): IIIFResourceType {
@@ -32,15 +33,15 @@ module Manifesto {
         }
 
         getLicense(): string {
-            return Utils.getLocalisedValue(this.getProperty('license'));
+            return Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
         }
 
         getSeeAlso(): any {
-            return Utils.getLocalisedValue(this.getProperty('seeAlso'));
+            return Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         }
 
         getTitle(): string {
-            return Utils.getLocalisedValue(this.getProperty('label'));
+            return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
 
         load(): Promise<IIIIFResource> {

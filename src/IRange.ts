@@ -1,11 +1,11 @@
 module Manifesto {
-    export interface IRange extends IJSONLDResource {
+    export interface IRange extends IManifestResource {
         canvases: any[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
-        parentRange: Range;
+        parentRange: IRange;
         path: string;
-        ranges: Range[];
+        ranges: IRange[];
         treeNode: TreeNode;
     }
 }

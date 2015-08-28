@@ -4,8 +4,8 @@ module Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
         canvases: ICanvas[] = [];
 
-        constructor(jsonld: any){
-            super(jsonld);
+        constructor(jsonld: any, options: IManifestoOptions){
+            super(jsonld, options);
         }
 
         getCanvasById(id: string): ICanvas{
@@ -79,13 +79,24 @@ module Manifesto {
             return -1;
         }
 
-        getLastCanvasLabel(): string {
+        getLastCanvasLabel(digitsOnly?: boolean): string {
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
-                return canvas.getLabel();
+                var label = canvas.getLabel();
+
+                if (digitsOnly){
+                    var regExp = /\d/;
+
+                    if (regExp.test(label)) {
+                        return label;
+                    }
+
+                } else if (label){
+                    return label;
+                }
             }
 
-            return this.getManifest().options.defaultLabel;
+            return this.options.defaultLabel;
         }
 
         getLastPageIndex(): number {
