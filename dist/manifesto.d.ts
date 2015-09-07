@@ -422,7 +422,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IRendering extends IJSONLDResource {
+    interface IRendering extends IManifestResource {
         getFormat(): RenderingFormat;
     }
 }
@@ -454,7 +454,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface IService extends IJSONLDResource {
+    interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
         getInfoUri(): string;
     }
