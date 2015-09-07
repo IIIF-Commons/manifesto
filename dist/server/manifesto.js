@@ -311,7 +311,7 @@ var Manifesto;
             if (!rendering) {
                 return parsed;
             }
-            // normalise to array
+            // coerce to array
             if (!_isArray(rendering)) {
                 rendering = [rendering];
             }
@@ -323,7 +323,7 @@ var Manifesto;
         };
         ManifestResource.prototype.getService = function (profile) {
             var services = this.getServices();
-            // normalise profile to string
+            // coerce profile to string
             if (typeof profile !== 'string') {
                 profile = profile.toString();
             }
@@ -348,7 +348,7 @@ var Manifesto;
             var parsed = [];
             if (!service)
                 return parsed;
-            // normalise to array
+            // coerce to array
             if (!_isArray(service)) {
                 service = [service];
             }

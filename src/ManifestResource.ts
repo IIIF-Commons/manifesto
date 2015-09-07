@@ -61,7 +61,7 @@ module Manifesto {
                 return parsed;
             }
 
-            // normalise to array
+            // coerce to array
             if (!_isArray(rendering)){
                 rendering = [rendering];
             }
@@ -78,7 +78,7 @@ module Manifesto {
 
             var services: IService[] = this.getServices();
 
-            // normalise profile to string
+            // coerce profile to string
             if (typeof profile !== 'string'){
                 profile = (<ServiceProfile>profile).toString();
             }
@@ -109,7 +109,7 @@ module Manifesto {
 
             if (!service) return parsed;
 
-            // normalise to array
+            // coerce to array
             if (!_isArray(service)){
                 service = [service];
             }
