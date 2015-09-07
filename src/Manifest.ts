@@ -73,7 +73,6 @@ module Manifesto {
             this.treeRoot.data.type = 'manifest';
 
             if (!this.isLoaded){
-                this.treeRoot.data = this;
                 return this.treeRoot;
             }
 

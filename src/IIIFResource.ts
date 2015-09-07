@@ -47,6 +47,7 @@ module Manifesto {
 
         getTree(): TreeNode{
             this.treeRoot = new TreeNode('root');
+            this.treeRoot.data = this;
             return this.treeRoot;
         }
 

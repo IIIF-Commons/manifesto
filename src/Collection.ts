@@ -41,7 +41,7 @@ module Manifesto {
                 for (var i = 0; i < parentCollection.manifests.length; i++) {
                     var manifest = parentCollection.manifests[i];
                     var tree:TreeNode = manifest.getTree();
-                    tree.label = manifest.getTitle() || "manifest " + (i + 1);
+                    tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
                 }
             }
@@ -52,7 +52,7 @@ module Manifesto {
                 for (var i = 0; i < parentCollection.collections.length; i++) {
                     var collection = parentCollection.collections[i];
                     var tree:TreeNode = collection.getTree();
-                    tree.label = collection.getTitle() || "collection " + (i + 1);
+                    tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
 
                     this._parseManifests(collection);
