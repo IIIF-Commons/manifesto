@@ -5,7 +5,6 @@ module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public rootRange: IRange;
         public sequences: ISequence[] = [];
-        public treeRoot: TreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
@@ -69,13 +68,18 @@ module Manifesto {
 
         getTree(): TreeNode{
 
-            this.treeRoot = new TreeNode('root');
-            this.treeRoot.label = 'root';
+            super.getTree();
+
+            this.treeRoot.data.type = 'manifest';
+
+            if (!this.isLoaded){
+                this.treeRoot.data = this;
+                return this.treeRoot;
+            }
 
             if (!this.rootRange) return this.treeRoot;
 
             this.treeRoot.data = this.rootRange;
-            this.treeRoot.data.type = 'manifest';
             this.rootRange.treeNode = this.treeRoot;
 
             if (this.rootRange.ranges){

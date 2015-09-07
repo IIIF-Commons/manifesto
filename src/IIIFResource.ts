@@ -3,6 +3,7 @@ var _assign = require("lodash.assign");
 module Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
         public isLoaded: boolean = false;
+        public treeRoot: TreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
@@ -42,6 +43,11 @@ module Manifesto {
 
         getTitle(): string {
             return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
+        }
+
+        getTree(): TreeNode{
+            this.treeRoot = new TreeNode('root');
+            return this.treeRoot;
         }
 
         load(): Promise<IIIIFResource> {

@@ -1,13 +1,15 @@
 module Manifesto {
     export interface IIIIFResource extends IManifestResource {
-        isLoaded: boolean;
         getAttribution(): string;
         getDescription(): string;
+        getIIIFResourceType(): IIIFResourceType;
         getLicense(): string;
         getLogo(): string;
         getSeeAlso(): any;
         getTitle(): string;
-        getIIIFResourceType(): IIIFResourceType;
+        getTree(): TreeNode;
+        isLoaded: boolean;
         load(): Promise<IIIIFResource>;
+        treeRoot: TreeNode;
     }
 }

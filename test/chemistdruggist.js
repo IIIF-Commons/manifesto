@@ -75,3 +75,10 @@ describe('#firstCollectionFirstManifestCanBeLoaded', function() {
         });
     })
 });
+
+describe('#getTree', function() {
+    it('has a tree containing manifests', function () {
+        var tree = collection.getTree();
+        expect(tree).to.exist;
+    })
+});

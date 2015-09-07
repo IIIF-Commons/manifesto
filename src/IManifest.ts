@@ -9,6 +9,5 @@ module Manifesto {
         isMultiSequence(): boolean;
         rootRange: IRange;
         sequences: ISequence[];
-        treeRoot: TreeNode;
     }
 }

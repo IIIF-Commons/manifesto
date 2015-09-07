@@ -147,6 +147,7 @@ declare var _assign: any;
 declare module Manifesto {
     class IIIFResource extends ManifestResource implements IIIIFResource {
         isLoaded: boolean;
+        treeRoot: TreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
         getAttribution(): string;
         getDescription(): string;
@@ -155,6 +156,7 @@ declare module Manifesto {
         getLicense(): string;
         getSeeAlso(): any;
         getTitle(): string;
+        getTree(): TreeNode;
         load(): Promise<IIIIFResource>;
     }
 }
@@ -164,7 +166,6 @@ declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         rootRange: IRange;
         sequences: ISequence[];
-        treeRoot: TreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
         getRanges(): IRange[];
         getRangeById(id: string): IRange;
@@ -186,6 +187,9 @@ declare module Manifesto {
         getManifestByIndex(manifestIndex: number): IManifest;
         getTotalCollections(): number;
         getTotalManifests(): number;
+        getTree(): TreeNode;
+        private _parseManifests(parentCollection);
+        private _parseCollections(parentCollection);
     }
 }
 declare module Manifesto {
@@ -324,11 +328,12 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface ICollection extends IIIIFResource {
+        collections: ICollection[];
         getCollectionByIndex(index: number): ICollection;
         getManifestByIndex(index: number): IManifest;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        collections: ICollection[];
+        getTree(): TreeNode;
         manifests: IManifest[];
     }
 }
@@ -354,15 +359,17 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IIIIFResource extends IManifestResource {
-        isLoaded: boolean;
         getAttribution(): string;
         getDescription(): string;
+        getIIIFResourceType(): IIIFResourceType;
         getLicense(): string;
         getLogo(): string;
         getSeeAlso(): any;
         getTitle(): string;
-        getIIIFResourceType(): IIIFResourceType;
+        getTree(): TreeNode;
+        isLoaded: boolean;
         load(): Promise<IIIIFResource>;
+        treeRoot: TreeNode;
     }
 }
 declare module Manifesto {
@@ -384,7 +391,6 @@ declare module Manifesto {
         isMultiSequence(): boolean;
         rootRange: IRange;
         sequences: ISequence[];
-        treeRoot: TreeNode;
     }
 }
 declare module Manifesto {

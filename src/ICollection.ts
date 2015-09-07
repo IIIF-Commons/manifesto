@@ -1,10 +1,11 @@
 module Manifesto {
     export interface ICollection extends IIIIFResource {
+        collections: ICollection[];
         getCollectionByIndex(index: number): ICollection;
         getManifestByIndex(index: number): IManifest;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        collections: ICollection[];
+        getTree(): TreeNode;
         manifests: IManifest[];
     }
 }
