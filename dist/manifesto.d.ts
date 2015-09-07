@@ -387,7 +387,10 @@ declare module Manifesto {
     interface IManifestResource extends IJSONLDResource {
         options: IManifestoOptions;
         getLabel(): string;
+        getRendering(format: RenderingFormat | string): IRendering;
+        getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
+        getServices(): IService[];
     }
 }
 interface IManifesto {
