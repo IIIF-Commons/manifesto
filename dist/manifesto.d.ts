@@ -201,8 +201,8 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Rendering extends JSONLDResource implements IRendering {
-        constructor(jsonld: any);
+    class Rendering extends ManifestResource implements IRendering {
+        constructor(jsonld: any, options: IManifestoOptions);
         getFormat(): RenderingFormat;
     }
 }
@@ -254,8 +254,8 @@ declare module Manifesto {
 }
 declare var _endsWith: any;
 declare module Manifesto {
-    class Service extends JSONLDResource implements IService {
-        constructor(resource: any);
+    class Service extends ManifestResource implements IService {
+        constructor(jsonld: any, options: IManifestoOptions);
         getProfile(): ServiceProfile;
         getInfoUri(): string;
     }

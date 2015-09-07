@@ -45,15 +45,7 @@ module Manifesto {
         }
 
         getRenderings(): IRendering[] {
-            var rendering;
-
-            // if passing a parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (this.__jsonld){
-                rendering = this.__jsonld.rendering;
-            } else {
-                rendering = (<any>this).rendering;
-            }
+            var rendering = this.__jsonld.rendering;
 
             var parsed: IRendering[] = [];
 
@@ -68,7 +60,7 @@ module Manifesto {
 
             for (var i = 0; i < rendering.length; i++){
                 var r: any = rendering[i];
-                parsed.push(new Rendering(r));
+                parsed.push(new Rendering(r, this.options));
             }
 
             return parsed;
@@ -95,15 +87,7 @@ module Manifesto {
         }
 
         getServices(): IService[] {
-            var service;
-
-            // if passing a parsed object, use the __jsonld.service property,
-            // otherwise look for a service property
-            if (this.__jsonld){
-                service = this.__jsonld.service;
-            } else {
-                service = (<any>this).service;
-            }
+            var service = this.__jsonld.service;
 
             var parsed: IService[] = [];
 
@@ -116,8 +100,7 @@ module Manifesto {
 
             for (var i = 0; i < service.length; i++){
                 var s: any = service[i];
-                s.__manifest = this;
-                parsed.push(new Service(s));
+                parsed.push(new Service(s, this.options));
             }
 
             return parsed;

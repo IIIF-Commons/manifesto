@@ -298,15 +298,7 @@ var Manifesto;
             return null;
         };
         ManifestResource.prototype.getRenderings = function () {
-            var rendering;
-            // if passing a parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (this.__jsonld) {
-                rendering = this.__jsonld.rendering;
-            }
-            else {
-                rendering = this.rendering;
-            }
+            var rendering = this.__jsonld.rendering;
             var parsed = [];
             if (!rendering) {
                 return parsed;
@@ -317,7 +309,7 @@ var Manifesto;
             }
             for (var i = 0; i < rendering.length; i++) {
                 var r = rendering[i];
-                parsed.push(new Manifesto.Rendering(r));
+                parsed.push(new Manifesto.Rendering(r, this.options));
             }
             return parsed;
         };
@@ -336,15 +328,7 @@ var Manifesto;
             return null;
         };
         ManifestResource.prototype.getServices = function () {
-            var service;
-            // if passing a parsed object, use the __jsonld.service property,
-            // otherwise look for a service property
-            if (this.__jsonld) {
-                service = this.__jsonld.service;
-            }
-            else {
-                service = this.service;
-            }
+            var service = this.__jsonld.service;
             var parsed = [];
             if (!service)
                 return parsed;
@@ -354,8 +338,7 @@ var Manifesto;
             }
             for (var i = 0; i < service.length; i++) {
                 var s = service[i];
-                s.__manifest = this;
-                parsed.push(new Manifesto.Service(s));
+                parsed.push(new Manifesto.Service(s, this.options));
             }
             return parsed;
         };
@@ -683,14 +666,14 @@ var Manifesto;
 (function (Manifesto) {
     var Rendering = (function (_super) {
         __extends(Rendering, _super);
-        function Rendering(jsonld) {
-            _super.call(this, jsonld);
+        function Rendering(jsonld, options) {
+            _super.call(this, jsonld, options);
         }
         Rendering.prototype.getFormat = function () {
             return new Manifesto.RenderingFormat(this.getProperty('format'));
         };
         return Rendering;
-    })(Manifesto.JSONLDResource);
+    })(Manifesto.ManifestResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
 var _last = require("lodash.last");
@@ -1061,8 +1044,8 @@ var Manifesto;
 (function (Manifesto) {
     var Service = (function (_super) {
         __extends(Service, _super);
-        function Service(resource) {
-            _super.call(this, resource);
+        function Service(jsonld, options) {
+            _super.call(this, jsonld, options);
         }
         Service.prototype.getProfile = function () {
             return new Manifesto.ServiceProfile(this.getProperty('profile'));
@@ -1079,7 +1062,7 @@ var Manifesto;
             return infoUri;
         };
         return Service;
-    })(Manifesto.JSONLDResource);
+    })(Manifesto.ManifestResource);
     Manifesto.Service = Service;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;

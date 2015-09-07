@@ -1,9 +1,10 @@
 var _endsWith = require("lodash.endswith");
 
 module Manifesto {
-    export class Service extends JSONLDResource implements IService {
-        constructor(resource: any){
-            super(resource);
+    export class Service extends ManifestResource implements IService {
+
+        constructor(jsonld: any, options: IManifestoOptions){
+            super(jsonld, options);
         }
 
         getProfile(): ServiceProfile{

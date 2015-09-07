@@ -1,8 +1,9 @@
 
 module Manifesto {
-    export class Rendering extends JSONLDResource implements IRendering {
-        constructor(jsonld: any){
-            super(jsonld);
+    export class Rendering extends ManifestResource implements IRendering {
+
+        constructor(jsonld: any, options: IManifestoOptions){
+            super(jsonld, options);
         }
 
         getFormat(): RenderingFormat{
