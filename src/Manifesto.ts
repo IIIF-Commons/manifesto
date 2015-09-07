@@ -14,8 +14,8 @@ module.exports = <IManifesto>{
     },
 
     // todo: deprecate this - temporary to enable current UV download menu
-    getRendering(resource: any, format: Manifesto.RenderingFormat | string): Manifesto.IRendering {
-        return Manifesto.Utils.getRendering(resource, format);
+    getRenderings(resource: any): Manifesto.IRendering[] {
+        return Manifesto.Utils.getRenderings(resource);
     },
 
     getService: function(resource: any, profile: Manifesto.ServiceProfile | string): Manifesto.IService {

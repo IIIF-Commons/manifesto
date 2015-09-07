@@ -1318,8 +1318,9 @@ module.exports = {
     create: function (manifest, options) {
         return Manifesto.Deserialiser.parse(manifest, options);
     },
-    getRendering: function (resource, format) {
-        return Manifesto.Utils.getRendering(resource, format);
+    // todo: deprecate this - temporary to enable current UV download menu
+    getRenderings: function (resource) {
+        return Manifesto.Utils.getRenderings(resource);
     },
     getService: function (resource, profile) {
         return Manifesto.Utils.getService(resource, profile);

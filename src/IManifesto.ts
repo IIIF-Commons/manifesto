@@ -2,7 +2,7 @@ interface IManifesto {
     CanvasType: Manifesto.CanvasType;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     ElementType: Manifesto.ElementType;
-    getRendering(resource: any, format: Manifesto.RenderingFormat | string): Manifesto.IRendering;
+    getRenderings(resource: any): Manifesto.IRendering[];
     getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
