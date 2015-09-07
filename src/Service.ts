@@ -11,9 +11,9 @@ module Manifesto {
             return new ServiceProfile(this.getProperty('profile'));
         }
 
-        //getDescription(): string {
-        //    return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
-        //}
+        getDescription(): string {
+            return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        }
 
         getInfoUri(): string {
 

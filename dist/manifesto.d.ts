@@ -257,6 +257,7 @@ declare module Manifesto {
     class Service extends ManifestResource implements IService {
         constructor(jsonld: any, options: IManifestoOptions);
         getProfile(): ServiceProfile;
+        getDescription(): string;
         getInfoUri(): string;
     }
 }

@@ -1050,9 +1050,9 @@ var Manifesto;
         Service.prototype.getProfile = function () {
             return new Manifesto.ServiceProfile(this.getProperty('profile'));
         };
-        //getDescription(): string {
-        //    return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
-        //}
+        Service.prototype.getDescription = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        };
         Service.prototype.getInfoUri = function () {
             var infoUri = this.id;
             if (!_endsWith(infoUri, '/')) {
