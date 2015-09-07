@@ -17,18 +17,18 @@ module.exports = <IManifesto>{
         return Manifesto.Utils.getService(resource, profile);
     },
 
-    loadManifest: function (uri: string): Promise<any> {
-        return Manifesto.Utils.loadResource(uri);
+    loadExternalResources: function(resources: Manifesto.IExternalResource[],
+                                    clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
+                                    login: (resource: Manifesto.IExternalResource) => Promise<void>,
+                                    getAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
+                                    storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken) => Promise<void>,
+                                    getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
+                                    handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
+                                    options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
+        return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
 
-    loadExternalResources: function(resources: Manifesto.IExternalResource[],
-                          clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
-                          login: (resource: Manifesto.IExternalResource) => Promise<void>,
-                          getAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
-                          storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken) => Promise<void>,
-                          getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
-                          handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
-                          options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
-        return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
+    loadManifest: function (uri: string): Promise<any> {
+        return Manifesto.Utils.loadResource(uri);
     }
 };

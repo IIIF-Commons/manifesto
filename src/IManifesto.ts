@@ -1,5 +1,9 @@
 interface IManifesto {
-    loadManifest: (uri: string) => Promise<any>;
+    CanvasType: Manifesto.CanvasType;
+    create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
+    ElementType: Manifesto.ElementType;
+    getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
+    IIIFResourceType: Manifesto.IIIFResourceType;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
                             clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
                             login: (resource: Manifesto.IExternalResource) => Promise<void>,
@@ -8,10 +12,7 @@ interface IManifesto {
                             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
                             handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
                             options?: Manifesto.IManifestoOptions) => Promise<Manifesto.IExternalResource[]>;
-    create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
-    CanvasType: Manifesto.CanvasType;
-    ElementType: Manifesto.ElementType;
-    IIIFResourceType: Manifesto.IIIFResourceType;
+    loadManifest: (uri: string) => Promise<any>;
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
     ServiceProfile: Manifesto.ServiceProfile;

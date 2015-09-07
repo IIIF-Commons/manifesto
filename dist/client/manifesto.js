@@ -1308,11 +1308,11 @@ module.exports = {
     getService: function (resource, profile) {
         return Manifesto.Utils.getService(resource, profile);
     },
-    loadManifest: function (uri) {
-        return Manifesto.Utils.loadResource(uri);
-    },
     loadExternalResources: function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
         return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
+    },
+    loadManifest: function (uri) {
+        return Manifesto.Utils.loadResource(uri);
     }
 };
 /// <reference path="./StringValue.ts" />
