@@ -3,6 +3,7 @@ module Manifesto {
         //new(jsonld: any, options?: IManifestoOptions);
         options: IManifestoOptions;
         getLabel(): string;
+        getMetadata(): any;
         getRendering(format: RenderingFormat | string): IRendering;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
