@@ -285,34 +285,10 @@ var Manifesto;
             return metadata;
         };
         ManifestResource.prototype.getRendering = function (format) {
-            var renderings = this.getRenderings();
-            // normalise format to string
-            if (typeof format !== 'string') {
-                format = format.toString();
-            }
-            for (var i = 0; i < renderings.length; i++) {
-                var rendering = renderings[i];
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-            return null;
+            return Manifesto.Utils.getRendering(this, format);
         };
         ManifestResource.prototype.getRenderings = function () {
-            var rendering = this.__jsonld.rendering;
-            var parsed = [];
-            if (!rendering) {
-                return parsed;
-            }
-            // coerce to array
-            if (!_isArray(rendering)) {
-                rendering = [rendering];
-            }
-            for (var i = 0; i < rendering.length; i++) {
-                var r = rendering[i];
-                parsed.push(new Manifesto.Rendering(r, this.options));
-            }
-            return parsed;
+            return Manifesto.Utils.getRenderings(this);
         };
         ManifestResource.prototype.getService = function (profile) {
             return Manifesto.Utils.getService(this, profile);
@@ -336,7 +312,7 @@ var Manifesto;
         }
         // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
         // https://github.com/UniversalViewer/universalviewer/issues/119
-        //getImages(): IService[] {
+        //getImages(): IAnnotation[] {
         //
         //}
         // todo: use getImages instead. the client must decide which to use.
@@ -1252,6 +1228,44 @@ var Manifesto;
                 });
             });
         };
+        Utils.getRendering = function (resource, format) {
+            var renderings = this.getRenderings(resource);
+            // normalise format to string
+            if (typeof format !== 'string') {
+                format = format.toString();
+            }
+            for (var i = 0; i < renderings.length; i++) {
+                var rendering = renderings[i];
+                if (rendering.getFormat().toString() === format) {
+                    return rendering;
+                }
+            }
+            return null;
+        };
+        Utils.getRenderings = function (resource) {
+            var rendering;
+            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld) {
+                rendering = resource.__jsonld.rendering;
+            }
+            else {
+                rendering = resource.rendering;
+            }
+            var parsed = [];
+            if (!rendering) {
+                return parsed;
+            }
+            // coerce to array
+            if (!_isArray(rendering)) {
+                rendering = [rendering];
+            }
+            for (var i = 0; i < rendering.length; i++) {
+                var r = rendering[i];
+                parsed.push(new Manifesto.Rendering(r, resource.options));
+            }
+            return parsed;
+        };
         Utils.getService = function (resource, profile) {
             var services = this.getServices(resource);
             // coerce profile to string
@@ -1304,6 +1318,9 @@ module.exports = {
     ViewingHint: new Manifesto.ViewingHint(),
     create: function (manifest, options) {
         return Manifesto.Deserialiser.parse(manifest, options);
+    },
+    getRendering: function (resource, format) {
+        return Manifesto.Utils.getRendering(resource, format);
     },
     getService: function (resource, profile) {
         return Manifesto.Utils.getService(resource, profile);

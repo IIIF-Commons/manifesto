@@ -229,6 +229,55 @@ module Manifesto {
             });
         }
 
+        static getRendering(resource: any, format: RenderingFormat | string): IRendering {
+            var renderings: IRendering[] = this.getRenderings(resource);
+
+            // normalise format to string
+            if (typeof format !== 'string'){
+                format = (<RenderingFormat>format).toString();
+            }
+
+            for (var i = 0; i < renderings.length; i++){
+                var rendering: IRendering = renderings[i];
+
+                if (rendering.getFormat().toString() === format) {
+                    return rendering;
+                }
+            }
+
+            return null;
+        }
+
+        static getRenderings(resource: any): IRendering[] {
+            var rendering;
+
+            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld){
+                rendering = resource.__jsonld.rendering;
+            } else {
+                rendering = (<any>resource).rendering;
+            }
+
+            var parsed: IRendering[] = [];
+
+            if (!rendering){
+                return parsed;
+            }
+
+            // coerce to array
+            if (!_isArray(rendering)){
+                rendering = [rendering];
+            }
+
+            for (var i = 0; i < rendering.length; i++){
+                var r: any = rendering[i];
+                parsed.push(new Rendering(r, resource.options));
+            }
+
+            return parsed;
+        }
+
         static getService(resource: any, profile: ServiceProfile | string): IService {
 
             var services: IService[] = this.getServices(resource);

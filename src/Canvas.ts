@@ -12,7 +12,7 @@ module Manifesto {
 
         // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
         // https://github.com/UniversalViewer/universalviewer/issues/119
-        //getImages(): IService[] {
+        //getImages(): IAnnotation[] {
         //
         //}
 

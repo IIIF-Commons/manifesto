@@ -26,44 +26,11 @@ module Manifesto {
         }
 
         getRendering(format: RenderingFormat | string): IRendering {
-            var renderings: IRendering[] = this.getRenderings();
-
-            // normalise format to string
-            if (typeof format !== 'string'){
-                format = (<RenderingFormat>format).toString();
-            }
-
-            for (var i = 0; i < renderings.length; i++){
-                var rendering: IRendering = renderings[i];
-
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-
-            return null;
+            return Utils.getRendering(this, format);
         }
 
         getRenderings(): IRendering[] {
-            var rendering = this.__jsonld.rendering;
-
-            var parsed: IRendering[] = [];
-
-            if (!rendering){
-                return parsed;
-            }
-
-            // coerce to array
-            if (!_isArray(rendering)){
-                rendering = [rendering];
-            }
-
-            for (var i = 0; i < rendering.length; i++){
-                var r: any = rendering[i];
-                parsed.push(new Rendering(r, this.options));
-            }
-
-            return parsed;
+            return Utils.getRenderings(this);
         }
 
         getService(profile: ServiceProfile | string): IService {
