@@ -9,6 +9,14 @@ module.exports = <IManifesto>{
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
 
+    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource {
+        return Manifesto.Deserialiser.parse(manifest, options);
+    },
+
+    getService: function(resource: any, profile: Manifesto.ServiceProfile | string): Manifesto.IService {
+        return Manifesto.Utils.getService(resource, profile);
+    },
+
     loadManifest: function (uri: string): Promise<any> {
         return Manifesto.Utils.loadResource(uri);
     },
@@ -22,9 +30,5 @@ module.exports = <IManifesto>{
                           handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
                           options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
         return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
-    },
-
-    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource {
-        return Manifesto.Deserialiser.parse(manifest, options);
     }
 };

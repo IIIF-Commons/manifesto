@@ -1302,14 +1302,17 @@ module.exports = {
     ServiceProfile: new Manifesto.ServiceProfile(),
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
+    create: function (manifest, options) {
+        return Manifesto.Deserialiser.parse(manifest, options);
+    },
+    getService: function (resource, profile) {
+        return Manifesto.Utils.getService(resource, profile);
+    },
     loadManifest: function (uri) {
         return Manifesto.Utils.loadResource(uri);
     },
     loadExternalResources: function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
         return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
-    },
-    create: function (manifest, options) {
-        return Manifesto.Deserialiser.parse(manifest, options);
     }
 };
 /// <reference path="./StringValue.ts" />
