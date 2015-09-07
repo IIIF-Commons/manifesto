@@ -25,10 +25,12 @@ module Manifesto {
             return metadata;
         }
 
+        // todo: once UV download menu uses manifesto parsed objects, this can be moved back from Utils
         getRendering(format: RenderingFormat | string): IRendering {
             return Utils.getRendering(this, format);
         }
 
+        // todo: once UV download menu uses manifesto parsed objects, this can be moved back from Utils
         getRenderings(): IRendering[] {
             return Utils.getRenderings(this);
         }
