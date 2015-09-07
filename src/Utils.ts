@@ -228,5 +228,53 @@ module Manifesto {
                 });
             });
         }
+
+        static getService(resource: any, profile: ServiceProfile | string): IService {
+
+            var services: IService[] = this.getServices(resource);
+
+            // coerce profile to string
+            if (typeof profile !== 'string'){
+                profile = (<ServiceProfile>profile).toString();
+            }
+
+            for (var i = 0; i < services.length; i++){
+                var service: IService = services[i];
+
+                if (service.getProfile().toString() === profile) {
+                    return service;
+                }
+            }
+
+            return null;
+        }
+
+        static getServices(resource: any): IService[] {
+            var service;
+
+            // if passing a manifesto-parsed object, use the __jsonld.service property,
+            // otherwise look for a service property (info.json services)
+            if (resource.__jsonld){
+                service = resource.__jsonld.service;
+            } else {
+                service = (<any>resource).service;
+            }
+
+            var parsed: IService[] = [];
+
+            if (!service) return parsed;
+
+            // coerce to array
+            if (!_isArray(service)){
+                service = [service];
+            }
+
+            for (var i = 0; i < service.length; i++){
+                var s: any = service[i];
+                parsed.push(new Service(s, resource.options));
+            }
+
+            return parsed;
+        }
     }
-};
+}

@@ -67,43 +67,11 @@ module Manifesto {
         }
 
         getService(profile: ServiceProfile | string): IService {
-
-            var services: IService[] = this.getServices();
-
-            // coerce profile to string
-            if (typeof profile !== 'string'){
-                profile = (<ServiceProfile>profile).toString();
-            }
-
-            for (var i = 0; i < services.length; i++){
-                var service: IService = services[i];
-
-                if (service.getProfile().toString() === profile) {
-                    return service;
-                }
-            }
-
-            return null;
+            return Utils.getService(this, profile);
         }
 
         getServices(): IService[] {
-            var service = this.__jsonld.service;
-
-            var parsed: IService[] = [];
-
-            if (!service) return parsed;
-
-            // coerce to array
-            if (!_isArray(service)){
-                service = [service];
-            }
-
-            for (var i = 0; i < service.length; i++){
-                var s: any = service[i];
-                parsed.push(new Service(s, this.options));
-            }
-
-            return parsed;
+            return Utils.getServices(this);
         }
     }
 }

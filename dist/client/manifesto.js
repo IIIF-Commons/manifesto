@@ -315,33 +315,10 @@ var Manifesto;
             return parsed;
         };
         ManifestResource.prototype.getService = function (profile) {
-            var services = this.getServices();
-            // coerce profile to string
-            if (typeof profile !== 'string') {
-                profile = profile.toString();
-            }
-            for (var i = 0; i < services.length; i++) {
-                var service = services[i];
-                if (service.getProfile().toString() === profile) {
-                    return service;
-                }
-            }
-            return null;
+            return Manifesto.Utils.getService(this, profile);
         };
         ManifestResource.prototype.getServices = function () {
-            var service = this.__jsonld.service;
-            var parsed = [];
-            if (!service)
-                return parsed;
-            // coerce to array
-            if (!_isArray(service)) {
-                service = [service];
-            }
-            for (var i = 0; i < service.length; i++) {
-                var s = service[i];
-                parsed.push(new Manifesto.Service(s, this.options));
-            }
-            return parsed;
+            return Manifesto.Utils.getServices(this);
         };
         return ManifestResource;
     })(Manifesto.JSONLDResource);
@@ -1275,11 +1252,47 @@ var Manifesto;
                 });
             });
         };
+        Utils.getService = function (resource, profile) {
+            var services = this.getServices(resource);
+            // coerce profile to string
+            if (typeof profile !== 'string') {
+                profile = profile.toString();
+            }
+            for (var i = 0; i < services.length; i++) {
+                var service = services[i];
+                if (service.getProfile().toString() === profile) {
+                    return service;
+                }
+            }
+            return null;
+        };
+        Utils.getServices = function (resource) {
+            var service;
+            // if passing a manifesto-parsed object, use the __jsonld.service property,
+            // otherwise look for a service property (info.json services)
+            if (resource.__jsonld) {
+                service = resource.__jsonld.service;
+            }
+            else {
+                service = resource.service;
+            }
+            var parsed = [];
+            if (!service)
+                return parsed;
+            // coerce to array
+            if (!_isArray(service)) {
+                service = [service];
+            }
+            for (var i = 0; i < service.length; i++) {
+                var s = service[i];
+                parsed.push(new Manifesto.Service(s, resource.options));
+            }
+            return parsed;
+        };
         return Utils;
     })();
     Manifesto.Utils = Utils;
 })(Manifesto || (Manifesto = {}));
-;
 module.exports = {
     CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
