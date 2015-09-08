@@ -148,6 +148,7 @@ declare module Manifesto {
     class IIIFResource extends ManifestResource implements IIIIFResource {
         index: number;
         isLoaded: boolean;
+        parentCollection: ICollection;
         treeRoot: TreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
         getAttribution(): string;
@@ -372,6 +373,7 @@ declare module Manifesto {
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
+        parentCollection: ICollection;
         treeRoot: TreeNode;
     }
 }

@@ -11,6 +11,7 @@ module Manifesto {
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
+        parentCollection: ICollection;
         treeRoot: TreeNode;
     }
 }

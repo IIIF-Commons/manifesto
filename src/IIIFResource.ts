@@ -4,6 +4,7 @@ module Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
         public index: number = 0;
         public isLoaded: boolean = false;
+        public parentCollection: ICollection;
         public treeRoot: TreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
