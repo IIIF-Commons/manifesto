@@ -246,17 +246,17 @@ declare module Manifesto {
     class Deserialiser {
         static parse(manifest: string, options?: IManifestoOptions): IIIIFResource;
         static parseJson(json: any, options?: IManifestoOptions): IIIIFResource;
-        static parseCollection(json: any, options?: IManifestoOptions): Collection;
-        static parseCollections(collection: Collection, options?: IManifestoOptions): void;
-        static parseManifest(json: any, options?: IManifestoOptions): Manifest;
-        static parseManifests(collection: Collection, options?: IManifestoOptions): void;
-        static parseSequences(manifest: Manifest, options: IManifestoOptions): void;
+        static parseCollection(json: any, options?: IManifestoOptions): ICollection;
+        static parseCollections(collection: ICollection, options?: IManifestoOptions): void;
+        static parseManifest(json: any, options?: IManifestoOptions): IManifest;
+        static parseManifests(collection: ICollection, options?: IManifestoOptions): void;
+        static parseSequences(manifest: IManifest, options: IManifestoOptions): void;
         static parseCanvases(sequence: any, options: IManifestoOptions): ICanvas[];
-        static parseRanges(manifest: Manifest, r: any, path: string, parentRange?: IRange): void;
-        static getCanvasById(manifest: Manifest, id: string): ICanvas;
+        static parseRanges(manifest: IManifest, r: any, path: string, parentRange?: IRange): void;
+        static getCanvasById(manifest: IManifest, id: string): ICanvas;
     }
     class Serialiser {
-        static serialise(manifest: Manifest): string;
+        static serialise(manifest: IManifest): string;
     }
 }
 declare var _endsWith: any;

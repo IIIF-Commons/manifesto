@@ -25,7 +25,7 @@ module Manifesto {
             return object;
         }
 
-        static parseCollection(json: any, options?: IManifestoOptions): Collection {
+        static parseCollection(json: any, options?: IManifestoOptions): ICollection {
             var collection: Collection = new Collection(json, options);
 
             this.parseCollections(collection, options);
@@ -34,17 +34,19 @@ module Manifesto {
             return collection;
         }
 
-        static parseCollections(collection: Collection, options?: IManifestoOptions): void {
+        static parseCollections(collection: ICollection, options?: IManifestoOptions): void {
             var children = collection.__jsonld.collections;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
-                    var child = this.parseCollection(children[i], options);
+                    var child: ICollection = this.parseCollection(children[i], options);
+                    child.index = i;
+                    child.parentCollection = collection;
                     collection.collections.push(child);
                 }
             }
         }
 
-        static parseManifest(json: any, options?: IManifestoOptions): Manifest {
+        static parseManifest(json: any, options?: IManifestoOptions): IManifest {
             var manifest: Manifest = new Manifest(json, options);
 
             this.parseSequences(manifest, options);
@@ -56,17 +58,19 @@ module Manifesto {
             return manifest;
         }
 
-        static parseManifests(collection: Collection, options?: IManifestoOptions): void {
+        static parseManifests(collection: ICollection, options?: IManifestoOptions): void {
             var children = collection.__jsonld.manifests;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
-                    var child = this.parseManifest(children[i], options);
+                    var child: IManifest = this.parseManifest(children[i], options);
+                    child.index = i;
+                    child.parentCollection = collection;
                     collection.manifests.push(child);
                 }
             }
         }
 
-        static parseSequences(manifest: Manifest, options: IManifestoOptions): void {
+        static parseSequences(manifest: IManifest, options: IManifestoOptions): void {
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
             var children = manifest.__jsonld.mediaSequences || manifest.__jsonld.sequences;
             if (children) {
@@ -94,7 +98,7 @@ module Manifesto {
             return canvases;
         }
 
-        static parseRanges(manifest: Manifest, r: any, path: string, parentRange?: IRange): void {
+        static parseRanges(manifest: IManifest, r: any, path: string, parentRange?: IRange): void {
 
             var range: IRange = new Range(r, manifest.options);
 
@@ -124,7 +128,7 @@ module Manifesto {
             }
         }
 
-        static getCanvasById(manifest: Manifest, id: string): ICanvas {
+        static getCanvasById(manifest: IManifest, id: string): ICanvas {
 
             for (var i = 0; i < manifest.sequences.length; i++){
                 var sequence: ISequence = manifest.sequences[i];
@@ -143,7 +147,7 @@ module Manifesto {
     }
 
     export class Serialiser {
-        static serialise(manifest: Manifest): string {
+        static serialise(manifest: IManifest): string {
             // todo
             return "";
         }
