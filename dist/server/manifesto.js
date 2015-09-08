@@ -395,6 +395,7 @@ var Manifesto;
         __extends(IIIFResource, _super);
         function IIIFResource(jsonld, options) {
             _super.call(this, jsonld, options);
+            this.index = 0;
             this.isLoaded = false;
             var defaultOptions = {
                 defaultLabel: '-',
@@ -456,6 +457,7 @@ var Manifesto;
         __extends(Manifest, _super);
         function Manifest(jsonld, options) {
             _super.call(this, jsonld, options);
+            this.index = 0;
             this.sequences = [];
             jsonld.__manifest = this;
         }
@@ -576,6 +578,7 @@ var Manifesto;
             if (parentCollection.manifests && parentCollection.manifests.length) {
                 for (var i = 0; i < parentCollection.manifests.length; i++) {
                     var manifest = parentCollection.manifests[i];
+                    manifest.index = i;
                     var tree = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
@@ -586,6 +589,7 @@ var Manifesto;
             if (parentCollection.collections && parentCollection.collections.length) {
                 for (var i = 0; i < parentCollection.collections.length; i++) {
                     var collection = parentCollection.collections[i];
+                    collection.index = i;
                     var tree = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);

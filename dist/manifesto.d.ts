@@ -146,6 +146,7 @@ declare module Manifesto {
 declare var _assign: any;
 declare module Manifesto {
     class IIIFResource extends ManifestResource implements IIIIFResource {
+        index: number;
         isLoaded: boolean;
         treeRoot: TreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
@@ -164,6 +165,7 @@ declare var _isArray: any;
 declare var _map: any;
 declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
+        index: number;
         rootRange: IRange;
         sequences: ISequence[];
         constructor(jsonld: any, options?: IManifestoOptions);
@@ -367,6 +369,7 @@ declare module Manifesto {
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;
+        index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         treeRoot: TreeNode;

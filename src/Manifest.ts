@@ -3,6 +3,7 @@ var _map = require("lodash.map");
 
 module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
+        public index: number = 0;
         public rootRange: IRange;
         public sequences: ISequence[] = [];
 

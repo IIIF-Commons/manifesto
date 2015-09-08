@@ -8,6 +8,7 @@ module Manifesto {
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;
+        index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         treeRoot: TreeNode;

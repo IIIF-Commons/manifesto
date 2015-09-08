@@ -2,6 +2,7 @@ var _assign = require("lodash.assign");
 
 module Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
+        public index: number = 0;
         public isLoaded: boolean = false;
         public treeRoot: TreeNode;
 
