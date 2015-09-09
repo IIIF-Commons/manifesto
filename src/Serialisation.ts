@@ -1,4 +1,5 @@
 var jmespath = require('jmespath');
+var _isString = require("lodash.isstring");
 
 module Manifesto {
     export class Deserialiser {
@@ -52,7 +53,8 @@ module Manifesto {
             this.parseSequences(manifest, options);
 
             if (manifest.__jsonld.structures && manifest.__jsonld.structures.length) {
-                this.parseRanges(manifest, JsonUtils.getRootRange(manifest.__jsonld), '');
+                var r: any = JsonUtils.getRootRange(manifest.__jsonld);
+                this.parseRanges(manifest, r, '');
             }
 
             return manifest;
@@ -100,7 +102,13 @@ module Manifesto {
 
         static parseRanges(manifest: IManifest, r: any, path: string, parentRange?: IRange): void {
 
-            var range: IRange = new Range(r, manifest.options);
+            var range: IRange;
+
+            if (_isString(r)){
+                r = JsonUtils.getRangeById(manifest.__jsonld, r);
+            }
+
+            range = new Range(r, manifest.options);
 
             // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange){
@@ -157,12 +165,14 @@ module Manifesto {
         static getCanvasById(manifest: any, id: string): any {
             var result = jmespath.search(manifest, "sequences[].canvases[?\"@id\"=='" + id + "'][]");
             if (result.length) return result[0];
+            console.log("canvas " + id + " not found");
             return null;
         }
 
         static getRangeById(manifest: any, id: string): any {
             var result = jmespath.search(manifest, "structures[?\"@id\"=='" + id + "'][]");
-            if (result.length) return result[0];
+            if (result.length) return result[0]
+            console.log("range " + id + " not found");
             return null;
         }
 

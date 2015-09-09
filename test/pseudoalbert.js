@@ -6,7 +6,7 @@ require('./shared');
 
 var manifest, sequence;
 
-describe('#loads', function() {
+describe('#loadsPseudoalbert', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.pseudoalbert).then(function(data) {
             manifest = manifesto.create(data);

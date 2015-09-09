@@ -6,7 +6,7 @@ require('./shared');
 
 var collection, manifest;
 
-describe('#loads', function() {
+describe('#loadsChemistDruggist', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.chemistdruggist).then(function(data) {
             collection = manifesto.create(data);

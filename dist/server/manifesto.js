@@ -850,6 +850,7 @@ var Manifesto;
     Manifesto.Sequence = Sequence;
 })(Manifesto || (Manifesto = {}));
 var jmespath = require('jmespath');
+var _isString = require("lodash.isstring");
 var Manifesto;
 (function (Manifesto) {
     var Deserialiser = (function () {
@@ -896,7 +897,8 @@ var Manifesto;
             var manifest = new Manifesto.Manifest(json, options);
             this.parseSequences(manifest, options);
             if (manifest.__jsonld.structures && manifest.__jsonld.structures.length) {
-                this.parseRanges(manifest, JsonUtils.getRootRange(manifest.__jsonld), '');
+                var r = JsonUtils.getRootRange(manifest.__jsonld);
+                this.parseRanges(manifest, r, '');
             }
             return manifest;
         };
@@ -935,7 +937,11 @@ var Manifesto;
             return canvases;
         };
         Deserialiser.parseRanges = function (manifest, r, path, parentRange) {
-            var range = new Manifesto.Range(r, manifest.options);
+            var range;
+            if (_isString(r)) {
+                r = JsonUtils.getRangeById(manifest.__jsonld, r);
+            }
+            range = new Manifesto.Range(r, manifest.options);
             // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange) {
                 manifest.rootRange = range;
