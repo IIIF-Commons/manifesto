@@ -61,8 +61,9 @@ module Manifesto {
                 } else {
                     var options = that.options;
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
-                        that.isLoaded = true;
-                        resolve(Deserialiser.parse(data, options));
+                        var parsed = Deserialiser.parse(data, options);
+                        that = _assign(that, parsed);
+                        resolve(that);
                     });
                 }
             });

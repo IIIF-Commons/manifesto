@@ -40,8 +40,6 @@ module Manifesto {
             if (parentCollection.manifests && parentCollection.manifests.length) {
                 for (var i = 0; i < parentCollection.manifests.length; i++) {
                     var manifest = parentCollection.manifests[i];
-                    //manifest.parentCollection = parentCollection;
-                    //manifest.index = i;
                     var tree: TreeNode = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
@@ -53,8 +51,6 @@ module Manifesto {
             if (parentCollection.collections && parentCollection.collections.length) {
                 for (var i = 0; i < parentCollection.collections.length; i++) {
                     var collection = parentCollection.collections[i];
-                    //collection.parentCollection = parentCollection;
-                    //collection.index = i;
                     var tree: TreeNode = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
