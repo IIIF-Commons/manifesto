@@ -4,7 +4,7 @@ var should = require('chai').should();
 var manifests = require('./fixtures/manifests');
 require('./shared');
 
-var collection, manifest;
+var collection, manifest, firstCollection;
 
 describe('#loadsChemistDruggist', function() {
     it('loads successfully', function (done) {
@@ -36,19 +36,22 @@ describe('#hasTitle', function() {
 
 describe('#firstCollectionHasTitle', function() {
     it('has a first collection with a title', function() {
-        collection.getCollectionByIndex(0).getTitle().should.equal('Volume 1, 1859');
+        firstCollection = collection.getCollectionByIndex(0);
+        firstCollection.getTitle().should.equal('Volume 1, 1859');
     })
 });
 
 describe('#firstCollectionHasManifestCount', function() {
     it('has a first collection which contains 16 manifests', function () {
-        collection.getCollectionByIndex(0).getTotalManifests().should.equal(16);
+        firstCollection.getTotalManifests().should.equal(16);
     })
 });
 
 describe('#firstCollectionHasFirstManifestWithMetadata', function() {
     it('has a first manifest with metadata', function () {
-        manifest = collection.getCollectionByIndex(0).getManifestByIndex(0);
+        manifest = firstCollection.getManifestByIndex(0);
+        var label = manifest.getLabel();
+        label.should.equal('15. September 1859');
         var metadata = manifest.getMetadata();
         metadata[0]['label'].should.equal('Volume');
         metadata[0]['value'].should.equal('1');

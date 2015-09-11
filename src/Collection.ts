@@ -55,7 +55,6 @@ module Manifesto {
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
 
-                    this._parseManifests(collection);
                     this._parseCollections(collection);
                 }
             }

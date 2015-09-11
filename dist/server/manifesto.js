@@ -592,7 +592,6 @@ var Manifesto;
                     var tree = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     parentCollection.treeRoot.addNode(tree);
-                    this._parseManifests(collection);
                     this._parseCollections(collection);
                 }
             }
