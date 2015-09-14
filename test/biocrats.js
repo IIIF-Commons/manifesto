@@ -1,3 +1,4 @@
+var _isDate = require("lodash.isdate");
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
@@ -63,4 +64,12 @@ describe('#hasRendering', function() {
         var rendering = sequence.getRendering(manifesto.RenderingFormat.pdf());
         rendering.getFormat().toString().should.equal('application/pdf');
     });
+});
+
+describe('#doesNotHaveNavDate', function() {
+    it('does not have a navDate', function() {
+        var navDate = manifest.getNavDate();
+        var isInvalid = isNaN(navDate.getTime());
+        isInvalid.should.equal(true);
+    })
 });

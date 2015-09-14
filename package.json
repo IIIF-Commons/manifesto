@@ -51,6 +51,7 @@
     "lodash.assign": "^3.2.0",
     "lodash.endswith": "^3.0.2",
     "lodash.isarray": "^3.0.4",
+    "lodash.isdate": "^3.0.1",
     "lodash.isnumber": "^3.0.1",
     "lodash.isstring": "^3.0.1",
     "lodash.last": "^3.0.0",
