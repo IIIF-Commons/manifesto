@@ -1359,7 +1359,7 @@ module.exports = {
         return Manifesto.Utils.loadResource(uri);
     },
     TreeNode: function () {
-        return Manifesto.TreeNode.prototype;
+        return Manifesto.TreeNode.constructor();
     }
 };
 /// <reference path="./StringValue.ts" />
