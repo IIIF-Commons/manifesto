@@ -38,6 +38,6 @@ module.exports = <IManifesto>{
     },
 
     TreeNode: function() {
-        return new Manifesto.TreeNode();
+        return Manifesto.TreeNode.prototype;
     }
 };

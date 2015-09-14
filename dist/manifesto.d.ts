@@ -425,7 +425,7 @@ interface IManifesto {
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
     ServiceProfile: Manifesto.ServiceProfile;
-    TreeNode: () => Manifesto.TreeNode;
+    TreeNode: Object;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }
