@@ -37,7 +37,5 @@ module.exports = <IManifesto>{
         return Manifesto.Utils.loadResource(uri);
     },
 
-    TreeNode: function() {
-        return Manifesto.TreeNode.constructor();
-    }
+    TreeNode: Manifesto.TreeNode.constructor()
 };
