@@ -1357,6 +1357,9 @@ module.exports = {
     },
     loadManifest: function (uri) {
         return Manifesto.Utils.loadResource(uri);
+    },
+    TreeNode: function () {
+        return new Manifesto.TreeNode();
     }
 };
 /// <reference path="./StringValue.ts" />

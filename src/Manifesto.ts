@@ -35,5 +35,9 @@ module.exports = <IManifesto>{
 
     loadManifest: function (uri: string): Promise<any> {
         return Manifesto.Utils.loadResource(uri);
+    },
+
+    TreeNode: function() {
+        return new Manifesto.TreeNode();
     }
 };
