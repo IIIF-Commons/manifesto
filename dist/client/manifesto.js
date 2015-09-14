@@ -1353,15 +1353,15 @@ module.exports = {
     getService: function (resource, profile) {
         return Manifesto.Utils.getService(resource, profile);
     },
+    getTreeNode: function () {
+        return new Manifesto.TreeNode();
+    },
     loadExternalResources: function (resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
         return Manifesto.Utils.loadExternalResources(resources, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
     loadManifest: function (uri) {
         return Manifesto.Utils.loadResource(uri);
-    },
-    TreeNode: (function () {
-        return new Manifesto.TreeNode();
-    })()
+    }
 };
 /// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />

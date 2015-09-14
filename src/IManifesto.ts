@@ -4,6 +4,7 @@ interface IManifesto {
     ElementType: Manifesto.ElementType;
     getRenderings(resource: any): Manifesto.IRendering[];
     getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
+    getTreeNode(): Manifesto.TreeNode;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
                             clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
@@ -17,7 +18,6 @@ interface IManifesto {
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
     ServiceProfile: Manifesto.ServiceProfile;
-    TreeNode: Manifesto.TreeNode;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }

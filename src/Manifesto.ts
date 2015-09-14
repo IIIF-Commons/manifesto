@@ -22,6 +22,11 @@ module.exports = <IManifesto>{
         return Manifesto.Utils.getService(resource, profile);
     },
 
+    // todo: enable this syntax: var treeNode = new manifesto.TreeNode()
+    getTreeNode: function () {
+        return new Manifesto.TreeNode();
+    },
+
     loadExternalResources: function(resources: Manifesto.IExternalResource[],
                                     clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
                                     login: (resource: Manifesto.IExternalResource) => Promise<void>,
@@ -35,9 +40,5 @@ module.exports = <IManifesto>{
 
     loadManifest: function (uri: string): Promise<any> {
         return Manifesto.Utils.loadResource(uri);
-    },
-
-    TreeNode: (function () {
-        return new Manifesto.TreeNode();
-    })()
+    }
 };
