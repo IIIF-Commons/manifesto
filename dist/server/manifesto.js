@@ -1358,7 +1358,9 @@ module.exports = {
     loadManifest: function (uri) {
         return Manifesto.Utils.loadResource(uri);
     },
-    TreeNode: Manifesto.TreeNode.constructor()
+    TreeNode: (function () {
+        return new Manifesto.TreeNode();
+    })()
 };
 /// <reference path="./StringValue.ts" />
 /// <reference path="./CanvasType.ts" />
