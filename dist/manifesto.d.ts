@@ -156,6 +156,7 @@ declare module Manifesto {
         getIIIFResourceType(): IIIFResourceType;
         getLogo(): string;
         getLicense(): string;
+        getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;
@@ -287,6 +288,7 @@ declare module Manifesto {
         nodes: TreeNode[];
         selected: boolean;
         expanded: boolean;
+        navDate: Date;
         parentNode: TreeNode;
         constructor(label?: string, data?: any);
         addNode(node: TreeNode): void;
@@ -368,6 +370,7 @@ declare module Manifesto {
         getIIIFResourceType(): IIIFResourceType;
         getLicense(): string;
         getLogo(): string;
+        getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;

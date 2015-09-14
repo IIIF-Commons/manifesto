@@ -39,6 +39,10 @@ module Manifesto {
             return Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
         }
 
+        getNavDate(): Date {
+            return new Date(this.getProperty('navDate'));
+        }
+
         getSeeAlso(): any {
             return Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         }

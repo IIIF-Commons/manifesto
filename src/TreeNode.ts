@@ -4,6 +4,7 @@ module Manifesto {
         public nodes: TreeNode[];
         public selected: boolean;
         public expanded: boolean;
+        public navDate: Date;
         public parentNode: TreeNode;
 
         constructor(public label?: string, public data?: any) {

@@ -419,6 +419,9 @@ var Manifesto;
         IIIFResource.prototype.getLicense = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
         };
+        IIIFResource.prototype.getNavDate = function () {
+            return new Date(this.getProperty('navDate'));
+        };
         IIIFResource.prototype.getSeeAlso = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         };
@@ -581,6 +584,7 @@ var Manifesto;
                     var manifest = parentCollection.manifests[i];
                     var tree = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
+                    tree.navDate = manifest.getNavDate();
                     parentCollection.treeRoot.addNode(tree);
                 }
             }
@@ -591,6 +595,7 @@ var Manifesto;
                     var collection = parentCollection.collections[i];
                     var tree = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
+                    tree.navDate = collection.getNavDate();
                     parentCollection.treeRoot.addNode(tree);
                     this._parseCollections(collection);
                 }

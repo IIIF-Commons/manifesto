@@ -41,6 +41,14 @@ describe('#firstCollectionHasTitle', function() {
     })
 });
 
+describe('#firstCollectionHasNavDate', function() {
+    it('has a first collection with a navDate', function() {
+        var navDate = firstCollection.getNavDate();
+        var year = navDate.getFullYear();
+        year.should.equal(1859);
+    })
+});
+
 describe('#firstCollectionHasManifestCount', function() {
     it('has a first collection which contains 16 manifests', function () {
         firstCollection.getTotalManifests().should.equal(16);
