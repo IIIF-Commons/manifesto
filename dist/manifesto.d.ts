@@ -294,6 +294,16 @@ declare module Manifesto {
         addNode(node: TreeNode): void;
     }
 }
+declare module Manifesto {
+    class TreeNodeType extends StringValue {
+        static COLLECTION: TreeNodeType;
+        static MANIFEST: TreeNodeType;
+        static RANGE: TreeNodeType;
+        collection(): TreeNodeType;
+        manifest(): TreeNodeType;
+        range(): TreeNodeType;
+    }
+}
 declare var http: any;
 declare var url: any;
 declare module Manifesto {

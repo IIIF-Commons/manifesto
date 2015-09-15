@@ -71,7 +71,7 @@ module Manifesto {
 
             super.getTree();
 
-            this.treeRoot.data.type = 'manifest';
+            this.treeRoot.data.type = TreeNodeType.MANIFEST.toString();
 
             if (!this.isLoaded){
                 return this.treeRoot;
@@ -99,7 +99,7 @@ module Manifesto {
         private _parseTreeNode(node: TreeNode, range: IRange): void {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = 'range';
+            node.data.type = TreeNodeType.RANGE.toString();
             range.treeNode = node;
 
             if (range.ranges) {

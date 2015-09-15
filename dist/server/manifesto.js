@@ -507,7 +507,7 @@ var Manifesto;
         };
         Manifest.prototype.getTree = function () {
             _super.prototype.getTree.call(this);
-            this.treeRoot.data.type = 'manifest';
+            this.treeRoot.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
             if (!this.isLoaded) {
                 return this.treeRoot;
             }
@@ -528,7 +528,7 @@ var Manifesto;
         Manifest.prototype._parseTreeNode = function (node, range) {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = 'range';
+            node.data.type = Manifesto.TreeNodeType.RANGE.toString();
             range.treeNode = node;
             if (range.ranges) {
                 for (var i = 0; i < range.ranges.length; i++) {
@@ -573,7 +573,7 @@ var Manifesto;
         };
         Collection.prototype.getTree = function () {
             _super.prototype.getTree.call(this);
-            this.treeRoot.data.type = 'collection';
+            this.treeRoot.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
             this._parseManifests(this);
             this._parseCollections(this);
             return this.treeRoot;
@@ -585,6 +585,7 @@ var Manifesto;
                     var tree = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
+                    tree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
                     parentCollection.treeRoot.addNode(tree);
                 }
             }
@@ -596,6 +597,7 @@ var Manifesto;
                     var tree = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
+                    tree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
                     parentCollection.treeRoot.addNode(tree);
                     this._parseCollections(collection);
                 }
@@ -1078,6 +1080,30 @@ var Manifesto;
     })();
     Manifesto.TreeNode = TreeNode;
 })(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var TreeNodeType = (function (_super) {
+        __extends(TreeNodeType, _super);
+        function TreeNodeType() {
+            _super.apply(this, arguments);
+        }
+        // todo: use getters when ES3 target is no longer required.
+        TreeNodeType.prototype.collection = function () {
+            return new TreeNodeType(TreeNodeType.COLLECTION.toString());
+        };
+        TreeNodeType.prototype.manifest = function () {
+            return new TreeNodeType(TreeNodeType.MANIFEST.toString());
+        };
+        TreeNodeType.prototype.range = function () {
+            return new TreeNodeType(TreeNodeType.RANGE.toString());
+        };
+        TreeNodeType.COLLECTION = new TreeNodeType("collection");
+        TreeNodeType.MANIFEST = new TreeNodeType("manifest");
+        TreeNodeType.RANGE = new TreeNodeType("range");
+        return TreeNodeType;
+    })(Manifesto.StringValue);
+    Manifesto.TreeNodeType = TreeNodeType;
+})(Manifesto || (Manifesto = {}));
 var http = require("http");
 var url = require("url");
 var Manifesto;
@@ -1352,6 +1378,7 @@ module.exports = {
     getService: function (resource, profile) {
         return Manifesto.Utils.getService(resource, profile);
     },
+    // todo: enable this syntax: var treeNode = new manifesto.TreeNode()
     getTreeNode: function () {
         return new Manifesto.TreeNode();
     },
@@ -1385,5 +1412,6 @@ module.exports = {
 /// <reference path="./Service.ts" />
 /// <reference path="./Thumb.ts" />
 /// <reference path="./TreeNode.ts" />
+/// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
 /// <reference path="./Manifesto.ts" /> 
