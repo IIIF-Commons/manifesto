@@ -1366,6 +1366,7 @@ module.exports = {
     ManifestType: new Manifesto.ManifestType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
     ServiceProfile: new Manifesto.ServiceProfile(),
+    TreeNodeType: new Manifesto.TreeNodeType(),
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
     create: function (manifest, options) {

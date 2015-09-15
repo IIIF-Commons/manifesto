@@ -18,6 +18,7 @@ interface IManifesto {
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
     ServiceProfile: Manifesto.ServiceProfile;
+    TreeNodeType: Manifesto.TreeNodeType;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }
