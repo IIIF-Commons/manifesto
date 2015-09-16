@@ -444,6 +444,7 @@ declare module Manifesto {
     interface IManifestoOptions {
         defaultLabel: string;
         locale: string;
+        navDate?: Date;
         pessimisticAccessControl: boolean;
     }
 }

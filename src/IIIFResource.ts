@@ -64,6 +64,7 @@ module Manifesto {
                     resolve(that);
                 } else {
                     var options = that.options;
+                    options.navDate = that.getNavDate();
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
                         var parsed = Deserialiser.parse(data, options);
                         that = _assign(that, parsed);

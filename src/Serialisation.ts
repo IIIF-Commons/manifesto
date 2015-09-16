@@ -9,6 +9,14 @@ module Manifesto {
 
         static parseJson(json: any, options?: IManifestoOptions): IIIIFResource {
             var object: IIIIFResource;
+
+            // have options been passed for the manifest to inherit?
+            if (options){
+                if (options.navDate && !isNaN(options.navDate.getTime())){
+                    json.navDate = options.navDate.toString();
+                }
+            }
+
             switch (json['@type']) {
             case 'sc:Collection':
                 object = this.parseCollection(json, options);

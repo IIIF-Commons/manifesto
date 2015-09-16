@@ -441,6 +441,7 @@ var Manifesto;
                 }
                 else {
                     var options = that.options;
+                    options.navDate = that.getNavDate();
                     Manifesto.Utils.loadResource(that.__jsonld['@id']).then(function (data) {
                         var parsed = Manifesto.Deserialiser.parse(data, options);
                         that = _assign(that, parsed);
@@ -864,6 +865,12 @@ var Manifesto;
         };
         Deserialiser.parseJson = function (json, options) {
             var object;
+            // have options been passed for the manifest to inherit?
+            if (options) {
+                if (options.navDate && !isNaN(options.navDate.getTime())) {
+                    json.navDate = options.navDate.toString();
+                }
+            }
             switch (json['@type']) {
                 case 'sc:Collection':
                     object = this.parseCollection(json, options);
