@@ -144,11 +144,17 @@ var Manifesto;
         ServiceProfile.prototype.clickThrough = function () {
             return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
         };
-        ServiceProfile.prototype.iiifImageLevel1 = function () {
-            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL1.toString());
+        ServiceProfile.prototype.iiif1ImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL1.toString());
         };
-        ServiceProfile.prototype.iiifImageLevel2 = function () {
-            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL2.toString());
+        ServiceProfile.prototype.iiif1ImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL2.toString());
+        };
+        ServiceProfile.prototype.iiif2ImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.iiif2ImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL2.toString());
         };
         ServiceProfile.prototype.ixif = function () {
             return new ServiceProfile(ServiceProfile.IXIF.toString());
@@ -170,8 +176,10 @@ var Manifesto;
         };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
-        ServiceProfile.IIIFIMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
-        ServiceProfile.IIIFIMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
+        ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
+        ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+        ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
+        ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
         ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
         ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
@@ -340,26 +348,32 @@ var Manifesto;
         // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
-            var uri;
+            var uri, resource, tile;
             //if(this.__jsonld.thumbnail){
             //    return this.__jsonld.thumbnail;
             //} else if (this.__jsonld.resources){
             if (this.__jsonld.resources) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.__jsonld.resources[0].resource.service['@id'];
+                resource = this.__jsonld.resources[0].resource;
             }
             else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.__jsonld.images[0].resource.service['@id'];
+                resource = this.__jsonld.images[0].resource;
             }
             else {
                 return null;
             }
+            uri = resource.service['@id'];
             if (!_endsWith(uri, '/')) {
                 uri += '/';
             }
             // todo: allow region, rotation, quality, and format as parameters?
-            var tile = 'full/' + width + ',' + height + '/0/default.jpg';
+            if (this.getService(Manifesto.ServiceProfile.IIIF1IMAGELEVEL1) || this.getService(Manifesto.ServiceProfile.IIIF1IMAGELEVEL2)) {
+                tile = 'full/' + width + ',' + height + '/0/native.jpg';
+            }
+            else {
+                tile = 'full/' + width + ',' + height + '/0/default.jpg';
+            }
             return uri + tile;
         };
         Canvas.prototype.getType = function () {

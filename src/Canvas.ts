@@ -45,27 +45,33 @@ module Manifesto {
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         getThumbUri(width: number, height: number): string {
 
-            var uri;
+            var uri, resource, tile;
 
             //if(this.__jsonld.thumbnail){
             //    return this.__jsonld.thumbnail;
             //} else if (this.__jsonld.resources){
             if (this.__jsonld.resources){
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.__jsonld.resources[0].resource.service['@id'];
+                resource = this.__jsonld.resources[0].resource;
             } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
                 // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.__jsonld.images[0].resource.service['@id'];
+                resource = this.__jsonld.images[0].resource;
             } else {
                 return null;
             }
+
+            uri = resource.service['@id'];
 
             if (!_endsWith(uri, '/')){
                 uri += '/';
             }
 
             // todo: allow region, rotation, quality, and format as parameters?
-            var tile = 'full/' + width + ',' + height + '/0/default.jpg';
+            if (this.getService(ServiceProfile.IIIF1IMAGELEVEL1) || this.getService(ServiceProfile.IIIF1IMAGELEVEL2)){
+                tile = 'full/' + width + ',' + height + '/0/native.jpg';
+            } else {
+                tile = 'full/' + width + ',' + height + '/0/default.jpg';
+            }
 
             return uri + tile;
         }

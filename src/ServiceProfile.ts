@@ -2,8 +2,10 @@ module Manifesto {
     export class ServiceProfile extends StringValue {
         public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
         public static CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
-        public static IIIFIMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
-        public static IIIFIMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
+        public static IIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
+        public static IIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+        public static IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
+        public static IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         public static IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
         public static LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
         public static LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
@@ -21,12 +23,20 @@ module Manifesto {
             return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
         }
 
-        iiifImageLevel1(): ServiceProfile {
-            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL1.toString());
+        iiif1ImageLevel1(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL1.toString());
         }
 
-        iiifImageLevel2(): ServiceProfile {
-            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL2.toString());
+        iiif1ImageLevel2(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL2.toString());
+        }
+
+        iiif2ImageLevel1(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL1.toString());
+        }
+
+        iiif2ImageLevel2(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL2.toString());
         }
 
         ixif(): ServiceProfile {

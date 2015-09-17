@@ -53,8 +53,10 @@ declare module Manifesto {
     class ServiceProfile extends StringValue {
         static AUTOCOMPLETE: ServiceProfile;
         static CLICKTHROUGH: ServiceProfile;
-        static IIIFIMAGELEVEL1: ServiceProfile;
-        static IIIFIMAGELEVEL2: ServiceProfile;
+        static IIIF1IMAGELEVEL1: ServiceProfile;
+        static IIIF1IMAGELEVEL2: ServiceProfile;
+        static IIIF2IMAGELEVEL1: ServiceProfile;
+        static IIIF2IMAGELEVEL2: ServiceProfile;
         static IXIF: ServiceProfile;
         static LOGIN: ServiceProfile;
         static LOGOUT: ServiceProfile;
@@ -63,8 +65,10 @@ declare module Manifesto {
         static TOKEN: ServiceProfile;
         autoComplete(): ServiceProfile;
         clickThrough(): ServiceProfile;
-        iiifImageLevel1(): ServiceProfile;
-        iiifImageLevel2(): ServiceProfile;
+        iiif1ImageLevel1(): ServiceProfile;
+        iiif1ImageLevel2(): ServiceProfile;
+        iiif2ImageLevel1(): ServiceProfile;
+        iiif2ImageLevel2(): ServiceProfile;
         ixif(): ServiceProfile;
         login(): ServiceProfile;
         logout(): ServiceProfile;
