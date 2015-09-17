@@ -45,7 +45,7 @@ module Manifesto {
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         getThumbUri(width: number, height: number): string {
 
-            var uri, resource, tile;
+            var uri, resource, tile, service;
 
             //if(this.__jsonld.thumbnail){
             //    return this.__jsonld.thumbnail;
@@ -60,14 +60,15 @@ module Manifesto {
                 return null;
             }
 
-            uri = resource.service['@id'];
+            service = resource.service;
+            uri = service['@id'];
 
             if (!_endsWith(uri, '/')){
                 uri += '/';
             }
 
             // todo: allow region, rotation, quality, and format as parameters?
-            if (this.getService(ServiceProfile.IIIF1IMAGELEVEL1) || this.getService(ServiceProfile.IIIF1IMAGELEVEL2)){
+            if (service.profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() || service.profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
                 tile = 'full/' + width + ',' + height + '/0/native.jpg';
             } else {
                 tile = 'full/' + width + ',' + height + '/0/default.jpg';
