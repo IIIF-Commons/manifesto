@@ -21,13 +21,15 @@ module Manifesto {
 
         generateTreeNodeIds(treeNode: TreeNode, index: number = 0): void {
 
-            var parentNodeId: string;
+            var id: string;
 
             if (!treeNode.parentNode){
-                treeNode.id = '0';
+                id = '0';
             } else {
-                treeNode.id = treeNode.parentNode.id + "/" + index;
+                id = treeNode.parentNode.id + "/" + index;
             }
+
+            treeNode.id = id.hashCode();
 
             for (var i = 0; i < treeNode.nodes.length; i++){
                 var n: TreeNode = treeNode.nodes[i];

@@ -1,6 +1,7 @@
 var browserify = require('gulp-browserify'),
     buffer = require('vinyl-buffer'),
     bump = require('gulp-bump'),
+    concat = require('gulp-concat'),
     Config = require('./gulpfile.config'),
     del = require('del'),
     gulp = require('gulp'),
@@ -89,6 +90,14 @@ gulp.task('tag', function(){
         .pipe(tag());
 });
 
+gulp.task('concat', function() {
+    var client = config.client + '/' + config.lib;
+    var server = config.server + '/' + config.lib;
+    var extensions = './bower_components/extensions/dist/extensions.js';
+    gulp.src([extensions, client]).pipe(concat(config.lib)).pipe(gulp.dest(config.client));
+    gulp.src([extensions, server]).pipe(concat(config.lib)).pipe(gulp.dest(config.server));
+});
+
 gulp.task('default', function(cb) {
-    runSequence('clean', 'build', 'browserify', cb);
+    runSequence('clean', 'build', 'browserify', 'concat', cb);
 });
