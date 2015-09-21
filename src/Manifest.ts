@@ -93,6 +93,8 @@ module Manifesto {
                 }
             }
 
+            this.generateTreeNodeIds(this.treeRoot);
+
             return this.treeRoot;
         }
 

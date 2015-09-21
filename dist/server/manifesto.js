@@ -419,6 +419,20 @@ var Manifesto;
             };
             this.options = _assign(defaultOptions, options);
         }
+        IIIFResource.prototype.generateTreeNodeIds = function (treeNode, index) {
+            if (index === void 0) { index = 0; }
+            var parentNodeId;
+            if (!treeNode.parentNode) {
+                treeNode.id = '0';
+            }
+            else {
+                treeNode.id = treeNode.parentNode.id + "/" + index;
+            }
+            for (var i = 0; i < treeNode.nodes.length; i++) {
+                var n = treeNode.nodes[i];
+                this.generateTreeNodeIds(n, i);
+            }
+        };
         IIIFResource.prototype.getAttribution = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('attribution'), this.options.locale);
         };
@@ -539,6 +553,7 @@ var Manifesto;
                     this._parseTreeNode(node, range);
                 }
             }
+            this.generateTreeNodeIds(this.treeRoot);
             return this.treeRoot;
         };
         Manifest.prototype._parseTreeNode = function (node, range) {
@@ -592,6 +607,7 @@ var Manifesto;
             this.treeRoot.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
             this._parseManifests(this);
             this._parseCollections(this);
+            this.generateTreeNodeIds(this.treeRoot);
             return this.treeRoot;
         };
         Collection.prototype._parseManifests = function (parentCollection) {

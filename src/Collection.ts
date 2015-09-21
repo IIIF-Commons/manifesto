@@ -33,6 +33,8 @@ module Manifesto {
             this._parseManifests(this);
             this._parseCollections(this);
 
+            this.generateTreeNodeIds(this.treeRoot);
+
             return this.treeRoot;
         }
 

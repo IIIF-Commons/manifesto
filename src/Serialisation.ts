@@ -18,14 +18,14 @@ module Manifesto {
             }
 
             switch (json['@type']) {
-            case 'sc:Collection':
-                object = this.parseCollection(json, options);
-                break;
-            case 'sc:Manifest':
-                object = this.parseManifest(json, options);
-                break;
-            default:
-                return null;
+                case 'sc:Collection':
+                    object = this.parseCollection(json, options);
+                    break;
+                case 'sc:Manifest':
+                    object = this.parseManifest(json, options);
+                    break;
+                default:
+                    return null;
             }
 
             // Top-level object was loaded from a URI, so flag it to prevent

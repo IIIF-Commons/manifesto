@@ -4,6 +4,7 @@ module Manifesto {
         public nodes: TreeNode[];
         public selected: boolean;
         public expanded: boolean;
+        public id: string;
         public navDate: Date;
         public parentNode: TreeNode;
 
