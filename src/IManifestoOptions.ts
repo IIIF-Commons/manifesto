@@ -2,7 +2,7 @@ module Manifesto {
     export interface IManifestoOptions {
         defaultLabel: string; // '-'
         locale: string; // 'en-GB'
-        manifest: any;
+        resource: IIIIFResource;
         navDate?: Date;
         pessimisticAccessControl: boolean; // false
     }

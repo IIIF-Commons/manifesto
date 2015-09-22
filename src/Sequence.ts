@@ -2,10 +2,26 @@ var _last = require("lodash.last");
 
 module Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
-        canvases: ICanvas[] = [];
 
         constructor(jsonld: any, options: IManifestoOptions){
             super(jsonld, options);
+        }
+
+        getCanvases(): ICanvas[] {
+            var canvases: ICanvas[] = [];
+
+            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
+            var children = this.__jsonld.elements || this.__jsonld.canvases;
+
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    var c = children[i];
+                    var canvas:ICanvas = new Canvas(c, this.options);
+                    canvases.push(canvas);
+                }
+            }
+
+            return canvases;
         }
 
         getCanvasById(id: string): ICanvas{
@@ -22,7 +38,7 @@ module Manifesto {
         }
 
         getCanvasByIndex(canvasIndex: number): any {
-            return this.canvases[canvasIndex];
+            return this.getCanvases()[canvasIndex];
         }
 
         getCanvasIndexById(id: string): number {
@@ -213,7 +229,7 @@ module Manifesto {
         }
 
         getTotalCanvases(): number{
-            return this.canvases.length;
+            return this.getCanvases().length;
         }
 
         getViewingDirection(): ViewingDirection {

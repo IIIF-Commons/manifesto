@@ -11,6 +11,14 @@ module Manifesto {
             super(jsonld, options);
         }
 
+        getCanvases(): string[] {
+            if (this.__jsonld.canvases) {
+                return this.__jsonld.canvases;
+            }
+
+            return [];
+        }
+
         getViewingDirection(): ViewingDirection {
             if (this.getProperty('viewingDirection')){
                 return new ViewingDirection(this.getProperty('viewingDirection'));

@@ -473,8 +473,6 @@ var Manifesto;
     var JSONLDResource = (function () {
         function JSONLDResource(jsonld) {
             this.__jsonld = jsonld;
-            // store a reference to the parsed object in the jsonld for convenience.
-            this.__jsonld.__parsed = this;
             this.context = this.getProperty('@context');
             this.id = this.getProperty('@id');
         }
@@ -637,6 +635,7 @@ var Manifesto;
             var defaultOptions = {
                 defaultLabel: '-',
                 locale: 'en-GB',
+                resource: this,
                 pessimisticAccessControl: false
             };
             this.options = _assign(defaultOptions, options);
@@ -715,20 +714,72 @@ var Manifesto;
         function Manifest(jsonld, options) {
             _super.call(this, jsonld, options);
             this.index = 0;
-            this.sequences = [];
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                var r = this._getRootRange();
+                this._parseRanges(r, '');
+            }
         }
-        // todo: use jmespath to flatten tree?
-        // https://github.com/jmespath/jmespath.js/issues/6
-        // using r.__parsed in the meantime
+        Manifest.prototype._getRootRange = function () {
+            var range;
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
+                        range = r;
+                    }
+                }
+                if (!range) {
+                    range = {};
+                    range.ranges = this.__jsonld.structures;
+                }
+            }
+            return range;
+        };
+        Manifest.prototype._getRangeById = function (id) {
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r['@id'] === id) {
+                        return r;
+                    }
+                }
+            }
+            return null;
+        };
+        Manifest.prototype._parseRanges = function (r, path, parentRange) {
+            var range;
+            if (_isString(r)) {
+                r = this._getRangeById(r);
+            }
+            range = new Manifesto.Range(r, this.options);
+            // if no parent range is passed, assign the new range to manifest.rootRange
+            if (!parentRange) {
+                this.rootRange = range;
+            }
+            else {
+                range.parentRange = parentRange;
+                parentRange.ranges.push(range);
+            }
+            range.path = path;
+            //if (r.canvases){
+            //    // create two-way relationship
+            //    for (var i = 0; i < r.canvases.length; i++){
+            //        var canvas: ICanvas = this.getCanvasById(manifest, r.canvases[i]);
+            //        canvas.ranges.push(range);
+            //        range.canvases.push(canvas);
+            //    }
+            //}
+            if (r.ranges) {
+                for (var j = 0; j < r.ranges.length; j++) {
+                    this._parseRanges(r.ranges[j], path + '/' + j, range);
+                }
+            }
+        };
         Manifest.prototype.getRanges = function () {
             var ranges = [];
-            var structures = this.getProperty('structures');
-            if (!structures)
-                return ranges;
-            for (var i = 0; i < structures.length; i++) {
-                var r = structures[i];
-                ranges.push(r.__parsed);
-            }
+            //if (this.rootRange){
+            //    ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
+            //}
             return ranges;
         };
         Manifest.prototype.getRangeById = function (id) {
@@ -751,11 +802,24 @@ var Manifesto;
             }
             return null;
         };
+        Manifest.prototype.getSequences = function () {
+            var sequences = [];
+            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
+            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    var s = children[i];
+                    var sequence = new Manifesto.Sequence(s, this.options);
+                    sequences.push(sequence);
+                }
+            }
+            return sequences;
+        };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
-            return this.sequences[sequenceIndex];
+            return this.getSequences()[sequenceIndex];
         };
         Manifest.prototype.getTotalSequences = function () {
-            return this.sequences.length;
+            return this.getSequences().length;
         };
         Manifest.prototype.getTree = function () {
             _super.prototype.getTree.call(this);
@@ -870,6 +934,12 @@ var Manifesto;
             this.canvases = [];
             this.ranges = [];
         }
+        Range.prototype.getCanvases = function () {
+            if (this.__jsonld.canvases) {
+                return this.__jsonld.canvases;
+            }
+            return [];
+        };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
                 return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
@@ -907,8 +977,20 @@ var Manifesto;
         __extends(Sequence, _super);
         function Sequence(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.canvases = [];
         }
+        Sequence.prototype.getCanvases = function () {
+            var canvases = [];
+            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
+            var children = this.__jsonld.elements || this.__jsonld.canvases;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    var c = children[i];
+                    var canvas = new Manifesto.Canvas(c, this.options);
+                    canvases.push(canvas);
+                }
+            }
+            return canvases;
+        };
         Sequence.prototype.getCanvasById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
@@ -919,7 +1001,7 @@ var Manifesto;
             return null;
         };
         Sequence.prototype.getCanvasByIndex = function (canvasIndex) {
-            return this.canvases[canvasIndex];
+            return this.getCanvases()[canvasIndex];
         };
         Sequence.prototype.getCanvasIndexById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
@@ -1069,7 +1151,7 @@ var Manifesto;
             return this.getProperty('startCanvas');
         };
         Sequence.prototype.getTotalCanvases = function () {
-            return this.canvases.length;
+            return this.getCanvases().length;
         };
         Sequence.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
@@ -1106,7 +1188,6 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Sequence = Sequence;
 })(Manifesto || (Manifesto = {}));
-var jmespath = require('jmespath');
 var _isString = require("lodash.isstring");
 var Manifesto;
 (function (Manifesto) {
@@ -1117,7 +1198,7 @@ var Manifesto;
             return this.parseJson(JSON.parse(manifest), options);
         };
         Deserialiser.parseJson = function (json, options) {
-            var object;
+            var resource;
             // have options been passed for the manifest to inherit?
             if (options) {
                 if (options.navDate && !isNaN(options.navDate.getTime())) {
@@ -1126,18 +1207,18 @@ var Manifesto;
             }
             switch (json['@type']) {
                 case 'sc:Collection':
-                    object = this.parseCollection(json, options);
+                    resource = this.parseCollection(json, options);
                     break;
                 case 'sc:Manifest':
-                    object = this.parseManifest(json, options);
+                    resource = this.parseManifest(json, options);
                     break;
                 default:
                     return null;
             }
-            // Top-level object was loaded from a URI, so flag it to prevent
+            // Top-level resource was loaded from a URI, so flag it to prevent
             // unnecessary reload:
-            object.isLoaded = true;
-            return object;
+            resource.isLoaded = true;
+            return resource;
         };
         Deserialiser.parseCollection = function (json, options) {
             var collection = new Manifesto.Collection(json, options);
@@ -1157,13 +1238,7 @@ var Manifesto;
             }
         };
         Deserialiser.parseManifest = function (json, options) {
-            var manifest = new Manifesto.Manifest(json, options);
-            this.parseSequences(manifest, options);
-            if (manifest.__jsonld.structures && manifest.__jsonld.structures.length) {
-                var r = JsonUtils.getRootRange(manifest.__jsonld);
-                this.parseRanges(manifest, r, '');
-            }
-            return manifest;
+            return new Manifesto.Manifest(json, options);
         };
         Deserialiser.parseManifests = function (collection, options) {
             var children = collection.__jsonld.manifests;
@@ -1175,70 +1250,6 @@ var Manifesto;
                     collection.manifests.push(child);
                 }
             }
-        };
-        Deserialiser.parseSequences = function (manifest, options) {
-            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            var children = manifest.__jsonld.mediaSequences || manifest.__jsonld.sequences;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var s = children[i];
-                    var sequence = new Manifesto.Sequence(s, options);
-                    sequence.canvases = this.parseCanvases(s, options);
-                    manifest.sequences.push(sequence);
-                }
-            }
-        };
-        Deserialiser.parseCanvases = function (sequence, options) {
-            var canvases = [];
-            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            var children = sequence.elements || sequence.canvases;
-            for (var i = 0; i < children.length; i++) {
-                var c = children[i];
-                var canvas = new Manifesto.Canvas(c, options);
-                canvases.push(canvas);
-            }
-            return canvases;
-        };
-        Deserialiser.parseRanges = function (manifest, r, path, parentRange) {
-            var range;
-            if (_isString(r)) {
-                r = JsonUtils.getRangeById(manifest.__jsonld, r);
-            }
-            range = new Manifesto.Range(r, manifest.options);
-            // if no parent range is passed, assign the new range to manifest.rootRange
-            if (!parentRange) {
-                manifest.rootRange = range;
-            }
-            else {
-                range.parentRange = parentRange;
-                parentRange.ranges.push(range);
-            }
-            range.path = path;
-            if (r.canvases) {
-                // create two-way relationship
-                for (var i = 0; i < r.canvases.length; i++) {
-                    var canvas = this.getCanvasById(manifest, r.canvases[i]);
-                    canvas.ranges.push(range);
-                    range.canvases.push(canvas);
-                }
-            }
-            if (r.ranges) {
-                for (var j = 0; j < r.ranges.length; j++) {
-                    this.parseRanges(manifest, r.ranges[j], path + '/' + j, range);
-                }
-            }
-        };
-        Deserialiser.getCanvasById = function (manifest, id) {
-            for (var i = 0; i < manifest.sequences.length; i++) {
-                var sequence = manifest.sequences[i];
-                for (var j = 0; j < sequence.canvases.length; j++) {
-                    var canvas = sequence.canvases[j];
-                    if (canvas.id === id) {
-                        return canvas;
-                    }
-                }
-            }
-            return null;
         };
         return Deserialiser;
     })();
@@ -1253,33 +1264,6 @@ var Manifesto;
         return Serialiser;
     })();
     Manifesto.Serialiser = Serialiser;
-    var JsonUtils = (function () {
-        function JsonUtils() {
-        }
-        JsonUtils.getCanvasById = function (manifest, id) {
-            var result = jmespath.search(manifest, "sequences[].canvases[?\"@id\"=='" + id + "'][]");
-            if (result.length)
-                return result[0];
-            console.log("canvas " + id + " not found");
-            return null;
-        };
-        JsonUtils.getRangeById = function (manifest, id) {
-            var result = jmespath.search(manifest, "structures[?\"@id\"=='" + id + "'][]");
-            if (result.length)
-                return result[0];
-            console.log("range " + id + " not found");
-            return null;
-        };
-        JsonUtils.getRootRange = function (manifest) {
-            var result = jmespath.search(manifest, "structures[?viewingHint=='top'][]");
-            if (result.length)
-                return result[0];
-            var rootRange = {};
-            rootRange.ranges = manifest.structures;
-            return rootRange;
-        };
-        return JsonUtils;
-    })();
 })(Manifesto || (Manifesto = {}));
 var _endsWith = require("lodash.endswith");
 var Manifesto;
@@ -1593,7 +1577,7 @@ var Manifesto;
             return null;
         };
         Utils.getServiceByReference = function (resource, id) {
-            var services = this.getServices(resource.options.manifest);
+            var services = this.getServices(resource.options.resource);
             var service;
             for (var i = 0; i < services.length; i++) {
                 var s = services[i];

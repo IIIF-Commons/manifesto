@@ -474,8 +474,6 @@ var Manifesto;
     var JSONLDResource = (function () {
         function JSONLDResource(jsonld) {
             this.__jsonld = jsonld;
-            // store a reference to the parsed object in the jsonld for convenience.
-            this.__jsonld.__parsed = this;
             this.context = this.getProperty('@context');
             this.id = this.getProperty('@id');
         }
@@ -638,6 +636,7 @@ var Manifesto;
             var defaultOptions = {
                 defaultLabel: '-',
                 locale: 'en-GB',
+                resource: this,
                 pessimisticAccessControl: false
             };
             this.options = _assign(defaultOptions, options);
@@ -716,20 +715,72 @@ var Manifesto;
         function Manifest(jsonld, options) {
             _super.call(this, jsonld, options);
             this.index = 0;
-            this.sequences = [];
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                var r = this._getRootRange();
+                this._parseRanges(r, '');
+            }
         }
-        // todo: use jmespath to flatten tree?
-        // https://github.com/jmespath/jmespath.js/issues/6
-        // using r.__parsed in the meantime
+        Manifest.prototype._getRootRange = function () {
+            var range;
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
+                        range = r;
+                    }
+                }
+                if (!range) {
+                    range = {};
+                    range.ranges = this.__jsonld.structures;
+                }
+            }
+            return range;
+        };
+        Manifest.prototype._getRangeById = function (id) {
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r['@id'] === id) {
+                        return r;
+                    }
+                }
+            }
+            return null;
+        };
+        Manifest.prototype._parseRanges = function (r, path, parentRange) {
+            var range;
+            if (_isString(r)) {
+                r = this._getRangeById(r);
+            }
+            range = new Manifesto.Range(r, this.options);
+            // if no parent range is passed, assign the new range to manifest.rootRange
+            if (!parentRange) {
+                this.rootRange = range;
+            }
+            else {
+                range.parentRange = parentRange;
+                parentRange.ranges.push(range);
+            }
+            range.path = path;
+            //if (r.canvases){
+            //    // create two-way relationship
+            //    for (var i = 0; i < r.canvases.length; i++){
+            //        var canvas: ICanvas = this.getCanvasById(manifest, r.canvases[i]);
+            //        canvas.ranges.push(range);
+            //        range.canvases.push(canvas);
+            //    }
+            //}
+            if (r.ranges) {
+                for (var j = 0; j < r.ranges.length; j++) {
+                    this._parseRanges(r.ranges[j], path + '/' + j, range);
+                }
+            }
+        };
         Manifest.prototype.getRanges = function () {
             var ranges = [];
-            var structures = this.getProperty('structures');
-            if (!structures)
-                return ranges;
-            for (var i = 0; i < structures.length; i++) {
-                var r = structures[i];
-                ranges.push(r.__parsed);
-            }
+            //if (this.rootRange){
+            //    ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
+            //}
             return ranges;
         };
         Manifest.prototype.getRangeById = function (id) {
@@ -752,11 +803,24 @@ var Manifesto;
             }
             return null;
         };
+        Manifest.prototype.getSequences = function () {
+            var sequences = [];
+            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
+            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    var s = children[i];
+                    var sequence = new Manifesto.Sequence(s, this.options);
+                    sequences.push(sequence);
+                }
+            }
+            return sequences;
+        };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
-            return this.sequences[sequenceIndex];
+            return this.getSequences()[sequenceIndex];
         };
         Manifest.prototype.getTotalSequences = function () {
-            return this.sequences.length;
+            return this.getSequences().length;
         };
         Manifest.prototype.getTree = function () {
             _super.prototype.getTree.call(this);
@@ -871,6 +935,12 @@ var Manifesto;
             this.canvases = [];
             this.ranges = [];
         }
+        Range.prototype.getCanvases = function () {
+            if (this.__jsonld.canvases) {
+                return this.__jsonld.canvases;
+            }
+            return [];
+        };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
                 return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
@@ -908,8 +978,20 @@ var Manifesto;
         __extends(Sequence, _super);
         function Sequence(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.canvases = [];
         }
+        Sequence.prototype.getCanvases = function () {
+            var canvases = [];
+            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
+            var children = this.__jsonld.elements || this.__jsonld.canvases;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    var c = children[i];
+                    var canvas = new Manifesto.Canvas(c, this.options);
+                    canvases.push(canvas);
+                }
+            }
+            return canvases;
+        };
         Sequence.prototype.getCanvasById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
@@ -920,7 +1002,7 @@ var Manifesto;
             return null;
         };
         Sequence.prototype.getCanvasByIndex = function (canvasIndex) {
-            return this.canvases[canvasIndex];
+            return this.getCanvases()[canvasIndex];
         };
         Sequence.prototype.getCanvasIndexById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
@@ -1070,7 +1152,7 @@ var Manifesto;
             return this.getProperty('startCanvas');
         };
         Sequence.prototype.getTotalCanvases = function () {
-            return this.canvases.length;
+            return this.getCanvases().length;
         };
         Sequence.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
@@ -1107,7 +1189,6 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Sequence = Sequence;
 })(Manifesto || (Manifesto = {}));
-var jmespath = _dereq_('jmespath');
 var _isString = _dereq_("lodash.isstring");
 var Manifesto;
 (function (Manifesto) {
@@ -1118,7 +1199,7 @@ var Manifesto;
             return this.parseJson(JSON.parse(manifest), options);
         };
         Deserialiser.parseJson = function (json, options) {
-            var object;
+            var resource;
             // have options been passed for the manifest to inherit?
             if (options) {
                 if (options.navDate && !isNaN(options.navDate.getTime())) {
@@ -1127,18 +1208,18 @@ var Manifesto;
             }
             switch (json['@type']) {
                 case 'sc:Collection':
-                    object = this.parseCollection(json, options);
+                    resource = this.parseCollection(json, options);
                     break;
                 case 'sc:Manifest':
-                    object = this.parseManifest(json, options);
+                    resource = this.parseManifest(json, options);
                     break;
                 default:
                     return null;
             }
-            // Top-level object was loaded from a URI, so flag it to prevent
+            // Top-level resource was loaded from a URI, so flag it to prevent
             // unnecessary reload:
-            object.isLoaded = true;
-            return object;
+            resource.isLoaded = true;
+            return resource;
         };
         Deserialiser.parseCollection = function (json, options) {
             var collection = new Manifesto.Collection(json, options);
@@ -1158,13 +1239,7 @@ var Manifesto;
             }
         };
         Deserialiser.parseManifest = function (json, options) {
-            var manifest = new Manifesto.Manifest(json, options);
-            this.parseSequences(manifest, options);
-            if (manifest.__jsonld.structures && manifest.__jsonld.structures.length) {
-                var r = JsonUtils.getRootRange(manifest.__jsonld);
-                this.parseRanges(manifest, r, '');
-            }
-            return manifest;
+            return new Manifesto.Manifest(json, options);
         };
         Deserialiser.parseManifests = function (collection, options) {
             var children = collection.__jsonld.manifests;
@@ -1176,70 +1251,6 @@ var Manifesto;
                     collection.manifests.push(child);
                 }
             }
-        };
-        Deserialiser.parseSequences = function (manifest, options) {
-            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            var children = manifest.__jsonld.mediaSequences || manifest.__jsonld.sequences;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var s = children[i];
-                    var sequence = new Manifesto.Sequence(s, options);
-                    sequence.canvases = this.parseCanvases(s, options);
-                    manifest.sequences.push(sequence);
-                }
-            }
-        };
-        Deserialiser.parseCanvases = function (sequence, options) {
-            var canvases = [];
-            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            var children = sequence.elements || sequence.canvases;
-            for (var i = 0; i < children.length; i++) {
-                var c = children[i];
-                var canvas = new Manifesto.Canvas(c, options);
-                canvases.push(canvas);
-            }
-            return canvases;
-        };
-        Deserialiser.parseRanges = function (manifest, r, path, parentRange) {
-            var range;
-            if (_isString(r)) {
-                r = JsonUtils.getRangeById(manifest.__jsonld, r);
-            }
-            range = new Manifesto.Range(r, manifest.options);
-            // if no parent range is passed, assign the new range to manifest.rootRange
-            if (!parentRange) {
-                manifest.rootRange = range;
-            }
-            else {
-                range.parentRange = parentRange;
-                parentRange.ranges.push(range);
-            }
-            range.path = path;
-            if (r.canvases) {
-                // create two-way relationship
-                for (var i = 0; i < r.canvases.length; i++) {
-                    var canvas = this.getCanvasById(manifest, r.canvases[i]);
-                    canvas.ranges.push(range);
-                    range.canvases.push(canvas);
-                }
-            }
-            if (r.ranges) {
-                for (var j = 0; j < r.ranges.length; j++) {
-                    this.parseRanges(manifest, r.ranges[j], path + '/' + j, range);
-                }
-            }
-        };
-        Deserialiser.getCanvasById = function (manifest, id) {
-            for (var i = 0; i < manifest.sequences.length; i++) {
-                var sequence = manifest.sequences[i];
-                for (var j = 0; j < sequence.canvases.length; j++) {
-                    var canvas = sequence.canvases[j];
-                    if (canvas.id === id) {
-                        return canvas;
-                    }
-                }
-            }
-            return null;
         };
         return Deserialiser;
     })();
@@ -1254,33 +1265,6 @@ var Manifesto;
         return Serialiser;
     })();
     Manifesto.Serialiser = Serialiser;
-    var JsonUtils = (function () {
-        function JsonUtils() {
-        }
-        JsonUtils.getCanvasById = function (manifest, id) {
-            var result = jmespath.search(manifest, "sequences[].canvases[?\"@id\"=='" + id + "'][]");
-            if (result.length)
-                return result[0];
-            console.log("canvas " + id + " not found");
-            return null;
-        };
-        JsonUtils.getRangeById = function (manifest, id) {
-            var result = jmespath.search(manifest, "structures[?\"@id\"=='" + id + "'][]");
-            if (result.length)
-                return result[0];
-            console.log("range " + id + " not found");
-            return null;
-        };
-        JsonUtils.getRootRange = function (manifest) {
-            var result = jmespath.search(manifest, "structures[?viewingHint=='top'][]");
-            if (result.length)
-                return result[0];
-            var rootRange = {};
-            rootRange.ranges = manifest.structures;
-            return rootRange;
-        };
-        return JsonUtils;
-    })();
 })(Manifesto || (Manifesto = {}));
 var _endsWith = _dereq_("lodash.endswith");
 var Manifesto;
@@ -1594,7 +1578,7 @@ var Manifesto;
             return null;
         };
         Utils.getServiceByReference = function (resource, id) {
-            var services = this.getServices(resource.options.manifest);
+            var services = this.getServices(resource.options.resource);
             var service;
             for (var i = 0; i < services.length; i++) {
                 var s = services[i];
@@ -1833,7 +1817,7 @@ var Manifesto;
     Manifesto.ResourceType = ResourceType;
 })(Manifesto || (Manifesto = {}));
 
-},{"http":6,"jmespath":27,"lodash.assign":40,"lodash.endswith":50,"lodash.isarray":52,"lodash.isstring":53,"lodash.last":54,"lodash.map":55,"url":24}],2:[function(_dereq_,module,exports){
+},{"http":6,"lodash.assign":27,"lodash.endswith":37,"lodash.isarray":39,"lodash.isstring":40,"lodash.last":41,"lodash.map":42,"url":24}],2:[function(_dereq_,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -8085,1770 +8069,117 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,_dereq_("ngpmcQ"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./support/isBuffer":25,"inherits":10,"ngpmcQ":11}],27:[function(_dereq_,module,exports){
-var _indexOf = _dereq_("lodash.indexof");
-var _isArray = _dereq_("lodash.isarray");
-var _isObject = _dereq_("lodash.isobject");
-var _keys = _dereq_("lodash.keys");
-var _lastIndexOf = _dereq_("lodash.lastindexof");
-var _toString = _dereq_("lodash._basetostring");
-
-(function(exports) {
-  "use strict";
-
-  function strictDeepEqual(first, second) {
-    // Check the scalar case first.
-    if (first === second) {
-      return true;
-    }
-
-    // Check if they are the same type.
-    var firstType = _toString(first);// toString.call(first);
-    if (firstType !== _toString(second)){// toString.call(second)) {
-      return false;
-    }
-    // We know that first and second have the same type so we can just check the
-    // first type from now on.
-    if (_isArray(first) === true) {
-      // Short circuit if they're not the same length;
-      if (first.length !== second.length) {
-        return false;
-      }
-      for (var i = 0; i < first.length; i++) {
-        if (strictDeepEqual(first[i], second[i]) === false) {
-          return false;
-        }
-      }
-      return true;
-    }
-    if (_isObject(first) === true) {
-      // An object is equal if it has the same key/value pairs.
-      var keysSeen = {};
-      for (var key in first) {
-        if (hasOwnProperty.call(first, key)) {
-          if (strictDeepEqual(first[key], second[key]) === false) {
-            return false;
-          }
-          keysSeen[key] = true;
-        }
-      }
-      // Now check that there aren't any keys in second that weren't
-      // in first.
-      for (var key2 in second) {
-        if (hasOwnProperty.call(second, key2)) {
-          if (keysSeen[key2] !== true) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-    return false;
-  }
-
-  function isFalse(obj) {
-    // From the spec:
-    // A false value corresponds to the following values:
-    // Empty list
-    // Empty object
-    // Empty string
-    // False boolean
-    // null value
-
-    // First check the scalar values.
-    if (obj === "" || obj === false || obj === null) {
-        return true;
-    } else if (_isArray(obj) && obj.length === 0) {
-        // Check for an empty array.
-        return true;
-    } else if (_isObject(obj)) {
-        // Check for an empty object.
-        for (var key in obj) {
-            // If there are any keys, then
-            // the object is not empty so the object
-            // is not false.
-            if (obj.hasOwnProperty(key)) {
-              return false;
-            }
-        }
-        return true;
-    } else {
-        return false;
-    }
-  }
-
-  function objValues(obj) {
-    var keys = _keys(obj);
-    var values = [];
-    for (var i = 0; i < keys.length; i++) {
-      values.push(obj[keys[i]]);
-    }
-    return values;
-  }
-
-  function merge(a, b) {
-      var merged = {};
-      for (var key in a) {
-          merged[key] = a[key];
-      }
-      for (var key2 in b) {
-          merged[key2] = b[key2];
-      }
-      return merged;
-  }
-
-
-  // The "[", "<", ">" tokens
-  // are not in basicToken because
-  // there are two token variants
-  // ("[?", "<=", ">=").  This is specially handled
-  // below.
-
-  var basicTokens = {
-    ".": "Dot",
-    "*": "Star",
-    ",": "Comma",
-    ":": "Colon",
-    "{": "Lbrace",
-    "}": "Rbrace",
-    "]": "Rbracket",
-    "(": "Lparen",
-    ")": "Rparen",
-    "@": "Current",
-    "&": "Expref"
-  };
-
-  var identifierStart = {
-      a: true, b: true, c: true, d: true, e: true, f: true, g: true, h: true,
-      i: true, j: true, k: true, l: true, m: true, n: true, o: true, p: true,
-      q: true, r: true, s: true, t: true, u: true, v: true, w: true, x: true,
-      y: true, z: true, A: true, B: true, C: true, D: true, E: true, F: true,
-      G: true, H: true, I: true, J: true, K: true, L: true, M: true, N: true,
-      O: true, P: true, Q: true, R: true, S: true, T: true, U: true, V: true,
-      W: true, X: true, Y: true, Z: true, _: true
-  };
-
-  var operatorStartToken = {
-      "<": true,
-      ">": true,
-      "=": true,
-      "!": true
-  };
-
-  var numbers = {
-      0: true,
-      1: true,
-      2: true,
-      3: true,
-      4: true,
-      5: true,
-      6: true,
-      7: true,
-      8: true,
-      9: true,
-      "-": true
-  };
-
-  var identifierTrailing = merge(identifierStart, numbers);
-
-  var skipChars = {
-      " ": true,
-      "\t": true,
-      "\n": true
-  };
-
-
-  function Lexer() {
-  }
-  Lexer.prototype = {
-      tokenize: function(stream) {
-          var tokens = [];
-          this.current = 0;
-          var start;
-          var identifier;
-          var token;
-          while (this.current < stream.length) {
-              if (identifierStart[stream[this.current]] !== undefined) {
-                  start = this.current;
-                  identifier = this.consumeUnquotedIdentifier(stream);
-                  tokens.push({type: "UnquotedIdentifier",
-                               value: identifier,
-                               start: start});
-              } else if (basicTokens[stream[this.current]] !== undefined) {
-                  tokens.push({type: basicTokens[stream[this.current]],
-                              value: stream[this.current],
-                              start: this.current});
-                  this.current++;
-              } else if (numbers[stream[this.current]] !== undefined) {
-                  token = this.consumeNumber(stream);
-                  tokens.push(token);
-              } else if (stream[this.current] === "[") {
-                  // No need to increment this.current.  This happens
-                  // in consumeLBracket
-                  token = this.consumeLBracket(stream);
-                  tokens.push(token);
-              } else if (stream[this.current] === "\"") {
-                  start = this.current;
-                  identifier = this.consumeQuotedIdentifier(stream);
-                  tokens.push({type: "QuotedIdentifier",
-                               value: identifier,
-                               start: start});
-              } else if (stream[this.current] === "'") {
-                  start = this.current;
-                  identifier = this.consumeRawStringLiteral(stream);
-                  tokens.push({type: "Literal",
-                               value: identifier,
-                               start: start});
-              } else if (stream[this.current] === "`") {
-                  start = this.current;
-                  var literal = this.consumeLiteral(stream);
-                  tokens.push({type: "Literal",
-                               value: literal,
-                               start: start});
-              } else if (operatorStartToken[stream[this.current]] !== undefined) {
-                  tokens.push(this.consumeOperator(stream));
-              } else if (skipChars[stream[this.current]] !== undefined) {
-                  // Ignore whitespace.
-                  this.current++;
-              } else if (stream[this.current] === "|") {
-                  start = this.current;
-                  this.current++;
-                  if (stream[this.current] === "|") {
-                      this.current++;
-                      tokens.push({type: "Or", value: "||", start: start});
-                  } else {
-                      tokens.push({type: "Pipe", value: "|", start: start});
-                  }
-              } else {
-                  var error = new Error("Unknown character:" + stream[this.current]);
-                  error.name = "LexerError";
-                  throw error;
-              }
-          }
-          return tokens;
-      },
-
-      consumeUnquotedIdentifier: function(stream) {
-          var start = this.current;
-          this.current++;
-          while (identifierTrailing[stream[this.current]] !== undefined) {
-              this.current++;
-          }
-          return stream.slice(start, this.current);
-      },
-
-      consumeQuotedIdentifier: function(stream) {
-          var start = this.current;
-          this.current++;
-          var maxLength = stream.length;
-          while (stream[this.current] !== "\"" && this.current < maxLength) {
-              // You can escape a double quote and you can escape an escape.
-              var current = this.current;
-              if (stream[current] === "\\" && (stream[current + 1] === "\\" ||
-                                               stream[current + 1] === "\"")) {
-                  current += 2;
-              } else {
-                  current++;
-              }
-              this.current = current;
-          }
-          this.current++;
-          return JSON.parse(stream.slice(start, this.current));
-      },
-
-      consumeRawStringLiteral: function(stream) {
-          var start = this.current;
-          this.current++;
-          var maxLength = stream.length;
-          while (stream[this.current] !== "'" && this.current < maxLength) {
-              // You can escape a single quote and you can escape an escape.
-              var current = this.current;
-              if (stream[current] === "\\" && (stream[current + 1] === "\\" ||
-                                               stream[current + 1] === "'")) {
-                  current += 2;
-              } else {
-                  current++;
-              }
-              this.current = current;
-          }
-          this.current++;
-          return stream.slice(start + 1, this.current - 1);
-      },
-
-      consumeNumber: function(stream) {
-          var start = this.current;
-          this.current++;
-          var maxLength = stream.length;
-          while (numbers[stream[this.current]] !== undefined && this.current < maxLength) {
-              this.current++;
-          }
-          var value = parseInt(stream.slice(start, this.current));
-          return {type: "Number", value: value, start: start};
-      },
-
-      consumeLBracket: function(stream) {
-          var start = this.current;
-          this.current++;
-          if (stream[this.current] === "?") {
-              this.current++;
-              return {type: "Filter", value: "[?", start: start};
-          } else if (stream[this.current] === "]") {
-              this.current++;
-              return {type: "Flatten", value: "[]", start: start};
-          } else {
-              return {type: "Lbracket", value: "[", start: start};
-          }
-      },
-
-      consumeOperator: function(stream) {
-          var start = this.current;
-          var startingChar = stream[start];
-          this.current++;
-          if (startingChar === "!") {
-              if (stream[this.current] === "=") {
-                  this.current++;
-                  return {type: "NE", value: "!=", start: start};
-              }
-          } else if (startingChar === "<") {
-              if (stream[this.current] === "=") {
-                  this.current++;
-                  return {type: "LTE", value: "<=", start: start};
-              } else {
-                  return {type: "LT", value: "<", start: start};
-              }
-          } else if (startingChar === ">") {
-              if (stream[this.current] === "=") {
-                  this.current++;
-                  return {type: "GTE", value: ">=", start: start};
-              } else {
-                  return {type: "GT", value: ">", start: start};
-              }
-          } else if (startingChar === "=") {
-              if (stream[this.current] === "=") {
-                  this.current++;
-                  return {type: "EQ", value: "==", start: start};
-              }
-          }
-      },
-
-      consumeLiteral: function(stream) {
-          this.current++;
-          var start = this.current;
-          var maxLength = stream.length;
-          var literal;
-          while(stream[this.current] !== "`" && this.current < maxLength) {
-              // You can escape a literal char or you can escape the escape.
-              var current = this.current;
-              if (stream[current] === "\\" && (stream[current + 1] === "\\" ||
-                                               stream[current + 1] === "`")) {
-                  current += 2;
-              } else {
-                  current++;
-              }
-              this.current = current;
-          }
-          var literalString = stream.slice(start, this.current).trimLeft();
-          literalString = literalString.replace("\\`", "`");
-          if (this.looksLikeJSON(literalString)) {
-              literal = JSON.parse(literalString);
-          } else {
-              // Try to JSON parse it as "<literal>"
-              literal = JSON.parse("\"" + literalString + "\"");
-          }
-          // +1 gets us to the ending "`", +1 to move on to the next char.
-          this.current++;
-          return literal;
-      },
-
-      looksLikeJSON: function(literalString) {
-          var startingChars = "[{\"";
-          var jsonLiterals = ["true", "false", "null"];
-          var numberLooking = "-0123456789";
-
-          if (literalString === "") {
-              return false;
-          } else if (_indexOf(startingChars, literalString[0]) >= 0) {
-              return true;
-          } else if (_indexOf(jsonLiterals, literalString) >= 0) {
-              return true;
-          } else if (_indexOf(numberLooking, literalString[0]) >= 0) {
-              try {
-                  JSON.parse(literalString);
-                  return true;
-              } catch (ex) {
-                  return false;
-              }
-          } else {
-              return false;
-          }
-      }
-  };
-
-
-  function Parser() {
-      this.bindingPower = {
-          "EOF": 0,
-          "UnquotedIdentifier": 0,
-          "QuotedIdentifier": 0,
-          "Rbracket": 0,
-          "Rparen": 0,
-          "Comma": 0,
-          "Rbrace": 0,
-          "Number": 0,
-          "Current": 0,
-          "Expref": 0,
-          "Pipe": 1,
-          "EQ": 2,
-          "GT": 2,
-          "LT": 2,
-          "GTE": 2,
-          "LTE": 2,
-          "NE": 2,
-          "Or": 5,
-          "Flatten": 6,
-          "Star": 20,
-          "Filter": 20,
-          "Dot": 40,
-          "Lbrace": 50,
-          "Lbracket": 55,
-          "Lparen": 60
-      };
-  }
-
-  Parser.prototype = {
-      parse: function(expression) {
-          this.loadTokens(expression);
-          this.index = 0;
-          var ast = this.expression(0);
-          if (this.lookahead(0) !== "EOF") {
-              var t = this.lookaheadToken(0);
-              var error = new Error(
-                  "Unexpected token type: " + t.type + ", value: " + t.value);
-              error.name = "ParserError";
-              throw error;
-          }
-          return ast;
-      },
-
-      loadTokens: function(expression) {
-          var lexer = new Lexer();
-          var tokens = lexer.tokenize(expression);
-          tokens.push({type: "EOF", value: "", start: expression.length});
-          this.tokens = tokens;
-      },
-
-      expression: function(rbp) {
-          var leftToken = this.lookaheadToken(0);
-          this.advance();
-          var name = "nud" + leftToken.type;
-          var nudMethod = this[name] || this.errorToken;
-          var left = nudMethod.call(this, leftToken);
-          var currentToken = this.lookahead(0);
-          while (rbp < this.bindingPower[currentToken]) {
-              var ledMethod = this["led" + currentToken];
-              if (ledMethod === undefined) {
-                  this.errorToken(this.lookaheadToken(0));
-              }
-              this.advance();
-              left = ledMethod.call(this, left);
-              currentToken = this.lookahead(0);
-          }
-          return left;
-      },
-
-      lookahead: function(number) {
-          return this.tokens[this.index + number].type;
-      },
-
-      lookaheadToken: function(number) {
-          return this.tokens[this.index + number];
-      },
-
-      advance: function() {
-          this.index++;
-      },
-
-      match: function(tokenType) {
-          if (this.lookahead(0) === tokenType) {
-              this.advance();
-          } else {
-              var t = this.lookaheadToken(0);
-              var error = new Error("Expected " + tokenType + ", got: " + t.type);
-              error.name = "ParserError";
-              throw error;
-          }
-      },
-
-      errorToken: function(token) {
-          var error = new Error("Invalid token (" +
-                                token.type + "): \"" +
-                                token.value + "\"");
-          error.name = "ParserError";
-          throw error;
-      },
-
-      nudLiteral: function(token) {
-          return {type: "Literal", value: token.value};
-      },
-
-      nudUnquotedIdentifier: function(token) {
-          return {type: "Field", name: token.value};
-      },
-
-      nudExpref: function() {
-        var expression = this.expression(this.bindingPower.Expref);
-        return {type: "ExpressionReference", children: [expression]};
-      },
-
-      nudQuotedIdentifier: function(token) {
-          var node = {type: "Field", name: token.value};
-          if (this.lookahead(0) === "Lparen") {
-              throw new Error("Quoted identifier not allowed for function names.");
-          } else {
-              return node;
-          }
-      },
-
-      ledOr: function(left) {
-        var right = this.expression(this.bindingPower.Or);
-        return {type: "OrExpression", children: [left, right]};
-      },
-
-      ledPipe: function(left) {
-          var right = this.expression(this.bindingPower.Pipe);
-          return {type: "Pipe", children: [left, right]};
-      },
-
-      nudStar: function() {
-          var left = {type: "Identity"};
-          var right = null;
-          if (this.lookahead(0) === "Rbracket") {
-              // This can happen in a multiselect,
-              // [a, b, *]
-              right = {type: "Identity"};
-          } else {
-              right = this.parseProjectionRHS(this.bindingPower.Star);
-          }
-          return {type: "ValueProjection", children: [left, right]};
-      },
-
-      nudCurrent: function() {
-          return {type: "Current"};
-      },
-
-      nudLbracket: function() {
-          var right;
-          if (this.lookahead(0) === "Number" || this.lookahead(0) === "Colon") {
-              right = this.parseIndexExpression();
-              return this.projectIfSlice({type: "Identity"}, right);
-          } else if (this.lookahead(0) === "Star" &&
-                     this.lookahead(1) === "Rbracket") {
-              this.advance();
-              this.advance();
-              right = this.parseProjectionRHS(this.bindingPower.Star);
-              return {type: "Projection",
-                      children: [{type: "Identity"}, right]};
-          } else {
-              return this.parseMultiselectList();
-          }
-      },
-
-      parseIndexExpression: function() {
-          if (this.lookahead(0) === "Colon" || this.lookahead(1) === "Colon") {
-              return this.parseSliceExpression();
-          } else {
-              var node = {
-                  type: "Index",
-                  value: this.lookaheadToken(0).value};
-              this.advance();
-              this.match("Rbracket");
-              return node;
-          }
-      },
-
-      projectIfSlice: function(left, right) {
-          var indexExpr = {type: "IndexExpression", children: [left, right]};
-          if (right.type === "Slice") {
-              return {
-                  type: "Projection",
-                  children: [indexExpr, this.parseProjectionRHS(this.bindingPower.Star)]
-              };
-          } else {
-              return indexExpr;
-          }
-      },
-
-      parseSliceExpression: function() {
-          // [start:end:step] where each part is optional, as well as the last
-          // colon.
-          var parts = [null, null, null];
-          var index = 0;
-          var currentToken = this.lookahead(0);
-          while (currentToken !== "Rbracket" && index < 3) {
-              if (currentToken === "Colon") {
-                  index++;
-                  this.advance();
-              } else if (currentToken === "Number") {
-                  parts[index] = this.lookaheadToken(0).value;
-                  this.advance();
-              } else {
-                  var t = this.lookahead(0);
-                  var error = new Error("Syntax error, unexpected token: " +
-                                        t.value + "(" + t.type + ")");
-                  error.name = "Parsererror";
-                  throw error;
-              }
-              currentToken = this.lookahead(0);
-          }
-          this.match("Rbracket");
-          return {
-              type: "Slice",
-              children: parts
-          };
-      },
-
-      nudLbrace: function() {
-          return this.parseMultiselectHash();
-      },
-
-      ledDot: function(left) {
-          var rbp = this.bindingPower.Dot;
-          var right;
-          if (this.lookahead(0) !== "Star") {
-              right = this.parseDotRHS(rbp);
-              return {type: "Subexpression", children: [left, right]};
-          } else {
-              // Creating a projection.
-              this.advance();
-              right = this.parseProjectionRHS(rbp);
-              return {type: "ValueProjection", children: [left, right]};
-          }
-      },
-
-      nudFilter: function() {
-        return this.ledFilter({type: "Identity"});
-      },
-
-      ledFilter: function(left) {
-        var condition = this.expression(0);
-        var right;
-        this.match("Rbracket");
-        if (this.lookahead(0) === "Flatten") {
-          right = {type: "Identity"};
-        } else {
-          right = this.parseProjectionRHS(this.bindingPower.Filter);
-        }
-        return {type: "FilterProjection", children: [left, right, condition]};
-      },
-
-      ledEQ: function(left) {
-        return this.parseComparator(left, "EQ");
-      },
-
-      ledNE: function(left) {
-        return this.parseComparator(left, "NE");
-      },
-
-      ledGT: function(left) {
-        return this.parseComparator(left, "GT");
-      },
-
-      ledGTE: function(left) {
-        return this.parseComparator(left, "GTE");
-      },
-
-      ledLT: function(left) {
-        return this.parseComparator(left, "LT");
-      },
-
-      ledLTE: function(left) {
-        return this.parseComparator(left, "LTE");
-      },
-
-      parseComparator: function(left, comparator) {
-        var right = this.expression(this.bindingPower[comparator]);
-        return {type: "Comparator", name: comparator, children: [left, right]};
-      },
-
-      ledLbracket: function(left) {
-          var token = this.lookaheadToken(0);
-          var right;
-          if (token.type === "Number" || token.type === "Colon") {
-              right = this.parseIndexExpression();
-              return this.projectIfSlice(left, right);
-          } else {
-              this.match("Star");
-              this.match("Rbracket");
-              right = this.parseProjectionRHS(this.bindingPower.Star);
-              return {type: "Projection", children: [left, right]};
-          }
-      },
-
-      nudFlatten: function() {
-          var left = {type: "Flatten", children: [{type: "Identity"}]};
-          var right = this.parseProjectionRHS(this.bindingPower.Flatten);
-          return {type: "Projection", children: [left, right]};
-      },
-
-      ledFlatten: function(left) {
-          var leftNode = {type: "Flatten", children: [left]};
-          var rightNode = this.parseProjectionRHS(this.bindingPower.Flatten);
-          return {type: "Projection", children: [leftNode, rightNode]};
-      },
-
-      ledLparen: function(left) {
-        var name = left.name;
-        var args = [];
-        var expression, node;
-        while (this.lookahead(0) !== "Rparen") {
-          if (this.lookahead(0) === "Current") {
-            expression = {type: "Current"};
-            this.advance();
-          } else {
-            expression = this.expression(0);
-          }
-          if (this.lookahead(0) === "Comma") {
-            this.match("Comma");
-          }
-          args.push(expression);
-        }
-        this.match("Rparen");
-        node = {type: "Function", name: name, children: args};
-        return node;
-      },
-
-      parseDotRHS: function(rbp) {
-          var lookahead = this.lookahead(0);
-          var exprTokens = ["UnquotedIdentifier", "QuotedIdentifier", "Star"];
-          if (_indexOf(exprTokens, lookahead) >= 0) {
-              return this.expression(rbp);
-          } else if (lookahead === "Lbracket") {
-              this.match("Lbracket");
-              return this.parseMultiselectList();
-          } else if (lookahead === "Lbrace") {
-              this.match("Lbrace");
-              return this.parseMultiselectHash();
-          }
-      },
-
-      parseProjectionRHS: function(rbp) {
-          var right;
-          if (this.bindingPower[this.lookahead(0)] < 10) {
-              right = {type: "Identity"};
-          } else if (this.lookahead(0) === "Lbracket") {
-              right = this.expression(rbp);
-          } else if (this.lookahead(0) === "Filter") {
-              right = this.expression(rbp);
-          } else if (this.lookahead(0) === "Dot") {
-              this.match("Dot");
-              right = this.parseDotRHS(rbp);
-          } else {
-              var t = this.lookaheadToken(0);
-              var error = new Error("Sytanx error, unexpected token: " +
-                                    t.value + "(" + t.type + ")");
-              error.name = "ParserError";
-              throw error;
-          }
-          return right;
-      },
-
-      parseMultiselectList: function() {
-          var expressions = [];
-          while (this.lookahead(0) !== "Rbracket") {
-              var expression = this.expression(0);
-              expressions.push(expression);
-              if (this.lookahead(0) === "Comma") {
-                  this.match("Comma");
-                  if (this.lookahead(0) === "Rbracket") {
-                    throw new Error("Unexpected token Rbracket");
-                  }
-              }
-          }
-          this.match("Rbracket");
-          return {type: "MultiSelectList", children: expressions};
-      },
-
-      parseMultiselectHash: function() {
-        var pairs = [];
-        var identifierTypes = ["UnquotedIdentifier", "QuotedIdentifier"];
-        var keyToken, keyName, value, node;
-        for (;;) {
-          keyToken = this.lookaheadToken(0);
-          if (_indexOf(identifierTypes, keyToken.type) < 0) {
-            throw new Error("Expecting an identifier token, got: " +
-                            keyToken.type);
-          }
-          keyName = keyToken.value;
-          this.advance();
-          this.match("Colon");
-          value = this.expression(0);
-          node = {type: "KeyValuePair", name: keyName, value: value};
-          pairs.push(node);
-          if (this.lookahead(0) === "Comma") {
-            this.match("Comma");
-          } else if (this.lookahead(0) === "Rbrace") {
-            this.match("Rbrace");
-            break;
-          }
-        }
-        return {type: "MultiSelectHash", children: pairs};
-      }
-  };
-
-
-  function TreeInterpreter(runtime) {
-    this.runtime = runtime;
-  }
-
-  TreeInterpreter.prototype = {
-      search: function(node, value) {
-          return this.visit(node, value);
-      },
-
-      visit: function(node, value) {
-          var visitMethod = this["visit" + node.type];
-          if (visitMethod === undefined) {
-              throw new Error("Unknown node type: " + node.type);
-          }
-          return visitMethod.call(this, node, value);
-      },
-
-      visitField: function(node, value) {
-          if (value === null ) {
-              return null;
-          } else if (_isObject(value)) {
-              var field = value[node.name];
-              if (field === undefined) {
-                  return null;
-              } else {
-                  return field;
-              }
-          } else {
-            return null;
-          }
-      },
-
-      visitSubexpression: function(node, value) {
-          var result = this.visit(node.children[0], value);
-          for (var i = 1; i < node.children.length; i++) {
-              result = this.visit(node.children[1], result);
-              if (result === null) {
-                  return null;
-              }
-          }
-          return result;
-      },
-
-      visitIndexExpression: function(node, value) {
-        var left = this.visit(node.children[0], value);
-        var right = this.visit(node.children[1], left);
-        return right;
-      },
-
-      visitIndex: function(node, value) {
-        if (!_isArray(value)) {
-          return null;
-        }
-        var index = node.value;
-        if (index < 0) {
-          index = value.length + index;
-        }
-        var result = value[index];
-        if (result === undefined) {
-          result = null;
-        }
-        return result;
-      },
-
-      visitSlice: function(node, value) {
-        if (!_isArray(value)) {
-          return null;
-        }
-        var sliceParams = node.children.slice(0);
-        var computed = this.computeSliceParams(value.length, sliceParams);
-        var start = computed[0];
-        var stop = computed[1];
-        var step = computed[2];
-        var result = [];
-        var i;
-        if (step > 0) {
-            for (i = start; i < stop; i += step) {
-                result.push(value[i]);
-            }
-        } else {
-            for (i = start; i > stop; i += step) {
-                result.push(value[i]);
-            }
-        }
-        return result;
-      },
-
-      computeSliceParams: function(arrayLength, sliceParams) {
-        var start = sliceParams[0];
-        var stop = sliceParams[1];
-        var step = sliceParams[2];
-        var computed = [null, null, null];
-        if (step === null) {
-          step = 1;
-        } else if (step === 0) {
-          var error = new Error("Invalid slice, step cannot be 0");
-          error.name = "RuntimeError";
-          throw error;
-        }
-        var stepValueNegative = step < 0 ? true : false;
-
-        if (start === null) {
-            start = stepValueNegative ? arrayLength - 1 : 0;
-        } else {
-            start = this.capSliceRange(arrayLength, start, step);
-        }
-
-        if (stop === null) {
-            stop = stepValueNegative ? -1 : arrayLength;
-        } else {
-            stop = this.capSliceRange(arrayLength, stop, step);
-        }
-        computed[0] = start;
-        computed[1] = stop;
-        computed[2] = step;
-        return computed;
-      },
-
-      capSliceRange: function(arrayLength, actualValue, step) {
-          if (actualValue < 0) {
-              actualValue += arrayLength;
-              if (actualValue < 0) {
-                  actualValue = step < 0 ? -1 : 0;
-              }
-          } else if (actualValue >= arrayLength) {
-              actualValue = step < 0 ? arrayLength - 1 : arrayLength;
-          }
-          return actualValue;
-      },
-
-      visitProjection: function(node, value) {
-        // Evaluate left child.
-        var base = this.visit(node.children[0], value);
-        if (!_isArray(base)) {
-          return null;
-        }
-        var collected = [];
-        for (var i = 0; i < base.length; i++) {
-          var current = this.visit(node.children[1], base[i]);
-          if (current !== null) {
-            collected.push(current);
-          }
-        }
-        return collected;
-      },
-
-      visitValueProjection: function(node, value) {
-        // Evaluate left child.
-        var base = this.visit(node.children[0], value);
-        if (!_isObject(base)) {
-          return null;
-        }
-        var collected = [];
-        var values = objValues(base);
-        for (var i = 0; i < values.length; i++) {
-          var current = this.visit(node.children[1], values[i]);
-          if (current !== null) {
-            collected.push(current);
-          }
-        }
-        return collected;
-      },
-
-      visitFilterProjection: function(node, value) {
-        var base = this.visit(node.children[0], value);
-        if (!_isArray(base)) {
-          return null;
-        }
-        var filtered = [];
-        var finalResults = [];
-        var matched, current;
-        for (var i = 0; i < base.length; i++) {
-          matched = this.visit(node.children[2], base[i]);
-          if (matched === true) {
-            filtered.push(base[i]);
-          }
-        }
-        for (var j = 0; j < filtered.length; j++) {
-          current = this.visit(node.children[1], filtered[j]);
-          if (current !== null) {
-            finalResults.push(current);
-          }
-        }
-        return finalResults;
-      },
-
-      visitComparator: function(node, value) {
-        var first = this.visit(node.children[0], value);
-        var second = this.visit(node.children[1], value);
-        var result;
-        switch(node.name) {
-          case "EQ":
-            result = strictDeepEqual(first, second);
-            break;
-          case "NE":
-            result = !strictDeepEqual(first, second);
-            break;
-          case "GT":
-            result = first > second;
-            break;
-          case "GTE":
-            result = first >= second;
-            break;
-          case "LT":
-            result = first < second;
-            break;
-          case "LTE":
-            result = first <= second;
-            break;
-          default:
-            throw new Error("Unknown comparator: " + node.name);
-        }
-        return result;
-      },
-
-      visitFlatten: function(node, value) {
-        var original = this.visit(node.children[0], value);
-        if (!_isArray(original)) {
-          return null;
-        }
-        var merged = [];
-        for (var i = 0; i < original.length; i++) {
-          var current = original[i];
-          if (_isArray(current)) {
-            merged.push.apply(merged, current);
-          } else {
-            merged.push(current);
-          }
-        }
-        return merged;
-      },
-
-      visitIdentity: function(node, value) {
-        return value;
-      },
-
-      visitMultiSelectList: function(node, value) {
-        if (value === null) {
-          return null;
-        }
-        var collected = [];
-        for (var i = 0; i < node.children.length; i++) {
-            collected.push(this.visit(node.children[i], value));
-        }
-        return collected;
-      },
-
-      visitMultiSelectHash: function(node, value) {
-        if (value === null) {
-          return null;
-        }
-        var collected = {};
-        var child;
-        for (var i = 0; i < node.children.length; i++) {
-          child = node.children[i];
-          collected[child.name] = this.visit(child.value, value);
-        }
-        return collected;
-      },
-
-      visitOrExpression: function(node, value) {
-        var matched = this.visit(node.children[0], value);
-        if (isFalse(matched)) {
-            matched = this.visit(node.children[1], value);
-        }
-        return matched;
-      },
-
-      visitLiteral: function(node) {
-          return node.value;
-      },
-
-      visitPipe: function(node, value) {
-        var left = this.visit(node.children[0], value);
-        return this.visit(node.children[1], left);
-      },
-
-      visitCurrent: function(node, value) {
-          return value;
-      },
-
-      visitFunction: function(node, value) {
-        var resolvedArgs = [];
-        for (var i = 0; i < node.children.length; i++) {
-            resolvedArgs.push(this.visit(node.children[i], value));
-        }
-        return this.runtime.callFunction(node.name, resolvedArgs);
-      },
-
-      visitExpressionReference: function(node) {
-        var refNode = node.children[0];
-        // Tag the node with a specific attribute so the type
-        // checker verify the type.
-        refNode.jmespathType = "Expref";
-        return refNode;
-      }
-  };
-
-  function Runtime(interpreter) {
-    this.interpreter = interpreter;
-    this.functionTable = {
-        // name: [function, <signature>]
-        // The <signature> can be:
-        //
-        // {
-        //   args: [[type1, type2], [type1, type2]],
-        //   variadic: true|false
-        // }
-        //
-        // Each arg in the arg list is a list of valid types
-        // (if the function is overloaded and supports multiple
-        // types.  If the type is "any" then no type checking
-        // occurs on the argument.  Variadic is optional
-        // and if not provided is assumed to be false.
-        abs: {func: this.functionAbs, signature: [{types: ["number"]}]},
-        avg: {func: this.functionAvg, signature: [{types: ["array-number"]}]},
-        ceil: {func: this.functionCeil, signature: [{types: ["number"]}]},
-        contains: {
-            func: this.functionContains,
-            signature: [{types: ["string", "array"]}, {types: ["any"]}]},
-        "ends_with": {
-            func: this.functionEndsWith,
-            signature: [{types: ["string"]}, {types: ["string"]}]},
-        floor: {func: this.functionFloor, signature: [{types: ["number"]}]},
-        length: {
-            func: this.functionLength,
-            signature: [{types: ["string", "array", "object"]}]},
-        max: {
-            func: this.functionMax,
-            signature: [{types: ["array-number", "array-string"]}]},
-        "merge": {
-            func: this.functionMerge,
-            signature: [{types: ["object"], variadic: true}]
-        },
-        "max_by": {
-          func: this.functionMaxBy,
-          signature: [{types: ["array"]}, {types: ["expref"]}]
-        },
-        sum: {func: this.functionSum, signature: [{types: ["array-number"]}]},
-        "starts_with": {
-            func: this.functionStartsWith,
-            signature: [{types: ["string"]}, {types: ["string"]}]},
-        min: {
-            func: this.functionMin,
-            signature: [{types: ["array-number", "array-string"]}]},
-        "min_by": {
-          func: this.functionMinBy,
-          signature: [{types: ["array"]}, {types: ["expref"]}]
-        },
-        type: {func: this.functionType, signature: [{types: ["any"]}]},
-        keys: {func: this.functionKeys, signature: [{types: ["object"]}]},
-        values: {func: this.functionValues, signature: [{types: ["object"]}]},
-        sort: {func: this.functionSort, signature: [{types: ["array-string", "array-number"]}]},
-        "sort_by": {
-          func: this.functionSortBy,
-          signature: [{types: ["array"]}, {types: ["expref"]}]
-        },
-        join: {
-            func: this.functionJoin,
-            signature: [
-                {types: ["string"]},
-                {types: ["array-string"]}
-            ]
-        },
-        reverse: {
-            func: this.functionReverse,
-            signature: [{types: ["string", "array"]}]},
-        "to_array": {func: this.functionToArray, signature: [{types: ["any"]}]},
-        "to_string": {func: this.functionToString, signature: [{types: ["any"]}]},
-        "to_number": {func: this.functionToNumber, signature: [{types: ["any"]}]},
-        "not_null": {
-            func: this.functionNotNull,
-            signature: [{types: ["any"], variadic: true}]
-        }
-    };
-  }
-
-  Runtime.prototype = {
-    callFunction: function(name, resolvedArgs) {
-      var functionEntry = this.functionTable[name];
-      if (functionEntry === undefined) {
-          throw new Error("Unknown function: " + name + "()");
-      }
-      this.validateArgs(name, resolvedArgs, functionEntry.signature);
-      return functionEntry.func.call(this, resolvedArgs);
-    },
-
-    validateArgs: function(name, args, signature) {
-        // Validating the args requires validating
-        // the correct arity and the correct type of each arg.
-        // If the last argument is declared as variadic, then we need
-        // a minimum number of args to be required.  Otherwise it has to
-        // be an exact amount.
-        var pluralized;
-        if (signature[signature.length - 1].variadic) {
-            if (args.length < signature.length) {
-                pluralized = signature.length === 1 ? " argument" : " arguments";
-                throw new Error("ArgumentError: " + name + "() " +
-                                "takes at least" + signature.length + pluralized +
-                                " but received " + args.length);
-            }
-        } else if (args.length !== signature.length) {
-            pluralized = signature.length === 1 ? " argument" : " arguments";
-            throw new Error("ArgumentError: " + name + "() " +
-                            "takes " + signature.length + pluralized +
-                            " but received " + args.length);
-        }
-        var currentSpec;
-        var actualType;
-        var typeMatched;
-        for (var i = 0; i < signature.length; i++) {
-            typeMatched = false;
-            currentSpec = signature[i].types;
-            actualType = this.getTypeName(args[i]);
-            for (var j = 0; j < currentSpec.length; j++) {
-                if (this.typeMatches(actualType, currentSpec[j], args[i])) {
-                    typeMatched = true;
-                    break;
-                }
-            }
-            if (!typeMatched) {
-                throw new Error("TypeError: " + name + "() " +
-                                "expected argument " + (i + 1) +
-                                " to be type " + currentSpec +
-                                " but received type " + actualType +
-                                " instead.");
-            }
-        }
-    },
-
-    typeMatches: function(actual, expected, argValue) {
-        if (expected === "any") {
-            return true;
-        }
-        if (_indexOf(expected, "array") === 0) {
-            // The expected type can either just be array,
-            // or it can require a specific subtype (array of numbers).
-            //
-            // The simplest case is if "array" with no subtype is specified.
-            if (expected === "array") {
-                return _indexOf(actual, "array") === 0;
-            } else if (_indexOf(actual, "array") === 0) {
-                // Otherwise we need to check subtypes.
-                // I think this has potential to be improved.
-                var subtype = expected.split("-")[1];
-                for (var i = 0; i < argValue.length; i++) {
-                    if (!this.typeMatches(
-                            this.getTypeName(argValue[i]), subtype,
-                                             argValue[i])) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        } else {
-            return actual === expected;
-        }
-    },
-    getTypeName: function(obj) {
-        //switch (toString.call(obj)) {
-        switch (_toString(obj)) {
-            case "[object String]":
-              return "string";
-            case "[object Number]":
-              return "number";
-            case "[object Array]":
-              return "array";
-            case "[object Boolean]":
-              return "boolean";
-            case "[object Null]":
-              return "null";
-            case "[object Object]":
-              // Check if it's an expref.  If it has, it's been
-              // tagged with a jmespathType attr of 'Expref';
-              if (obj.jmespathType === "Expref") {
-                return "expref";
-              } else {
-                return "object";
-              }
-        }
-    },
-
-    functionStartsWith: function(resolvedArgs) {
-        return _lastIndexOf(resolvedArgs[0], resolvedArgs[1]) === 0;
-    },
-
-    functionEndsWith: function(resolvedArgs) {
-        var searchStr = resolvedArgs[0];
-        var suffix = resolvedArgs[1];
-        return _indexOf(suffix, searchStr.length - suffix.length) !== -1;
-    },
-
-    functionReverse: function(resolvedArgs) {
-        var typeName = this.getTypeName(resolvedArgs[0]);
-        if (typeName === "string") {
-          var originalStr = resolvedArgs[0];
-          var reversedStr = "";
-          for (var i = originalStr.length - 1; i >= 0; i--) {
-              reversedStr += originalStr[i];
-          }
-          return reversedStr;
-        } else {
-          var reversedArray = resolvedArgs[0].slice(0);
-          reversedArray.reverse();
-          return reversedArray;
-        }
-    },
-
-    functionAbs: function(resolvedArgs) {
-      return Math.abs(resolvedArgs[0]);
-    },
-
-    functionCeil: function(resolvedArgs) {
-        return Math.ceil(resolvedArgs[0]);
-    },
-
-    functionAvg: function(resolvedArgs) {
-        var sum = 0;
-        var inputArray = resolvedArgs[0];
-        for (var i = 0; i < inputArray.length; i++) {
-            sum += inputArray[i];
-        }
-        return sum / inputArray.length;
-    },
-
-    functionContains: function(resolvedArgs) {
-        return _indexOf(resolvedArgs[0], resolvedArgs[1]) >= 0;
-    },
-
-    functionFloor: function(resolvedArgs) {
-        return Math.floor(resolvedArgs[0]);
-    },
-
-    functionLength: function(resolvedArgs) {
-       if (!_isObject(resolvedArgs[0])) {
-         return resolvedArgs[0].length;
-       } else {
-         // As far as I can tell, there's no way to get the length
-         // of an object without O(n) iteration through the object.
-         return _keys(resolvedArgs[0]).length;
-       }
-    },
-
-    functionMerge: function(resolvedArgs) {
-      var merged = {};
-      for (var i = 0; i < resolvedArgs.length; i++) {
-        var current = resolvedArgs[i];
-        for (var key in current) {
-          merged[key] = current[key];
-        }
-      }
-      return merged;
-    },
-
-    functionMax: function(resolvedArgs) {
-      if (resolvedArgs[0].length > 0) {
-        var typeName = this.getTypeName(resolvedArgs[0][0]);
-        if (typeName === "number") {
-          return Math.max.apply(Math, resolvedArgs[0]);
-        } else {
-          var elements = resolvedArgs[0];
-          var maxElement = elements[0];
-          for (var i = 1; i < elements.length; i++) {
-              if (maxElement.localeCompare(elements[i]) < 0) {
-                  maxElement = elements[i];
-              }
-          }
-          return maxElement;
-        }
-      } else {
-          return null;
-      }
-    },
-
-    functionMin: function(resolvedArgs) {
-      if (resolvedArgs[0].length > 0) {
-        var typeName = this.getTypeName(resolvedArgs[0][0]);
-        if (typeName === "number") {
-          return Math.min.apply(Math, resolvedArgs[0]);
-        } else {
-          var elements = resolvedArgs[0];
-          var minElement = elements[0];
-          for (var i = 1; i < elements.length; i++) {
-              if (elements[i].localeCompare(minElement) < 0) {
-                  minElement = elements[i];
-              }
-          }
-          return minElement;
-        }
-      } else {
-        return null;
-      }
-    },
-
-    functionSum: function(resolvedArgs) {
-      var sum = 0;
-      var listToSum = resolvedArgs[0];
-      for (var i = 0; i < listToSum.length; i++) {
-        sum += listToSum[i];
-      }
-      return sum;
-    },
-
-    functionType: function(resolvedArgs) {
-        return this.getTypeName(resolvedArgs[0]);
-    },
-
-    functionKeys: function(resolvedArgs) {
-        return _keys(resolvedArgs[0]);
-    },
-
-    functionValues: function(resolvedArgs) {
-        var obj = resolvedArgs[0];
-        var keys = _keys(obj);
-        var values = [];
-        for (var i = 0; i < keys.length; i++) {
-            values.push(obj[keys[i]]);
-        }
-        return values;
-    },
-
-    functionJoin: function(resolvedArgs) {
-        var joinChar = resolvedArgs[0];
-        var listJoin = resolvedArgs[1];
-        return listJoin.join(joinChar);
-    },
-
-    functionToArray: function(resolvedArgs) {
-        if (this.getTypeName(resolvedArgs[0]) === "array") {
-            return resolvedArgs[0];
-        } else {
-            return [resolvedArgs[0]];
-        }
-    },
-
-    functionToString: function(resolvedArgs) {
-        if (this.getTypeName(resolvedArgs[0]) === "string") {
-            return resolvedArgs[0];
-        } else {
-            return JSON.stringify(resolvedArgs[0]);
-        }
-    },
-
-    functionToNumber: function(resolvedArgs) {
-        var typeName = this.getTypeName(resolvedArgs[0]);
-        var convertedValue;
-        if (typeName === "number") {
-            return resolvedArgs[0];
-        } else if (typeName === "string") {
-            convertedValue = +resolvedArgs[0];
-            if (!isNaN(convertedValue)) {
-                return convertedValue;
-            }
-        }
-        return null;
-    },
-
-    functionNotNull: function(resolvedArgs) {
-        for (var i = 0; i < resolvedArgs.length; i++) {
-            if (this.getTypeName(resolvedArgs[i]) !== "null") {
-                return resolvedArgs[i];
-            }
-        }
-        return null;
-    },
-
-    functionSort: function(resolvedArgs) {
-        var sortedArray = resolvedArgs[0].slice(0);
-        sortedArray.sort();
-        return sortedArray;
-    },
-
-    functionSortBy: function(resolvedArgs) {
-        var sortedArray = resolvedArgs[0].slice(0);
-        if (sortedArray.length === 0) {
-            return sortedArray;
-        }
-        var interpreter = this.interpreter;
-        var exprefNode = resolvedArgs[1];
-        var requiredType = this.getTypeName(
-            interpreter.visit(exprefNode, sortedArray[0]));
-        if (_indexOf(["number", "string"], requiredType) < 0) {
-            throw new Error("TypeError");
-        }
-        var that = this;
-        // In order to get a stable sort out of an unstable
-        // sort algorithm, we decorate/sort/undecorate (DSU)
-        // by creating a new list of [index, element] pairs.
-        // In the cmp function, if the evaluated elements are
-        // equal, then the index will be used as the tiebreaker.
-        // After the decorated list has been sorted, it will be
-        // undecorated to extract the original elements.
-        var decorated = [];
-        for (var i = 0; i < sortedArray.length; i++) {
-          decorated.push([i, sortedArray[i]]);
-        }
-        decorated.sort(function(a, b) {
-          var exprA = interpreter.visit(exprefNode, a[1]);
-          var exprB = interpreter.visit(exprefNode, b[1]);
-          if (that.getTypeName(exprA) !== requiredType) {
-              throw new Error(
-                  "TypeError: expected " + requiredType + ", received " +
-                  that.getTypeName(exprA));
-          } else if (that.getTypeName(exprB) !== requiredType) {
-              throw new Error(
-                  "TypeError: expected " + requiredType + ", received " +
-                  that.getTypeName(exprB));
-          }
-          if (exprA > exprB) {
-            return 1;
-          } else if (exprA < exprB) {
-            return -1;
-          } else {
-            // If they're equal compare the items by their
-            // order to maintain relative order of equal keys
-            // (i.e. to get a stable sort).
-            return a[0] - b[0];
-          }
-        });
-        // Undecorate: extract out the original list elements.
-        for (var j = 0; j < decorated.length; j++) {
-          sortedArray[j] = decorated[j][1];
-        }
-        return sortedArray;
-    },
-
-    functionMaxBy: function(resolvedArgs) {
-      var exprefNode = resolvedArgs[1];
-      var resolvedArray = resolvedArgs[0];
-      var keyFunction = this.createKeyFunction(exprefNode, ["number", "string"]);
-      var maxNumber = -Infinity;
-      var maxRecord;
-      var current;
-      for (var i = 0; i < resolvedArray.length; i++) {
-        current = keyFunction(resolvedArray[i]);
-        if (current > maxNumber) {
-          maxNumber = current;
-          maxRecord = resolvedArray[i];
-        }
-      }
-      return maxRecord;
-    },
-
-    functionMinBy: function(resolvedArgs) {
-      var exprefNode = resolvedArgs[1];
-      var resolvedArray = resolvedArgs[0];
-      var keyFunction = this.createKeyFunction(exprefNode, ["number", "string"]);
-      var minNumber = Infinity;
-      var minRecord;
-      var current;
-      for (var i = 0; i < resolvedArray.length; i++) {
-        current = keyFunction(resolvedArray[i]);
-        if (current < minNumber) {
-          minNumber = current;
-          minRecord = resolvedArray[i];
-        }
-      }
-      return minRecord;
-    },
-
-    createKeyFunction: function(exprefNode, allowedTypes) {
-      var that = this;
-      var interpreter = this.interpreter;
-      var keyFunc = function(x) {
-        var current = interpreter.visit(exprefNode, x);
-        if (_indexOf(allowedTypes, that.getTypeName(current)) < 0) {
-          var msg = "TypeError: expected one of " + allowedTypes +
-                    ", received " + that.getTypeName(current);
-          throw new Error(msg);
-        }
-        return current;
-      };
-      return keyFunc;
-    }
-
-  };
-
-  function compile(stream) {
-    var parser = new Parser();
-    var ast = parser.parse(stream);
-    return ast;
-  }
-
-  function tokenize(stream) {
-      var lexer = new Lexer();
-      return lexer.tokenize(stream);
-  }
-
-  function search(data, expression) {
-      var parser = new Parser();
-      // This needs to be improved.  Both the interpreter and runtime depend on
-      // each other.  The runtime needs the interpreter to support exprefs.
-      // There's likely a clean way to avoid the cyclic dependency.
-      var runtime = new Runtime();
-      var interpreter = new TreeInterpreter(runtime);
-      runtime.interpreter = interpreter;
-      var node = parser.parse(expression);
-      return interpreter.search(node, data);
-  }
-
-  exports.tokenize = tokenize;
-  exports.compile = compile;
-  exports.search = search;
-  exports.Parser = Parser;
-  exports.strictDeepEqual = strictDeepEqual;
-})(typeof exports === "undefined" ? this.jmespath = {} : exports);
-
-},{"lodash._basetostring":28,"lodash.indexof":29,"lodash.isarray":52,"lodash.isobject":33,"lodash.keys":34,"lodash.lastindexof":37}],28:[function(_dereq_,module,exports){
 /**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
+ * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
+var baseAssign = _dereq_('lodash._baseassign'),
+    createAssigner = _dereq_('lodash._createassigner'),
+    keys = _dereq_('lodash.keys');
 
 /**
- * Converts `value` to a string if it's not one. An empty string is returned
- * for `null` or `undefined` values.
+ * A specialized version of `_.assign` for customizing assigned values without
+ * support for argument juggling, multiple sources, and `this` binding `customizer`
+ * functions.
  *
  * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @param {Function} customizer The function to customize assigned values.
+ * @returns {Object} Returns `object`.
  */
-function baseToString(value) {
-  return value == null ? '' : (value + '');
+function assignWith(object, source, customizer) {
+  var index = -1,
+      props = keys(source),
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index],
+        value = object[key],
+        result = customizer(value, source[key], key, object, source);
+
+    if ((result === result ? (result !== value) : (value === value)) ||
+        (value === undefined && !(key in object))) {
+      object[key] = result;
+    }
+  }
+  return object;
 }
 
-module.exports = baseToString;
-
-},{}],29:[function(_dereq_,module,exports){
 /**
- * lodash 3.0.3 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var baseIndexOf = _dereq_('lodash._baseindexof'),
-    binaryIndex = _dereq_('lodash._binaryindex');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max;
-
-/**
- * Gets the index at which the first occurrence of `value` is found in `array`
- * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
- * for equality comparisons. If `fromIndex` is negative, it is used as the offset
- * from the end of `array`. If `array` is sorted providing `true` for `fromIndex`
- * performs a faster binary search.
+ * Assigns own enumerable properties of source object(s) to the destination
+ * object. Subsequent sources overwrite property assignments of previous sources.
+ * If `customizer` is provided it is invoked to produce the assigned values.
+ * The `customizer` is bound to `thisArg` and invoked with five arguments:
+ * (objectValue, sourceValue, key, object, source).
+ *
+ * **Note:** This method mutates `object` and is based on
+ * [`Object.assign`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign).
  *
  * @static
  * @memberOf _
- * @category Array
- * @param {Array} array The array to search.
- * @param {*} value The value to search for.
- * @param {boolean|number} [fromIndex=0] The index to search from or `true`
- *  to perform a binary search on a sorted array.
- * @returns {number} Returns the index of the matched value, else `-1`.
+ * @alias extend
+ * @category Object
+ * @param {Object} object The destination object.
+ * @param {...Object} [sources] The source objects.
+ * @param {Function} [customizer] The function to customize assigned values.
+ * @param {*} [thisArg] The `this` binding of `customizer`.
+ * @returns {Object} Returns `object`.
  * @example
  *
- * _.indexOf([1, 2, 1, 2], 2);
- * // => 1
+ * _.assign({ 'user': 'barney' }, { 'age': 40 }, { 'user': 'fred' });
+ * // => { 'user': 'fred', 'age': 40 }
  *
- * // using `fromIndex`
- * _.indexOf([1, 2, 1, 2], 2, 2);
- * // => 3
+ * // using a customizer callback
+ * var defaults = _.partialRight(_.assign, function(value, other) {
+ *   return _.isUndefined(value) ? other : value;
+ * });
  *
- * // performing a binary search
- * _.indexOf([1, 1, 2, 2], 2, true);
- * // => 2
+ * defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
+ * // => { 'user': 'barney', 'age': 36 }
  */
-function indexOf(array, value, fromIndex) {
-  var length = array ? array.length : 0;
-  if (!length) {
-    return -1;
-  }
-  if (typeof fromIndex == 'number') {
-    fromIndex = fromIndex < 0 ? nativeMax(length + fromIndex, 0) : fromIndex;
-  } else if (fromIndex) {
-    var index = binaryIndex(array, value);
-    if (index < length &&
-        (value === value ? (value === array[index]) : (array[index] !== array[index]))) {
-      return index;
-    }
-    return -1;
-  }
-  return baseIndexOf(array, value, fromIndex || 0);
-}
+var assign = createAssigner(function(object, source, customizer) {
+  return customizer
+    ? assignWith(object, source, customizer)
+    : baseAssign(object, source);
+});
 
-module.exports = indexOf;
+module.exports = assign;
 
-},{"lodash._baseindexof":30,"lodash._binaryindex":31}],30:[function(_dereq_,module,exports){
+},{"lodash._baseassign":28,"lodash._createassigner":30,"lodash.keys":34}],28:[function(_dereq_,module,exports){
 /**
- * lodash 3.1.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
+var baseCopy = _dereq_('lodash._basecopy'),
+    keys = _dereq_('lodash.keys');
 
 /**
- * The base implementation of `_.indexOf` without support for binary searches.
+ * The base implementation of `_.assign` without support for argument juggling,
+ * multiple sources, and `customizer` functions.
  *
  * @private
- * @param {Array} array The array to search.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
  */
-function baseIndexOf(array, value, fromIndex) {
-  if (value !== value) {
-    return indexOfNaN(array, fromIndex);
-  }
-  var index = fromIndex - 1,
-      length = array.length;
-
-  while (++index < length) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
+function baseAssign(object, source) {
+  return source == null
+    ? object
+    : baseCopy(source, keys(source), object);
 }
 
-/**
- * Gets the index at which the first occurrence of `NaN` is found in `array`.
- * If `fromRight` is provided elements of `array` are iterated from right to left.
- *
- * @private
- * @param {Array} array The array to search.
- * @param {number} fromIndex The index to search from.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched `NaN`, else `-1`.
- */
-function indexOfNaN(array, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 0 : -1);
+module.exports = baseAssign;
 
-  while ((fromRight ? index-- : ++index < length)) {
-    var other = array[index];
-    if (other !== other) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = baseIndexOf;
-
-},{}],31:[function(_dereq_,module,exports){
+},{"lodash._basecopy":29,"lodash.keys":34}],29:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9857,41 +8188,129 @@ module.exports = baseIndexOf;
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
-var binaryIndexBy = _dereq_('lodash._binaryindexby');
-
-/** Used as references for the maximum length and index of an array. */
-var MAX_ARRAY_LENGTH = 4294967295,
-    HALF_MAX_ARRAY_LENGTH = MAX_ARRAY_LENGTH >>> 1;
 
 /**
- * Performs a binary search of `array` to determine the index at which `value`
- * should be inserted into `array` in order to maintain its sort order.
+ * Copies properties of `source` to `object`.
  *
  * @private
- * @param {Array} array The sorted array to inspect.
- * @param {*} value The value to evaluate.
- * @param {boolean} [retHighest] Specify returning the highest qualified index.
- * @returns {number} Returns the index at which `value` should be inserted
- *  into `array`.
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property names to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @returns {Object} Returns `object`.
  */
-function binaryIndex(array, value, retHighest) {
-  var low = 0,
-      high = array ? array.length : low;
+function baseCopy(source, props, object) {
+  object || (object = {});
 
-  if (typeof value == 'number' && value === value && high <= HALF_MAX_ARRAY_LENGTH) {
-    while (low < high) {
-      var mid = (low + high) >>> 1,
-          computed = array[mid];
+  var index = -1,
+      length = props.length;
 
-      if ((retHighest ? (computed <= value) : (computed < value)) && computed !== null) {
-        low = mid + 1;
-      } else {
-        high = mid;
+  while (++index < length) {
+    var key = props[index];
+    object[key] = source[key];
+  }
+  return object;
+}
+
+module.exports = baseCopy;
+
+},{}],30:[function(_dereq_,module,exports){
+/**
+ * lodash 3.1.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+var bindCallback = _dereq_('lodash._bindcallback'),
+    isIterateeCall = _dereq_('lodash._isiterateecall'),
+    restParam = _dereq_('lodash.restparam');
+
+/**
+ * Creates a function that assigns properties of source object(s) to a given
+ * destination object.
+ *
+ * **Note:** This function is used to create `_.assign`, `_.defaults`, and `_.merge`.
+ *
+ * @private
+ * @param {Function} assigner The function to assign values.
+ * @returns {Function} Returns the new assigner function.
+ */
+function createAssigner(assigner) {
+  return restParam(function(object, sources) {
+    var index = -1,
+        length = object == null ? 0 : sources.length,
+        customizer = length > 2 ? sources[length - 2] : undefined,
+        guard = length > 2 ? sources[2] : undefined,
+        thisArg = length > 1 ? sources[length - 1] : undefined;
+
+    if (typeof customizer == 'function') {
+      customizer = bindCallback(customizer, thisArg, 5);
+      length -= 2;
+    } else {
+      customizer = typeof thisArg == 'function' ? thisArg : undefined;
+      length -= (customizer ? 1 : 0);
+    }
+    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+      customizer = length < 3 ? undefined : customizer;
+      length = 1;
+    }
+    while (++index < length) {
+      var source = sources[index];
+      if (source) {
+        assigner(object, source, customizer);
       }
     }
-    return high;
+    return object;
+  });
+}
+
+module.exports = createAssigner;
+
+},{"lodash._bindcallback":31,"lodash._isiterateecall":32,"lodash.restparam":33}],31:[function(_dereq_,module,exports){
+/**
+ * lodash 3.0.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/**
+ * A specialized version of `baseCallback` which only supports `this` binding
+ * and specifying the number of arguments to provide to `func`.
+ *
+ * @private
+ * @param {Function} func The function to bind.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {number} [argCount] The number of arguments to provide to `func`.
+ * @returns {Function} Returns the callback.
+ */
+function bindCallback(func, thisArg, argCount) {
+  if (typeof func != 'function') {
+    return identity;
   }
-  return binaryIndexBy(array, value, identity, retHighest);
+  if (thisArg === undefined) {
+    return func;
+  }
+  switch (argCount) {
+    case 1: return function(value) {
+      return func.call(thisArg, value);
+    };
+    case 3: return function(value, index, collection) {
+      return func.call(thisArg, value, index, collection);
+    };
+    case 4: return function(accumulator, value, index, collection) {
+      return func.call(thisArg, accumulator, value, index, collection);
+    };
+    case 5: return function(value, other, key, object, source) {
+      return func.call(thisArg, value, other, key, object, source);
+    };
+  }
+  return function() {
+    return func.apply(thisArg, arguments);
+  };
 }
 
 /**
@@ -9913,11 +8332,11 @@ function identity(value) {
   return value;
 }
 
-module.exports = binaryIndex;
+module.exports = bindCallback;
 
-},{"lodash._binaryindexby":32}],32:[function(_dereq_,module,exports){
+},{}],32:[function(_dereq_,module,exports){
 /**
- * lodash 3.0.3 (Custom Build) <https://lodash.com/>
+ * lodash 3.0.9 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -9925,73 +8344,100 @@ module.exports = binaryIndex;
  * Available under MIT license <https://lodash.com/license>
  */
 
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeFloor = Math.floor,
-    nativeMin = Math.min;
-
-/** Used as references for the maximum length and index of an array. */
-var MAX_ARRAY_LENGTH = 4294967295,
-    MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1;
+/** Used to detect unsigned integer values. */
+var reIsUint = /^\d+$/;
 
 /**
- * This function is like `binaryIndex` except that it invokes `iteratee` for
- * `value` and each element of `array` to compute their sort ranking. The
- * iteratee is invoked with one argument; (value).
+ * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+ * of an array-like value.
+ */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * The base implementation of `_.property` without support for deep paths.
  *
  * @private
- * @param {Array} array The sorted array to inspect.
- * @param {*} value The value to evaluate.
- * @param {Function} iteratee The function invoked per iteration.
- * @param {boolean} [retHighest] Specify returning the highest qualified index.
- * @returns {number} Returns the index at which `value` should be inserted
- *  into `array`.
+ * @param {string} key The key of the property to get.
+ * @returns {Function} Returns the new function.
  */
-function binaryIndexBy(array, value, iteratee, retHighest) {
-  value = iteratee(value);
-
-  var low = 0,
-      high = array ? array.length : 0,
-      valIsNaN = value !== value,
-      valIsNull = value === null,
-      valIsUndef = value === undefined;
-
-  while (low < high) {
-    var mid = nativeFloor((low + high) / 2),
-        computed = iteratee(array[mid]),
-        isDef = computed !== undefined,
-        isReflexive = computed === computed;
-
-    if (valIsNaN) {
-      var setLow = isReflexive || retHighest;
-    } else if (valIsNull) {
-      setLow = isReflexive && isDef && (retHighest || computed != null);
-    } else if (valIsUndef) {
-      setLow = isReflexive && (retHighest || isDef);
-    } else if (computed == null) {
-      setLow = false;
-    } else {
-      setLow = retHighest ? (computed <= value) : (computed < value);
-    }
-    if (setLow) {
-      low = mid + 1;
-    } else {
-      high = mid;
-    }
-  }
-  return nativeMin(high, MAX_ARRAY_INDEX);
+function baseProperty(key) {
+  return function(object) {
+    return object == null ? undefined : object[key];
+  };
 }
 
-module.exports = binaryIndexBy;
-
-},{}],33:[function(_dereq_,module,exports){
 /**
- * lodash 3.0.2 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
+ * Gets the "length" property value of `object`.
+ *
+ * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
+ * that affects Safari on at least iOS 8.1-8.3 ARM64.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {*} Returns the "length" value.
  */
+var getLength = baseProperty('length');
+
+/**
+ * Checks if `value` is array-like.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ */
+function isArrayLike(value) {
+  return value != null && isLength(getLength(value));
+}
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return value > -1 && value % 1 == 0 && value < length;
+}
+
+/**
+ * Checks if the provided arguments are from an iteratee call.
+ *
+ * @private
+ * @param {*} value The potential iteratee value argument.
+ * @param {*} index The potential iteratee index or key argument.
+ * @param {*} object The potential iteratee object argument.
+ * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
+ */
+function isIterateeCall(value, index, object) {
+  if (!isObject(object)) {
+    return false;
+  }
+  var type = typeof index;
+  if (type == 'number'
+      ? (isArrayLike(object) && isIndex(index, object.length))
+      : (type == 'string' && index in object)) {
+    var other = object[index];
+    return value === value ? (value === other) : (other !== other);
+  }
+  return false;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ */
+function isLength(value) {
+  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
 
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
@@ -10020,7 +8466,76 @@ function isObject(value) {
   return !!value && (type == 'object' || type == 'function');
 }
 
-module.exports = isObject;
+module.exports = isIterateeCall;
+
+},{}],33:[function(_dereq_,module,exports){
+/**
+ * lodash 3.6.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/* Native method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * Creates a function that invokes `func` with the `this` binding of the
+ * created function and arguments from `start` and beyond provided as an array.
+ *
+ * **Note:** This method is based on the [rest parameter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters).
+ *
+ * @static
+ * @memberOf _
+ * @category Function
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @returns {Function} Returns the new function.
+ * @example
+ *
+ * var say = _.restParam(function(what, names) {
+ *   return what + ' ' + _.initial(names).join(', ') +
+ *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
+ * });
+ *
+ * say('hello', 'fred', 'barney', 'pebbles');
+ * // => 'hello fred, barney, & pebbles'
+ */
+function restParam(func, start) {
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  start = nativeMax(start === undefined ? (func.length - 1) : (+start || 0), 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        rest = Array(length);
+
+    while (++index < length) {
+      rest[index] = args[start + index];
+    }
+    switch (start) {
+      case 0: return func.call(this, rest);
+      case 1: return func.call(this, args[0], rest);
+      case 2: return func.call(this, args[0], args[1], rest);
+    }
+    var otherArgs = Array(start + 1);
+    index = -1;
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = rest;
+    return func.apply(this, otherArgs);
+  };
+}
+
+module.exports = restParam;
 
 },{}],34:[function(_dereq_,module,exports){
 /**
@@ -10260,7 +8775,7 @@ function keysIn(object) {
 
 module.exports = keys;
 
-},{"lodash._getnative":35,"lodash.isarguments":36,"lodash.isarray":52}],35:[function(_dereq_,module,exports){
+},{"lodash._getnative":35,"lodash.isarguments":36,"lodash.isarray":39}],35:[function(_dereq_,module,exports){
 /**
  * lodash 3.9.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -10512,577 +9027,6 @@ module.exports = isArguments;
  * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var binaryIndex = _dereq_('lodash._binaryindex');
-
-/**
- * Gets the index at which the first occurrence of `NaN` is found in `array`.
- * If `fromRight` is provided elements of `array` are iterated from right to left.
- *
- * @private
- * @param {Array} array The array to search.
- * @param {number} fromIndex The index to search from.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched `NaN`, else `-1`.
- */
-function indexOfNaN(array, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 0 : -1);
-
-  while ((fromRight ? index-- : ++index < length)) {
-    var other = array[index];
-    if (other !== other) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max,
-    nativeMin = Math.min;
-
-/**
- * This method is like `_.indexOf` except that it iterates over elements of
- * `array` from right to left.
- *
- * @static
- * @memberOf _
- * @category Array
- * @param {Array} array The array to search.
- * @param {*} value The value to search for.
- * @param {boolean|number} [fromIndex=array.length-1] The index to search from
- *  or `true` to perform a binary search on a sorted array.
- * @returns {number} Returns the index of the matched value, else `-1`.
- * @example
- *
- * _.lastIndexOf([1, 2, 1, 2], 2);
- * // => 3
- *
- * // using `fromIndex`
- * _.lastIndexOf([1, 2, 1, 2], 2, 2);
- * // => 1
- *
- * // performing a binary search
- * _.lastIndexOf([1, 1, 2, 2], 2, true);
- * // => 3
- */
-function lastIndexOf(array, value, fromIndex) {
-  var length = array ? array.length : 0;
-  if (!length) {
-    return -1;
-  }
-  var index = length;
-  if (typeof fromIndex == 'number') {
-    index = (fromIndex < 0 ? nativeMax(length + fromIndex, 0) : nativeMin(fromIndex || 0, length - 1)) + 1;
-  } else if (fromIndex) {
-    index = binaryIndex(array, value, true) - 1;
-    var other = array[index];
-    if (value === value ? (value === other) : (other !== other)) {
-      return index;
-    }
-    return -1;
-  }
-  if (value !== value) {
-    return indexOfNaN(array, index, true);
-  }
-  while (index--) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = lastIndexOf;
-
-},{"lodash._binaryindex":38}],38:[function(_dereq_,module,exports){
-module.exports=_dereq_(31)
-},{"lodash._binaryindexby":39}],39:[function(_dereq_,module,exports){
-module.exports=_dereq_(32)
-},{}],40:[function(_dereq_,module,exports){
-/**
- * lodash 3.2.0 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var baseAssign = _dereq_('lodash._baseassign'),
-    createAssigner = _dereq_('lodash._createassigner'),
-    keys = _dereq_('lodash.keys');
-
-/**
- * A specialized version of `_.assign` for customizing assigned values without
- * support for argument juggling, multiple sources, and `this` binding `customizer`
- * functions.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @param {Function} customizer The function to customize assigned values.
- * @returns {Object} Returns `object`.
- */
-function assignWith(object, source, customizer) {
-  var index = -1,
-      props = keys(source),
-      length = props.length;
-
-  while (++index < length) {
-    var key = props[index],
-        value = object[key],
-        result = customizer(value, source[key], key, object, source);
-
-    if ((result === result ? (result !== value) : (value === value)) ||
-        (value === undefined && !(key in object))) {
-      object[key] = result;
-    }
-  }
-  return object;
-}
-
-/**
- * Assigns own enumerable properties of source object(s) to the destination
- * object. Subsequent sources overwrite property assignments of previous sources.
- * If `customizer` is provided it is invoked to produce the assigned values.
- * The `customizer` is bound to `thisArg` and invoked with five arguments:
- * (objectValue, sourceValue, key, object, source).
- *
- * **Note:** This method mutates `object` and is based on
- * [`Object.assign`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign).
- *
- * @static
- * @memberOf _
- * @alias extend
- * @category Object
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @param {Function} [customizer] The function to customize assigned values.
- * @param {*} [thisArg] The `this` binding of `customizer`.
- * @returns {Object} Returns `object`.
- * @example
- *
- * _.assign({ 'user': 'barney' }, { 'age': 40 }, { 'user': 'fred' });
- * // => { 'user': 'fred', 'age': 40 }
- *
- * // using a customizer callback
- * var defaults = _.partialRight(_.assign, function(value, other) {
- *   return _.isUndefined(value) ? other : value;
- * });
- *
- * defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
- * // => { 'user': 'barney', 'age': 36 }
- */
-var assign = createAssigner(function(object, source, customizer) {
-  return customizer
-    ? assignWith(object, source, customizer)
-    : baseAssign(object, source);
-});
-
-module.exports = assign;
-
-},{"lodash._baseassign":41,"lodash._createassigner":43,"lodash.keys":47}],41:[function(_dereq_,module,exports){
-/**
- * lodash 3.2.0 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var baseCopy = _dereq_('lodash._basecopy'),
-    keys = _dereq_('lodash.keys');
-
-/**
- * The base implementation of `_.assign` without support for argument juggling,
- * multiple sources, and `customizer` functions.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @returns {Object} Returns `object`.
- */
-function baseAssign(object, source) {
-  return source == null
-    ? object
-    : baseCopy(source, keys(source), object);
-}
-
-module.exports = baseAssign;
-
-},{"lodash._basecopy":42,"lodash.keys":47}],42:[function(_dereq_,module,exports){
-/**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/**
- * Copies properties of `source` to `object`.
- *
- * @private
- * @param {Object} source The object to copy properties from.
- * @param {Array} props The property names to copy.
- * @param {Object} [object={}] The object to copy properties to.
- * @returns {Object} Returns `object`.
- */
-function baseCopy(source, props, object) {
-  object || (object = {});
-
-  var index = -1,
-      length = props.length;
-
-  while (++index < length) {
-    var key = props[index];
-    object[key] = source[key];
-  }
-  return object;
-}
-
-module.exports = baseCopy;
-
-},{}],43:[function(_dereq_,module,exports){
-/**
- * lodash 3.1.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var bindCallback = _dereq_('lodash._bindcallback'),
-    isIterateeCall = _dereq_('lodash._isiterateecall'),
-    restParam = _dereq_('lodash.restparam');
-
-/**
- * Creates a function that assigns properties of source object(s) to a given
- * destination object.
- *
- * **Note:** This function is used to create `_.assign`, `_.defaults`, and `_.merge`.
- *
- * @private
- * @param {Function} assigner The function to assign values.
- * @returns {Function} Returns the new assigner function.
- */
-function createAssigner(assigner) {
-  return restParam(function(object, sources) {
-    var index = -1,
-        length = object == null ? 0 : sources.length,
-        customizer = length > 2 ? sources[length - 2] : undefined,
-        guard = length > 2 ? sources[2] : undefined,
-        thisArg = length > 1 ? sources[length - 1] : undefined;
-
-    if (typeof customizer == 'function') {
-      customizer = bindCallback(customizer, thisArg, 5);
-      length -= 2;
-    } else {
-      customizer = typeof thisArg == 'function' ? thisArg : undefined;
-      length -= (customizer ? 1 : 0);
-    }
-    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-      customizer = length < 3 ? undefined : customizer;
-      length = 1;
-    }
-    while (++index < length) {
-      var source = sources[index];
-      if (source) {
-        assigner(object, source, customizer);
-      }
-    }
-    return object;
-  });
-}
-
-module.exports = createAssigner;
-
-},{"lodash._bindcallback":44,"lodash._isiterateecall":45,"lodash.restparam":46}],44:[function(_dereq_,module,exports){
-/**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/**
- * A specialized version of `baseCallback` which only supports `this` binding
- * and specifying the number of arguments to provide to `func`.
- *
- * @private
- * @param {Function} func The function to bind.
- * @param {*} thisArg The `this` binding of `func`.
- * @param {number} [argCount] The number of arguments to provide to `func`.
- * @returns {Function} Returns the callback.
- */
-function bindCallback(func, thisArg, argCount) {
-  if (typeof func != 'function') {
-    return identity;
-  }
-  if (thisArg === undefined) {
-    return func;
-  }
-  switch (argCount) {
-    case 1: return function(value) {
-      return func.call(thisArg, value);
-    };
-    case 3: return function(value, index, collection) {
-      return func.call(thisArg, value, index, collection);
-    };
-    case 4: return function(accumulator, value, index, collection) {
-      return func.call(thisArg, accumulator, value, index, collection);
-    };
-    case 5: return function(value, other, key, object, source) {
-      return func.call(thisArg, value, other, key, object, source);
-    };
-  }
-  return function() {
-    return func.apply(thisArg, arguments);
-  };
-}
-
-/**
- * This method returns the first argument provided to it.
- *
- * @static
- * @memberOf _
- * @category Utility
- * @param {*} value Any value.
- * @returns {*} Returns `value`.
- * @example
- *
- * var object = { 'user': 'fred' };
- *
- * _.identity(object) === object;
- * // => true
- */
-function identity(value) {
-  return value;
-}
-
-module.exports = bindCallback;
-
-},{}],45:[function(_dereq_,module,exports){
-/**
- * lodash 3.0.9 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^\d+$/;
-
-/**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
- * of an array-like value.
- */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * The base implementation of `_.property` without support for deep paths.
- *
- * @private
- * @param {string} key The key of the property to get.
- * @returns {Function} Returns the new function.
- */
-function baseProperty(key) {
-  return function(object) {
-    return object == null ? undefined : object[key];
-  };
-}
-
-/**
- * Gets the "length" property value of `object`.
- *
- * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
- * that affects Safari on at least iOS 8.1-8.3 ARM64.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {*} Returns the "length" value.
- */
-var getLength = baseProperty('length');
-
-/**
- * Checks if `value` is array-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- */
-function isArrayLike(value) {
-  return value != null && isLength(getLength(value));
-}
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return value > -1 && value % 1 == 0 && value < length;
-}
-
-/**
- * Checks if the provided arguments are from an iteratee call.
- *
- * @private
- * @param {*} value The potential iteratee value argument.
- * @param {*} index The potential iteratee index or key argument.
- * @param {*} object The potential iteratee object argument.
- * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
- */
-function isIterateeCall(value, index, object) {
-  if (!isObject(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-      ? (isArrayLike(object) && isIndex(index, object.length))
-      : (type == 'string' && index in object)) {
-    var other = object[index];
-    return value === value ? (value === other) : (other !== other);
-  }
-  return false;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- */
-function isLength(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-module.exports = isIterateeCall;
-
-},{}],46:[function(_dereq_,module,exports){
-/**
- * lodash 3.6.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/** Used as the `TypeError` message for "Functions" methods. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max;
-
-/**
- * Creates a function that invokes `func` with the `this` binding of the
- * created function and arguments from `start` and beyond provided as an array.
- *
- * **Note:** This method is based on the [rest parameter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters).
- *
- * @static
- * @memberOf _
- * @category Function
- * @param {Function} func The function to apply a rest parameter to.
- * @param {number} [start=func.length-1] The start position of the rest parameter.
- * @returns {Function} Returns the new function.
- * @example
- *
- * var say = _.restParam(function(what, names) {
- *   return what + ' ' + _.initial(names).join(', ') +
- *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
- * });
- *
- * say('hello', 'fred', 'barney', 'pebbles');
- * // => 'hello fred, barney, & pebbles'
- */
-function restParam(func, start) {
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  start = nativeMax(start === undefined ? (func.length - 1) : (+start || 0), 0);
-  return function() {
-    var args = arguments,
-        index = -1,
-        length = nativeMax(args.length - start, 0),
-        rest = Array(length);
-
-    while (++index < length) {
-      rest[index] = args[start + index];
-    }
-    switch (start) {
-      case 0: return func.call(this, rest);
-      case 1: return func.call(this, args[0], rest);
-      case 2: return func.call(this, args[0], args[1], rest);
-    }
-    var otherArgs = Array(start + 1);
-    index = -1;
-    while (++index < start) {
-      otherArgs[index] = args[index];
-    }
-    otherArgs[start] = rest;
-    return func.apply(this, otherArgs);
-  };
-}
-
-module.exports = restParam;
-
-},{}],47:[function(_dereq_,module,exports){
-module.exports=_dereq_(34)
-},{"lodash._getnative":48,"lodash.isarguments":49,"lodash.isarray":52}],48:[function(_dereq_,module,exports){
-module.exports=_dereq_(35)
-},{}],49:[function(_dereq_,module,exports){
-module.exports=_dereq_(36)
-},{}],50:[function(_dereq_,module,exports){
-/**
- * lodash 3.0.2 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
@@ -11128,9 +9072,31 @@ function endsWith(string, target, position) {
 
 module.exports = endsWith;
 
-},{"lodash._basetostring":51}],51:[function(_dereq_,module,exports){
-module.exports=_dereq_(28)
-},{}],52:[function(_dereq_,module,exports){
+},{"lodash._basetostring":38}],38:[function(_dereq_,module,exports){
+/**
+ * lodash 3.0.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/**
+ * Converts `value` to a string if it's not one. An empty string is returned
+ * for `null` or `undefined` values.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  return value == null ? '' : (value + '');
+}
+
+module.exports = baseToString;
+
+},{}],39:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11312,7 +9278,7 @@ function isNative(value) {
 
 module.exports = isArray;
 
-},{}],53:[function(_dereq_,module,exports){
+},{}],40:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11367,7 +9333,7 @@ function isString(value) {
 
 module.exports = isString;
 
-},{}],54:[function(_dereq_,module,exports){
+},{}],41:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11397,7 +9363,7 @@ function last(array) {
 
 module.exports = last;
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],42:[function(_dereq_,module,exports){
 /**
  * lodash 3.1.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11549,7 +9515,7 @@ function map(collection, iteratee, thisArg) {
 
 module.exports = map;
 
-},{"lodash._arraymap":56,"lodash._basecallback":57,"lodash._baseeach":62,"lodash.isarray":52}],56:[function(_dereq_,module,exports){
+},{"lodash._arraymap":43,"lodash._basecallback":44,"lodash._baseeach":49,"lodash.isarray":39}],43:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11581,7 +9547,7 @@ function arrayMap(array, iteratee) {
 
 module.exports = arrayMap;
 
-},{}],57:[function(_dereq_,module,exports){
+},{}],44:[function(_dereq_,module,exports){
 /**
  * lodash 3.3.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12005,7 +9971,7 @@ function property(path) {
 
 module.exports = baseCallback;
 
-},{"lodash._baseisequal":58,"lodash._bindcallback":60,"lodash.isarray":52,"lodash.pairs":61}],58:[function(_dereq_,module,exports){
+},{"lodash._baseisequal":45,"lodash._bindcallback":47,"lodash.isarray":39,"lodash.pairs":48}],45:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.7 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12349,7 +10315,7 @@ function isObject(value) {
 
 module.exports = baseIsEqual;
 
-},{"lodash.isarray":52,"lodash.istypedarray":59,"lodash.keys":63}],59:[function(_dereq_,module,exports){
+},{"lodash.isarray":39,"lodash.istypedarray":46,"lodash.keys":50}],46:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12461,9 +10427,9 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{}],60:[function(_dereq_,module,exports){
-module.exports=_dereq_(44)
-},{}],61:[function(_dereq_,module,exports){
+},{}],47:[function(_dereq_,module,exports){
+module.exports=_dereq_(31)
+},{}],48:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12543,7 +10509,7 @@ function pairs(object) {
 
 module.exports = pairs;
 
-},{"lodash.keys":63}],62:[function(_dereq_,module,exports){
+},{"lodash.keys":50}],49:[function(_dereq_,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -12726,11 +10692,11 @@ function isObject(value) {
 
 module.exports = baseEach;
 
-},{"lodash.keys":63}],63:[function(_dereq_,module,exports){
+},{"lodash.keys":50}],50:[function(_dereq_,module,exports){
 module.exports=_dereq_(34)
-},{"lodash._getnative":64,"lodash.isarguments":65,"lodash.isarray":52}],64:[function(_dereq_,module,exports){
+},{"lodash._getnative":51,"lodash.isarguments":52,"lodash.isarray":39}],51:[function(_dereq_,module,exports){
 module.exports=_dereq_(35)
-},{}],65:[function(_dereq_,module,exports){
+},{}],52:[function(_dereq_,module,exports){
 module.exports=_dereq_(36)
 },{}]},{},[1])
 (1)

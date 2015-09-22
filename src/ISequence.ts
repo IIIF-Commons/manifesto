@@ -1,6 +1,6 @@
 module Manifesto {
     export interface ISequence extends IManifestResource {
-        canvases: ICanvas[];
+        getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;

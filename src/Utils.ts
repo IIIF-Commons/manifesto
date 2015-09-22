@@ -299,7 +299,7 @@ module Manifesto {
         }
 
         static getServiceByReference(resource: any, id: string): any {
-            var services = this.getServices(resource.options.manifest);
+            var services = this.getServices(resource.options.resource);
             var service: IService;
 
             for (var i = 0; i < services.length; i++){

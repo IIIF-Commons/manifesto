@@ -6,8 +6,6 @@ module Manifesto{
 
         constructor(jsonld: any){
             this.__jsonld = jsonld;
-            // store a reference to the parsed object in the jsonld for convenience.
-            this.__jsonld.__parsed = this;
             this.context = this.getProperty('@context');
             this.id = this.getProperty('@id');
         }

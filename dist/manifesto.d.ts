@@ -175,11 +175,14 @@ declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
         rootRange: IRange;
-        sequences: ISequence[];
         constructor(jsonld: any, options?: IManifestoOptions);
+        private _getRootRange();
+        private _getRangeById(id);
+        private _parseRanges(r, path, parentRange?);
         getRanges(): IRange[];
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
+        getSequences(): ISequence[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
@@ -210,6 +213,7 @@ declare module Manifesto {
         ranges: Range[];
         treeNode: TreeNode;
         constructor(jsonld: any, options: IManifestoOptions);
+        getCanvases(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
     }
@@ -223,8 +227,8 @@ declare module Manifesto {
 declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {
-        canvases: ICanvas[];
         constructor(jsonld: any, options: IManifestoOptions);
+        getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(canvasIndex: number): any;
         getCanvasIndexById(id: string): number;
@@ -248,7 +252,6 @@ declare module Manifesto {
         isTotalCanvasesEven(): boolean;
     }
 }
-declare var jmespath: any;
 declare var _isString: any;
 declare module Manifesto {
     class Deserialiser {
@@ -258,10 +261,6 @@ declare module Manifesto {
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void;
         static parseManifest(json: any, options?: IManifestoOptions): IManifest;
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void;
-        static parseSequences(manifest: IManifest, options: IManifestoOptions): void;
-        static parseCanvases(sequence: any, options: IManifestoOptions): ICanvas[];
-        static parseRanges(manifest: IManifest, r: any, path: string, parentRange?: IRange): void;
-        static getCanvasById(manifest: IManifest, id: string): ICanvas;
     }
     class Serialiser {
         static serialise(manifest: IManifest): string;
@@ -452,13 +451,13 @@ declare module Manifesto {
     interface IManifest extends IIIIFResource {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
+        getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
         getManifestType(): ManifestType;
         isMultiSequence(): boolean;
         rootRange: IRange;
-        sequences: ISequence[];
     }
 }
 declare module Manifesto {
@@ -493,14 +492,14 @@ declare module Manifesto {
     interface IManifestoOptions {
         defaultLabel: string;
         locale: string;
-        manifest: any;
+        resource: IIIIFResource;
         navDate?: Date;
         pessimisticAccessControl: boolean;
     }
 }
 declare module Manifesto {
     interface IRange extends IManifestResource {
-        canvases: any[];
+        getCanvases(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         parentRange: IRange;
@@ -523,7 +522,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface ISequence extends IManifestResource {
-        canvases: ICanvas[];
+        getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
