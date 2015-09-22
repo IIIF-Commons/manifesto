@@ -13,7 +13,7 @@ module Manifesto {
             if (!data) this.data = {};
         }
 
-        public addNode(node:TreeNode):void {
+        public addNode(node: TreeNode):void {
             this.nodes.push(node);
             node.parentNode = this;
         }

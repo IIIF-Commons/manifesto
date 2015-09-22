@@ -9,7 +9,6 @@ module Manifesto {
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
-            jsonld.__manifest = this;
         }
 
         // todo: use jmespath to flatten tree?

@@ -10,11 +10,21 @@ module Manifesto {
             super(jsonld, options);
         }
 
-        // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
         // https://github.com/UniversalViewer/universalviewer/issues/119
-        //getImages(): IAnnotation[] {
-        //
-        //}
+        getImages(): IAnnotation[] {
+            if (!this.__jsonld.images) return [];
+
+            var images: IAnnotation[] = [];
+
+            for (var i = 0; i < this.__jsonld.images.length; i++) {
+                var a = this.__jsonld.images[i];
+
+                var annotation = new Annotation(a, this.options);
+                images.push(annotation);
+            }
+
+            return images;
+        }
 
         // todo: use getImages instead. the client must decide which to use.
         // each service has a getInfoUri method.

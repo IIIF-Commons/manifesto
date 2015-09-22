@@ -10,7 +10,7 @@ module Manifesto {
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
 
-            var defaultOptions: IManifestoOptions = {
+            var defaultOptions: any = {
                 defaultLabel: '-',
                 locale: 'en-GB',
                 pessimisticAccessControl: false

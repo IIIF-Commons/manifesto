@@ -298,6 +298,21 @@ module Manifesto {
             return null;
         }
 
+        static getServiceByReference(resource: any, id: string): any {
+            var services = this.getServices(resource.options.manifest);
+            var service: IService;
+
+            for (var i = 0; i < services.length; i++){
+                var s = services[i];
+
+                if (s['@id'] === id){
+                    service = new Service(s, resource.options);
+                }
+            }
+
+            return service;
+        }
+
         static getServices(resource: any): IService[] {
             var service;
 
@@ -320,7 +335,12 @@ module Manifesto {
 
             for (var i = 0; i < service.length; i++){
                 var s: any = service[i];
-                parsed.push(new Service(s, resource.options));
+
+                if (_isString(s)){
+                    parsed.push(this.getServiceByReference(resource, s));
+                } else {
+                    parsed.push(new Service(s, resource.options));
+                }
             }
 
             return parsed;

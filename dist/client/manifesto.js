@@ -535,11 +535,18 @@ var Manifesto;
             _super.call(this, jsonld, options);
             this.ranges = [];
         }
-        // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
         // https://github.com/UniversalViewer/universalviewer/issues/119
-        //getImages(): IAnnotation[] {
-        //
-        //}
+        Canvas.prototype.getImages = function () {
+            if (!this.__jsonld.images)
+                return [];
+            var images = [];
+            for (var i = 0; i < this.__jsonld.images.length; i++) {
+                var a = this.__jsonld.images[i];
+                var annotation = new Manifesto.Annotation(a, this.options);
+                images.push(annotation);
+            }
+            return images;
+        };
         // todo: use getImages instead. the client must decide which to use.
         // each service has a getInfoUri method.
         Canvas.prototype.getInfoUri = function () {
@@ -710,7 +717,6 @@ var Manifesto;
             _super.call(this, jsonld, options);
             this.index = 0;
             this.sequences = [];
-            jsonld.__manifest = this;
         }
         // todo: use jmespath to flatten tree?
         // https://github.com/jmespath/jmespath.js/issues/6
@@ -1587,6 +1593,17 @@ var Manifesto;
             }
             return null;
         };
+        Utils.getServiceByReference = function (resource, id) {
+            var services = this.getServices(resource.options.manifest);
+            var service;
+            for (var i = 0; i < services.length; i++) {
+                var s = services[i];
+                if (s['@id'] === id) {
+                    service = new Manifesto.Service(s, resource.options);
+                }
+            }
+            return service;
+        };
         Utils.getServices = function (resource) {
             var service;
             // if passing a manifesto-parsed object, use the __jsonld.service property,
@@ -1606,7 +1623,12 @@ var Manifesto;
             }
             for (var i = 0; i < service.length; i++) {
                 var s = service[i];
-                parsed.push(new Manifesto.Service(s, resource.options));
+                if (_isString(s)) {
+                    parsed.push(this.getServiceByReference(resource, s));
+                }
+                else {
+                    parsed.push(new Manifesto.Service(s, resource.options));
+                }
             }
             return parsed;
         };
@@ -1671,6 +1693,145 @@ module.exports = {
 /// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
 /// <reference path="./Manifesto.ts" /> 
+var Manifesto;
+(function (Manifesto) {
+    var Annotation = (function (_super) {
+        __extends(Annotation, _super);
+        function Annotation(jsonld, options) {
+            _super.call(this, jsonld, options);
+        }
+        Annotation.prototype.getMotivation = function () {
+            return new Manifesto.AnnotationMotivation(this.getProperty('motivation').toLowerCase());
+        };
+        Annotation.prototype.getOn = function () {
+            return this.getProperty('on');
+        };
+        Annotation.prototype.getResource = function () {
+            return new Manifesto.Resource(this.getProperty('resource'), this.options);
+        };
+        return Annotation;
+    })(Manifesto.ManifestResource);
+    Manifesto.Annotation = Annotation;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationMotivation = (function (_super) {
+        __extends(AnnotationMotivation, _super);
+        function AnnotationMotivation() {
+            _super.apply(this, arguments);
+        }
+        // todo: use getters when ES3 target is no longer required.
+        AnnotationMotivation.prototype.bookmarking = function () {
+            return new AnnotationMotivation(AnnotationMotivation.BOOKMARKING.toString());
+        };
+        AnnotationMotivation.prototype.classifying = function () {
+            return new AnnotationMotivation(AnnotationMotivation.CLASSIFYING.toString());
+        };
+        AnnotationMotivation.prototype.commenting = function () {
+            return new AnnotationMotivation(AnnotationMotivation.COMMENTING.toString());
+        };
+        AnnotationMotivation.prototype.describing = function () {
+            return new AnnotationMotivation(AnnotationMotivation.DESCRIBING.toString());
+        };
+        AnnotationMotivation.prototype.editing = function () {
+            return new AnnotationMotivation(AnnotationMotivation.EDITING.toString());
+        };
+        AnnotationMotivation.prototype.highlighting = function () {
+            return new AnnotationMotivation(AnnotationMotivation.HIGHLIGHTING.toString());
+        };
+        AnnotationMotivation.prototype.identifying = function () {
+            return new AnnotationMotivation(AnnotationMotivation.IDENTIFYING.toString());
+        };
+        AnnotationMotivation.prototype.linking = function () {
+            return new AnnotationMotivation(AnnotationMotivation.LINKING.toString());
+        };
+        AnnotationMotivation.prototype.moderating = function () {
+            return new AnnotationMotivation(AnnotationMotivation.MODERATING.toString());
+        };
+        AnnotationMotivation.prototype.painting = function () {
+            return new AnnotationMotivation(AnnotationMotivation.PAINTING.toString());
+        };
+        AnnotationMotivation.prototype.questioning = function () {
+            return new AnnotationMotivation(AnnotationMotivation.QUESIONING.toString());
+        };
+        AnnotationMotivation.prototype.replying = function () {
+            return new AnnotationMotivation(AnnotationMotivation.REPLYING.toString());
+        };
+        AnnotationMotivation.prototype.tagging = function () {
+            return new AnnotationMotivation(AnnotationMotivation.TAGGING.toString());
+        };
+        AnnotationMotivation.BOOKMARKING = new AnnotationMotivation("oa:bookmarking");
+        AnnotationMotivation.CLASSIFYING = new AnnotationMotivation("oa:classifying");
+        AnnotationMotivation.COMMENTING = new AnnotationMotivation("oa:commenting");
+        AnnotationMotivation.DESCRIBING = new AnnotationMotivation("oa:describing");
+        AnnotationMotivation.EDITING = new AnnotationMotivation("oa:editing");
+        AnnotationMotivation.HIGHLIGHTING = new AnnotationMotivation("oa:highlighting");
+        AnnotationMotivation.IDENTIFYING = new AnnotationMotivation("oa:identifying");
+        AnnotationMotivation.LINKING = new AnnotationMotivation("oa:linking");
+        AnnotationMotivation.MODERATING = new AnnotationMotivation("oa:moderating");
+        AnnotationMotivation.PAINTING = new AnnotationMotivation("sc:painting");
+        AnnotationMotivation.QUESIONING = new AnnotationMotivation("oa:questioning");
+        AnnotationMotivation.REPLYING = new AnnotationMotivation("oa:replying");
+        AnnotationMotivation.TAGGING = new AnnotationMotivation("oa:tagging");
+        return AnnotationMotivation;
+    })(Manifesto.StringValue);
+    Manifesto.AnnotationMotivation = AnnotationMotivation;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var Resource = (function (_super) {
+        __extends(Resource, _super);
+        function Resource(jsonld, options) {
+            _super.call(this, jsonld, options);
+        }
+        Resource.prototype.getFormat = function () {
+            return new Manifesto.ResourceFormat(this.getProperty('format').toLowerCase());
+        };
+        Resource.prototype.getType = function () {
+            return new Manifesto.ResourceType(this.getProperty('@type').toLowerCase());
+        };
+        Resource.prototype.getWidth = function () {
+            return this.getProperty('width');
+        };
+        Resource.prototype.getHeight = function () {
+            return this.getProperty('height');
+        };
+        return Resource;
+    })(Manifesto.ManifestResource);
+    Manifesto.Resource = Resource;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ResourceFormat = (function (_super) {
+        __extends(ResourceFormat, _super);
+        function ResourceFormat() {
+            _super.apply(this, arguments);
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ResourceFormat.prototype.jpgimage = function () {
+            return new ResourceFormat(ResourceFormat.JPGIMAGE.toString());
+        };
+        ResourceFormat.JPGIMAGE = new Manifesto.TreeNodeType("image/jpeg");
+        return ResourceFormat;
+    })(Manifesto.StringValue);
+    Manifesto.ResourceFormat = ResourceFormat;
+})(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var ResourceType = (function (_super) {
+        __extends(ResourceType, _super);
+        function ResourceType() {
+            _super.apply(this, arguments);
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ResourceType.prototype.image = function () {
+            return new ResourceType(ResourceType.IMAGE.toString());
+        };
+        ResourceType.IMAGE = new Manifesto.TreeNodeType("dctypes:image");
+        return ResourceType;
+    })(Manifesto.StringValue);
+    Manifesto.ResourceType = ResourceType;
+})(Manifesto || (Manifesto = {}));
 
 },{"http":6,"jmespath":27,"lodash.assign":40,"lodash.endswith":50,"lodash.isarray":52,"lodash.isstring":53,"lodash.last":54,"lodash.map":55,"url":24}],2:[function(_dereq_,module,exports){
 /*!

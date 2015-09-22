@@ -132,6 +132,7 @@ declare module Manifesto {
     class Canvas extends ManifestResource implements ICanvas {
         ranges: IRange[];
         constructor(jsonld: any, options: IManifestoOptions);
+        getImages(): IAnnotation[];
         getInfoUri(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
@@ -322,7 +323,46 @@ declare module Manifesto {
         static getRendering(resource: any, format: RenderingFormat | string): IRendering;
         static getRenderings(resource: any): IRendering[];
         static getService(resource: any, profile: ServiceProfile | string): IService;
+        static getServiceByReference(resource: any, id: string): any;
         static getServices(resource: any): IService[];
+    }
+}
+declare module Manifesto {
+    class Annotation extends ManifestResource implements IAnnotation {
+        constructor(jsonld: any, options: IManifestoOptions);
+        getMotivation(): AnnotationMotivation;
+        getOn(): string;
+        getResource(): Resource;
+    }
+}
+declare module Manifesto {
+    class AnnotationMotivation extends StringValue {
+        static BOOKMARKING: AnnotationMotivation;
+        static CLASSIFYING: AnnotationMotivation;
+        static COMMENTING: AnnotationMotivation;
+        static DESCRIBING: AnnotationMotivation;
+        static EDITING: AnnotationMotivation;
+        static HIGHLIGHTING: AnnotationMotivation;
+        static IDENTIFYING: AnnotationMotivation;
+        static LINKING: AnnotationMotivation;
+        static MODERATING: AnnotationMotivation;
+        static PAINTING: AnnotationMotivation;
+        static QUESIONING: AnnotationMotivation;
+        static REPLYING: AnnotationMotivation;
+        static TAGGING: AnnotationMotivation;
+        bookmarking(): AnnotationMotivation;
+        classifying(): AnnotationMotivation;
+        commenting(): AnnotationMotivation;
+        describing(): AnnotationMotivation;
+        editing(): AnnotationMotivation;
+        highlighting(): AnnotationMotivation;
+        identifying(): AnnotationMotivation;
+        linking(): AnnotationMotivation;
+        moderating(): AnnotationMotivation;
+        painting(): AnnotationMotivation;
+        questioning(): AnnotationMotivation;
+        replying(): AnnotationMotivation;
+        tagging(): AnnotationMotivation;
     }
 }
 declare module Manifesto {
@@ -334,12 +374,15 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IAnnotation extends IJSONLDResource {
-        getMotivation(): string;
+        getMotivation(): AnnotationMotivation;
+        getOn(): string;
+        getResource(): Resource;
     }
 }
 declare module Manifesto {
     interface ICanvas extends IManifestResource {
         getHeight(): number;
+        getImages(): IAnnotation[];
         getInfoUri(): string;
         getRange(): IRange;
         getThumbUri(width: number, height: number): string;
@@ -450,6 +493,7 @@ declare module Manifesto {
     interface IManifestoOptions {
         defaultLabel: string;
         locale: string;
+        manifest: any;
         navDate?: Date;
         pessimisticAccessControl: boolean;
     }
@@ -468,6 +512,13 @@ declare module Manifesto {
 declare module Manifesto {
     interface IRendering extends IManifestResource {
         getFormat(): RenderingFormat;
+    }
+}
+declare module Manifesto {
+    interface IResource extends IManifestResource {
+        getFormat(): ResourceFormat;
+        getHeight(): number;
+        getWidth(): number;
     }
 }
 declare module Manifesto {
@@ -501,5 +552,26 @@ declare module Manifesto {
     interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
         getInfoUri(): string;
+    }
+}
+declare module Manifesto {
+    class Resource extends ManifestResource implements IResource {
+        constructor(jsonld: any, options: IManifestoOptions);
+        getFormat(): ResourceFormat;
+        getType(): ResourceType;
+        getWidth(): number;
+        getHeight(): number;
+    }
+}
+declare module Manifesto {
+    class ResourceFormat extends StringValue {
+        static JPGIMAGE: TreeNodeType;
+        jpgimage(): ResourceFormat;
+    }
+}
+declare module Manifesto {
+    class ResourceType extends StringValue {
+        static IMAGE: TreeNodeType;
+        image(): ResourceType;
     }
 }

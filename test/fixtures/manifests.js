@@ -6,7 +6,8 @@ module.exports = {
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
     "chemistdruggist": "http://localhost:3000/chemistdruggist.json",
-    "horriblemurders": "http://localhost:3000/horriblemurders.json"
+    "horriblemurders": "http://localhost:3000/horriblemurders.json",
+    "correspondance": "http://localhost:3000/correspondance.json"
 };
 
 //BBoM: http://wellcomelibrary.org/iiif/b18031511/manifest
