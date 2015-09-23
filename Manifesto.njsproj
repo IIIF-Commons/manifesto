@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{fbb54118-8831-4484-af3e-9a121498a341}</ProjectGuid>
+    <ProjectHome />
+    <ProjectView>ProjectFiles</ProjectView>
+    <StartupFile>gulpfile.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <EnableTypeScript>true</EnableTypeScript>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Compile Include="gulpfile.config.js" />
+    <Compile Include="gulpfile.js" />
+    <TypeScriptCompile Include="src\Canvas.ts" />
+    <TypeScriptCompile Include="src\CanvasType.ts" />
+    <TypeScriptCompile Include="src\Collection.ts" />
+    <TypeScriptCompile Include="src\Element.ts" />
+    <TypeScriptCompile Include="src\ElementType.ts" />
+    <TypeScriptCompile Include="src\IAccessToken.ts" />
+    <TypeScriptCompile Include="src\IAnnotation.ts" />
+    <TypeScriptCompile Include="src\ICanvas.ts" />
+    <TypeScriptCompile Include="src\ICollection.ts" />
+    <TypeScriptCompile Include="src\IElement.ts" />
+    <TypeScriptCompile Include="src\IExternalResource.ts" />
+    <TypeScriptCompile Include="src\IIIFResource.ts" />
+    <TypeScriptCompile Include="src\IIIFResourceType.ts" />
+    <TypeScriptCompile Include="src\IIIIFResource.ts" />
+    <TypeScriptCompile Include="src\IJSONLDResource.ts" />
+    <TypeScriptCompile Include="src\IManifest.ts" />
+    <TypeScriptCompile Include="src\IManifesto.ts" />
+    <TypeScriptCompile Include="src\IManifestoOptions.ts" />
+    <TypeScriptCompile Include="src\IManifestResource.ts" />
+    <TypeScriptCompile Include="src\IRange.ts" />
+    <TypeScriptCompile Include="src\IRendering.ts" />
+    <TypeScriptCompile Include="src\ISequence.ts" />
+    <TypeScriptCompile Include="src\IService.ts" />
+    <TypeScriptCompile Include="src\JSONLDResource.ts" />
+    <TypeScriptCompile Include="src\Manifest.ts" />
+    <TypeScriptCompile Include="src\Manifesto.ts" />
+    <TypeScriptCompile Include="src\ManifestResource.ts" />
+    <TypeScriptCompile Include="src\ManifestType.ts" />
+    <TypeScriptCompile Include="src\Range.ts" />
+    <TypeScriptCompile Include="src\Rendering.ts" />
+    <TypeScriptCompile Include="src\RenderingFormat.ts" />
+    <TypeScriptCompile Include="src\Sequence.ts" />
+    <TypeScriptCompile Include="src\Serialisation.ts" />
+    <TypeScriptCompile Include="src\Service.ts" />
+    <TypeScriptCompile Include="src\ServiceProfile.ts" />
+    <TypeScriptCompile Include="src\StringValue.ts" />
+    <TypeScriptCompile Include="src\Thumb.ts" />
+    <TypeScriptCompile Include="src\TreeNode.ts" />
+    <TypeScriptCompile Include="src\Utils.ts" />
+    <TypeScriptCompile Include="src\ViewingDirection.ts" />
+    <TypeScriptCompile Include="src\ViewingHint.ts" />
+    <TypeScriptCompile Include="src\_references.ts" />
+    <Compile Include="tasks\bump.js" />
+    <Compile Include="test\biocrats.js" />
+    <Compile Include="test\cardiganshire.js" />
+    <Compile Include="test\chemistdruggist.js" />
+    <Compile Include="test\horriblemurders.js" />
+    <Compile Include="test\pseudoalbert.js" />
+    <Compile Include="test\shared.js" />
+    <Compile Include="test\storyofwellcome.js" />
+    <TypeScriptCompile Include="typings\es6-promise.d.ts" />
+    <TypeScriptCompile Include="typings\http-status-codes.d.ts" />
+    <TypeScriptCompile Include="typings\lodash.d.ts" />
+    <TypeScriptCompile Include="typings\node.d.ts" />
+    <Content Include="test\fixtures\auth-all-acceptterms.json" />
+    <Content Include="test\fixtures\auth-all-caslogin.json" />
+    <Content Include="test\fixtures\auth-all-clickthrough.json" />
+    <Content Include="test\fixtures\auth-clickthrough-and-cas.json" />
+    <Content Include="test\fixtures\auth-iiif-open-and-degraded.json" />
+    <Content Include="test\fixtures\auth-iiif-singledegraded.json" />
+    <Content Include="test\fixtures\auth-megamix.json" />
+    <Content Include="test\fixtures\auth-open-and-clickthrough-and-cas.json" />
+    <Content Include="test\fixtures\auth-open-and-clickthrough.json" />
+    <Content Include="test\fixtures\biocrats.json" />
+    <Content Include="test\fixtures\cardiganshire.json" />
+    <Content Include="test\fixtures\chemistdruggist.json" />
+    <Content Include="test\fixtures\horriblemurders.json" />
+    <Content Include="test\fixtures\pseudoalbert.json" />
+    <Content Include="test\fixtures\storyofwellcome.json" />
+    <Content Include="test\fixtures\wellcomeapocalypse.json" />
+    <Content Include="test\fixtures\wellcomecollection-firstmanifest.json" />
+    <Content Include="test\fixtures\wunder.json" />
+    <Compile Include="test\fixtures\manifests.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src" />
+    <Folder Include="tasks" />
+    <Folder Include="test" />
+    <Folder Include="test\fixtures" />
+    <Folder Include="typings" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
