@@ -399,8 +399,8 @@ var Manifesto;
         ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
         ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
         ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
-        ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
-        ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
+        ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/0/search");
+        ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
         return ServiceProfile;
     })(Manifesto.StringValue);
     Manifesto.ServiceProfile = ServiceProfile;
@@ -762,14 +762,6 @@ var Manifesto;
                 parentRange.ranges.push(range);
             }
             range.path = path;
-            //if (r.canvases){
-            //    // create two-way relationship
-            //    for (var i = 0; i < r.canvases.length; i++){
-            //        var canvas: ICanvas = this.getCanvasById(manifest, r.canvases[i]);
-            //        canvas.ranges.push(range);
-            //        range.canvases.push(canvas);
-            //    }
-            //}
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
                     this._parseRanges(r.ranges[j], path + '/' + j, range);

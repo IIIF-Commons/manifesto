@@ -68,15 +68,6 @@ module Manifesto {
 
             range.path = path;
 
-            //if (r.canvases){
-            //    // create two-way relationship
-            //    for (var i = 0; i < r.canvases.length; i++){
-            //        var canvas: ICanvas = this.getCanvasById(manifest, r.canvases[i]);
-            //        canvas.ranges.push(range);
-            //        range.canvases.push(canvas);
-            //    }
-            //}
-
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
                     this._parseRanges(r.ranges[j], path + '/' + j, range);

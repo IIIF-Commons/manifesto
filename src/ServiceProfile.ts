@@ -10,8 +10,8 @@ module Manifesto {
         public static LOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
         public static LOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
         public static OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
-        public static SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
-        public static TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
+        public static SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/0/search");
+        public static TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
 
         // todo: use getters when ES3 target is no longer required.
 
