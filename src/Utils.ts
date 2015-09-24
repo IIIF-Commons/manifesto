@@ -299,14 +299,15 @@ module Manifesto {
         }
 
         static getServiceByReference(resource: any, id: string): any {
-            var services = this.getServices(resource.options.resource);
+            var services: IService[] = this.getServices(resource.options.resource.__jsonld);
             var service: IService;
 
             for (var i = 0; i < services.length; i++){
                 var s = services[i];
 
-                if (s['@id'] === id){
-                    service = new Service(s, resource.options);
+                if (s.id === id){
+                    service = new Service(s.__jsonld, resource.options);
+                    break;
                 }
             }
 

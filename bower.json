@@ -28,7 +28,7 @@
 
   },
   "devDependencies": {
-    "exjs": "~0.2.15",
+    "exjs": "~0.3.0",
     "extensions": "edsilv/extensions#~0.1.8",
     "http-status-codes": "edsilv/http-status-codes#~0.0.2"
   }

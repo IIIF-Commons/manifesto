@@ -93,7 +93,7 @@ gulp.task('tag', function(){
 gulp.task('concat', function() {
     var client = config.client + '/' + config.lib;
     var server = config.server + '/' + config.lib;
-    //var exjs = './bower_components/exjs/dist/ex.min.js';
+    var exjs = './bower_components/exjs/dist/ex.es3.min.js';
     var extensions = './bower_components/extensions/dist/extensions.js';
     gulp.src([extensions, client]).pipe(concat(config.lib)).pipe(gulp.dest(config.client));
     gulp.src([extensions, server]).pipe(concat(config.lib)).pipe(gulp.dest(config.server));

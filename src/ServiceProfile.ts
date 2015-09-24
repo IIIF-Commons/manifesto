@@ -1,14 +1,14 @@
 module Manifesto {
     export class ServiceProfile extends StringValue {
-        public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         public static CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         public static IIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
         public static IIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
         public static IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
         public static IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         public static IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
-        public static LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
-        public static LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
+        public static LOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
+        public static LOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
         public static OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
         public static SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
         public static TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");

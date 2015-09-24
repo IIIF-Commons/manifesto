@@ -88,9 +88,9 @@ module Manifesto {
 
             var ranges: IRange[] = [];
 
-            //if (this.rootRange){
-            //    ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
-            //}
+            if (this.rootRange){
+                ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
+            }
 
             return ranges;
         }

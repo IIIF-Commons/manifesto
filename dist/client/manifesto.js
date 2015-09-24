@@ -389,15 +389,15 @@ var Manifesto;
         ServiceProfile.prototype.token = function () {
             return new ServiceProfile(ServiceProfile.TOKEN.toString());
         };
-        ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/autocomplete/1/");
+        ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
         ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
         ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
         ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
-        ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/image/2/auth/login");
-        ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/image/2/auth/logout");
+        ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
+        ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
         ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
         ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/1/");
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/image/2/auth/token");
@@ -778,9 +778,9 @@ var Manifesto;
         };
         Manifest.prototype.getRanges = function () {
             var ranges = [];
-            //if (this.rootRange){
-            //    ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
-            //}
+            if (this.rootRange) {
+                ranges = this.rootRange.ranges.en().traverseUnique(function (range) { return range.ranges; }).toArray();
+            }
             return ranges;
         };
         Manifest.prototype.getRangeById = function (id) {
@@ -1578,12 +1578,13 @@ var Manifesto;
             return null;
         };
         Utils.getServiceByReference = function (resource, id) {
-            var services = this.getServices(resource.options.resource);
+            var services = this.getServices(resource.options.resource.__jsonld);
             var service;
             for (var i = 0; i < services.length; i++) {
                 var s = services[i];
-                if (s['@id'] === id) {
-                    service = new Manifesto.Service(s, resource.options);
+                if (s.id === id) {
+                    service = new Manifesto.Service(s.__jsonld, resource.options);
+                    break;
                 }
             }
             return service;
