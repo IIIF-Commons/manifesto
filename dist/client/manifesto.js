@@ -659,10 +659,6 @@ var Manifesto;
             infoUri += 'info.json';
             return infoUri;
         };
-        Canvas.prototype.getRange = function () {
-            // get the deepest Range that this Canvas belongs to.
-            return _last(this.ranges);
-        };
         // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {

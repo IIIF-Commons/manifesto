@@ -176,7 +176,6 @@ declare module Manifesto {
         constructor(jsonld: any, options: IManifestoOptions);
         getImages(): IAnnotation[];
         getInfoUri(): string;
-        getRange(): IRange;
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;
         getWidth(): number;
@@ -394,11 +393,9 @@ declare module Manifesto {
         getHeight(): number;
         getImages(): IAnnotation[];
         getInfoUri(): string;
-        getRange(): IRange;
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;
         getWidth(): number;
-        ranges: IRange[];
     }
 }
 declare module Manifesto {
@@ -462,6 +459,7 @@ declare module Manifesto {
     interface IManifest extends IIIIFResource {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
+        getRanges(): IRange[];
         getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
