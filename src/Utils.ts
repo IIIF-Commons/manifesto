@@ -249,7 +249,16 @@ module Manifesto {
         }
 
         static getRenderings(resource: any): IRendering[] {
-            var rendering = resource.__jsonld.rendering;
+            var rendering;
+
+            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld){
+                rendering = resource.__jsonld.rendering;
+            } else {
+                rendering = (<any>resource).rendering;
+            }
+
             var renderings: IRendering[] = [];
             if (!rendering) return renderings;
 
@@ -303,7 +312,16 @@ module Manifesto {
         }
 
         static getServices(resource: any): IService[] {
-            var service = resource.__jsonld.service;
+            var service;
+
+            // if passing a manifesto-parsed object, use the __jsonld.service property,
+            // otherwise look for a service property (info.json services)
+            if (resource.__jsonld){
+                service = resource.__jsonld.service;
+            } else {
+                service = (<any>resource).service;
+            }
+
             var services: IService[] = [];
             if (!service) return services;
 

@@ -1632,7 +1632,15 @@ var Manifesto;
             return null;
         };
         Utils.getRenderings = function (resource) {
-            var rendering = resource.__jsonld.rendering;
+            var rendering;
+            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (resource.__jsonld) {
+                rendering = resource.__jsonld.rendering;
+            }
+            else {
+                rendering = resource.rendering;
+            }
             var renderings = [];
             if (!rendering)
                 return renderings;
@@ -1673,7 +1681,15 @@ var Manifesto;
             return service;
         };
         Utils.getServices = function (resource) {
-            var service = resource.__jsonld.service;
+            var service;
+            // if passing a manifesto-parsed object, use the __jsonld.service property,
+            // otherwise look for a service property (info.json services)
+            if (resource.__jsonld) {
+                service = resource.__jsonld.service;
+            }
+            else {
+                service = resource.service;
+            }
             var services = [];
             if (!service)
                 return services;
