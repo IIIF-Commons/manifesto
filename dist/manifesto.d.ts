@@ -6,6 +6,36 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
+    class AnnotationMotivation extends StringValue {
+        static BOOKMARKING: AnnotationMotivation;
+        static CLASSIFYING: AnnotationMotivation;
+        static COMMENTING: AnnotationMotivation;
+        static DESCRIBING: AnnotationMotivation;
+        static EDITING: AnnotationMotivation;
+        static HIGHLIGHTING: AnnotationMotivation;
+        static IDENTIFYING: AnnotationMotivation;
+        static LINKING: AnnotationMotivation;
+        static MODERATING: AnnotationMotivation;
+        static PAINTING: AnnotationMotivation;
+        static QUESTIONING: AnnotationMotivation;
+        static REPLYING: AnnotationMotivation;
+        static TAGGING: AnnotationMotivation;
+        bookmarking(): AnnotationMotivation;
+        classifying(): AnnotationMotivation;
+        commenting(): AnnotationMotivation;
+        describing(): AnnotationMotivation;
+        editing(): AnnotationMotivation;
+        highlighting(): AnnotationMotivation;
+        identifying(): AnnotationMotivation;
+        linking(): AnnotationMotivation;
+        moderating(): AnnotationMotivation;
+        painting(): AnnotationMotivation;
+        questioning(): AnnotationMotivation;
+        replying(): AnnotationMotivation;
+        tagging(): AnnotationMotivation;
+    }
+}
+declare module Manifesto {
     class CanvasType extends StringValue {
         static CANVAS: CanvasType;
         canvas(): CanvasType;
@@ -47,6 +77,18 @@ declare module Manifesto {
         pdf(): RenderingFormat;
         doc(): RenderingFormat;
         docx(): RenderingFormat;
+    }
+}
+declare module Manifesto {
+    class ResourceFormat extends StringValue {
+        static JPGIMAGE: ResourceFormat;
+        jpgimage(): ResourceFormat;
+    }
+}
+declare module Manifesto {
+    class ResourceType extends StringValue {
+        static IMAGE: ResourceType;
+        image(): ResourceType;
     }
 }
 declare module Manifesto {
@@ -196,8 +238,8 @@ declare module Manifesto {
         collections: ICollection[];
         manifests: IManifest[];
         constructor(jsonld: any, options: IManifestoOptions);
-        getCollectionByIndex(collectionIndex: number): ICollection;
-        getManifestByIndex(manifestIndex: number): IManifest;
+        getCollectionByIndex(collectionIndex: number): Promise<ICollection>;
+        getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
         getTree(): TreeNode;
@@ -207,7 +249,6 @@ declare module Manifesto {
 }
 declare module Manifesto {
     class Range extends ManifestResource implements IRange {
-        canvases: any[];
         parentRange: Range;
         path: string;
         ranges: Range[];
@@ -335,36 +376,6 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class AnnotationMotivation extends StringValue {
-        static BOOKMARKING: AnnotationMotivation;
-        static CLASSIFYING: AnnotationMotivation;
-        static COMMENTING: AnnotationMotivation;
-        static DESCRIBING: AnnotationMotivation;
-        static EDITING: AnnotationMotivation;
-        static HIGHLIGHTING: AnnotationMotivation;
-        static IDENTIFYING: AnnotationMotivation;
-        static LINKING: AnnotationMotivation;
-        static MODERATING: AnnotationMotivation;
-        static PAINTING: AnnotationMotivation;
-        static QUESIONING: AnnotationMotivation;
-        static REPLYING: AnnotationMotivation;
-        static TAGGING: AnnotationMotivation;
-        bookmarking(): AnnotationMotivation;
-        classifying(): AnnotationMotivation;
-        commenting(): AnnotationMotivation;
-        describing(): AnnotationMotivation;
-        editing(): AnnotationMotivation;
-        highlighting(): AnnotationMotivation;
-        identifying(): AnnotationMotivation;
-        linking(): AnnotationMotivation;
-        moderating(): AnnotationMotivation;
-        painting(): AnnotationMotivation;
-        questioning(): AnnotationMotivation;
-        replying(): AnnotationMotivation;
-        tagging(): AnnotationMotivation;
-    }
-}
-declare module Manifesto {
     interface IAccessToken {
         accessToken: string;
         tokenType: string;
@@ -393,8 +404,8 @@ declare module Manifesto {
 declare module Manifesto {
     interface ICollection extends IIIIFResource {
         collections: ICollection[];
-        getCollectionByIndex(index: number): ICollection;
-        getManifestByIndex(index: number): IManifest;
+        getCollectionByIndex(index: number): Promise<ICollection>;
+        getManifestByIndex(index: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
         getTree(): TreeNode;
@@ -472,6 +483,7 @@ declare module Manifesto {
     }
 }
 interface IManifesto {
+    AnnotationMotivation: Manifesto.AnnotationMotivation;
     CanvasType: Manifesto.CanvasType;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     ElementType: Manifesto.ElementType;
@@ -483,6 +495,8 @@ interface IManifesto {
     loadManifest: (uri: string) => Promise<any>;
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
+    ResourceFormat: Manifesto.ResourceFormat;
+    ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
     TreeNodeType: Manifesto.TreeNodeType;
     ViewingDirection: Manifesto.ViewingDirection;
@@ -560,17 +574,5 @@ declare module Manifesto {
         getType(): ResourceType;
         getWidth(): number;
         getHeight(): number;
-    }
-}
-declare module Manifesto {
-    class ResourceFormat extends StringValue {
-        static JPGIMAGE: TreeNodeType;
-        jpgimage(): ResourceFormat;
-    }
-}
-declare module Manifesto {
-    class ResourceType extends StringValue {
-        static IMAGE: TreeNodeType;
-        image(): ResourceType;
     }
 }

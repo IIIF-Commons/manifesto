@@ -8,12 +8,15 @@ module Manifesto {
             jsonld.__collection = this;
         }
 
-        getCollectionByIndex(collectionIndex: number): ICollection {
-            return this.collections[collectionIndex];
+        getCollectionByIndex(collectionIndex: number): Promise<ICollection>  {
+            var collection: ICollection = this.collections[collectionIndex];
+            // id for collection MUST be dereferenceable
+            return collection.load();
         }
 
-        getManifestByIndex(manifestIndex: number): IManifest {
-            return this.manifests[manifestIndex];
+        getManifestByIndex(manifestIndex: number): Promise<IManifest> {
+            var manifest: IManifest = this.manifests[manifestIndex];
+            return manifest.load();
         }
 
         getTotalCollections(): number{

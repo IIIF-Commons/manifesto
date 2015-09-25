@@ -1,7 +1,6 @@
 
 module Manifesto {
     export class Range extends ManifestResource implements IRange{
-        canvases: any[] = [];
         parentRange: Range;
         path: string;
         ranges: Range[] = [];

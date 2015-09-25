@@ -249,21 +249,9 @@ module Manifesto {
         }
 
         static getRenderings(resource: any): IRendering[] {
-            var rendering;
-
-            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (resource.__jsonld){
-                rendering = resource.__jsonld.rendering;
-            } else {
-                rendering = (<any>resource).rendering;
-            }
-
-            var parsed: IRendering[] = [];
-
-            if (!rendering){
-                return parsed;
-            }
+            var rendering = resource.__jsonld.rendering;
+            var renderings: IRendering[] = [];
+            if (!rendering) return renderings;
 
             // coerce to array
             if (!_isArray(rendering)){
@@ -272,10 +260,10 @@ module Manifesto {
 
             for (var i = 0; i < rendering.length; i++){
                 var r: any = rendering[i];
-                parsed.push(new Rendering(r, resource.options));
+                renderings.push(new Rendering(r, resource.options));
             }
 
-            return parsed;
+            return renderings;
         }
 
         static getService(resource: any, profile: ServiceProfile | string): IService {
@@ -299,7 +287,7 @@ module Manifesto {
         }
 
         static getServiceByReference(resource: any, id: string): any {
-            var services: IService[] = this.getServices(resource.options.resource.__jsonld);
+            var services: IService[] = this.getServices(resource.options.resource);
             var service: IService;
 
             for (var i = 0; i < services.length; i++){
@@ -315,19 +303,9 @@ module Manifesto {
         }
 
         static getServices(resource: any): IService[] {
-            var service;
-
-            // if passing a manifesto-parsed object, use the __jsonld.service property,
-            // otherwise look for a service property (info.json services)
-            if (resource.__jsonld){
-                service = resource.__jsonld.service;
-            } else {
-                service = (<any>resource).service;
-            }
-
-            var parsed: IService[] = [];
-
-            if (!service) return parsed;
+            var service = resource.__jsonld.service;
+            var services: IService[] = [];
+            if (!service) return services;
 
             // coerce to array
             if (!_isArray(service)){
@@ -338,13 +316,13 @@ module Manifesto {
                 var s: any = service[i];
 
                 if (_isString(s)){
-                    parsed.push(this.getServiceByReference(resource, s));
+                    services.push(this.getServiceByReference(resource, s));
                 } else {
-                    parsed.push(new Service(s, resource.options));
+                    services.push(new Service(s, resource.options));
                 }
             }
 
-            return parsed;
+            return services;
         }
     }
 }

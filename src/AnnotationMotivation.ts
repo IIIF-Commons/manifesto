@@ -10,7 +10,7 @@ module Manifesto {
         public static LINKING = new AnnotationMotivation("oa:linking");
         public static MODERATING = new AnnotationMotivation("oa:moderating");
         public static PAINTING = new AnnotationMotivation("sc:painting");
-        public static QUESIONING = new AnnotationMotivation("oa:questioning");
+        public static QUESTIONING = new AnnotationMotivation("oa:questioning");
         public static REPLYING = new AnnotationMotivation("oa:replying");
         public static TAGGING = new AnnotationMotivation("oa:tagging");
 
@@ -57,7 +57,7 @@ module Manifesto {
         }
 
         questioning(): AnnotationMotivation {
-            return new AnnotationMotivation(AnnotationMotivation.QUESIONING.toString());
+            return new AnnotationMotivation(AnnotationMotivation.QUESTIONING.toString());
         }
 
         replying(): AnnotationMotivation {
