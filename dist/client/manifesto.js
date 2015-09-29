@@ -457,6 +457,12 @@ var Manifesto;
         ServiceProfile.prototype.clickThrough = function () {
             return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
         };
+        ServiceProfile.prototype.iiifImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.iiifImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL2.toString());
+        };
         ServiceProfile.prototype.iiif1ImageLevel1 = function () {
             return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL1.toString());
         };
@@ -489,6 +495,8 @@ var Manifesto;
         };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
+        ServiceProfile.IIIFIMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
+        ServiceProfile.IIIFIMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
         ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
         ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
         ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
@@ -643,25 +651,6 @@ var Manifesto;
             }
             return images;
         };
-        // todo: use getImages instead. the client must decide which to use.
-        // each service has a getInfoUri method.
-        //getInfoUri(): string {
-        //    var infoUri;
-        //
-        //    if (this.__jsonld.resources){
-        //        infoUri = this.__jsonld.resources[0].resource.service['@id'];
-        //    } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-        //        infoUri = this.__jsonld.images[0].resource.service['@id'];
-        //    }
-        //
-        //    if (!_endsWith(infoUri, '/')) {
-        //        infoUri += '/';
-        //    }
-        //
-        //    infoUri += 'info.json';
-        //
-        //    return infoUri;
-        //}
         // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
@@ -678,11 +667,15 @@ var Manifesto;
                     if (!_endsWith(id, '/')) {
                         id += '/';
                     }
-                    if (profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                    if (profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL1.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL2.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
                     }
-                    else if (profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
+                    else if (profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL1.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL2.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
                     }

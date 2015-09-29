@@ -27,26 +27,6 @@ module Manifesto {
             return images;
         }
 
-        // todo: use getImages instead. the client must decide which to use.
-        // each service has a getInfoUri method.
-        //getInfoUri(): string {
-        //    var infoUri;
-        //
-        //    if (this.__jsonld.resources){
-        //        infoUri = this.__jsonld.resources[0].resource.service['@id'];
-        //    } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-        //        infoUri = this.__jsonld.images[0].resource.service['@id'];
-        //    }
-        //
-        //    if (!_endsWith(infoUri, '/')) {
-        //        infoUri += '/';
-        //    }
-        //
-        //    infoUri += 'info.json';
-        //
-        //    return infoUri;
-        //}
-
         // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         getThumbUri(width: number, height: number): string {
@@ -68,11 +48,16 @@ module Manifesto {
                         id += '/';
                     }
 
-                    if (profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                    if (profile === ServiceProfile.IIIFIMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.IIIFIMAGELEVEL2.toString() ||
+                        profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
                         profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
-                    } else if (profile === ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
-                               profile === ServiceProfile.IIIF2IMAGELEVEL2.toString()){
+                    } else if (
+                        profile === ServiceProfile.IIIFIMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.IIIFIMAGELEVEL2.toString() ||
+                        profile === ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
                     }
                 }
