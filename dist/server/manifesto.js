@@ -495,6 +495,9 @@ var Manifesto;
         ServiceProfile.prototype.stanfordIIIF1ImageLevel2 = function () {
             return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString());
         };
+        ServiceProfile.prototype.token = function () {
+            return new ServiceProfile(ServiceProfile.TOKEN.toString());
+        };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         ServiceProfile.STANFORDIIIFIMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");

@@ -124,6 +124,7 @@ declare module Manifesto {
         stanfordIIIFImageLevel2(): ServiceProfile;
         stanfordIIIF1ImageLevel1(): ServiceProfile;
         stanfordIIIF1ImageLevel2(): ServiceProfile;
+        token(): ServiceProfile;
     }
 }
 declare module Manifesto {

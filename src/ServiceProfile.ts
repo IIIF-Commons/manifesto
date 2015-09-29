@@ -78,5 +78,9 @@ module Manifesto {
         stanfordIIIF1ImageLevel2(): ServiceProfile {
             return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString());
         }
+
+        token(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.TOKEN.toString());
+        }
     }
 }
