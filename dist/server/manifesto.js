@@ -456,12 +456,6 @@ var Manifesto;
         ServiceProfile.prototype.clickThrough = function () {
             return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
         };
-        ServiceProfile.prototype.iiifImageLevel1 = function () {
-            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL1.toString());
-        };
-        ServiceProfile.prototype.iiifImageLevel2 = function () {
-            return new ServiceProfile(ServiceProfile.IIIFIMAGELEVEL2.toString());
-        };
         ServiceProfile.prototype.iiif1ImageLevel1 = function () {
             return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL1.toString());
         };
@@ -489,13 +483,24 @@ var Manifesto;
         ServiceProfile.prototype.searchWithin = function () {
             return new ServiceProfile(ServiceProfile.SEARCHWITHIN.toString());
         };
-        ServiceProfile.prototype.token = function () {
-            return new ServiceProfile(ServiceProfile.TOKEN.toString());
+        ServiceProfile.prototype.stanfordIIIFImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIFImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGELEVEL2.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString());
         };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
-        ServiceProfile.IIIFIMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
-        ServiceProfile.IIIFIMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
+        ServiceProfile.STANFORDIIIFIMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
+        ServiceProfile.STANFORDIIIFIMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
+        ServiceProfile.STANFORDIIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
+        ServiceProfile.STANFORDIIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
         ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/1/level1.json");
         ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/1/level2.json");
         ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
@@ -666,15 +671,15 @@ var Manifesto;
                     if (!_endsWith(id, '/')) {
                         id += '/';
                     }
-                    if (profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL2.toString() ||
+                    if (profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGELEVEL1.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGELEVEL2.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGELEVEL1.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
                     }
-                    else if (profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIFIMAGELEVEL2.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
+                    else if (profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
                     }

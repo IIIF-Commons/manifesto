@@ -48,14 +48,14 @@ module Manifesto {
                         id += '/';
                     }
 
-                    if (profile === ServiceProfile.IIIFIMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.IIIFIMAGELEVEL2.toString() ||
+                    if (profile === ServiceProfile.STANFORDIIIFIMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGELEVEL2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString() ||
                         profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
                         profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
                     } else if (
-                        profile === ServiceProfile.IIIFIMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.IIIFIMAGELEVEL2.toString() ||
                         profile === ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
                         profile === ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
