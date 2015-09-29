@@ -4,8 +4,8 @@ module Manifesto {
         public static CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
         public static IIIFIMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
         public static IIIFIMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
-        public static IIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
-        public static IIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+        public static IIIF1IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/1/level1.json");
+        public static IIIF1IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/1/level2.json");
         public static IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
         public static IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         public static IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
