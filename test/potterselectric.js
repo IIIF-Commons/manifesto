@@ -1,3 +1,5 @@
+// stub collections
+
 var _isDate = require("lodash.isdate");
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');

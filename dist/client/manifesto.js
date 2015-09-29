@@ -1385,6 +1385,7 @@ var Manifesto;
     Manifesto.Serialiser = Serialiser;
 })(Manifesto || (Manifesto = {}));
 var _endsWith = _dereq_("lodash.endswith");
+var _isArray = _dereq_("lodash.isarray");
 var Manifesto;
 (function (Manifesto) {
     var Service = (function (_super) {
@@ -1393,7 +1394,11 @@ var Manifesto;
             _super.call(this, jsonld, options);
         }
         Service.prototype.getProfile = function () {
-            return new Manifesto.ServiceProfile(this.getProperty('profile'));
+            var profile = this.getProperty('profile');
+            if (_isArray(profile)) {
+                return new Manifesto.ServiceProfile(profile[0]);
+            }
+            return new Manifesto.ServiceProfile(profile);
         };
         Service.prototype.getDescription = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);

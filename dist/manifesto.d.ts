@@ -314,6 +314,7 @@ declare module Manifesto {
     }
 }
 declare var _endsWith: any;
+declare var _isArray: any;
 declare module Manifesto {
     class Service extends ManifestResource implements IService {
         constructor(jsonld: any, options: IManifestoOptions);

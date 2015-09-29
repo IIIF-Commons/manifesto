@@ -1,14 +1,16 @@
 module.exports = {
+    "anzacbulletin": "http://localhost:3000/anzacbulletin.json",
     "biocrats": "http://localhost:3000/biocrats.json",
-    "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
-    "wunder": "http://localhost:3000/wunder.json",
     "cardiganshire": "http://localhost:3000/cardiganshire.json",
-    "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
-    "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
     "chemistdruggist": "http://localhost:3000/chemistdruggist.json",
-    "horriblemurders": "http://localhost:3000/horriblemurders.json",
     "correspondance": "http://localhost:3000/correspondance.json",
-    "potterselectric": "http://localhost:3000/potterselectric.json"
+    "horriblemurders": "http://localhost:3000/horriblemurders.json",
+    "illustrationsofchina": "http://localhost:3000/illustrationsofchina.json",
+    "potterselectric": "http://localhost:3000/potterselectric.json",
+    "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
+    "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
+    "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
+    "wunder": "http://localhost:3000/wunder.json"
 };
 
 //BBoM: http://wellcomelibrary.org/iiif/b18031511/manifest

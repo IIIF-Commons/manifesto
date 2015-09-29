@@ -1,5 +1,6 @@
-// foliated
+// multi-sequence
 
+var _isDate = require("lodash.isdate");
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
@@ -8,18 +9,11 @@ require('./shared');
 
 var manifest, sequence;
 
-describe('#loadsPseudoalbert', function() {
+describe('#loadsIllustrationsOfChina', function() {
     it('loads successfully', function (done) {
-        manifesto.loadManifest(manifests.pseudoalbert).then(function(data) {
+        manifesto.loadManifest(manifests.illustrationsofchina).then(function(data) {
             manifest = manifesto.create(data);
             done();
         });
-    });
-});
-
-describe('#hasManifestType', function() {
-    it('has a manifestType property of "manuscript"', function () {
-        var type = manifest.getManifestType();
-        type.toString().should.equal('manuscript');
     });
 });

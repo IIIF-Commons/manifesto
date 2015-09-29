@@ -1,4 +1,5 @@
 var _endsWith = require("lodash.endswith");
+var _isArray = require("lodash.isarray");
 
 module Manifesto {
     export class Service extends ManifestResource implements IService {
@@ -8,7 +9,13 @@ module Manifesto {
         }
 
         getProfile(): ServiceProfile{
-            return new ServiceProfile(this.getProperty('profile'));
+            var profile = this.getProperty('profile');
+
+            if (_isArray(profile)){
+                return new ServiceProfile(profile[0]);
+            }
+
+            return new ServiceProfile(profile);
         }
 
         getDescription(): string {
