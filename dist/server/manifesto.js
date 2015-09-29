@@ -632,9 +632,9 @@ var Manifesto;
         }
         // https://github.com/UniversalViewer/universalviewer/issues/119
         Canvas.prototype.getImages = function () {
-            if (!this.__jsonld.images)
-                return [];
             var images = [];
+            if (!this.__jsonld.images)
+                return images;
             for (var i = 0; i < this.__jsonld.images.length; i++) {
                 var a = this.__jsonld.images[i];
                 var annotation = new Manifesto.Annotation(a, this.options);
@@ -644,51 +644,80 @@ var Manifesto;
         };
         // todo: use getImages instead. the client must decide which to use.
         // each service has a getInfoUri method.
-        Canvas.prototype.getInfoUri = function () {
-            var infoUri;
-            if (this.__jsonld.resources) {
-                infoUri = this.__jsonld.resources[0].resource.service['@id'];
-            }
-            else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
-                infoUri = this.__jsonld.images[0].resource.service['@id'];
-            }
-            if (!_endsWith(infoUri, '/')) {
-                infoUri += '/';
-            }
-            infoUri += 'info.json';
-            return infoUri;
-        };
+        //getInfoUri(): string {
+        //    var infoUri;
+        //
+        //    if (this.__jsonld.resources){
+        //        infoUri = this.__jsonld.resources[0].resource.service['@id'];
+        //    } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
+        //        infoUri = this.__jsonld.images[0].resource.service['@id'];
+        //    }
+        //
+        //    if (!_endsWith(infoUri, '/')) {
+        //        infoUri += '/';
+        //    }
+        //
+        //    infoUri += 'info.json';
+        //
+        //    return infoUri;
+        //}
         // todo: Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         Canvas.prototype.getThumbUri = function (width, height) {
-            var uri, resource, tile, service;
-            //if(this.__jsonld.thumbnail){
-            //    return this.__jsonld.thumbnail;
-            //} else if (this.__jsonld.resources){
-            if (this.__jsonld.resources) {
-                // todo: create thumbnail serviceprofile and use manifest.getService
-                resource = this.__jsonld.resources[0].resource;
+            var uri;
+            var images = this.getImages();
+            if (images && images.length) {
+                var firstImage = images[0];
+                var resource = firstImage.getResource();
+                var services = resource.getServices();
+                for (var i = 0; i < services.length; i++) {
+                    var service = services[i];
+                    var profile = service.getProfile().toString();
+                    var id = service.id;
+                    if (!_endsWith(id, '/')) {
+                        id += '/';
+                    }
+                    if (profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) {
+                        uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
+                    }
+                    else if (profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
+                        uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
+                    }
+                }
             }
-            else if (this.__jsonld.images && this.__jsonld.images[0].resource.service) {
-                // todo: create thumbnail serviceprofile and use manifest.getService
-                resource = this.__jsonld.images[0].resource;
-            }
-            else {
-                return null;
-            }
-            service = resource.service;
-            uri = service['@id'];
-            if (!_endsWith(uri, '/')) {
-                uri += '/';
-            }
-            // todo: allow region, rotation, quality, and format as parameters?
-            if (service.profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() || service.profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) {
-                tile = 'full/' + width + ',' + height + '/0/native.jpg';
-            }
-            else {
-                tile = 'full/' + width + ',' + height + '/0/default.jpg';
-            }
-            return uri + tile;
+            return uri;
+            //var uri, resource, tile, service;
+            //
+            ////if(this.__jsonld.thumbnail){
+            ////    return this.__jsonld.thumbnail;
+            ////} else if (this.__jsonld.resources){
+            //if (this.__jsonld.resources){
+            //    // todo: create thumbnail serviceprofile and use manifest.getService
+            //    resource = this.__jsonld.resources[0].resource;
+            //} else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
+            //    // todo: create thumbnail serviceprofile and use manifest.getService
+            //    resource = this.__jsonld.images[0].resource;
+            //} else {
+            //    return null;
+            //}
+            //
+            //service = resource.service;
+            //uri = service['@id'];
+            //
+            //if (!_endsWith(uri, '/')){
+            //    uri += '/';
+            //}
+            //
+            //// todo: allow region, rotation, quality, and format as parameters?
+            //if (service.profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() || service.profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
+            //    tile = 'full/' + width + ',' + height + '/0/native.jpg';
+            //} else {
+            //    tile = 'full/' + width + ',' + height + '/0/default.jpg';
+            //}
+            //
+            //return uri + tile;
         };
         Canvas.prototype.getType = function () {
             return new Manifesto.CanvasType(this.getProperty('@type').toLowerCase());
