@@ -296,8 +296,9 @@ module Manifesto {
         }
 
         static getServiceByReference(resource: any, id: string): any {
-            var services: IService[] = this.getServices(resource.options.resource);
+
             var service: IService;
+            var services: IService[] = this.getServices(resource.options.resource);
 
             for (var i = 0; i < services.length; i++){
                 var s = services[i];
@@ -333,7 +334,7 @@ module Manifesto {
             for (var i = 0; i < service.length; i++){
                 var s: any = service[i];
 
-                if (_isString(s)){
+                if (_isString(s) && resource !== resource.options.resource){
                     services.push(this.getServiceByReference(resource, s));
                 } else {
                     services.push(new Service(s, resource.options));
