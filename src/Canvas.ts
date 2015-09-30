@@ -48,10 +48,14 @@ module Manifesto {
                         id += '/';
                     }
 
-                    if (profile === ServiceProfile.STANFORDIIIFIMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.STANFORDIIIFIMAGELEVEL2.toString() ||
-                        profile === ServiceProfile.STANFORDIIIF1IMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString() ||
+                    if (profile === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
                         profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
                         profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
@@ -64,37 +68,6 @@ module Manifesto {
             }
 
             return uri;
-
-            //var uri, resource, tile, service;
-            //
-            ////if(this.__jsonld.thumbnail){
-            ////    return this.__jsonld.thumbnail;
-            ////} else if (this.__jsonld.resources){
-            //if (this.__jsonld.resources){
-            //    // todo: create thumbnail serviceprofile and use manifest.getService
-            //    resource = this.__jsonld.resources[0].resource;
-            //} else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-            //    // todo: create thumbnail serviceprofile and use manifest.getService
-            //    resource = this.__jsonld.images[0].resource;
-            //} else {
-            //    return null;
-            //}
-            //
-            //service = resource.service;
-            //uri = service['@id'];
-            //
-            //if (!_endsWith(uri, '/')){
-            //    uri += '/';
-            //}
-            //
-            //// todo: allow region, rotation, quality, and format as parameters?
-            //if (service.profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() || service.profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
-            //    tile = 'full/' + width + ',' + height + '/0/native.jpg';
-            //} else {
-            //    tile = 'full/' + width + ',' + height + '/0/default.jpg';
-            //}
-            //
-            //return uri + tile;
         }
 
         getType(): CanvasType {

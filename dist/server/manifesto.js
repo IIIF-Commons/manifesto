@@ -483,27 +483,43 @@ var Manifesto;
         ServiceProfile.prototype.searchWithin = function () {
             return new ServiceProfile(ServiceProfile.SEARCHWITHIN.toString());
         };
-        ServiceProfile.prototype.stanfordIIIFImageLevel1 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGELEVEL1.toString());
+        ServiceProfile.prototype.stanfordIIIFImageCompliance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString());
         };
-        ServiceProfile.prototype.stanfordIIIFImageLevel2 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGELEVEL2.toString());
+        ServiceProfile.prototype.stanfordIIIFImageCompliance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString());
         };
-        ServiceProfile.prototype.stanfordIIIF1ImageLevel1 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGELEVEL1.toString());
+        ServiceProfile.prototype.stanfordIIIFImageConformance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString());
         };
-        ServiceProfile.prototype.stanfordIIIF1ImageLevel2 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString());
+        ServiceProfile.prototype.stanfordIIIFImageConformance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageCompliance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageCompliance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageConformance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageConformance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString());
         };
         ServiceProfile.prototype.token = function () {
             return new ServiceProfile(ServiceProfile.TOKEN.toString());
         };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://wellcomelibrary.org/ld/iiif-ext/0/accept-terms-click-through");
-        ServiceProfile.STANFORDIIIFIMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
-        ServiceProfile.STANFORDIIIFIMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
-        ServiceProfile.STANFORDIIIF1IMAGELEVEL1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
-        ServiceProfile.STANFORDIIIF1IMAGELEVEL2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
+        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
+        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level1");
+        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level2");
+        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
+        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1");
+        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
         ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/1/level1.json");
         ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/1/level2.json");
         ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
@@ -674,10 +690,14 @@ var Manifesto;
                     if (!_endsWith(id, '/')) {
                         id += '/';
                     }
-                    if (profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGELEVEL2.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGELEVEL2.toString() ||
+                    if (profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
+                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
@@ -689,36 +709,6 @@ var Manifesto;
                 }
             }
             return uri;
-            //var uri, resource, tile, service;
-            //
-            ////if(this.__jsonld.thumbnail){
-            ////    return this.__jsonld.thumbnail;
-            ////} else if (this.__jsonld.resources){
-            //if (this.__jsonld.resources){
-            //    // todo: create thumbnail serviceprofile and use manifest.getService
-            //    resource = this.__jsonld.resources[0].resource;
-            //} else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-            //    // todo: create thumbnail serviceprofile and use manifest.getService
-            //    resource = this.__jsonld.images[0].resource;
-            //} else {
-            //    return null;
-            //}
-            //
-            //service = resource.service;
-            //uri = service['@id'];
-            //
-            //if (!_endsWith(uri, '/')){
-            //    uri += '/';
-            //}
-            //
-            //// todo: allow region, rotation, quality, and format as parameters?
-            //if (service.profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() || service.profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
-            //    tile = 'full/' + width + ',' + height + '/0/native.jpg';
-            //} else {
-            //    tile = 'full/' + width + ',' + height + '/0/default.jpg';
-            //}
-            //
-            //return uri + tile;
         };
         Canvas.prototype.getType = function () {
             return new Manifesto.CanvasType(this.getProperty('@type').toLowerCase());

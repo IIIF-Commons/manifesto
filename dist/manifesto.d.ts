@@ -95,10 +95,14 @@ declare module Manifesto {
     class ServiceProfile extends StringValue {
         static AUTOCOMPLETE: ServiceProfile;
         static CLICKTHROUGH: ServiceProfile;
-        static STANFORDIIIFIMAGELEVEL1: ServiceProfile;
-        static STANFORDIIIFIMAGELEVEL2: ServiceProfile;
-        static STANFORDIIIF1IMAGELEVEL1: ServiceProfile;
-        static STANFORDIIIF1IMAGELEVEL2: ServiceProfile;
+        static STANFORDIIIFIMAGECOMPLIANCE1: ServiceProfile;
+        static STANFORDIIIFIMAGECOMPLIANCE2: ServiceProfile;
+        static STANFORDIIIFIMAGECONFORMANCE1: ServiceProfile;
+        static STANFORDIIIFIMAGECONFORMANCE2: ServiceProfile;
+        static STANFORDIIIF1IMAGECOMPLIANCE1: ServiceProfile;
+        static STANFORDIIIF1IMAGECOMPLIANCE2: ServiceProfile;
+        static STANFORDIIIF1IMAGECONFORMANCE1: ServiceProfile;
+        static STANFORDIIIF1IMAGECONFORMANCE2: ServiceProfile;
         static IIIF1IMAGELEVEL1: ServiceProfile;
         static IIIF1IMAGELEVEL2: ServiceProfile;
         static IIIF2IMAGELEVEL1: ServiceProfile;
@@ -120,10 +124,14 @@ declare module Manifesto {
         logout(): ServiceProfile;
         otherManifestations(): ServiceProfile;
         searchWithin(): ServiceProfile;
-        stanfordIIIFImageLevel1(): ServiceProfile;
-        stanfordIIIFImageLevel2(): ServiceProfile;
-        stanfordIIIF1ImageLevel1(): ServiceProfile;
-        stanfordIIIF1ImageLevel2(): ServiceProfile;
+        stanfordIIIFImageCompliance1(): ServiceProfile;
+        stanfordIIIFImageCompliance2(): ServiceProfile;
+        stanfordIIIFImageConformance1(): ServiceProfile;
+        stanfordIIIFImageConformance2(): ServiceProfile;
+        stanfordIIIF1ImageCompliance1(): ServiceProfile;
+        stanfordIIIF1ImageCompliance2(): ServiceProfile;
+        stanfordIIIF1ImageConformance1(): ServiceProfile;
+        stanfordIIIF1ImageConformance2(): ServiceProfile;
         token(): ServiceProfile;
     }
 }
