@@ -11,6 +11,7 @@ module.exports = {
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
+    "witnesstopeter": "http://localhost:3000/witnesstopeter.json",
     "wunder": "http://localhost:3000/wunder.json"
 };
 
