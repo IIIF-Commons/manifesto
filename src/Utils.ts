@@ -41,34 +41,38 @@ module Manifesto {
             return new Promise<any>((resolve, reject) => {
                 var u = url.parse(uri);
 
-                var fetch = http.request({
+                var request = http.request({
                     host: u.hostname,
                     port: u.port,
                     path: u.pathname,
                     method: "GET",
                     withCredentials: false
-                }, (res) => {
+                }, (response) => {
                     var result = "";
-                    res.on('data', (chunk) => {
+                    response.on('data', (chunk) => {
                         result += chunk;
                     });
-                    res.on('end', () => {
+                    response.on('end', () => {
                         resolve(result);
                     });
                 });
 
-                fetch.end();
+                request.on('error', (error) => {
+                    reject(error);
+                });
+
+                request.end();
             });
         }
 
         static loadExternalResource(resource: IExternalResource,
-                     clickThrough: (resource: IExternalResource) => Promise<void>,
-                     login: (resource: IExternalResource) => Promise<void>,
-                     getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                     storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                     getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                     handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-                     options?: IManifestoOptions): Promise<IExternalResource> {
+             clickThrough: (resource: IExternalResource) => Promise<void>,
+             login: (resource: IExternalResource) => Promise<void>,
+             getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+             storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
+             getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
+             options?: IManifestoOptions): Promise<IExternalResource> {
 
             return new Promise<any>((resolve, reject) => {
 
@@ -88,14 +92,22 @@ module Manifesto {
                                     getAccessToken(resource).then((token: IAccessToken) => {
                                         resource.getData(token).then(() => {
                                             resolve(handleResourceResponse(resource));
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
+                                    })["catch"]((error) => {
+                                        reject(error);
                                     });
+                                })["catch"]((error) => {
+                                    reject(error);
                                 });
                             }
                         } else {
                             // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
+                    })["catch"]((error) => {
+                        reject(error);
                     });
                 } else {
 
@@ -123,8 +135,12 @@ module Manifesto {
                                         storeAccessToken,
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
                                 }
+                            })["catch"]((error) => {
+                                reject(error);
                             });
                         } else {
                             Utils.authorize(
@@ -135,8 +151,12 @@ module Manifesto {
                                 storeAccessToken,
                                 getStoredAccessToken).then(() => {
                                     resolve(handleResourceResponse(resource));
+                                })["catch"]((error) => {
+                                    reject(error);
                                 });
                         }
+                    })["catch"]((error) => {
+                        reject(error);
                     });
                 }
             });
@@ -151,7 +171,7 @@ module Manifesto {
                       handleResourceResponse: (resource: IExternalResource) => Promise<any>,
                       options?: IManifestoOptions): Promise<IExternalResource[]> {
 
-            return new Promise<IExternalResource[]>((resolve) => {
+            return new Promise<IExternalResource[]>((resolve, reject) => {
 
                 var promises = _map(resources, (resource: IExternalResource) => {
                     return Utils.loadExternalResource(
@@ -168,6 +188,8 @@ module Manifesto {
                 Promise.all(promises)
                     .then(() => {
                         resolve(resources)
+                    })["catch"]((error) => {
+                        reject(error);
                     });
             });
         }
@@ -188,6 +210,8 @@ module Manifesto {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
                                     resolve(resource);
+                                })["catch"]((error) => {
+                                    reject(error);
                                 });
                             } else {
                                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
@@ -203,8 +227,14 @@ module Manifesto {
                                             storeAccessToken(resource, accessToken).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
+                                                })["catch"]((error) => {
+                                                    reject(error);
                                                 });
+                                            })["catch"]((error) => {
+                                                reject(error);
                                             });
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
                                     });
                                 } else {
@@ -214,12 +244,20 @@ module Manifesto {
                                             storeAccessToken(resource, accessToken).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
+                                                })["catch"]((error) => {
+                                                    reject(error);
                                                 });
+                                            })["catch"]((error) => {
+                                                reject(error);
                                             });
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
                                     });
                                 }
                             }
+                        })["catch"]((error) => {
+                            reject(error);
                         });
                     } else {
                         // this info.json isn't access controlled, therefore there's no need to request an access token
