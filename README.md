@@ -8,6 +8,8 @@ IIIF Presentation API client and server utility library.
 
 ###Getting Started
 
+http://blog.edsilv.com/manifesto/
+
 https://github.com/edsilv/manifesto-express-demo 
 
 A web server that loads a manifest and writes its label to output.

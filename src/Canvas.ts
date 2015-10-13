@@ -10,7 +10,6 @@ module Manifesto {
             super(jsonld, options);
         }
 
-        // https://github.com/UniversalViewer/universalviewer/issues/119
         getImages(): IAnnotation[] {
 
             var images: IAnnotation[] = [];
