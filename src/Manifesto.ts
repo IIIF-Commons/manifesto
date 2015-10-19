@@ -50,6 +50,9 @@ module.exports = <IManifesto>{
         return false;
     },
 
+    // todo: create hasServiceDescriptor
+    // based on @profile and @type (or lack of) can the resource describe associated services?
+
     loadExternalResources: function(resources: Manifesto.IExternalResource[],
                                     clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
                                     login: (resource: Manifesto.IExternalResource) => Promise<void>,
