@@ -5,7 +5,6 @@
   ],
   "@id": "http://wellcomelibrary.org/iiif/b19684538/manifest",
   "@type": "sc:Manifest",
-  "exp:manifestType": "manuscript",
   "label": "Pseudo-Albert the Great, De secretis mulierum",
   "metadata": [
     {
@@ -57,6 +56,11 @@
       "value": "1"
     }
   ],
+  "service": {
+    "@context": "http://wellcomelibrary.org/ld/ixif/0/context.json",
+    "profile": "http://universalviewer.azurewebsites.net/ui-extensions-profile",
+    "manifestType": "manuscript"
+  },
   "sequences": [
     {
       "@id": "http://wellcomelibrary.org/iiif/b19684538/sequence/s0",

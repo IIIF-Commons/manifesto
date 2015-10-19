@@ -189,7 +189,11 @@ module Manifesto {
         }
 
         getManifestType(): ManifestType {
-            return new ManifestType(this.getProperty('exp:manifestType'));
+            var service: IService = this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
+            if (service){
+                return new ManifestType(service.getProperty('manifestType'));
+            }
+            return new ManifestType('');
         }
 
         isMultiSequence(): boolean{

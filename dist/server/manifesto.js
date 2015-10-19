@@ -966,7 +966,11 @@ var Manifesto;
             }
         };
         Manifest.prototype.getManifestType = function () {
-            return new Manifesto.ManifestType(this.getProperty('exp:manifestType'));
+            var service = this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
+            if (service) {
+                return new Manifesto.ManifestType(service.getProperty('manifestType'));
+            }
+            return new Manifesto.ManifestType('');
         };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
