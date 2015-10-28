@@ -1,7 +1,6 @@
 
 module Manifesto {
     export class Range extends ManifestResource implements IRange{
-        canvases: any[] = [];
         parentRange: Range;
         path: string;
         ranges: Range[] = [];
@@ -9,6 +8,14 @@ module Manifesto {
 
         constructor(jsonld: any, options: IManifestoOptions){
             super(jsonld, options);
+        }
+
+        getCanvases(): string[] {
+            if (this.__jsonld.canvases) {
+                return this.__jsonld.canvases;
+            }
+
+            return [];
         }
 
         getViewingDirection(): ViewingDirection {

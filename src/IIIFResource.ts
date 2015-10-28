@@ -13,10 +13,29 @@ module Manifesto {
             var defaultOptions: IManifestoOptions = {
                 defaultLabel: '-',
                 locale: 'en-GB',
+                resource: <IIIIFResource>this,
                 pessimisticAccessControl: false
             };
 
             this.options = _assign(defaultOptions, options);
+        }
+
+        generateTreeNodeIds(treeNode: TreeNode, index: number = 0): void {
+
+            var id: string;
+
+            if (!treeNode.parentNode){
+                id = '0';
+            } else {
+                id = treeNode.parentNode.id + "/" + index;
+            }
+
+            treeNode.id = id.hashCode();
+
+            for (var i = 0; i < treeNode.nodes.length; i++){
+                var n: TreeNode = treeNode.nodes[i];
+                this.generateTreeNodeIds(n, i);
+            }
         }
 
         getAttribution(): string {
@@ -37,6 +56,10 @@ module Manifesto {
 
         getLicense(): string {
             return Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
+        }
+
+        getNavDate(): Date {
+            return new Date(this.getProperty('navDate'));
         }
 
         getSeeAlso(): any {
@@ -60,6 +83,7 @@ module Manifesto {
                     resolve(that);
                 } else {
                     var options = that.options;
+                    options.navDate = that.getNavDate();
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
                         var parsed = Deserialiser.parse(data, options);
                         that = _assign(that, parsed);

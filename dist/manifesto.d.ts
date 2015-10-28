@@ -6,6 +6,36 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
+    class AnnotationMotivation extends StringValue {
+        static BOOKMARKING: AnnotationMotivation;
+        static CLASSIFYING: AnnotationMotivation;
+        static COMMENTING: AnnotationMotivation;
+        static DESCRIBING: AnnotationMotivation;
+        static EDITING: AnnotationMotivation;
+        static HIGHLIGHTING: AnnotationMotivation;
+        static IDENTIFYING: AnnotationMotivation;
+        static LINKING: AnnotationMotivation;
+        static MODERATING: AnnotationMotivation;
+        static PAINTING: AnnotationMotivation;
+        static QUESTIONING: AnnotationMotivation;
+        static REPLYING: AnnotationMotivation;
+        static TAGGING: AnnotationMotivation;
+        bookmarking(): AnnotationMotivation;
+        classifying(): AnnotationMotivation;
+        commenting(): AnnotationMotivation;
+        describing(): AnnotationMotivation;
+        editing(): AnnotationMotivation;
+        highlighting(): AnnotationMotivation;
+        identifying(): AnnotationMotivation;
+        linking(): AnnotationMotivation;
+        moderating(): AnnotationMotivation;
+        painting(): AnnotationMotivation;
+        questioning(): AnnotationMotivation;
+        replying(): AnnotationMotivation;
+        tagging(): AnnotationMotivation;
+    }
+}
+declare module Manifesto {
     class CanvasType extends StringValue {
         static CANVAS: CanvasType;
         canvas(): CanvasType;
@@ -50,11 +80,33 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
+    class ResourceFormat extends StringValue {
+        static JPGIMAGE: ResourceFormat;
+        jpgimage(): ResourceFormat;
+    }
+}
+declare module Manifesto {
+    class ResourceType extends StringValue {
+        static IMAGE: ResourceType;
+        image(): ResourceType;
+    }
+}
+declare module Manifesto {
     class ServiceProfile extends StringValue {
         static AUTOCOMPLETE: ServiceProfile;
         static CLICKTHROUGH: ServiceProfile;
-        static IIIFIMAGELEVEL1: ServiceProfile;
-        static IIIFIMAGELEVEL2: ServiceProfile;
+        static STANFORDIIIFIMAGECOMPLIANCE1: ServiceProfile;
+        static STANFORDIIIFIMAGECOMPLIANCE2: ServiceProfile;
+        static STANFORDIIIFIMAGECONFORMANCE1: ServiceProfile;
+        static STANFORDIIIFIMAGECONFORMANCE2: ServiceProfile;
+        static STANFORDIIIF1IMAGECOMPLIANCE1: ServiceProfile;
+        static STANFORDIIIF1IMAGECOMPLIANCE2: ServiceProfile;
+        static STANFORDIIIF1IMAGECONFORMANCE1: ServiceProfile;
+        static STANFORDIIIF1IMAGECONFORMANCE2: ServiceProfile;
+        static IIIF1IMAGELEVEL1: ServiceProfile;
+        static IIIF1IMAGELEVEL2: ServiceProfile;
+        static IIIF2IMAGELEVEL1: ServiceProfile;
+        static IIIF2IMAGELEVEL2: ServiceProfile;
         static IXIF: ServiceProfile;
         static LOGIN: ServiceProfile;
         static LOGOUT: ServiceProfile;
@@ -63,13 +115,23 @@ declare module Manifesto {
         static TOKEN: ServiceProfile;
         autoComplete(): ServiceProfile;
         clickThrough(): ServiceProfile;
-        iiifImageLevel1(): ServiceProfile;
-        iiifImageLevel2(): ServiceProfile;
+        iiif1ImageLevel1(): ServiceProfile;
+        iiif1ImageLevel2(): ServiceProfile;
+        iiif2ImageLevel1(): ServiceProfile;
+        iiif2ImageLevel2(): ServiceProfile;
         ixif(): ServiceProfile;
         login(): ServiceProfile;
         logout(): ServiceProfile;
         otherManifestations(): ServiceProfile;
         searchWithin(): ServiceProfile;
+        stanfordIIIFImageCompliance1(): ServiceProfile;
+        stanfordIIIFImageCompliance2(): ServiceProfile;
+        stanfordIIIFImageConformance1(): ServiceProfile;
+        stanfordIIIFImageConformance2(): ServiceProfile;
+        stanfordIIIF1ImageCompliance1(): ServiceProfile;
+        stanfordIIIF1ImageCompliance2(): ServiceProfile;
+        stanfordIIIF1ImageConformance1(): ServiceProfile;
+        stanfordIIIF1ImageConformance2(): ServiceProfile;
         token(): ServiceProfile;
     }
 }
@@ -128,8 +190,7 @@ declare module Manifesto {
     class Canvas extends ManifestResource implements ICanvas {
         ranges: IRange[];
         constructor(jsonld: any, options: IManifestoOptions);
-        getInfoUri(): string;
-        getRange(): IRange;
+        getImages(): IAnnotation[];
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;
         getWidth(): number;
@@ -151,11 +212,13 @@ declare module Manifesto {
         parentCollection: ICollection;
         treeRoot: TreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
+        generateTreeNodeIds(treeNode: TreeNode, index?: number): void;
         getAttribution(): string;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
         getLogo(): string;
         getLicense(): string;
+        getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;
@@ -168,11 +231,14 @@ declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
         rootRange: IRange;
-        sequences: ISequence[];
         constructor(jsonld: any, options?: IManifestoOptions);
+        private _getRootRange();
+        private _getRangeById(id);
+        private _parseRanges(r, path, parentRange?);
         getRanges(): IRange[];
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
+        getSequences(): ISequence[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
@@ -186,8 +252,8 @@ declare module Manifesto {
         collections: ICollection[];
         manifests: IManifest[];
         constructor(jsonld: any, options: IManifestoOptions);
-        getCollectionByIndex(collectionIndex: number): ICollection;
-        getManifestByIndex(manifestIndex: number): IManifest;
+        getCollectionByIndex(collectionIndex: number): Promise<ICollection>;
+        getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
         getTree(): TreeNode;
@@ -197,12 +263,12 @@ declare module Manifesto {
 }
 declare module Manifesto {
     class Range extends ManifestResource implements IRange {
-        canvases: any[];
         parentRange: Range;
         path: string;
         ranges: Range[];
         treeNode: TreeNode;
         constructor(jsonld: any, options: IManifestoOptions);
+        getCanvases(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
     }
@@ -216,8 +282,8 @@ declare module Manifesto {
 declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {
-        canvases: ICanvas[];
         constructor(jsonld: any, options: IManifestoOptions);
+        getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(canvasIndex: number): any;
         getCanvasIndexById(id: string): number;
@@ -241,7 +307,6 @@ declare module Manifesto {
         isTotalCanvasesEven(): boolean;
     }
 }
-declare var jmespath: any;
 declare var _isString: any;
 declare module Manifesto {
     class Deserialiser {
@@ -251,16 +316,13 @@ declare module Manifesto {
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void;
         static parseManifest(json: any, options?: IManifestoOptions): IManifest;
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void;
-        static parseSequences(manifest: IManifest, options: IManifestoOptions): void;
-        static parseCanvases(sequence: any, options: IManifestoOptions): ICanvas[];
-        static parseRanges(manifest: IManifest, r: any, path: string, parentRange?: IRange): void;
-        static getCanvasById(manifest: IManifest, id: string): ICanvas;
     }
     class Serialiser {
         static serialise(manifest: IManifest): string;
     }
 }
 declare var _endsWith: any;
+declare var _isArray: any;
 declare module Manifesto {
     class Service extends ManifestResource implements IService {
         constructor(jsonld: any, options: IManifestoOptions);
@@ -287,9 +349,21 @@ declare module Manifesto {
         nodes: TreeNode[];
         selected: boolean;
         expanded: boolean;
+        id: string;
+        navDate: Date;
         parentNode: TreeNode;
         constructor(label?: string, data?: any);
         addNode(node: TreeNode): void;
+    }
+}
+declare module Manifesto {
+    class TreeNodeType extends StringValue {
+        static COLLECTION: TreeNodeType;
+        static MANIFEST: TreeNodeType;
+        static RANGE: TreeNodeType;
+        collection(): TreeNodeType;
+        manifest(): TreeNodeType;
+        range(): TreeNodeType;
     }
 }
 declare var http: any;
@@ -304,37 +378,48 @@ declare module Manifesto {
         static getRendering(resource: any, format: RenderingFormat | string): IRendering;
         static getRenderings(resource: any): IRendering[];
         static getService(resource: any, profile: ServiceProfile | string): IService;
+        static getServiceByReference(resource: any, id: string): any;
         static getServices(resource: any): IService[];
+    }
+}
+declare module Manifesto {
+    class Annotation extends ManifestResource implements IAnnotation {
+        constructor(jsonld: any, options: IManifestoOptions);
+        getMotivation(): AnnotationMotivation;
+        getOn(): string;
+        getResource(): Resource;
     }
 }
 declare module Manifesto {
     interface IAccessToken {
         accessToken: string;
-        tokenType: string;
+        error: string;
+        errorDescription: string;
         expiresIn: number;
+        tokenType: string;
     }
 }
 declare module Manifesto {
     interface IAnnotation extends IJSONLDResource {
-        getMotivation(): string;
+        getMotivation(): AnnotationMotivation;
+        getOn(): string;
+        getResource(): Resource;
     }
 }
 declare module Manifesto {
     interface ICanvas extends IManifestResource {
         getHeight(): number;
-        getInfoUri(): string;
-        getRange(): IRange;
+        getImages(): IAnnotation[];
         getThumbUri(width: number, height: number): string;
         getType(): CanvasType;
         getWidth(): number;
-        ranges: IRange[];
     }
 }
 declare module Manifesto {
     interface ICollection extends IIIIFResource {
         collections: ICollection[];
-        getCollectionByIndex(index: number): ICollection;
-        getManifestByIndex(index: number): IManifest;
+        getCollectionByIndex(index: number): Promise<ICollection>;
+        getManifestByIndex(index: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
         getTree(): TreeNode;
@@ -368,6 +453,7 @@ declare module Manifesto {
         getIIIFResourceType(): IIIFResourceType;
         getLicense(): string;
         getLogo(): string;
+        getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;
@@ -390,13 +476,14 @@ declare module Manifesto {
     interface IManifest extends IIIIFResource {
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
+        getRanges(): IRange[];
+        getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
         getTree(): TreeNode;
         getManifestType(): ManifestType;
         isMultiSequence(): boolean;
         rootRange: IRange;
-        sequences: ISequence[];
     }
 }
 declare module Manifesto {
@@ -411,17 +498,22 @@ declare module Manifesto {
     }
 }
 interface IManifesto {
+    AnnotationMotivation: Manifesto.AnnotationMotivation;
     CanvasType: Manifesto.CanvasType;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     ElementType: Manifesto.ElementType;
     getRenderings(resource: any): Manifesto.IRendering[];
     getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
+    getTreeNode(): Manifesto.TreeNode;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadExternalResources: (resources: Manifesto.IExternalResource[], clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>, login: (resource: Manifesto.IExternalResource) => Promise<void>, getAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>, storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken) => Promise<void>, getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>, handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>, options?: Manifesto.IManifestoOptions) => Promise<Manifesto.IExternalResource[]>;
     loadManifest: (uri: string) => Promise<any>;
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
+    ResourceFormat: Manifesto.ResourceFormat;
+    ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
+    TreeNodeType: Manifesto.TreeNodeType;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }
@@ -429,12 +521,14 @@ declare module Manifesto {
     interface IManifestoOptions {
         defaultLabel: string;
         locale: string;
+        resource: IIIIFResource;
+        navDate?: Date;
         pessimisticAccessControl: boolean;
     }
 }
 declare module Manifesto {
     interface IRange extends IManifestResource {
-        canvases: any[];
+        getCanvases(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         parentRange: IRange;
@@ -449,8 +543,15 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
+    interface IResource extends IManifestResource {
+        getFormat(): ResourceFormat;
+        getHeight(): number;
+        getWidth(): number;
+    }
+}
+declare module Manifesto {
     interface ISequence extends IManifestResource {
-        canvases: ICanvas[];
+        getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(index: number): ICanvas;
         getCanvasIndexById(id: string): number;
@@ -479,5 +580,14 @@ declare module Manifesto {
     interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
         getInfoUri(): string;
+    }
+}
+declare module Manifesto {
+    class Resource extends ManifestResource implements IResource {
+        constructor(jsonld: any, options: IManifestoOptions);
+        getFormat(): ResourceFormat;
+        getType(): ResourceType;
+        getWidth(): number;
+        getHeight(): number;
     }
 }

@@ -41,34 +41,38 @@ module Manifesto {
             return new Promise<any>((resolve, reject) => {
                 var u = url.parse(uri);
 
-                var fetch = http.request({
+                var request = http.request({
                     host: u.hostname,
-                    port: u.port || 80,
+                    port: u.port,
                     path: u.pathname,
                     method: "GET",
                     withCredentials: false
-                }, (res) => {
+                }, (response) => {
                     var result = "";
-                    res.on('data', (chunk) => {
+                    response.on('data', (chunk) => {
                         result += chunk;
                     });
-                    res.on('end', () => {
+                    response.on('end', () => {
                         resolve(result);
                     });
                 });
 
-                fetch.end();
+                request.on('error', (error) => {
+                    reject(error);
+                });
+
+                request.end();
             });
         }
 
         static loadExternalResource(resource: IExternalResource,
-                     clickThrough: (resource: IExternalResource) => Promise<void>,
-                     login: (resource: IExternalResource) => Promise<void>,
-                     getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                     storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                     getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                     handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-                     options?: IManifestoOptions): Promise<IExternalResource> {
+             clickThrough: (resource: IExternalResource) => Promise<void>,
+             login: (resource: IExternalResource) => Promise<void>,
+             getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+             storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
+             getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
+             options?: IManifestoOptions): Promise<IExternalResource> {
 
             return new Promise<any>((resolve, reject) => {
 
@@ -88,14 +92,22 @@ module Manifesto {
                                     getAccessToken(resource).then((token: IAccessToken) => {
                                         resource.getData(token).then(() => {
                                             resolve(handleResourceResponse(resource));
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
+                                    })["catch"]((error) => {
+                                        reject(error);
                                     });
+                                })["catch"]((error) => {
+                                    reject(error);
                                 });
                             }
                         } else {
                             // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
+                    })["catch"]((error) => {
+                        reject(error);
                     });
                 } else {
 
@@ -123,8 +135,12 @@ module Manifesto {
                                         storeAccessToken,
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
                                 }
+                            })["catch"]((error) => {
+                                reject(error);
                             });
                         } else {
                             Utils.authorize(
@@ -135,8 +151,12 @@ module Manifesto {
                                 storeAccessToken,
                                 getStoredAccessToken).then(() => {
                                     resolve(handleResourceResponse(resource));
+                                })["catch"]((error) => {
+                                    reject(error);
                                 });
                         }
+                    })["catch"]((error) => {
+                        reject(error);
                     });
                 }
             });
@@ -151,7 +171,7 @@ module Manifesto {
                       handleResourceResponse: (resource: IExternalResource) => Promise<any>,
                       options?: IManifestoOptions): Promise<IExternalResource[]> {
 
-            return new Promise<IExternalResource[]>((resolve) => {
+            return new Promise<IExternalResource[]>((resolve, reject) => {
 
                 var promises = _map(resources, (resource: IExternalResource) => {
                     return Utils.loadExternalResource(
@@ -168,6 +188,8 @@ module Manifesto {
                 Promise.all(promises)
                     .then(() => {
                         resolve(resources)
+                    })["catch"]((error) => {
+                        reject(error);
                     });
             });
         }
@@ -188,13 +210,15 @@ module Manifesto {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
                                     resolve(resource);
+                                })["catch"]((error) => {
+                                    reject(error);
                                 });
                             } else {
                                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
                                     // if the resource was redirected to a degraded version
                                     // and the response hasn't been handled yet.
                                     // if the client wishes to trigger a login, set resource.isResponseHandled to true
-                                    // and call loadExternalResources() again.
+                                    // and call loadExternalResources() again passing the resource.
                                     resolve(resource);
                                 } else if (resource.clickThroughService && !resource.isResponseHandled){
                                     // if the resource has a click through service, use that.
@@ -203,8 +227,14 @@ module Manifesto {
                                             storeAccessToken(resource, accessToken).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
+                                                })["catch"]((error) => {
+                                                    reject(error);
                                                 });
+                                            })["catch"]((error) => {
+                                                reject(error);
                                             });
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
                                     });
                                 } else {
@@ -214,12 +244,20 @@ module Manifesto {
                                             storeAccessToken(resource, accessToken).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
+                                                })["catch"]((error) => {
+                                                    reject(error);
                                                 });
+                                            })["catch"]((error) => {
+                                                reject(error);
                                             });
+                                        })["catch"]((error) => {
+                                            reject(error);
                                         });
                                     });
                                 }
                             }
+                        })["catch"]((error) => {
+                            reject(error);
                         });
                     } else {
                         // this info.json isn't access controlled, therefore there's no need to request an access token
@@ -259,11 +297,8 @@ module Manifesto {
                 rendering = (<any>resource).rendering;
             }
 
-            var parsed: IRendering[] = [];
-
-            if (!rendering){
-                return parsed;
-            }
+            var renderings: IRendering[] = [];
+            if (!rendering) return renderings;
 
             // coerce to array
             if (!_isArray(rendering)){
@@ -272,10 +307,10 @@ module Manifesto {
 
             for (var i = 0; i < rendering.length; i++){
                 var r: any = rendering[i];
-                parsed.push(new Rendering(r, resource.options));
+                renderings.push(new Rendering(r, resource.options));
             }
 
-            return parsed;
+            return renderings;
         }
 
         static getService(resource: any, profile: ServiceProfile | string): IService {
@@ -298,6 +333,23 @@ module Manifesto {
             return null;
         }
 
+        static getServiceByReference(resource: any, id: string): any {
+
+            var service: IService;
+            var services: IService[] = this.getServices(resource.options.resource);
+
+            for (var i = 0; i < services.length; i++){
+                var s = services[i];
+
+                if (s.id === id){
+                    service = new Service(s.__jsonld, resource.options);
+                    break;
+                }
+            }
+
+            return service;
+        }
+
         static getServices(resource: any): IService[] {
             var service;
 
@@ -309,9 +361,8 @@ module Manifesto {
                 service = (<any>resource).service;
             }
 
-            var parsed: IService[] = [];
-
-            if (!service) return parsed;
+            var services: IService[] = [];
+            if (!service) return services;
 
             // coerce to array
             if (!_isArray(service)){
@@ -320,10 +371,15 @@ module Manifesto {
 
             for (var i = 0; i < service.length; i++){
                 var s: any = service[i];
-                parsed.push(new Service(s, resource.options));
+
+                if (_isString(s) && resource !== resource.options.resource){
+                    services.push(this.getServiceByReference(resource, s));
+                } else {
+                    services.push(new Service(s, resource.options));
+                }
             }
 
-            return parsed;
+            return services;
         }
     }
 }

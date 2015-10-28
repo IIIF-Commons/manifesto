@@ -1,0 +1,122 @@
+
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://wellcomelibrary.org/iiif/b11607798/manifest",
+  "@type": "sc:Manifest",
+  "label": "Clinical images",
+  "metadata": [
+    {
+      "label": "Note",
+      "value": "This one features a thumbnail where the thumbnail image is ALSO protected by an auth service, not just the thumbnail image service."
+    },
+    {
+      "label": "License",
+      "value": "CC-BY-NC-ND"
+    }
+  ],
+  "service": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/caslogin",
+      "profile": "http://iiif.io/api/auth/0/login",
+      "label": "Log in to Library",
+      "description": "<h1>Protected material</h1><p>This digitised archival material requires login.</p> <a href=\"http://wellcomelibrary.org/about-this-site/terms-and-conditions/\">Read full terms and conditions</a>",
+      "service": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/tokencas",
+          "profile": "http://iiif.io/api/auth/0/token"
+        },
+        {
+          "@id": "http://wellcomelibrary.org/iiif/logout",
+          "profile": "http://iiif.io/api/auth/0/logout",
+          "label": "Log out of Wellcome Library",
+          "description": "Log out of Wellcome Library"
+        }
+      ]
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b11607798/sequence/s0",
+      "@type": "sc:Sequence",
+      "label": "Sequence s0",
+      "canvases": [
+        {
+          "@id": "http://wellcomelibrary.org/iiif/b11607798/canvas/c0",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": {
+            "@id": "http://wellcomelibrary.org/iiif-img/b11607798-0/71b3f604-b2d0-4d62-ac48-1d961c44b66f/full/64,100/0/default.jpg",
+            "@type": "dcTypes:Image",
+            "format": "image/jpeg",
+            "height": 100,
+            "width": 64,
+            "service": [
+              {
+                "@id": "http://wellcomelibrary.org/iiif-img/b11607798-0/71b3f604-b2d0-4d62-ac48-1d961c44b66f",
+                "protocol": "http://iiif.io/api/image",
+                "height": 400,
+                "width": 256,
+                "sizes": [
+                  {
+                    "width": 64,
+                    "height": 100
+                  },
+                  {
+                    "width": 128,
+                    "height": 200
+                  },
+                  {
+                    "width": 256,
+                    "height": 400
+                  }
+                ],
+                "profile": [
+                  "http://iiif.io/api/image/2/level0.json",
+                  {
+                    "formats": [
+                      "jpg"
+                    ],
+                    "qualities": [
+                      "color"
+                    ],
+                    "supports": [
+                      "sizeByWhListed"
+                    ]
+                  }
+                ],
+                "service": "http://wellcomelibrary.org/iiif/caslogin"
+              },
+              "http://wellcomelibrary.org/iiif/caslogin"
+            ]
+          },
+          "height": 3521,
+          "width": 2256,
+          "images": [
+            {
+              "@id": "http://wellcomelibrary.org/iiif/b11607798/imageanno/71b3f604-b2d0-4d62-ac48-1d961c44b66f",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://wellcomelibrary.org/iiif-img/b11607798-0/71b3f604-b2d0-4d62-ac48-1d961c44b66f/full/!800,800/0/default.jpg",
+                "@type": "dcTypes:Image",
+                "format": "image/jpeg",
+                "height": 800,
+                "width": 513,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/2/context.json",
+                    "@id": "http://wellcomelibrary.org/iiif-img/b11607798-0/71b3f604-b2d0-4d62-ac48-1d961c44b66f",
+                    "profile": "http://iiif.io/api/image/2/level1.json",
+                    "service": "http://wellcomelibrary.org/iiif/caslogin"
+                  },
+                  "http://wellcomelibrary.org/iiif/caslogin"
+                ]
+              },
+              "on": "http://wellcomelibrary.org/iiif/b11607798/canvas/c0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,11 +1,15 @@
 module.exports = <IManifesto>{
 
+    AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
+    ResourceFormat: new Manifesto.ResourceFormat(),
+    ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
+    TreeNodeType: new Manifesto.TreeNodeType(),
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
 
@@ -20,6 +24,11 @@ module.exports = <IManifesto>{
 
     getService: function(resource: any, profile: Manifesto.ServiceProfile | string): Manifesto.IService {
         return Manifesto.Utils.getService(resource, profile);
+    },
+
+    // todo: enable this syntax: var treeNode = new manifesto.TreeNode()
+    getTreeNode: function () {
+        return new Manifesto.TreeNode();
     },
 
     loadExternalResources: function(resources: Manifesto.IExternalResource[],

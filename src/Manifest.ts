@@ -5,27 +5,82 @@ module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
         public rootRange: IRange;
-        public sequences: ISequence[] = [];
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
-            jsonld.__manifest = this;
+
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                var r: any = this._getRootRange();
+                this._parseRanges(r, '');
+            }
         }
 
-        // todo: use jmespath to flatten tree?
-        // https://github.com/jmespath/jmespath.js/issues/6
-        // using r.__parsed in the meantime
+        private _getRootRange(): IRange {
+            var range: any;
+
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r.viewingHint === ViewingHint.TOP.toString()){
+                        range = r;
+                    }
+                }
+
+                if (!range){
+                    range = {};
+                    range.ranges = this.__jsonld.structures;
+                }
+            }
+
+            return range;
+        }
+
+        private _getRangeById(id: string): IRange {
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r['@id'] === id){
+                        return r;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private _parseRanges(r: any, path: string, parentRange?: IRange): void{
+            var range: IRange;
+
+            if (_isString(r)){
+                r = this._getRangeById(r);
+            }
+
+            range = new Range(r, this.options);
+
+            // if no parent range is passed, assign the new range to manifest.rootRange
+            if (!parentRange){
+                this.rootRange = range;
+            } else {
+                range.parentRange = parentRange;
+                parentRange.ranges.push(range);
+            }
+
+            range.path = path;
+
+            if (r.ranges) {
+                for (var j = 0; j < r.ranges.length; j++) {
+                    this._parseRanges(r.ranges[j], path + '/' + j, range);
+                }
+            }
+        }
+
         getRanges(): IRange[] {
 
             var ranges: IRange[] = [];
 
-            var structures = this.getProperty('structures');
-
-            if (!structures) return ranges;
-
-            for (var i = 0; i < structures.length; i++){
-                var r = structures[i];
-                ranges.push(r.__parsed);
+            if (this.rootRange){
+                ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
             }
 
             return ranges;
@@ -59,19 +114,35 @@ module Manifesto {
             return null;
         }
 
+        getSequences(): ISequence[] {
+            var sequences: ISequence[] = [];
+
+            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
+            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    var s = children[i];
+                    var sequence: ISequence = new Sequence(s, this.options);
+                    sequences.push(sequence);
+                }
+            }
+
+            return sequences;
+        }
+
         getSequenceByIndex(sequenceIndex: number): ISequence {
-            return this.sequences[sequenceIndex];
+            return this.getSequences()[sequenceIndex];
         }
 
         getTotalSequences(): number{
-            return this.sequences.length;
+            return this.getSequences().length;
         }
 
         getTree(): TreeNode{
 
             super.getTree();
 
-            this.treeRoot.data.type = 'manifest';
+            this.treeRoot.data.type = TreeNodeType.MANIFEST.toString();
 
             if (!this.isLoaded){
                 return this.treeRoot;
@@ -93,13 +164,15 @@ module Manifesto {
                 }
             }
 
+            this.generateTreeNodeIds(this.treeRoot);
+
             return this.treeRoot;
         }
 
         private _parseTreeNode(node: TreeNode, range: IRange): void {
             node.label = range.getLabel();
             node.data = range;
-            node.data.type = 'range';
+            node.data.type = TreeNodeType.RANGE.toString();
             range.treeNode = node;
 
             if (range.ranges) {

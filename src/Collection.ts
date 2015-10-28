@@ -8,12 +8,15 @@ module Manifesto {
             jsonld.__collection = this;
         }
 
-        getCollectionByIndex(collectionIndex: number): ICollection {
-            return this.collections[collectionIndex];
+        getCollectionByIndex(collectionIndex: number): Promise<ICollection>  {
+            var collection: ICollection = this.collections[collectionIndex];
+            // id for collection MUST be dereferenceable
+            return collection.load();
         }
 
-        getManifestByIndex(manifestIndex: number): IManifest {
-            return this.manifests[manifestIndex];
+        getManifestByIndex(manifestIndex: number): Promise<IManifest> {
+            var manifest: IManifest = this.manifests[manifestIndex];
+            return manifest.load();
         }
 
         getTotalCollections(): number{
@@ -28,10 +31,12 @@ module Manifesto {
 
             super.getTree();
 
-            this.treeRoot.data.type = 'collection';
+            this.treeRoot.data.type = TreeNodeType.COLLECTION.toString();
 
             this._parseManifests(this);
             this._parseCollections(this);
+
+            this.generateTreeNodeIds(this.treeRoot);
 
             return this.treeRoot;
         }
@@ -42,6 +47,8 @@ module Manifesto {
                     var manifest = parentCollection.manifests[i];
                     var tree: TreeNode = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
+                    tree.navDate = manifest.getNavDate();
+                    tree.data.type = TreeNodeType.MANIFEST.toString();
                     parentCollection.treeRoot.addNode(tree);
                 }
             }
@@ -53,6 +60,8 @@ module Manifesto {
                     var collection = parentCollection.collections[i];
                     var tree: TreeNode = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
+                    tree.navDate = collection.getNavDate();
+                    tree.data.type = TreeNodeType.COLLECTION.toString();
                     parentCollection.treeRoot.addNode(tree);
 
                     this._parseCollections(collection);

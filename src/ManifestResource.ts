@@ -19,7 +19,7 @@ module Manifesto {
                 var item: any = metadata[i];
 
                 item.label = Utils.getLocalisedValue(item.label, this.options.locale);
-                item.value  = Utils.getLocalisedValue(item.value, this.options.locale);
+                item.value = Utils.getLocalisedValue(item.value, this.options.locale);
             }
 
             return metadata;

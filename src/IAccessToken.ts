@@ -1,7 +1,9 @@
 module Manifesto {
     export interface IAccessToken {
         accessToken: string;
-        tokenType: string;
+        error: string;
+        errorDescription: string;
         expiresIn: number;
+        tokenType: string;
     }
 }

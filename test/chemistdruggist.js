@@ -1,3 +1,5 @@
+// nested collections
+
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
@@ -35,9 +37,20 @@ describe('#hasTitle', function() {
 });
 
 describe('#firstCollectionHasTitle', function() {
-    it('has a first collection with a title', function() {
-        firstCollection = collection.getCollectionByIndex(0);
-        firstCollection.getTitle().should.equal('Volume 1, 1859');
+    it('has a first collection with a title', function(done) {
+         collection.getCollectionByIndex(0).then(function(data) {
+            firstCollection = data;
+            firstCollection.getTitle().should.equal('Volume 1, 1859');
+            done();
+        });
+    })
+});
+
+describe('#firstCollectionHasNavDate', function() {
+    it('has a first collection with a navDate', function() {
+        var navDate = firstCollection.getNavDate();
+        var year = navDate.getFullYear();
+        year.should.equal(1859);
     })
 });
 
@@ -48,34 +61,22 @@ describe('#firstCollectionHasManifestCount', function() {
 });
 
 describe('#firstCollectionHasFirstManifestWithMetadata', function() {
-    it('has a first manifest with metadata', function () {
-        manifest = firstCollection.getManifestByIndex(0);
-        var label = manifest.getLabel();
-        label.should.equal('15. September 1859');
-        var metadata = manifest.getMetadata();
-        metadata[0]['label'].should.equal('Volume');
-        metadata[0]['value'].should.equal('1');
+    it('has a first manifest with metadata', function (done) {
+        firstCollection.getManifestByIndex(0).then(function(data) {
+            manifest = data;
+            var label = manifest.getLabel();
+            label.should.equal('The chemist and druggist.');
+            var metadata = manifest.getMetadata();
+            metadata[0]['label'].should.equal('Type');
+            metadata[0]['value'].should.equal('PeriodicalIssue');
+            done();
+        });
     })
 });
 
 describe('#firstCollectionFirstManifestHasTitle', function() {
     it('has a first manifest with a title', function() {
-        manifest.getTitle().should.equal('15. September 1859');
-    })
-});
-
-describe('#firstCollectionFirstManifestCanBeLoaded', function() {
-    it('has a first manifest with no sequences prior to loading', function () {
-        manifest.getTotalSequences().should.equal(0);
-    })
-});
-
-describe('#firstCollectionFirstManifestCanBeLoaded', function() {
-    it('has a first manifest with sequences after loading', function () {
-        manifest = manifest.load().then(function(manifest) {
-            manifest.getTotalSequences().should.equal(1);
-            done();
-        });
+        manifest.getTitle().should.equal('The chemist and druggist.');
     })
 });
 

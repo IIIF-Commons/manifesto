@@ -1,9 +1,11 @@
 interface IManifesto {
+    AnnotationMotivation: Manifesto.AnnotationMotivation;
     CanvasType: Manifesto.CanvasType;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     ElementType: Manifesto.ElementType;
     getRenderings(resource: any): Manifesto.IRendering[];
     getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
+    getTreeNode(): Manifesto.TreeNode;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
                             clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
@@ -16,7 +18,10 @@ interface IManifesto {
     loadManifest: (uri: string) => Promise<any>;
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
+    ResourceFormat: Manifesto.ResourceFormat;
+    ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
+    TreeNodeType: Manifesto.TreeNodeType;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }

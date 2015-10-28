@@ -1,5 +1,7 @@
 module Manifesto {
     export interface IAnnotation extends IJSONLDResource {
-        getMotivation(): string;
+        getMotivation(): AnnotationMotivation;
+        getOn(): string;
+        getResource(): Resource;
     }
 }

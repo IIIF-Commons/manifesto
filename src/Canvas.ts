@@ -10,35 +10,20 @@ module Manifesto {
             super(jsonld, options);
         }
 
-        // todo: return all image services matching the IIIFIMAGELEVEL1/2 profile
-        // https://github.com/UniversalViewer/universalviewer/issues/119
-        //getImages(): IAnnotation[] {
-        //
-        //}
+        getImages(): IAnnotation[] {
 
-        // todo: use getImages instead. the client must decide which to use.
-        // each service has a getInfoUri method.
-        getInfoUri(): string {
-            var infoUri;
+            var images: IAnnotation[] = [];
 
-            if (this.__jsonld.resources){
-                infoUri = this.__jsonld.resources[0].resource.service['@id'];
-            } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-                infoUri = this.__jsonld.images[0].resource.service['@id'];
+            if (!this.__jsonld.images) return images;
+
+            for (var i = 0; i < this.__jsonld.images.length; i++) {
+                var a = this.__jsonld.images[i];
+
+                var annotation = new Annotation(a, this.options);
+                images.push(annotation);
             }
 
-            if (!_endsWith(infoUri, '/')) {
-                infoUri += '/';
-            }
-
-            infoUri += 'info.json';
-
-            return infoUri;
-        }
-
-        getRange(): IRange {
-            // get the deepest Range that this Canvas belongs to.
-            return _last(this.ranges);
+            return images;
         }
 
         // todo: Prefer thumbnail service to image service if supplied and if
@@ -46,28 +31,42 @@ module Manifesto {
         getThumbUri(width: number, height: number): string {
 
             var uri;
+            var images: IAnnotation[] = this.getImages();
 
-            //if(this.__jsonld.thumbnail){
-            //    return this.__jsonld.thumbnail;
-            //} else if (this.__jsonld.resources){
-            if (this.__jsonld.resources){
-                // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.__jsonld.resources[0].resource.service['@id'];
-            } else if (this.__jsonld.images && this.__jsonld.images[0].resource.service){
-                // todo: create thumbnail serviceprofile and use manifest.getService
-                uri = this.__jsonld.images[0].resource.service['@id'];
-            } else {
-                return null;
+            if (images && images.length) {
+                var firstImage = images[0];
+                var resource: IResource = firstImage.getResource();
+                var services: IService[] = resource.getServices();
+
+                for (var i = 0; i < services.length; i++) {
+                    var service:IService = services[i];
+                    var profile:string = service.getProfile().toString();
+                    var id = service.id;
+
+                    if (!_endsWith(id, '/')) {
+                        id += '/';
+                    }
+
+                    if (profile === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
+                        profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
+                        profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
+                        uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
+                    } else if (
+                        profile === ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
+                        profile === ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
+                        uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
+                    }
+                }
             }
 
-            if (!_endsWith(uri, '/')){
-                uri += '/';
-            }
-
-            // todo: allow region, rotation, quality, and format as parameters?
-            var tile = 'full/' + width + ',' + height + '/0/default.jpg';
-
-            return uri + tile;
+            return uri;
         }
 
         getType(): CanvasType {

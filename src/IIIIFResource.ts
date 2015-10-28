@@ -5,6 +5,7 @@ module Manifesto {
         getIIIFResourceType(): IIIFResourceType;
         getLicense(): string;
         getLogo(): string;
+        getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
         getTree(): TreeNode;
