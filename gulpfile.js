@@ -16,7 +16,8 @@ var browserify = require('gulp-browserify'),
     source = require('vinyl-source-stream'),
     tag = require('gulp-tag-version'),
     tasks = requireDir('./tasks'),
-    ts = require('gulp-typescript');
+    ts = require('gulp-typescript'),
+    typedoc = require("gulp-typedoc");
 
 var config = new Config();
 
@@ -97,6 +98,27 @@ gulp.task('concat', function() {
     var extensions = './bower_components/extensions/dist/extensions.js';
     gulp.src([exjs, extensions, client]).pipe(concat(config.lib)).pipe(gulp.dest(config.client));
     gulp.src([exjs, extensions, server]).pipe(concat(config.lib)).pipe(gulp.dest(config.server));
+});
+
+gulp.task("documentation", function() {
+    return gulp
+        .src(['src/*.ts', 'typings/*.d.ts'])
+        .pipe(typedoc({
+            // TypeScript options (see typescript docs)
+            module: 'commonjs',
+            target: config.tsTarget,
+            includeDeclarations: false,
+
+            // Output options (see typedoc docs)
+            out: "./docs",
+            json: "./docs/docs.json",
+
+            // TypeDoc options (see typedoc docs)
+            name: "manifesto",
+            theme: "default",
+            ignoreCompilerErrors: false,
+            version: true
+        }));
 });
 
 gulp.task('default', function(cb) {
