@@ -7,6 +7,7 @@ interface IManifesto {
     getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
     getTreeNode(): Manifesto.TreeNode;
     IIIFResourceType: Manifesto.IIIFResourceType;
+    isImageProfile(profile: Manifesto.ServiceProfile): boolean;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
                             clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
                             login: (resource: Manifesto.IExternalResource) => Promise<void>,
