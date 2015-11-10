@@ -6,6 +6,10 @@ IIIF Presentation API client and server utility library.
 
     npm install manifesto.js --save
 
+Alternatively, use bower:
+
+    bower install manifesto
+
 ###Getting Started
 
 http://blog.edsilv.com/manifesto/
