@@ -1,5 +1,10 @@
+*.js
+.idea
+.travis.yml
+bower.json
 bower_components
+docs
 src
-test
 tasks
+test
 typings
