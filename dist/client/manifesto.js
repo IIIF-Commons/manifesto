@@ -235,8 +235,7 @@ var Manifesto;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Manifesto;
 (function (Manifesto) {
@@ -1159,12 +1158,12 @@ var Manifesto;
             }
             return -1;
         };
-        Sequence.prototype.getLastCanvasLabel = function (digitsOnly) {
+        Sequence.prototype.getLastCanvasLabel = function (alphanumeric) {
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas = this.getCanvasByIndex(i);
                 var label = canvas.getLabel();
-                if (digitsOnly) {
-                    var regExp = /\d/;
+                if (alphanumeric) {
+                    var regExp = /^[a-zA-Z0-9]*$/;
                     if (regExp.test(label)) {
                         return label;
                     }
