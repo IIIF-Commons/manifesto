@@ -14,6 +14,9 @@ module Manifesto {
         getMetadata(): any{
             var metadata: Object[] = this.getProperty('metadata');
 
+            if (!metadata)
+                return [];
+
             // get localised value for each metadata item.
             for (var i = 0; i < metadata.length; i++) {
                 var item: any = metadata[i];
