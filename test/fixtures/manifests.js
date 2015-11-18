@@ -10,6 +10,7 @@ module.exports = {
     "plato": "http://localhost:3000/plato.json",
     "potterselectric": "http://localhost:3000/potterselectric.json",
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
+    "riksarkivetscblarge": "http://localhost:3000/riksarkivetscblarge.json",
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
     "witnesstopeter": "http://localhost:3000/witnesstopeter.json",

@@ -284,6 +284,7 @@ declare module Manifesto {
 declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {
+        private canvases;
         constructor(jsonld: any, options: IManifestoOptions);
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
