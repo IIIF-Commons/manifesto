@@ -52,11 +52,8 @@ module Manifesto {
 
         getLogo(): string {
             var logo = this.getProperty('logo');
-
-            if (_isString(logo)){
-                return logo;
-            }
-
+            if (!logo) return null;
+            if (_isString(logo)) return logo;
             return logo['@id'];
         }
 

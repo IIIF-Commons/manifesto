@@ -786,9 +786,10 @@ var Manifesto;
         };
         IIIFResource.prototype.getLogo = function () {
             var logo = this.getProperty('logo');
-            if (_isString(logo)) {
+            if (!logo)
+                return null;
+            if (_isString(logo))
                 return logo;
-            }
             return logo['@id'];
         };
         IIIFResource.prototype.getLicense = function () {
