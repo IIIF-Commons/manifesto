@@ -1,0 +1,180 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://dams.llgc.org.uk/iiif/2.0/1123257/manifest.json",
+  "label": "[Tankerey's house, Llangollen]",
+  "metadata": [
+    {
+      "label": [
+        {
+          "@value": "Title",
+          "@language": "en"
+        },
+        {
+          "@value": "Teitl",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": "[Tankerey's house, Llangollen]"
+    },
+    {
+      "label": [
+        {
+          "@value": "Author",
+          "@language": "en"
+        },
+        {
+          "@value": "Awdur",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": "Thomas, John 1838-1905"
+    },
+    {
+      "label": [
+        {
+          "@value": "Date",
+          "@language": "en"
+        },
+        {
+          "@value": "Dyddiad",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": "[ca. 1875]"
+    },
+    {
+      "label": [
+        {
+          "@value": "Physical description",
+          "@language": "en"
+        },
+        {
+          "@value": "Disgrifiad ffisegol",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": "1 negative : glass, wet collodion, b&w ; 10 x 12.5 cm."
+    },
+    {
+      "label": [
+        {
+          "@value": "Permalink",
+          "@language": "en"
+        },
+        {
+          "@value": "Dolen barhaol",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": "<a href=\"http://hdl.handle.net/10107/1123257\">http://hdl.handle.net/10107/1123257</a>"
+    },
+    {
+      "label": [
+        {
+          "@value": "License",
+          "@language": "en"
+        },
+        {
+          "@value": "Trwydded",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": [
+        {
+          "@value": "The National Library of Wales has created and published this digital version of the resource. It may be used for non-commercial purposes while respecting the moral rights of the creators of the digital version.",
+          "@language": "en"
+        },
+        {
+          "@value": "Crëwyd a chyhoeddwyd y fersiwn digidol hwn o'r adnodd gan Lyfrgell Genedlaethol Cymru. Gellir defnyddio'r deunydd ynddo ond ar gyfer defnydd anfasnachol gan barchu hawliau moesol crewyr y fersiwn digidol.",
+          "@language": "cy-GB"
+        }
+      ]
+    },
+    {
+      "label": [
+        {
+          "@value": "Repository",
+          "@language": "en"
+        },
+        {
+          "@value": "Ystorfa",
+          "@language": "cy-GB"
+        }
+      ],
+      "value": [
+        {
+          "@value": "This content has been digitised by The National Library of Wales",
+          "@language": "en"
+        },
+        {
+          "@value": "Digidwyd y cynnwys hwn gan Lyfrgell Genedlaethol Cymru",
+          "@language": "cy-GB"
+        }
+      ]
+    }
+  ],
+  "description": "A view of the house and garden from an elevated vantage point; Llangollen, a hill and surrounding countryside can be seen in the background.",
+  "logo": {
+    "@id": "http://dams.llgc.org.uk/iiif/2.0/image/logo/full/400,/0/default.jpg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "http://dams.llgc.org.uk/iiif/2.0/image/logo",
+      "profile": "http://iiif.io/api/image/2/level1.json"
+    }
+  },
+  "attribution": "Llyfrgell Genedlaethol Cymru – The National Library of Wales",
+  "sequences": [
+    {
+      "@id": "http://dams.llgc.org.uk/iiif/2.0/1123257/sequence/Physical.json",
+      "@type": "sc:Sequence",
+      "label": "Current Page Order",
+      "viewingDirection": "left-to-right",
+      "viewingHint": "paged",
+      "canvases": [
+        {
+          "@id": "http://dams.llgc.org.uk/iiif/2.0/1123257/canvas/1123257.json",
+          "@type": "sc:Canvas",
+          "label": "[Tankerey's house, Llangollen]",
+          "height": 4561,
+          "width": 5838,
+          "images": [
+            {
+              "@id": "http://dams.llgc.org.uk/iiif/2.0/1123257/annotation/1123257.json",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "http://dams.llgc.org.uk/iiif/2.0/1123257/res/1123257.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://dams.llgc.org.uk/iiif/2.0/image/1123257",
+                  "profile": "http://iiif.io/api/image/2/level1.json",
+                  "height": 4561,
+                  "width": 5838,
+                  "tiles": [
+                    {
+                      "width": 256,
+                      "scaleFactors": [
+                        1,
+                        2,
+                        4,
+                        8,
+                        16,
+                        32
+                      ]
+                    }
+                  ]
+                },
+                "height": 4561,
+                "width": 5838
+              },
+              "on": "http://dams.llgc.org.uk/iiif/2.0/1123257/canvas/1123257.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
