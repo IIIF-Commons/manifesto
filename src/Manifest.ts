@@ -5,6 +5,7 @@ module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
         public rootRange: IRange;
+        private sequences: ISequence[] = null;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
@@ -114,8 +115,10 @@ module Manifesto {
             return null;
         }
 
-        getSequences(): ISequence[] {
-            var sequences: ISequence[] = [];
+        getSequences(): ISequence[]{
+            if (this.sequences != null)
+                return this.sequences;
+            this.sequences = [];
 
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
             var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
@@ -123,11 +126,11 @@ module Manifesto {
                 for (var i = 0; i < children.length; i++) {
                     var s = children[i];
                     var sequence: ISequence = new Sequence(s, this.options);
-                    sequences.push(sequence);
+                    this.sequences.push(sequence);
                 }
             }
 
-            return sequences;
+            return this.sequences;
         }
 
         getSequenceByIndex(sequenceIndex: number): ISequence {

@@ -834,6 +834,7 @@ var Manifesto;
         function Manifest(jsonld, options) {
             _super.call(this, jsonld, options);
             this.index = 0;
+            this.sequences = null;
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 var r = this._getRootRange();
                 this._parseRanges(r, '');
@@ -915,17 +916,19 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getSequences = function () {
-            var sequences = [];
+            if (this.sequences != null)
+                return this.sequences;
+            this.sequences = [];
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
             var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
                     var s = children[i];
                     var sequence = new Manifesto.Sequence(s, this.options);
-                    sequences.push(sequence);
+                    this.sequences.push(sequence);
                 }
             }
-            return sequences;
+            return this.sequences;
         };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
             return this.getSequences()[sequenceIndex];

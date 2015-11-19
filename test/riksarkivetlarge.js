@@ -26,18 +26,9 @@ describe('#hasLabel', function() {
 
 describe('#loopThroughCanvases', function() {
     it('loopsQuickly', function () {
-        var sequence = manifest.getSequenceByIndex(0);
-        // var canvases = sequence.getCanvases();
-        // var totalCanvases = sequence.getTotalCanvases();
-        // for (var imageIndex = 0; imageIndex < totalCanvases; imageIndex++) {
-        //     var canvas = canvases[imageIndex];
-        //     canvas.getLabel();
-        //     //this.$imageDropdown.append('<option value=' + (imageIndex) + '>' + label + '</option>')
-        // }
-        for (var imageIndex = 0; imageIndex < sequence.getTotalCanvases(); imageIndex++) {
-            var canvas = sequence.getCanvasByIndex(imageIndex);
+        for (var imageIndex = 0; imageIndex < manifest.getSequenceByIndex(0).getTotalCanvases(); imageIndex++) {
+            var canvas = manifest.getSequenceByIndex(0).getCanvasByIndex(imageIndex);
             canvas.getLabel();
-            //this.$imageDropdown.append('<option value=' + (imageIndex) + '>' + label + '</option>')
         }
 
     });
