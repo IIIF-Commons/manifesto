@@ -1,4 +1,5 @@
 .idea
+.ntvs_analysis.dat
 coverage
 npm-debug.log
 node_modules
