@@ -51,7 +51,10 @@ module Manifesto {
         }
 
         getLogo(): string {
-            return this.getProperty('logo');
+            var logo = this.getProperty('logo');
+            if (!logo) return null;
+            if (_isString(logo)) return logo;
+            return logo['@id'];
         }
 
         getLicense(): string {
