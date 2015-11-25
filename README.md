@@ -10,18 +10,14 @@ Alternatively, use bower:
 
     bower install manifesto
 
-###Getting Started
+Getting Started
+--
+
+Documentation
+
+http://universalviewer.github.io/manifesto-docs/
+
+
+Tutorial
 
 http://blog.edsilv.com/manifesto/
-
-https://github.com/edsilv/manifesto-express-demo 
-
-A web server that loads a manifest and writes its label to output.
-
-https://github.com/edsilv/manifesto-react-demo
-
-A web site using the react rendering engine.
-
-https://github.com/edsilv/manifesto-handlebars-demo
-
-A web site using the handlebars rendering engine.
