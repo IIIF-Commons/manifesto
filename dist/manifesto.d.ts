@@ -235,6 +235,7 @@ declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
         rootRange: IRange;
+        private sequences;
         constructor(jsonld: any, options?: IManifestoOptions);
         private _getRootRange();
         private _getRangeById(id);
@@ -286,6 +287,7 @@ declare module Manifesto {
 declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {
+        private canvases;
         constructor(jsonld: any, options: IManifestoOptions);
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
