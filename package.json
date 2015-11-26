@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "dist/server/manifesto.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edsilv/manifesto.git"
+    "url": "git+https://github.com/universalviewer/manifesto.git"
   },
   "keywords": [
     "IIIF"
@@ -16,9 +16,9 @@
   "author": "Edward Silverton <e.silverton@gmail.com> (http://edsilv.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/edsilv/manifesto/issues"
+    "url": "https://github.com/universalviewer/manifesto/issues"
   },
-  "homepage": "https://github.com/edsilv/manifesto",
+  "homepage": "https://github.com/universalviewer/manifesto",
   "devDependencies": {
     "browserify": "^11.0.0",
     "chai": "^2.3.0",
@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "http-status-codes": "git://github.com/edsilv/http-status-codes.git",
-    "jmespath": "git://github.com/edsilv/jmespath.js.git",
     "lodash.assign": "^3.2.0",
     "lodash.endswith": "^3.0.2",
     "lodash.isarray": "^3.0.4",
