@@ -333,12 +333,16 @@ var Manifesto;
         ElementType.prototype.movingimage = function () {
             return new ElementType(ElementType.MOVINGIMAGE.toString());
         };
+        ElementType.prototype.physicalobject = function () {
+            return new ElementType(ElementType.PHYSICALOBJECT.toString());
+        };
         ElementType.prototype.sound = function () {
             return new ElementType(ElementType.SOUND.toString());
         };
         ElementType.DOCUMENT = new ElementType("foaf:document");
-        ElementType.IMAGE = new ElementType("dcTypes:Image");
+        ElementType.IMAGE = new ElementType("dcTypes:image");
         ElementType.MOVINGIMAGE = new ElementType("dctypes:movingimage");
+        ElementType.PHYSICALOBJECT = new ElementType("dctypes:physicalobject");
         ElementType.SOUND = new ElementType("dctypes:sound");
         return ElementType;
     })(Manifesto.StringValue);

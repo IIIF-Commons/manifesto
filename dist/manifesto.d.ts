@@ -46,10 +46,12 @@ declare module Manifesto {
         static DOCUMENT: ElementType;
         static IMAGE: ElementType;
         static MOVINGIMAGE: ElementType;
+        static PHYSICALOBJECT: ElementType;
         static SOUND: ElementType;
         document(): ElementType;
         image(): ElementType;
         movingimage(): ElementType;
+        physicalobject(): ElementType;
         sound(): ElementType;
     }
 }
