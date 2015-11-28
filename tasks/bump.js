@@ -3,7 +3,7 @@ var argv = require('yargs').argv,
     exec = require('child_process').exec,
     gulp = require('gulp');
 
-gulp.task('bump:patch', function(){
+gulp.task('bump', function(){
     var bumpType = argv.type || 'patch'; // major.minor.patch
 
     return gulp.src(['./bower.json', './package.json'])
