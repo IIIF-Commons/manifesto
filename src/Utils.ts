@@ -36,7 +36,7 @@ module Manifesto {
             return null;
         }
 
-        static loadResource (uri: string): Promise<any> {
+        static loadResource (uri: string): Promise<string> {
 
             return new Promise<any>((resolve, reject) => {
                 var u = url.parse(uri);
