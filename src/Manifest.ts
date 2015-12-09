@@ -202,5 +202,13 @@ module Manifesto {
         isMultiSequence(): boolean{
             return this.getTotalSequences() > 1;
         }
+
+        getViewingDirection(): ViewingDirection {
+            if (this.getProperty('viewingDirection')){
+                return new ViewingDirection(this.getProperty('viewingDirection'));
+            }
+
+            return ViewingDirection.LEFTTORIGHT;
+        }
     }
 }

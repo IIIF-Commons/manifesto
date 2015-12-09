@@ -238,6 +238,8 @@ module Manifesto {
         getViewingDirection(): ViewingDirection {
             if (this.getProperty('viewingDirection')){
                 return new ViewingDirection(this.getProperty('viewingDirection'));
+            } else if ((<IManifest>this.options.resource).getViewingDirection){
+                return (<IManifest>this.options.resource).getViewingDirection();
             }
 
             return ViewingDirection.LEFTTORIGHT;
