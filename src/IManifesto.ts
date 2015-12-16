@@ -16,7 +16,7 @@ interface IManifesto {
                             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
                             handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
                             options?: Manifesto.IManifestoOptions) => Promise<Manifesto.IExternalResource[]>;
-    loadManifest: (uri: string) => Promise<any>;
+    loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceFormat: Manifesto.ResourceFormat;

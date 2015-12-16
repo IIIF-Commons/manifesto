@@ -1,7 +1,8 @@
-*.js
 .idea
 .travis.yml
 bower.json
+gulpfile.config.js
+gulpfile.js
 bower_components
 docs
 src
