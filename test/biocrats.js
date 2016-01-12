@@ -31,6 +31,13 @@ describe('#hasManifestType', function() {
     });
 });
 
+describe('#hasMetadata', function() {
+    it('has metadata', function () {
+        var metadata = manifest.getMetadata();
+        expect(metadata).to.exist;
+    });
+});
+
 describe('#hasTree', function() {
     it('has a tree', function () {
         var tree = manifest.getTree();
