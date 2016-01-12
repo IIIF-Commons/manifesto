@@ -17,11 +17,6 @@ module.exports = <IManifesto>{
         return Manifesto.Deserialiser.parse(manifest, options);
     },
 
-    // todo: deprecate this - temporary to enable current UV download menu
-    getRenderings(resource: any): Manifesto.IRendering[] {
-        return Manifesto.Utils.getRenderings(resource);
-    },
-
     getService: function(resource: any, profile: Manifesto.ServiceProfile | string): Manifesto.IService {
         return Manifesto.Utils.getService(resource, profile);
     },
