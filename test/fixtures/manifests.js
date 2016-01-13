@@ -12,6 +12,7 @@ module.exports = {
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
     "qatarRightToLeft": "http://localhost:3000/qatar-right-to-left.json",
     "riksarkivetscblarge": "http://localhost:3000/riksarkivetscblarge.json",
+    "scroll": "http://localhost:3000/scroll.json",
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "tankeryshouse": "http://localhost:3000/tankeryshouse.json",
     "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",

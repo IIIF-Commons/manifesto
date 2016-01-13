@@ -30,6 +30,5 @@ describe('#loopThroughCanvases', function() {
             var canvas = manifest.getSequenceByIndex(0).getCanvasByIndex(imageIndex);
             canvas.getLabel();
         }
-
     });
 });

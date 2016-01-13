@@ -11,6 +11,10 @@ module Manifesto {
         getProfile(): ServiceProfile{
             var profile = this.getProperty('profile');
 
+            if (!profile) {
+                profile = this.getProperty('dcterms:conformsTo');
+            }
+
             if (_isArray(profile)){
                 return new ServiceProfile(profile[0]);
             }
