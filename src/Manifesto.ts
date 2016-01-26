@@ -49,15 +49,15 @@ module.exports = <IManifesto>{
     // based on @profile and @type (or lack of) can the resource describe associated services?
 
     loadExternalResources: function(resources: Manifesto.IExternalResource[],
-        storageStrategy: string,
+        tokenStorageStrategy: string,
         clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
         login: (resource: Manifesto.IExternalResource) => Promise<void>,
         getAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
-        storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken, storageStrategy: string) => Promise<void>,
-        getStoredAccessToken: (resource: Manifesto.IExternalResource, storageStrategy: string) => Promise<Manifesto.IAccessToken>,
+        storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken, tokenStorageStrategy: string) => Promise<void>,
+        getStoredAccessToken: (resource: Manifesto.IExternalResource, tokenStorageStrategy: string) => Promise<Manifesto.IAccessToken>,
         handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
         options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
-        return Manifesto.Utils.loadExternalResources(resources, storageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
+        return Manifesto.Utils.loadExternalResources(resources, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
 
     loadManifest: function (uri: string): Promise<any> {
