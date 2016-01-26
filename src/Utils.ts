@@ -118,7 +118,7 @@ module Manifesto {
 
                     // try loading the resource using an access token that matches the info.json domain.
                     // if an access token is found, request the resource using it regardless of whether it is access controlled.
-                    getStoredAccessToken(resource).then((storedAccessToken: IAccessToken) => {
+                    getStoredAccessToken(resource, storageStrategy).then((storedAccessToken: IAccessToken) => {
                         if (storedAccessToken) {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
@@ -130,6 +130,7 @@ module Manifesto {
                                     // if access controlled, do login.
                                     Utils.authorize(
                                         resource,
+                                        storageStrategy,
                                         clickThrough,
                                         login,
                                         getAccessToken,
@@ -146,6 +147,7 @@ module Manifesto {
                         } else {
                             Utils.authorize(
                                 resource,
+                                storageStrategy,
                                 clickThrough,
                                 login,
                                 getAccessToken,
@@ -164,19 +166,21 @@ module Manifesto {
         }
 
         static loadExternalResources(resources: IExternalResource[],
-                      clickThrough: (resource: IExternalResource) => Promise<void>,
-                      login: (resource: IExternalResource) => Promise<void>,
-                      getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                      storeAccessToken: (resource: IExternalResource, token: IAccessToken, storageStrategy: string) => Promise<void>,
-                      getStoredAccessToken: (resource: IExternalResource, storageStrategy: string) => Promise<IAccessToken>,
-                      handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-                      options?: IManifestoOptions): Promise<IExternalResource[]> {
+            storageStrategy: string,
+            clickThrough: (resource: IExternalResource) => Promise<void>,
+            login: (resource: IExternalResource) => Promise<void>,
+            getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, storageStrategy: string) => Promise<void>,
+            getStoredAccessToken: (resource: IExternalResource, storageStrategy: string) => Promise<IAccessToken>,
+            handleResourceResponse: (resource: IExternalResource) => Promise<any>,
+            options?: IManifestoOptions): Promise<IExternalResource[]> {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
 
                 var promises = _map(resources, (resource: IExternalResource) => {
                     return Utils.loadExternalResource(
                         resource,
+                        storageStrategy,
                         clickThrough,
                         login,
                         getAccessToken,
@@ -196,17 +200,18 @@ module Manifesto {
         }
 
         static authorize(resource: IExternalResource,
-                  clickThrough: (resource: IExternalResource) => Promise<void>,
-                  login: (resource: IExternalResource) => Promise<void>,
-                  getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                  storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                  getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>): Promise<IExternalResource> {
+            storageStrategy: string,
+            clickThrough: (resource: IExternalResource) => Promise<void>,
+            login: (resource: IExternalResource) => Promise<void>,
+            getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, storageStrategy: string) => Promise<void>,
+            getStoredAccessToken: (resource: IExternalResource, storageStrategy: string) => Promise<IAccessToken>): Promise<IExternalResource> {
 
             return new Promise<IExternalResource>((resolve, reject) => {
 
                 resource.getData().then(() => {
                     if (resource.isAccessControlled()) {
-                        getStoredAccessToken(resource).then((storedAccessToken: IAccessToken) => {
+                        getStoredAccessToken(resource, storageStrategy).then((storedAccessToken: IAccessToken) => {
                             if (storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
@@ -225,7 +230,7 @@ module Manifesto {
                                     // if the resource has a click through service, use that.
                                     clickThrough(resource).then(() => {
                                         getAccessToken(resource).then((accessToken) => {
-                                            storeAccessToken(resource, accessToken).then(() => {
+                                            storeAccessToken(resource, accessToken, storageStrategy).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
                                                 })["catch"]((error) => {
@@ -242,7 +247,7 @@ module Manifesto {
                                     // get an access token
                                     login(resource).then(() => {
                                         getAccessToken(resource).then((accessToken) => {
-                                            storeAccessToken(resource, accessToken).then(() => {
+                                            storeAccessToken(resource, accessToken, storageStrategy).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
                                                 })["catch"]((error) => {
