@@ -66,13 +66,14 @@ module Manifesto {
         }
 
         static loadExternalResource(resource: IExternalResource,
-             clickThrough: (resource: IExternalResource) => Promise<void>,
-             login: (resource: IExternalResource) => Promise<void>,
-             getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-             storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-             getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-             options?: IManifestoOptions): Promise<IExternalResource> {
+            storageStrategy: string,
+            clickThrough: (resource: IExternalResource) => Promise<void>,
+            login: (resource: IExternalResource) => Promise<void>,
+            getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, storageStrategy: string) => Promise<void>,
+            getStoredAccessToken: (resource: IExternalResource, storageStrategy: string) => Promise<IAccessToken>,
+            handleResourceResponse: (resource: IExternalResource) => Promise<any>,
+            options?: IManifestoOptions): Promise<IExternalResource> {
 
             return new Promise<any>((resolve, reject) => {
 
@@ -166,8 +167,8 @@ module Manifesto {
                       clickThrough: (resource: IExternalResource) => Promise<void>,
                       login: (resource: IExternalResource) => Promise<void>,
                       getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
-                      storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>,
-                      getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+                      storeAccessToken: (resource: IExternalResource, token: IAccessToken, storageStrategy: string) => Promise<void>,
+                      getStoredAccessToken: (resource: IExternalResource, storageStrategy: string) => Promise<IAccessToken>,
                       handleResourceResponse: (resource: IExternalResource) => Promise<any>,
                       options?: IManifestoOptions): Promise<IExternalResource[]> {
 
