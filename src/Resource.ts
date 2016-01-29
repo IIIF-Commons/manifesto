@@ -20,5 +20,19 @@ module Manifesto {
         getHeight(): number {
             return this.getProperty('height');
         }
+
+        getMaxWidth(): number {
+            return this.getProperty('maxWidth');
+        }
+
+        getMaxHeight(): number {
+            var maxHeight = this.getProperty('maxHeight');
+
+            // if a maxHeight hasn't been specified, default to maxWidth.
+            // maxWidth in essence becomes maxEdge
+            if (!maxHeight) {
+                return this.getMaxWidth();
+            }
+        }
     }
 }
