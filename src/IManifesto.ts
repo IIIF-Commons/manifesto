@@ -5,7 +5,7 @@ interface IManifesto {
     ElementType: Manifesto.ElementType;
     getRenderings(resource: any): Manifesto.IRendering[];
     getService: (resource: any, profile: Manifesto.ServiceProfile | string) => Manifesto.IService;
-    getTreeNode(): Manifesto.TreeNode;
+    getTreeNode(): Manifesto.ITreeNode;
     IIIFResourceType: Manifesto.IIIFResourceType;
     isImageProfile(profile: Manifesto.ServiceProfile): boolean;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
