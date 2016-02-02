@@ -352,7 +352,7 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class TreeNode {
+    class TreeNode implements ITreeNode {
         label: string;
         data: any;
         nodes: TreeNode[];
@@ -589,6 +589,17 @@ declare module Manifesto {
     interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
         getInfoUri(): string;
+    }
+}
+declare module Manifesto {
+    interface ITreeNode {
+        nodes: ITreeNode[];
+        selected: boolean;
+        expanded: boolean;
+        id: string;
+        navDate: Date;
+        parentNode: ITreeNode;
+        addNode(node: ITreeNode): void;
     }
 }
 declare module Manifesto {

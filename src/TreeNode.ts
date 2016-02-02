@@ -1,6 +1,6 @@
 
 module Manifesto {
-    export class TreeNode {
+    export class TreeNode implements ITreeNode {
         public nodes: TreeNode[];
         public selected: boolean;
         public expanded: boolean;
