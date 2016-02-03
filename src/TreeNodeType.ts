@@ -6,15 +6,15 @@ module Manifesto {
 
         // todo: use getters when ES3 target is no longer required.
 
-        collection(): TreeNodeType {
+        public collection(): TreeNodeType {
             return new TreeNodeType(TreeNodeType.COLLECTION.toString());
         }
 
-        manifest(): TreeNodeType {
+        public manifest(): TreeNodeType {
             return new TreeNodeType(TreeNodeType.MANIFEST.toString());
         }
 
-        range(): TreeNodeType {
+        public range(): TreeNodeType {
             return new TreeNodeType(TreeNodeType.RANGE.toString());
         }
     }
