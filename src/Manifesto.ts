@@ -1,3 +1,4 @@
+import ITreeNode = Manifesto.ITreeNode;
 module.exports = <IManifesto>{
 
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
@@ -22,7 +23,7 @@ module.exports = <IManifesto>{
     },
 
     // todo: enable this syntax: var treeNode = new manifesto.TreeNode()
-    getTreeNode: function () {
+    getTreeNode: function (): ITreeNode {
         return new Manifesto.TreeNode();
     },
 

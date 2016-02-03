@@ -8,11 +8,11 @@ module Manifesto {
         getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         parentCollection: ICollection;
-        treeRoot: TreeNode;
+        treeRoot: ITreeNode;
     }
 }

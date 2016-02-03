@@ -5,7 +5,7 @@ module Manifesto {
         getManifestByIndex(index: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         manifests: IManifest[];
     }
 }

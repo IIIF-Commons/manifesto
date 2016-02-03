@@ -216,9 +216,9 @@ declare module Manifesto {
         index: number;
         isLoaded: boolean;
         parentCollection: ICollection;
-        treeRoot: TreeNode;
+        treeRoot: ITreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
-        generateTreeNodeIds(treeNode: TreeNode, index?: number): void;
+        generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
         getAttribution(): string;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
@@ -227,7 +227,7 @@ declare module Manifesto {
         getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         load(): Promise<IIIIFResource>;
     }
 }
@@ -248,7 +248,7 @@ declare module Manifesto {
         getSequences(): ISequence[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTotalSequences(): number;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         private _parseTreeNode(node, range);
         getManifestType(): ManifestType;
         isMultiSequence(): boolean;
@@ -264,7 +264,7 @@ declare module Manifesto {
         getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         private _parseManifests(parentCollection);
         private _parseCollections(parentCollection);
     }
@@ -274,7 +274,7 @@ declare module Manifesto {
         parentRange: Range;
         path: string;
         ranges: Range[];
-        treeNode: TreeNode;
+        treeNode: ITreeNode;
         constructor(jsonld: any, options: IManifestoOptions);
         getCanvases(): string[];
         getViewingDirection(): ViewingDirection;
@@ -352,17 +352,30 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class TreeNode implements ITreeNode {
-        label: string;
+    interface ITreeNode {
         data: any;
-        nodes: TreeNode[];
+        nodes: ITreeNode[];
         selected: boolean;
         expanded: boolean;
         id: string;
+        label: string;
         navDate: Date;
-        parentNode: TreeNode;
+        parentNode: ITreeNode;
+        addNode(node: ITreeNode): void;
+    }
+}
+declare module Manifesto {
+    class TreeNode implements ITreeNode {
+        data: any;
+        nodes: ITreeNode[];
+        selected: boolean;
+        expanded: boolean;
+        id: string;
+        label: string;
+        navDate: Date;
+        parentNode: ITreeNode;
         constructor(label?: string, data?: any);
-        addNode(node: TreeNode): void;
+        addNode(node: ITreeNode): void;
     }
 }
 declare module Manifesto {
@@ -389,6 +402,7 @@ declare module Manifesto {
         static getServices(resource: any): IService[];
     }
 }
+import ITreeNode = Manifesto.ITreeNode;
 declare module Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
         constructor(jsonld: any, options: IManifestoOptions);
@@ -429,7 +443,7 @@ declare module Manifesto {
         getManifestByIndex(index: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         manifests: IManifest[];
     }
 }
@@ -463,12 +477,12 @@ declare module Manifesto {
         getNavDate(): Date;
         getSeeAlso(): any;
         getTitle(): string;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         parentCollection: ICollection;
-        treeRoot: TreeNode;
+        treeRoot: ITreeNode;
     }
 }
 declare module Manifesto {
@@ -487,7 +501,7 @@ declare module Manifesto {
         getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
-        getTree(): TreeNode;
+        getTree(): ITreeNode;
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;
         isMultiSequence(): boolean;
@@ -543,7 +557,7 @@ declare module Manifesto {
         parentRange: IRange;
         path: string;
         ranges: IRange[];
-        treeNode: TreeNode;
+        treeNode: ITreeNode;
     }
 }
 declare module Manifesto {
@@ -589,17 +603,6 @@ declare module Manifesto {
     interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
         getInfoUri(): string;
-    }
-}
-declare module Manifesto {
-    interface ITreeNode {
-        nodes: ITreeNode[];
-        selected: boolean;
-        expanded: boolean;
-        id: string;
-        navDate: Date;
-        parentNode: ITreeNode;
-        addNode(node: ITreeNode): void;
     }
 }
 declare module Manifesto {

@@ -6,6 +6,6 @@ module Manifesto {
         parentRange: IRange;
         path: string;
         ranges: IRange[];
-        treeNode: TreeNode;
+        treeNode: ITreeNode;
     }
 }

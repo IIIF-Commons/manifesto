@@ -5,7 +5,7 @@ module Manifesto {
         public index: number = 0;
         public isLoaded: boolean = false;
         public parentCollection: ICollection;
-        public treeRoot: TreeNode;
+        public treeRoot: ITreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
@@ -20,7 +20,7 @@ module Manifesto {
             this.options = _assign(defaultOptions, options);
         }
 
-        generateTreeNodeIds(treeNode: TreeNode, index: number = 0): void {
+        generateTreeNodeIds(treeNode: ITreeNode, index: number = 0): void {
 
             var id: string;
 
@@ -33,7 +33,7 @@ module Manifesto {
             treeNode.id = id.hashCode();
 
             for (var i = 0; i < treeNode.nodes.length; i++){
-                var n: TreeNode = treeNode.nodes[i];
+                var n: ITreeNode = treeNode.nodes[i];
                 this.generateTreeNodeIds(n, i);
             }
         }
@@ -73,7 +73,7 @@ module Manifesto {
             return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
 
-        getTree(): TreeNode{
+        getTree(): ITreeNode{
             this.treeRoot = new TreeNode('root');
             this.treeRoot.data = this;
             return this.treeRoot;

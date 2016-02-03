@@ -141,7 +141,7 @@ module Manifesto {
             return this.getSequences().length;
         }
 
-        getTree(): TreeNode{
+        getTree(): ITreeNode{
 
             super.getTree();
 
@@ -160,7 +160,7 @@ module Manifesto {
                 for (var i = 0; i < this.rootRange.ranges.length; i++){
                     var range: IRange = this.rootRange.ranges[i];
 
-                    var node: TreeNode = new TreeNode();
+                    var node: ITreeNode = new TreeNode();
                     this.treeRoot.addNode(node);
 
                     this._parseTreeNode(node, range);
@@ -172,7 +172,7 @@ module Manifesto {
             return this.treeRoot;
         }
 
-        private _parseTreeNode(node: TreeNode, range: IRange): void {
+        private _parseTreeNode(node: ITreeNode, range: IRange): void {
             node.label = range.getLabel();
             node.data = range;
             node.data.type = TreeNodeType.RANGE.toString();
@@ -183,7 +183,7 @@ module Manifesto {
                 for (var i = 0; i < range.ranges.length; i++) {
                     var childRange = range.ranges[i];
 
-                    var childNode = new TreeNode();
+                    var childNode: ITreeNode = new TreeNode();
                     node.addNode(childNode);
 
                     this._parseTreeNode(childNode, childRange);

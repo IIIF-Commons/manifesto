@@ -27,7 +27,7 @@ module Manifesto {
             return this.manifests.length;
         }
 
-        getTree(): TreeNode{
+        getTree(): ITreeNode{
 
             super.getTree();
 
@@ -45,7 +45,7 @@ module Manifesto {
             if (parentCollection.manifests && parentCollection.manifests.length) {
                 for (var i = 0; i < parentCollection.manifests.length; i++) {
                     var manifest = parentCollection.manifests[i];
-                    var tree: TreeNode = manifest.getTree();
+                    var tree: ITreeNode = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.type = TreeNodeType.MANIFEST.toString();
@@ -58,7 +58,7 @@ module Manifesto {
             if (parentCollection.collections && parentCollection.collections.length) {
                 for (var i = 0; i < parentCollection.collections.length; i++) {
                     var collection = parentCollection.collections[i];
-                    var tree: TreeNode = collection.getTree();
+                    var tree: ITreeNode = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.type = TreeNodeType.COLLECTION.toString();

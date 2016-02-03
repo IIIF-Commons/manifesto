@@ -4,7 +4,7 @@ module Manifesto {
         parentRange: Range;
         path: string;
         ranges: Range[] = [];
-        treeNode: TreeNode;
+        treeNode: ITreeNode;
 
         constructor(jsonld: any, options: IManifestoOptions){
             super(jsonld, options);

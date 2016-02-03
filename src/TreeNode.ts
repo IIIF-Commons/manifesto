@@ -1,19 +1,22 @@
 
 module Manifesto {
     export class TreeNode implements ITreeNode {
-        public nodes: TreeNode[];
+        public data: any;
+        public nodes: ITreeNode[];
         public selected: boolean;
         public expanded: boolean;
         public id: string;
+        public label: string;
         public navDate: Date;
-        public parentNode: TreeNode;
+        public parentNode: ITreeNode;
 
-        constructor(public label?: string, public data?: any) {
+        constructor(label?: string, data?: any) {
+            this.label = label;
+            this.data = data || {};
             this.nodes = [];
-            if (!data) this.data = {};
         }
 
-        public addNode(node: TreeNode):void {
+        public addNode(node: ITreeNode):void {
             this.nodes.push(node);
             node.parentNode = this;
         }

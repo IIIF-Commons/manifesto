@@ -23,6 +23,7 @@
 /// <reference path="./Serialisation.ts" />
 /// <reference path="./Service.ts" />
 /// <reference path="./Thumb.ts" />
+/// <reference path="./ITreeNode.ts" />
 /// <reference path="./TreeNode.ts" />
 /// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
