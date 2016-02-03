@@ -402,7 +402,6 @@ declare module Manifesto {
         static getServices(resource: any): IService[];
     }
 }
-import ITreeNode = Manifesto.ITreeNode;
 declare module Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
         constructor(jsonld: any, options: IManifestoOptions);
