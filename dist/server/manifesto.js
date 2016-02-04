@@ -1070,6 +1070,7 @@ var Manifesto;
                     var tree = manifest.getTree();
                     tree.label = manifest.getTitle() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
+                    tree.data.id = manifest.id;
                     tree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
                     parentCollection.treeRoot.addNode(tree);
                 }
@@ -1082,6 +1083,7 @@ var Manifesto;
                     var tree = collection.getTree();
                     tree.label = collection.getTitle() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
+                    tree.data.id = collection.id;
                     tree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
                     parentCollection.treeRoot.addNode(tree);
                     this._parseCollections(collection);
