@@ -341,14 +341,24 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class Thumb {
+    interface IThumb {
         index: number;
         uri: string;
         label: string;
         width: number;
         height: number;
         visible: boolean;
-        constructor(index: number, uri: string, label: string, width: number, height: number, visible: boolean);
+    }
+}
+declare module Manifesto {
+    class Thumb implements IThumb {
+        index: number;
+        uri: string;
+        label: string;
+        width: number;
+        height: number;
+        visible: boolean;
+        constructor(index: number, uri: string, label: string, width: number, height: number, visible?: boolean);
     }
 }
 declare module Manifesto {

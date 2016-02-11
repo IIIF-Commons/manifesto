@@ -1477,6 +1477,7 @@ var Manifesto;
 (function (Manifesto) {
     var Thumb = (function () {
         function Thumb(index, uri, label, width, height, visible) {
+            if (visible === void 0) { visible = true; }
             this.index = index;
             this.uri = uri;
             this.label = label;
@@ -1872,6 +1873,7 @@ global.manifesto = module.exports = {
 /// <reference path="./Sequence.ts" />
 /// <reference path="./Serialisation.ts" />
 /// <reference path="./Service.ts" />
+/// <reference path="./IThumb.ts" />
 /// <reference path="./Thumb.ts" />
 /// <reference path="./ITreeNode.ts" />
 /// <reference path="./TreeNode.ts" />
