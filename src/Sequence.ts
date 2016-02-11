@@ -204,8 +204,8 @@ module Manifesto {
             return 0;
         }
 
-        getThumbs(width: number, height?: number): Manifesto.Thumb[] {
-            var thumbs: Manifesto.Thumb[] = [];
+        getThumbs(width: number, height?: number): Manifesto.IThumb[] {
+            var thumbs: Manifesto.IThumb[] = [];
 
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);

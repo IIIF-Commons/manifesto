@@ -303,7 +303,7 @@ declare module Manifesto {
         getPagedIndices(canvasIndex: number, pagingEnabled?: boolean): number[];
         getPrevPageIndex(canvasIndex: number, pagingEnabled?: boolean): number;
         getStartCanvasIndex(): number;
-        getThumbs(width: number, height?: number): Manifesto.Thumb[];
+        getThumbs(width: number, height?: number): Manifesto.IThumb[];
         getStartCanvas(): string;
         getTotalCanvases(): number;
         getViewingDirection(): ViewingDirection;
@@ -596,7 +596,7 @@ declare module Manifesto {
         getRendering(format: RenderingFormat | string): IRendering;
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
-        getThumbs(width: number, height: number): Manifesto.Thumb[];
+        getThumbs(width: number, height: number): Manifesto.IThumb[];
         getTotalCanvases(): number;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): Manifesto.ViewingHint;
