@@ -16,9 +16,21 @@ module Manifesto {
             this.nodes = [];
         }
 
-        public addNode(node: ITreeNode):void {
+        public addNode(node: ITreeNode): void {
             this.nodes.push(node);
             node.parentNode = this;
+        }
+
+        public isCollection(): boolean {
+            return this.data.type === TreeNodeType.COLLECTION.toString();
+        }
+
+        public isManifest(): boolean {
+            return this.data.type === TreeNodeType.MANIFEST.toString();
+        }
+
+        public isRange(): boolean {
+            return this.data.type === TreeNodeType.RANGE.toString();
         }
     }
 }

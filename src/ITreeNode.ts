@@ -10,5 +10,8 @@ module Manifesto {
         parentNode: ITreeNode;
 
         addNode(node: ITreeNode): void;
+        isCollection(): boolean;
+        isManifest(): boolean;
+        isRange(): boolean;
     }
 }

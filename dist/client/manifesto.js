@@ -1503,6 +1503,15 @@ var Manifesto;
             this.nodes.push(node);
             node.parentNode = this;
         };
+        TreeNode.prototype.isCollection = function () {
+            return this.data.type === Manifesto.TreeNodeType.COLLECTION.toString();
+        };
+        TreeNode.prototype.isManifest = function () {
+            return this.data.type === Manifesto.TreeNodeType.MANIFEST.toString();
+        };
+        TreeNode.prototype.isRange = function () {
+            return this.data.type === Manifesto.TreeNodeType.RANGE.toString();
+        };
         return TreeNode;
     })();
     Manifesto.TreeNode = TreeNode;

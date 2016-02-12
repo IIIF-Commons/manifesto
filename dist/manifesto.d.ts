@@ -372,6 +372,9 @@ declare module Manifesto {
         navDate: Date;
         parentNode: ITreeNode;
         addNode(node: ITreeNode): void;
+        isCollection(): boolean;
+        isManifest(): boolean;
+        isRange(): boolean;
     }
 }
 declare module Manifesto {
@@ -386,6 +389,9 @@ declare module Manifesto {
         parentNode: ITreeNode;
         constructor(label?: string, data?: any);
         addNode(node: ITreeNode): void;
+        isCollection(): boolean;
+        isManifest(): boolean;
+        isRange(): boolean;
     }
 }
 declare module Manifesto {
