@@ -11,6 +11,7 @@ module Manifesto {
         getCanvases(): ICanvas[]{
             if (this.canvases != null)
                 return this.canvases;
+
             this.canvases = [];
 
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
@@ -19,7 +20,8 @@ module Manifesto {
             if (children) {
                 for (var i = 0; i < children.length; i++) {
                     var c = children[i];
-                    var canvas:ICanvas = new Canvas(c, this.options);
+                    var canvas: ICanvas = new Canvas(c, this.options);
+                    canvas.index = i;
                     this.canvases.push(canvas);
                 }
             }
@@ -207,21 +209,12 @@ module Manifesto {
         getThumbs(width: number, height?: number): Manifesto.IThumb[] {
             var thumbs: Manifesto.IThumb[] = [];
 
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
+            var totalCanvases: number = this.getTotalCanvases();
+
+            for (var i = 0; i < totalCanvases; i++) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
 
-                //if (!_isNumber(height)) {
-                    var heightRatio = canvas.getHeight() / canvas.getWidth();
-
-                    if (heightRatio) {
-                        height = Math.floor(width * heightRatio);
-                    }
-                //}
-
-                var uri = canvas.getThumbUri(width, height);
-                var label = canvas.getLabel();
-
-                thumbs.push(new Manifesto.Thumb(i, uri, label, width, height, true));
+                thumbs.push(new Manifesto.Thumb(width, canvas));
             }
 
             return thumbs;

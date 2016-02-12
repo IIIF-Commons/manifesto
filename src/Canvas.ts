@@ -4,6 +4,7 @@ var _last = require("lodash.last");
 module Manifesto {
     export class Canvas extends ManifestResource implements ICanvas{
 
+        index: number;
         ranges: IRange[] = [];
 
         constructor(jsonld: any, options: IManifestoOptions){

@@ -9,14 +9,19 @@ module Manifesto {
         public height: number;
         public visible: boolean;
 
-        constructor(index: number, uri: string, label: string, width: number, height: number, visible: boolean = true, data?: any) {
-            this.data = data;
-            this.index = index;
-            this.uri = uri;
-            this.label = label;
+        constructor(width: number, canvas: ICanvas) {
+            this.data = canvas;
+            this.index = canvas.index;
             this.width = width;
-            this.height = height;
-            this.visible = visible;
+
+            var heightRatio = canvas.getHeight() / canvas.getWidth();
+
+            if (heightRatio) {
+                this.height = Math.floor(this.width * heightRatio);
+            }
+
+            this.uri = canvas.getThumbUri(width, this.height);
+            this.label = canvas.getLabel();
         }
     }
 }

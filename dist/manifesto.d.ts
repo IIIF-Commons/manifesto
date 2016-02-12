@@ -194,6 +194,7 @@ declare var _endsWith: any;
 declare var _last: any;
 declare module Manifesto {
     class Canvas extends ManifestResource implements ICanvas {
+        index: number;
         ranges: IRange[];
         constructor(jsonld: any, options: IManifestoOptions);
         getImages(): IAnnotation[];
@@ -360,7 +361,7 @@ declare module Manifesto {
         width: number;
         height: number;
         visible: boolean;
-        constructor(index: number, uri: string, label: string, width: number, height: number, visible?: boolean, data?: any);
+        constructor(width: number, canvas: ICanvas);
     }
 }
 declare module Manifesto {
@@ -446,6 +447,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface ICanvas extends IManifestResource {
+        index: number;
         getHeight(): number;
         getImages(): IAnnotation[];
         getThumbUri(width: number, height: number): string;
