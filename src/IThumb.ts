@@ -1,10 +1,11 @@
 module Manifesto {
     export interface IThumb {
-        index: number;
-        uri: string;
-        label: string;
-        width: number;
+        data: any;
         height: number;
+        index: number;
+        label: string;
+        uri: string;
         visible: boolean;
+        width: number;
     }
 }

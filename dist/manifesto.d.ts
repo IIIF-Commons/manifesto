@@ -342,23 +342,25 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IThumb {
-        index: number;
-        uri: string;
-        label: string;
-        width: number;
+        data: any;
         height: number;
+        index: number;
+        label: string;
+        uri: string;
         visible: boolean;
+        width: number;
     }
 }
 declare module Manifesto {
     class Thumb implements IThumb {
+        data: any;
         index: number;
         uri: string;
         label: string;
         width: number;
         height: number;
         visible: boolean;
-        constructor(index: number, uri: string, label: string, width: number, height: number, visible?: boolean);
+        constructor(index: number, uri: string, label: string, width: number, height: number, visible?: boolean, data?: any);
     }
 }
 declare module Manifesto {

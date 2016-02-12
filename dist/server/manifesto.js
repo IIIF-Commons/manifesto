@@ -1476,8 +1476,9 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var Thumb = (function () {
-        function Thumb(index, uri, label, width, height, visible) {
+        function Thumb(index, uri, label, width, height, visible, data) {
             if (visible === void 0) { visible = true; }
+            this.data = data;
             this.index = index;
             this.uri = uri;
             this.label = label;

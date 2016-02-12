@@ -1,6 +1,7 @@
 
 module Manifesto {
     export class Thumb implements IThumb {
+        public data: any;
         public index: number;
         public uri: string;
         public label: string;
@@ -8,7 +9,8 @@ module Manifesto {
         public height: number;
         public visible: boolean;
 
-        constructor(index: number, uri: string, label: string, width: number, height: number, visible: boolean = true) {
+        constructor(index: number, uri: string, label: string, width: number, height: number, visible: boolean = true, data?: any) {
+            this.data = data;
             this.index = index;
             this.uri = uri;
             this.label = label;
