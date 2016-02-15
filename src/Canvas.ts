@@ -5,7 +5,7 @@ module Manifesto {
     export class Canvas extends ManifestResource implements ICanvas{
 
         index: number;
-        ranges: IRange[] = [];
+        ranges: IRange[];
 
         constructor(jsonld: any, options: IManifestoOptions){
             super(jsonld, options);

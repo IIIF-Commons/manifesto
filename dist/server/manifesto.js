@@ -703,7 +703,6 @@ var Manifesto;
         __extends(Canvas, _super);
         function Canvas(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.ranges = [];
         }
         Canvas.prototype.getImages = function () {
             var images = [];
