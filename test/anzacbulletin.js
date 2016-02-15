@@ -7,7 +7,7 @@ require('./shared');
 
 var manifest, sequence, canvas, image;
 
-describe('#loadsBiocrats', function() {
+describe('#loadsAnzacBulletin', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.biocrats).then(function(data) {
             manifest = manifesto.create(data);

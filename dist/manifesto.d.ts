@@ -240,7 +240,8 @@ declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
         rootRange: IRange;
-        private sequences;
+        private _ranges;
+        private _sequences;
         constructor(jsonld: any, options?: IManifestoOptions);
         private _getRootRange();
         private _getRangeById(id);

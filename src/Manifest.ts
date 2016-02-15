@@ -5,7 +5,8 @@ module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
         public rootRange: IRange;
-        private sequences: ISequence[] = null;
+        private _ranges: IRange[] = null;
+        private _sequences: ISequence[] = null;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld, options);
@@ -78,13 +79,16 @@ module Manifesto {
 
         getRanges(): IRange[] {
 
-            var ranges: IRange[] = [];
+            if (this._ranges != null)
+                return this._ranges;
+
+            this._ranges = [];
 
             if (this.rootRange){
-                ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
+                this._ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
             }
 
-            return ranges;
+            return this._ranges;
         }
 
         getRangeById(id: string): IRange {
@@ -116,9 +120,10 @@ module Manifesto {
         }
 
         getSequences(): ISequence[]{
-            if (this.sequences != null)
-                return this.sequences;
-            this.sequences = [];
+            if (this._sequences != null)
+                return this._sequences;
+
+            this._sequences = [];
 
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
             var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
@@ -126,11 +131,11 @@ module Manifesto {
                 for (var i = 0; i < children.length; i++) {
                     var s = children[i];
                     var sequence: ISequence = new Sequence(s, this.options);
-                    this.sequences.push(sequence);
+                    this._sequences.push(sequence);
                 }
             }
 
-            return this.sequences;
+            return this._sequences;
         }
 
         getSequenceByIndex(sequenceIndex: number): ISequence {
