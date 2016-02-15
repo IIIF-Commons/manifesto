@@ -1,6 +1,7 @@
 module Manifesto {
     export interface ICanvas extends IManifestResource {
         index: number;
+        ranges: IRange[];
 
         getHeight(): number;
         getImages(): IAnnotation[];

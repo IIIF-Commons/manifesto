@@ -451,6 +451,7 @@ declare module Manifesto {
 declare module Manifesto {
     interface ICanvas extends IManifestResource {
         index: number;
+        ranges: IRange[];
         getHeight(): number;
         getImages(): IAnnotation[];
         getThumbUri(width: number, height: number): string;
