@@ -11,21 +11,12 @@ module Manifesto {
             super(jsonld, options);
         }
 
-        getCanvases(): ICanvas[] {
-            if (this.canvases != null) return this.canvases;
-
-            this.canvases = [];
-
+        getCanvasIds(): string[] {
             if (this.__jsonld.canvases) {
-                for (var i = 0; i < this.__jsonld.canvases.length; i++) {
-                    var c = this.__jsonld.canvases[i];
-                    var canvas: ICanvas = new Canvas(c, this.options);
-                    canvas.index = i;
-                    this.canvases.push(canvas);
-                }
+                return this.__jsonld.canvases;
             }
 
-            return this.canvases;
+            return [];
         }
 
         getViewingDirection(): ViewingDirection {

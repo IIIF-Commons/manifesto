@@ -281,7 +281,7 @@ declare module Manifesto {
         ranges: Range[];
         treeNode: ITreeNode;
         constructor(jsonld: any, options: IManifestoOptions);
-        getCanvases(): ICanvas[];
+        getCanvasIds(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
     }
@@ -575,7 +575,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IRange extends IManifestResource {
-        getCanvases(): ICanvas[];
+        getCanvasIds(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         parentRange: IRange;

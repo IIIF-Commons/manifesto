@@ -80,3 +80,19 @@ describe('#doesNotHaveNavDate', function() {
         isInvalid.should.equal(true);
     })
 });
+
+describe('#hasCanvas', function() {
+    it('has a canvas', function () {
+        var canvas = sequence.getCanvases()[0];
+        canvas.id.should.equal("http://wellcomelibrary.org/iiif/b18035978/canvas/c0");
+    });
+});
+
+describe('#rangeHasCanvas', function() {
+    it('range has a canvas', function() {
+        var range = manifest.getRanges()[0];
+        range.id.should.equal("http://wellcomelibrary.org/iiif/b18035978/range/r-0");
+        var canvasId = range.getCanvasIds()[0];
+        canvasId.should.equal("http://wellcomelibrary.org/iiif/b18035978/canvas/c0");
+    })
+});

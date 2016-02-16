@@ -1,6 +1,6 @@
 module Manifesto {
     export interface IRange extends IManifestResource {
-        getCanvases(): ICanvas[];
+        getCanvasIds(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         parentRange: IRange;

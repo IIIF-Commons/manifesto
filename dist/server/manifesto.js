@@ -1106,19 +1106,11 @@ var Manifesto;
             _super.call(this, jsonld, options);
             this.ranges = [];
         }
-        Range.prototype.getCanvases = function () {
-            if (this.canvases != null)
-                return this.canvases;
-            this.canvases = [];
+        Range.prototype.getCanvasIds = function () {
             if (this.__jsonld.canvases) {
-                for (var i = 0; i < this.__jsonld.canvases.length; i++) {
-                    var c = this.__jsonld.canvases[i];
-                    var canvas = new Manifesto.Canvas(c, this.options);
-                    canvas.index = i;
-                    this.canvases.push(canvas);
-                }
+                return this.__jsonld.canvases;
             }
-            return this.canvases;
+            return [];
         };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
