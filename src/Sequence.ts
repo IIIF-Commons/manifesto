@@ -9,8 +9,7 @@ module Manifesto {
         }
 
         getCanvases(): ICanvas[]{
-            if (this.canvases != null)
-                return this.canvases;
+            if (this.canvases != null) return this.canvases;
 
             this.canvases = [];
 

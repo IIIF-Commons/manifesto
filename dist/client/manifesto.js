@@ -1109,10 +1109,18 @@ var Manifesto;
             this.ranges = [];
         }
         Range.prototype.getCanvases = function () {
+            if (this.canvases != null)
+                return this.canvases;
+            this.canvases = [];
             if (this.__jsonld.canvases) {
-                return this.__jsonld.canvases;
+                for (var i = 0; i < this.__jsonld.canvases.length; i++) {
+                    var c = this.__jsonld.canvases[i];
+                    var canvas = new Manifesto.Canvas(c, this.options);
+                    canvas.index = i;
+                    this.canvases.push(canvas);
+                }
             }
-            return [];
+            return this.canvases;
         };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
