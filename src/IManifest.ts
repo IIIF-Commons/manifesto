@@ -9,6 +9,7 @@ module Manifesto {
         getTree(): ITreeNode;
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;
+        getViewingHint(): ViewingHint;
         isMultiSequence(): boolean;
         rootRange: IRange;
     }

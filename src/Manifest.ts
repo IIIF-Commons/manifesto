@@ -215,5 +215,13 @@ module Manifesto {
 
             return ViewingDirection.LEFTTORIGHT;
         }
+
+        getViewingHint(): ViewingHint {
+            if (this.getProperty('viewingHint')){
+                return new ViewingHint(this.getProperty('viewingHint'));
+            }
+
+            return ViewingHint.EMPTY;
+        }
     }
 }
