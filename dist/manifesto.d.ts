@@ -486,6 +486,7 @@ declare module Manifesto {
         isResponseHandled: boolean;
         loginService: IService;
         logoutService: IService;
+        profile: Manifesto.ServiceProfile;
         status: number;
         tokenService: IService;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
