@@ -7,7 +7,7 @@ module Manifesto {
         isResponseHandled: boolean;
         loginService: IService;
         logoutService: IService;
-        profile: Manifesto.ServiceProfile;
+        //profile: Manifesto.ServiceProfile;
         status: number;
         tokenService: IService;
 
