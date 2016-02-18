@@ -8,6 +8,9 @@ interface IManifesto {
     getTreeNode(): Manifesto.ITreeNode;
     IIIFResourceType: Manifesto.IIIFResourceType;
     isImageProfile(profile: Manifesto.ServiceProfile): boolean;
+    isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean;
+    isLevel1ImageProfile(profile: Manifesto.ServiceProfile): boolean;
+    isLevel2ImageProfile(profile: Manifesto.ServiceProfile): boolean;
     loadExternalResources: (resources: Manifesto.IExternalResource[],
          tokenStorageStrategy: string,
          clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
