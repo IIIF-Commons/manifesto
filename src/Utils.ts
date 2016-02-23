@@ -138,7 +138,9 @@ module Manifesto {
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((error) => {
-                                            reject(error);
+                                            var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
+                                            errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                                            resolve(handleResourceResponse(errorResponse));
                                         });
                                 }
                             })["catch"]((error) => {

@@ -1659,7 +1659,9 @@ var Manifesto;
                                     Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     })["catch"](function (error) {
-                                        reject(error);
+                                        var errorResponse = {};
+                                        errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
+                                        resolve(handleResourceResponse(errorResponse));
                                     });
                                 }
                             })["catch"](function (error) {
