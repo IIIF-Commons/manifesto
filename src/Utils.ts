@@ -138,15 +138,11 @@ module Manifesto {
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((error) => {
-                                            var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
-                                            errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
-                                            resolve(handleResourceResponse(errorResponse));
+                                            resolve(Utils.authorizationFailed());
                                         });
                                 }
                             })["catch"]((error) => {
-                                var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
-                                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
-                                resolve(handleResourceResponse(errorResponse));
+                                resolve(Utils.authorizationFailed());
                             });
                         } else {
                             Utils.authorize(
@@ -159,13 +155,21 @@ module Manifesto {
                                 getStoredAccessToken).then(() => {
                                     resolve(handleResourceResponse(resource));
                                 })["catch"]((error) => {
-                                    reject(error);
+                                    resolve(Utils.authorizationFailed());
                                 });
                         }
                     })["catch"]((error) => {
-                        reject(error);
+                        resolve(Utils.authorizationFailed());
                     });
                 }
+            });
+        }
+
+        static authorizationFailed(): Promise<IExternalResource> {
+            return new Promise<IExternalResource>((resolve, reject) => {
+                var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
+                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                resolve(errorResponse);
             });
         }
 

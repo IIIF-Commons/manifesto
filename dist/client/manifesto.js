@@ -1661,28 +1661,31 @@ var Manifesto;
                                     Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     })["catch"](function (error) {
-                                        var errorResponse = {};
-                                        errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
-                                        resolve(handleResourceResponse(errorResponse));
+                                        resolve(Utils.authorizationFailed());
                                     });
                                 }
                             })["catch"](function (error) {
-                                var errorResponse = {};
-                                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
-                                resolve(handleResourceResponse(errorResponse));
+                                resolve(Utils.authorizationFailed());
                             });
                         }
                         else {
                             Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                 resolve(handleResourceResponse(resource));
                             })["catch"](function (error) {
-                                reject(error);
+                                resolve(Utils.authorizationFailed());
                             });
                         }
                     })["catch"](function (error) {
-                        reject(error);
+                        resolve(Utils.authorizationFailed());
                     });
                 }
+            });
+        };
+        Utils.authorizationFailed = function () {
+            return new Promise(function (resolve, reject) {
+                var errorResponse = {};
+                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                resolve(errorResponse);
             });
         };
         Utils.loadExternalResources = function (resources, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
