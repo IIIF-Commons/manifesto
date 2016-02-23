@@ -144,7 +144,9 @@ module Manifesto {
                                         });
                                 }
                             })["catch"]((error) => {
-                                reject(error);
+                                var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
+                                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                                resolve(handleResourceResponse(errorResponse));
                             });
                         } else {
                             Utils.authorize(

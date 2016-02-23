@@ -1662,12 +1662,14 @@ var Manifesto;
                                         resolve(handleResourceResponse(resource));
                                     })["catch"](function (error) {
                                         var errorResponse = {};
-                                        errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
+                                        errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
                                         resolve(handleResourceResponse(errorResponse));
                                     });
                                 }
                             })["catch"](function (error) {
-                                reject(error);
+                                var errorResponse = {};
+                                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                                resolve(handleResourceResponse(errorResponse));
                             });
                         }
                         else {
