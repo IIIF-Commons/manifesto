@@ -1700,7 +1700,28 @@ var Manifesto;
                             if (storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(function () {
-                                    resolve(resource);
+                                    // invalid access token
+                                    if (resource.status === HTTPStatusCode.FORBIDDEN) {
+                                        // get an access token
+                                        login(resource).then(function () {
+                                            getAccessToken(resource).then(function (accessToken) {
+                                                storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
+                                                    resource.getData(accessToken).then(function () {
+                                                        resolve(resource);
+                                                    })["catch"](function (error) {
+                                                        reject(error);
+                                                    });
+                                                })["catch"](function (error) {
+                                                    reject(error);
+                                                });
+                                            })["catch"](function (error) {
+                                                reject(error);
+                                            });
+                                        });
+                                    }
+                                    else {
+                                        resolve(resource);
+                                    }
                                 })["catch"](function (error) {
                                     reject(error);
                                 });

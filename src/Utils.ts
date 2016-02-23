@@ -215,7 +215,27 @@ module Manifesto {
                             if (storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
-                                    resolve(resource);
+                                    // invalid access token
+                                    if (resource.status === HTTPStatusCode.FORBIDDEN){
+                                        // get an access token
+                                        login(resource).then(() => {
+                                            getAccessToken(resource).then((accessToken) => {
+                                                storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
+                                                    resource.getData(accessToken).then(() => {
+                                                        resolve(resource);
+                                                    })["catch"]((error) => {
+                                                        reject(error);
+                                                    });
+                                                })["catch"]((error) => {
+                                                    reject(error);
+                                                });
+                                            })["catch"]((error) => {
+                                                reject(error);
+                                            });
+                                        });
+                                    } else {
+                                        resolve(resource);
+                                    }
                                 })["catch"]((error) => {
                                     reject(error);
                                 });
