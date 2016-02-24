@@ -138,11 +138,11 @@ module Manifesto {
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((error) => {
-                                            resolve(Utils.authorizationFailed());
+                                            reject(Utils.authorizationFailed());
                                         });
                                 }
                             })["catch"]((error) => {
-                                resolve(Utils.authorizationFailed());
+                                reject(Utils.authorizationFailed());
                             });
                         } else {
                             Utils.authorize(
@@ -155,23 +155,28 @@ module Manifesto {
                                 getStoredAccessToken).then(() => {
                                     resolve(handleResourceResponse(resource));
                                 })["catch"]((error) => {
-                                    resolve(Utils.authorizationFailed());
+                                    reject(Utils.authorizationFailed());
                                 });
                         }
                     })["catch"]((error) => {
-                        resolve(Utils.authorizationFailed());
+                        reject(Utils.authorizationFailed());
                     });
                 }
             });
         }
 
-        static authorizationFailed(): Promise<IExternalResource> {
-            return new Promise<IExternalResource>((resolve, reject) => {
-                var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
-                errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
-                resolve(errorResponse);
-            });
+        static authorizationFailed(): Error {
+            var error: Error = new Error();
+            error.message = "Authorization failed";
+            error.name = HTTPStatusCode.SERVICE_UNAVAILABLE.toString();
+            return error;
         }
+
+    //{
+    //    var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
+    //    errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
+    //    resolve(errorResponse);
+    //}
 
         static loadExternalResources(resources: IExternalResource[],
             tokenStorageStrategy: string,

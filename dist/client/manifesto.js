@@ -1661,33 +1661,37 @@ var Manifesto;
                                     Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     })["catch"](function (error) {
-                                        resolve(Utils.authorizationFailed());
+                                        reject(Utils.authorizationFailed());
                                     });
                                 }
                             })["catch"](function (error) {
-                                resolve(Utils.authorizationFailed());
+                                reject(Utils.authorizationFailed());
                             });
                         }
                         else {
                             Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                 resolve(handleResourceResponse(resource));
                             })["catch"](function (error) {
-                                resolve(Utils.authorizationFailed());
+                                reject(Utils.authorizationFailed());
                             });
                         }
                     })["catch"](function (error) {
-                        resolve(Utils.authorizationFailed());
+                        reject(Utils.authorizationFailed());
                     });
                 }
             });
         };
         Utils.authorizationFailed = function () {
-            return new Promise(function (resolve, reject) {
-                var errorResponse = {};
-                errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
-                resolve(errorResponse);
-            });
+            var error = new Error();
+            error.message = "Authorization failed";
+            error.name = HTTPStatusCode.SERVICE_UNAVAILABLE.toString();
+            return error;
         };
+        //{
+        //    var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
+        //    errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
+        //    resolve(errorResponse);
+        //}
         Utils.loadExternalResources = function (resources, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
             return new Promise(function (resolve, reject) {
                 var promises = _map(resources, function (resource) {
