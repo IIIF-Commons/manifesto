@@ -1682,7 +1682,7 @@ var Manifesto;
         Utils.authorizationFailed = function () {
             return new Promise(function (resolve, reject) {
                 var errorResponse = {};
-                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
                 resolve(errorResponse);
             });
         };

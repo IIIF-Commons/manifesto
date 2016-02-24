@@ -168,7 +168,7 @@ module Manifesto {
         static authorizationFailed(): Promise<IExternalResource> {
             return new Promise<IExternalResource>((resolve, reject) => {
                 var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
-                errorResponse.status = HTTPStatusCode.UNAUTHORIZED;
+                errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
                 resolve(errorResponse);
             });
         }
