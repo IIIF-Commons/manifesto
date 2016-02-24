@@ -93,22 +93,22 @@ module Manifesto {
                                     getAccessToken(resource).then((token: IAccessToken) => {
                                         resource.getData(token).then(() => {
                                             resolve(handleResourceResponse(resource));
-                                        })["catch"]((error) => {
-                                            reject(error);
+                                        })["catch"]((message) => {
+                                            reject(Utils.createInternalServerError(message));
                                         });
-                                    })["catch"]((error) => {
-                                        reject(error);
+                                    })["catch"]((message) => {
+                                        reject(Utils.createInternalServerError(message));
                                     });
-                                })["catch"]((error) => {
-                                    reject(error);
+                                })["catch"]((message) => {
+                                    reject(Utils.createInternalServerError(message));
                                 });
                             }
                         } else {
                             // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
-                    })["catch"]((error) => {
-                        reject(error);
+                    })["catch"]((message) => {
+                        reject(Utils.createInternalServerError(message));
                     });
                 } else {
 
@@ -138,11 +138,11 @@ module Manifesto {
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((error) => {
-                                            reject(Utils.authorizationFailed());
+                                            reject(Utils.createAuthorizationFailedError());
                                         });
                                 }
                             })["catch"]((error) => {
-                                reject(Utils.authorizationFailed());
+                                reject(Utils.createAuthorizationFailedError());
                             });
                         } else {
                             Utils.authorize(
@@ -155,28 +155,30 @@ module Manifesto {
                                 getStoredAccessToken).then(() => {
                                     resolve(handleResourceResponse(resource));
                                 })["catch"]((error) => {
-                                    reject(Utils.authorizationFailed());
+                                    reject(Utils.createAuthorizationFailedError());
                                 });
                         }
                     })["catch"]((error) => {
-                        reject(Utils.authorizationFailed());
+                        reject(Utils.createAuthorizationFailedError());
                     });
                 }
             });
         }
 
-        static authorizationFailed(): Error {
+        static createError(name: string, message: string): Error {
             var error: Error = new Error();
-            error.message = "Authorization failed";
+            error.message = message;
             error.name = HTTPStatusCode.SERVICE_UNAVAILABLE.toString();
             return error;
         }
 
-    //{
-    //    var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
-    //    errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
-    //    resolve(errorResponse);
-    //}
+        static createAuthorizationFailedError(): Error {
+            return Utils.createError(HTTPStatusCode.SERVICE_UNAVAILABLE.toString(), "Authorization failed");
+        }
+
+        static createInternalServerError(message: string): Error {
+            return Utils.createError(HTTPStatusCode.INTERNAL_SERVER_ERROR.toString(), message);
+        }
 
         static loadExternalResources(resources: IExternalResource[],
             tokenStorageStrategy: string,
@@ -236,21 +238,21 @@ module Manifesto {
                                                 storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
                                                     resource.getData(accessToken).then(() => {
                                                         resolve(resource);
-                                                    })["catch"]((error) => {
-                                                        reject(error);
+                                                    })["catch"]((message) => {
+                                                        reject(Utils.createInternalServerError(message));
                                                     });
-                                                })["catch"]((error) => {
-                                                    reject(error);
+                                                })["catch"]((message) => {
+                                                    reject(Utils.createInternalServerError(message));
                                                 });
-                                            })["catch"]((error) => {
-                                                reject(error);
+                                            })["catch"]((message) => {
+                                                reject(Utils.createInternalServerError(message));
                                             });
                                         });
                                     } else {
                                         resolve(resource);
                                     }
-                                })["catch"]((error) => {
-                                    reject(error);
+                                })["catch"]((message) => {
+                                    reject(Utils.createInternalServerError(message));
                                 });
                             } else {
                                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
@@ -266,14 +268,14 @@ module Manifesto {
                                             storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
-                                                })["catch"]((error) => {
-                                                    reject(error);
+                                                })["catch"]((message) => {
+                                                    reject(Utils.createInternalServerError(message));
                                                 });
-                                            })["catch"]((error) => {
-                                                reject(error);
+                                            })["catch"]((message) => {
+                                                reject(Utils.createInternalServerError(message));
                                             });
-                                        })["catch"]((error) => {
-                                            reject(error);
+                                        })["catch"]((message) => {
+                                            reject(Utils.createInternalServerError(message));
                                         });
                                     });
                                 } else {
@@ -283,20 +285,20 @@ module Manifesto {
                                             storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
                                                 resource.getData(accessToken).then(() => {
                                                     resolve(resource);
-                                                })["catch"]((error) => {
-                                                    reject(error);
+                                                })["catch"]((message) => {
+                                                    reject(Utils.createInternalServerError(message));
                                                 });
-                                            })["catch"]((error) => {
-                                                reject(error);
+                                            })["catch"]((message) => {
+                                                reject(Utils.createInternalServerError(message));
                                             });
-                                        })["catch"]((error) => {
-                                            reject(error);
+                                        })["catch"]((message) => {
+                                            reject(Utils.createInternalServerError(message));
                                         });
                                     });
                                 }
                             }
-                        })["catch"]((error) => {
-                            reject(error);
+                        })["catch"]((message) => {
+                            reject(Utils.createInternalServerError(message));
                         });
                     } else {
                         // this info.json isn't access controlled, therefore there's no need to request an access token

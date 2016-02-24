@@ -1622,14 +1622,14 @@ var Manifesto;
                                     getAccessToken(resource).then(function (token) {
                                         resource.getData(token).then(function () {
                                             resolve(handleResourceResponse(resource));
-                                        })["catch"](function (error) {
-                                            reject(error);
+                                        })["catch"](function (message) {
+                                            reject(Utils.createInternalServerError(message));
                                         });
-                                    })["catch"](function (error) {
-                                        reject(error);
+                                    })["catch"](function (message) {
+                                        reject(Utils.createInternalServerError(message));
                                     });
-                                })["catch"](function (error) {
-                                    reject(error);
+                                })["catch"](function (message) {
+                                    reject(Utils.createInternalServerError(message));
                                 });
                             }
                         }
@@ -1637,8 +1637,8 @@ var Manifesto;
                             // this info.json isn't access controlled, therefore no need to request an access token.
                             resolve(resource);
                         }
-                    })["catch"](function (error) {
-                        reject(error);
+                    })["catch"](function (message) {
+                        reject(Utils.createInternalServerError(message));
                     });
                 }
                 else {
@@ -1661,37 +1661,38 @@ var Manifesto;
                                     Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     })["catch"](function (error) {
-                                        reject(Utils.authorizationFailed());
+                                        reject(Utils.createAuthorizationFailedError());
                                     });
                                 }
                             })["catch"](function (error) {
-                                reject(Utils.authorizationFailed());
+                                reject(Utils.createAuthorizationFailedError());
                             });
                         }
                         else {
                             Utils.authorize(resource, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                 resolve(handleResourceResponse(resource));
                             })["catch"](function (error) {
-                                reject(Utils.authorizationFailed());
+                                reject(Utils.createAuthorizationFailedError());
                             });
                         }
                     })["catch"](function (error) {
-                        reject(Utils.authorizationFailed());
+                        reject(Utils.createAuthorizationFailedError());
                     });
                 }
             });
         };
-        Utils.authorizationFailed = function () {
+        Utils.createError = function (name, message) {
             var error = new Error();
-            error.message = "Authorization failed";
+            error.message = message;
             error.name = HTTPStatusCode.SERVICE_UNAVAILABLE.toString();
             return error;
         };
-        //{
-        //    var errorResponse: Manifesto.IExternalResource = <Manifesto.IExternalResource>{};
-        //    errorResponse.status = HTTPStatusCode.SERVICE_UNAVAILABLE;
-        //    resolve(errorResponse);
-        //}
+        Utils.createAuthorizationFailedError = function () {
+            return Utils.createError(HTTPStatusCode.SERVICE_UNAVAILABLE.toString(), "Authorization failed");
+        };
+        Utils.createInternalServerError = function (message) {
+            return Utils.createError(HTTPStatusCode.INTERNAL_SERVER_ERROR.toString(), message);
+        };
         Utils.loadExternalResources = function (resources, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
             return new Promise(function (resolve, reject) {
                 var promises = _map(resources, function (resource) {
@@ -1721,22 +1722,22 @@ var Manifesto;
                                                 storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
                                                     resource.getData(accessToken).then(function () {
                                                         resolve(resource);
-                                                    })["catch"](function (error) {
-                                                        reject(error);
+                                                    })["catch"](function (message) {
+                                                        reject(Utils.createInternalServerError(message));
                                                     });
-                                                })["catch"](function (error) {
-                                                    reject(error);
+                                                })["catch"](function (message) {
+                                                    reject(Utils.createInternalServerError(message));
                                                 });
-                                            })["catch"](function (error) {
-                                                reject(error);
+                                            })["catch"](function (message) {
+                                                reject(Utils.createInternalServerError(message));
                                             });
                                         });
                                     }
                                     else {
                                         resolve(resource);
                                     }
-                                })["catch"](function (error) {
-                                    reject(error);
+                                })["catch"](function (message) {
+                                    reject(Utils.createInternalServerError(message));
                                 });
                             }
                             else {
@@ -1754,14 +1755,14 @@ var Manifesto;
                                             storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
                                                 resource.getData(accessToken).then(function () {
                                                     resolve(resource);
-                                                })["catch"](function (error) {
-                                                    reject(error);
+                                                })["catch"](function (message) {
+                                                    reject(Utils.createInternalServerError(message));
                                                 });
-                                            })["catch"](function (error) {
-                                                reject(error);
+                                            })["catch"](function (message) {
+                                                reject(Utils.createInternalServerError(message));
                                             });
-                                        })["catch"](function (error) {
-                                            reject(error);
+                                        })["catch"](function (message) {
+                                            reject(Utils.createInternalServerError(message));
                                         });
                                     });
                                 }
@@ -1772,20 +1773,20 @@ var Manifesto;
                                             storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
                                                 resource.getData(accessToken).then(function () {
                                                     resolve(resource);
-                                                })["catch"](function (error) {
-                                                    reject(error);
+                                                })["catch"](function (message) {
+                                                    reject(Utils.createInternalServerError(message));
                                                 });
-                                            })["catch"](function (error) {
-                                                reject(error);
+                                            })["catch"](function (message) {
+                                                reject(Utils.createInternalServerError(message));
                                             });
-                                        })["catch"](function (error) {
-                                            reject(error);
+                                        })["catch"](function (message) {
+                                            reject(Utils.createInternalServerError(message));
                                         });
                                     });
                                 }
                             }
-                        })["catch"](function (error) {
-                            reject(error);
+                        })["catch"](function (message) {
+                            reject(Utils.createInternalServerError(message));
                         });
                     }
                     else {
