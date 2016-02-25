@@ -231,8 +231,8 @@ module Manifesto {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
                                     // invalid access token
-                                    if (resource.status === HTTPStatusCode.FORBIDDEN){
-                                        // get an access token
+                                    if (resource.status !== HTTPStatusCode.OK){
+                                        // get a new access token
                                         login(resource).then(() => {
                                             getAccessToken(resource).then((accessToken) => {
                                                 storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
