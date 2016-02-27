@@ -98,7 +98,6 @@ declare module Manifesto {
 declare module Manifesto {
     class ServiceProfile extends StringValue {
         static AUTOCOMPLETE: ServiceProfile;
-        static CLICKTHROUGH: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE0: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE1: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE2: ServiceProfile;
@@ -119,19 +118,22 @@ declare module Manifesto {
         static IIIF2IMAGELEVEL2: ServiceProfile;
         static IXIF: ServiceProfile;
         static LOGIN: ServiceProfile;
+        static CLICKTHROUGH: ServiceProfile;
+        static RESTRICTED: ServiceProfile;
         static LOGOUT: ServiceProfile;
         static OTHERMANIFESTATIONS: ServiceProfile;
         static SEARCHWITHIN: ServiceProfile;
         static TOKEN: ServiceProfile;
         static UIEXTENSIONS: ServiceProfile;
         autoComplete(): ServiceProfile;
-        clickThrough(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
         iiif1ImageLevel2(): ServiceProfile;
         iiif2ImageLevel1(): ServiceProfile;
         iiif2ImageLevel2(): ServiceProfile;
         ixif(): ServiceProfile;
         login(): ServiceProfile;
+        clickThrough(): ServiceProfile;
+        restricted(): ServiceProfile;
         logout(): ServiceProfile;
         otherManifestations(): ServiceProfile;
         searchWithin(): ServiceProfile;
