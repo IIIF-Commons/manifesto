@@ -57,11 +57,15 @@ module Manifesto {
                         profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
                         profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
                         profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.IIIF1IMAGELEVEL2.toString()){
+                        profile === ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
+                        profile === ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
+                        profile === ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()){
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
                     } else if (
                         profile === ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
+                        profile === ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString() ||
+                        profile === ServiceProfile.IIIF2IMAGELEVEL2.toString() ||
+                        profile === ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
                     }
                 }

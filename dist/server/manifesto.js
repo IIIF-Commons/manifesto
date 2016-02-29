@@ -750,11 +750,15 @@ var Manifesto;
                         profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
                         profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
                         profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) {
+                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
                     }
                     else if (profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) {
+                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString() ||
+                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) {
                         uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
                     }
                 }
