@@ -15,8 +15,9 @@
 
     StatusCodes: <Manifesto.IStatusCodes>{
         AUTHORIZATION_FAILED: 1,
-        INTERNAL_SERVER_ERROR: 2,
-        RESTRICTED: 3
+        FORBIDDEN: 2,
+        INTERNAL_SERVER_ERROR: 3,
+        RESTRICTED: 4
     },
 
     create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource {

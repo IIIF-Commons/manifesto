@@ -657,6 +657,7 @@ declare module Manifesto {
 declare module Manifesto {
     interface IStatusCodes {
         AUTHORIZATION_FAILED: number;
+        FORBIDDEN: number;
         INTERNAL_SERVER_ERROR: number;
         RESTRICTED: number;
     }

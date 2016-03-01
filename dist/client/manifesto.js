@@ -1911,8 +1911,9 @@ global.manifesto = module.exports = {
     ViewingHint: new Manifesto.ViewingHint(),
     StatusCodes: {
         AUTHORIZATION_FAILED: 1,
-        INTERNAL_SERVER_ERROR: 2,
-        RESTRICTED: 3
+        FORBIDDEN: 2,
+        INTERNAL_SERVER_ERROR: 3,
+        RESTRICTED: 4
     },
     create: function (manifest, options) {
         return Manifesto.Deserialiser.parse(manifest, options);
