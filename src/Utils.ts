@@ -142,7 +142,11 @@ module Manifesto {
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((error) => {
-                                            reject(Utils.createAuthorizationFailedError());
+                                            if (resource.restrictedService){
+                                                reject(Utils.createRestrictedError());
+                                            } else {
+                                                reject(Utils.createAuthorizationFailedError());
+                                            }
                                         });
                                 }
                             })["catch"]((error) => {
@@ -178,11 +182,15 @@ module Manifesto {
         }
 
         static createAuthorizationFailedError(): Error {
-            return Utils.createError(HTTPStatusCode.SERVICE_UNAVAILABLE.toString(), "Authorization failed");
+            return Utils.createError(StatusCodes.AUTHORIZATION_FAILED.toString(), "Authorization failed");
+        }
+
+        static createRestrictedError(): Error {
+            return Utils.createError(StatusCodes.RESTRICTED.toString(), "Restricted");
         }
 
         static createInternalServerError(message: string): Error {
-            return Utils.createError(HTTPStatusCode.INTERNAL_SERVER_ERROR.toString(), message);
+            return Utils.createError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
         }
 
         static loadExternalResources(resources: IExternalResource[],
