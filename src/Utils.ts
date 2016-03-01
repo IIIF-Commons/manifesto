@@ -68,8 +68,9 @@ module Manifesto {
         static loadExternalResource(resource: IExternalResource,
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
+            restricted: (resource: IExternalResource) => Promise<void>,
             login: (resource: IExternalResource) => Promise<void>,
-            getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+            getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
             storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
             getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>,
             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
@@ -88,9 +89,11 @@ module Manifesto {
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService){
                                 resolve(clickThrough(resource));
+                            } else if(resource.restrictedService) {
+                                resolve(restricted(resource));
                             } else {
                                 login(resource).then(() => {
-                                    getAccessToken(resource).then((token: IAccessToken) => {
+                                    getAccessToken(resource, true).then((token: IAccessToken) => {
                                         resource.getData(token).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((message) => {
@@ -132,6 +135,7 @@ module Manifesto {
                                         resource,
                                         tokenStorageStrategy,
                                         clickThrough,
+                                        restricted,
                                         login,
                                         getAccessToken,
                                         storeAccessToken,
@@ -149,14 +153,15 @@ module Manifesto {
                                 resource,
                                 tokenStorageStrategy,
                                 clickThrough,
+                                restricted,
                                 login,
                                 getAccessToken,
                                 storeAccessToken,
                                 getStoredAccessToken).then(() => {
-                                    resolve(handleResourceResponse(resource));
-                                })["catch"]((error) => {
-                                    reject(Utils.createAuthorizationFailedError());
-                                });
+                                resolve(handleResourceResponse(resource));
+                            })["catch"]((error) => {
+                                reject(Utils.createAuthorizationFailedError());
+                            });
                         }
                     })["catch"]((error) => {
                         reject(Utils.createAuthorizationFailedError());
@@ -183,8 +188,9 @@ module Manifesto {
         static loadExternalResources(resources: IExternalResource[],
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
+            restricted: (resource: IExternalResource) => Promise<void>,
             login: (resource: IExternalResource) => Promise<void>,
-            getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+            getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
             storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
             getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>,
             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
@@ -197,6 +203,7 @@ module Manifesto {
                         resource,
                         tokenStorageStrategy,
                         clickThrough,
+                        restricted,
                         login,
                         getAccessToken,
                         storeAccessToken,
@@ -214,11 +221,13 @@ module Manifesto {
             });
         }
 
-        static authorize(resource: IExternalResource,
+        static authorize(
+            resource: IExternalResource,
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
+            restricted: (resource: IExternalResource) => Promise<void>,
             login: (resource: IExternalResource) => Promise<void>,
-            getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>,
+            getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
             storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
             getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>): Promise<IExternalResource> {
 
@@ -227,75 +236,70 @@ module Manifesto {
                 resource.getData().then(() => {
                     if (resource.isAccessControlled()) {
                         getStoredAccessToken(resource, tokenStorageStrategy).then((storedAccessToken: IAccessToken) => {
-                            if (storedAccessToken) {
+                            if(storedAccessToken) {
                                 // try using the stored access token
                                 resource.getData(storedAccessToken).then(() => {
-                                    // invalid access token
-                                    if (resource.status !== HTTPStatusCode.OK){
-                                        // get a new access token
-                                        login(resource).then(() => {
-                                            getAccessToken(resource).then((accessToken) => {
-                                                storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
-                                                    resource.getData(accessToken).then(() => {
-                                                        resolve(resource);
-                                                    })["catch"]((message) => {
-                                                        reject(Utils.createInternalServerError(message));
-                                                    });
-                                                })["catch"]((message) => {
-                                                    reject(Utils.createInternalServerError(message));
-                                                });
-                                            })["catch"]((message) => {
-                                                reject(Utils.createInternalServerError(message));
-                                            });
-                                        });
+                                    if (resource.status === HTTPStatusCode.OK){
+                                        resolve(resource); // happy path ended
                                     } else {
-                                        resolve(resource);
+                                        // the stored token is no good for this resource
+                                        Utils.showAuthInteraction(
+                                            resource,
+                                            tokenStorageStrategy,
+                                            clickThrough,
+                                            restricted,
+                                            login,
+                                            getAccessToken,
+                                            storeAccessToken,
+                                            resolve,
+                                            reject);
                                     }
                                 })["catch"]((message) => {
                                     reject(Utils.createInternalServerError(message));
                                 });
                             } else {
-                                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
-                                    // if the resource was redirected to a degraded version
-                                    // and the response hasn't been handled yet.
-                                    // if the client wishes to trigger a login, set resource.isResponseHandled to true
-                                    // and call loadExternalResources() again passing the resource.
-                                    resolve(resource);
-                                } else if (resource.clickThroughService && !resource.isResponseHandled){
-                                    // if the resource has a click through service, use that.
-                                    clickThrough(resource).then(() => {
-                                        getAccessToken(resource).then((accessToken) => {
-                                            storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
-                                                resource.getData(accessToken).then(() => {
+                                // There was no stored token, but the user might have a cookie that will grant a token
+                                getAccessToken(resource, false).then((accessToken) => {
+                                    if(accessToken) {
+                                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
+                                            // try using the fresh access token
+                                            resource.getData(accessToken).then(() => {
+                                                if (resource.status === HTTPStatusCode.OK){
                                                     resolve(resource);
-                                                })["catch"]((message) => {
-                                                    reject(Utils.createInternalServerError(message));
-                                                });
+                                                } else {
+                                                    // User has a token, but it's not good enough
+                                                    Utils.showAuthInteraction(
+                                                        resource,
+                                                        tokenStorageStrategy,
+                                                        clickThrough,
+                                                        restricted,
+                                                        login,
+                                                        getAccessToken,
+                                                        storeAccessToken,
+                                                        resolve,
+                                                        reject);
+                                                }
                                             })["catch"]((message) => {
                                                 reject(Utils.createInternalServerError(message));
                                             });
                                         })["catch"]((message) => {
+                                            // not able to store access token
                                             reject(Utils.createInternalServerError(message));
                                         });
-                                    });
-                                } else {
-                                    // get an access token
-                                    login(resource).then(() => {
-                                        getAccessToken(resource).then((accessToken) => {
-                                            storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
-                                                resource.getData(accessToken).then(() => {
-                                                    resolve(resource);
-                                                })["catch"]((message) => {
-                                                    reject(Utils.createInternalServerError(message));
-                                                });
-                                            })["catch"]((message) => {
-                                                reject(Utils.createInternalServerError(message));
-                                            });
-                                        })["catch"]((message) => {
-                                            reject(Utils.createInternalServerError(message));
-                                        });
-                                    });
-                                }
+                                    } else {
+                                        // The user did not have a cookie that granted a token
+                                        Utils.showAuthInteraction(
+                                            resource,
+                                            tokenStorageStrategy,
+                                            clickThrough,
+                                            restricted,
+                                            login,
+                                            getAccessToken,
+                                            storeAccessToken,
+                                            resolve,
+                                            reject);
+                                    }
+                                })
                             }
                         })["catch"]((message) => {
                             reject(Utils.createInternalServerError(message));
@@ -307,6 +311,62 @@ module Manifesto {
                 });
             });
         }
+
+        private static showAuthInteraction(
+            resource,
+            tokenStorageStrategy,
+            clickThrough,
+            restricted,
+            login,
+            getAccessToken,
+            storeAccessToken,
+            resolve,
+            reject) {
+            if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                // if the resource was redirected to a degraded version
+                // and the response hasn't been handled yet.
+                // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                // and call loadExternalResources() again passing the resource.
+                resolve(resource);
+            } else if (resource.restrictedService) {
+                resolve(restricted(resource));
+                // TODO: move to next etc
+            } else if (resource.clickThroughService && !resource.isResponseHandled) {
+                // if the resource has a click through service, use that.
+                clickThrough(resource).then(() => {
+                    getAccessToken(resource, true).then((accessToken) => {
+                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
+                            resource.getData(accessToken).then(() => {
+                                resolve(resource);
+                            })["catch"]((message) => {
+                                reject(Utils.createInternalServerError(message));
+                            });
+                        })["catch"]((message) => {
+                            reject(Utils.createInternalServerError(message));
+                        });
+                    })["catch"]((message) => {
+                        reject(Utils.createInternalServerError(message));
+                    });
+                });
+            } else {
+                // get an access token
+                login(resource).then(() => {
+                    getAccessToken(resource, true).then((accessToken) => {
+                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
+                            resource.getData(accessToken).then(() => {
+                                resolve(resource);
+                            })["catch"]((message) => {
+                                reject(Utils.createInternalServerError(message));
+                            });
+                        })["catch"]((message) => {
+                            reject(Utils.createInternalServerError(message));
+                        });
+                    })["catch"]((message) => {
+                        reject(Utils.createInternalServerError(message));
+                    });
+                });
+            }
+        };
 
         static getService(resource: any, profile: ServiceProfile | string): IService {
 

@@ -102,13 +102,14 @@
     loadExternalResources: function(resources: Manifesto.IExternalResource[],
         tokenStorageStrategy: string,
         clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
+        restricted: (resource: Manifesto.IExternalResource) => Promise<void>,
         login: (resource: Manifesto.IExternalResource) => Promise<void>,
-        getAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken>,
+        getAccessToken: (resource: Manifesto.IExternalResource, rejectOnError: boolean) => Promise<Manifesto.IAccessToken>,
         storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken, tokenStorageStrategy: string) => Promise<void>,
         getStoredAccessToken: (resource: Manifesto.IExternalResource, tokenStorageStrategy: string) => Promise<Manifesto.IAccessToken>,
         handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
         options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
-        return Manifesto.Utils.loadExternalResources(resources, tokenStorageStrategy, clickThrough, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
+        return Manifesto.Utils.loadExternalResources(resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
     },
 
     loadManifest: function (uri: string): Promise<any> {

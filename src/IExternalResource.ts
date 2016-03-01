@@ -1,6 +1,7 @@
 module Manifesto {
     export interface IExternalResource {
         clickThroughService: IService;
+        restrictedService: IService;
         data: any;
         dataUri: string;
         error: any;
