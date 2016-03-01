@@ -1704,7 +1704,7 @@ var Manifesto;
         Utils.createError = function (name, message) {
             var error = new Error();
             error.message = message;
-            error.name = HTTPStatusCode.SERVICE_UNAVAILABLE.toString();
+            error.name = name;
             return error;
         };
         Utils.createAuthorizationFailedError = function () {

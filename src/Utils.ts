@@ -179,7 +179,7 @@ module Manifesto {
         static createError(name: string, message: string): Error {
             var error: Error = new Error();
             error.message = message;
-            error.name = HTTPStatusCode.SERVICE_UNAVAILABLE.toString();
+            error.name = name;
             return error;
         }
 
