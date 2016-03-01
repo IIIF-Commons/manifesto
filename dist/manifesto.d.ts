@@ -426,6 +426,7 @@ declare module Manifesto {
 }
 declare var http: any;
 declare var url: any;
+declare var manifesto: IManifesto;
 declare module Manifesto {
     class Utils {
         static getLocalisedValue(resource: any, locale: string): string;
@@ -583,6 +584,7 @@ interface IManifesto {
     ResourceFormat: Manifesto.ResourceFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
+    StatusCodes: Manifesto.IStatusCodes;
     TreeNodeType: Manifesto.TreeNodeType;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
@@ -653,6 +655,13 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
+    interface IStatusCodes {
+        AUTHORIZATION_FAILED: number;
+        INTERNAL_SERVER_ERROR: number;
+        RESTRICTED: number;
+    }
+}
+declare module Manifesto {
     class Resource extends ManifestResource implements IResource {
         constructor(jsonld: any, options: IManifestoOptions);
         getFormat(): ResourceFormat;
@@ -662,9 +671,4 @@ declare module Manifesto {
         getMaxWidth(): number;
         getMaxHeight(): number;
     }
-}
-declare module Manifesto.StatusCodes {
-    var AUTHORIZATION_FAILED: number;
-    var INTERNAL_SERVER_ERROR: number;
-    var RESTRICTED: number;
 }

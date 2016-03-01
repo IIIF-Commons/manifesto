@@ -1,6 +1,8 @@
 var http = require("http");
 var url = require("url");
 
+declare var manifesto: IManifesto;
+
 module Manifesto {
     export class Utils {
 
@@ -182,15 +184,15 @@ module Manifesto {
         }
 
         static createAuthorizationFailedError(): Error {
-            return Utils.createError(StatusCodes.AUTHORIZATION_FAILED.toString(), "Authorization failed");
+            return Utils.createError(manifesto.StatusCodes.AUTHORIZATION_FAILED.toString(), "Authorization failed");
         }
 
         static createRestrictedError(): Error {
-            return Utils.createError(StatusCodes.RESTRICTED.toString(), "Restricted");
+            return Utils.createError(manifesto.StatusCodes.RESTRICTED.toString(), "Restricted");
         }
 
         static createInternalServerError(message: string): Error {
-            return Utils.createError(StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
+            return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
         }
 
         static loadExternalResources(resources: IExternalResource[],

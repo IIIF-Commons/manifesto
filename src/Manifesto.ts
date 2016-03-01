@@ -13,6 +13,12 @@
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
 
+    StatusCodes: <Manifesto.IStatusCodes>{
+        AUTHORIZATION_FAILED: 1,
+        INTERNAL_SERVER_ERROR: 2,
+        RESTRICTED: 3
+    },
+
     create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource {
         return Manifesto.Deserialiser.parse(manifest, options);
     },
@@ -63,7 +69,9 @@
             profile.toString() === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString() ||
             profile.toString() === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE0.toString() ||
             profile.toString() === Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString() ||
-            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()){
+            profile.toString() === Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString() ||
+            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString() ||
+            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString()){
             return true;
         }
 
@@ -76,7 +84,9 @@
             profile.toString() === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
             profile.toString() === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
             profile.toString() === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()){
+            profile.toString() === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
+            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
+            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString()){
             return true;
         }
 
@@ -89,7 +99,9 @@
             profile.toString() === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
             profile.toString() === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
             profile.toString() === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
-            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()){
+            profile.toString() === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString() ||
+            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString() ||
+            profile.toString() === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()){
             return true;
         }
 
