@@ -27,8 +27,12 @@ module Manifesto {
             return images;
         }
 
+        getIndex(): number {
+            return this.getProperty('index');
+        }
+
         // todo: Prefer thumbnail service to image service if supplied and if
-        // the thumbnail service can provide a satisfactory size +/- x pixels.
+        // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
         getThumbUri(width: number, height: number): string {
 
             var uri;
