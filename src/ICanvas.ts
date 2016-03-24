@@ -7,7 +7,7 @@ module Manifesto {
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getThumbUri(width: number): string;
+        //getThumbUri(width: number): string;
         getType(): CanvasType;
         getWidth(): number;
     }

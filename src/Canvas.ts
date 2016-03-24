@@ -11,20 +11,63 @@ module Manifesto {
             super(jsonld, options);
         }
 
-        getCanonicalImageUri(width?: number): string {
+        getCanonicalImageUri(w?: number): string {
+
+            var id: string;
             var region: string = 'full';
             var rotation: number = 0;
-            var quality: string = 'default.jpg';
-            var w: number = width || this.externalResource.data.width;
-            var size: string = w + ',';
+            var quality: string = 'default';
+            var width: number = w;
+            var size: string;
 
-            if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
-                this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
-                this.externalResource.data['@context'].indexOf('/1/context.json') > -1 ) {
-                quality = 'native.jpg';
+            // if an info.json has been loaded
+            if (this.externalResource){
+                id = this.externalResource.data['@id'];
+
+                if (!width){
+                    width = this.externalResource.data.width;
+                }
+
+                if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
+                    this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
+                    this.externalResource.data['@context'].indexOf('/1/context.json') > -1 ) {
+                    quality = 'native';
+                }
+            } else {
+                // info.json hasn't been loaded yet
+                var images: IAnnotation[] = this.getImages();
+
+                if (images && images.length) {
+                    var firstImage = images[0];
+                    var resource: IResource = firstImage.getResource();
+                    var services: IService[] = resource.getServices();
+
+                    if (!width){
+                        width = resource.getWidth();
+                    }
+
+                    var service: IService = services[0];
+                    id = service.id;
+                    quality = Utils.getImageQuality(service.getProfile());
+
+                    //for (var i = 0; i < services.length; i++) {
+                    //    var service: IService = services[i];
+                    //    id = service.id;
+                    //
+                    //    if (!_endsWith(id, '/')) {
+                    //        id += '/';
+                    //    }
+                    //
+                    //    quality = Utils.getImageQuality(service.getProfile());
+                    //}
+                } else {
+                    return null;
+                }
             }
 
-            var uri: string = [this.externalResource.data['@id'], region, size, rotation, quality].join('/');
+            size = width + ',';
+
+            var uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
 
             return uri;
         }
@@ -52,30 +95,30 @@ module Manifesto {
         // todo: Prefer thumbnail service to image service if supplied and if
         // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
         // this is used to get thumb URIs for databinding *before* the info.json has been requested
-        getThumbUri(width: number): string {
-
-            var uri;
-            var images: IAnnotation[] = this.getImages();
-
-            if (images && images.length) {
-                var firstImage = images[0];
-                var resource: IResource = firstImage.getResource();
-                var services: IService[] = resource.getServices();
-
-                for (var i = 0; i < services.length; i++) {
-                    var service: IService = services[i];
-                    var id = service.id;
-
-                    if (!_endsWith(id, '/')) {
-                        id += '/';
-                    }
-
-                    uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
-                }
-            }
-
-            return uri;
-        }
+        //getThumbUri(width: number): string {
+        //
+        //    var uri;
+        //    var images: IAnnotation[] = this.getImages();
+        //
+        //    if (images && images.length) {
+        //        var firstImage = images[0];
+        //        var resource: IResource = firstImage.getResource();
+        //        var services: IService[] = resource.getServices();
+        //
+        //        for (var i = 0; i < services.length; i++) {
+        //            var service: IService = services[i];
+        //            var id = service.id;
+        //
+        //            if (!_endsWith(id, '/')) {
+        //                id += '/';
+        //            }
+        //
+        //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
+        //        }
+        //    }
+        //
+        //    return uri;
+        //}
 
         getType(): CanvasType {
             return new CanvasType(this.getProperty('@type').toLowerCase());

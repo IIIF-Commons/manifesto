@@ -20,7 +20,7 @@ module Manifesto {
             //    this.height = Math.floor(this.width * heightRatio);
             //}
 
-            this.uri = canvas.getThumbUri(width);
+            this.uri = canvas.getCanonicalImageUri(width);
             this.label = canvas.getLabel();
         }
     }
