@@ -1535,11 +1535,10 @@ var Manifesto;
             this.data = canvas;
             this.index = canvas.index;
             this.width = width;
-            //var heightRatio = canvas.getHeight() / canvas.getWidth();
-            //
-            //if (heightRatio) {
-            //    this.height = Math.floor(this.width * heightRatio);
-            //}
+            var heightRatio = canvas.getHeight() / canvas.getWidth();
+            if (heightRatio) {
+                this.height = Math.floor(this.width * heightRatio);
+            }
             this.uri = canvas.getCanonicalImageUri(width);
             this.label = canvas.getLabel();
         }
