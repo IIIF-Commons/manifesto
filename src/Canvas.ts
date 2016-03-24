@@ -49,17 +49,6 @@ module Manifesto {
                     var service: IService = services[0];
                     id = service.id;
                     quality = Utils.getImageQuality(service.getProfile());
-
-                    //for (var i = 0; i < services.length; i++) {
-                    //    var service: IService = services[i];
-                    //    id = service.id;
-                    //
-                    //    if (!_endsWith(id, '/')) {
-                    //        id += '/';
-                    //    }
-                    //
-                    //    quality = Utils.getImageQuality(service.getProfile());
-                    //}
                 } else {
                     return null;
                 }
