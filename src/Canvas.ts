@@ -11,6 +11,24 @@ module Manifesto {
             super(jsonld, options);
         }
 
+        getCanonicalImageUri(width?: number): string {
+            var region: string = 'full';
+            var rotation: number = 0;
+            var quality: string = 'default.jpg';
+            var w: number = width || this.externalResource.data.width;
+            var size: string = w + ',';
+
+            if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
+                this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
+                this.externalResource.data['@context'].indexOf('/1/context.json') > -1 ) {
+                quality = 'native.jpg';
+            }
+
+            var uri: string = [this.externalResource.data['@id'], region, size, rotation, quality].join('/');
+
+            return uri;
+        }
+
         getImages(): IAnnotation[] {
 
             var images: IAnnotation[] = [];
@@ -33,7 +51,8 @@ module Manifesto {
 
         // todo: Prefer thumbnail service to image service if supplied and if
         // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
-        getThumbUri(width: number, height: number): string {
+        // this is used to get thumb URIs for databinding *before* the info.json has been requested
+        getThumbUri(width: number): string {
 
             var uri;
             var images: IAnnotation[] = this.getImages();
@@ -44,34 +63,14 @@ module Manifesto {
                 var services: IService[] = resource.getServices();
 
                 for (var i = 0; i < services.length; i++) {
-                    var service:IService = services[i];
-                    var profile:string = service.getProfile().toString();
+                    var service: IService = services[i];
                     var id = service.id;
 
                     if (!_endsWith(id, '/')) {
                         id += '/';
                     }
 
-                    if (profile === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
-                        profile === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
-                        profile === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
-                        profile === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
-                        profile === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
-                        profile === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
-                        profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
-                        profile === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
-                        profile === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
-                        profile === ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
-                        profile === ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()){
-                        uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
-                    } else if (
-                        profile === ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
-                        profile === ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString() ||
-                        profile === ServiceProfile.IIIF2IMAGELEVEL2.toString() ||
-                        profile === ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) {
-                        uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
-                    }
+                    uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
                 }
             }
 

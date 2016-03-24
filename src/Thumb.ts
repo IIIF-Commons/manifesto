@@ -14,13 +14,13 @@ module Manifesto {
             this.index = canvas.index;
             this.width = width;
 
-            var heightRatio = canvas.getHeight() / canvas.getWidth();
+            //var heightRatio = canvas.getHeight() / canvas.getWidth();
+            //
+            //if (heightRatio) {
+            //    this.height = Math.floor(this.width * heightRatio);
+            //}
 
-            if (heightRatio) {
-                this.height = Math.floor(this.width * heightRatio);
-            }
-
-            this.uri = canvas.getThumbUri(width, this.height);
+            this.uri = canvas.getThumbUri(width);
             this.label = canvas.getLabel();
         }
     }

@@ -212,9 +212,10 @@ declare module Manifesto {
         index: number;
         ranges: IRange[];
         constructor(jsonld: any, options: IManifestoOptions);
+        getCanonicalImageUri(width?: number): string;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getThumbUri(width: number, height: number): string;
+        getThumbUri(width: number): string;
         getType(): CanvasType;
         getWidth(): number;
         getHeight(): number;
@@ -431,6 +432,7 @@ declare var url: any;
 declare var manifesto: IManifesto;
 declare module Manifesto {
     class Utils {
+        static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getLocalisedValue(resource: any, locale: string): string;
         static loadResource(uri: string): Promise<string>;
         static loadExternalResource(resource: IExternalResource, tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource>;
@@ -474,10 +476,11 @@ declare module Manifesto {
     interface ICanvas extends IManifestResource {
         index: number;
         ranges: IRange[];
+        getCanonicalImageUri(width?: number): string;
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getThumbUri(width: number, height: number): string;
+        getThumbUri(width: number): string;
         getType(): CanvasType;
         getWidth(): number;
     }

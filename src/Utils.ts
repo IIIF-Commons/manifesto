@@ -6,6 +6,28 @@ declare var manifesto: IManifesto;
 module Manifesto {
     export class Utils {
 
+        static getImageQuality(profile: Manifesto.ServiceProfile): string {
+
+            var p: string = profile.toString();
+
+            if (p === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
+                p === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
+                p === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
+                p === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
+                p === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
+                p === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
+                p === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
+                p === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
+                p === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                p === ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
+                p === ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
+                p === ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()){
+                return 'native';
+            }
+
+            return 'default';
+        }
+
         static getLocalisedValue(resource: any, locale: string): string {
 
             // if the resource is not an array of translations, return the string.

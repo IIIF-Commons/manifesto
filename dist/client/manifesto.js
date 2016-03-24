@@ -720,6 +720,20 @@ var Manifesto;
         function Canvas(jsonld, options) {
             _super.call(this, jsonld, options);
         }
+        Canvas.prototype.getCanonicalImageUri = function (width) {
+            var region = 'full';
+            var rotation = 0;
+            var quality = 'default.jpg';
+            var w = width || this.externalResource.data.width;
+            var size = w + ',';
+            if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
+                this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
+                this.externalResource.data['@context'].indexOf('/1/context.json') > -1) {
+                quality = 'native.jpg';
+            }
+            var uri = [this.externalResource.data['@id'], region, size, rotation, quality].join('/');
+            return uri;
+        };
         Canvas.prototype.getImages = function () {
             var images = [];
             if (!this.__jsonld.images)
@@ -736,7 +750,8 @@ var Manifesto;
         };
         // todo: Prefer thumbnail service to image service if supplied and if
         // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
-        Canvas.prototype.getThumbUri = function (width, height) {
+        // this is used to get thumb URIs for databinding *before* the info.json has been requested
+        Canvas.prototype.getThumbUri = function (width) {
             var uri;
             var images = this.getImages();
             if (images && images.length) {
@@ -745,31 +760,11 @@ var Manifesto;
                 var services = resource.getServices();
                 for (var i = 0; i < services.length; i++) {
                     var service = services[i];
-                    var profile = service.getProfile().toString();
                     var id = service.id;
                     if (!_endsWith(id, '/')) {
                         id += '/';
                     }
-                    if (profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
-                        profile === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) {
-                        uri = id + 'full/' + width + ',' + height + '/0/native.jpg';
-                    }
-                    else if (profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString() ||
-                        profile === Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) {
-                        uri = id + 'full/' + width + ',' + height + '/0/default.jpg';
-                    }
+                    uri = id + 'full/' + width + ',/0/' + Manifesto.Utils.getImageQuality(service.getProfile()) + '.jpg';
                 }
             }
             return uri;
@@ -1507,11 +1502,12 @@ var Manifesto;
             this.data = canvas;
             this.index = canvas.index;
             this.width = width;
-            var heightRatio = canvas.getHeight() / canvas.getWidth();
-            if (heightRatio) {
-                this.height = Math.floor(this.width * heightRatio);
-            }
-            this.uri = canvas.getThumbUri(width, this.height);
+            //var heightRatio = canvas.getHeight() / canvas.getWidth();
+            //
+            //if (heightRatio) {
+            //    this.height = Math.floor(this.width * heightRatio);
+            //}
+            this.uri = canvas.getThumbUri(width);
             this.label = canvas.getLabel();
         }
         return Thumb;
@@ -1574,6 +1570,24 @@ var Manifesto;
     var Utils = (function () {
         function Utils() {
         }
+        Utils.getImageQuality = function (profile) {
+            var p = profile.toString();
+            if (p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) {
+                return 'native';
+            }
+            return 'default';
+        };
         Utils.getLocalisedValue = function (resource, locale) {
             // if the resource is not an array of translations, return the string.
             if (!_isArray(resource)) {
