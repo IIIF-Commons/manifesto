@@ -726,7 +726,7 @@ var Manifesto;
             var width = w;
             var size;
             // if an info.json has been loaded
-            if (this.externalResource) {
+            if (this.externalResource && this.externalResource.data) {
                 id = this.externalResource.data['@id'];
                 if (!width) {
                     width = this.externalResource.data.width;
