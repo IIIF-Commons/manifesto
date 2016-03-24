@@ -1,5 +1,6 @@
 module Manifesto {
     export class ManifestResource extends JSONLDResource implements IManifestResource {
+        externalResource: IExternalResource;
         options: IManifestoOptions;
 
         constructor(jsonld: any, options: IManifestoOptions) {
@@ -14,8 +15,7 @@ module Manifesto {
         getMetadata(): any{
             var metadata: Object[] = this.getProperty('metadata');
 
-            if (!metadata)
-                return [];
+            if (!metadata) return [];
 
             // get localised value for each metadata item.
             for (var i = 0; i < metadata.length; i++) {

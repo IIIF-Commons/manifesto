@@ -194,6 +194,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     class ManifestResource extends JSONLDResource implements IManifestResource {
+        externalResource: IExternalResource;
         options: IManifestoOptions;
         constructor(jsonld: any, options: IManifestoOptions);
         getLabel(): string;
@@ -557,6 +558,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IManifestResource extends IJSONLDResource {
+        externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
         getLabel(): string;
         getMetadata(): any;

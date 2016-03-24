@@ -1,6 +1,7 @@
 module Manifesto {
     export interface IManifestResource extends IJSONLDResource{
         //new(jsonld: any, options?: IManifestoOptions);
+        externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
         getLabel(): string;
         getMetadata(): any;
