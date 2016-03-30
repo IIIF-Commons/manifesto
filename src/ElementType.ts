@@ -1,5 +1,6 @@
 module Manifesto {
     export class ElementType extends StringValue{
+        public static CANVAS = new ElementType("sc:canvas");
         public static DOCUMENT = new ElementType("foaf:document");
         public static IMAGE = new ElementType("dcTypes:image");
         public static MOVINGIMAGE = new ElementType("dctypes:movingimage");
@@ -7,6 +8,10 @@ module Manifesto {
         public static SOUND = new ElementType("dctypes:sound");
 
         // todo: use getters when ES3 target is no longer required.
+
+        canvas(): ElementType {
+            return new ElementType(ElementType.CANVAS.toString());
+        }
 
         document(): ElementType {
             return new ElementType(ElementType.DOCUMENT.toString());

@@ -1,7 +1,6 @@
 (<any>global).manifesto = module.exports = <IManifesto>{
 
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
-    CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),

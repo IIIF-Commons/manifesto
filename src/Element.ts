@@ -1,7 +1,8 @@
 module Manifesto {
     export class Element extends ManifestResource implements IElement {
 
-        type: ElementType;
+        public index: number;
+        public type: ElementType;
 
         constructor(jsonld: any, options: IManifestoOptions){
             super(jsonld, options);

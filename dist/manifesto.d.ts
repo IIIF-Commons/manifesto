@@ -36,18 +36,14 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    class CanvasType extends StringValue {
-        static CANVAS: CanvasType;
-        canvas(): CanvasType;
-    }
-}
-declare module Manifesto {
     class ElementType extends StringValue {
+        static CANVAS: ElementType;
         static DOCUMENT: ElementType;
         static IMAGE: ElementType;
         static MOVINGIMAGE: ElementType;
         static PHYSICALOBJECT: ElementType;
         static SOUND: ElementType;
+        canvas(): ElementType;
         document(): ElementType;
         image(): ElementType;
         movingimage(): ElementType;
@@ -205,27 +201,26 @@ declare module Manifesto {
         getServices(): IService[];
     }
 }
+declare module Manifesto {
+    class Element extends ManifestResource implements IElement {
+        index: number;
+        type: ElementType;
+        constructor(jsonld: any, options: IManifestoOptions);
+        getResources(): IAnnotation[];
+        getType(): ElementType;
+    }
+}
 declare var _endsWith: any;
 declare var _last: any;
 declare module Manifesto {
-    class Canvas extends ManifestResource implements ICanvas {
-        index: number;
+    class Canvas extends Element implements ICanvas {
         ranges: IRange[];
         constructor(jsonld: any, options: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getType(): CanvasType;
         getWidth(): number;
         getHeight(): number;
-    }
-}
-declare module Manifesto {
-    class Element extends ManifestResource implements IElement {
-        type: ElementType;
-        constructor(jsonld: any, options: IManifestoOptions);
-        getResources(): IAnnotation[];
-        getType(): ElementType;
     }
 }
 declare var _assign: any;
@@ -473,14 +468,12 @@ declare module Manifesto {
     }
 }
 declare module Manifesto {
-    interface ICanvas extends IManifestResource {
-        index: number;
+    interface ICanvas extends IElement {
         ranges: IRange[];
         getCanonicalImageUri(width?: number): string;
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getType(): CanvasType;
         getWidth(): number;
     }
 }
@@ -497,6 +490,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IElement extends IManifestResource {
+        index: number;
         getResources(): IAnnotation[];
         getType(): ElementType;
     }
@@ -573,7 +567,6 @@ declare module Manifesto {
 }
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
-    CanvasType: Manifesto.CanvasType;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     ElementType: Manifesto.ElementType;
     getRenderings(resource: any): Manifesto.IRendering[];

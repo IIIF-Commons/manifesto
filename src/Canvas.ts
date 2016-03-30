@@ -2,9 +2,8 @@ var _endsWith = require("lodash.endswith");
 var _last = require("lodash.last");
 
 module Manifesto {
-    export class Canvas extends ManifestResource implements ICanvas{
+    export class Canvas extends Element implements ICanvas{
 
-        public index: number;
         public ranges: IRange[];
 
         constructor(jsonld: any, options: IManifestoOptions){
@@ -109,9 +108,9 @@ module Manifesto {
         //    return uri;
         //}
 
-        getType(): CanvasType {
-            return new CanvasType(this.getProperty('@type').toLowerCase());
-        }
+        //getType(): CanvasType {
+        //    return new CanvasType(this.getProperty('@type').toLowerCase());
+        //}
 
         getWidth(): number {
             return this.getProperty('width');

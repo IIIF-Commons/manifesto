@@ -1,6 +1,5 @@
 module Manifesto {
-    export interface ICanvas extends IManifestResource {
-        index: number;
+    export interface ICanvas extends IElement {
         ranges: IRange[];
 
         getCanonicalImageUri(width?: number): string;
@@ -8,7 +7,7 @@ module Manifesto {
         getImages(): IAnnotation[];
         getIndex(): number;
         //getThumbUri(width: number): string;
-        getType(): CanvasType;
+        //getType(): CanvasType;
         getWidth(): number;
     }
 }

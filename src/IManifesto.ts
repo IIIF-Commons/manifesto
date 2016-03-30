@@ -1,6 +1,5 @@
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
-    CanvasType: Manifesto.CanvasType;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     ElementType: Manifesto.ElementType;
     getRenderings(resource: any): Manifesto.IRendering[];

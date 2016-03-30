@@ -302,28 +302,15 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 var Manifesto;
 (function (Manifesto) {
-    var CanvasType = (function (_super) {
-        __extends(CanvasType, _super);
-        function CanvasType() {
-            _super.apply(this, arguments);
-        }
-        // todo: use getters when ES3 target is no longer required.
-        CanvasType.prototype.canvas = function () {
-            return new CanvasType(CanvasType.CANVAS.toString());
-        };
-        CanvasType.CANVAS = new CanvasType("sc:canvas");
-        return CanvasType;
-    })(Manifesto.StringValue);
-    Manifesto.CanvasType = CanvasType;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
     var ElementType = (function (_super) {
         __extends(ElementType, _super);
         function ElementType() {
             _super.apply(this, arguments);
         }
         // todo: use getters when ES3 target is no longer required.
+        ElementType.prototype.canvas = function () {
+            return new ElementType(ElementType.CANVAS.toString());
+        };
         ElementType.prototype.document = function () {
             return new ElementType(ElementType.DOCUMENT.toString());
         };
@@ -339,6 +326,7 @@ var Manifesto;
         ElementType.prototype.sound = function () {
             return new ElementType(ElementType.SOUND.toString());
         };
+        ElementType.CANVAS = new ElementType("sc:canvas");
         ElementType.DOCUMENT = new ElementType("foaf:document");
         ElementType.IMAGE = new ElementType("dcTypes:image");
         ElementType.MOVINGIMAGE = new ElementType("dctypes:movingimage");
@@ -709,6 +697,31 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.ManifestResource = ManifestResource;
 })(Manifesto || (Manifesto = {}));
+var Manifesto;
+(function (Manifesto) {
+    var Element = (function (_super) {
+        __extends(Element, _super);
+        function Element(jsonld, options) {
+            _super.call(this, jsonld, options);
+        }
+        Element.prototype.getResources = function () {
+            var resources = [];
+            if (!this.__jsonld.resources)
+                return resources;
+            for (var i = 0; i < this.__jsonld.resources.length; i++) {
+                var a = this.__jsonld.resources[i];
+                var annotation = new Manifesto.Annotation(a, this.options);
+                resources.push(annotation);
+            }
+            return resources;
+        };
+        Element.prototype.getType = function () {
+            return new Manifesto.ElementType(this.getProperty('@type'));
+        };
+        return Element;
+    })(Manifesto.ManifestResource);
+    Manifesto.Element = Element;
+})(Manifesto || (Manifesto = {}));
 var _endsWith = require("lodash.endswith");
 var _last = require("lodash.last");
 var Manifesto;
@@ -800,9 +813,9 @@ var Manifesto;
         //
         //    return uri;
         //}
-        Canvas.prototype.getType = function () {
-            return new Manifesto.CanvasType(this.getProperty('@type').toLowerCase());
-        };
+        //getType(): CanvasType {
+        //    return new CanvasType(this.getProperty('@type').toLowerCase());
+        //}
         Canvas.prototype.getWidth = function () {
             return this.getProperty('width');
         };
@@ -810,33 +823,8 @@ var Manifesto;
             return this.getProperty('height');
         };
         return Canvas;
-    })(Manifesto.ManifestResource);
+    })(Manifesto.Element);
     Manifesto.Canvas = Canvas;
-})(Manifesto || (Manifesto = {}));
-var Manifesto;
-(function (Manifesto) {
-    var Element = (function (_super) {
-        __extends(Element, _super);
-        function Element(jsonld, options) {
-            _super.call(this, jsonld, options);
-        }
-        Element.prototype.getResources = function () {
-            var resources = [];
-            if (!this.__jsonld.resources)
-                return resources;
-            for (var i = 0; i < this.__jsonld.resources.length; i++) {
-                var a = this.__jsonld.resources[i];
-                var annotation = new Manifesto.Annotation(a, this.options);
-                resources.push(annotation);
-            }
-            return resources;
-        };
-        Element.prototype.getType = function () {
-            return new Manifesto.ElementType(this.getProperty('@type'));
-        };
-        return Element;
-    })(Manifesto.ManifestResource);
-    Manifesto.Element = Element;
 })(Manifesto || (Manifesto = {}));
 var _assign = require("lodash.assign");
 var Manifesto;
@@ -1956,7 +1944,6 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 global.manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
-    CanvasType: new Manifesto.CanvasType(),
     ElementType: new Manifesto.ElementType(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),
@@ -2062,7 +2049,6 @@ global.manifesto = module.exports = {
 };
 /// <reference path="./StringValue.ts" />
 /// <reference path="./AnnotationMotivation.ts" />
-/// <reference path="./CanvasType.ts" />
 /// <reference path="./ElementType.ts" />
 /// <reference path="./IIIFResourceType.ts" />
 /// <reference path="./ManifestType.ts" />
@@ -2074,8 +2060,8 @@ global.manifesto = module.exports = {
 /// <reference path="./ViewingHint.ts" />
 /// <reference path="./JSONLDResource.ts" />
 /// <reference path="./ManifestResource.ts" />
-/// <reference path="./Canvas.ts" />
 /// <reference path="./Element.ts" />
+/// <reference path="./Canvas.ts" />
 /// <reference path="./IIIFResource.ts" />
 /// <reference path="./Manifest.ts" />
 /// <reference path="./Collection.ts" />
