@@ -822,6 +822,17 @@ var Manifesto;
         function Element(jsonld, options) {
             _super.call(this, jsonld, options);
         }
+        Element.prototype.getResources = function () {
+            var resources = [];
+            if (!this.__jsonld.resources)
+                return resources;
+            for (var i = 0; i < this.__jsonld.resources.length; i++) {
+                var a = this.__jsonld.resources[i];
+                var annotation = new Manifesto.Annotation(a, this.options);
+                resources.push(annotation);
+            }
+            return resources;
+        };
         Element.prototype.getType = function () {
             return new Manifesto.ElementType(this.getProperty('@type'));
         };

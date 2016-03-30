@@ -224,6 +224,7 @@ declare module Manifesto {
     class Element extends ManifestResource implements IElement {
         type: ElementType;
         constructor(jsonld: any, options: IManifestoOptions);
+        getResources(): IAnnotation[];
         getType(): ElementType;
     }
 }
@@ -496,6 +497,7 @@ declare module Manifesto {
 }
 declare module Manifesto {
     interface IElement extends IManifestResource {
+        getResources(): IAnnotation[];
         getType(): ElementType;
     }
 }
