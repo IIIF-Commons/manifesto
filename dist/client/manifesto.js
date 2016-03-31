@@ -421,7 +421,11 @@ var Manifesto;
         ResourceFormat.prototype.jpgimage = function () {
             return new ResourceFormat(ResourceFormat.JPGIMAGE.toString());
         };
+        ResourceFormat.prototype.pdf = function () {
+            return new ResourceFormat(ResourceFormat.PDF.toString());
+        };
         ResourceFormat.JPGIMAGE = new ResourceFormat("image/jpeg");
+        ResourceFormat.PDF = new ResourceFormat("application/pdf");
         return ResourceFormat;
     })(Manifesto.StringValue);
     Manifesto.ResourceFormat = ResourceFormat;

@@ -84,7 +84,9 @@ declare module Manifesto {
 declare module Manifesto {
     class ResourceFormat extends StringValue {
         static JPGIMAGE: ResourceFormat;
+        static PDF: ResourceFormat;
         jpgimage(): ResourceFormat;
+        pdf(): ResourceFormat;
     }
 }
 declare module Manifesto {
