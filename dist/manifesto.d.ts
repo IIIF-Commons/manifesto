@@ -20,6 +20,7 @@ declare module Manifesto {
         static QUESTIONING: AnnotationMotivation;
         static REPLYING: AnnotationMotivation;
         static TAGGING: AnnotationMotivation;
+        static TRANSCRIBING: AnnotationMotivation;
         bookmarking(): AnnotationMotivation;
         classifying(): AnnotationMotivation;
         commenting(): AnnotationMotivation;
@@ -33,6 +34,7 @@ declare module Manifesto {
         questioning(): AnnotationMotivation;
         replying(): AnnotationMotivation;
         tagging(): AnnotationMotivation;
+        transcribing(): AnnotationMotivation;
     }
 }
 declare module Manifesto {

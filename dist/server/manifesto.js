@@ -283,6 +283,9 @@ var Manifesto;
         AnnotationMotivation.prototype.tagging = function () {
             return new AnnotationMotivation(AnnotationMotivation.TAGGING.toString());
         };
+        AnnotationMotivation.prototype.transcribing = function () {
+            return new AnnotationMotivation(AnnotationMotivation.TRANSCRIBING.toString());
+        };
         AnnotationMotivation.BOOKMARKING = new AnnotationMotivation("oa:bookmarking");
         AnnotationMotivation.CLASSIFYING = new AnnotationMotivation("oa:classifying");
         AnnotationMotivation.COMMENTING = new AnnotationMotivation("oa:commenting");
@@ -296,6 +299,7 @@ var Manifesto;
         AnnotationMotivation.QUESTIONING = new AnnotationMotivation("oa:questioning");
         AnnotationMotivation.REPLYING = new AnnotationMotivation("oa:replying");
         AnnotationMotivation.TAGGING = new AnnotationMotivation("oa:tagging");
+        AnnotationMotivation.TRANSCRIBING = new AnnotationMotivation("oad:transcribing");
         return AnnotationMotivation;
     })(Manifesto.StringValue);
     Manifesto.AnnotationMotivation = AnnotationMotivation;

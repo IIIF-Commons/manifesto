@@ -13,6 +13,7 @@ module Manifesto {
         public static QUESTIONING = new AnnotationMotivation("oa:questioning");
         public static REPLYING = new AnnotationMotivation("oa:replying");
         public static TAGGING = new AnnotationMotivation("oa:tagging");
+        public static TRANSCRIBING = new AnnotationMotivation("oad:transcribing");
 
         // todo: use getters when ES3 target is no longer required.
 
@@ -66,6 +67,10 @@ module Manifesto {
 
         tagging(): AnnotationMotivation {
             return new AnnotationMotivation(AnnotationMotivation.TAGGING.toString());
+        }
+
+        transcribing(): AnnotationMotivation {
+            return new AnnotationMotivation(AnnotationMotivation.TRANSCRIBING.toString());
         }
     }
 }
