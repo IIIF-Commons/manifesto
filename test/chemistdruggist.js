@@ -65,7 +65,7 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
         firstCollection.getManifestByIndex(0).then(function(data) {
             manifest = data;
             var label = manifest.getLabel();
-            label.should.equal('15. September 1859');
+            label.should.equal('The chemist and druggist.');
             var metadata = manifest.getMetadata();
             metadata[0]['label'].should.equal('Title');
             metadata[0]['value'].should.equal('The chemist and druggist.');
@@ -76,7 +76,7 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
 
 describe('#firstCollectionFirstManifestHasLabel', function() {
     it('has a first manifest with a label', function() {
-        manifest.getLabel().should.equal('15. September 1859');
+        manifest.getLabel().should.equal('The chemist and druggist.');
     })
 });
 

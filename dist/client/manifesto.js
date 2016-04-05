@@ -895,7 +895,7 @@ var Manifesto;
             return Manifesto.Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         };
         IIIFResource.prototype.getLabel = function () {
-            return (this.parentLabel || Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale));
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
         IIIFResource.prototype.getTree = function () {
             this.treeRoot = new Manifesto.TreeNode('root');
@@ -1137,7 +1137,7 @@ var Manifesto;
                 for (var i = 0; i < parentCollection.manifests.length; i++) {
                     var manifest = parentCollection.manifests[i];
                     var tree = manifest.getTree();
-                    tree.label = manifest.getLabel() || 'manifest ' + (i + 1);
+                    tree.label = manifest.parentLabel || manifest.getLabel() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
                     tree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
@@ -1150,7 +1150,7 @@ var Manifesto;
                 for (var i = 0; i < parentCollection.collections.length; i++) {
                     var collection = parentCollection.collections[i];
                     var tree = collection.getTree();
-                    tree.label = collection.getLabel() || 'collection ' + (i + 1);
+                    tree.label = collection.parentLabel || collection.getLabel() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
                     tree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
