@@ -5,6 +5,7 @@ module Manifesto {
         public index: number = 0;
         public isLoaded: boolean = false;
         public parentCollection: ICollection;
+        public parentLabel: string;
         public treeRoot: ITreeNode;
 
         constructor(jsonld: any, options?: IManifestoOptions) {
@@ -69,7 +70,7 @@ module Manifesto {
             return Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         }
 
-        getTitle(): string {
+        getLabel(): string {
             return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
 
@@ -88,6 +89,7 @@ module Manifesto {
                     var options = that.options;
                     options.navDate = that.getNavDate();
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
+                        that.parentLabel = that.getLabel();
                         var parsed = Deserialiser.parse(data, options);
                         that = _assign(that, parsed);
                         resolve(that);

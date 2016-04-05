@@ -3,16 +3,17 @@ module Manifesto {
         getAttribution(): string;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
+        getLabel(): string;
         getLicense(): string;
         getLogo(): string;
         getNavDate(): Date;
         getSeeAlso(): any;
-        getTitle(): string;
         getTree(): ITreeNode;
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         parentCollection: ICollection;
+        parentLabel: string;
         treeRoot: ITreeNode;
     }
 }

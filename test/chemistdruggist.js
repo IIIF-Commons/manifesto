@@ -30,17 +30,17 @@ describe('#hasCollectionCount', function() {
     });
 });
 
-describe('#hasTitle', function() {
-    it('has a title', function() {
-        collection.getTitle().should.equal('The chemist and druggist.');
+describe('#hasLabel', function() {
+    it('has a label', function() {
+        collection.getLabel().should.equal('The chemist and druggist.');
     })
 });
 
-describe('#firstCollectionHasTitle', function() {
-    it('has a first collection with a title', function(done) {
+describe('#firstCollectionHasLabel', function() {
+    it('has a first collection with a label', function(done) {
          collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
-            firstCollection.getTitle().should.equal('Volume 1, 1859');
+            firstCollection.getLabel().should.equal('Volume 1, 1859');
             done();
         });
     })
@@ -74,9 +74,9 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
     })
 });
 
-describe('#firstCollectionFirstManifestHasTitle', function() {
-    it('has a first manifest with a title', function() {
-        manifest.getTitle().should.equal('The chemist and druggist.');
+describe('#firstCollectionFirstManifestHasLabel', function() {
+    it('has a first manifest with a label', function() {
+        manifest.getLabel().should.equal('The chemist and druggist.');
     })
 });
 
