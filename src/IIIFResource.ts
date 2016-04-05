@@ -71,7 +71,8 @@ module Manifesto {
         }
 
         getLabel(): string {
-            return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
+            // if the parent manifest/collection assigned a label to this resource it overrides
+            return (this.parentLabel || Utils.getLocalisedValue(this.getProperty('label'), this.options.locale));
         }
 
         getTree(): ITreeNode{

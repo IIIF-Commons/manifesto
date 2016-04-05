@@ -895,7 +895,7 @@ var Manifesto;
             return Manifesto.Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         };
         IIIFResource.prototype.getLabel = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
+            return (this.parentLabel || Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale));
         };
         IIIFResource.prototype.getTree = function () {
             this.treeRoot = new Manifesto.TreeNode('root');
