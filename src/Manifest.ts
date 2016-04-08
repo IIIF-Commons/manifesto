@@ -204,6 +204,14 @@ module Manifesto {
             return new ManifestType('');
         }
 
+        getTrackingLabel(): string {
+            var service: IService = this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
+            if (service){
+                return service.getProperty('trackingLabel');
+            }
+            return '';
+        }
+
         isMultiSequence(): boolean{
             return this.getTotalSequences() > 1;
         }

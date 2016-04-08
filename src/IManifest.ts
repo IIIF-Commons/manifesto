@@ -10,6 +10,7 @@ module Manifesto {
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): ViewingHint;
+        getTrackingLabel(): string;
         isMultiSequence(): boolean;
         rootRange: IRange;
     }

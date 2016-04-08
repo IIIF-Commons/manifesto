@@ -1082,6 +1082,13 @@ var Manifesto;
             }
             return new Manifesto.ManifestType('');
         };
+        Manifest.prototype.getTrackingLabel = function () {
+            var service = this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
+            if (service) {
+                return service.getProperty('trackingLabel');
+            }
+            return '';
+        };
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
         };

@@ -272,6 +272,7 @@ declare module Manifesto {
         getTree(): ITreeNode;
         private _parseTreeNode(node, range);
         getManifestType(): ManifestType;
+        getTrackingLabel(): string;
         isMultiSequence(): boolean;
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
@@ -557,6 +558,7 @@ declare module Manifesto {
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): ViewingHint;
+        getTrackingLabel(): string;
         isMultiSequence(): boolean;
         rootRange: IRange;
     }
