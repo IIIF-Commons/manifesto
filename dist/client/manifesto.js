@@ -517,6 +517,9 @@ var Manifesto;
         ServiceProfile.prototype.token = function () {
             return new ServiceProfile(ServiceProfile.TOKEN.toString());
         };
+        ServiceProfile.prototype.trackingExtensions = function () {
+            return new ServiceProfile(ServiceProfile.TRACKINGEXTENSIONS.toString());
+        };
         ServiceProfile.prototype.uiExtensions = function () {
             return new ServiceProfile(ServiceProfile.UIEXTENSIONS.toString());
         };
@@ -553,6 +556,7 @@ var Manifesto;
         ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
         ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/0/search");
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
+        ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
         ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.azurewebsites.net/ui-extensions-profile");
         return ServiceProfile;
     })(Manifesto.StringValue);

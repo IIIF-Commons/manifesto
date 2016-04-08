@@ -130,6 +130,7 @@ declare module Manifesto {
         static OTHERMANIFESTATIONS: ServiceProfile;
         static SEARCHWITHIN: ServiceProfile;
         static TOKEN: ServiceProfile;
+        static TRACKINGEXTENSIONS: ServiceProfile;
         static UIEXTENSIONS: ServiceProfile;
         autoComplete(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
@@ -152,6 +153,7 @@ declare module Manifesto {
         stanfordIIIF1ImageConformance1(): ServiceProfile;
         stanfordIIIF1ImageConformance2(): ServiceProfile;
         token(): ServiceProfile;
+        trackingExtensions(): ServiceProfile;
         uiExtensions(): ServiceProfile;
     }
 }

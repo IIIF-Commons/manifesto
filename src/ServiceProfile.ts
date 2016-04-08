@@ -33,6 +33,7 @@ module Manifesto {
         public static OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
         public static SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/0/search");
         public static TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
+        public static TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
         public static UIEXTENSIONS = new ServiceProfile("http://universalviewer.azurewebsites.net/ui-extensions-profile");
 
         // todo: use getters when ES3 target is no longer required.
@@ -119,6 +120,10 @@ module Manifesto {
 
         token(): ServiceProfile {
             return new ServiceProfile(ServiceProfile.TOKEN.toString());
+        }
+
+        trackingExtensions(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.TRACKINGEXTENSIONS.toString());
         }
 
         uiExtensions(): ServiceProfile {
