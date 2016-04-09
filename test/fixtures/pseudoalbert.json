@@ -58,7 +58,7 @@
   ],
   "service": {
     "@context": "http://wellcomelibrary.org/ld/ixif/0/context.json",
-    "profile": "http://universalviewer.azurewebsites.net/ui-extensions-profile",
+    "profile": "http://universalviewer.io/ui-extensions-profile",
     "manifestType": "manuscript"
   },
   "sequences": [

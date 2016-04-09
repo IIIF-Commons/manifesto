@@ -34,7 +34,7 @@ module Manifesto {
         public static SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/0/search");
         public static TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
         public static TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
-        public static UIEXTENSIONS = new ServiceProfile("http://universalviewer.azurewebsites.net/ui-extensions-profile");
+        public static UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
 
         // todo: use getters when ES3 target is no longer required.
 
