@@ -18,6 +18,7 @@ var tag = require('gulp-tag-version');
 var tasks = requireDir('./tasks');
 var ts = require('gulp-typescript');
 var typedoc = require("gulp-typedoc");
+var uglify = require('gulp-uglify');
 
 var config = new Config();
 
@@ -30,6 +31,18 @@ gulp.task('test', function () {
                 .pipe(mocha())
                 .pipe(istanbul.writeReports());
         });
+});
+
+gulp.task('compressClient', function() {
+    return gulp.src(config.client + config.lib)
+        .pipe(uglify())
+        .pipe(gulp.dest(config.client));
+});
+
+gulp.task('compressServer', function() {
+    return gulp.src(config.server + config.lib)
+        .pipe(uglify())
+        .pipe(gulp.dest(config.server));
 });
 
 gulp.task('clean', function (cb) {
@@ -95,7 +108,7 @@ gulp.task('concat', function() {
     var client = config.client + '/' + config.lib;
     var server = config.server + '/' + config.lib;
     var exjs = './bower_components/exjs/dist/ex.es3.min.js';
-    var extensions = './bower_components/extensions/dist/extensions.js';
+    var extensions = './bower_components/extensions/dist/extensions.js'; // todo: is the whole lib needed?
     gulp.src([exjs, extensions, client]).pipe(concat(config.lib)).pipe(gulp.dest(config.client));
     gulp.src([exjs, extensions, server]).pipe(concat(config.lib)).pipe(gulp.dest(config.server));
 });
