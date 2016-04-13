@@ -30,3 +30,9 @@ http://blog.edsilv.com/manifesto/
     bower install
     gulp
     gulp test
+
+###Building
+
+    gulp
+    gulp compressClient
+    gulp compressServer
