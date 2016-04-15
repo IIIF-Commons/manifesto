@@ -1,4 +1,5 @@
 var _assign = require("lodash.assign");
+var _findIndex = require("lodash.findindex");
 
 module Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
@@ -90,8 +91,17 @@ module Manifesto {
                     options.navDate = that.getNavDate();
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
                         that.parentLabel = that.getLabel();
+
                         var parsed = Deserialiser.parse(data, options);
                         that = _assign(that, parsed);
+
+                        // if this is in a collection, find the index of this item and assign it
+                        if (that.parentCollection){
+                            that.index = _findIndex(that.parentCollection.collections, (r) => {
+                                return r.id === that.id;
+                            });
+                        }
+
                         resolve(that);
                     });
                 }

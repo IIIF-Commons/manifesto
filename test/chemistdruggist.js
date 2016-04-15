@@ -6,7 +6,7 @@ var should = require('chai').should();
 var manifests = require('./fixtures/manifests');
 require('./shared');
 
-var collection, manifest, firstCollection;
+var collection, manifest, firstCollection, secondCollection;
 
 describe('#loadsChemistDruggist', function() {
     it('loads successfully', function (done) {
@@ -84,5 +84,15 @@ describe('#getTree', function() {
     it('has a tree containing manifests', function () {
         var tree = collection.getTree();
         expect(tree).to.exist;
+    })
+});
+
+describe('#secondCollectionHasCorrectIndex', function() {
+    it('has a second collection with a correct index', function(done) {
+        collection.getCollectionByIndex(1).then(function(data) {
+            secondCollection = data;
+            secondCollection.index.should.equal(1);
+            done();
+        });
     })
 });

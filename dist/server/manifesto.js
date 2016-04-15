@@ -839,6 +839,7 @@ var Manifesto;
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
 var _assign = require("lodash.assign");
+var _findIndex = require("lodash.findindex");
 var Manifesto;
 (function (Manifesto) {
     var IIIFResource = (function (_super) {
@@ -917,6 +918,12 @@ var Manifesto;
                         that.parentLabel = that.getLabel();
                         var parsed = Manifesto.Deserialiser.parse(data, options);
                         that = _assign(that, parsed);
+                        // if this is in a collection, find the index of this item and assign it
+                        if (that.parentCollection) {
+                            that.index = _findIndex(that.parentCollection.collections, function (r) {
+                                return r.id === that.id;
+                            });
+                        }
                         resolve(that);
                     });
                 }

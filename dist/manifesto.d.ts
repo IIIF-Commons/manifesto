@@ -230,6 +230,7 @@ declare module Manifesto {
     }
 }
 declare var _assign: any;
+declare var _findIndex: any;
 declare module Manifesto {
     class IIIFResource extends ManifestResource implements IIIIFResource {
         index: number;

@@ -51,6 +51,7 @@
     "http-status-codes": "git://github.com/edsilv/http-status-codes.git",
     "lodash.assign": "^3.2.0",
     "lodash.endswith": "^3.0.2",
+    "lodash.findindex": "^4.3.0",
     "lodash.isarray": "^3.0.4",
     "lodash.isdate": "^3.0.1",
     "lodash.isnumber": "^3.0.1",
