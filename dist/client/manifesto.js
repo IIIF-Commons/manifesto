@@ -922,9 +922,16 @@ var Manifesto;
                         that = _assign(that, parsed);
                         // if this is in a collection, find the index of this item and assign it
                         if (that.parentCollection) {
-                            that.index = _findIndex(that.parentCollection.collections, function (r) {
-                                return r.id === that.id;
-                            });
+                            if (that.parentCollection.collections && that.parentCollection.collections.length) {
+                                that.index = _findIndex(that.parentCollection.collections, function (r) {
+                                    return r.id === that.id;
+                                });
+                            }
+                            else {
+                                that.index = _findIndex(that.parentCollection.manifests, function (r) {
+                                    return r.id === that.id;
+                                });
+                            }
                         }
                         resolve(that);
                     });

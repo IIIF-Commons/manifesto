@@ -6,7 +6,7 @@ var should = require('chai').should();
 var manifests = require('./fixtures/manifests');
 require('./shared');
 
-var collection, manifest, firstCollection, secondCollection;
+var collection, manifest, firstCollection, secondCollection, secondManifest;
 
 describe('#loadsChemistDruggist', function() {
     it('loads successfully', function (done) {
@@ -92,6 +92,16 @@ describe('#secondCollectionHasCorrectIndex', function() {
         collection.getCollectionByIndex(1).then(function(data) {
             secondCollection = data;
             secondCollection.index.should.equal(1);
+            done();
+        });
+    })
+});
+
+describe('#secondCollectionManifestHasCorrectIndex', function() {
+    it('has a second manifest with a correct index', function(done) {
+        secondCollection.getManifestByIndex(1).then(function(data) {
+            secondManifest = data;
+            secondManifest.index.should.equal(1);
             done();
         });
     })
