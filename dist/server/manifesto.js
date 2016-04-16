@@ -839,14 +839,13 @@ var Manifesto;
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
 var _assign = require("lodash.assign");
-var _findIndex = require("lodash.findindex");
 var Manifesto;
 (function (Manifesto) {
     var IIIFResource = (function (_super) {
         __extends(IIIFResource, _super);
         function IIIFResource(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.index = 0;
+            this.index = -1;
             this.isLoaded = false;
             var defaultOptions = {
                 defaultLabel: '-',
@@ -918,19 +917,7 @@ var Manifesto;
                         that.parentLabel = that.getLabel();
                         var parsed = Manifesto.Deserialiser.parse(data, options);
                         that = _assign(that, parsed);
-                        // if this is in a collection, find the index of this item and assign it
-                        if (that.parentCollection) {
-                            if (that.parentCollection.collections && that.parentCollection.collections.length) {
-                                that.index = _findIndex(that.parentCollection.collections, function (r) {
-                                    return r.id === that.id;
-                                });
-                            }
-                            else {
-                                that.index = _findIndex(that.parentCollection.manifests, function (r) {
-                                    return r.id === that.id;
-                                });
-                            }
-                        }
+                        that.index = options.index;
                         resolve(that);
                     });
                 }
@@ -1134,11 +1121,13 @@ var Manifesto;
         }
         Collection.prototype.getCollectionByIndex = function (collectionIndex) {
             var collection = this.collections[collectionIndex];
+            collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         };
         Collection.prototype.getManifestByIndex = function (manifestIndex) {
             var manifest = this.manifests[manifestIndex];
+            manifest.options.index = manifestIndex;
             return manifest.load();
         };
         Collection.prototype.getTotalCollections = function () {
@@ -1482,6 +1471,12 @@ var Manifesto;
         };
         Deserialiser.parseCollection = function (json, options) {
             var collection = new Manifesto.Collection(json, options);
+            if (options) {
+                collection.index = options.index || 0;
+            }
+            else {
+                collection.index = 0;
+            }
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
             return collection;
@@ -1490,15 +1485,18 @@ var Manifesto;
             var children = collection.__jsonld.collections;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
+                    if (options) {
+                        options.index = i;
+                    }
                     var child = this.parseCollection(children[i], options);
-                    child.index = i;
                     child.parentCollection = collection;
                     collection.collections.push(child);
                 }
             }
         };
         Deserialiser.parseManifest = function (json, options) {
-            return new Manifesto.Manifest(json, options);
+            var manifest = new Manifesto.Manifest(json, options);
+            return manifest;
         };
         Deserialiser.parseManifests = function (collection, options) {
             var children = collection.__jsonld.manifests;

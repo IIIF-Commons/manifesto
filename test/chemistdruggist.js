@@ -6,7 +6,7 @@ var should = require('chai').should();
 var manifests = require('./fixtures/manifests');
 require('./shared');
 
-var collection, manifest, firstCollection, secondCollection, secondManifest;
+var collection, manifest, firstCollection, secondCollection, secondManifest, thirdManifest;
 
 describe('#loadsChemistDruggist', function() {
     it('loads successfully', function (done) {
@@ -89,19 +89,30 @@ describe('#getTree', function() {
 
 describe('#secondCollectionHasCorrectIndex', function() {
     it('has a second collection with a correct index', function(done) {
-        collection.getCollectionByIndex(1).then(function(data) {
-            secondCollection = data;
-            secondCollection.index.should.equal(1);
+        collection.getCollectionByIndex(1).then(function(data) { // at this point collection 1 manifest parentCollections have the correct index
+            secondCollection = data; // at this point they are 0
+            expect(secondCollection.index).to.equal(1);
             done();
         });
     })
 });
 
-describe('#secondCollectionManifestHasCorrectIndex', function() {
+describe('#secondCollectionSecondManifestHasCorrectIndex', function() {
     it('has a second manifest with a correct index', function(done) {
         secondCollection.getManifestByIndex(1).then(function(data) {
             secondManifest = data;
-            secondManifest.index.should.equal(1);
+            expect(secondManifest.index).to.equal(1);
+            expect(secondManifest.parentCollection.index).to.equal(1);
+            done();
+        });
+    })
+});
+
+describe('#secondCollectionThirdManifestHasCorrectIndex', function() {
+    it('has a third manifest with a correct index', function(done) {
+        secondCollection.getManifestByIndex(2).then(function(data) {
+            thirdManifest = data;
+            expect(thirdManifest.index).to.equal(2);
             done();
         });
     })

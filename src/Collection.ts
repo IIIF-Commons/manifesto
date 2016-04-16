@@ -10,12 +10,14 @@ module Manifesto {
 
         getCollectionByIndex(collectionIndex: number): Promise<ICollection>  {
             var collection: ICollection = this.collections[collectionIndex];
+            collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         }
 
         getManifestByIndex(manifestIndex: number): Promise<IManifest> {
             var manifest: IManifest = this.manifests[manifestIndex];
+            manifest.options.index = manifestIndex;
             return manifest.load();
         }
 

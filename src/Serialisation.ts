@@ -36,6 +36,12 @@ module Manifesto {
         static parseCollection(json: any, options?: IManifestoOptions): ICollection {
             var collection: Collection = new Collection(json, options);
 
+            if (options){
+                collection.index = options.index || 0;
+            } else {
+                collection.index = 0;
+            }
+
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
 
@@ -46,8 +52,10 @@ module Manifesto {
             var children = collection.__jsonld.collections;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
+                    if (options){
+                        options.index = i;
+                    }
                     var child: ICollection = this.parseCollection(children[i], options);
-                    child.index = i;
                     child.parentCollection = collection;
                     collection.collections.push(child);
                 }
@@ -55,7 +63,8 @@ module Manifesto {
         }
 
         static parseManifest(json: any, options?: IManifestoOptions): IManifest {
-            return new Manifest(json, options);
+            var manifest: IManifest = new Manifest(json, options);
+            return manifest;
         }
 
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void {
