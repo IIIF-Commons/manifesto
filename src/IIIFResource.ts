@@ -31,7 +31,7 @@ module Manifesto {
                 id = treeNode.parentNode.id + "/" + index;
             }
 
-            treeNode.id = id.hashCode();
+            treeNode.id = id; //.hashCode();
 
             for (var i = 0; i < treeNode.nodes.length; i++){
                 var n: ITreeNode = treeNode.nodes[i];
