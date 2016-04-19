@@ -28,7 +28,7 @@ module Manifesto {
             if (!treeNode.parentNode){
                 id = '0';
             } else {
-                id = treeNode.parentNode.id + "/" + index;
+                id = treeNode.parentNode.id + "-" + index;
             }
 
             treeNode.id = id; //.hashCode();
