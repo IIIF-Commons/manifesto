@@ -866,7 +866,7 @@ var Manifesto;
             else {
                 id = treeNode.parentNode.id + "/" + index;
             }
-            treeNode.id = id.hashCode();
+            treeNode.id = id; //.hashCode();
             for (var i = 0; i < treeNode.nodes.length; i++) {
                 var n = treeNode.nodes[i];
                 this.generateTreeNodeIds(n, i);
