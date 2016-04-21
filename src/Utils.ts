@@ -420,21 +420,24 @@ module Manifesto {
             return null;
         }
 
-        static getServiceByReference(resource: any, id: string): any {
+        static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource {
+            return [<IJSONLDResource>parentResource.__jsonld].en().traverseUnique(x => Utils.getAllArrays(x))
+                .first(r => r['@id'] === id);
+        }
 
-            var service: IService;
-            var services: IService[] = this.getServices(resource.options.resource);
+        static getAllArrays(obj: any): exjs.IEnumerable<any> {
+            var all = [].en();
 
-            for (var i = 0; i < services.length; i++){
-                var s = services[i];
+            if (!obj) return all;
 
-                if (s.id === id){
-                    service = new Service(s.__jsonld, resource.options);
-                    break;
+            for (var key in obj) {
+                var val = obj[key];
+                if (_isArray(val)) {
+                    all = all.concat(val)
                 }
             }
 
-            return service;
+            return all;
         }
 
         static getServices(resource: any): IService[] {
@@ -459,8 +462,12 @@ module Manifesto {
             for (var i = 0; i < service.length; i++){
                 var s: any = service[i];
 
-                if (_isString(s) && resource !== resource.options.resource){
-                    services.push(this.getServiceByReference(resource, s));
+                if (_isString(s)){
+                    var r: IJSONLDResource = this.getResourceById(resource.options.resource, s);
+
+                    if (r){
+                        services.push(new Service(r.__jsonld || r, resource.options));
+                    }
                 } else {
                     services.push(new Service(s, resource.options));
                 }
