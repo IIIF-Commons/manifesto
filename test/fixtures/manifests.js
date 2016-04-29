@@ -1,6 +1,7 @@
 module.exports = {
     "aarau": "http://localhost:3000/aarau.json",
     "anzacbulletin": "http://localhost:3000/anzacbulletin.json",
+    "audio": "http://localhost:3000/audio.json",
     "biocrats": "http://localhost:3000/biocrats.json",
     "cardiganshire": "http://localhost:3000/cardiganshire.json",
     "chemistdruggist": "http://localhost:3000/chemistdruggist.json",
