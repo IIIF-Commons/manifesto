@@ -28,14 +28,50 @@ module Manifesto {
             return metadata;
         }
 
-        // todo: once UV download menu uses manifesto parsed objects, this can be moved back from Utils
         getRendering(format: RenderingFormat | string): IRendering {
-            return Utils.getRendering(this, format);
+            var renderings: IRendering[] = this.getRenderings();
+
+            // normalise format to string
+            if (typeof format !== 'string'){
+                format = (<RenderingFormat>format).toString();
+            }
+
+            for (var i = 0; i < renderings.length; i++){
+                var rendering: IRendering = renderings[i];
+
+                if (rendering.getFormat().toString() === format) {
+                    return rendering;
+                }
+            }
+
+            return null;
         }
 
-        // todo: once UV download menu uses manifesto parsed objects, this can be moved back from Utils
         getRenderings(): IRendering[] {
-            return Utils.getRenderings(this);
+            var rendering;
+
+            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (this.__jsonld){
+                rendering = this.__jsonld.rendering;
+            } else {
+                rendering = (<any>this).rendering;
+            }
+
+            var renderings: IRendering[] = [];
+            if (!rendering) return renderings;
+
+            // coerce to array
+            if (!_isArray(rendering)){
+                rendering = [rendering];
+            }
+
+            for (var i = 0; i < rendering.length; i++){
+                var r: any = rendering[i];
+                renderings.push(new Rendering(r, this.options));
+            }
+
+            return renderings;
         }
 
         getService(profile: ServiceProfile | string): IService {

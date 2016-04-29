@@ -1,6 +1,6 @@
 {
   "name": "manifesto",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "homepage": "https://github.com/edsilv/manifesto",
   "authors": [
     "edsilv <e.silverton@gmail.com>"
@@ -27,7 +27,7 @@
   "dependencies": {},
   "devDependencies": {
     "exjs": "~0.3.0",
-    "extensions": "edsilv/extensions#~0.1.8",
-    "http-status-codes": "edsilv/http-status-codes#~0.0.2"
+    "extensions": "edsilv/extensions",
+    "http-status-codes": "edsilv/http-status-codes"
   }
 }

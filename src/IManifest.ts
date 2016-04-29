@@ -8,6 +8,7 @@ module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         getManifestType(): ManifestType;
+        getViewingDirection(): Manifesto.ViewingDirection;
         isMultiSequence(): boolean;
         rootRange: IRange;
     }

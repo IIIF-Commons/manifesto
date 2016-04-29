@@ -252,6 +252,7 @@ declare module Manifesto {
         private _parseTreeNode(node, range);
         getManifestType(): ManifestType;
         isMultiSequence(): boolean;
+        getViewingDirection(): ViewingDirection;
     }
 }
 declare module Manifesto {
@@ -383,8 +384,6 @@ declare module Manifesto {
         static loadExternalResource(resource: IExternalResource, clickThrough: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource>;
         static loadExternalResources(resources: IExternalResource[], clickThrough: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource[]>;
         static authorize(resource: IExternalResource, clickThrough: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken) => Promise<void>, getStoredAccessToken: (resource: IExternalResource) => Promise<IAccessToken>): Promise<IExternalResource>;
-        static getRendering(resource: any, format: RenderingFormat | string): IRendering;
-        static getRenderings(resource: any): IRendering[];
         static getService(resource: any, profile: ServiceProfile | string): IService;
         static getServiceByReference(resource: any, id: string): any;
         static getServices(resource: any): IService[];
@@ -490,6 +489,7 @@ declare module Manifesto {
         getTotalSequences(): number;
         getTree(): TreeNode;
         getManifestType(): ManifestType;
+        getViewingDirection(): Manifesto.ViewingDirection;
         isMultiSequence(): boolean;
         rootRange: IRange;
     }

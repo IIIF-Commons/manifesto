@@ -13,11 +13,20 @@ Alternatively, use bower:
 Getting Started
 --
 
-Documentation
+###Documentation
 
 http://universalviewer.io/manifesto-docs/
 
 
-Tutorial
+###Tutorial
 
 http://blog.edsilv.com/manifesto/
+
+
+###Developer Setup
+
+    git clone https://github.com/UniversalViewer/manifesto.git
+    npm install
+    bower install
+    gulp
+    gulp test
