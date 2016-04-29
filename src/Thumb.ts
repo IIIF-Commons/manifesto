@@ -18,6 +18,8 @@ module Manifesto {
 
             if (heightRatio) {
                 this.height = Math.floor(this.width * heightRatio);
+            } else {
+                this.height = width;
             }
 
             this.uri = canvas.getCanonicalImageUri(width);
