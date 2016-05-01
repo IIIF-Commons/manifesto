@@ -1,0 +1,13 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@id": "http://digital.library.villanova.edu/Collection/vudl:24093/IIIF",
+    "@type": "sc:Collection",
+    "label": "Dime Novel and Popular Literature",
+    "collections": [
+        {
+            "label": "Covers and Illustrations",
+            "@id": "http://localhost:3000/nested-bottom.json",
+            "@type": "sc:Collection"
+        }
+    ]
+}
