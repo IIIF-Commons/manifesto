@@ -21,7 +21,9 @@ module.exports = {
     "tankeryshouse": "http://localhost:3000/tankeryshouse.json",
     "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
     "witnesstopeter": "http://localhost:3000/witnesstopeter.json",
-    "wunder": "http://localhost:3000/wunder.json"
+    "wunder": "http://localhost:3000/wunder.json",
+    "query-bodleian": "http://iiif.bodleian.ox.ac.uk/iiif/manifestloader?manifest=http://iiif.bodleian.ox.ac.uk/iiif/manifest/f22e9dae-c070-48eb-be0b-aa6c5bc195a6.json",
+    "query-gams": "http://gams.uni-graz.at/cocoon/mets2json?source=http%3A%2F%2Fgams.uni-graz.at%2Farchive%2Fget%2Fo%3Asrbas.1535%2FMETS_SOURCE"
 };
 
 //BBoM: http://wellcomelibrary.org/iiif/b18031511/manifest
