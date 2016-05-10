@@ -1681,7 +1681,7 @@ var Manifesto;
                 var request = http.request({
                     host: u.hostname,
                     port: u.port,
-                    path: u.pathname,
+                    path: u.path,
                     method: "GET",
                     withCredentials: false
                 }, function (response) {
