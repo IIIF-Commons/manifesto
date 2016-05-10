@@ -1,0 +1,122 @@
+{
+    "@context": [
+        "http://iiif.io/api/presentation/2/context.json",
+        "http://wellcomelibrary.org/ixif/0/context.json"
+    ],
+    "@type": "sc:Manifest",
+    "@id": "http://digital.library.villanova.edu/Item/vudl:289359/Manifest",
+    "label": "Edward T. LeBlanc Interview: Cassette 10",
+    "metadata": [
+        {
+            "label": "Full Title",
+            "value": "<span>Edward T. LeBlanc Interview: Cassette 10</span>"
+        },
+        {
+            "label": "Date Added",
+            "value": "<span>9 January 2014</span>"
+        },
+        {
+            "label": "About",
+            "value": "<span><a href=\"http://digital.library.villanova.edu/Record/vudl:289359\">More Details</a><br /><a href=\"http://digital.library.villanova.edu/Item/vudl:289359\">Permanent Link</a></span>"
+        }
+    ],
+    "description": "",
+    "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+    "attribution": "Digital Library@Villanova University",
+    "mediaSequences": [
+        {
+            "@type": "ixif:MediaSequence",
+            "label": "Contents",
+            "rendering": [
+
+            ],
+            "elements": [
+                {
+                    "@id": "http://digital.library.villanova.edu/files/vudl:289361/MP3#element",
+                    "format": "audio/mp3",
+                    "@type": "dctypes:Sound",
+                    "label": "Side A",
+                    "rendering": [
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289361/MASTER",
+                            "format": "audio/x-flac",
+                            "label": "Original source file - 538.64 MB"
+                        },
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289361/MP3",
+                            "format": "audio/mp3",
+                            "label": "MP3 Audio"
+                        },
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289361/OGG",
+                            "format": "audio/ogg",
+                            "label": "OGG Audio"
+                        },
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289361/MASTER-MD",
+                            "format": "application/xml",
+                            "label": "Technical Metadata"
+                        }
+                    ],
+                    "thumbnail": "http://digital.library.villanova.edu/themes/vudiglib3/images/vudl/audio.png"
+                },
+                {
+                    "@id": "http://digital.library.villanova.edu/files/vudl:289362/MP3#element",
+                    "format": "audio/mp3",
+                    "@type": "dctypes:Sound",
+                    "label": "Side B",
+                    "rendering": [
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289362/MASTER",
+                            "format": "audio/x-flac",
+                            "label": "Original source file - 473.00 MB"
+                        },
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289362/MP3",
+                            "format": "audio/mp3",
+                            "label": "MP3 Audio"
+                        },
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289362/OGG",
+                            "format": "audio/ogg",
+                            "label": "OGG Audio"
+                        },
+                        {
+                            "@id": "http://digital.library.villanova.edu/files/vudl:289362/MASTER-MD",
+                            "format": "application/xml",
+                            "label": "Technical Metadata"
+                        }
+                    ],
+                    "thumbnail": "http://digital.library.villanova.edu/themes/vudiglib3/images/vudl/audio.png"
+                }
+            ]
+        }
+    ],
+    "sequences": {
+        "@type": "sc:Sequence",
+        "label": "Unsupported extension. This manifest is being used as a wrapper for non-IIIF content (e.g., audio, video) and is unfortunately incompatible with IIIF viewers.",
+        "compatibilityHint": "displayIfContentUnsupported",
+        "canvases": [
+            {
+                "@type": "sc:Canvas",
+                "@id": "http://digital.library.villanova.edu/Item/vudl:289359/Canvas/Placeholder",
+                "label": "Placeholder image",
+                "height": 600,
+                "width": 600,
+                "images": [
+                    {
+                        "@type": "oa:Annotation",
+                        "motivation": "sc:painting",
+                        "resource": {
+                            "@id": "http://digital.library.villanova.edu/placeholder.jpg",
+                            "@type": "dcTypes:Image",
+                            "height": 600,
+                            "width": 600
+                        },
+                        "on": "http://digital.library.villanova.edu/Item/vudl:289359/Canvas/Placeholder"
+                    }
+                ]
+            }
+        ]
+    }
+}

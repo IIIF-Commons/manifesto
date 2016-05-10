@@ -1,0 +1,13 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@id": "http://digital.library.villanova.edu/Collection/vudl:3/IIIF",
+    "@type": "sc:Collection",
+    "label": "Villanova Digital Library",
+    "collections": [
+        {
+            "label": "Dime Novel and Popular Literature",
+            "@id": "http://localhost:3000/nested-middle.json",
+            "@type": "sc:Collection"
+        }
+    ]
+}

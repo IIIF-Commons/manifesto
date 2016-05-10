@@ -49,7 +49,8 @@ module Manifesto {
                     id = service.id;
                     quality = Utils.getImageQuality(service.getProfile());
                 } else {
-                    return null;
+                    return "undefined" == typeof this.__jsonld.thumbnail
+                        ? null : this.__jsonld.thumbnail;
                 }
             }
 

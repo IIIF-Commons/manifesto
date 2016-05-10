@@ -1,12 +1,16 @@
 module.exports = {
     "aarau": "http://localhost:3000/aarau.json",
     "anzacbulletin": "http://localhost:3000/anzacbulletin.json",
+    "audio": "http://localhost:3000/audio.json",
     "biocrats": "http://localhost:3000/biocrats.json",
     "cardiganshire": "http://localhost:3000/cardiganshire.json",
     "chemistdruggist": "http://localhost:3000/chemistdruggist.json",
     "correspondance": "http://localhost:3000/correspondance.json",
     "horriblemurders": "http://localhost:3000/horriblemurders.json",
     "illustrationsofchina": "http://localhost:3000/illustrationsofchina.json",
+    "nested-bottom": "http://localhost:3000/nested-bottom.json",
+    "nested-middle": "http://localhost:3000/nested-middle.json",
+    "nested-top": "http://localhost:3000/nested-top.json",
     "plato": "http://localhost:3000/plato.json",
     "potterselectric": "http://localhost:3000/potterselectric.json",
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
@@ -17,7 +21,9 @@ module.exports = {
     "tankeryshouse": "http://localhost:3000/tankeryshouse.json",
     "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
     "witnesstopeter": "http://localhost:3000/witnesstopeter.json",
-    "wunder": "http://localhost:3000/wunder.json"
+    "wunder": "http://localhost:3000/wunder.json",
+    "query-bodleian": "http://iiif.bodleian.ox.ac.uk/iiif/manifestloader?manifest=http://iiif.bodleian.ox.ac.uk/iiif/manifest/f22e9dae-c070-48eb-be0b-aa6c5bc195a6.json",
+    "query-gams": "http://gams.uni-graz.at/cocoon/mets2json?source=http%3A%2F%2Fgams.uni-graz.at%2Farchive%2Fget%2Fo%3Asrbas.1535%2FMETS_SOURCE"
 };
 
 //BBoM: http://wellcomelibrary.org/iiif/b18031511/manifest
