@@ -18,12 +18,12 @@ describe('#loadsGams', function() {
     });
 });
 
-describe('#loadsBodleian', function() {
-    it('loads successfully', function (done) {
-        manifesto.loadManifest(manifests['query-bodleian']).then(function(data) {
-            manifest = manifesto.create(data);
-            done();
-        });
-    });
-});
+//describe('#loadsBodleian', function() {
+//    it('loads successfully', function (done) {
+//        manifesto.loadManifest(manifests['query-bodleian']).then(function(data) {
+//            manifest = manifesto.create(data);
+//            done();
+//        });
+//    });
+//});
 
