@@ -6,7 +6,13 @@ module Manifesto {
         }
 
         getMotivation(): AnnotationMotivation {
-            return new AnnotationMotivation(this.getProperty('motivation').toLowerCase());
+            var motivation: string = this.getProperty('motivation');
+
+            if (motivation){
+                return new AnnotationMotivation(motivation.toLowerCase());
+            }
+
+            return null;
         }
 
         getOn(): string {

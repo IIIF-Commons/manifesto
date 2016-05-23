@@ -6,11 +6,23 @@ module Manifesto {
         }
 
         getFormat(): ResourceFormat {
-            return new ResourceFormat(this.getProperty('format').toLowerCase());
+            var format: string = this.getProperty('format');
+
+            if (format){
+                return new ResourceFormat(format.toLowerCase());
+            }
+
+            return null;
         }
 
         getType(): ResourceType {
-            return new ResourceType(this.getProperty('@type').toLowerCase());
+            var type: string = this.getProperty('@type');
+
+            if (type){
+                return new ResourceType(type.toLowerCase());
+            }
+
+            return null;
         }
 
         getWidth(): number {

@@ -2128,7 +2128,11 @@ var Manifesto;
             _super.call(this, jsonld, options);
         }
         Annotation.prototype.getMotivation = function () {
-            return new Manifesto.AnnotationMotivation(this.getProperty('motivation').toLowerCase());
+            var motivation = this.getProperty('motivation');
+            if (motivation) {
+                return new Manifesto.AnnotationMotivation(motivation.toLowerCase());
+            }
+            return null;
         };
         Annotation.prototype.getOn = function () {
             return this.getProperty('on');
@@ -2148,10 +2152,18 @@ var Manifesto;
             _super.call(this, jsonld, options);
         }
         Resource.prototype.getFormat = function () {
-            return new Manifesto.ResourceFormat(this.getProperty('format').toLowerCase());
+            var format = this.getProperty('format');
+            if (format) {
+                return new Manifesto.ResourceFormat(format.toLowerCase());
+            }
+            return null;
         };
         Resource.prototype.getType = function () {
-            return new Manifesto.ResourceType(this.getProperty('@type').toLowerCase());
+            var type = this.getProperty('@type');
+            if (type) {
+                return new Manifesto.ResourceType(type.toLowerCase());
+            }
+            return null;
         };
         Resource.prototype.getWidth = function () {
             return this.getProperty('width');
