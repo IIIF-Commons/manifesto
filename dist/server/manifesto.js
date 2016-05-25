@@ -231,6 +231,7 @@ var Manifesto;
     })();
     Manifesto.StringValue = StringValue;
 })(Manifesto || (Manifesto = {}));
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -304,6 +305,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.AnnotationMotivation = AnnotationMotivation;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ElementType = (function (_super) {
@@ -340,6 +347,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ElementType = ElementType;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var IIIFResourceType = (function (_super) {
@@ -360,6 +373,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.IIIFResourceType = IIIFResourceType;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ManifestType = (function (_super) {
@@ -384,6 +403,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ManifestType = ManifestType;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var RenderingFormat = (function (_super) {
@@ -408,6 +433,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.RenderingFormat = RenderingFormat;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ResourceFormat = (function (_super) {
@@ -428,6 +459,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ResourceFormat = ResourceFormat;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ResourceType = (function (_super) {
@@ -444,6 +481,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ResourceType = ResourceType;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ServiceProfile = (function (_super) {
@@ -560,6 +603,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ServiceProfile = ServiceProfile;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ViewingDirection = (function (_super) {
@@ -588,6 +637,12 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ViewingDirection = ViewingDirection;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ViewingHint = (function (_super) {
@@ -624,6 +679,7 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.ViewingHint = ViewingHint;
 })(Manifesto || (Manifesto = {}));
+
 var Manifesto;
 (function (Manifesto) {
     var JSONLDResource = (function () {
@@ -639,6 +695,12 @@ var Manifesto;
     })();
     Manifesto.JSONLDResource = JSONLDResource;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var ManifestResource = (function (_super) {
@@ -709,6 +771,12 @@ var Manifesto;
     })(Manifesto.JSONLDResource);
     Manifesto.ManifestResource = ManifestResource;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var Element = (function (_super) {
@@ -734,6 +802,12 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Element = Element;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var _endsWith = require("lodash.endswith");
 var _last = require("lodash.last");
 var Manifesto;
@@ -839,6 +913,12 @@ var Manifesto;
     })(Manifesto.Element);
     Manifesto.Canvas = Canvas;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var _assign = require("lodash.assign");
 var Manifesto;
 (function (Manifesto) {
@@ -928,6 +1008,12 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.IIIFResource = IIIFResource;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var _isArray = require("lodash.isarray");
 var _map = require("lodash.map");
 var Manifesto;
@@ -1110,6 +1196,12 @@ var Manifesto;
     })(Manifesto.IIIFResource);
     Manifesto.Manifest = Manifest;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var Collection = (function (_super) {
@@ -1176,6 +1268,12 @@ var Manifesto;
     })(Manifesto.IIIFResource);
     Manifesto.Collection = Collection;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var Range = (function (_super) {
@@ -1206,6 +1304,12 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Range = Range;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var Rendering = (function (_super) {
@@ -1220,6 +1324,12 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Rendering = Rendering;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var _last = require("lodash.last");
 var Manifesto;
 (function (Manifesto) {
@@ -1438,6 +1548,7 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Sequence = Sequence;
 })(Manifesto || (Manifesto = {}));
+
 var _isString = require("lodash.isstring");
 var Manifesto;
 (function (Manifesto) {
@@ -1524,6 +1635,12 @@ var Manifesto;
     })();
     Manifesto.Serialiser = Serialiser;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var _endsWith = require("lodash.endswith");
 var _isArray = require("lodash.isarray");
 var Manifesto;
@@ -1558,6 +1675,9 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Service = Service;
 })(Manifesto || (Manifesto = {}));
+
+
+
 var Manifesto;
 (function (Manifesto) {
     var Thumb = (function () {
@@ -1579,6 +1699,9 @@ var Manifesto;
     })();
     Manifesto.Thumb = Thumb;
 })(Manifesto || (Manifesto = {}));
+
+
+
 var Manifesto;
 (function (Manifesto) {
     var TreeNode = (function () {
@@ -1604,6 +1727,12 @@ var Manifesto;
     })();
     Manifesto.TreeNode = TreeNode;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var TreeNodeType = (function (_super) {
@@ -1628,6 +1757,7 @@ var Manifesto;
     })(Manifesto.StringValue);
     Manifesto.TreeNodeType = TreeNodeType;
 })(Manifesto || (Manifesto = {}));
+
 var http = require("http");
 var url = require("url");
 var Manifesto;
@@ -1985,6 +2115,7 @@ var Manifesto;
     })();
     Manifesto.Utils = Utils;
 })(Manifesto || (Manifesto = {}));
+
 global.manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     ElementType: new Manifesto.ElementType(),
@@ -2090,6 +2221,7 @@ global.manifesto = module.exports = {
         return Manifesto.Utils.loadResource(uri);
     }
 };
+
 /// <reference path="./StringValue.ts" />
 /// <reference path="./AnnotationMotivation.ts" />
 /// <reference path="./ElementType.ts" />
@@ -2120,6 +2252,12 @@ global.manifesto = module.exports = {
 /// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
 /// <reference path="./Manifesto.ts" /> 
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var Annotation = (function (_super) {
@@ -2144,6 +2282,48 @@ var Manifesto;
     })(Manifesto.ManifestResource);
     Manifesto.Annotation = Annotation;
 })(Manifesto || (Manifesto = {}));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Manifesto;
 (function (Manifesto) {
     var Resource = (function (_super) {

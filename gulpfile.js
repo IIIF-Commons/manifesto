@@ -1,29 +1,27 @@
-var browserify = require('gulp-browserify');
-var buffer = require('vinyl-buffer');
+var browserify = require('browserify');
 var bump = require('gulp-bump');
 var concat = require('gulp-concat');
-var Config = require('./gulpfile.config');
+var c = require('./gulpfile.config');
+var config = new c();
 var del = require('del');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var http = require('http');
+var insert = require('gulp-insert');
 var istanbul = require('gulp-istanbul');
 var merge = require('merge2');
 var mocha = require('gulp-mocha');
 var rename = require('gulp-rename');
 var requireDir = require('require-dir');
 var runSequence = require('run-sequence');
-var source = require('vinyl-source-stream');
 var tag = require('gulp-tag-version');
 var tasks = requireDir('./tasks');
+var through = require('through2');
 var ts = require('gulp-typescript');
 var typedoc = require("gulp-typedoc");
 var uglify = require('gulp-uglify');
 
-var config = new Config();
-
 gulp.task('test', function () {
-    return gulp.src(config.server + config.lib)
+    return gulp.src(config.server + config.name)
         .pipe(istanbul())
         .pipe(istanbul.hookRequire())
         .on('finish', function() {
@@ -33,84 +31,85 @@ gulp.task('test', function () {
         });
 });
 
-gulp.task('compressClient', function() {
-    return gulp.src(config.client + config.lib)
-        .pipe(uglify())
-        .pipe(gulp.dest(config.client));
+gulp.task('minify', function(cb){
+    return Promise.all([
+        minify(config.client + config.jsOut, config.client),
+        minify(config.server + config.jsOut, config.server)
+    ]);
 });
 
-gulp.task('compressServer', function() {
-    return gulp.src(config.server + config.lib)
-        .pipe(uglify())
-        .pipe(gulp.dest(config.server));
-});
+function minify(file, dest) {
+    return gulp.src(file)
+            .pipe(rename(function(path) {
+                path.extname = ".min" + path.extname;
+            }))
+            .pipe(uglify({
+                mangle: false
+            }))
+            .pipe(insert.prepend(config.header))
+            .pipe(gulp.dest(dest));
+}
 
-gulp.task('clean', function (cb) {
-    del([
-        config.dist + '/*'
-    ], cb);
+gulp.task('clean:dist', function (cb) {
+    return del(config.dist + '/*', cb);
 });
 
 gulp.task('build', function() {
 
-    var tsResult = gulp.src(config.tsSrc)
+    var result = gulp.src(config.tsSrc)
         .pipe(ts({
             declarationFiles: true,
             noExternalResolve: true,
             noLib: false,
             module: 'commonjs',
-            out: config.tsOut,
-            target: config.tsTarget
+            target: 'es3'
         }));
-
+    
     return merge([
-        tsResult.dts.pipe(gulp.dest(config.dist)),
-        tsResult.js.pipe(gulp.dest(config.server))
+        result.dts
+            .pipe(concat(config.dtsOut))
+            .pipe(gulp.dest(config.dist)),
+        result.js
+            .pipe(concat(config.jsOut))
+            .pipe(gulp.dest(config.server))
     ]);
 });
 
-gulp.task('browserify', function () {
-    return gulp.src(config.browserifySrc)
-        .pipe(browserify({
-            standalone: config.browserifyStandalone
-        }))
-        .pipe(rename(config.browserifyOut))
+function bundle(debug) {
+
+  return through.obj(function(file, encoding, cb) {
+    var bundle = browserify({
+            standalone: config.name,
+            debug: debug
+        })
+      .require(file, { entry: file.path })
+      .bundle();
+
+    file.contents = bundle;
+    this.push(file);
+    cb();
+  })
+}
+
+gulp.task('browserify', function(cb) {
+    return gulp.src(config.jsOut, { cwd: config.server })
+        .pipe(bundle(false))
+        .pipe(rename(config.jsOut))
         .pipe(gulp.dest(config.client));
 });
 
-// todo: gulp-browserify is no longer supported. Use browserify directly.
-//gulp.task('browserify', function () {
-//
-//    var b = browserify({
-//        entries: config.browserifySrc,
-//        debug: true
-//    });
-//
-//    return b.bundle()
-//        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-//        .pipe(source(config.browserifyOut))
-//        .pipe(buffer())
-//        //.pipe(sourcemaps.init({loadMaps: true}))
-//        // Add transformation tasks to the pipeline here.
-//        //.pipe(uglify())
-//        //.on('error', gutil.log)
-//        //.pipe(sourcemaps.write('./'))
-//        //.pipe(rename(config.browserifyOut))
-//        .pipe(gulp.dest(config.client));
-//});
-
-gulp.task('tag', function(){
-    return gulp.src('./package.json')
-        .pipe(tag());
-});
+// gulp.task('tag', function(){
+//     return gulp.src('./package.json')
+//         .pipe(tag());
+// });
 
 gulp.task('concat', function() {
-    var client = config.client + '/' + config.lib;
-    var server = config.server + '/' + config.lib;
+    var client = config.client + '/' + config.jsOut;
+    var server = config.server + '/' + config.jsOut;
     var exjs = './bower_components/exjs/dist/ex.es3.min.js';
     var extensions = './bower_components/extensions/dist/extensions.js'; // todo: is the whole lib needed?
-    gulp.src([exjs, extensions, client]).pipe(concat(config.lib)).pipe(gulp.dest(config.client));
-    gulp.src([exjs, extensions, server]).pipe(concat(config.lib)).pipe(gulp.dest(config.server));
+    gulp.src([exjs, extensions, client]).pipe(concat(config.jsOut)).pipe(gulp.dest(config.client));
+    gulp.src([exjs, extensions, server]).pipe(concat(config.jsOut)).pipe(gulp.dest(config.server));
 });
 
 gulp.task("documentation", function() {
@@ -127,7 +126,7 @@ gulp.task("documentation", function() {
             json: "./docs/docs.json",
 
             // TypeDoc options (see typedoc docs)
-            name: "manifesto",
+            name: config.name,
             theme: "default",
             ignoreCompilerErrors: false,
             version: true
@@ -135,5 +134,5 @@ gulp.task("documentation", function() {
 });
 
 gulp.task('default', function(cb) {
-    runSequence('clean', 'build', 'browserify', 'concat', cb);
+    runSequence('clean:dist', 'build', 'browserify', 'concat', 'minify', cb);
 });
