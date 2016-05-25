@@ -1,3 +1,4 @@
+// manifesto.js v0.1.25 https://github.com/universalviewer/manifesto
 declare module Manifesto {
     class StringValue {
         value: string;
