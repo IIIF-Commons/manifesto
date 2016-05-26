@@ -7,7 +7,7 @@ var rename = require('gulp-rename');
 var requireDir = require('require-dir');
 var runSequence = require('run-sequence');
 var tasks = requireDir('./tasks');
-var utils = require('./tasks/utils');
+var utils = require('gulp-utils');
 
 gulp.task('browserify', function(cb) {
     return gulp.src(config.jsOut, {cwd: config.browserifySrc})
