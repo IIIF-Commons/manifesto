@@ -15,6 +15,19 @@ var GulpConfig = (function () {
             'src/*.ts',
             'typings/*.ts',
             '!test'];
+        this.tsConfig = {
+            declarationFiles: true,
+            noExternalResolve: true,
+            noLib: false,
+            module: 'commonjs',
+            target: 'es3'
+        };
+        this.browserifyConfig = {
+            standalone: this.name,
+            debug: false
+        };
+        this.browserifySrc = this.server;
+        this.browserifyTarget = this.client;
         this.test = 'test/*.js';
     }
     return GulpConfig;

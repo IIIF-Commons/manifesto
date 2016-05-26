@@ -1,7 +1,7 @@
-var argv = require('yargs').argv,
-    bump = require('gulp-bump'),
-    exec = require('child_process').exec,
-    gulp = require('gulp');
+var argv = require('yargs').argv;
+var bump = require('gulp-bump');
+var exec = require('child_process').exec;
+var gulp = require('gulp');
 
 gulp.task('bump', function(){
     var bumpType = argv.type || 'patch'; // major.minor.patch
@@ -9,8 +9,8 @@ gulp.task('bump', function(){
     return gulp.src(['./bower.json', './package.json'])
         .pipe(bump({type: bumpType}))
         .pipe(gulp.dest('./'));
-        //.pipe(filter('package.json'))
-        //.pipe(tag());
+    //.pipe(filter('package.json'))
+    //.pipe(tag());
 });
 
 // requires global gulp-cli
