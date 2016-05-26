@@ -9,13 +9,5 @@ function prependHeader(file, dest){
             .pipe(gulp.dest(dest));
 }
 
-gulp.task('prependHeaders', function(cb){
-    return Promise.all([
-        prependHeader(config.dist + '/' + config.dtsOut, config.dist),
-        prependHeader(config.client + '/' + config.jsOut, config.client),
-        prependHeader(config.client + '/' + config.name + '.min.js', config.client),
-        prependHeader(config.server + '/' + config.jsOut, config.server),
-        prependHeader(config.server + '/' + config.name + '.min.js', config.server)
-    ]);
-});
+
 
