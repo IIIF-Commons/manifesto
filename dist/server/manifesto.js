@@ -847,11 +847,13 @@ var Manifesto;
                     if (!width) {
                         width = resource.getWidth();
                     }
-                    var service = services[0];
-                    id = service.id;
-                    quality = Manifesto.Utils.getImageQuality(service.getProfile());
+                    if (services.length) {
+                        var service = services[0];
+                        id = service.id;
+                        quality = Manifesto.Utils.getImageQuality(service.getProfile());
+                    }
                 }
-                else {
+                if (!id) {
                     return "undefined" == typeof this.__jsonld.thumbnail
                         ? null : this.__jsonld.thumbnail;
                 }

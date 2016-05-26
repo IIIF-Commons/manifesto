@@ -44,11 +44,15 @@ module Manifesto {
                     if (!width){
                         width = resource.getWidth();
                     }
-
-                    var service: IService = services[0];
-                    id = service.id;
-                    quality = Utils.getImageQuality(service.getProfile());
-                } else {
+                    
+                    if (services.length){
+                        var service: IService = services[0];
+                        id = service.id;
+                        quality = Utils.getImageQuality(service.getProfile());
+                    }
+                }
+                
+                if (!id){
                     return "undefined" == typeof this.__jsonld.thumbnail
                         ? null : this.__jsonld.thumbnail;
                 }
