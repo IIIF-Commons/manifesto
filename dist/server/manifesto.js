@@ -2119,7 +2119,7 @@ var Manifesto;
     Manifesto.Utils = Utils;
 })(Manifesto || (Manifesto = {}));
 
-global.manifesto = module.exports = {
+global.manifesto = global.Manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     ElementType: new Manifesto.ElementType(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
