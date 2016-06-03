@@ -559,7 +559,6 @@ declare module Manifesto {
         getManifestByIndex(index: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        getTree(): ITreeNode;
         manifests: IManifest[];
     }
 }
@@ -619,14 +618,13 @@ declare module Manifesto {
 }
 
 declare module Manifesto {
-    interface IManifest extends IIIIFResource {
-        getRangeById(id: string): IRange;
+    interface IManifest extends Manifesto.IIIIFResource {
+        getRangeById(id: string): Manifesto.IRange;
         getRangeByPath(path: string): IRange;
         getRanges(): IRange[];
         getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
         getTotalSequences(): number;
-        getTree(): ITreeNode;
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): ViewingHint;
