@@ -13,12 +13,12 @@ var GulpConfig = (function () {
         this.header = '// ' + metadata.name + ' v' + metadata.version + ' ' + metadata.homepage + '\n';
         this.dtsOut = this.name + '.d.ts';
         this.dtsBundleOut = this.name + '.bundle.d.ts';
-        // libs that must be included in a consuming app for this component to work
+        // libs that MUST be included in a consuming app for this component to work
         this.deps = [
             'node_modules/exjs/dist/ex.es3.min.js',
             'node_modules/extensions/dist/extensions.min.js'
         ];
-        // libs used for testing purposes, but not needed in a consuming app
+        // libs that MAY be included in a consuming app but are used here for testing purposes
         this.testDeps = [
         ];
         this.testDepsDir = './test/js';
