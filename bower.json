@@ -25,9 +25,5 @@
     "typings"
   ],
   "dependencies": {},
-  "devDependencies": {
-    "exjs": "~0.3.0",
-    "extensions": "edsilv/extensions",
-    "http-status-codes": "edsilv/http-status-codes"
-  }
+  "devDependencies": {}
 }

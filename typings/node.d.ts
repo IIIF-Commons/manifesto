@@ -28,7 +28,7 @@ interface WeakSetConstructor {}
  *                                               *
  ************************************************/
 declare var process: NodeJS.Process;
-declare var global: NodeJS.Global;
+declare var global: any;
 
 declare var __filename: string;
 declare var __dirname: string;
