@@ -5,7 +5,7 @@ var gulp = require('gulp');
 var merge = require('merge2');
 var path = require('path');
 
-gulp.task('bundle:deps', function(cb) {
+gulp.task('bundle', function(cb) {
     var client = path.join(config.client, config.jsMinOut);
     var server = path.join(config.server, config.jsMinOut);
     
