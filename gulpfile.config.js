@@ -16,7 +16,8 @@ var GulpConfig = (function () {
         // libs that MUST be included in a consuming app for this component to work
         this.deps = [
             'node_modules/exjs/dist/ex.es3.min.js',
-            'node_modules/extensions/dist/extensions.min.js'
+            'node_modules/extensions/dist/extensions.min.js',
+            'node_modules/http-status-codes/dist/http-status-codes.js'
         ];
         // libs that MAY be included in a consuming app but are used here for testing purposes
         this.testDeps = [
