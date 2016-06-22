@@ -56,6 +56,7 @@ module Manifesto {
                         options.index = i;
                     }
                     var child: ICollection = this.parseCollection(children[i], options);
+                    child.index = i;
                     child.parentCollection = collection;
                     collection.collections.push(child);
                 }

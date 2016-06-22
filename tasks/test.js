@@ -3,9 +3,10 @@ var config = new c();
 var gulp = require('gulp');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
+var path = require('path');
 
 gulp.task('test', function () {
-    return gulp.src(config.server + config.name)
+    return gulp.src(path.join(config.server, config.name))
         .pipe(istanbul())
         .pipe(istanbul.hookRequire())
         .on('finish', function() {

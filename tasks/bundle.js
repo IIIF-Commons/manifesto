@@ -7,7 +7,7 @@ var path = require('path');
 
 gulp.task('bundle', function(cb) {
     var client = path.join(config.client, config.jsMinOut);
-    var server = path.join(config.server, config.jsMinOut);
+    var server = path.join(config.server, config.jsOut);
     
     return merge([
         gulp.src(config.deps.concat([client]))
@@ -18,6 +18,14 @@ gulp.task('bundle', function(cb) {
             .pipe(gulp.dest(config.server))
     ]);
 });
+
+// gulp.task('bundle:debug', function(cb) {
+//     var server = path.join(config.server, config.jsOut);
+    
+//     return gulp.src(config.deps.concat([server]))
+//             .pipe(concat(config.jsOut))
+//             .pipe(gulp.dest(config.jsDebugOut));
+// });
 
 gulp.task('bundle:typings', function(cb) {
     return gulp.src(config.typings.concat([
