@@ -17,6 +17,7 @@ module.exports = {
     "pseudoalbert": "http://localhost:3000/pseudoalbert.json",
     "qatarRightToLeft": "http://localhost:3000/qatar-right-to-left.json",
     "riksarkivetscblarge": "http://localhost:3000/riksarkivetscblarge.json",
+    "https": "https://iiif.riksarkivet.se/arkis!C0000263/manifest",
     "scroll": "http://localhost:3000/scroll.json",
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "tankeryshouse": "http://localhost:3000/tankeryshouse.json",

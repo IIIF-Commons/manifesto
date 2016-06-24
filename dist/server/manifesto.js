@@ -1611,6 +1611,7 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 
 var http = require("http");
+var https = require("https");
 var url = require("url");
 var Manifesto;
 (function (Manifesto) {
@@ -1662,21 +1663,44 @@ var Manifesto;
         Utils.loadResource = function (uri) {
             return new Promise(function (resolve, reject) {
                 var u = url.parse(uri);
-                var request = http.request({
+                // var opts = {
+                //     auth: u.protocol === 'https:' ? true : false,
+                //     host: u.hostname,
+                //     port: u.protocol === 'https:' ? 443 : u.port,
+                //     path: u.path,
+                //     method: "GET",
+                //     withCredentials: u.protocol === 'https:' ? true : false
+                // };
+                var request;
+                var opts = {
                     host: u.hostname,
                     port: u.port,
                     path: u.path,
                     method: "GET",
                     withCredentials: false
-                }, function (response) {
-                    var result = "";
-                    response.on('data', function (chunk) {
-                        result += chunk;
+                };
+                if (u.protocol === 'https:') {
+                    request = https.request(opts, function (response) {
+                        var result = "";
+                        response.on('data', function (chunk) {
+                            result += chunk;
+                        });
+                        response.on('end', function () {
+                            resolve(result);
+                        });
                     });
-                    response.on('end', function () {
-                        resolve(result);
+                }
+                else {
+                    request = http.request(opts, function (response) {
+                        var result = "";
+                        response.on('data', function (chunk) {
+                            result += chunk;
+                        });
+                        response.on('end', function () {
+                            resolve(result);
+                        });
                     });
-                });
+                }
                 request.on('error', function (error) {
                     reject(error);
                 });

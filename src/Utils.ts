@@ -1,4 +1,5 @@
 var http = require("http");
+var https = require("https");
 var url = require("url");
 
 declare var manifesto: IManifesto;
@@ -65,21 +66,46 @@ module Manifesto {
             return new Promise<any>((resolve, reject) => {
                 var u = url.parse(uri);
 
-                var request = http.request({
+                // var opts = {
+                //     auth: u.protocol === 'https:' ? true : false,
+                //     host: u.hostname,
+                //     port: u.protocol === 'https:' ? 443 : u.port,
+                //     path: u.path,
+                //     method: "GET",
+                //     withCredentials: u.protocol === 'https:' ? true : false
+                // };
+
+                var request: any;
+
+                var opts: any = {
                     host: u.hostname,
                     port: u.port,
                     path: u.path,
                     method: "GET",
                     withCredentials: false
-                }, (response) => {
-                    var result = "";
-                    response.on('data', (chunk) => {
-                        result += chunk;
+                };
+                
+                if (u.protocol === 'https:'){
+                    request = https.request(opts, (response) => {
+                        var result = "";
+                        response.on('data', (chunk) => {
+                            result += chunk;
+                        });
+                        response.on('end', () => {
+                            resolve(result);
+                        });
                     });
-                    response.on('end', () => {
-                        resolve(result);
+                } else {
+                    request = http.request(opts, (response) => {
+                        var result = "";
+                        response.on('data', (chunk) => {
+                            result += chunk;
+                        });
+                        response.on('end', () => {
+                            resolve(result);
+                        });
                     });
-                });
+                }              
 
                 request.on('error', (error) => {
                     reject(error);
