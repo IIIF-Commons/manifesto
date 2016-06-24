@@ -1611,7 +1611,7 @@ var Manifesto;
 })(Manifesto || (Manifesto = {}));
 
 var http = require("http");
-var https = require("https");
+//var https = require("https");
 var url = require("url");
 var Manifesto;
 (function (Manifesto) {
@@ -1679,28 +1679,27 @@ var Manifesto;
                     method: "GET",
                     withCredentials: false
                 };
-                if (u.protocol === 'https:') {
-                    request = https.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
+                // if (u.protocol === 'https:'){
+                //     request = https.request(opts, (response) => {
+                //         var result = "";
+                //         response.on('data', (chunk) => {
+                //             result += chunk;
+                //         });
+                //         response.on('end', () => {
+                //             resolve(result);
+                //         });
+                //     });
+                // } else {
+                request = http.request(opts, function (response) {
+                    var result = "";
+                    response.on('data', function (chunk) {
+                        result += chunk;
                     });
-                }
-                else {
-                    request = http.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
+                    response.on('end', function () {
+                        resolve(result);
                     });
-                }
+                });
+                //}              
                 request.on('error', function (error) {
                     reject(error);
                 });
