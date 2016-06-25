@@ -460,6 +460,7 @@ declare module Manifesto {
 }
 
 declare var http: any;
+declare var https: any;
 declare var url: any;
 declare var manifesto: IManifesto;
 declare module Manifesto {
