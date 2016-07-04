@@ -996,17 +996,21 @@ declare module Manifesto {
 declare module Manifesto {
     interface IExternalResource {
         clickThroughService: IService;
-        restrictedService: IService;
         data: any;
         dataUri: string;
         error: any;
+        getData(accessToken?: IAccessToken): Promise<IExternalResource>;
+        height: number;
+        isAccessControlled(): boolean;
         isResponseHandled: boolean;
         loginService: IService;
         logoutService: IService;
+        restrictedService: IService;
         status: number;
         tokenService: IService;
-        getData(accessToken?: IAccessToken): Promise<IExternalResource>;
-        isAccessControlled(): boolean;
+        width: number;
+        x: number;
+        y: number;
     }
 }
 

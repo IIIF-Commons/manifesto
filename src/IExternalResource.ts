@@ -1,18 +1,21 @@
 module Manifesto {
     export interface IExternalResource {
+        //profile: Manifesto.ServiceProfile;
         clickThroughService: IService;
-        restrictedService: IService;
         data: any;
         dataUri: string;
         error: any;
+        getData(accessToken?: IAccessToken): Promise<IExternalResource>;
+        height: number;
+        isAccessControlled(): boolean;
         isResponseHandled: boolean;
         loginService: IService;
         logoutService: IService;
-        //profile: Manifesto.ServiceProfile;
+        restrictedService: IService;
         status: number;
         tokenService: IService;
-
-        getData(accessToken?: IAccessToken): Promise<IExternalResource>;
-        isAccessControlled(): boolean;
+        width: number;
+        x: number;
+        y: number;
     }
 }
