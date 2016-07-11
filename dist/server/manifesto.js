@@ -825,6 +825,9 @@ var Manifesto;
         IIIFResource.prototype.getNavDate = function () {
             return new Date(this.getProperty('navDate'));
         };
+        IIIFResource.prototype.getRelated = function () {
+            return this.getProperty('related');
+        };
         IIIFResource.prototype.getSeeAlso = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         };

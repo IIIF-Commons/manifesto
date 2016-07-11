@@ -66,6 +66,10 @@ module Manifesto {
             return new Date(this.getProperty('navDate'));
         }
 
+        getRelated(): any {
+            return this.getProperty('related');
+        }
+
         getSeeAlso(): any {
             return Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
         }

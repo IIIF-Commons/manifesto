@@ -7,6 +7,7 @@ module Manifesto {
         getLicense(): string;
         getLogo(): string;
         getNavDate(): Date;
+        getRelated(): any;
         getSeeAlso(): any;
         getTree(): ITreeNode;
         index: number;

@@ -682,6 +682,7 @@ declare module Manifesto {
         getLogo(): string;
         getLicense(): string;
         getNavDate(): Date;
+        getRelated(): any;
         getSeeAlso(): any;
         getLabel(): string;
         getTree(): ITreeNode;
@@ -1023,6 +1024,7 @@ declare module Manifesto {
         getLicense(): string;
         getLogo(): string;
         getNavDate(): Date;
+        getRelated(): any;
         getSeeAlso(): any;
         getTree(): ITreeNode;
         index: number;
