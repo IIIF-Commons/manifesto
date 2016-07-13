@@ -87,9 +87,11 @@ module Manifesto {
             return this.getProperty('index');
         }
 
-        // todo: Prefer thumbnail service to image service if supplied and if
-        // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
-        // this is used to get thumb URIs for databinding *before* the info.json has been requested
+        // Prefer thumbnail service to image service if supplied and if
+        // the thumbnail service can provide a satisfactory size +/- x pixels.
+        // this is used to get thumb URIs *before* the info.json has been requested
+        // and populate thumbnails in a viewer.
+        // the publisher may also provide pre-computed fixed-size thumbs for better performance.
         //getThumbUri(width: number): string {
         //
         //    var uri;
