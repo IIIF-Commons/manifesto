@@ -3,7 +3,7 @@ var config = new c();
 var gulp = require('gulp');
 var typedoc = require("gulp-typedoc");
 
-gulp.task("documentation", function() {
+gulp.task("docs", function() {
     return gulp
         .src(['src/*.ts', 'typings/*.d.ts'])
         .pipe(typedoc({
