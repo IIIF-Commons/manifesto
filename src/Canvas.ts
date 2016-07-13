@@ -10,6 +10,7 @@ module Manifesto {
             super(jsonld, options);
         }
 
+        // http://iiif.io/api/image/2.1/#canonical-uri-syntax
         getCanonicalImageUri(w?: number): string {
 
             var id: string;
@@ -52,6 +53,7 @@ module Manifesto {
                     }
                 }
                 
+                // todo: this is not compatible and should be moved to getThumbUri
                 if (!id){
                     return "undefined" == typeof this.__jsonld.thumbnail
                         ? null : this.__jsonld.thumbnail;
