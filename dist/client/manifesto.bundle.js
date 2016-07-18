@@ -667,6 +667,7 @@ var Manifesto;
         function Canvas(jsonld, options) {
             _super.call(this, jsonld, options);
         }
+        // http://iiif.io/api/image/2.1/#canonical-uri-syntax
         Canvas.prototype.getCanonicalImageUri = function (w) {
             var id;
             var region = 'full';
@@ -702,6 +703,7 @@ var Manifesto;
                         quality = Manifesto.Utils.getImageQuality(service.getProfile());
                     }
                 }
+                // todo: this is not compatible and should be moved to getThumbUri
                 if (!id) {
                     return "undefined" == typeof this.__jsonld.thumbnail
                         ? null : this.__jsonld.thumbnail;
@@ -725,9 +727,11 @@ var Manifesto;
         Canvas.prototype.getIndex = function () {
             return this.getProperty('index');
         };
-        // todo: Prefer thumbnail service to image service if supplied and if
-        // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
-        // this is used to get thumb URIs for databinding *before* the info.json has been requested
+        // Prefer thumbnail service to image service if supplied and if
+        // the thumbnail service can provide a satisfactory size +/- x pixels.
+        // this is used to get thumb URIs *before* the info.json has been requested
+        // and populate thumbnails in a viewer.
+        // the publisher may also provide pre-computed fixed-size thumbs for better performance.
         //getThumbUri(width: number): string {
         //
         //    var uri;
