@@ -9,7 +9,7 @@ var manifest, sequence, canvas, image;
 
 describe('#loadsAnzacBulletin', function() {
     it('loads successfully', function (done) {
-        manifesto.loadManifest(manifests.biocrats).then(function(data) {
+        manifesto.loadManifest(manifests.anzacbulletin).then(function(data) {
             manifest = manifesto.create(data);
             sequence = manifest.getSequenceByIndex(0);
             canvas = sequence.getCanvasByIndex(0);

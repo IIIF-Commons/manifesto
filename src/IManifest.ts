@@ -5,6 +5,7 @@ module Manifesto {
         getRanges(): IRange[];
         getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
+        getTopRanges(): IRange[];
         getTotalSequences(): number;
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;

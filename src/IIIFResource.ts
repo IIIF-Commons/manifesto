@@ -21,24 +21,6 @@ module Manifesto {
             this.options = _assign(defaultOptions, options);
         }
 
-        generateTreeNodeIds(treeNode: ITreeNode, index: number = 0): void {
-
-            var id: string;
-
-            if (!treeNode.parentNode){
-                id = '0';
-            } else {
-                id = treeNode.parentNode.id + "-" + index;
-            }
-
-            treeNode.id = id;
-
-            for (var i = 0; i < treeNode.nodes.length; i++){
-                var n: ITreeNode = treeNode.nodes[i];
-                this.generateTreeNodeIds(n, i);
-            }
-        }
-
         getAttribution(): string {
             return Utils.getLocalisedValue(this.getProperty('attribution'), this.options.locale);
         }

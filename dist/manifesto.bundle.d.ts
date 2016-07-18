@@ -675,7 +675,6 @@ declare module Manifesto {
         parentLabel: string;
         treeRoot: ITreeNode;
         constructor(jsonld: any, options?: IManifestoOptions);
-        generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
         getAttribution(): string;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
@@ -699,7 +698,8 @@ declare module Manifesto {
         private _ranges;
         private _sequences;
         constructor(jsonld: any, options?: IManifestoOptions);
-        private _getRootRange();
+        getTree(): ITreeNode;
+        getTopRanges(): IRange[];
         private _getRangeById(id);
         private _parseRanges(r, path, parentRange?);
         getRanges(): IRange[];
@@ -708,8 +708,6 @@ declare module Manifesto {
         getSequences(): ISequence[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTotalSequences(): number;
-        getTree(): ITreeNode;
-        private _parseTreeNode(node, range);
         getManifestType(): ManifestType;
         getTrackingLabel(): string;
         isMultiSequence(): boolean;
@@ -727,6 +725,9 @@ declare module Manifesto {
         getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
+        /**
+         * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
+         */
         getTree(): ITreeNode;
         private _parseManifests(parentCollection);
         private _parseCollections(parentCollection);
@@ -744,6 +745,8 @@ declare module Manifesto {
         getCanvasIds(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
+        getTree(treeRoot: ITreeNode): ITreeNode;
+        private _parseTreeNode(node, range);
     }
 }
 
@@ -889,6 +892,7 @@ declare module Manifesto {
     class Utils {
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getLocalisedValue(resource: any, locale: string): string;
+        static generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
         static loadResource(uri: string): Promise<string>;
         static loadExternalResource(resource: IExternalResource, tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource>;
         static createError(name: string, message: string): Error;
@@ -1052,6 +1056,7 @@ declare module Manifesto {
         getRanges(): IRange[];
         getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
+        getTopRanges(): IRange[];
         getTotalSequences(): number;
         getManifestType(): ManifestType;
         getViewingDirection(): Manifesto.ViewingDirection;
@@ -1114,6 +1119,7 @@ declare module Manifesto {
 declare module Manifesto {
     interface IRange extends IManifestResource {
         getCanvasIds(): string[];
+        getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         parentRange: IRange;

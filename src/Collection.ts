@@ -29,6 +29,9 @@ module Manifesto {
             return this.manifests.length;
         }
 
+        /**
+         * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
+         */
         getTree(): ITreeNode{
 
             super.getTree();
@@ -38,7 +41,7 @@ module Manifesto {
             this._parseManifests(this);
             this._parseCollections(this);
 
-            this.generateTreeNodeIds(this.treeRoot);
+            Manifesto.Utils.generateTreeNodeIds(this.treeRoot);
 
             return this.treeRoot;
         }
