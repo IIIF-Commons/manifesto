@@ -1,6 +1,8 @@
 module Manifesto {
     export interface IIIIFResource extends IManifestResource {
+        defaultTree: ITreeNode; // the tree generated from the first viewingHint="top" range
         getAttribution(): string;
+        getDefaultTree(): ITreeNode;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): string;
@@ -9,12 +11,10 @@ module Manifesto {
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
-        getTree(): ITreeNode;
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         parentCollection: ICollection;
         parentLabel: string;
-        treeRoot: ITreeNode;
     }
 }

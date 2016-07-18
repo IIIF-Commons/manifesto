@@ -2,13 +2,13 @@ var _assign = require("lodash.assign");
 
 module Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
+        public defaultTree: ITreeNode;
         public index: number = -1;
         public isLoaded: boolean = false;
         public parentCollection: ICollection;
         public parentLabel: string;
-        public treeRoot: ITreeNode;
 
-        constructor(jsonld: any, options?: IManifestoOptions) {
+        constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);
 
             var defaultOptions: IManifestoOptions = {
@@ -19,24 +19,6 @@ module Manifesto {
             };
 
             this.options = _assign(defaultOptions, options);
-        }
-
-        generateTreeNodeIds(treeNode: ITreeNode, index: number = 0): void {
-
-            var id: string;
-
-            if (!treeNode.parentNode){
-                id = '0';
-            } else {
-                id = treeNode.parentNode.id + "-" + index;
-            }
-
-            treeNode.id = id;
-
-            for (var i = 0; i < treeNode.nodes.length; i++){
-                var n: ITreeNode = treeNode.nodes[i];
-                this.generateTreeNodeIds(n, i);
-            }
         }
 
         getAttribution(): string {
@@ -78,10 +60,10 @@ module Manifesto {
             return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
 
-        getTree(): ITreeNode{
-            this.treeRoot = new TreeNode('root');
-            this.treeRoot.data = this;
-            return this.treeRoot;
+        getDefaultTree(): ITreeNode{
+            this.defaultTree = new TreeNode('root');
+            this.defaultTree.data = this;
+            return this.defaultTree;
         }
 
         load(): Promise<IIIIFResource> {

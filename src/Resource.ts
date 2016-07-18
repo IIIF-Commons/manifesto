@@ -1,7 +1,7 @@
 module Manifesto {
     export class Resource extends ManifestResource implements IResource{
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 

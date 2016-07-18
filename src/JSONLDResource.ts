@@ -4,14 +4,17 @@ module Manifesto{
         id: string;
         __jsonld: any;
 
-        constructor(jsonld: any){
+        constructor(jsonld?: any){
             this.__jsonld = jsonld;
             this.context = this.getProperty('@context');
             this.id = this.getProperty('@id');
         }
 
         getProperty(name: string): any {
-            return this.__jsonld[name];
+            if (this.__jsonld){
+                return this.__jsonld[name];
+            }
+            return null;
         }
     }
 }

@@ -3,7 +3,7 @@ module Manifesto {
         externalResource: IExternalResource;
         options: IManifestoOptions;
 
-        constructor(jsonld: any, options: IManifestoOptions) {
+        constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld);
             this.options = options;
         }
