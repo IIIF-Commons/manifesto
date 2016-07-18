@@ -202,7 +202,7 @@ declare module Manifesto {
         context: string;
         id: string;
         __jsonld: any;
-        constructor(jsonld: any);
+        constructor(jsonld?: any);
         getProperty(name: string): any;
     }
 }
@@ -211,7 +211,7 @@ declare module Manifesto {
     class ManifestResource extends JSONLDResource implements IManifestResource {
         externalResource: IExternalResource;
         options: IManifestoOptions;
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getLabel(): string;
         getMetadata(): any;
         getRendering(format: RenderingFormat | string): IRendering;
@@ -225,7 +225,7 @@ declare module Manifesto {
     class Element extends ManifestResource implements IElement {
         index: number;
         type: ElementType;
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getResources(): IAnnotation[];
         getType(): ElementType;
     }
@@ -236,7 +236,7 @@ declare var _last: any;
 declare module Manifesto {
     class Canvas extends Element implements ICanvas {
         ranges: IRange[];
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
         getImages(): IAnnotation[];
         getIndex(): number;
@@ -248,12 +248,12 @@ declare module Manifesto {
 declare var _assign: any;
 declare module Manifesto {
     class IIIFResource extends ManifestResource implements IIIIFResource {
+        defaultTree: ITreeNode;
         index: number;
         isLoaded: boolean;
         parentCollection: ICollection;
         parentLabel: string;
-        treeRoot: ITreeNode;
-        constructor(jsonld: any, options?: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getAttribution(): string;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
@@ -263,7 +263,7 @@ declare module Manifesto {
         getRelated(): any;
         getSeeAlso(): any;
         getLabel(): string;
-        getTree(): ITreeNode;
+        getDefaultTree(): ITreeNode;
         load(): Promise<IIIIFResource>;
     }
 }
@@ -273,15 +273,16 @@ declare var _map: any;
 declare module Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
-        rootRange: IRange;
-        private _ranges;
+        private _allRanges;
         private _sequences;
-        constructor(jsonld: any, options?: IManifestoOptions);
-        getTree(): ITreeNode;
+        private _topRanges;
+        constructor(jsonld?: any, options?: IManifestoOptions);
+        getDefaultTree(): ITreeNode;
+        private _getTopRanges();
         getTopRanges(): IRange[];
         private _getRangeById(id);
         private _parseRanges(r, path, parentRange?);
-        getRanges(): IRange[];
+        getAllRanges(): IRange[];
         getRangeById(id: string): IRange;
         getRangeByPath(path: string): IRange;
         getSequences(): ISequence[];
@@ -299,7 +300,7 @@ declare module Manifesto {
     class Collection extends IIIFResource implements ICollection {
         collections: ICollection[];
         manifests: IManifest[];
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getCollectionByIndex(collectionIndex: number): Promise<ICollection>;
         getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
@@ -307,7 +308,7 @@ declare module Manifesto {
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
-        getTree(): ITreeNode;
+        getDefaultTree(): ITreeNode;
         private _parseManifests(parentCollection);
         private _parseCollections(parentCollection);
     }
@@ -320,7 +321,7 @@ declare module Manifesto {
         path: string;
         ranges: Range[];
         treeNode: ITreeNode;
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
@@ -331,7 +332,7 @@ declare module Manifesto {
 
 declare module Manifesto {
     class Rendering extends ManifestResource implements IRendering {
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): RenderingFormat;
     }
 }
@@ -340,7 +341,7 @@ declare var _last: any;
 declare module Manifesto {
     class Sequence extends ManifestResource implements ISequence {
         private canvases;
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
         getCanvasByIndex(canvasIndex: number): any;
@@ -385,7 +386,7 @@ declare var _endsWith: any;
 declare var _isArray: any;
 declare module Manifesto {
     class Service extends ManifestResource implements IService {
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getProfile(): ServiceProfile;
         getDescription(): string;
         getInfoUri(): string;
@@ -600,7 +601,9 @@ declare module Manifesto {
 
 declare module Manifesto {
     interface IIIIFResource extends IManifestResource {
+        defaultTree: ITreeNode;
         getAttribution(): string;
+        getDefaultTree(): ITreeNode;
         getDescription(): string;
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): string;
@@ -609,13 +612,11 @@ declare module Manifesto {
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
-        getTree(): ITreeNode;
         index: number;
         isLoaded: boolean;
         load(): Promise<IIIIFResource>;
         parentCollection: ICollection;
         parentLabel: string;
-        treeRoot: ITreeNode;
     }
 }
 
@@ -630,19 +631,18 @@ declare module Manifesto {
 
 declare module Manifesto {
     interface IManifest extends Manifesto.IIIIFResource {
+        getAllRanges(): IRange[];
+        getManifestType(): ManifestType;
         getRangeById(id: string): Manifesto.IRange;
         getRangeByPath(path: string): IRange;
-        getRanges(): IRange[];
-        getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
+        getSequences(): ISequence[];
         getTopRanges(): IRange[];
         getTotalSequences(): number;
-        getManifestType(): ManifestType;
+        getTrackingLabel(): string;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): ViewingHint;
-        getTrackingLabel(): string;
         isMultiSequence(): boolean;
-        rootRange: IRange;
     }
 }
 
@@ -768,7 +768,7 @@ declare module Manifesto {
 
 declare module Manifesto {
     class Resource extends ManifestResource implements IResource {
-        constructor(jsonld: any, options: IManifestoOptions);
+        constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): ResourceFormat;
         getType(): ResourceType;
         getWidth(): number;

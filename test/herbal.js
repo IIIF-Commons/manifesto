@@ -18,7 +18,7 @@ describe('#loadsHerbal', function() {
 
 describe('#hasTree', function() {
     it('has a tree', function () {
-        var tree = manifest.getTree();
+        var tree = manifest.getDefaultTree();
         expect(tree).to.exist;
     });
 });

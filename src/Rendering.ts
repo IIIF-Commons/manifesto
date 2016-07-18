@@ -2,7 +2,7 @@
 module Manifesto {
     export class Rendering extends ManifestResource implements IRendering {
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 

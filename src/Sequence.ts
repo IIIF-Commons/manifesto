@@ -4,7 +4,7 @@ module Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
         private canvases: ICanvas[] = null;
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 

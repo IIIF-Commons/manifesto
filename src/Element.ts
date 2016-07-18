@@ -4,7 +4,7 @@ module Manifesto {
         public index: number;
         public type: ElementType;
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 

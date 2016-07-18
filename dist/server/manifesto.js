@@ -538,7 +538,10 @@ var Manifesto;
             this.id = this.getProperty('@id');
         }
         JSONLDResource.prototype.getProperty = function (name) {
-            return this.__jsonld[name];
+            if (this.__jsonld) {
+                return this.__jsonld[name];
+            }
+            return null;
         };
         return JSONLDResource;
     }());
@@ -823,10 +826,10 @@ var Manifesto;
         IIIFResource.prototype.getLabel = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
-        IIIFResource.prototype.getTree = function () {
-            this.treeRoot = new Manifesto.TreeNode('root');
-            this.treeRoot.data = this;
-            return this.treeRoot;
+        IIIFResource.prototype.getDefaultTree = function () {
+            this.defaultTree = new Manifesto.TreeNode('root');
+            this.defaultTree.data = this;
+            return this.defaultTree;
         };
         IIIFResource.prototype.load = function () {
             var that = this;
@@ -866,49 +869,51 @@ var Manifesto;
         function Manifest(jsonld, options) {
             _super.call(this, jsonld, options);
             this.index = 0;
-            this._ranges = null;
+            this._allRanges = null;
             this._sequences = null;
+            this._topRanges = [];
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                var topRanges = this.getTopRanges();
-                if (topRanges.length) {
-                    for (var i = 0; i < topRanges.length; i++) {
-                        var r = topRanges[i];
-                        this._parseRanges(r, '');
-                    }
+                var topRanges = this._getTopRanges();
+                for (var i = 0; i < topRanges.length; i++) {
+                    var range = topRanges[i];
+                    this._parseRanges(range, '');
                 }
             }
         }
-        Manifest.prototype.getTree = function () {
-            _super.prototype.getTree.call(this);
-            this.treeRoot.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
+        Manifest.prototype.getDefaultTree = function () {
+            _super.prototype.getDefaultTree.call(this);
+            this.defaultTree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
             if (!this.isLoaded) {
-                return this.treeRoot;
+                return this.defaultTree;
             }
             var topRanges = this.getTopRanges();
-            // default to the first 'top' range
+            // if there are any ranges in the manifest, default to the first 'top' range (or placeholder)
             if (topRanges.length) {
-                topRanges[0].getTree(this.treeRoot);
+                topRanges[0].getTree(this.defaultTree);
             }
-            Manifesto.Utils.generateTreeNodeIds(this.treeRoot);
-            return this.treeRoot;
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+            return this.defaultTree;
         };
-        Manifest.prototype.getTopRanges = function () {
-            var ranges = [];
+        Manifest.prototype._getTopRanges = function () {
+            var topRanges = [];
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var r = this.__jsonld.structures[i];
-                    if (r.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
-                        ranges.push(r);
+                    var json = this.__jsonld.structures[i];
+                    if (json.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
+                        topRanges.push(json);
                     }
                 }
-                // if no viewingHint="top" range was found, create one
-                if (!ranges.length) {
-                    var range = new Manifesto.Range();
+                // if no viewingHint="top" range was found, create a default one
+                if (!topRanges.length) {
+                    var range = {};
                     range.ranges = this.__jsonld.structures;
-                    ranges.push(range);
+                    topRanges.push(range);
                 }
             }
-            return ranges;
+            return topRanges;
+        };
+        Manifest.prototype.getTopRanges = function () {
+            return this._topRanges;
         };
         Manifest.prototype._getRangeById = function (id) {
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
@@ -927,32 +932,36 @@ var Manifesto;
                 r = this._getRangeById(r);
             }
             range = new Manifesto.Range(r, this.options);
-            // if no parent range is passed, assign the new range to manifest.rootRange
+            range.parentRange = parentRange;
+            range.path = path;
             if (!parentRange) {
-                this.rootRange = range;
+                this._topRanges.push(range);
             }
             else {
-                range.parentRange = parentRange;
                 parentRange.ranges.push(range);
             }
-            range.path = path;
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
                     this._parseRanges(r.ranges[j], path + '/' + j, range);
                 }
             }
         };
-        Manifest.prototype.getRanges = function () {
-            if (this._ranges != null)
-                return this._ranges;
-            this._ranges = [];
-            if (this.rootRange) {
-                this._ranges = this.rootRange.ranges.en().traverseUnique(function (range) { return range.ranges; }).toArray();
+        Manifest.prototype.getAllRanges = function () {
+            if (this._allRanges != null)
+                return this._allRanges;
+            this._allRanges = [];
+            var topRanges = this.getTopRanges();
+            for (var i = 0; i < topRanges.length; i++) {
+                var topRange = topRanges[i];
+                if (topRange.id) {
+                    this._allRanges.push(topRange); // it might be a placeholder root range
+                }
+                this._allRanges = this._allRanges.concat(topRange.ranges.en().traverseUnique(function (range) { return range.ranges; }).toArray());
             }
-            return this._ranges;
+            return this._allRanges;
         };
         Manifest.prototype.getRangeById = function (id) {
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
                 if (range.id === id) {
@@ -962,7 +971,7 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getRangeByPath = function (path) {
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
                 if (range.path === path) {
@@ -1061,24 +1070,24 @@ var Manifesto;
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
-        Collection.prototype.getTree = function () {
-            _super.prototype.getTree.call(this);
-            this.treeRoot.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
+        Collection.prototype.getDefaultTree = function () {
+            _super.prototype.getDefaultTree.call(this);
+            this.defaultTree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
             this._parseManifests(this);
             this._parseCollections(this);
-            Manifesto.Utils.generateTreeNodeIds(this.treeRoot);
-            return this.treeRoot;
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+            return this.defaultTree;
         };
         Collection.prototype._parseManifests = function (parentCollection) {
             if (parentCollection.manifests && parentCollection.manifests.length) {
                 for (var i = 0; i < parentCollection.manifests.length; i++) {
                     var manifest = parentCollection.manifests[i];
-                    var tree = manifest.getTree();
+                    var tree = manifest.getDefaultTree();
                     tree.label = manifest.parentLabel || manifest.getLabel() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
                     tree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
-                    parentCollection.treeRoot.addNode(tree);
+                    parentCollection.defaultTree.addNode(tree);
                 }
             }
         };
@@ -1086,12 +1095,12 @@ var Manifesto;
             if (parentCollection.collections && parentCollection.collections.length) {
                 for (var i = 0; i < parentCollection.collections.length; i++) {
                     var collection = parentCollection.collections[i];
-                    var tree = collection.getTree();
+                    var tree = collection.getDefaultTree();
                     tree.label = collection.parentLabel || collection.getLabel() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
                     tree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
-                    parentCollection.treeRoot.addNode(tree);
+                    parentCollection.defaultTree.addNode(tree);
                     this._parseCollections(collection);
                 }
             }

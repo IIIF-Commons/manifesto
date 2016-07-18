@@ -82,7 +82,7 @@ describe('#firstCollectionFirstManifestHasLabel', function() {
 
 describe('#getTree', function() {
     it('has a tree containing manifests', function () {
-        var tree = collection.getTree();
+        var tree = collection.getDefaultTree();
         expect(tree).to.exist;
     })
 });

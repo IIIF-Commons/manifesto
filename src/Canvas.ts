@@ -6,7 +6,7 @@ module Manifesto {
 
         public ranges: IRange[];
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 

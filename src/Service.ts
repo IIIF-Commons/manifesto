@@ -4,7 +4,7 @@ var _isArray = require("lodash.isarray");
 module Manifesto {
     export class Service extends ManifestResource implements IService {
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 

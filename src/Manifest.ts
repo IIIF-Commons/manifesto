@@ -4,67 +4,71 @@ var _map = require("lodash.map");
 module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
-        public rootRange: IRange;
-        private _ranges: IRange[] = null;
+        private _allRanges: IRange[] = null; 
         private _sequences: ISequence[] = null;
+        private _topRanges: IRange[] = [];
 
-        constructor(jsonld: any, options?: IManifestoOptions) {
+        constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);
 
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                var topRanges: IRange[] = this.getTopRanges();
+                var topRanges: any[] = this._getTopRanges();
 
-                if (topRanges.length){
-                    for (var i = 0; i < topRanges.length; i++) {
-                        var r: any = topRanges[i]; 
-                        this._parseRanges(r, '');
-                    }
+                for (var i = 0; i < topRanges.length; i++) {
+                    var range: any = topRanges[i]; 
+                    this._parseRanges(range, '');
                 }
             }
         }
 
-        public getTree(): ITreeNode {
-            super.getTree();
+        public getDefaultTree(): ITreeNode {
+            
+            super.getDefaultTree();
 
-            this.treeRoot.data.type = TreeNodeType.MANIFEST.toString();
+            this.defaultTree.data.type = TreeNodeType.MANIFEST.toString();
 
             if (!this.isLoaded){
-                return this.treeRoot;
+                return this.defaultTree;
             }
 
             var topRanges: IRange[] = this.getTopRanges();
 
-            // default to the first 'top' range
+            // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
             if (topRanges.length){
-                topRanges[0].getTree(this.treeRoot);
+                topRanges[0].getTree(this.defaultTree);
             }
+            
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
 
-            Manifesto.Utils.generateTreeNodeIds(this.treeRoot);
-
-            return this.treeRoot;
+            return this.defaultTree;
         }
 
-        public getTopRanges(): IRange[] {
-            var ranges: any[] = [];
+        private _getTopRanges(): any[] {
+
+            var topRanges: any[] = [];
 
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
 
                 for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var r = this.__jsonld.structures[i];
-                    if (r.viewingHint === ViewingHint.TOP.toString()){
-                        ranges.push(r);
+                    var json: any = this.__jsonld.structures[i];
+                    if (json.viewingHint === ViewingHint.TOP.toString()){
+                        topRanges.push(json);
                     }
                 }
 
-                // if no viewingHint="top" range was found, create one
-                if (!ranges.length){
-                    var range: IRange = new Range();
+                // if no viewingHint="top" range was found, create a default one
+                if (!topRanges.length){
+                    var range: any = {};
                     range.ranges = this.__jsonld.structures;
-                    ranges.push(range);
+                    topRanges.push(range);
                 }
             }
 
-            return ranges;
+            return topRanges;
+        }
+
+        public getTopRanges(): IRange[] {
+            return this._topRanges;
         }
 
         private _getRangeById(id: string): IRange {
@@ -88,16 +92,14 @@ module Manifesto {
             }
 
             range = new Range(r, this.options);
+            range.parentRange = parentRange;
+            range.path = path;
 
-            // if no parent range is passed, assign the new range to manifest.rootRange
             if (!parentRange){
-                this.rootRange = range;
+                this._topRanges.push(range);
             } else {
-                range.parentRange = parentRange;
                 parentRange.ranges.push(range);
             }
-
-            range.path = path;
 
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
@@ -106,23 +108,29 @@ module Manifesto {
             }
         }
 
-        getRanges(): IRange[] {
+        getAllRanges(): IRange[] {
 
-            if (this._ranges != null)
-                return this._ranges;
+            if (this._allRanges != null)
+                return this._allRanges;
 
-            this._ranges = [];
+            this._allRanges = [];
 
-            if (this.rootRange){
-                this._ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
+            var topRanges: IRange[] = this.getTopRanges();
+
+            for (var i = 0; i < topRanges.length; i++) {
+                var topRange: IRange = topRanges[i];
+                if (topRange.id){
+                    this._allRanges.push(topRange); // it might be a placeholder root range
+                }                
+                this._allRanges = this._allRanges.concat(topRange.ranges.en().traverseUnique(range => range.ranges).toArray());
             }
 
-            return this._ranges;
+            return this._allRanges;
         }
 
         getRangeById(id: string): IRange {
 
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
 
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
@@ -136,7 +144,7 @@ module Manifesto {
 
         getRangeByPath(path: string): IRange{
 
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
 
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];

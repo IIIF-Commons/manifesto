@@ -7,7 +7,7 @@ module Manifesto {
         ranges: Range[] = [];
         treeNode: ITreeNode;
 
-        constructor(jsonld: any, options: IManifestoOptions){
+        constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 
