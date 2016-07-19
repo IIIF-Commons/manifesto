@@ -16,7 +16,7 @@ module Manifesto {
 
                 for (var i = 0; i < topRanges.length; i++) {
                     var range: any = topRanges[i]; 
-                    this._parseRanges(range, '');
+                    this._parseRanges(range, String(i));
                 }
             }
         }

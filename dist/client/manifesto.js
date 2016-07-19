@@ -819,7 +819,7 @@ var Manifesto;
                 var topRanges = this._getTopRanges();
                 for (var i = 0; i < topRanges.length; i++) {
                     var range = topRanges[i];
-                    this._parseRanges(range, '');
+                    this._parseRanges(range, String(i));
                 }
             }
         }

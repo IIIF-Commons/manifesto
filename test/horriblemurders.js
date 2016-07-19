@@ -21,7 +21,7 @@ describe('#hasNestedRanges', function() {
     it('has nested ranges', function () {
         var topRange = manifest.getTopRanges()[0];
         var path = topRange.ranges[0].ranges[0].path;
-        expect(path).to.equal('/0/0');
+        expect(path).to.equal('0/0/0');
     });
 });
 
