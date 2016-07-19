@@ -31,6 +31,13 @@ describe('#hasManifestType', function() {
     });
 });
 
+describe('#isManifest', function() {
+    it('is a manifest', function() {
+        expect(manifest.isManifest()).to.equal(true);
+        expect(manifest.isCollection()).to.equal(false); 
+    });
+});
+
 describe('#hasMetadata', function() {
     it('has metadata', function () {
         var metadata = manifest.getMetadata();

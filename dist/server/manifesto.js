@@ -831,6 +831,12 @@ var Manifesto;
             this.defaultTree.data = this;
             return this.defaultTree;
         };
+        IIIFResource.prototype.isCollection = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+        };
+        IIIFResource.prototype.isManifest = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+        };
         IIIFResource.prototype.load = function () {
             var that = this;
             return new Promise(function (resolve, reject) {
@@ -887,7 +893,7 @@ var Manifesto;
                 return this.defaultTree;
             }
             var topRanges = this.getTopRanges();
-            // if there are any ranges in the manifest, default to the first 'top' range (or placeholder)
+            // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
             if (topRanges.length) {
                 topRanges[0].getTree(this.defaultTree);
             }

@@ -264,6 +264,8 @@ declare module Manifesto {
         getSeeAlso(): any;
         getLabel(): string;
         getDefaultTree(): ITreeNode;
+        isCollection(): boolean;
+        isManifest(): boolean;
         load(): Promise<IIIIFResource>;
     }
 }

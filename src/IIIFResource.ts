@@ -66,6 +66,14 @@ module Manifesto {
             return this.defaultTree;
         }
 
+        isCollection(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+        }
+
+        isManifest(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+        }
+
         load(): Promise<IIIIFResource> {
             var that = this;
             return new Promise<IIIIFResource>((resolve, reject) => {
