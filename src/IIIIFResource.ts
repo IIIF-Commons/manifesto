@@ -12,7 +12,9 @@ module Manifesto {
         getRelated(): any;
         getSeeAlso(): any;
         index: number;
+        isCollection(): boolean;
         isLoaded: boolean;
+        isManifest(): boolean;
         load(): Promise<IIIIFResource>;
         parentCollection: ICollection;
         parentLabel: string;
