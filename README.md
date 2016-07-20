@@ -15,7 +15,7 @@ Getting Started
 
 ###Documentation
 
-http://universalviewer.io/manifesto-docs/
+http://viewdir.github.io/manifesto-docs/
 
 
 ###Tutorial
