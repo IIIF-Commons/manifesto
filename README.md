@@ -25,7 +25,7 @@ http://blog.edsilv.com/manifesto/
 
 ###Developer Setup
 
-    git clone https://github.com/UniversalViewer/manifesto.git
+    git clone https://github.com/viewdir/manifesto.git
     npm install
     bower install
     gulp
