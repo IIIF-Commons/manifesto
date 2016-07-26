@@ -35,6 +35,7 @@ module Manifesto {
         public static TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
         public static TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
         public static UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
+        public static PRINTEXTENSIONS = new ServiceProfile("http://universalviewer.io/print-extensions-profile");
 
         // todo: use getters when ES3 target is no longer required.
 
@@ -128,6 +129,10 @@ module Manifesto {
 
         uiExtensions(): ServiceProfile {
             return new ServiceProfile(ServiceProfile.UIEXTENSIONS.toString());
+        }
+
+        printExtensions(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.PRINTEXTENSIONS.toString());
         }
     }
 }
