@@ -721,13 +721,17 @@ declare module Manifesto {
 
 declare module Manifesto {
     class Collection extends IIIFResource implements ICollection {
-        collections: ICollection[];
-        manifests: IManifest[];
+        members: IIIIFResource[];
+        private _collections;
+        private _manifests;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getCollections(): ICollection[];
+        getManifests(): IManifest[];
         getCollectionByIndex(collectionIndex: number): Promise<ICollection>;
         getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
+        getTotalMembers(): number;
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
@@ -799,6 +803,8 @@ declare module Manifesto {
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void;
         static parseManifest(json: any, options?: IManifestoOptions): IManifest;
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void;
+        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource;
+        static parseMembers(collection: ICollection, options?: IManifestoOptions): void;
     }
     class Serialiser {
         static serialise(manifest: IManifest): string;
@@ -984,12 +990,13 @@ declare module Manifesto {
 
 declare module Manifesto {
     interface ICollection extends IIIIFResource {
-        collections: ICollection[];
         getCollectionByIndex(index: number): Promise<ICollection>;
+        getCollections(): ICollection[];
         getManifestByIndex(index: number): Promise<IManifest>;
+        getManifests(): IManifest[];
         getTotalCollections(): number;
         getTotalManifests(): number;
-        manifests: IManifest[];
+        members: IIIIFResource[];
     }
 }
 

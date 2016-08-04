@@ -1,0 +1,158 @@
+
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest",
+  "@type": "sc:Manifest",
+  "label": "SR2",
+  "viewingHint": "individuals",
+  "viewingDirection": "left-to-right",
+  "sequences": [
+    {
+      "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/sequence/normal",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+          "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/n870zr077",
+          "@type": "sc:Canvas",
+          "label": "color-landscape copy 497.tif",
+          "images": [
+            {
+              "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/annotation/n870zr077-image",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "https://libimages1.princeton.edu/loris/plum/n8%2F70%2Fzr%2F07%2F7-intermediate_file.jp2/full/!600,600/0/default.jpg",
+                "@type": "dcterms:Image",
+                "format": "image/jpeg",
+                "width": 287,
+                "height": 200,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://libimages1.princeton.edu/loris/plum/n8%2F70%2Fzr%2F07%2F7-intermediate_file.jp2",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              },
+              "on": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/n870zr077"
+            }
+          ],
+          "width": 287,
+          "height": 200,
+          "otherContent": [
+            {
+              "@id": "https://hydra-dev.princeton.edu/concern/container/jw827b826/file_sets/n870zr077/text",
+              "@type": "sc:AnnotationList",
+              "label": "Text of this Page"
+            }
+          ]
+        },
+        {
+          "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/5t34sj840",
+          "@type": "sc:Canvas",
+          "label": "color-landscape copy 498.tif",
+          "images": [
+            {
+              "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/annotation/5t34sj840-image",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "https://libimages1.princeton.edu/loris/plum/5t%2F34%2Fsj%2F84%2F0-intermediate_file.jp2/full/!600,600/0/default.jpg",
+                "@type": "dcterms:Image",
+                "format": "image/jpeg",
+                "width": 287,
+                "height": 200,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://libimages1.princeton.edu/loris/plum/5t%2F34%2Fsj%2F84%2F0-intermediate_file.jp2",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              },
+              "on": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/5t34sj840"
+            }
+          ],
+          "width": 287,
+          "height": 200,
+          "otherContent": [
+            {
+              "@id": "https://hydra-dev.princeton.edu/concern/container/jw827b826/file_sets/5t34sj840/text",
+              "@type": "sc:AnnotationList",
+              "label": "Text of this Page"
+            }
+          ]
+        }
+      ],
+      "viewingHint": "individuals",
+      "rendering": {
+        "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/pdf/gray",
+        "label": "Download as PDF",
+        "format": "application/pdf"
+      }
+    }
+  ],
+  "structures": [
+    {
+      "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/range/g70275876494200",
+      "@type": "sc:Range",
+      "label": "Logical",
+      "viewingHint": "top",
+      "ranges": [
+        {
+          "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/range/g70275876586100",
+          "@type": "sc:Range",
+          "label": "Chapter 1",
+          "members": [
+            {
+              "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/n870zr077",
+              "@type": "sc:Canvas"
+            }
+          ],
+          "canvases": [
+            "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/n870zr077"
+          ]
+        }
+      ],
+      "canvases": [
+        "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/5t34sj840"
+      ],
+      "members": [
+        {
+          "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/range/g70275876586100",
+          "@type": "sc:Range",
+          "label": "Chapter 1",
+          "members": [
+            {
+              "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/n870zr077",
+              "@type": "sc:Canvas"
+            }
+          ],
+          "canvases": [
+            "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/n870zr077"
+          ]
+        },
+        {
+          "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest/canvas/5t34sj840",
+          "@type": "sc:Canvas"
+        }
+      ]
+    }
+  ],
+  "metadata": [
+    {
+      "label": "Identifier",
+      "value": "ark:/99999/fk49k4m56h"
+    },
+    {
+      "label": "Collection",
+      "value": [
+        "Example Collection"
+      ]
+    }
+  ],
+  "thumbnail": {
+    "@id": "https://libimages1.princeton.edu/loris/plum/n8%2F70%2Fzr%2F07%2F7-intermediate_file.jp2/full/!200,150/0/default.jpg",
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json",
+      "@id": "https://libimages1.princeton.edu/loris/plum/n8%2F70%2Fzr%2F07%2F7-intermediate_file.jp2",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    }
+  }
+}

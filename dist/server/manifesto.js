@@ -1052,26 +1052,42 @@ var Manifesto;
         __extends(Collection, _super);
         function Collection(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.collections = [];
-            this.manifests = [];
+            this.members = [];
+            this._collections = null;
+            this._manifests = null;
             jsonld.__collection = this;
         }
+        Collection.prototype.getCollections = function () {
+            if (this._collections) {
+                return this._collections;
+            }
+            return this._collections = this.members.en().where(function (m) { return m.isCollection(); }).toArray();
+        };
+        Collection.prototype.getManifests = function () {
+            if (this._manifests) {
+                return this._manifests;
+            }
+            return this._manifests = this.members.en().where(function (m) { return m.isManifest(); }).toArray();
+        };
         Collection.prototype.getCollectionByIndex = function (collectionIndex) {
-            var collection = this.collections[collectionIndex];
+            var collection = this.getCollections()[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         };
         Collection.prototype.getManifestByIndex = function (manifestIndex) {
-            var manifest = this.manifests[manifestIndex];
+            var manifest = this.getManifests()[manifestIndex];
             manifest.options.index = manifestIndex;
             return manifest.load();
         };
         Collection.prototype.getTotalCollections = function () {
-            return this.collections.length;
+            return this.getCollections().length;
         };
         Collection.prototype.getTotalManifests = function () {
-            return this.manifests.length;
+            return this.getManifests().length;
+        };
+        Collection.prototype.getTotalMembers = function () {
+            return this.members.length;
         };
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
@@ -1085,9 +1101,9 @@ var Manifesto;
             return this.defaultTree;
         };
         Collection.prototype._parseManifests = function (parentCollection) {
-            if (parentCollection.manifests && parentCollection.manifests.length) {
-                for (var i = 0; i < parentCollection.manifests.length; i++) {
-                    var manifest = parentCollection.manifests[i];
+            if (parentCollection.getManifests() && parentCollection.getManifests().length) {
+                for (var i = 0; i < parentCollection.getManifests().length; i++) {
+                    var manifest = parentCollection.getManifests()[i];
                     var tree = manifest.getDefaultTree();
                     tree.label = manifest.parentLabel || manifest.getLabel() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
@@ -1098,9 +1114,9 @@ var Manifesto;
             }
         };
         Collection.prototype._parseCollections = function (parentCollection) {
-            if (parentCollection.collections && parentCollection.collections.length) {
-                for (var i = 0; i < parentCollection.collections.length; i++) {
-                    var collection = parentCollection.collections[i];
+            if (parentCollection.getCollections() && parentCollection.getCollections().length) {
+                for (var i = 0; i < parentCollection.getCollections().length; i++) {
+                    var collection = parentCollection.getCollections()[i];
                     var tree = collection.getDefaultTree();
                     tree.label = collection.parentLabel || collection.getLabel() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
@@ -1466,6 +1482,7 @@ var Manifesto;
             }
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
+            this.parseMembers(collection, options);
             return collection;
         };
         Deserialiser.parseCollections = function (collection, options) {
@@ -1478,7 +1495,7 @@ var Manifesto;
                     var child = this.parseCollection(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
-                    collection.collections.push(child);
+                    collection.members.push(child);
                 }
             }
         };
@@ -1493,7 +1510,33 @@ var Manifesto;
                     var child = this.parseManifest(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
-                    collection.manifests.push(child);
+                    collection.members.push(child);
+                }
+            }
+        };
+        Deserialiser.parseMember = function (json, options) {
+            if (json['@type'].toLowerCase() === 'sc:manifest') {
+                return this.parseManifest(json, options);
+            }
+            else if (json['@type'].toLowerCase() === 'sc:collection') {
+                return this.parseCollection(json, options);
+            }
+        };
+        Deserialiser.parseMembers = function (collection, options) {
+            var children = collection.__jsonld.members;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    if (options) {
+                        options.index = i;
+                    }
+                    var child = this.parseMember(children[i], options);
+                    // only add to members if not already parsed from backwards-compatible collections/manifests arrays
+                    if (collection.members.en().where(function (m) { return m.id === child.id; }).first()) {
+                        continue;
+                    }
+                    child.index = i;
+                    child.parentCollection = collection;
+                    collection.members.push(child);
                 }
             }
         };
