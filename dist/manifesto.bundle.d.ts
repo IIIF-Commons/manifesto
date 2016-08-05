@@ -1,4 +1,4 @@
-// manifesto.js v0.2.0 https://github.com/universalviewer/manifesto
+// manifesto.js v0.2.1 https://github.com/viewdir/manifesto
 declare module exjs {
     var version: string;
 }
@@ -566,6 +566,7 @@ declare module Manifesto {
         static TOKEN: ServiceProfile;
         static TRACKINGEXTENSIONS: ServiceProfile;
         static UIEXTENSIONS: ServiceProfile;
+        static PRINTEXTENSIONS: ServiceProfile;
         autoComplete(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
         iiif1ImageLevel2(): ServiceProfile;
@@ -589,6 +590,7 @@ declare module Manifesto {
         token(): ServiceProfile;
         trackingExtensions(): ServiceProfile;
         uiExtensions(): ServiceProfile;
+        printExtensions(): ServiceProfile;
     }
 }
 

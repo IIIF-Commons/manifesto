@@ -422,6 +422,9 @@ var Manifesto;
         ServiceProfile.prototype.uiExtensions = function () {
             return new ServiceProfile(ServiceProfile.UIEXTENSIONS.toString());
         };
+        ServiceProfile.prototype.printExtensions = function () {
+            return new ServiceProfile(ServiceProfile.PRINTEXTENSIONS.toString());
+        };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");
         ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
@@ -457,6 +460,7 @@ var Manifesto;
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
         ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
         ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
+        ServiceProfile.PRINTEXTENSIONS = new ServiceProfile("http://universalviewer.io/print-extensions-profile");
         return ServiceProfile;
     }(Manifesto.StringValue));
     Manifesto.ServiceProfile = ServiceProfile;
@@ -981,7 +985,7 @@ var Manifesto;
             if (r.members) {
                 for (var l = 0; l < r.members.length; l++) {
                     var child = r.members[l];
-                    /// only add to members if not already parsed from backwards-compatible ranges/canvases arrays
+                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
                     if (r.members.en().where(function (m) { return m.id === child.id; }).first()) {
                         continue;
                     }

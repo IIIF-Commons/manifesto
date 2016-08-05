@@ -15,7 +15,7 @@ Getting Started
 
 ###Documentation
 
-http://universalviewer.io/manifesto-docs/
+http://viewdir.github.io/manifesto-docs/
 
 
 ###Tutorial
@@ -25,7 +25,7 @@ http://blog.edsilv.com/manifesto/
 
 ###Developer Setup
 
-    git clone https://github.com/UniversalViewer/manifesto.git
+    git clone https://github.com/viewdir/manifesto.git
     npm install
     bower install
     gulp
