@@ -8,6 +8,10 @@ module Manifesto {
             this.options = options;
         }
 
+        getIIIFResourceType(): IIIFResourceType {
+            return new IIIFResourceType(this.getProperty('@type'));
+        }
+
         getLabel(): string {
             return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
@@ -80,6 +84,14 @@ module Manifesto {
 
         getServices(): IService[] {
             return Utils.getServices(this);
+        }
+
+        isCanvas(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
+        }
+
+        isRange(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
         }
     }
 }

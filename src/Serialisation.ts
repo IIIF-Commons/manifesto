@@ -44,6 +44,7 @@ module Manifesto {
 
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
+            this.parseMembers(collection, options);
 
             return collection;
         }
@@ -58,7 +59,7 @@ module Manifesto {
                     var child: ICollection = this.parseCollection(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
-                    collection.collections.push(child);
+                    collection.members.push(child);
                 }
             }
         }
@@ -75,7 +76,34 @@ module Manifesto {
                     var child: IManifest = this.parseManifest(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
-                    collection.manifests.push(child);
+                    collection.members.push(child);
+                }
+            }
+        }
+
+        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource {
+            if (json['@type'].toLowerCase() === 'sc:manifest'){
+                return <IIIIFResource>this.parseManifest(json, options);
+            } else if (json['@type'].toLowerCase() === 'sc:collection'){
+                return <IIIIFResource>this.parseCollection(json, options);
+            }
+        }
+
+        static parseMembers(collection: ICollection, options?: IManifestoOptions): void {
+            var children = collection.__jsonld.members;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    if (options){
+                        options.index = i;
+                    }
+                    var child: IIIIFResource = this.parseMember(children[i], options);
+                    // only add to members if not already parsed from backwards-compatible collections/manifests arrays
+                    if (collection.members.en().where(m => m.id === child.id).first()) {
+                        continue;
+                    }
+                    child.index = i;
+                    child.parentCollection = collection;
+                    collection.members.push(child);
                 }
             }
         }
