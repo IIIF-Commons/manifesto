@@ -85,6 +85,7 @@ module Manifesto {
         }
 
         private _parseRangeCanvas(json: any, range: IRange): void {
+            // todo: currently this isn't needed
             //var canvas: IJSONLDResource = new JSONLDResource(json);
             //range.members.push(<IManifestResource>canvas);
         }

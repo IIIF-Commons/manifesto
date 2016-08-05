@@ -955,6 +955,7 @@ var Manifesto;
             return null;
         };
         Manifest.prototype._parseRangeCanvas = function (json, range) {
+            // todo: currently this isn't needed
             //var canvas: IJSONLDResource = new JSONLDResource(json);
             //range.members.push(<IManifestResource>canvas);
         };
@@ -2639,7 +2640,9 @@ function fromArrayBuffer (that, array, byteOffset, length) {
     throw new RangeError('\'length\' is out of bounds')
   }
 
-  if (length === undefined) {
+  if (byteOffset === undefined && length === undefined) {
+    array = new Uint8Array(array)
+  } else if (length === undefined) {
     array = new Uint8Array(array, byteOffset)
   } else {
     array = new Uint8Array(array, byteOffset, length)

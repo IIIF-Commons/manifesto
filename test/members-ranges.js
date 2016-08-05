@@ -7,18 +7,18 @@ require('./shared');
 
 var manifest, topRange;
 
-// describe('#loadsMembersRanges', function() {
-//     it('loads successfully', function (done) {
-//         manifesto.loadManifest(manifests.membersranges).then(function(data) {
-//             manifest = manifesto.create(data);
-//             done();
-//         });
-//     });
-// });
+describe('#loadsMembersRanges', function() {
+    it('loads successfully', function (done) {
+        manifesto.loadManifest(manifests.membersranges).then(function(data) {
+            manifest = manifesto.create(data);
+            done();
+        });
+    });
+});
 
-// describe('#hasMembersCount', function() {
-//     it('has a members count of 2', function () {
-//         topRange = manifest.getTopRanges()[0];
-//         topRange.members.length.should.equal(2);
-//     });
-// });
+describe('#hasMembersCount', function() {
+    it('has a members count of 1', function () {
+        topRange = manifest.getTopRanges()[0]; // canvases are not currently parsed
+        topRange.members.length.should.equal(1);
+    });
+});
