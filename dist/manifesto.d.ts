@@ -59,10 +59,14 @@ declare module Manifesto {
 
 declare module Manifesto {
     class IIIFResourceType extends StringValue {
-        static MANIFEST: IIIFResourceType;
+        static CANVAS: IIIFResourceType;
         static COLLECTION: IIIFResourceType;
-        manifest(): IIIFResourceType;
+        static MANIFEST: IIIFResourceType;
+        static RANGE: IIIFResourceType;
+        canvas(): IIIFResourceType;
         collection(): IIIFResourceType;
+        manifest(): IIIFResourceType;
+        range(): IIIFResourceType;
     }
 }
 
@@ -212,12 +216,15 @@ declare module Manifesto {
         externalResource: IExternalResource;
         options: IManifestoOptions;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getIIIFResourceType(): IIIFResourceType;
         getLabel(): string;
         getMetadata(): any;
         getRendering(format: RenderingFormat | string): IRendering;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
         getServices(): IService[];
+        isCanvas(): boolean;
+        isRange(): boolean;
     }
 }
 
@@ -283,6 +290,7 @@ declare module Manifesto {
         private _getTopRanges();
         getTopRanges(): IRange[];
         private _getRangeById(id);
+        private _parseRangeCanvas(json, range);
         private _parseRanges(r, path, parentRange?);
         getAllRanges(): IRange[];
         getRangeById(id: string): IRange;
@@ -322,13 +330,16 @@ declare module Manifesto {
 
 declare module Manifesto {
     class Range extends ManifestResource implements IRange {
-        canvases: ICanvas[];
+        _canvases: ICanvas[];
+        _ranges: IRange[];
         parentRange: Range;
         path: string;
-        ranges: Range[];
+        members: IManifestResource[];
         treeNode: ITreeNode;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
+        getCanvases(): ICanvas[];
+        getRanges(): IRange[];
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         getTree(treeRoot: ITreeNode): ITreeNode;
@@ -703,18 +714,22 @@ declare module Manifesto {
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
         getServices(): IService[];
+        isCanvas(): boolean;
+        isRange(): boolean;
     }
 }
 
 declare module Manifesto {
     interface IRange extends IManifestResource {
         getCanvasIds(): string[];
+        getCanvases(): ICanvas[];
+        getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
+        members: IManifestResource[];
         parentRange: IRange;
         path: string;
-        ranges: IRange[];
         treeNode: ITreeNode;
     }
 }

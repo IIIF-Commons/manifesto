@@ -1,10 +1,11 @@
 
 module Manifesto {
     export class Range extends ManifestResource implements IRange{
-        canvases: ICanvas[];
+        _canvases: ICanvas[] = null;
+        _ranges: IRange[] = null;
         parentRange: Range;
         path: string;
-        ranges: Range[] = [];
+        members: IManifestResource[] = [];
         treeNode: ITreeNode;
 
         constructor(jsonld?: any, options?: IManifestoOptions){
@@ -17,6 +18,22 @@ module Manifesto {
             }
 
             return [];
+        }
+
+        getCanvases(): ICanvas[] {
+            if (this._canvases){
+                return this._canvases;
+            }
+            
+            return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
+        }
+
+        getRanges(): IRange[] {
+            if (this._ranges){
+                return this._ranges;
+            }
+            
+            return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
         }
 
         getViewingDirection(): ViewingDirection {
@@ -40,9 +57,11 @@ module Manifesto {
             treeRoot.data = this;
             this.treeNode = treeRoot;
 
-            if (this.ranges){
-                for (var i = 0; i < this.ranges.length; i++){
-                    var range: IRange = this.ranges[i];
+            var ranges: IRange[] = this.getRanges();
+
+            if (ranges && ranges.length){
+                for (var i = 0; i < ranges.length; i++){
+                    var range: IRange = ranges[i];
 
                     var node: ITreeNode = new TreeNode();
                     treeRoot.addNode(node);
@@ -62,10 +81,12 @@ module Manifesto {
             node.data.type = TreeNodeType.RANGE.toString();
             range.treeNode = node;
 
-            if (range.ranges) {
+            var ranges: IRange[] = range.getRanges();
 
-                for (var i = 0; i < range.ranges.length; i++) {
-                    var childRange = range.ranges[i];
+            if (ranges && ranges.length) {
+
+                for (var i = 0; i < ranges.length; i++) {
+                    var childRange = ranges[i];
 
                     var childNode: ITreeNode = new TreeNode();
                     node.addNode(childNode);

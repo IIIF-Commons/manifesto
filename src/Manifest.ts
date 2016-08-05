@@ -84,6 +84,11 @@ module Manifesto {
             return null;
         }
 
+        private _parseRangeCanvas(json: any, range: IRange): void {
+            //var canvas: IJSONLDResource = new JSONLDResource(json);
+            //range.members.push(<IManifestResource>canvas);
+        }
+
         private _parseRanges(r: any, path: string, parentRange?: IRange): void{
             var range: IRange;
 
@@ -98,12 +103,35 @@ module Manifesto {
             if (!parentRange){
                 this._topRanges.push(range);
             } else {
-                parentRange.ranges.push(range);
+                parentRange.members.push(range);
             }
 
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
                     this._parseRanges(r.ranges[j], path + '/' + j, range);
+                }
+            }
+
+            if (r.canvases) {
+                for (var k = 0; k < r.canvases.length; k++) {
+                    this._parseRangeCanvas(r.canvases[k], r);
+                }
+            }
+
+            if (r.members) {
+                for (var l = 0; l < r.members.length; l++) {
+                    var child = r.members[l];
+
+                    /// only add to members if not already parsed from backwards-compatible ranges/canvases arrays
+                    if (r.members.en().where(m => m.id === child.id).first()) {
+                        continue;
+                    }
+
+                    if (child['@type'].toLowerCase() === 'sc:range'){
+                        this._parseRanges(child, path + '/' + l, range);
+                    } else if (child['@type'].toLowerCase() === 'sc:canvas'){
+                        this._parseRangeCanvas(child, r);
+                    }
                 }
             }
         }
@@ -121,8 +149,9 @@ module Manifesto {
                 var topRange: IRange = topRanges[i];
                 if (topRange.id){
                     this._allRanges.push(topRange); // it might be a placeholder root range
-                }                
-                this._allRanges = this._allRanges.concat(topRange.ranges.en().traverseUnique(range => range.ranges).toArray());
+                }
+                var subRanges: IRange[] = topRange.getRanges();        
+                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(range => range.getRanges()).toArray());
             }
 
             return this._allRanges;
