@@ -122,7 +122,7 @@ module Manifesto {
                 for (var l = 0; l < r.members.length; l++) {
                     var child = r.members[l];
 
-                    /// only add to members if not already parsed from backwards-compatible ranges/canvases arrays
+                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
                     if (r.members.en().where(m => m.id === child.id).first()) {
                         continue;
                     }
