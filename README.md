@@ -27,12 +27,5 @@ http://blog.edsilv.com/manifesto/
 
     git clone https://github.com/viewdir/manifesto.git
     npm install
-    bower install
     gulp
     gulp test
-
-###Building
-
-    gulp
-    gulp compressClient
-    gulp compressServer
