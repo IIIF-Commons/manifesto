@@ -146,6 +146,7 @@ declare module Manifesto {
         static TRACKINGEXTENSIONS: ServiceProfile;
         static UIEXTENSIONS: ServiceProfile;
         static PRINTEXTENSIONS: ServiceProfile;
+        static SHAREEXTENSIONS: ServiceProfile;
         autoComplete(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
         iiif1ImageLevel2(): ServiceProfile;
@@ -170,6 +171,7 @@ declare module Manifesto {
         trackingExtensions(): ServiceProfile;
         uiExtensions(): ServiceProfile;
         printExtensions(): ServiceProfile;
+        shareExtensions(): ServiceProfile;
     }
 }
 
