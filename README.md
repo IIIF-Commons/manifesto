@@ -15,7 +15,7 @@ Getting Started
 
 ###Documentation
 
-http://viewdir.github.io/manifesto-docs/
+https://viewdir.github.io/manifesto/
 
 
 ###Tutorial
