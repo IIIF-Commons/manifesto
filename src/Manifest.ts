@@ -4,38 +4,71 @@ var _map = require("lodash.map");
 module Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
-        public rootRange: IRange;
-        private _ranges: IRange[] = null;
+        private _allRanges: IRange[] = null; 
         private _sequences: ISequence[] = null;
+        private _topRanges: IRange[] = [];
 
-        constructor(jsonld: any, options?: IManifestoOptions) {
+        constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);
 
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                var r: any = this._getRootRange();
-                this._parseRanges(r, '');
+                var topRanges: any[] = this._getTopRanges();
+
+                for (var i = 0; i < topRanges.length; i++) {
+                    var range: any = topRanges[i]; 
+                    this._parseRanges(range, String(i));
+                }
             }
         }
 
-        private _getRootRange(): IRange {
-            var range: any;
+        public getDefaultTree(): ITreeNode {
+            
+            super.getDefaultTree();
+
+            this.defaultTree.data.type = TreeNodeType.MANIFEST.toString();
+
+            if (!this.isLoaded){
+                return this.defaultTree;
+            }
+
+            var topRanges: IRange[] = this.getTopRanges();
+
+            // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
+            if (topRanges.length){
+                topRanges[0].getTree(this.defaultTree);
+            }
+            
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+
+            return this.defaultTree;
+        }
+
+        private _getTopRanges(): any[] {
+
+            var topRanges: any[] = [];
 
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
 
                 for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var r = this.__jsonld.structures[i];
-                    if (r.viewingHint === ViewingHint.TOP.toString()){
-                        range = r;
+                    var json: any = this.__jsonld.structures[i];
+                    if (json.viewingHint === ViewingHint.TOP.toString()){
+                        topRanges.push(json);
                     }
                 }
 
-                if (!range){
-                    range = {};
+                // if no viewingHint="top" range was found, create a default one
+                if (!topRanges.length){
+                    var range: any = {};
                     range.ranges = this.__jsonld.structures;
+                    topRanges.push(range);
                 }
             }
 
-            return range;
+            return topRanges;
+        }
+
+        public getTopRanges(): IRange[] {
+            return this._topRanges;
         }
 
         private _getRangeById(id: string): IRange {
@@ -51,6 +84,12 @@ module Manifesto {
             return null;
         }
 
+        private _parseRangeCanvas(json: any, range: IRange): void {
+            // todo: currently this isn't needed
+            //var canvas: IJSONLDResource = new JSONLDResource(json);
+            //range.members.push(<IManifestResource>canvas);
+        }
+
         private _parseRanges(r: any, path: string, parentRange?: IRange): void{
             var range: IRange;
 
@@ -59,41 +98,69 @@ module Manifesto {
             }
 
             range = new Range(r, this.options);
-
-            // if no parent range is passed, assign the new range to manifest.rootRange
-            if (!parentRange){
-                this.rootRange = range;
-            } else {
-                range.parentRange = parentRange;
-                parentRange.ranges.push(range);
-            }
-
+            range.parentRange = parentRange;
             range.path = path;
+
+            if (!parentRange){
+                this._topRanges.push(range);
+            } else {
+                parentRange.members.push(range);
+            }
 
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
                     this._parseRanges(r.ranges[j], path + '/' + j, range);
                 }
             }
-        }
 
-        getRanges(): IRange[] {
-
-            if (this._ranges != null)
-                return this._ranges;
-
-            this._ranges = [];
-
-            if (this.rootRange){
-                this._ranges = this.rootRange.ranges.en().traverseUnique(range => range.ranges).toArray();
+            if (r.canvases) {
+                for (var k = 0; k < r.canvases.length; k++) {
+                    this._parseRangeCanvas(r.canvases[k], r);
+                }
             }
 
-            return this._ranges;
+            if (r.members) {
+                for (var l = 0; l < r.members.length; l++) {
+                    var child = r.members[l];
+
+                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
+                    if (r.members.en().where(m => m.id === child.id).first()) {
+                        continue;
+                    }
+
+                    if (child['@type'].toLowerCase() === 'sc:range'){
+                        this._parseRanges(child, path + '/' + l, range);
+                    } else if (child['@type'].toLowerCase() === 'sc:canvas'){
+                        this._parseRangeCanvas(child, r);
+                    }
+                }
+            }
+        }
+
+        getAllRanges(): IRange[] {
+
+            if (this._allRanges != null)
+                return this._allRanges;
+
+            this._allRanges = [];
+
+            var topRanges: IRange[] = this.getTopRanges();
+
+            for (var i = 0; i < topRanges.length; i++) {
+                var topRange: IRange = topRanges[i];
+                if (topRange.id){
+                    this._allRanges.push(topRange); // it might be a placeholder root range
+                }
+                var subRanges: IRange[] = topRange.getRanges();        
+                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(range => range.getRanges()).toArray());
+            }
+
+            return this._allRanges;
         }
 
         getRangeById(id: string): IRange {
 
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
 
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
@@ -107,7 +174,7 @@ module Manifesto {
 
         getRangeByPath(path: string): IRange{
 
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
 
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
@@ -144,56 +211,6 @@ module Manifesto {
 
         getTotalSequences(): number{
             return this.getSequences().length;
-        }
-
-        getTree(): ITreeNode{
-
-            super.getTree();
-
-            this.treeRoot.data.type = TreeNodeType.MANIFEST.toString();
-
-            if (!this.isLoaded){
-                return this.treeRoot;
-            }
-
-            if (!this.rootRange) return this.treeRoot;
-
-            this.treeRoot.data = this.rootRange;
-            this.rootRange.treeNode = this.treeRoot;
-
-            if (this.rootRange.ranges){
-                for (var i = 0; i < this.rootRange.ranges.length; i++){
-                    var range: IRange = this.rootRange.ranges[i];
-
-                    var node: ITreeNode = new TreeNode();
-                    this.treeRoot.addNode(node);
-
-                    this._parseTreeNode(node, range);
-                }
-            }
-
-            this.generateTreeNodeIds(this.treeRoot);
-
-            return this.treeRoot;
-        }
-
-        private _parseTreeNode(node: ITreeNode, range: IRange): void {
-            node.label = range.getLabel();
-            node.data = range;
-            node.data.type = TreeNodeType.RANGE.toString();
-            range.treeNode = node;
-
-            if (range.ranges) {
-
-                for (var i = 0; i < range.ranges.length; i++) {
-                    var childRange = range.ranges[i];
-
-                    var childNode: ITreeNode = new TreeNode();
-                    node.addNode(childNode);
-
-                    this._parseTreeNode(childNode, childRange);
-                }
-            }
         }
 
         getManifestType(): ManifestType {

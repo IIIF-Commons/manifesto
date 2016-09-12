@@ -3,9 +3,13 @@ module Manifesto {
         externalResource: IExternalResource;
         options: IManifestoOptions;
 
-        constructor(jsonld: any, options: IManifestoOptions) {
+        constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld);
             this.options = options;
+        }
+
+        getIIIFResourceType(): IIIFResourceType {
+            return new IIIFResourceType(this.getProperty('@type'));
         }
 
         getLabel(): string {
@@ -80,6 +84,14 @@ module Manifesto {
 
         getServices(): IService[] {
             return Utils.getServices(this);
+        }
+
+        isCanvas(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
+        }
+
+        isRange(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
         }
     }
 }

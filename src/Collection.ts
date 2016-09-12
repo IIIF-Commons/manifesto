@@ -1,72 +1,96 @@
 module Manifesto {
     export class Collection extends IIIFResource implements ICollection {
-        public collections: ICollection[] = [];
-        public manifests: IManifest[] = [];
+        public members: IIIIFResource[] = [];
+        private _collections: ICollection[] = null;
+        private _manifests: IManifest[] = null;
 
-        constructor(jsonld: any, options: IManifestoOptions) {
+        constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);
             jsonld.__collection = this;
         }
 
+        getCollections(): ICollection[]{
+            if (this._collections){
+                return this._collections;
+            }
+            
+            return this._collections = <ICollection[]>this.members.en().where(m => m.isCollection()).toArray();
+        }
+
+        getManifests(): IManifest[]{
+            if (this._manifests){
+                return this._manifests;
+            }
+            
+            return this._manifests = <IManifest[]>this.members.en().where(m => m.isManifest()).toArray();
+        }
+
         getCollectionByIndex(collectionIndex: number): Promise<ICollection>  {
-            var collection: ICollection = this.collections[collectionIndex];
+            var collection: ICollection = this.getCollections()[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         }
 
         getManifestByIndex(manifestIndex: number): Promise<IManifest> {
-            var manifest: IManifest = this.manifests[manifestIndex];
+            var manifest: IManifest = this.getManifests()[manifestIndex];
             manifest.options.index = manifestIndex;
             return manifest.load();
         }
 
-        getTotalCollections(): number{
-            return this.collections.length;
+        getTotalCollections(): number {
+            return this.getCollections().length;
         }
 
-        getTotalManifests(): number{
-            return this.manifests.length;
+        getTotalManifests(): number {
+            return this.getManifests().length;
         }
 
-        getTree(): ITreeNode{
+        getTotalMembers(): number {
+            return this.members.length;
+        }
 
-            super.getTree();
+        /**
+         * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
+         */
+        getDefaultTree(): ITreeNode{
 
-            this.treeRoot.data.type = TreeNodeType.COLLECTION.toString();
+            super.getDefaultTree();
+            
+            this.defaultTree.data.type = TreeNodeType.COLLECTION.toString();
 
             this._parseManifests(this);
             this._parseCollections(this);
 
-            this.generateTreeNodeIds(this.treeRoot);
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
 
-            return this.treeRoot;
+            return this.defaultTree;
         }
 
         private _parseManifests(parentCollection: ICollection) {
-            if (parentCollection.manifests && parentCollection.manifests.length) {
-                for (var i = 0; i < parentCollection.manifests.length; i++) {
-                    var manifest = parentCollection.manifests[i];
-                    var tree: ITreeNode = manifest.getTree();
+            if (parentCollection.getManifests() && parentCollection.getManifests().length) {
+                for (var i = 0; i < parentCollection.getManifests().length; i++) {
+                    var manifest = parentCollection.getManifests()[i];
+                    var tree: ITreeNode = manifest.getDefaultTree();
                     tree.label = manifest.parentLabel || manifest.getLabel() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
                     tree.data.type = TreeNodeType.MANIFEST.toString();
-                    parentCollection.treeRoot.addNode(tree);
+                    parentCollection.defaultTree.addNode(tree);
                 }
             }
         }
 
         private _parseCollections(parentCollection: ICollection) {
-            if (parentCollection.collections && parentCollection.collections.length) {
-                for (var i = 0; i < parentCollection.collections.length; i++) {
-                    var collection = parentCollection.collections[i];
-                    var tree: ITreeNode = collection.getTree();
+            if (parentCollection.getCollections() && parentCollection.getCollections().length) {
+                for (var i = 0; i < parentCollection.getCollections().length; i++) {
+                    var collection = parentCollection.getCollections()[i];
+                    var tree: ITreeNode = collection.getDefaultTree();
                     tree.label = collection.parentLabel || collection.getLabel() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
                     tree.data.type = TreeNodeType.COLLECTION.toString();
-                    parentCollection.treeRoot.addNode(tree);
+                    parentCollection.defaultTree.addNode(tree);
 
                     this._parseCollections(collection);
                 }

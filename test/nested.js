@@ -54,7 +54,7 @@ describe('#firstCollectionHasEmptyManifestCount', function() {
 
 describe('#getTree', function() {
     it('has a tree', function () {
-        var tree = collection.getTree();
+        var tree = collection.getDefaultTree();
         expect(tree).to.exist;
     });
 });

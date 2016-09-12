@@ -61,6 +61,24 @@ module Manifesto {
             return null;
         }
 
+        static generateTreeNodeIds(treeNode: ITreeNode, index: number = 0): void {
+
+            var id: string;
+
+            if (!treeNode.parentNode){
+                id = '0';
+            } else {
+                id = treeNode.parentNode.id + "-" + index;
+            }
+
+            treeNode.id = id;
+
+            for (var i = 0; i < treeNode.nodes.length; i++){
+                var n: ITreeNode = treeNode.nodes[i];
+                Utils.generateTreeNodeIds(n, i);
+            }
+        }
+
         static loadResource (uri: string): Promise<string> {
 
             return new Promise<any>((resolve, reject) => {

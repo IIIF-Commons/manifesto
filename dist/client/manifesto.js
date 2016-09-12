@@ -1,4 +1,4 @@
-// manifesto.js v0.2.0 https://github.com/universalviewer/manifesto
+// manifesto.js v0.2.1 https://github.com/viewdir/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 var Manifesto;
@@ -147,14 +147,22 @@ var Manifesto;
             _super.apply(this, arguments);
         }
         // todo: use getters when ES3 target is no longer required.
-        IIIFResourceType.prototype.manifest = function () {
-            return new IIIFResourceType(IIIFResourceType.MANIFEST.toString());
+        IIIFResourceType.prototype.canvas = function () {
+            return new IIIFResourceType(IIIFResourceType.CANVAS.toString());
         };
         IIIFResourceType.prototype.collection = function () {
             return new IIIFResourceType(IIIFResourceType.COLLECTION.toString());
         };
-        IIIFResourceType.MANIFEST = new IIIFResourceType("sc:manifest");
+        IIIFResourceType.prototype.manifest = function () {
+            return new IIIFResourceType(IIIFResourceType.MANIFEST.toString());
+        };
+        IIIFResourceType.prototype.range = function () {
+            return new IIIFResourceType(IIIFResourceType.RANGE.toString());
+        };
+        IIIFResourceType.CANVAS = new IIIFResourceType("sc:canvas");
         IIIFResourceType.COLLECTION = new IIIFResourceType("sc:collection");
+        IIIFResourceType.MANIFEST = new IIIFResourceType("sc:manifest");
+        IIIFResourceType.RANGE = new IIIFResourceType("sc:range");
         return IIIFResourceType;
     }(Manifesto.StringValue));
     Manifesto.IIIFResourceType = IIIFResourceType;
@@ -350,6 +358,12 @@ var Manifesto;
         ServiceProfile.prototype.uiExtensions = function () {
             return new ServiceProfile(ServiceProfile.UIEXTENSIONS.toString());
         };
+        ServiceProfile.prototype.printExtensions = function () {
+            return new ServiceProfile(ServiceProfile.PRINTEXTENSIONS.toString());
+        };
+        ServiceProfile.prototype.shareExtensions = function () {
+            return new ServiceProfile(ServiceProfile.SHAREEXTENSIONS.toString());
+        };
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");
         ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
@@ -385,6 +399,8 @@ var Manifesto;
         ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
         ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
         ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
+        ServiceProfile.PRINTEXTENSIONS = new ServiceProfile("http://universalviewer.io/print-extensions-profile");
+        ServiceProfile.SHAREEXTENSIONS = new ServiceProfile("http://universalviewer.io/share-extensions-profile");
         return ServiceProfile;
     }(Manifesto.StringValue));
     Manifesto.ServiceProfile = ServiceProfile;
@@ -475,7 +491,10 @@ var Manifesto;
             this.id = this.getProperty('@id');
         }
         JSONLDResource.prototype.getProperty = function (name) {
-            return this.__jsonld[name];
+            if (this.__jsonld) {
+                return this.__jsonld[name];
+            }
+            return null;
         };
         return JSONLDResource;
     }());
@@ -495,6 +514,9 @@ var Manifesto;
             _super.call(this, jsonld);
             this.options = options;
         }
+        ManifestResource.prototype.getIIIFResourceType = function () {
+            return new Manifesto.IIIFResourceType(this.getProperty('@type'));
+        };
         ManifestResource.prototype.getLabel = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
@@ -553,6 +575,12 @@ var Manifesto;
         ManifestResource.prototype.getServices = function () {
             return Manifesto.Utils.getServices(this);
         };
+        ManifestResource.prototype.isCanvas = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
+        };
+        ManifestResource.prototype.isRange = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
+        };
         return ManifestResource;
     }(Manifesto.JSONLDResource));
     Manifesto.ManifestResource = ManifestResource;
@@ -603,6 +631,7 @@ var Manifesto;
         function Canvas(jsonld, options) {
             _super.call(this, jsonld, options);
         }
+        // http://iiif.io/api/image/2.1/#canonical-uri-syntax
         Canvas.prototype.getCanonicalImageUri = function (w) {
             var id;
             var region = 'full';
@@ -638,6 +667,7 @@ var Manifesto;
                         quality = Manifesto.Utils.getImageQuality(service.getProfile());
                     }
                 }
+                // todo: this is not compatible and should be moved to getThumbUri
                 if (!id) {
                     return "undefined" == typeof this.__jsonld.thumbnail
                         ? null : this.__jsonld.thumbnail;
@@ -661,9 +691,11 @@ var Manifesto;
         Canvas.prototype.getIndex = function () {
             return this.getProperty('index');
         };
-        // todo: Prefer thumbnail service to image service if supplied and if
-        // todo: the thumbnail service can provide a satisfactory size +/- x pixels.
-        // this is used to get thumb URIs for databinding *before* the info.json has been requested
+        // Prefer thumbnail service to image service if supplied and if
+        // the thumbnail service can provide a satisfactory size +/- x pixels.
+        // this is used to get thumb URIs *before* the info.json has been requested
+        // and populate thumbnails in a viewer.
+        // the publisher may also provide pre-computed fixed-size thumbs for better performance.
         //getThumbUri(width: number): string {
         //
         //    var uri;
@@ -724,21 +756,6 @@ var Manifesto;
             };
             this.options = _assign(defaultOptions, options);
         }
-        IIIFResource.prototype.generateTreeNodeIds = function (treeNode, index) {
-            if (index === void 0) { index = 0; }
-            var id;
-            if (!treeNode.parentNode) {
-                id = '0';
-            }
-            else {
-                id = treeNode.parentNode.id + "-" + index;
-            }
-            treeNode.id = id;
-            for (var i = 0; i < treeNode.nodes.length; i++) {
-                var n = treeNode.nodes[i];
-                this.generateTreeNodeIds(n, i);
-            }
-        };
         IIIFResource.prototype.getAttribution = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('attribution'), this.options.locale);
         };
@@ -771,10 +788,16 @@ var Manifesto;
         IIIFResource.prototype.getLabel = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
-        IIIFResource.prototype.getTree = function () {
-            this.treeRoot = new Manifesto.TreeNode('root');
-            this.treeRoot.data = this;
-            return this.treeRoot;
+        IIIFResource.prototype.getDefaultTree = function () {
+            this.defaultTree = new Manifesto.TreeNode('root');
+            this.defaultTree.data = this;
+            return this.defaultTree;
+        };
+        IIIFResource.prototype.isCollection = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+        };
+        IIIFResource.prototype.isManifest = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
         };
         IIIFResource.prototype.load = function () {
             var that = this;
@@ -814,28 +837,51 @@ var Manifesto;
         function Manifest(jsonld, options) {
             _super.call(this, jsonld, options);
             this.index = 0;
-            this._ranges = null;
+            this._allRanges = null;
             this._sequences = null;
+            this._topRanges = [];
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                var r = this._getRootRange();
-                this._parseRanges(r, '');
+                var topRanges = this._getTopRanges();
+                for (var i = 0; i < topRanges.length; i++) {
+                    var range = topRanges[i];
+                    this._parseRanges(range, String(i));
+                }
             }
         }
-        Manifest.prototype._getRootRange = function () {
-            var range;
+        Manifest.prototype.getDefaultTree = function () {
+            _super.prototype.getDefaultTree.call(this);
+            this.defaultTree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
+            if (!this.isLoaded) {
+                return this.defaultTree;
+            }
+            var topRanges = this.getTopRanges();
+            // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
+            if (topRanges.length) {
+                topRanges[0].getTree(this.defaultTree);
+            }
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+            return this.defaultTree;
+        };
+        Manifest.prototype._getTopRanges = function () {
+            var topRanges = [];
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var r = this.__jsonld.structures[i];
-                    if (r.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
-                        range = r;
+                    var json = this.__jsonld.structures[i];
+                    if (json.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
+                        topRanges.push(json);
                     }
                 }
-                if (!range) {
-                    range = {};
+                // if no viewingHint="top" range was found, create a default one
+                if (!topRanges.length) {
+                    var range = {};
                     range.ranges = this.__jsonld.structures;
+                    topRanges.push(range);
                 }
             }
-            return range;
+            return topRanges;
+        };
+        Manifest.prototype.getTopRanges = function () {
+            return this._topRanges;
         };
         Manifest.prototype._getRangeById = function (id) {
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
@@ -848,38 +894,68 @@ var Manifesto;
             }
             return null;
         };
+        Manifest.prototype._parseRangeCanvas = function (json, range) {
+            // todo: currently this isn't needed
+            //var canvas: IJSONLDResource = new JSONLDResource(json);
+            //range.members.push(<IManifestResource>canvas);
+        };
         Manifest.prototype._parseRanges = function (r, path, parentRange) {
             var range;
             if (_isString(r)) {
                 r = this._getRangeById(r);
             }
             range = new Manifesto.Range(r, this.options);
-            // if no parent range is passed, assign the new range to manifest.rootRange
+            range.parentRange = parentRange;
+            range.path = path;
             if (!parentRange) {
-                this.rootRange = range;
+                this._topRanges.push(range);
             }
             else {
-                range.parentRange = parentRange;
-                parentRange.ranges.push(range);
+                parentRange.members.push(range);
             }
-            range.path = path;
             if (r.ranges) {
                 for (var j = 0; j < r.ranges.length; j++) {
                     this._parseRanges(r.ranges[j], path + '/' + j, range);
                 }
             }
-        };
-        Manifest.prototype.getRanges = function () {
-            if (this._ranges != null)
-                return this._ranges;
-            this._ranges = [];
-            if (this.rootRange) {
-                this._ranges = this.rootRange.ranges.en().traverseUnique(function (range) { return range.ranges; }).toArray();
+            if (r.canvases) {
+                for (var k = 0; k < r.canvases.length; k++) {
+                    this._parseRangeCanvas(r.canvases[k], r);
+                }
             }
-            return this._ranges;
+            if (r.members) {
+                for (var l = 0; l < r.members.length; l++) {
+                    var child = r.members[l];
+                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
+                    if (r.members.en().where(function (m) { return m.id === child.id; }).first()) {
+                        continue;
+                    }
+                    if (child['@type'].toLowerCase() === 'sc:range') {
+                        this._parseRanges(child, path + '/' + l, range);
+                    }
+                    else if (child['@type'].toLowerCase() === 'sc:canvas') {
+                        this._parseRangeCanvas(child, r);
+                    }
+                }
+            }
+        };
+        Manifest.prototype.getAllRanges = function () {
+            if (this._allRanges != null)
+                return this._allRanges;
+            this._allRanges = [];
+            var topRanges = this.getTopRanges();
+            for (var i = 0; i < topRanges.length; i++) {
+                var topRange = topRanges[i];
+                if (topRange.id) {
+                    this._allRanges.push(topRange); // it might be a placeholder root range
+                }
+                var subRanges = topRange.getRanges();
+                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(function (range) { return range.getRanges(); }).toArray());
+            }
+            return this._allRanges;
         };
         Manifest.prototype.getRangeById = function (id) {
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
                 if (range.id === id) {
@@ -889,7 +965,7 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getRangeByPath = function (path) {
-            var ranges = this.getRanges();
+            var ranges = this.getAllRanges();
             for (var i = 0; i < ranges.length; i++) {
                 var range = ranges[i];
                 if (range.path === path) {
@@ -918,41 +994,6 @@ var Manifesto;
         };
         Manifest.prototype.getTotalSequences = function () {
             return this.getSequences().length;
-        };
-        Manifest.prototype.getTree = function () {
-            _super.prototype.getTree.call(this);
-            this.treeRoot.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
-            if (!this.isLoaded) {
-                return this.treeRoot;
-            }
-            if (!this.rootRange)
-                return this.treeRoot;
-            this.treeRoot.data = this.rootRange;
-            this.rootRange.treeNode = this.treeRoot;
-            if (this.rootRange.ranges) {
-                for (var i = 0; i < this.rootRange.ranges.length; i++) {
-                    var range = this.rootRange.ranges[i];
-                    var node = new Manifesto.TreeNode();
-                    this.treeRoot.addNode(node);
-                    this._parseTreeNode(node, range);
-                }
-            }
-            this.generateTreeNodeIds(this.treeRoot);
-            return this.treeRoot;
-        };
-        Manifest.prototype._parseTreeNode = function (node, range) {
-            node.label = range.getLabel();
-            node.data = range;
-            node.data.type = Manifesto.TreeNodeType.RANGE.toString();
-            range.treeNode = node;
-            if (range.ranges) {
-                for (var i = 0; i < range.ranges.length; i++) {
-                    var childRange = range.ranges[i];
-                    var childNode = new Manifesto.TreeNode();
-                    node.addNode(childNode);
-                    this._parseTreeNode(childNode, childRange);
-                }
-            }
         };
         Manifest.prototype.getManifestType = function () {
             var service = this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
@@ -999,58 +1040,77 @@ var Manifesto;
         __extends(Collection, _super);
         function Collection(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.collections = [];
-            this.manifests = [];
+            this.members = [];
+            this._collections = null;
+            this._manifests = null;
             jsonld.__collection = this;
         }
+        Collection.prototype.getCollections = function () {
+            if (this._collections) {
+                return this._collections;
+            }
+            return this._collections = this.members.en().where(function (m) { return m.isCollection(); }).toArray();
+        };
+        Collection.prototype.getManifests = function () {
+            if (this._manifests) {
+                return this._manifests;
+            }
+            return this._manifests = this.members.en().where(function (m) { return m.isManifest(); }).toArray();
+        };
         Collection.prototype.getCollectionByIndex = function (collectionIndex) {
-            var collection = this.collections[collectionIndex];
+            var collection = this.getCollections()[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         };
         Collection.prototype.getManifestByIndex = function (manifestIndex) {
-            var manifest = this.manifests[manifestIndex];
+            var manifest = this.getManifests()[manifestIndex];
             manifest.options.index = manifestIndex;
             return manifest.load();
         };
         Collection.prototype.getTotalCollections = function () {
-            return this.collections.length;
+            return this.getCollections().length;
         };
         Collection.prototype.getTotalManifests = function () {
-            return this.manifests.length;
+            return this.getManifests().length;
         };
-        Collection.prototype.getTree = function () {
-            _super.prototype.getTree.call(this);
-            this.treeRoot.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
+        Collection.prototype.getTotalMembers = function () {
+            return this.members.length;
+        };
+        /**
+         * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
+         */
+        Collection.prototype.getDefaultTree = function () {
+            _super.prototype.getDefaultTree.call(this);
+            this.defaultTree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
             this._parseManifests(this);
             this._parseCollections(this);
-            this.generateTreeNodeIds(this.treeRoot);
-            return this.treeRoot;
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+            return this.defaultTree;
         };
         Collection.prototype._parseManifests = function (parentCollection) {
-            if (parentCollection.manifests && parentCollection.manifests.length) {
-                for (var i = 0; i < parentCollection.manifests.length; i++) {
-                    var manifest = parentCollection.manifests[i];
-                    var tree = manifest.getTree();
+            if (parentCollection.getManifests() && parentCollection.getManifests().length) {
+                for (var i = 0; i < parentCollection.getManifests().length; i++) {
+                    var manifest = parentCollection.getManifests()[i];
+                    var tree = manifest.getDefaultTree();
                     tree.label = manifest.parentLabel || manifest.getLabel() || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
                     tree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
-                    parentCollection.treeRoot.addNode(tree);
+                    parentCollection.defaultTree.addNode(tree);
                 }
             }
         };
         Collection.prototype._parseCollections = function (parentCollection) {
-            if (parentCollection.collections && parentCollection.collections.length) {
-                for (var i = 0; i < parentCollection.collections.length; i++) {
-                    var collection = parentCollection.collections[i];
-                    var tree = collection.getTree();
+            if (parentCollection.getCollections() && parentCollection.getCollections().length) {
+                for (var i = 0; i < parentCollection.getCollections().length; i++) {
+                    var collection = parentCollection.getCollections()[i];
+                    var tree = collection.getDefaultTree();
                     tree.label = collection.parentLabel || collection.getLabel() || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
                     tree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
-                    parentCollection.treeRoot.addNode(tree);
+                    parentCollection.defaultTree.addNode(tree);
                     this._parseCollections(collection);
                 }
             }
@@ -1071,13 +1131,27 @@ var Manifesto;
         __extends(Range, _super);
         function Range(jsonld, options) {
             _super.call(this, jsonld, options);
-            this.ranges = [];
+            this._canvases = null;
+            this._ranges = null;
+            this.members = [];
         }
         Range.prototype.getCanvasIds = function () {
             if (this.__jsonld.canvases) {
                 return this.__jsonld.canvases;
             }
             return [];
+        };
+        Range.prototype.getCanvases = function () {
+            if (this._canvases) {
+                return this._canvases;
+            }
+            return this._canvases = this.members.en().where(function (m) { return m.isCanvas(); }).toArray();
+        };
+        Range.prototype.getRanges = function () {
+            if (this._ranges) {
+                return this._ranges;
+            }
+            return this._ranges = this.members.en().where(function (m) { return m.isRange(); }).toArray();
         };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
@@ -1090,6 +1164,36 @@ var Manifesto;
                 return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
             }
             return null;
+        };
+        Range.prototype.getTree = function (treeRoot) {
+            treeRoot.data = this;
+            this.treeNode = treeRoot;
+            var ranges = this.getRanges();
+            if (ranges && ranges.length) {
+                for (var i = 0; i < ranges.length; i++) {
+                    var range = ranges[i];
+                    var node = new Manifesto.TreeNode();
+                    treeRoot.addNode(node);
+                    this._parseTreeNode(node, range);
+                }
+            }
+            Manifesto.Utils.generateTreeNodeIds(treeRoot);
+            return treeRoot;
+        };
+        Range.prototype._parseTreeNode = function (node, range) {
+            node.label = range.getLabel();
+            node.data = range;
+            node.data.type = Manifesto.TreeNodeType.RANGE.toString();
+            range.treeNode = node;
+            var ranges = range.getRanges();
+            if (ranges && ranges.length) {
+                for (var i = 0; i < ranges.length; i++) {
+                    var childRange = ranges[i];
+                    var childNode = new Manifesto.TreeNode();
+                    node.addNode(childNode);
+                    this._parseTreeNode(childNode, childRange);
+                }
+            }
         };
         return Range;
     }(Manifesto.ManifestResource));
@@ -1382,6 +1486,7 @@ var Manifesto;
             }
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
+            this.parseMembers(collection, options);
             return collection;
         };
         Deserialiser.parseCollections = function (collection, options) {
@@ -1394,7 +1499,7 @@ var Manifesto;
                     var child = this.parseCollection(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
-                    collection.collections.push(child);
+                    collection.members.push(child);
                 }
             }
         };
@@ -1409,7 +1514,33 @@ var Manifesto;
                     var child = this.parseManifest(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
-                    collection.manifests.push(child);
+                    collection.members.push(child);
+                }
+            }
+        };
+        Deserialiser.parseMember = function (json, options) {
+            if (json['@type'].toLowerCase() === 'sc:manifest') {
+                return this.parseManifest(json, options);
+            }
+            else if (json['@type'].toLowerCase() === 'sc:collection') {
+                return this.parseCollection(json, options);
+            }
+        };
+        Deserialiser.parseMembers = function (collection, options) {
+            var children = collection.__jsonld.members;
+            if (children) {
+                for (var i = 0; i < children.length; i++) {
+                    if (options) {
+                        options.index = i;
+                    }
+                    var child = this.parseMember(children[i], options);
+                    // only add to members if not already parsed from backwards-compatible collections/manifests arrays
+                    if (collection.members.en().where(function (m) { return m.id === child.id; }).first()) {
+                        continue;
+                    }
+                    child.index = i;
+                    child.parentCollection = collection;
+                    collection.members.push(child);
                 }
             }
         };
@@ -1599,6 +1730,21 @@ var Manifesto;
                 }
             }
             return null;
+        };
+        Utils.generateTreeNodeIds = function (treeNode, index) {
+            if (index === void 0) { index = 0; }
+            var id;
+            if (!treeNode.parentNode) {
+                id = '0';
+            }
+            else {
+                id = treeNode.parentNode.id + "-" + index;
+            }
+            treeNode.id = id;
+            for (var i = 0; i < treeNode.nodes.length; i++) {
+                var n = treeNode.nodes[i];
+                Utils.generateTreeNodeIds(n, i);
+            }
         };
         Utils.loadResource = function (uri) {
             return new Promise(function (resolve, reject) {
@@ -2434,7 +2580,9 @@ function fromArrayBuffer (that, array, byteOffset, length) {
     throw new RangeError('\'length\' is out of bounds')
   }
 
-  if (length === undefined) {
+  if (byteOffset === undefined && length === undefined) {
+    array = new Uint8Array(array)
+  } else if (length === undefined) {
     array = new Uint8Array(array, byteOffset)
   } else {
     array = new Uint8Array(array, byteOffset, length)

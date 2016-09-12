@@ -31,6 +31,13 @@ describe('#hasManifestType', function() {
     });
 });
 
+describe('#isManifest', function() {
+    it('is a manifest', function() {
+        expect(manifest.isManifest()).to.equal(true);
+        expect(manifest.isCollection()).to.equal(false); 
+    });
+});
+
 describe('#hasMetadata', function() {
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
@@ -40,7 +47,7 @@ describe('#hasMetadata', function() {
 
 describe('#hasTree', function() {
     it('has a tree', function () {
-        var tree = manifest.getTree();
+        var tree = manifest.getDefaultTree();
         expect(tree).to.exist;
     });
 });
@@ -90,7 +97,7 @@ describe('#hasCanvas', function() {
 
 describe('#rangeHasCanvas', function() {
     it('range has a canvas', function() {
-        var range = manifest.getRanges()[0];
+        var range = manifest.getAllRanges()[0];
         range.id.should.equal("http://wellcomelibrary.org/iiif/b18035978/range/r-0");
         var canvasId = range.getCanvasIds()[0];
         canvasId.should.equal("http://wellcomelibrary.org/iiif/b18035978/canvas/c0");

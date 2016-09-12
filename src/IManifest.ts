@@ -1,16 +1,16 @@
 module Manifesto {
     export interface IManifest extends Manifesto.IIIIFResource {
+        getAllRanges(): IRange[];
+        getManifestType(): ManifestType;
         getRangeById(id: string): Manifesto.IRange;
         getRangeByPath(path: string): IRange;
-        getRanges(): IRange[];
-        getSequences(): ISequence[];
         getSequenceByIndex(index: number): ISequence;
+        getSequences(): ISequence[];
+        getTopRanges(): IRange[];
         getTotalSequences(): number;
-        getManifestType(): ManifestType;
+        getTrackingLabel(): string;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): ViewingHint;
-        getTrackingLabel(): string;
         isMultiSequence(): boolean;
-        rootRange: IRange;
     }
 }
