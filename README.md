@@ -13,17 +13,17 @@ Alternatively, use bower:
 Getting Started
 --
 
-###Documentation
+### Documentation
 
 https://viewdir.github.io/manifesto/
 
 
-###Tutorial
+### Tutorial
 
 http://blog.edsilv.com/manifesto/
 
 
-###Developer Setup
+### Developer Setup
 
     git clone https://github.com/viewdir/manifesto.git
     npm install
