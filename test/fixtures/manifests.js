@@ -3,6 +3,7 @@ module.exports = {
     "anzacbulletin": "http://localhost:3000/anzacbulletin.json",
     "audio": "http://localhost:3000/audio.json",
     "biocrats": "http://localhost:3000/biocrats.json",
+    "canvasMetadata": "http://localhost:3000/canvas-metadata.json",
     "cardiganshire": "http://localhost:3000/cardiganshire.json",
     "chemistdruggist": "http://localhost:3000/chemistdruggist.json",
     "correspondance": "http://localhost:3000/correspondance.json",
