@@ -1,4 +1,4 @@
-// manifesto.js v0.2.1 https://github.com/viewdir/manifesto
+// manifesto.js v0.2.3 https://github.com/viewdir/manifesto
 declare module exjs {
     var version: string;
 }
@@ -985,7 +985,7 @@ declare module Manifesto {
 }
 
 declare module Manifesto {
-    interface IAnnotation extends IJSONLDResource {
+    interface IAnnotation extends IManifestResource {
         getMotivation(): AnnotationMotivation;
         getOn(): string;
         getResource(): Resource;
