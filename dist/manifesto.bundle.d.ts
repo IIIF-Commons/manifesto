@@ -1,4 +1,4 @@
-// manifesto.js v0.2.3 https://github.com/viewdir/manifesto
+// manifesto.js v0.2.4 https://github.com/viewdir/manifesto
 declare module exjs {
     var version: string;
 }
@@ -1147,8 +1147,11 @@ declare module Manifesto {
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
         getServices(): IService[];
+        isAnnotation(): boolean;
         isCanvas(): boolean;
+        isManifest(): boolean;
         isRange(): boolean;
+        isSequence(): boolean;
     }
 }
 

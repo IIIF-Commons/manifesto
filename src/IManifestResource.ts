@@ -9,7 +9,10 @@ module Manifesto {
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
         getServices(): IService[];
+        isAnnotation(): boolean;
         isCanvas(): boolean;
+        isManifest(): boolean;
         isRange(): boolean;
+        isSequence(): boolean;
     }
 }
