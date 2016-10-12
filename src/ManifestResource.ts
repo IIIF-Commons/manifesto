@@ -86,12 +86,28 @@ module Manifesto {
             return Utils.getServices(this);
         }
 
+        isAnnotation(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
+        }
+
         isCanvas(): boolean {
             return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
         }
 
+        isCollection(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+        }
+
+        isManifest(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+        }
+
         isRange(): boolean {
             return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
+        }
+
+        isSequence(): boolean {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.SEQUENCE.toString();
         }
     }
 }

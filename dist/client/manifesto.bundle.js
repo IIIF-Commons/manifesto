@@ -211,6 +211,9 @@ var Manifesto;
             _super.apply(this, arguments);
         }
         // todo: use getters when ES3 target is no longer required.
+        IIIFResourceType.prototype.annotation = function () {
+            return new IIIFResourceType(IIIFResourceType.ANNOTATION.toString());
+        };
         IIIFResourceType.prototype.canvas = function () {
             return new IIIFResourceType(IIIFResourceType.CANVAS.toString());
         };
@@ -223,10 +226,15 @@ var Manifesto;
         IIIFResourceType.prototype.range = function () {
             return new IIIFResourceType(IIIFResourceType.RANGE.toString());
         };
+        IIIFResourceType.prototype.sequence = function () {
+            return new IIIFResourceType(IIIFResourceType.SEQUENCE.toString());
+        };
+        IIIFResourceType.ANNOTATION = new IIIFResourceType("oa:annotation");
         IIIFResourceType.CANVAS = new IIIFResourceType("sc:canvas");
         IIIFResourceType.COLLECTION = new IIIFResourceType("sc:collection");
         IIIFResourceType.MANIFEST = new IIIFResourceType("sc:manifest");
         IIIFResourceType.RANGE = new IIIFResourceType("sc:range");
+        IIIFResourceType.SEQUENCE = new IIIFResourceType("sc:sequence");
         return IIIFResourceType;
     }(Manifesto.StringValue));
     Manifesto.IIIFResourceType = IIIFResourceType;
@@ -639,11 +647,23 @@ var Manifesto;
         ManifestResource.prototype.getServices = function () {
             return Manifesto.Utils.getServices(this);
         };
+        ManifestResource.prototype.isAnnotation = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
+        };
         ManifestResource.prototype.isCanvas = function () {
             return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
         };
+        ManifestResource.prototype.isCollection = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+        };
+        ManifestResource.prototype.isManifest = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+        };
         ManifestResource.prototype.isRange = function () {
             return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
+        };
+        ManifestResource.prototype.isSequence = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.SEQUENCE.toString();
         };
         return ManifestResource;
     }(Manifesto.JSONLDResource));

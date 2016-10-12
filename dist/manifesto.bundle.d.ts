@@ -480,14 +480,18 @@ declare module Manifesto {
 
 declare module Manifesto {
     class IIIFResourceType extends StringValue {
+        static ANNOTATION: IIIFResourceType;
         static CANVAS: IIIFResourceType;
         static COLLECTION: IIIFResourceType;
         static MANIFEST: IIIFResourceType;
         static RANGE: IIIFResourceType;
+        static SEQUENCE: IIIFResourceType;
+        annotation(): IIIFResourceType;
         canvas(): IIIFResourceType;
         collection(): IIIFResourceType;
         manifest(): IIIFResourceType;
         range(): IIIFResourceType;
+        sequence(): IIIFResourceType;
     }
 }
 
@@ -648,8 +652,12 @@ declare module Manifesto {
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
         getServices(): IService[];
+        isAnnotation(): boolean;
         isCanvas(): boolean;
+        isCollection(): boolean;
+        isManifest(): boolean;
         isRange(): boolean;
+        isSequence(): boolean;
     }
 }
 
