@@ -591,15 +591,18 @@ var Manifesto;
         ManifestResource.prototype.getLabel = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
-        ManifestResource.prototype.getMetadata = function () {
+        ManifestResource.prototype.getMetadata = function (localised) {
+            if (localised === void 0) { localised = true; }
             var metadata = this.getProperty('metadata');
             if (!metadata)
                 return [];
-            // get localised value for each metadata item.
-            for (var i = 0; i < metadata.length; i++) {
-                var item = metadata[i];
-                item.label = Manifesto.Utils.getLocalisedValue(item.label, this.options.locale);
-                item.value = Manifesto.Utils.getLocalisedValue(item.value, this.options.locale);
+            if (localised) {
+                // get localised value for each metadata item.
+                for (var i = 0; i < metadata.length; i++) {
+                    var item = metadata[i];
+                    item.label = Manifesto.Utils.getLocalisedValue(item.label, this.options.locale);
+                    item.value = Manifesto.Utils.getLocalisedValue(item.value, this.options.locale);
+                }
             }
             return metadata;
         };

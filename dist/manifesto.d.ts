@@ -226,7 +226,7 @@ declare module Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): string;
-        getMetadata(): any;
+        getMetadata(localised?: boolean): any;
         getRendering(format: RenderingFormat | string): IRendering;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
