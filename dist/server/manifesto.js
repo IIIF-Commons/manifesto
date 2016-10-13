@@ -598,7 +598,7 @@ var Manifesto;
                 return metadata;
             for (var i = 0; i < _metadata.length; i++) {
                 var item = _metadata[i];
-                var metadataItem = new Manifesto.MetadataItem(item, this.options);
+                var metadataItem = new Manifesto.MetadataItem(item, this.options.locale);
                 metadata.push(metadataItem);
             }
             return metadata;
@@ -2359,22 +2359,22 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var MetadataItem = (function () {
-        function MetadataItem(item, options) {
-            this.options = options;
-            this.label = Manifesto.TranslationCollection.parse(item.label, options);
-            this.value = Manifesto.TranslationCollection.parse(item.value, options);
+        function MetadataItem(item, defaultLocale) {
+            this.defaultLocale = defaultLocale;
+            this.label = Manifesto.TranslationCollection.parse(item.label, this.defaultLocale);
+            this.value = Manifesto.TranslationCollection.parse(item.value, this.defaultLocale);
         }
         MetadataItem.prototype.getLabel = function () {
             var _this = this;
             if (this.label.length) {
-                return this.label.en().where(function (x) { return x.locale === _this.options.locale; }).first().value;
+                return this.label.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
             }
             return null;
         };
         MetadataItem.prototype.getValue = function () {
             var _this = this;
             if (this.value.length) {
-                return this.value.en().where(function (x) { return x.locale === _this.options.locale; }).first().value;
+                return this.value.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
             }
             return null;
         };
@@ -2455,11 +2455,11 @@ var Manifesto;
         function TranslationCollection() {
             _super.apply(this, arguments);
         }
-        TranslationCollection.parse = function (translation, options) {
+        TranslationCollection.parse = function (translation, defaultLocale) {
             var tc = [];
             if (!_isArray(translation)) {
                 // if it's just a single string value, create one translation in the configured locale
-                var t = new Manifesto.Translation(translation, options.locale);
+                var t = new Manifesto.Translation(translation, defaultLocale);
                 tc.push(t);
                 return tc;
             }

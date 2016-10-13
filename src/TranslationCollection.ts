@@ -1,11 +1,11 @@
 module Manifesto {
     export class TranslationCollection extends Array<Translation> {
-        static parse(translation: any, options: IManifestoOptions): TranslationCollection {
+        static parse(translation: any, defaultLocale: string): TranslationCollection {
             var tc: TranslationCollection = [];
             
             if (!_isArray(translation)){
                 // if it's just a single string value, create one translation in the configured locale
-                var t: Translation = new Translation(translation, options.locale);
+                var t: Translation = new Translation(translation, defaultLocale);
                 tc.push(t);
                 return tc;
             } else {

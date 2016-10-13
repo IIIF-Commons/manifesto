@@ -25,7 +25,7 @@ module Manifesto {
 
             for (var i = 0; i < _metadata.length; i++) {
                 var item: any = _metadata[i];
-                var metadataItem: MetadataItem = new MetadataItem(item, this.options);
+                var metadataItem: MetadataItem = new MetadataItem(item, this.options.locale);
                 metadata.push(metadataItem);
             }
 

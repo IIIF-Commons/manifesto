@@ -1232,8 +1232,8 @@ declare module Manifesto {
     class MetadataItem {
         label: TranslationCollection;
         value: TranslationCollection;
-        options: IManifestoOptions;
-        constructor(item: any, options: IManifestoOptions);
+        defaultLocale: string;
+        constructor(item: any, defaultLocale: string);
         getLabel(): string;
         getValue(): string;
     }
@@ -1261,6 +1261,6 @@ declare module Manifesto {
 
 declare module Manifesto {
     class TranslationCollection extends Array<Translation> {
-        static parse(translation: any, options: IManifestoOptions): TranslationCollection;
+        static parse(translation: any, defaultLocale: string): TranslationCollection;
     }
 }
