@@ -226,7 +226,7 @@ declare module Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): string;
-        getMetadata(localised?: boolean): any;
+        getMetadata(): MetadataItem[];
         getRendering(format: RenderingFormat | string): IRendering;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService;
@@ -808,6 +808,17 @@ declare module Manifesto {
 }
 
 declare module Manifesto {
+    class MetadataItem {
+        label: TranslationCollection;
+        value: TranslationCollection;
+        options: IManifestoOptions;
+        constructor(item: any, options: IManifestoOptions);
+        getLabel(): string;
+        getValue(): string;
+    }
+}
+
+declare module Manifesto {
     class Resource extends ManifestResource implements IResource {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): ResourceFormat;
@@ -816,5 +827,19 @@ declare module Manifesto {
         getHeight(): number;
         getMaxWidth(): number;
         getMaxHeight(): number;
+    }
+}
+
+declare module Manifesto {
+    class Translation {
+        value: string;
+        locale: string;
+        constructor(value: string, locale: string);
+    }
+}
+
+declare module Manifesto {
+    class TranslationCollection extends Array<Translation> {
+        static parse(translation: any, options: IManifestoOptions): TranslationCollection;
     }
 }

@@ -21,8 +21,8 @@ describe('#hasTranslatedMetadata', function() {
     it('has translated metadata', function () {
         var metadata = manifest.getMetadata();
         var title = metadata[0];
-        title.label.should.equal('Teitl');
-        title.value.should.equal('Cardiganshire Constabulary register of criminals');
+        title.getLabel().should.equal('Teitl');
+        title.getValue().should.equal('Cardiganshire Constabulary register of criminals');
     });
 });
 

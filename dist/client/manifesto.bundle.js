@@ -592,18 +592,15 @@ var Manifesto;
         ManifestResource.prototype.getLabel = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
-        ManifestResource.prototype.getMetadata = function (localised) {
-            if (localised === void 0) { localised = true; }
-            var metadata = this.getProperty('metadata');
-            if (!metadata)
-                return [];
-            if (localised) {
-                // get localised value for each metadata item.
-                for (var i = 0; i < metadata.length; i++) {
-                    var item = metadata[i];
-                    item.label = Manifesto.Utils.getLocalisedValue(item.label, this.options.locale);
-                    item.value = Manifesto.Utils.getLocalisedValue(item.value, this.options.locale);
-                }
+        ManifestResource.prototype.getMetadata = function () {
+            var _metadata = this.getProperty('metadata');
+            var metadata = [];
+            if (!_metadata)
+                return metadata;
+            for (var i = 0; i < _metadata.length; i++) {
+                var item = _metadata[i];
+                var metadataItem = new Manifesto.MetadataItem(item, this.options);
+                metadata.push(metadataItem);
             }
             return metadata;
         };
@@ -2360,6 +2357,33 @@ var Manifesto;
 
 
 
+var Manifesto;
+(function (Manifesto) {
+    var MetadataItem = (function () {
+        function MetadataItem(item, options) {
+            this.options = options;
+            this.label = Manifesto.TranslationCollection.parse(item.label, options);
+            this.value = Manifesto.TranslationCollection.parse(item.value, options);
+        }
+        MetadataItem.prototype.getLabel = function () {
+            var _this = this;
+            if (this.label.length) {
+                return this.label.en().where(function (x) { return x.locale === _this.options.locale; }).first().value;
+            }
+            return null;
+        };
+        MetadataItem.prototype.getValue = function () {
+            var _this = this;
+            if (this.value.length) {
+                return this.value.en().where(function (x) { return x.locale === _this.options.locale; }).first().value;
+            }
+            return null;
+        };
+        return MetadataItem;
+    }());
+    Manifesto.MetadataItem = MetadataItem;
+})(Manifesto || (Manifesto = {}));
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -2406,6 +2430,52 @@ var Manifesto;
         return Resource;
     }(Manifesto.ManifestResource));
     Manifesto.Resource = Resource;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var Translation = (function () {
+        function Translation(value, locale) {
+            this.value = value;
+            this.locale = locale;
+        }
+        return Translation;
+    }());
+    Manifesto.Translation = Translation;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Manifesto;
+(function (Manifesto) {
+    var TranslationCollection = (function (_super) {
+        __extends(TranslationCollection, _super);
+        function TranslationCollection() {
+            _super.apply(this, arguments);
+        }
+        TranslationCollection.parse = function (translation, options) {
+            var tc = [];
+            if (!_isArray(translation)) {
+                // if it's just a single string value, create one translation in the configured locale
+                var t = new Manifesto.Translation(translation, options.locale);
+                tc.push(t);
+                return tc;
+            }
+            else {
+                for (var i = 0; i < translation.length; i++) {
+                    var value = translation[i];
+                    var t = new Manifesto.Translation(value['@value'], value['@language']);
+                    tc.push(t);
+                }
+            }
+            return tc;
+        };
+        return TranslationCollection;
+    }(Array));
+    Manifesto.TranslationCollection = TranslationCollection;
 })(Manifesto || (Manifesto = {}));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

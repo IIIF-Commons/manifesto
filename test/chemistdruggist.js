@@ -69,8 +69,8 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
             var label = manifest.getLabel();
             label.should.equal('The chemist and druggist.');
             var metadata = manifest.getMetadata();
-            metadata[0]['label'].should.equal('Title');
-            metadata[0]['value'].should.equal('The chemist and druggist.');
+            metadata[0].getLabel().should.equal('Title');
+            metadata[0].getValue().should.equal('The chemist and druggist.');
             done();
         });
     })

@@ -16,19 +16,17 @@ module Manifesto {
             return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
 
-        getMetadata(localised: boolean = true): any{
-            var metadata: Object[] = this.getProperty('metadata');
+        getMetadata(): MetadataItem[] {
+            var _metadata: any[] = this.getProperty('metadata');
 
-            if (!metadata) return [];
+            var metadata: MetadataItem[] = [];
 
-            if (localised) {
-                // get localised value for each metadata item.
-                for (var i = 0; i < metadata.length; i++) {
-                    var item: any = metadata[i];
+            if (!_metadata) return metadata;
 
-                    item.label = Utils.getLocalisedValue(item.label, this.options.locale);
-                    item.value = Utils.getLocalisedValue(item.value, this.options.locale);
-                }
+            for (var i = 0; i < _metadata.length; i++) {
+                var item: any = _metadata[i];
+                var metadataItem: MetadataItem = new MetadataItem(item, this.options);
+                metadata.push(metadataItem);
             }
 
             return metadata;
