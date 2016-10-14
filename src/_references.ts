@@ -27,5 +27,5 @@
 /// <reference path="./TreeNode.ts" />
 /// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
-/// <reference path="./Manifesto.ts" />
 /// <reference path="./MetadataItem.ts" />
+/// <reference path="./Manifesto.ts" />

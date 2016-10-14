@@ -941,7 +941,6 @@ declare module Manifesto {
     }
 }
 
-
 declare module Manifesto {
     class MetadataItem {
         label: TranslationCollection;
@@ -952,6 +951,7 @@ declare module Manifesto {
         getValue(): string;
     }
 }
+
 
 /// <reference path="StringValue.d.ts" />
 /// <reference path="AnnotationMotivation.d.ts" />
@@ -982,8 +982,8 @@ declare module Manifesto {
 /// <reference path="TreeNode.d.ts" />
 /// <reference path="TreeNodeType.d.ts" />
 /// <reference path="Utils.d.ts" />
-/// <reference path="Manifesto.d.ts" />
 /// <reference path="MetadataItem.d.ts" />
+/// <reference path="Manifesto.d.ts" />
 
 declare module Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
