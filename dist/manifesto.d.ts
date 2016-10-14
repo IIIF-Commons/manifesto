@@ -502,6 +502,7 @@ declare var manifesto: IManifesto;
 declare module Manifesto {
     class Utils {
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
+        static getInexactLocale(locale: string): string;
         static getLocalisedValue(resource: any, locale: string): string;
         static generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
         static loadResource(uri: string): Promise<string>;
@@ -527,7 +528,6 @@ declare module Manifesto {
         defaultLocale: string;
         resource: any;
         constructor(resource: any, defaultLocale: string);
-        private _getInexactLocale();
         getLabel(): string;
         getValue(): string;
     }

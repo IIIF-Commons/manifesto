@@ -29,6 +29,10 @@ module Manifesto {
             return 'default';
         }
 
+        static getInexactLocale(locale: string): string {
+            return locale.substr(0, locale.indexOf('-'));
+        }
+
         static getLocalisedValue(resource: any, locale: string): string {
 
             // if the resource is not an array of translations, return the string.
