@@ -1137,6 +1137,7 @@ interface IManifesto {
     ServiceProfile: Manifesto.ServiceProfile;
     StatusCodes: Manifesto.IStatusCodes;
     TreeNodeType: Manifesto.TreeNodeType;
+    Utils: any;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
 }

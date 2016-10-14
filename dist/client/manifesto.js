@@ -2132,6 +2132,7 @@ global.manifesto = global.Manifesto = module.exports = {
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
     TreeNodeType: new Manifesto.TreeNodeType(),
+    Utils: Manifesto.Utils,
     ViewingDirection: new Manifesto.ViewingDirection(),
     ViewingHint: new Manifesto.ViewingHint(),
     StatusCodes: {
