@@ -22,7 +22,7 @@ interface IManifesto {
          options?: Manifesto.IManifestoOptions) => Promise<Manifesto.IExternalResource[]>;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
-    MetadataItem: Manifesto.MetadataItem;
+    MetadataItem: any;
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceFormat: Manifesto.ResourceFormat;
     ResourceType: Manifesto.ResourceType;
