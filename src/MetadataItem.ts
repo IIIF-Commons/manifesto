@@ -3,11 +3,13 @@ module Manifesto {
         public label: TranslationCollection;
         public value: TranslationCollection;
         public defaultLocale: string;
+        public resource: any;
 
-        constructor(item: any, defaultLocale: string) {
+        constructor(resource: any, defaultLocale: string) {
+            this.resource = resource;
             this.defaultLocale = defaultLocale;
-            this.label = TranslationCollection.parse(item.label, this.defaultLocale);
-            this.value = TranslationCollection.parse(item.value, this.defaultLocale);
+            this.label = TranslationCollection.parse(this.resource.label, this.defaultLocale);
+            this.value = TranslationCollection.parse(this.resource.value, this.defaultLocale);
         }
 
         getLabel(): string {

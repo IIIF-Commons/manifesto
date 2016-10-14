@@ -946,7 +946,8 @@ declare module Manifesto {
         label: TranslationCollection;
         value: TranslationCollection;
         defaultLocale: string;
-        constructor(item: any, defaultLocale: string);
+        resource: any;
+        constructor(resource: any, defaultLocale: string);
         getLabel(): string;
         getValue(): string;
     }

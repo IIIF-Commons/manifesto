@@ -2156,10 +2156,11 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var MetadataItem = (function () {
-        function MetadataItem(item, defaultLocale) {
+        function MetadataItem(resource, defaultLocale) {
+            this.resource = resource;
             this.defaultLocale = defaultLocale;
-            this.label = Manifesto.TranslationCollection.parse(item.label, this.defaultLocale);
-            this.value = Manifesto.TranslationCollection.parse(item.value, this.defaultLocale);
+            this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
+            this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
         }
         MetadataItem.prototype.getLabel = function () {
             var _this = this;
