@@ -2162,17 +2162,20 @@ var Manifesto;
             this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
             this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
         }
+        MetadataItem.prototype._getInexactLocale = function () {
+            return this.defaultLocale.substr(0, this.defaultLocale.indexOf('-'));
+        };
         MetadataItem.prototype.getLabel = function () {
             var _this = this;
             if (this.label.length) {
-                return this.label.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
+                return this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === _this._getInexactLocale(); }).first().value;
             }
             return null;
         };
         MetadataItem.prototype.getValue = function () {
             var _this = this;
             if (this.value.length) {
-                return this.value.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
+                return this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === _this._getInexactLocale(); }).first().value;
             }
             return null;
         };

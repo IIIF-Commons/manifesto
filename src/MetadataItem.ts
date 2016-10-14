@@ -12,17 +12,21 @@ module Manifesto {
             this.value = TranslationCollection.parse(this.resource.value, this.defaultLocale);
         }
 
-        getLabel(): string {
+        private _getInexactLocale(): string {
+            return this.defaultLocale.substr(0, this.defaultLocale.indexOf('-'));
+        }
+
+        public getLabel(): string {
             if (this.label.length) {
-                return this.label.en().where(x => x.locale === this.defaultLocale).first().value;
+                return this.label.en().where(x => x.locale === this.defaultLocale || x.locale === this._getInexactLocale()).first().value;
             }
 
             return null;
         }
 
-        getValue(): string {
+        public getValue(): string {
             if (this.value.length) {
-                return this.value.en().where(x => x.locale === this.defaultLocale).first().value;
+                return this.value.en().where(x => x.locale === this.defaultLocale || x.locale === this._getInexactLocale()).first().value;
             }
 
             return null;

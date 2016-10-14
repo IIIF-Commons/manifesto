@@ -948,6 +948,7 @@ declare module Manifesto {
         defaultLocale: string;
         resource: any;
         constructor(resource: any, defaultLocale: string);
+        private _getInexactLocale();
         getLabel(): string;
         getValue(): string;
     }
