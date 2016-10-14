@@ -2261,6 +2261,33 @@ global.manifesto = global.Manifesto = module.exports = {
     }
 };
 
+var Manifesto;
+(function (Manifesto) {
+    var MetadataItem = (function () {
+        function MetadataItem(item, defaultLocale) {
+            this.defaultLocale = defaultLocale;
+            this.label = Manifesto.TranslationCollection.parse(item.label, this.defaultLocale);
+            this.value = Manifesto.TranslationCollection.parse(item.value, this.defaultLocale);
+        }
+        MetadataItem.prototype.getLabel = function () {
+            var _this = this;
+            if (this.label.length) {
+                return this.label.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
+            }
+            return null;
+        };
+        MetadataItem.prototype.getValue = function () {
+            var _this = this;
+            if (this.value.length) {
+                return this.value.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
+            }
+            return null;
+        };
+        return MetadataItem;
+    }());
+    Manifesto.MetadataItem = MetadataItem;
+})(Manifesto || (Manifesto = {}));
+
 /// <reference path="./StringValue.ts" />
 /// <reference path="./AnnotationMotivation.ts" />
 /// <reference path="./ElementType.ts" />
@@ -2290,7 +2317,8 @@ global.manifesto = global.Manifesto = module.exports = {
 /// <reference path="./TreeNode.ts" />
 /// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
-/// <reference path="./Manifesto.ts" /> 
+/// <reference path="./Manifesto.ts" />
+/// <reference path="./MetadataItem.ts" /> 
 
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2357,33 +2385,6 @@ var Manifesto;
 
 
 
-
-var Manifesto;
-(function (Manifesto) {
-    var MetadataItem = (function () {
-        function MetadataItem(item, defaultLocale) {
-            this.defaultLocale = defaultLocale;
-            this.label = Manifesto.TranslationCollection.parse(item.label, this.defaultLocale);
-            this.value = Manifesto.TranslationCollection.parse(item.value, this.defaultLocale);
-        }
-        MetadataItem.prototype.getLabel = function () {
-            var _this = this;
-            if (this.label.length) {
-                return this.label.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
-            }
-            return null;
-        };
-        MetadataItem.prototype.getValue = function () {
-            var _this = this;
-            if (this.value.length) {
-                return this.value.en().where(function (x) { return x.locale === _this.defaultLocale; }).first().value;
-            }
-            return null;
-        };
-        return MetadataItem;
-    }());
-    Manifesto.MetadataItem = MetadataItem;
-})(Manifesto || (Manifesto = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

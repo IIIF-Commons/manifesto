@@ -942,6 +942,17 @@ declare module Manifesto {
 }
 
 
+declare module Manifesto {
+    class MetadataItem {
+        label: TranslationCollection;
+        value: TranslationCollection;
+        defaultLocale: string;
+        constructor(item: any, defaultLocale: string);
+        getLabel(): string;
+        getValue(): string;
+    }
+}
+
 /// <reference path="StringValue.d.ts" />
 /// <reference path="AnnotationMotivation.d.ts" />
 /// <reference path="ElementType.d.ts" />
@@ -972,6 +983,7 @@ declare module Manifesto {
 /// <reference path="TreeNodeType.d.ts" />
 /// <reference path="Utils.d.ts" />
 /// <reference path="Manifesto.d.ts" />
+/// <reference path="MetadataItem.d.ts" />
 
 declare module Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
@@ -1226,17 +1238,6 @@ declare module Manifesto {
         FORBIDDEN: number;
         INTERNAL_SERVER_ERROR: number;
         RESTRICTED: number;
-    }
-}
-
-declare module Manifesto {
-    class MetadataItem {
-        label: TranslationCollection;
-        value: TranslationCollection;
-        defaultLocale: string;
-        constructor(item: any, defaultLocale: string);
-        getLabel(): string;
-        getValue(): string;
     }
 }
 
