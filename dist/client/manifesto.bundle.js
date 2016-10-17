@@ -2169,14 +2169,28 @@ var Manifesto;
         MetadataItem.prototype.getLabel = function () {
             var _this = this;
             if (this.label.length) {
-                return this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first().value;
+                var label = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (label) {
+                    return label.value;
+                }
+                else {
+                    // return the first value
+                    return this.label[0].value;
+                }
             }
             return null;
         };
         MetadataItem.prototype.getValue = function () {
             var _this = this;
             if (this.value.length) {
-                return this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first().value;
+                var value = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (value) {
+                    return value.value;
+                }
+                else {
+                    // return the first value
+                    return this.value[0].value;
+                }
             }
             return null;
         };
@@ -2469,7 +2483,12 @@ var Manifesto;
             if (_isArray(translation)) {
                 for (var i = 0; i < translation.length; i++) {
                     var value = translation[i];
-                    t = new Manifesto.Translation(value['@value'], value['@language']);
+                    if (_isString(value)) {
+                        t = new Manifesto.Translation(value, defaultLocale);
+                    }
+                    else {
+                        t = new Manifesto.Translation(value['@value'], value['@language'] || defaultLocale);
+                    }
                     tc.push(t);
                 }
             }

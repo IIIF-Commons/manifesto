@@ -14,7 +14,14 @@ module Manifesto {
 
         public getLabel(): string {
             if (this.label.length) {
-                return this.label.en().where(x => x.locale === this.defaultLocale || x.locale === Utils.getInexactLocale(this.defaultLocale)).first().value;
+                var label: Translation = this.label.en().where(x => x.locale === this.defaultLocale || x.locale === Utils.getInexactLocale(this.defaultLocale)).first()
+                
+                if (label) {
+                    return label.value;
+                } else {
+                    // return the first value
+                    return this.label[0].value;
+                }
             }
 
             return null;
@@ -22,7 +29,14 @@ module Manifesto {
 
         public getValue(): string {
             if (this.value.length) {
-                return this.value.en().where(x => x.locale === this.defaultLocale || x.locale === Utils.getInexactLocale(this.defaultLocale)).first().value;
+                var value: Translation = this.value.en().where(x => x.locale === this.defaultLocale || x.locale === Utils.getInexactLocale(this.defaultLocale)).first();
+
+                if (value) {
+                    return value.value;
+                }  else {
+                    // return the first value
+                    return this.value[0].value;
+                }
             }
 
             return null;

@@ -6,8 +6,14 @@ module Manifesto {
             
             if (_isArray(translation)) {
                 for (var i = 0; i < translation.length; i++){
-                    var value: string = translation[i];
-                    t = new Translation(value['@value'], value['@language']);
+                    var value: any = translation[i];
+
+                    if (_isString(value)) {
+                        t = new Translation(value, defaultLocale);
+                    } else {
+                        t = new Translation(value['@value'], value['@language'] || defaultLocale);
+                    }
+                    
                     tc.push(t);
                 }
             } else if (_isString(translation)) {
