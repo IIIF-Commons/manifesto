@@ -25,6 +25,7 @@ module.exports = {
     "scroll": "http://localhost:3000/scroll.json",
     "storyofwellcome": "http://localhost:3000/storyofwellcome.json",
     "tankeryshouse": "http://localhost:3000/tankeryshouse.json",
+    "translations": "http://localhost:3000/translations.json",
     "wellcomeapocalypse": "http://localhost:3000/wellcomeapocalypse.json",
     "witnesstopeter": "http://localhost:3000/witnesstopeter.json",
     "wunder": "http://localhost:3000/wunder.json",

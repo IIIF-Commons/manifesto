@@ -2465,18 +2465,25 @@ var Manifesto;
         }
         TranslationCollection.parse = function (translation, defaultLocale) {
             var tc = [];
-            if (!_isArray(translation)) {
+            var t;
+            if (_isArray(translation)) {
+                for (var i = 0; i < translation.length; i++) {
+                    var value = translation[i];
+                    t = new Manifesto.Translation(value['@value'], value['@language']);
+                    tc.push(t);
+                }
+            }
+            else if (_isString(translation)) {
                 // if it's just a single string value, create one translation in the configured locale
-                var t = new Manifesto.Translation(translation, defaultLocale);
+                t = new Manifesto.Translation(translation, defaultLocale);
                 tc.push(t);
                 return tc;
             }
             else {
-                for (var i = 0; i < translation.length; i++) {
-                    var value = translation[i];
-                    var t = new Manifesto.Translation(value['@value'], value['@language']);
-                    tc.push(t);
-                }
+                // it's an object
+                t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
+                tc.push(t);
+                return tc;
             }
             return tc;
         };
