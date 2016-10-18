@@ -9,6 +9,7 @@
     ResourceFormat: new Manifesto.ResourceFormat(),
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
+    Translation: Manifesto.Translation,
     TranslationCollection: Manifesto.TranslationCollection,
     TreeNodeType: new Manifesto.TreeNodeType(),
     Utils: Manifesto.Utils,

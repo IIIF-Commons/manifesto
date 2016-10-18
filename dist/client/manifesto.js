@@ -2131,6 +2131,18 @@ var Manifesto;
     Manifesto.MetadataItem = MetadataItem;
 })(Manifesto || (Manifesto = {}));
 
+var Manifesto;
+(function (Manifesto) {
+    var Translation = (function () {
+        function Translation(value, locale) {
+            this.value = value;
+            this.locale = locale;
+        }
+        return Translation;
+    }());
+    Manifesto.Translation = Translation;
+})(Manifesto || (Manifesto = {}));
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -2200,6 +2212,7 @@ global.manifesto = global.Manifesto = module.exports = {
     ResourceFormat: new Manifesto.ResourceFormat(),
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
+    Translation: Manifesto.Translation,
     TranslationCollection: Manifesto.TranslationCollection,
     TreeNodeType: new Manifesto.TreeNodeType(),
     Utils: Manifesto.Utils,
@@ -2329,6 +2342,7 @@ global.manifesto = global.Manifesto = module.exports = {
 /// <reference path="./TreeNodeType.ts" />
 /// <reference path="./Utils.ts" />
 /// <reference path="./MetadataItem.ts" />
+/// <reference path="./Translation.ts" />
 /// <reference path="./TranslationCollection.ts" />
 /// <reference path="./Manifesto.ts" /> 
 
@@ -2444,18 +2458,6 @@ var Manifesto;
         return Resource;
     }(Manifesto.ManifestResource));
     Manifesto.Resource = Resource;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Translation = (function () {
-        function Translation(value, locale) {
-            this.value = value;
-            this.locale = locale;
-        }
-        return Translation;
-    }());
-    Manifesto.Translation = Translation;
 })(Manifesto || (Manifesto = {}));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

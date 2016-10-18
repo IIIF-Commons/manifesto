@@ -535,6 +535,14 @@ declare module Manifesto {
 }
 
 declare module Manifesto {
+    class Translation {
+        value: string;
+        locale: string;
+        constructor(value: string, locale: string);
+    }
+}
+
+declare module Manifesto {
     class TranslationCollection extends Array<Translation> {
         static parse(translation: any, defaultLocale: string): TranslationCollection;
         static getValue(translationCollection: TranslationCollection, locale?: string): string;
@@ -572,6 +580,7 @@ declare module Manifesto {
 /// <reference path="TreeNodeType.d.ts" />
 /// <reference path="Utils.d.ts" />
 /// <reference path="MetadataItem.d.ts" />
+/// <reference path="Translation.d.ts" />
 /// <reference path="TranslationCollection.d.ts" />
 /// <reference path="Manifesto.d.ts" />
 
@@ -724,6 +733,7 @@ interface IManifesto {
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
     StatusCodes: Manifesto.IStatusCodes;
+    Translation: any;
     TranslationCollection: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;
@@ -842,13 +852,5 @@ declare module Manifesto {
         getHeight(): number;
         getMaxWidth(): number;
         getMaxHeight(): number;
-    }
-}
-
-declare module Manifesto {
-    class Translation {
-        value: string;
-        locale: string;
-        constructor(value: string, locale: string);
     }
 }

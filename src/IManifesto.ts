@@ -28,6 +28,7 @@ interface IManifesto {
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
     StatusCodes: Manifesto.IStatusCodes;
+    Translation: any;
     TranslationCollection: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;
