@@ -530,7 +530,9 @@ declare module Manifesto {
         constructor(defaultLocale: string);
         parse(resource: any): void;
         getLabel(): string;
+        setLabel(value: string): void;
         getValue(): string;
+        setValue(value: string): void;
     }
 }
 

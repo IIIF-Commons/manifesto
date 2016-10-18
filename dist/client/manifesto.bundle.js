@@ -2184,17 +2184,34 @@ var Manifesto;
             this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
             this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
         };
+        // shortcuts to get/set values based on default locale
         MetadataItem.prototype.getLabel = function () {
             if (this.label) {
                 return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
             }
             return null;
         };
+        MetadataItem.prototype.setLabel = function (value) {
+            var _this = this;
+            if (this.label && this.label.length) {
+                var t = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (t)
+                    t.value = value;
+            }
+        };
         MetadataItem.prototype.getValue = function () {
             if (this.value) {
                 return Manifesto.TranslationCollection.getValue(this.value, this.defaultLocale);
             }
             return null;
+        };
+        MetadataItem.prototype.setValue = function (value) {
+            var _this = this;
+            if (this.value && this.value.length) {
+                var t = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (t)
+                    t.value = value;
+            }
         };
         return MetadataItem;
     }());
