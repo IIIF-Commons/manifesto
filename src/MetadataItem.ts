@@ -16,11 +16,19 @@ module Manifesto {
         }
 
         public getLabel(): string {
-            return TranslationCollection.getValue(this.label, this.defaultLocale);
+            if (this.label) {
+                return TranslationCollection.getValue(this.label, this.defaultLocale);
+            }
+            
+            return null;
         }
 
         public getValue(): string {
-            return TranslationCollection.getValue(this.value, this.defaultLocale);
+            if (this.value) {
+                return TranslationCollection.getValue(this.value, this.defaultLocale);
+            }
+            
+            return null;
         }
     }
 }

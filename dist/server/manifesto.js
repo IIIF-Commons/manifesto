@@ -2184,10 +2184,16 @@ var Manifesto;
             this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
         };
         MetadataItem.prototype.getLabel = function () {
-            return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
+            if (this.label) {
+                return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
+            }
+            return null;
         };
         MetadataItem.prototype.getValue = function () {
-            return Manifesto.TranslationCollection.getValue(this.value, this.defaultLocale);
+            if (this.value) {
+                return Manifesto.TranslationCollection.getValue(this.value, this.defaultLocale);
+            }
+            return null;
         };
         return MetadataItem;
     }());
