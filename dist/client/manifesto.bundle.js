@@ -841,10 +841,18 @@ var Manifesto;
             this.options = _assign(defaultOptions, options);
         }
         IIIFResource.prototype.getAttribution = function () {
-            return Manifesto.TranslationCollection.parse(this.getProperty('attribution'), this.options.locale);
+            var attribution = this.getProperty('attribution');
+            if (attribution) {
+                return Manifesto.TranslationCollection.parse(attribution, this.options.locale);
+            }
+            return [];
         };
         IIIFResource.prototype.getDescription = function () {
-            return Manifesto.TranslationCollection.parse(this.getProperty('description'), this.options.locale);
+            var description = this.getProperty('description');
+            if (description) {
+                return Manifesto.TranslationCollection.parse(description, this.options.locale);
+            }
+            return [];
         };
         IIIFResource.prototype.getIIIFResourceType = function () {
             return new Manifesto.IIIFResourceType(this.getProperty('@type'));
@@ -870,7 +878,11 @@ var Manifesto;
             return this.getProperty('seeAlso');
         };
         IIIFResource.prototype.getLabel = function () {
-            return Manifesto.TranslationCollection.parse(this.getProperty('label'), this.options.locale);
+            var label = this.getProperty('label');
+            if (label) {
+                return Manifesto.TranslationCollection.parse(label, this.options.locale);
+            }
+            return [];
         };
         IIIFResource.prototype.getDefaultTree = function () {
             this.defaultTree = new Manifesto.TreeNode('root');

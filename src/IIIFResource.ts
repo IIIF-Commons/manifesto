@@ -22,11 +22,23 @@ module Manifesto {
         }
 
         getAttribution(): TranslationCollection {
-            return TranslationCollection.parse(this.getProperty('attribution'), this.options.locale);
+            var attribution: any = this.getProperty('attribution');
+
+            if (attribution) {
+                return TranslationCollection.parse(attribution, this.options.locale);
+            }
+            
+            return [];
         }
 
         getDescription(): TranslationCollection {
-            return TranslationCollection.parse(this.getProperty('description'), this.options.locale);
+            var description: any = this.getProperty('description');
+
+            if (description) {
+                return TranslationCollection.parse(description, this.options.locale);
+            }
+
+            return [];
         }
 
         getIIIFResourceType(): IIIFResourceType {
@@ -57,7 +69,13 @@ module Manifesto {
         }
 
         getLabel(): TranslationCollection {
-            return TranslationCollection.parse(this.getProperty('label'), this.options.locale);
+            var label: any = this.getProperty('label');
+
+            if (label) {
+                return TranslationCollection.parse(label, this.options.locale);
+            }
+            
+            return [];
         }
 
         getDefaultTree(): ITreeNode{
