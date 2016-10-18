@@ -32,7 +32,7 @@ describe('#hasCollectionCount', function() {
 
 describe('#hasLabel', function() {
     it('has a label', function() {
-        collection.getLabel().should.equal('Villanova Digital Library');
+        Manifesto.TranslationCollection.getValue(collection.getLabel()).should.equal('Villanova Digital Library');
     });
 });
 
@@ -40,7 +40,7 @@ describe('#firstCollectionHasLabel', function() {
     it('has a first collection with a label', function(done) {
          collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
-            firstCollection.getLabel().should.equal('Dime Novel and Popular Literature');
+            Manifesto.TranslationCollection.getValue(firstCollection.getLabel()).should.equal('Dime Novel and Popular Literature');
             done();
         });
     });
@@ -63,7 +63,7 @@ describe('#secondLevelCollectionHasLabel', function() {
    it('has a second-level collection with a label', function (done) {
        firstCollection.getCollectionByIndex(0).then(function(data) {
            secondCollection = data;
-           secondCollection.getLabel().should.equal('Covers and Illustrations');
+           Manifesto.TranslationCollection.getValue(secondCollection.getLabel()).should.equal('Covers and Illustrations');
            done();
        });
    });
@@ -79,7 +79,7 @@ describe('#canAccessManifestFromSecondCollection', function() {
    it('can access a deeply-nested manifest', function (done) {
        secondCollection.getManifestByIndex(0).then(function(data) {
            manifest = data;
-           manifest.getLabel().should.equal('Wunder der Vererbung');
+           Manifesto.TranslationCollection.getValue(manifest.getLabel()).should.equal('Wunder der Vererbung');
            done();
        });
    });

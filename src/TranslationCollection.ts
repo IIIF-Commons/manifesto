@@ -1,7 +1,8 @@
 module Manifesto {
     export class TranslationCollection extends Array<Translation> {
+
         static parse(translation: any, defaultLocale: string): TranslationCollection {
-            var tc: TranslationCollection = [];
+            var tc: TranslationCollection = <TranslationCollection>[];
             var t: Translation;
             
             if (_isArray(translation)) {
@@ -29,6 +30,24 @@ module Manifesto {
             }
 
             return tc;
+        }
+
+        static getValue(translationCollection: TranslationCollection, locale?: string): string {
+            if (translationCollection.length) {
+
+                if (locale) {
+                    var translation: Translation = translationCollection.en().where(t => t.locale === locale || Utils.getInexactLocale(t.locale) === Utils.getInexactLocale(locale)).first()
+                
+                    if (translation) {
+                        return translation.value;
+                    }
+                }
+
+                // return the first value
+                return translationCollection[0].value;
+            }
+
+            return null;
         }
     }
 }

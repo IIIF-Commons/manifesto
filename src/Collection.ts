@@ -72,7 +72,7 @@ module Manifesto {
                 for (var i = 0; i < parentCollection.getManifests().length; i++) {
                     var manifest = parentCollection.getManifests()[i];
                     var tree: ITreeNode = manifest.getDefaultTree();
-                    tree.label = manifest.parentLabel || manifest.getLabel() || 'manifest ' + (i + 1);
+                    tree.label = manifest.parentLabel || TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
                     tree.data.type = TreeNodeType.MANIFEST.toString();
@@ -86,7 +86,7 @@ module Manifesto {
                 for (var i = 0; i < parentCollection.getCollections().length; i++) {
                     var collection = parentCollection.getCollections()[i];
                     var tree: ITreeNode = collection.getDefaultTree();
-                    tree.label = collection.parentLabel || collection.getLabel() || 'collection ' + (i + 1);
+                    tree.label = collection.parentLabel || TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
                     tree.data.type = TreeNodeType.COLLECTION.toString();

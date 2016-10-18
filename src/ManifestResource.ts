@@ -12,8 +12,8 @@ module Manifesto {
             return new IIIFResourceType(this.getProperty('@type'));
         }
 
-        getLabel(): string {
-            return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
+        getLabel(): TranslationCollection {
+            return TranslationCollection.parse(this.getProperty('label'), this.options.locale);
         }
 
         getMetadata(): MetadataItem[] {

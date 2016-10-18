@@ -13,33 +13,11 @@ module Manifesto {
         }
 
         public getLabel(): string {
-            if (this.label.length) {
-                var label: Translation = this.label.en().where(x => x.locale === this.defaultLocale || x.locale === Utils.getInexactLocale(this.defaultLocale)).first()
-                
-                if (label) {
-                    return label.value;
-                } else {
-                    // return the first value
-                    return this.label[0].value;
-                }
-            }
-
-            return null;
+            return TranslationCollection.getValue(this.label, this.defaultLocale);
         }
 
         public getValue(): string {
-            if (this.value.length) {
-                var value: Translation = this.value.en().where(x => x.locale === this.defaultLocale || x.locale === Utils.getInexactLocale(this.defaultLocale)).first();
-
-                if (value) {
-                    return value.value;
-                }  else {
-                    // return the first value
-                    return this.value[0].value;
-                }
-            }
-
-            return null;
+            return TranslationCollection.getValue(this.value, this.defaultLocale);
         }
     }
 }

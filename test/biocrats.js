@@ -18,7 +18,7 @@ describe('#loadsBiocrats', function() {
 
 describe('#hasLabel', function() {
     it('has a label', function () {
-        var label = manifest.getLabel();
+        var label = Manifesto.TranslationCollection.getValue(manifest.getLabel());
         label.should.be.a('string');
         label.should.equal('The biocrats');
     });

@@ -21,12 +21,12 @@ module Manifesto {
             this.options = _assign(defaultOptions, options);
         }
 
-        getAttribution(): string {
-            return Utils.getLocalisedValue(this.getProperty('attribution'), this.options.locale);
+        getAttribution(): TranslationCollection {
+            return TranslationCollection.parse(this.getProperty('attribution'), this.options.locale);
         }
 
-        getDescription(): string {
-            return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        getDescription(): TranslationCollection {
+            return TranslationCollection.parse(this.getProperty('description'), this.options.locale);
         }
 
         getIIIFResourceType(): IIIFResourceType {
@@ -53,11 +53,11 @@ module Manifesto {
         }
 
         getSeeAlso(): any {
-            return Utils.getLocalisedValue(this.getProperty('seeAlso'), this.options.locale);
+            return this.getProperty('seeAlso');
         }
 
-        getLabel(): string {
-            return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
+        getLabel(): TranslationCollection {
+            return TranslationCollection.parse(this.getProperty('label'), this.options.locale);
         }
 
         getDefaultTree(): ITreeNode{
@@ -83,7 +83,7 @@ module Manifesto {
                     var options = that.options;
                     options.navDate = that.getNavDate();
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
-                        that.parentLabel = that.getLabel();
+                        that.parentLabel = TranslationCollection.getValue(that.getLabel(), options.locale);
                         var parsed = Deserialiser.parse(data, options);
                         that = _assign(that, parsed);
                         that.index = options.index;

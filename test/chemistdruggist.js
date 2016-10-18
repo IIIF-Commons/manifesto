@@ -34,7 +34,7 @@ describe('#hasCollectionCount', function() {
 
 describe('#hasLabel', function() {
     it('has a label', function() {
-        collection.getLabel().should.equal('The chemist and druggist.');
+        Manifesto.TranslationCollection.getValue(collection.getLabel()).should.equal('The chemist and druggist.');
     })
 });
 
@@ -42,7 +42,7 @@ describe('#firstCollectionHasLabel', function() {
     it('has a first collection with a label', function(done) {
          collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
-            firstCollection.getLabel().should.equal('Volume 1, 1859');
+            Manifesto.TranslationCollection.getValue(firstCollection.getLabel()).should.equal('Volume 1, 1859');
             done();
         });
     })
@@ -66,11 +66,11 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
     it('has a first manifest with metadata', function (done) {
         firstCollection.getManifestByIndex(0).then(function(data) {
             manifest = data;
-            var label = manifest.getLabel();
+            var label = Manifesto.TranslationCollection.getValue(manifest.getLabel());
             label.should.equal('The chemist and druggist.');
             var metadata = manifest.getMetadata();
-            metadata[0].getLabel().should.equal('Title');
-            metadata[0].getValue().should.equal('The chemist and druggist.');
+            Manifesto.TranslationCollection.getValue(metadata[0].label).should.equal('Title');
+            Manifesto.TranslationCollection.getValue(metadata[0].value).should.equal('The chemist and druggist.');
             done();
         });
     })
@@ -78,7 +78,7 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
 
 describe('#firstCollectionFirstManifestHasLabel', function() {
     it('has a first manifest with a label', function() {
-        manifest.getLabel().should.equal('The chemist and druggist.');
+        Manifesto.TranslationCollection.getValue(manifest.getLabel()).should.equal('The chemist and druggist.');
     })
 });
 

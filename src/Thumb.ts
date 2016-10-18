@@ -23,7 +23,7 @@ module Manifesto {
             }
 
             this.uri = canvas.getCanonicalImageUri(width);
-            this.label = canvas.getLabel();
+            this.label = TranslationCollection.getValue(canvas.getLabel()); // todo: pass locale?
         }
     }
 }

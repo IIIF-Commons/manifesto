@@ -73,7 +73,7 @@ module Manifesto {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
 
                 // check if there's a literal match
-                if (canvas.getLabel() === label) {
+                if (TranslationCollection.getValue(canvas.getLabel(), this.options.locale) === label) {
                     return i;
                 }
 
@@ -102,9 +102,9 @@ module Manifesto {
         getLastCanvasLabel(alphanumeric?: boolean): string {
             for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
-                var label = canvas.getLabel();
+                var label: string = TranslationCollection.getValue(canvas.getLabel(), this.options.locale);
 
-                if (alphanumeric){
+                if (alphanumeric) {
                     var regExp = /^[a-zA-Z0-9]*$/;
 
                     if (regExp.test(label)) {

@@ -30,7 +30,11 @@ module Manifesto {
         }
 
         static getInexactLocale(locale: string): string {
-            return locale.substr(0, locale.indexOf('-'));
+            if (locale.indexOf('-') !== -1) {
+                return locale.substr(0, locale.indexOf('-'));
+            }
+            
+            return locale;
         }
 
         static getLocalisedValue(resource: any, locale: string): string {

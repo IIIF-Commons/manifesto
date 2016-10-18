@@ -76,7 +76,7 @@ module Manifesto {
         }
 
         private _parseTreeNode(node: ITreeNode, range: IRange): void {
-            node.label = range.getLabel();
+            node.label = TranslationCollection.getValue(range.getLabel(), this.options.locale);
             node.data = range;
             node.data.type = TreeNodeType.RANGE.toString();
             range.treeNode = node;
