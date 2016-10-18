@@ -598,7 +598,8 @@ var Manifesto;
                 return metadata;
             for (var i = 0; i < _metadata.length; i++) {
                 var item = _metadata[i];
-                var metadataItem = new Manifesto.MetadataItem(item, this.options.locale);
+                var metadataItem = new Manifesto.MetadataItem(this.options.locale);
+                metadataItem.parse(item);
                 metadata.push(metadataItem);
             }
             return metadata;
@@ -2174,12 +2175,14 @@ var Manifesto;
 var Manifesto;
 (function (Manifesto) {
     var MetadataItem = (function () {
-        function MetadataItem(resource, defaultLocale) {
-            this.resource = resource;
+        function MetadataItem(defaultLocale) {
             this.defaultLocale = defaultLocale;
+        }
+        MetadataItem.prototype.parse = function (resource) {
+            this.resource = resource;
             this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
             this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
-        }
+        };
         MetadataItem.prototype.getLabel = function () {
             return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
         };

@@ -5,9 +5,12 @@ module Manifesto {
         public defaultLocale: string;
         public resource: any;
 
-        constructor(resource: any, defaultLocale: string) {
-            this.resource = resource;
+        constructor(defaultLocale: string) {
             this.defaultLocale = defaultLocale;
+        }
+
+        public parse(resource: any): void {
+            this.resource = resource;
             this.label = TranslationCollection.parse(this.resource.label, this.defaultLocale);
             this.value = TranslationCollection.parse(this.resource.value, this.defaultLocale);
         }

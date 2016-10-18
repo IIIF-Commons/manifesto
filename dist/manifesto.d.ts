@@ -527,7 +527,8 @@ declare module Manifesto {
         value: TranslationCollection;
         defaultLocale: string;
         resource: any;
-        constructor(resource: any, defaultLocale: string);
+        constructor(defaultLocale: string);
+        parse(resource: any): void;
         getLabel(): string;
         getValue(): string;
     }
