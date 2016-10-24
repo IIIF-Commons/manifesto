@@ -2245,7 +2245,10 @@ var Manifesto;
         TranslationCollection.parse = function (translation, defaultLocale) {
             var tc = [];
             var t;
-            if (_isArray(translation)) {
+            if (!translation) {
+                return tc;
+            }
+            else if (_isArray(translation)) {
                 for (var i = 0; i < translation.length; i++) {
                     var value = translation[i];
                     if (_isString(value)) {

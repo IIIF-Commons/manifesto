@@ -5,7 +5,9 @@ module Manifesto {
             var tc: TranslationCollection = <TranslationCollection>[];
             var t: Translation;
             
-            if (_isArray(translation)) {
+            if (!translation) {
+                return tc;
+            } else if (_isArray(translation)) {
                 for (var i = 0; i < translation.length; i++){
                     var value: any = translation[i];
 
