@@ -307,6 +307,7 @@ declare var ex: typeof exjs.en;
 declare module exjs {
 }
 
+// extensions v0.1.11 https://github.com/edsilv/extensions
 declare function escape(s: string): any;
 declare function unescape(s: string): any;
 
