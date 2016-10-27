@@ -2386,20 +2386,6 @@ global.manifesto = global.Manifesto = module.exports = {
     create: function (manifest, options) {
         return Manifesto.Deserialiser.parse(manifest, options);
     },
-    // todo: create hasServiceDescriptor
-    // based on @profile and @type (or lack of) can the resource describe associated services?
-    // loadExternalResources: function(resources: Manifesto.IExternalResource[],
-    //     tokenStorageStrategy: string,
-    //     clickThrough: (resource: Manifesto.IExternalResource) => Promise<void>,
-    //     restricted: (resource: Manifesto.IExternalResource) => Promise<void>,
-    //     login: (resource: Manifesto.IExternalResource) => Promise<void>,
-    //     getAccessToken: (resource: Manifesto.IExternalResource, rejectOnError: boolean) => Promise<Manifesto.IAccessToken>,
-    //     storeAccessToken: (resource: Manifesto.IExternalResource, token: Manifesto.IAccessToken, tokenStorageStrategy: string) => Promise<void>,
-    //     getStoredAccessToken: (resource: Manifesto.IExternalResource, tokenStorageStrategy: string) => Promise<Manifesto.IAccessToken>,
-    //     handleResourceResponse: (resource: Manifesto.IExternalResource) => Promise<any>,
-    //     options?: Manifesto.IManifestoOptions): Promise<Manifesto.IExternalResource[]>{
-    //     return Manifesto.Utils.loadExternalResources(resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
-    // },
     loadManifest: function (uri) {
         return Manifesto.Utils.loadResource(uri);
     }

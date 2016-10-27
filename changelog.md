@@ -1,4 +1,15 @@
+#v2.0.0
 
+##Breaking Changes
+
+- Removed `Manifesto.getRenderings()`. Use `ManifestoResource.getRenderings()` instead.
+- Removed `Manifesto.getService()`. Use `Manifesto.Utils.getService()` instead.
+- Removed `Manifesto.getTreeNode()`. Use `new Manifeso.TreeNode()` instead.
+- Removed `Manifesto.isImageProfile()`. Use `Manifesto.Utils.isImageProfile()` instead.
+- Removed `Manifesto.isLevel0ImageProfile()`. Use `Manifesto.Utils.isLevel0ImageProfile()` instead.
+- Removed `Manifesto.isLevel1ImageProfile()`. Use `Manifesto.Utils.isLevel1ImageProfile()` instead.
+- Removed `Manifesto.isLevel2ImageProfile()`. Use `Manifesto.Utils.isLevel2ImageProfile()` instead.
+- Removed `Manifesto.loadExternalResources()`. Use `Manifesto.Utils.loadExternalResources()` instead.
 
 #v1.0.0
 
