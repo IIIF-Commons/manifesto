@@ -1155,6 +1155,7 @@ interface IManifesto {
     StatusCodes: Manifesto.IStatusCodes;
     Translation: any;
     TranslationCollection: any;
+    TreeNode: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;
     ViewingDirection: Manifesto.ViewingDirection;
