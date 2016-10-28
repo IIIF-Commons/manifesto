@@ -1,10 +1,14 @@
+#v2.0.1
+
+- `MetadataItem.getValue()` now prefers the label's locale over the defaultLocale
+
 #v2.0.0
 
 ##Breaking Changes
 
 - Removed `Manifesto.getRenderings()`. Use `ManifestResource.getRenderings()` instead.
 - Removed `Manifesto.getService()`. Use `Manifesto.Utils.getService()` instead.
-- Removed `Manifesto.getTreeNode()`. Use `new Manifeso.TreeNode()` instead.
+- Removed `Manifesto.getTreeNode()`. Use `new Manifesto.TreeNode()` instead.
 - Removed `Manifesto.isImageProfile()`. Use `Manifesto.Utils.isImageProfile()` instead.
 - Removed `Manifesto.isLevel0ImageProfile()`. Use `Manifesto.Utils.isLevel0ImageProfile()` instead.
 - Removed `Manifesto.isLevel1ImageProfile()`. Use `Manifesto.Utils.isLevel1ImageProfile()` instead.
