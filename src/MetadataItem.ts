@@ -34,7 +34,15 @@ module Manifesto {
 
         public getValue(): string {
             if (this.value) {
-                return TranslationCollection.getValue(this.value, this.defaultLocale);
+
+                var locale: string = this.defaultLocale;
+
+                // if the label has a locale, prefer that to the default locale
+                if (this.label.length && this.label[0].locale) {
+                    locale = this.label[0].locale;
+                }
+
+                return TranslationCollection.getValue(this.value, locale);
             }
             
             return null;

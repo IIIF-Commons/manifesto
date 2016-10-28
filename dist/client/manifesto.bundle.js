@@ -2269,7 +2269,12 @@ var Manifesto;
         };
         MetadataItem.prototype.getValue = function () {
             if (this.value) {
-                return Manifesto.TranslationCollection.getValue(this.value, this.defaultLocale);
+                var locale = this.defaultLocale;
+                // if the label has a locale, prefer that to the default locale
+                if (this.label.length && this.label[0].locale) {
+                    locale = this.label[0].locale;
+                }
+                return Manifesto.TranslationCollection.getValue(this.value, locale);
             }
             return null;
         };

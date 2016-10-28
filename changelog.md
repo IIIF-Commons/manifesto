@@ -2,7 +2,7 @@
 
 ##Breaking Changes
 
-- Removed `Manifesto.getRenderings()`. Use `ManifestoResource.getRenderings()` instead.
+- Removed `Manifesto.getRenderings()`. Use `ManifestResource.getRenderings()` instead.
 - Removed `Manifesto.getService()`. Use `Manifesto.Utils.getService()` instead.
 - Removed `Manifesto.getTreeNode()`. Use `new Manifeso.TreeNode()` instead.
 - Removed `Manifesto.isImageProfile()`. Use `Manifesto.Utils.isImageProfile()` instead.
