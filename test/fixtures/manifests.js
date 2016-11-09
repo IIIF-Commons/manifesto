@@ -7,6 +7,7 @@ module.exports = {
     "cardiganshire": "http://localhost:3000/cardiganshire.json",
     "chemistdruggist": "http://localhost:3000/chemistdruggist.json",
     "correspondance": "http://localhost:3000/correspondance.json",
+    "emptymemberscollection": "http://localhost:3000/empty-collection.json",
     "herbal": "http://localhost:3000/herbal.json",
     "horriblemurders": "http://localhost:3000/horriblemurders.json",
     "illustrationsofchina": "http://localhost:3000/illustrationsofchina.json",
