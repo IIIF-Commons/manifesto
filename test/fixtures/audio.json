@@ -27,9 +27,7 @@
         {
             "@type": "ixif:MediaSequence",
             "label": "Contents",
-            "rendering": [
-
-            ],
+            "rendering": [],
             "elements": [
                 {
                     "@id": "http://digital.library.villanova.edu/files/vudl:289361/MP3#element",

@@ -1011,28 +1011,25 @@ var Manifesto;
                 parentRange.members.push(range);
             }
             if (r.ranges) {
-                for (var j = 0; j < r.ranges.length; j++) {
-                    this._parseRanges(r.ranges[j], path + '/' + j, range);
-                }
-            }
-            if (r.canvases) {
-                for (var k = 0; k < r.canvases.length; k++) {
-                    this._parseRangeCanvas(r.canvases[k], r);
+                for (var i = 0; i < r.ranges.length; i++) {
+                    this._parseRanges(r.ranges[i], path + '/' + i, range);
                 }
             }
             if (r.members) {
-                for (var l = 0; l < r.members.length; l++) {
-                    var child = r.members[l];
+                var _loop_1 = function(i) {
+                    var child = r.members[i];
                     // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
                     if (r.members.en().where(function (m) { return m.id === child.id; }).first()) {
-                        continue;
+                        return "continue";
                     }
                     if (child['@type'].toLowerCase() === 'sc:range') {
-                        this._parseRanges(child, path + '/' + l, range);
+                        this_1._parseRanges(child, path + '/' + i, range);
                     }
-                    else if (child['@type'].toLowerCase() === 'sc:canvas') {
-                        this._parseRangeCanvas(child, r);
-                    }
+                };
+                var this_1 = this;
+                for (var i = 0; i < r.members.length; i++) {
+                    var state_1 = _loop_1(i);
+                    if (state_1 === "continue") continue;
                 }
             }
         };

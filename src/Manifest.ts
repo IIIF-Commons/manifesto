@@ -108,20 +108,14 @@ module Manifesto {
             }
 
             if (r.ranges) {
-                for (var j = 0; j < r.ranges.length; j++) {
-                    this._parseRanges(r.ranges[j], path + '/' + j, range);
-                }
-            }
-
-            if (r.canvases) {
-                for (var k = 0; k < r.canvases.length; k++) {
-                    this._parseRangeCanvas(r.canvases[k], r);
+                for (let i = 0; i < r.ranges.length; i++) {
+                    this._parseRanges(r.ranges[i], path + '/' + i, range);
                 }
             }
 
             if (r.members) {
-                for (var l = 0; l < r.members.length; l++) {
-                    var child = r.members[l];
+                for (let i = 0; i < r.members.length; i++) {
+                    const child = r.members[i];
 
                     // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
                     if (r.members.en().where(m => m.id === child.id).first()) {
@@ -129,9 +123,7 @@ module Manifesto {
                     }
 
                     if (child['@type'].toLowerCase() === 'sc:range'){
-                        this._parseRanges(child, path + '/' + l, range);
-                    } else if (child['@type'].toLowerCase() === 'sc:canvas'){
-                        this._parseRangeCanvas(child, r);
+                        this._parseRanges(child, path + '/' + i, range);
                     }
                 }
             }
