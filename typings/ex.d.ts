@@ -173,14 +173,14 @@ declare module exjs {
         zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult>;
     }
 }
-declare var Symbol: any;
-interface Iterator<T> {
-    next(): IteratorResult<T>;
-}
-interface IteratorResult<T> {
-    done: boolean;
-    value: T;
-}
+// declare var Symbol: any;
+// interface Iterator<T> {
+//     next(): IteratorResult<T>;
+// }
+// interface IteratorResult<T> {
+//     done: boolean;
+//     value: T;
+// }
 declare module exjs {
 }
 declare var global: any;
