@@ -25,7 +25,7 @@ var GulpConfig = (function () {
         this.testDepsDir = './test/js';
         // ts definitions to copy to the typings dir
         this.typings = [
-            //'node_modules/exjs/dist/ex.d.ts',
+            'node_modules/exjs/dist/ex.d.ts',
             'node_modules/extensions/dist/extensions.d.ts',
             'node_modules/http-status-codes/dist/http-status-codes.d.ts'
         ];
