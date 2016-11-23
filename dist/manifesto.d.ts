@@ -1,4 +1,4 @@
-// manifesto.js v2.0.2 https://github.com/viewdir/manifesto
+// manifesto.js v2.0.3 https://github.com/viewdir/manifesto
 declare module Manifesto {
     class StringValue {
         value: string;
