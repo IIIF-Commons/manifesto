@@ -730,10 +730,12 @@ var Manifesto;
                 if (!width) {
                     width = this.externalResource.data.width;
                 }
-                if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
-                    this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
-                    this.externalResource.data['@context'].indexOf('/1/context.json') > -1) {
-                    quality = 'native';
+                if (this.externalResource.data['@context']) {
+                    if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
+                        this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
+                        this.externalResource.data['@context'].indexOf('/1/context.json') > -1) {
+                        quality = 'native';
+                    }
                 }
             }
             else {
