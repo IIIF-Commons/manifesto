@@ -21,7 +21,7 @@ module Manifesto {
             var size: string;
 
             // if an info.json has been loaded
-            if (this.externalResource && this.externalResource.data) {
+            if (this.externalResource && this.externalResource.data && this.externalResource.data['@id']) {
                 id = this.externalResource.data['@id'];
 
                 if (!width) {
@@ -45,11 +45,11 @@ module Manifesto {
                     var resource: IResource = firstImage.getResource();
                     var services: IService[] = resource.getServices();
 
-                    if (!width){
+                    if (!width) {
                         width = resource.getWidth();
                     }
                     
-                    if (services.length){
+                    if (services.length) {
                         var service: IService = services[0];
                         id = service.id;
                         quality = Utils.getImageQuality(service.getProfile());
@@ -57,7 +57,7 @@ module Manifesto {
                 }
                 
                 // todo: this is not compatible and should be moved to getThumbUri
-                if (!id){
+                if (!id) {
                     return "undefined" == typeof this.__jsonld.thumbnail
                         ? null : this.__jsonld.thumbnail;
                 }

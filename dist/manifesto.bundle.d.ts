@@ -1,4 +1,4 @@
-// manifesto.js v2.0.4 https://github.com/viewdir/manifesto
+// manifesto.js v2.0.5 https://github.com/viewdir/manifesto
 declare module exjs {
 }
 declare module exjs {
