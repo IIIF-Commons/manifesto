@@ -92,9 +92,16 @@ module Manifesto {
 
         private _parseRanges(r: any, path: string, parentRange?: IRange): void{
             var range: IRange;
+            var id: string;
 
             if (_isString(r)){
-                r = this._getRangeById(r);
+                id = r;
+                r = this._getRangeById(id);
+            }
+
+            if (!r) {
+                console.warn("Range:", id, "does not exist");
+                return;
             }
 
             range = new Range(r, this.options);

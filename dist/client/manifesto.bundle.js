@@ -1000,8 +1000,14 @@ var Manifesto;
         };
         Manifest.prototype._parseRanges = function (r, path, parentRange) {
             var range;
+            var id;
             if (_isString(r)) {
-                r = this._getRangeById(r);
+                id = r;
+                r = this._getRangeById(id);
+            }
+            if (!r) {
+                console.warn("Range:", id, "does not exist");
+                return;
             }
             range = new Manifesto.Range(r, this.options);
             range.parentRange = parentRange;
