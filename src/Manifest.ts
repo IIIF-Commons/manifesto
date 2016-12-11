@@ -232,6 +232,10 @@ module Manifesto {
             return this.getTotalSequences() > 1;
         }
 
+        isPagingEnabled(): boolean{
+            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+        }
+
         getViewingDirection(): ViewingDirection {
             if (this.getProperty('viewingDirection')){
                 return new ViewingDirection(this.getProperty('viewingDirection'));
