@@ -12,5 +12,6 @@ module Manifesto {
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): ViewingHint;
         isMultiSequence(): boolean;
+        isPagingEnabled(): boolean;
     }
 }

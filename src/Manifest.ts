@@ -228,11 +228,11 @@ module Manifesto {
             return '';
         }
 
-        isMultiSequence(): boolean{
+        isMultiSequence(): boolean {
             return this.getTotalSequences() > 1;
         }
 
-        isPagingEnabled(): boolean{
+        isPagingEnabled(): boolean {
             return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
         }
 
