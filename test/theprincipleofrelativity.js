@@ -22,3 +22,10 @@ describe('#isPaged', function() {
         viewingHint.toString().should.equal('paged');
     });
 });
+
+describe('#isPagingEnabled', function() {
+    it('is paging enabled', function () {
+        var enabled = manifest.isPagingEnabled();
+        enabled.should.equal(true);
+    });
+});

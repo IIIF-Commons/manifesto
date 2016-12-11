@@ -1114,6 +1114,9 @@ var Manifesto;
         Manifest.prototype.isMultiSequence = function () {
             return this.getTotalSequences() > 1;
         };
+        Manifest.prototype.isPagingEnabled = function () {
+            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+        };
         Manifest.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
                 return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
