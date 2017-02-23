@@ -9,7 +9,8 @@
         "noUnusedLocals": true,
         "noUnusedParameters": false,
         "strictNullChecks": true,
-        "target": "es3"
+        "target": "es3",
+        "lib": ["es6"]
     },
     "files": [
         "src/Definitions.ts",

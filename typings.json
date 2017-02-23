@@ -2,9 +2,7 @@
   "name": "manifesto.js",
   "dependencies": {},
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.9.7+20161130133742",
     "ex": "github:edsilv/exjs/dist/ex.d.ts",
-    "extensions": "github:edsilv/extensions/dist/extensions.d.ts",
     "http-status-codes": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts",
     "node": "registry:dt/node#7.0.0+20170204020307"
   }
