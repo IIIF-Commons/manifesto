@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class Thumb implements IThumb {
         public data: any;
         public index: number;

@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class Element extends ManifestResource implements IElement {
 
         public index: number;

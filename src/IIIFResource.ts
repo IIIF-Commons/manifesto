@@ -1,9 +1,7 @@
-var _assign = require("lodash.assign");
-
-module Manifesto {
+namespace Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
         public defaultTree: ITreeNode;
-        public index: number = -1;
+        public index: number | undefined = -1;
         public isLoaded: boolean = false;
         public parentCollection: ICollection;
         public parentLabel: string;
@@ -18,7 +16,7 @@ module Manifesto {
                 pessimisticAccessControl: false
             };
 
-            this.options = _assign(defaultOptions, options);
+            this.options = Object.assign(defaultOptions, options);
         }
 
         getAttribution(): TranslationCollection {
@@ -45,10 +43,10 @@ module Manifesto {
             return new IIIFResourceType(this.getProperty('@type'));
         }
 
-        getLogo(): string {
+        getLogo(): string | null {
             var logo = this.getProperty('logo');
             if (!logo) return null;
-            if (_isString(logo)) return logo;
+            if (typeof(logo) === 'string') return logo;
             return logo['@id'];
         }
 
@@ -103,7 +101,7 @@ module Manifesto {
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
                         that.parentLabel = TranslationCollection.getValue(that.getLabel(), options.locale);
                         var parsed = Deserialiser.parse(data, options);
-                        that = _assign(that, parsed);
+                        that = Object.assign(that, parsed);
                         that.index = options.index;
 
                         resolve(that);

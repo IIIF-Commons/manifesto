@@ -1,6 +1,4 @@
-var _last = require("lodash.last");
-
-module Manifesto {
+namespace Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
         private canvases: ICanvas[] = null;
 
@@ -133,7 +131,7 @@ module Manifesto {
                 if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     index = indices[0] + 1;
                 } else {
-                    index = _last(indices) + 1;
+                    index = indices[indices.length - 1] + 1;
                 }
             } else {
                 index = canvasIndex + 1;
@@ -177,7 +175,7 @@ module Manifesto {
                 var indices = this.getPagedIndices(canvasIndex);
 
                 if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
-                    index = _last(indices) - 1;
+                    index = indices[indices.length - 1] - 1;
                 } else {
                     index = indices[0] - 1;
                 }

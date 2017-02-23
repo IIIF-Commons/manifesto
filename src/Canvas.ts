@@ -1,7 +1,4 @@
-var _endsWith = require("lodash.endswith");
-var _last = require("lodash.last");
-
-module Manifesto {
+namespace Manifesto {
     export class Canvas extends Element implements ICanvas{
 
         public ranges: IRange[];
@@ -13,11 +10,11 @@ module Manifesto {
         // http://iiif.io/api/image/2.1/#canonical-uri-syntax
         getCanonicalImageUri(w?: number): string {
 
-            var id: string;
-            var region: string = 'full';
-            var rotation: number = 0;
-            var quality: string = 'default';
-            var width: number = w;
+            let id: string | null = null;
+            const region: string = 'full';
+            const rotation: number = 0;
+            let quality: string = 'default';
+            let width: number | undefined = w;
             var size: string;
 
             // if an info.json has been loaded

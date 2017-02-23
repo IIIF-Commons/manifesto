@@ -4,7 +4,7 @@ var url = require("url");
 
 declare var manifesto: IManifesto;
 
-module Manifesto {
+namespace Manifesto {
     export class Utils {
 
         static getImageQuality(profile: Manifesto.ServiceProfile): string {
@@ -40,7 +40,7 @@ module Manifesto {
         static getLocalisedValue(resource: any, locale: string): string {
 
             // if the resource is not an array of translations, return the string.
-            if (!_isArray(resource)){
+            if (!Array.isArray(resource)){
                 return resource;
             }
 
@@ -349,7 +349,7 @@ module Manifesto {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
 
-                var promises = _map(resources, (resource: IExternalResource) => {
+                var promises = resources.map((resource: IExternalResource) => {
                     return Utils.loadExternalResource(
                         resource,
                         tokenStorageStrategy,
@@ -551,7 +551,7 @@ module Manifesto {
 
             for (var key in obj) {
                 var val = obj[key];
-                if (_isArray(val)) {
+                if (Array.isArray(val)) {
                     all = all.concat(val)
                 }
             }
@@ -574,14 +574,14 @@ module Manifesto {
             if (!service) return services;
 
             // coerce to array
-            if (!_isArray(service)){
+            if (!Array.isArray(service)){
                 service = [service];
             }
 
             for (var i = 0; i < service.length; i++){
                 var s: any = service[i];
 
-                if (_isString(s)){
+                if (typeof(s) === 'string'){
                     var r: IJSONLDResource = this.getResourceById(resource.options.resource, s);
 
                     if (r){

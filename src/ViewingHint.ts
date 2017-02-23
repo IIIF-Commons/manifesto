@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class ViewingHint extends StringValue {
         public static CONTINUOUS = new ViewingHint("continuous");
         public static EMPTY = new ViewingHint("");

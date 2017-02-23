@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IExternalResource {
         //profile: Manifesto.ServiceProfile;
         clickThroughService: IService;

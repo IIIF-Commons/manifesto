@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface ISequence extends IManifestResource {
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;

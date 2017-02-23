@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class TreeNode implements ITreeNode {
         public data: any;
         public nodes: ITreeNode[];

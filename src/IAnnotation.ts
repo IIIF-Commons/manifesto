@@ -1,6 +1,6 @@
-module Manifesto {
+namespace Manifesto {
     export interface IAnnotation extends IManifestResource {
-        getMotivation(): AnnotationMotivation;
+        getMotivation(): AnnotationMotivation | null;
         getOn(): string;
         getResource(): Resource;
     }

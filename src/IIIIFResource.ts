@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode; // the tree generated from the first viewingHint="top" range
         getAttribution(): TranslationCollection;
@@ -7,7 +7,7 @@ module Manifesto {
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): TranslationCollection;
         getLicense(): string;
-        getLogo(): string;
+        getLogo(): string | null;
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;

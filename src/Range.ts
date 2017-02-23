@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class Range extends ManifestResource implements IRange{
         _canvases: ICanvas[] = null;
         _ranges: IRange[] = null;

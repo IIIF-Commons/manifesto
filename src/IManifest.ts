@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IManifest extends Manifesto.IIIIFResource {
         getAllRanges(): IRange[];
         getManifestType(): ManifestType;

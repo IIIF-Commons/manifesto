@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class Resource extends ManifestResource implements IResource{
 
         constructor(jsonld?: any, options?: IManifestoOptions){

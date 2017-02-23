@@ -1,5 +1,4 @@
-// manifesto.js v2.0.7 https://github.com/viewdir/manifesto
-declare module Manifesto {
+declare namespace Manifesto {
     class StringValue {
         value: string;
         constructor(value?: string);
@@ -7,7 +6,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class AnnotationMotivation extends StringValue {
         static BOOKMARKING: AnnotationMotivation;
         static CLASSIFYING: AnnotationMotivation;
@@ -40,7 +39,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ElementType extends StringValue {
         static CANVAS: ElementType;
         static DOCUMENT: ElementType;
@@ -57,7 +56,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class IIIFResourceType extends StringValue {
         static ANNOTATION: IIIFResourceType;
         static CANVAS: IIIFResourceType;
@@ -74,7 +73,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ManifestType extends StringValue {
         static EMPTY: ManifestType;
         static MANUSCRIPT: ManifestType;
@@ -85,7 +84,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class RenderingFormat extends StringValue {
         static PDF: RenderingFormat;
         static DOC: RenderingFormat;
@@ -96,7 +95,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ResourceFormat extends StringValue {
         static JPGIMAGE: ResourceFormat;
         static PDF: ResourceFormat;
@@ -105,14 +104,14 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ResourceType extends StringValue {
         static IMAGE: ResourceType;
         image(): ResourceType;
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ServiceProfile extends StringValue {
         static AUTOCOMPLETE: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE0: ServiceProfile;
@@ -179,7 +178,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ViewingDirection extends StringValue {
         static LEFTTORIGHT: ViewingDirection;
         static RIGHTTOLEFT: ViewingDirection;
@@ -192,7 +191,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ViewingHint extends StringValue {
         static CONTINUOUS: ViewingHint;
         static EMPTY: ViewingHint;
@@ -209,7 +208,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class JSONLDResource implements IJSONLDResource {
         context: string;
         id: string;
@@ -219,7 +218,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class ManifestResource extends JSONLDResource implements IManifestResource {
         externalResource: IExternalResource;
         options: IManifestoOptions;
@@ -240,7 +239,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Element extends ManifestResource implements IElement {
         index: number;
         type: ElementType;
@@ -250,9 +249,7 @@ declare module Manifesto {
     }
 }
 
-declare var _endsWith: any;
-declare var _last: any;
-declare module Manifesto {
+declare namespace Manifesto {
     class Canvas extends Element implements ICanvas {
         ranges: IRange[];
         constructor(jsonld?: any, options?: IManifestoOptions);
@@ -264,8 +261,7 @@ declare module Manifesto {
     }
 }
 
-declare var _assign: any;
-declare module Manifesto {
+declare namespace Manifesto {
     class IIIFResource extends ManifestResource implements IIIIFResource {
         defaultTree: ITreeNode;
         index: number;
@@ -289,9 +285,7 @@ declare module Manifesto {
     }
 }
 
-declare var _isArray: any;
-declare var _map: any;
-declare module Manifesto {
+declare namespace Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
         private _allRanges;
@@ -319,7 +313,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Collection extends IIIFResource implements ICollection {
         members: IIIIFResource[];
         private _collections;
@@ -341,7 +335,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Range extends ManifestResource implements IRange {
         _canvases: ICanvas[];
         _ranges: IRange[];
@@ -360,15 +354,14 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Rendering extends ManifestResource implements IRendering {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): RenderingFormat;
     }
 }
 
-declare var _last: any;
-declare module Manifesto {
+declare namespace Manifesto {
     class Sequence extends ManifestResource implements ISequence {
         private canvases;
         constructor(jsonld?: any, options?: IManifestoOptions);
@@ -397,8 +390,7 @@ declare module Manifesto {
     }
 }
 
-declare var _isString: any;
-declare module Manifesto {
+declare namespace Manifesto {
     class Deserialiser {
         static parse(manifest: string, options?: IManifestoOptions): IIIIFResource;
         static parseJson(json: any, options?: IManifestoOptions): IIIIFResource;
@@ -414,9 +406,7 @@ declare module Manifesto {
     }
 }
 
-declare var _endsWith: any;
-declare var _isArray: any;
-declare module Manifesto {
+declare namespace Manifesto {
     class Service extends ManifestResource implements IService {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getProfile(): ServiceProfile;
@@ -425,7 +415,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IThumb {
         data: any;
         height: number;
@@ -437,7 +427,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Thumb implements IThumb {
         data: any;
         index: number;
@@ -450,7 +440,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface ITreeNode {
         data: any;
         nodes: ITreeNode[];
@@ -467,7 +457,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class TreeNode implements ITreeNode {
         data: any;
         nodes: ITreeNode[];
@@ -485,7 +475,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class TreeNodeType extends StringValue {
         static COLLECTION: TreeNodeType;
         static MANIFEST: TreeNodeType;
@@ -500,7 +490,7 @@ declare var http: any;
 declare var https: any;
 declare var url: any;
 declare var manifesto: IManifesto;
-declare module Manifesto {
+declare namespace Manifesto {
     class Utils {
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getInexactLocale(locale: string): string;
@@ -526,7 +516,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class MetadataItem {
         label: TranslationCollection;
         value: TranslationCollection;
@@ -541,7 +531,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Translation {
         value: string;
         locale: string;
@@ -549,7 +539,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class TranslationCollection extends Array<Translation> {
         static parse(translation: any, defaultLocale: string): TranslationCollection;
         static getValue(translationCollection: TranslationCollection, locale?: string): string;
@@ -557,50 +547,16 @@ declare module Manifesto {
 }
 
 
-/// <reference path="StringValue.d.ts" />
-/// <reference path="AnnotationMotivation.d.ts" />
-/// <reference path="ElementType.d.ts" />
-/// <reference path="IIIFResourceType.d.ts" />
-/// <reference path="ManifestType.d.ts" />
-/// <reference path="RenderingFormat.d.ts" />
-/// <reference path="ResourceFormat.d.ts" />
-/// <reference path="ResourceType.d.ts" />
-/// <reference path="ServiceProfile.d.ts" />
-/// <reference path="ViewingDirection.d.ts" />
-/// <reference path="ViewingHint.d.ts" />
-/// <reference path="JSONLDResource.d.ts" />
-/// <reference path="ManifestResource.d.ts" />
-/// <reference path="Element.d.ts" />
-/// <reference path="Canvas.d.ts" />
-/// <reference path="IIIFResource.d.ts" />
-/// <reference path="Manifest.d.ts" />
-/// <reference path="Collection.d.ts" />
-/// <reference path="Range.d.ts" />
-/// <reference path="Rendering.d.ts" />
-/// <reference path="Sequence.d.ts" />
-/// <reference path="Serialisation.d.ts" />
-/// <reference path="Service.d.ts" />
-/// <reference path="IThumb.d.ts" />
-/// <reference path="Thumb.d.ts" />
-/// <reference path="ITreeNode.d.ts" />
-/// <reference path="TreeNode.d.ts" />
-/// <reference path="TreeNodeType.d.ts" />
-/// <reference path="Utils.d.ts" />
-/// <reference path="MetadataItem.d.ts" />
-/// <reference path="Translation.d.ts" />
-/// <reference path="TranslationCollection.d.ts" />
-/// <reference path="Manifesto.d.ts" />
-
-declare module Manifesto {
+declare namespace Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
         constructor(jsonld: any, options: IManifestoOptions);
-        getMotivation(): AnnotationMotivation;
+        getMotivation(): AnnotationMotivation | null;
         getOn(): string;
         getResource(): Resource;
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IAccessToken {
         accessToken: string;
         error: string;
@@ -610,15 +566,15 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IAnnotation extends IManifestResource {
-        getMotivation(): AnnotationMotivation;
+        getMotivation(): AnnotationMotivation | null;
         getOn(): string;
         getResource(): Resource;
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface ICanvas extends IElement {
         ranges: IRange[];
         getCanonicalImageUri(width?: number): string;
@@ -629,7 +585,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface ICollection extends IIIIFResource {
         getCollectionByIndex(index: number): Promise<ICollection>;
         getCollections(): ICollection[];
@@ -641,7 +597,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IElement extends IManifestResource {
         index: number;
         getResources(): IAnnotation[];
@@ -649,7 +605,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IExternalResource {
         clickThroughService: IService;
         data: any;
@@ -670,7 +626,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode;
         getAttribution(): TranslationCollection;
@@ -693,7 +649,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IJSONLDResource {
         context: string;
         id: string;
@@ -702,7 +658,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IManifest extends Manifesto.IIIIFResource {
         getAllRanges(): IRange[];
         getManifestType(): ManifestType;
@@ -742,7 +698,7 @@ interface IManifesto {
     ViewingHint: Manifesto.ViewingHint;
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IManifestoOptions {
         defaultLabel: string;
         locale: string;
@@ -753,7 +709,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IManifestResource extends IJSONLDResource {
         externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
@@ -771,7 +727,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IRange extends IManifestResource {
         getCanvasIds(): string[];
         getCanvases(): ICanvas[];
@@ -786,13 +742,13 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IRendering extends IManifestResource {
         getFormat(): RenderingFormat;
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IResource extends IManifestResource {
         getFormat(): ResourceFormat;
         getHeight(): number;
@@ -800,7 +756,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface ISequence extends IManifestResource {
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas;
@@ -828,14 +784,14 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
         getInfoUri(): string;
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     interface IStatusCodes {
         AUTHORIZATION_FAILED: number;
         FORBIDDEN: number;
@@ -844,7 +800,7 @@ declare module Manifesto {
     }
 }
 
-declare module Manifesto {
+declare namespace Manifesto {
     class Resource extends ManifestResource implements IResource {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): ResourceFormat;

@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class ManifestResource extends JSONLDResource implements IManifestResource {
         externalResource: IExternalResource;
         options: IManifestoOptions;
@@ -67,7 +67,7 @@ module Manifesto {
             if (!rendering) return renderings;
 
             // coerce to array
-            if (!_isArray(rendering)){
+            if (!Array.isArray(rendering)){
                 rendering = [rendering];
             }
 

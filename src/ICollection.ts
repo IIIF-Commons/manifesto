@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface ICollection extends IIIIFResource {
         getCollectionByIndex(index: number): Promise<ICollection>;
         getCollections(): ICollection[]; 

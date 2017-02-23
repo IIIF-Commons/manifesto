@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IElement extends IManifestResource{
         index: number;
         getResources(): IAnnotation[];

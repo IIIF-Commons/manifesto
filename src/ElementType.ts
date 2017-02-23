@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class ElementType extends StringValue{
         public static CANVAS = new ElementType("sc:canvas");
         public static DOCUMENT = new ElementType("foaf:document");

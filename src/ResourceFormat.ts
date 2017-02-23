@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class ResourceFormat extends StringValue {
         public static JPGIMAGE = new ResourceFormat("image/jpeg");
         public static PDF = new ResourceFormat("application/pdf");

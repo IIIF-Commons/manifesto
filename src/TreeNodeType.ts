@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class TreeNodeType extends StringValue {
         public static COLLECTION = new TreeNodeType("sc:collection");
         public static MANIFEST = new TreeNodeType("sc:manifest");

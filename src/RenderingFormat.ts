@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class RenderingFormat extends StringValue{
         public static PDF = new RenderingFormat("application/pdf");
         public static DOC = new RenderingFormat("application/msword");

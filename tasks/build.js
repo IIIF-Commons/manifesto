@@ -1,20 +1,23 @@
-var c = require('../gulpfile.config');
-var config = new c();
-var concat = require('gulp-concat');
-var gulp = require('gulp');
-var merge = require('merge2');
-var ts = require('gulp-typescript');
+const concat = require('gulp-concat');
+const gulp = require('gulp');
+const merge = require('merge2');
+const ts = require('gulp-typescript');
+var tsProject = ts.createProject('tsconfig.json');
 
-gulp.task('build', function() {
-    var result = gulp.src(config.tsSrc)
-        .pipe(ts(config.tsConfig));
+module.exports = function(config) {
 
-    return merge([
-        result.dts
-            .pipe(concat(config.dtsOut))
-            .pipe(gulp.dest(config.dist)),
-        result.js
-            .pipe(concat(config.jsOut))
-            .pipe(gulp.dest(config.server))
-    ]);
-});
+    gulp.task('build', function() {
+        const result = tsProject.src()
+            .pipe(tsProject());
+
+        return merge([
+            result.dts
+                .pipe(concat(config.fileNames.dtsOut))
+                .pipe(gulp.dest(config.directories.dist)),
+            result.js
+                .pipe(concat(config.fileNames.jsOut))
+                .pipe(gulp.dest(config.directories.server))
+        ]);
+    });
+    
+}

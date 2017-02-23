@@ -1,11 +1,11 @@
-module Manifesto {
+namespace Manifesto {
     export class Annotation extends ManifestResource implements IAnnotation{
 
         constructor(jsonld: any, options: IManifestoOptions){
             super(jsonld, options);
         }
 
-        getMotivation(): AnnotationMotivation {
+        getMotivation(): AnnotationMotivation | null {
             var motivation: string = this.getProperty('motivation');
 
             if (motivation){

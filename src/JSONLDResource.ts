@@ -1,4 +1,4 @@
-module Manifesto{
+namespace Manifesto{
     export class JSONLDResource implements IJSONLDResource {
         context: string;
         id: string;

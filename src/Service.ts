@@ -1,7 +1,4 @@
-var _endsWith = require("lodash.endswith");
-var _isArray = require("lodash.isarray");
-
-module Manifesto {
+namespace Manifesto {
     export class Service extends ManifestResource implements IService {
 
         constructor(jsonld?: any, options?: IManifestoOptions){
@@ -15,7 +12,7 @@ module Manifesto {
                 profile = this.getProperty('dcterms:conformsTo');
             }
 
-            if (_isArray(profile)){
+            if (Array.isArray(profile)){
                 return new ServiceProfile(profile[0]);
             }
 
@@ -30,7 +27,7 @@ module Manifesto {
 
             var infoUri = this.id;
 
-            if (!_endsWith(infoUri, '/')) {
+            if (!String.endsWith(infoUri, '/')) {
                 infoUri += '/';
             }
 

@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IRange extends IManifestResource {
         getCanvasIds(): string[];
         getCanvases(): ICanvas[];
@@ -7,7 +7,7 @@ module Manifesto {
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
         members: IManifestResource[];
-        parentRange: IRange;
+        parentRange: IRange | undefined;
         path: string;
         treeNode: ITreeNode;
     }

@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class ManifestType extends StringValue{
         public static EMPTY = new ManifestType("");
         public static MANUSCRIPT = new ManifestType("manuscript");

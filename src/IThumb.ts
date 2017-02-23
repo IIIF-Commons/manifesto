@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IThumb {
         data: any;
         height: number;

@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class TranslationCollection extends Array<Translation> {
 
         static parse(translation: any, defaultLocale: string): TranslationCollection {
@@ -7,11 +7,11 @@ module Manifesto {
             
             if (!translation) {
                 return tc;
-            } else if (_isArray(translation)) {
+            } else if (Array.isArray(translation)) {
                 for (var i = 0; i < translation.length; i++){
                     var value: any = translation[i];
 
-                    if (_isString(value)) {
+                    if (typeof(value) === 'string') {
                         t = new Translation(value, defaultLocale);
                     } else {
                         t = new Translation(value['@value'], value['@language'] || defaultLocale);
@@ -19,7 +19,7 @@ module Manifesto {
                     
                     tc.push(t);
                 }
-            } else if (_isString(translation)) {
+            } else if (typeof(translation) === 'string') {
                 // if it's just a single string value, create one translation in the configured locale
                 t = new Translation(translation, defaultLocale);
                 tc.push(t);

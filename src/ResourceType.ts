@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class ResourceType extends StringValue {
         public static IMAGE = new ResourceType("dctypes:image");
 

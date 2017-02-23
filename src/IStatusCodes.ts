@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IStatusCodes {
         AUTHORIZATION_FAILED: number;
         FORBIDDEN: number;

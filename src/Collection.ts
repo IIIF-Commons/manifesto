@@ -1,8 +1,8 @@
-module Manifesto {
+namespace Manifesto {
     export class Collection extends IIIFResource implements ICollection {
         public members: IIIIFResource[] = [];
-        private _collections: ICollection[] = null;
-        private _manifests: IManifest[] = null;
+        private _collections: ICollection[] | null = null;
+        private _manifests: IManifest[] | null = null;
 
         constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);

@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class ViewingDirection extends StringValue{
         public static LEFTTORIGHT = new ViewingDirection("left-to-right");
         public static RIGHTTOLEFT = new ViewingDirection("right-to-left");

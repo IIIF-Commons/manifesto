@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class StringValue {
         public value: string = "";
 

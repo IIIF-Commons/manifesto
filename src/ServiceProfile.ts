@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class ServiceProfile extends StringValue {
         public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         public static STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");

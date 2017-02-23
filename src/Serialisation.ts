@@ -1,6 +1,4 @@
-var _isString = require("lodash.isstring");
-
-module Manifesto {
+namespace Manifesto {
     export class Deserialiser {
         static parse(manifest: string, options?: IManifestoOptions): IIIIFResource {
             return this.parseJson(JSON.parse(manifest), options);

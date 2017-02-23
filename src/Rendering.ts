@@ -1,5 +1,5 @@
 
-module Manifesto {
+namespace Manifesto {
     export class Rendering extends ManifestResource implements IRendering {
 
         constructor(jsonld?: any, options?: IManifestoOptions){

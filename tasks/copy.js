@@ -1,7 +1,6 @@
-var c = require('../gulpfile.config');
-var config = new c();
-var gulp = require('gulp');
+const gulp = require('gulp');
+const path = require('path');
 
-gulp.task('copy:typings', function() {
-    return gulp.src(config.typings).pipe(gulp.dest(config.typingsDir));
-});
+module.exports = function(config) {
+
+}

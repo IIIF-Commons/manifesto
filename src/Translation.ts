@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class Translation {
         value: string;
         locale: string;

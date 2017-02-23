@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class IIIFResourceType extends StringValue{
         public static ANNOTATION = new IIIFResourceType("oa:annotation");
         public static CANVAS = new IIIFResourceType("sc:canvas");

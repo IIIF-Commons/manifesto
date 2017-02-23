@@ -1,11 +1,8 @@
-var _isArray = require("lodash.isarray");
-var _map = require("lodash.map");
-
-module Manifesto {
+namespace Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
-        private _allRanges: IRange[] = null; 
-        private _sequences: ISequence[] = null;
+        private _allRanges: IRange[] | null = null; 
+        private _sequences: ISequence[] | null = null;
         private _topRanges: IRange[] = [];
 
         constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -84,17 +81,17 @@ module Manifesto {
             return null;
         }
 
-        private _parseRangeCanvas(json: any, range: IRange): void {
+        //private _parseRangeCanvas(json: any, range: IRange): void {
             // todo: currently this isn't needed
             //var canvas: IJSONLDResource = new JSONLDResource(json);
             //range.members.push(<IManifestResource>canvas);
-        }
+        //}
 
         private _parseRanges(r: any, path: string, parentRange?: IRange): void{
             var range: IRange;
-            var id: string;
+            var id: string | null = null;
 
-            if (_isString(r)){
+            if (typeof(r) === 'string'){
                 id = r;
                 r = this._getRangeById(id);
             }
@@ -122,7 +119,7 @@ module Manifesto {
 
             if (r.members) {
                 for (let i = 0; i < r.members.length; i++) {
-                    const child = r.members[i];
+                    const child: any = r.members[i];
 
                     // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
                     if (r.members.en().where(m => m.id === child.id).first()) {

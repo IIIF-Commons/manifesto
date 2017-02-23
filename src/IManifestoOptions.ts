@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export interface IManifestoOptions {
         defaultLabel: string; // '-'
         locale: string; // 'en-GB'

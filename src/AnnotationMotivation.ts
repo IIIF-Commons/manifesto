@@ -1,4 +1,4 @@
-module Manifesto {
+namespace Manifesto {
     export class AnnotationMotivation extends StringValue{
         public static BOOKMARKING = new AnnotationMotivation("oa:bookmarking");
         public static CLASSIFYING = new AnnotationMotivation("oa:classifying");
