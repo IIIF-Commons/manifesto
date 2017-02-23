@@ -4,8 +4,8 @@ namespace Manifesto {
         getCanvases(): ICanvas[];
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         members: IManifestResource[];
         parentRange: IRange | undefined;
         path: string;

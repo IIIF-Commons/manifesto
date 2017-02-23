@@ -6,7 +6,7 @@ namespace Manifesto {
         getDescription(): TranslationCollection;
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): TranslationCollection;
-        getLicense(): string;
+        getLicense(): string | null;
         getLogo(): string | null;
         getNavDate(): Date;
         getRelated(): any;

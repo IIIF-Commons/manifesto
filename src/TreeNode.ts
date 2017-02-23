@@ -11,7 +11,7 @@ namespace Manifesto {
         public parentNode: ITreeNode;
 
         constructor(label?: string, data?: any) {
-            this.label = label;
+            this.label = <string>label;
             this.data = data || {};
             this.nodes = [];
         }

@@ -3,9 +3,9 @@ namespace Manifesto {
         externalResource: IExternalResource;
         options: IManifestoOptions;
 
-        constructor(jsonld?: any, options?: IManifestoOptions) {
+        constructor(jsonld: any, options?: IManifestoOptions) {
             super(jsonld);
-            this.options = options;
+            this.options = <IManifestoOptions>options;
         }
 
         getIIIFResourceType(): IIIFResourceType {
@@ -17,13 +17,13 @@ namespace Manifesto {
         }
 
         getMetadata(): MetadataItem[] {
-            var _metadata: any[] = this.getProperty('metadata');
+            const _metadata: any[] = this.getProperty('metadata');
 
-            var metadata: MetadataItem[] = [];
+            const metadata: MetadataItem[] = [];
 
             if (!_metadata) return metadata;
 
-            for (var i = 0; i < _metadata.length; i++) {
+            for (let i = 0; i < _metadata.length; i++) {
                 var item: any = _metadata[i];
                 var metadataItem: MetadataItem = new MetadataItem(this.options.locale);
                 metadataItem.parse(item);
@@ -33,16 +33,16 @@ namespace Manifesto {
             return metadata;
         }
 
-        getRendering(format: RenderingFormat | string): IRendering {
-            var renderings: IRendering[] = this.getRenderings();
+        getRendering(format: RenderingFormat | string): IRendering | null {
+            const renderings: IRendering[] = this.getRenderings();
 
             // normalise format to string
-            if (typeof format !== 'string'){
+            if (typeof(format) !== 'string') {
                 format = (<RenderingFormat>format).toString();
             }
 
-            for (var i = 0; i < renderings.length; i++){
-                var rendering: IRendering = renderings[i];
+            for (let i = 0; i < renderings.length; i++){
+                const rendering: IRendering = renderings[i];
 
                 if (rendering.getFormat().toString() === format) {
                     return rendering;
@@ -53,7 +53,7 @@ namespace Manifesto {
         }
 
         getRenderings(): IRendering[] {
-            var rendering;
+            let rendering;
 
             // if passing a manifesto-parsed object, use the __jsonld.rendering property,
             // otherwise look for a rendering property
@@ -63,7 +63,7 @@ namespace Manifesto {
                 rendering = (<any>this).rendering;
             }
 
-            var renderings: IRendering[] = [];
+            const renderings: IRendering[] = [];
             if (!rendering) return renderings;
 
             // coerce to array
@@ -71,15 +71,15 @@ namespace Manifesto {
                 rendering = [rendering];
             }
 
-            for (var i = 0; i < rendering.length; i++){
-                var r: any = rendering[i];
+            for (let i = 0; i < rendering.length; i++) {
+                const r: any = rendering[i];
                 renderings.push(new Rendering(r, this.options));
             }
 
             return renderings;
         }
 
-        getService(profile: ServiceProfile | string): IService {
+        getService(profile: ServiceProfile | string): IService | null {
             return Utils.getService(this, profile);
         }
 

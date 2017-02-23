@@ -2,13 +2,13 @@ namespace Manifesto {
     export class TranslationCollection extends Array<Translation> {
 
         static parse(translation: any, defaultLocale: string): TranslationCollection {
-            var tc: TranslationCollection = <TranslationCollection>[];
-            var t: Translation;
+            const tc: TranslationCollection = <TranslationCollection>[];
+            let t: Translation;
             
             if (!translation) {
                 return tc;
             } else if (Array.isArray(translation)) {
-                for (var i = 0; i < translation.length; i++){
+                for (let i = 0; i < translation.length; i++){
                     var value: any = translation[i];
 
                     if (typeof(value) === 'string') {
@@ -34,11 +34,11 @@ namespace Manifesto {
             return tc;
         }
 
-        static getValue(translationCollection: TranslationCollection, locale?: string): string {
+        static getValue(translationCollection: TranslationCollection, locale?: string): string | null {
             if (translationCollection.length) {
 
                 if (locale) {
-                    var translation: Translation = translationCollection.en().where(t => t.locale === locale || Utils.getInexactLocale(t.locale) === Utils.getInexactLocale(locale)).first()
+                    const translation: Translation = translationCollection.en().where(t => t.locale === locale || Utils.getInexactLocale(t.locale) === Utils.getInexactLocale(locale)).first()
                 
                     if (translation) {
                         return translation.value;

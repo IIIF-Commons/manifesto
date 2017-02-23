@@ -6,7 +6,7 @@ namespace Manifesto {
         }
 
         getProfile(): ServiceProfile{
-            var profile = this.getProperty('profile');
+            let profile: any = this.getProperty('profile');
 
             if (!profile) {
                 profile = this.getProperty('dcterms:conformsTo');
@@ -19,15 +19,15 @@ namespace Manifesto {
             return new ServiceProfile(profile);
         }
 
-        getDescription(): string {
+        getDescription(): string | null {
             return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
         }
 
         getInfoUri(): string {
 
-            var infoUri = this.id;
+            let infoUri: string = this.id;
 
-            if (!String.endsWith(infoUri, '/')) {
+            if (!infoUri.endsWith('/')) {
                 infoUri += '/';
             }
 

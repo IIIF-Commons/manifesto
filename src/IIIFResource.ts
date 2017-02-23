@@ -1,7 +1,7 @@
 namespace Manifesto {
     export class IIIFResource extends ManifestResource implements IIIIFResource {
         public defaultTree: ITreeNode;
-        public index: number | undefined = -1;
+        public index: number = -1;
         public isLoaded: boolean = false;
         public parentCollection: ICollection;
         public parentLabel: string;
@@ -9,7 +9,7 @@ namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);
 
-            var defaultOptions: IManifestoOptions = {
+            const defaultOptions: IManifestoOptions = {
                 defaultLabel: '-',
                 locale: 'en-GB',
                 resource: <IIIIFResource>this,
@@ -20,7 +20,7 @@ namespace Manifesto {
         }
 
         getAttribution(): TranslationCollection {
-            var attribution: any = this.getProperty('attribution');
+            const attribution: any = this.getProperty('attribution');
 
             if (attribution) {
                 return TranslationCollection.parse(attribution, this.options.locale);
@@ -30,7 +30,7 @@ namespace Manifesto {
         }
 
         getDescription(): TranslationCollection {
-            var description: any = this.getProperty('description');
+            const description: any = this.getProperty('description');
 
             if (description) {
                 return TranslationCollection.parse(description, this.options.locale);
@@ -44,13 +44,13 @@ namespace Manifesto {
         }
 
         getLogo(): string | null {
-            var logo = this.getProperty('logo');
+            const logo: any = this.getProperty('logo');
             if (!logo) return null;
             if (typeof(logo) === 'string') return logo;
             return logo['@id'];
         }
 
-        getLicense(): string {
+        getLicense(): string | null {
             return Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
         }
 
@@ -67,7 +67,7 @@ namespace Manifesto {
         }
 
         getLabel(): TranslationCollection {
-            var label: any = this.getProperty('label');
+            const label: any = this.getProperty('label');
 
             if (label) {
                 return TranslationCollection.parse(label, this.options.locale);
@@ -91,7 +91,7 @@ namespace Manifesto {
         }
 
         load(): Promise<IIIIFResource> {
-            var that = this;
+            let that = this;
             return new Promise<IIIIFResource>((resolve, reject) => {
                 if (that.isLoaded) {
                     resolve(that);
@@ -99,10 +99,10 @@ namespace Manifesto {
                     var options = that.options;
                     options.navDate = that.getNavDate();
                     Utils.loadResource(that.__jsonld['@id']).then(function(data) {
-                        that.parentLabel = TranslationCollection.getValue(that.getLabel(), options.locale);
+                        that.parentLabel = <string>TranslationCollection.getValue(that.getLabel(), options.locale);
                         var parsed = Deserialiser.parse(data, options);
                         that = Object.assign(that, parsed);
-                        that.index = options.index;
+                        that.index = <number>options.index;
 
                         resolve(that);
                     });

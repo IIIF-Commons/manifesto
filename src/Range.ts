@@ -1,8 +1,8 @@
 
 namespace Manifesto {
     export class Range extends ManifestResource implements IRange{
-        _canvases: ICanvas[] = null;
-        _ranges: IRange[] = null;
+        _canvases: ICanvas[] | null = null;
+        _ranges: IRange[] | null = null;
         parentRange: Range;
         path: string;
         members: IManifestResource[] = [];
@@ -36,16 +36,16 @@ namespace Manifesto {
             return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
         }
 
-        getViewingDirection(): ViewingDirection {
-            if (this.getProperty('viewingDirection')){
+        getViewingDirection(): ViewingDirection | null {
+            if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
             }
 
             return null;
         }
 
-        getViewingHint(): ViewingHint {
-            if (this.getProperty('viewingHint')){
+        getViewingHint(): ViewingHint | null {
+            if (this.getProperty('viewingHint')) {
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
@@ -59,13 +59,11 @@ namespace Manifesto {
 
             var ranges: IRange[] = this.getRanges();
 
-            if (ranges && ranges.length){
-                for (var i = 0; i < ranges.length; i++){
-                    var range: IRange = ranges[i];
-
-                    var node: ITreeNode = new TreeNode();
+            if (ranges && ranges.length) {
+                for (let i = 0; i < ranges.length; i++) {
+                    const range: IRange = ranges[i];
+                    const node: ITreeNode = new TreeNode();
                     treeRoot.addNode(node);
-
                     this._parseTreeNode(node, range);
                 }
             }
@@ -76,21 +74,19 @@ namespace Manifesto {
         }
 
         private _parseTreeNode(node: ITreeNode, range: IRange): void {
-            node.label = TranslationCollection.getValue(range.getLabel(), this.options.locale);
+            node.label = <string>TranslationCollection.getValue(range.getLabel(), this.options.locale);
             node.data = range;
             node.data.type = TreeNodeType.RANGE.toString();
             range.treeNode = node;
 
-            var ranges: IRange[] = range.getRanges();
+            const ranges: IRange[] = range.getRanges();
 
             if (ranges && ranges.length) {
 
-                for (var i = 0; i < ranges.length; i++) {
-                    var childRange = ranges[i];
-
-                    var childNode: ITreeNode = new TreeNode();
+                for (let i = 0; i < ranges.length; i++) {
+                    const childRange = ranges[i];
+                    const childNode: ITreeNode = new TreeNode();
                     node.addNode(childNode);
-
                     this._parseTreeNode(childNode, childRange);
                 }
             }

@@ -9,10 +9,10 @@ namespace Manifesto {
             super(jsonld, options);
 
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                var topRanges: any[] = this._getTopRanges();
+                const topRanges: any[] = this._getTopRanges();
 
-                for (var i = 0; i < topRanges.length; i++) {
-                    var range: any = topRanges[i]; 
+                for (let i = 0; i < topRanges.length; i++) {
+                    const range: any = topRanges[i]; 
                     this._parseRanges(range, String(i));
                 }
             }
@@ -24,14 +24,14 @@ namespace Manifesto {
 
             this.defaultTree.data.type = TreeNodeType.MANIFEST.toString();
 
-            if (!this.isLoaded){
+            if (!this.isLoaded) {
                 return this.defaultTree;
             }
 
-            var topRanges: IRange[] = this.getTopRanges();
+            const topRanges: IRange[] = this.getTopRanges();
 
             // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
-            if (topRanges.length){
+            if (topRanges.length) {
                 topRanges[0].getTree(this.defaultTree);
             }
             
@@ -42,20 +42,20 @@ namespace Manifesto {
 
         private _getTopRanges(): any[] {
 
-            var topRanges: any[] = [];
+            const topRanges: any[] = [];
 
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
 
-                for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var json: any = this.__jsonld.structures[i];
+                for (let i = 0; i < this.__jsonld.structures.length; i++) {
+                    const json: any = this.__jsonld.structures[i];
                     if (json.viewingHint === ViewingHint.TOP.toString()){
                         topRanges.push(json);
                     }
                 }
 
                 // if no viewingHint="top" range was found, create a default one
-                if (!topRanges.length){
-                    var range: any = {};
+                if (!topRanges.length) {
+                    const range: any = {};
                     range.ranges = this.__jsonld.structures;
                     topRanges.push(range);
                 }
@@ -68,10 +68,10 @@ namespace Manifesto {
             return this._topRanges;
         }
 
-        private _getRangeById(id: string): IRange {
+        private _getRangeById(id: string): IRange | null {
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var r = this.__jsonld.structures[i];
+                for (let i = 0; i < this.__jsonld.structures.length; i++) {
+                    const r = this.__jsonld.structures[i];
                     if (r['@id'] === id){
                         return r;
                     }
@@ -88,8 +88,8 @@ namespace Manifesto {
         //}
 
         private _parseRanges(r: any, path: string, parentRange?: IRange): void{
-            var range: IRange;
-            var id: string | null = null;
+            let range: IRange;
+            let id: string | null = null;
 
             if (typeof(r) === 'string'){
                 id = r;
@@ -105,7 +105,7 @@ namespace Manifesto {
             range.parentRange = parentRange;
             range.path = path;
 
-            if (!parentRange){
+            if (!parentRange) {
                 this._topRanges.push(range);
             } else {
                 parentRange.members.push(range);
@@ -140,26 +140,26 @@ namespace Manifesto {
 
             this._allRanges = [];
 
-            var topRanges: IRange[] = this.getTopRanges();
+            const topRanges: IRange[] = this.getTopRanges();
 
-            for (var i = 0; i < topRanges.length; i++) {
-                var topRange: IRange = topRanges[i];
+            for (let i = 0; i < topRanges.length; i++) {
+                const topRange: IRange = topRanges[i];
                 if (topRange.id){
                     this._allRanges.push(topRange); // it might be a placeholder root range
                 }
-                var subRanges: IRange[] = topRange.getRanges();        
+                const subRanges: IRange[] = topRange.getRanges();        
                 this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(range => range.getRanges()).toArray());
             }
 
             return this._allRanges;
         }
 
-        getRangeById(id: string): IRange {
+        getRangeById(id: string): IRange | null {
 
-            var ranges = this.getAllRanges();
+            const ranges: IRange[] = this.getAllRanges();
 
-            for (var i = 0; i < ranges.length; i++) {
-                var range = ranges[i];
+            for (let i = 0; i < ranges.length; i++) {
+                const range: IRange = ranges[i];
                 if (range.id === id){
                     return range;
                 }
@@ -168,12 +168,12 @@ namespace Manifesto {
             return null;
         }
 
-        getRangeByPath(path: string): IRange{
+        getRangeByPath(path: string): IRange | null {
 
-            var ranges = this.getAllRanges();
+            const ranges: IRange[] = this.getAllRanges();
 
-            for (var i = 0; i < ranges.length; i++) {
-                var range = ranges[i];
+            for (let i = 0; i < ranges.length; i++) {
+                const range: IRange = ranges[i];
                 if (range.path === path) {
                     return range;
                 }
@@ -183,17 +183,18 @@ namespace Manifesto {
         }
 
         getSequences(): ISequence[]{
-            if (this._sequences != null)
+            if (this._sequences !== null)
                 return this._sequences;
 
             this._sequences = [];
 
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            const children: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+
             if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var s = children[i];
-                    var sequence: ISequence = new Sequence(s, this.options);
+                for (let i = 0; i < children.length; i++) {
+                    const s: any = children[i];
+                    const sequence: any = new Sequence(s, this.options);
                     this._sequences.push(sequence);
                 }
             }
@@ -210,7 +211,7 @@ namespace Manifesto {
         }
 
         getManifestType(): ManifestType {
-            var service: IService = this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
+            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
             if (service){
                 return new ManifestType(service.getProperty('manifestType'));
             }
@@ -218,7 +219,7 @@ namespace Manifesto {
         }
 
         getTrackingLabel(): string {
-            var service: IService = this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
+            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
             if (service){
                 return service.getProperty('trackingLabel');
             }

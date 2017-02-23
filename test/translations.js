@@ -21,7 +21,7 @@ describe('#hasMetadata', function() {
         var metadata = manifest.getMetadata();
         expect(metadata[4].value).to.be.instanceof(Array);
 
-        for (var i = 0; i < metadata.length; i++) {
+        for (let i = 0; i < metadata.length; i++) {
             var label = metadata[i].getLabel();
             expect(label).to.be.a('string');
             var value = metadata[i].getValue();

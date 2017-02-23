@@ -4,7 +4,7 @@ namespace Manifesto {
         private _collections: ICollection[] | null = null;
         private _manifests: IManifest[] | null = null;
 
-        constructor(jsonld?: any, options?: IManifestoOptions) {
+        constructor(jsonld: any, options: IManifestoOptions) {
             super(jsonld, options);
             jsonld.__collection = this;
         }
@@ -26,14 +26,14 @@ namespace Manifesto {
         }
 
         getCollectionByIndex(collectionIndex: number): Promise<ICollection>  {
-            var collection: ICollection = this.getCollections()[collectionIndex];
+            const collection: ICollection = this.getCollections()[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         }
 
         getManifestByIndex(manifestIndex: number): Promise<IManifest> {
-            var manifest: IManifest = this.getManifests()[manifestIndex];
+            const manifest: IManifest = this.getManifests()[manifestIndex];
             manifest.options.index = manifestIndex;
             return manifest.load();
         }
@@ -69,7 +69,7 @@ namespace Manifesto {
 
         private _parseManifests(parentCollection: ICollection) {
             if (parentCollection.getManifests() && parentCollection.getManifests().length) {
-                for (var i = 0; i < parentCollection.getManifests().length; i++) {
+                for (let i = 0; i < parentCollection.getManifests().length; i++) {
                     var manifest = parentCollection.getManifests()[i];
                     var tree: ITreeNode = manifest.getDefaultTree();
                     tree.label = manifest.parentLabel || TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
@@ -83,7 +83,7 @@ namespace Manifesto {
 
         private _parseCollections(parentCollection: ICollection) {
             if (parentCollection.getCollections() && parentCollection.getCollections().length) {
-                for (var i = 0; i < parentCollection.getCollections().length; i++) {
+                for (let i = 0; i < parentCollection.getCollections().length; i++) {
                     var collection = parentCollection.getCollections()[i];
                     var tree: ITreeNode = collection.getDefaultTree();
                     tree.label = collection.parentLabel || TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);

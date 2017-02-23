@@ -1,21 +1,21 @@
 namespace Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
-        private canvases: ICanvas[] = null;
+        private canvases: ICanvas[] | null = null;
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 
-        getCanvases(): ICanvas[]{
+        getCanvases(): ICanvas[] {
             if (this.canvases != null) return this.canvases;
 
             this.canvases = [];
 
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            var children = this.__jsonld.elements || this.__jsonld.canvases;
+            const children = this.__jsonld.elements || this.__jsonld.canvases;
 
             if (children) {
-                for (var i = 0; i < children.length; i++) {
+                for (let i = 0; i < children.length; i++) {
                     var c = children[i];
                     var canvas: ICanvas = new Canvas(c, this.options);
                     canvas.index = i;
@@ -26,10 +26,10 @@ namespace Manifesto {
             return this.canvases;
         }
 
-        getCanvasById(id: string): ICanvas{
+        getCanvasById(id: string): ICanvas | null {
 
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
-                var canvas = this.getCanvasByIndex(i);
+            for (let i = 0; i < this.getTotalCanvases(); i++) {
+                const canvas = this.getCanvasByIndex(i);
 
                 if (canvas.id === id){
                     return canvas;
@@ -43,10 +43,10 @@ namespace Manifesto {
             return this.getCanvases()[canvasIndex];
         }
 
-        getCanvasIndexById(id: string): number {
+        getCanvasIndexById(id: string): number | null {
 
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
-                var canvas = this.getCanvasByIndex(i);
+            for (let i = 0; i < this.getTotalCanvases(); i++) {
+                const canvas = this.getCanvasByIndex(i);
 
                 if (canvas.id === id){
                     return i;
@@ -67,8 +67,8 @@ namespace Manifesto {
             var doublePageRegExp = /(\d*)\D+(\d*)/;
             var match, regExp, regStr, labelPart1, labelPart2;
 
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
-                var canvas: ICanvas = this.getCanvasByIndex(i);
+            for (let i = 0; i < this.getTotalCanvases(); i++) {
+                const canvas: ICanvas = this.getCanvasByIndex(i);
 
                 // check if there's a literal match
                 if (TranslationCollection.getValue(canvas.getLabel(), this.options.locale) === label) {
@@ -89,7 +89,7 @@ namespace Manifesto {
 
                 regExp = new RegExp(regStr);
 
-                if (regExp.test(canvas.getLabel())) {
+                if (regExp.test(canvas.getLabel().toString())) {
                     return i;
                 }
             }
@@ -98,9 +98,9 @@ namespace Manifesto {
         }
 
         getLastCanvasLabel(alphanumeric?: boolean): string {
-            for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
-                var canvas: ICanvas = this.getCanvasByIndex(i);
-                var label: string = TranslationCollection.getValue(canvas.getLabel(), this.options.locale);
+            for (let i = this.getTotalCanvases() - 1; i >= 0; i--) {
+                const canvas: ICanvas = this.getCanvasByIndex(i);
+                const label: string = <string>TranslationCollection.getValue(canvas.getLabel(), this.options.locale);
 
                 if (alphanumeric) {
                     var regExp = /^[a-zA-Z0-9]*$/;
@@ -123,10 +123,10 @@ namespace Manifesto {
 
         getNextPageIndex(canvasIndex: number, pagingEnabled?: boolean): number {
 
-            var index;
+            let index: number;
 
-            if (pagingEnabled){
-                var indices = this.getPagedIndices(canvasIndex);
+            if (pagingEnabled) {
+                const indices: number[] = this.getPagedIndices(canvasIndex);
 
                 if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     index = indices[0] + 1;
@@ -146,7 +146,7 @@ namespace Manifesto {
 
         getPagedIndices(canvasIndex: number, pagingEnabled?: boolean): number[]{
 
-            var indices = [];
+            let indices: number[] = [];
 
             if (!pagingEnabled) {
                 indices.push(canvasIndex);
@@ -169,10 +169,10 @@ namespace Manifesto {
 
         getPrevPageIndex(canvasIndex: number, pagingEnabled?: boolean): number {
 
-            var index;
+            let index: number;
 
-            if (pagingEnabled){
-                var indices = this.getPagedIndices(canvasIndex);
+            if (pagingEnabled) {
+                const indices = this.getPagedIndices(canvasIndex);
 
                 if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
                     index = indices[indices.length - 1] - 1;
@@ -188,11 +188,11 @@ namespace Manifesto {
         }
 
         getStartCanvasIndex(): number {
-            var startCanvas = this.getStartCanvas();
+            const startCanvas: string = this.getStartCanvas();
 
             if (startCanvas) {
                 // if there's a startCanvas attribute, loop through the canvases and return the matching index.
-                for (var i = 0; i < this.getTotalCanvases(); i++) {
+                for (let i = 0; i < this.getTotalCanvases(); i++) {
                     var canvas = this.getCanvasByIndex(i);
 
                     if (canvas.id === startCanvas) return i;
@@ -204,13 +204,11 @@ namespace Manifesto {
         }
 
         getThumbs(width: number, height?: number): Manifesto.IThumb[] {
-            var thumbs: Manifesto.IThumb[] = [];
+            const thumbs: Manifesto.IThumb[] = [];
+            const totalCanvases: number = this.getTotalCanvases();
 
-            var totalCanvases: number = this.getTotalCanvases();
-
-            for (var i = 0; i < totalCanvases; i++) {
+            for (let i = 0; i < totalCanvases; i++) {
                 var canvas: ICanvas = this.getCanvasByIndex(i);
-
                 thumbs.push(new Manifesto.Thumb(width, canvas));
             }
 

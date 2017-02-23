@@ -1,10 +1,10 @@
 namespace Manifesto {
     export class Deserialiser {
-        static parse(manifest: string, options?: IManifestoOptions): IIIIFResource {
+        static parse(manifest: string, options?: IManifestoOptions): IIIIFResource | null {
             return this.parseJson(JSON.parse(manifest), options);
         }
 
-        static parseJson(json: any, options?: IManifestoOptions): IIIIFResource {
+        static parseJson(json: any, options?: IManifestoOptions): IIIIFResource | null {
             var resource: IIIIFResource;
 
             // have options been passed for the manifest to inherit?
@@ -32,9 +32,9 @@ namespace Manifesto {
         }
 
         static parseCollection(json: any, options?: IManifestoOptions): ICollection {
-            var collection: Collection = new Collection(json, options);
+            const collection: Collection = new Collection(json, <IManifestoOptions>options);
 
-            if (options){
+            if (options) {
                 collection.index = options.index || 0;
             } else {
                 collection.index = 0;
@@ -48,13 +48,13 @@ namespace Manifesto {
         }
 
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void {
-            var children = collection.__jsonld.collections;
+            const children = collection.__jsonld.collections;
             if (children) {
-                for (var i = 0; i < children.length; i++) {
+                for (let i = 0; i < children.length; i++) {
                     if (options){
                         options.index = i;
                     }
-                    var child: ICollection = this.parseCollection(children[i], options);
+                    const child: ICollection = this.parseCollection(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
                     collection.members.push(child);
@@ -63,15 +63,15 @@ namespace Manifesto {
         }
 
         static parseManifest(json: any, options?: IManifestoOptions): IManifest {
-            var manifest: IManifest = new Manifest(json, options);
+            const manifest: IManifest = new Manifest(json, options);
             return manifest;
         }
 
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void {
-            var children = collection.__jsonld.manifests;
+            const children = collection.__jsonld.manifests;
             if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var child: IManifest = this.parseManifest(children[i], options);
+                for (let i = 0; i < children.length; i++) {
+                    const child: IManifest = this.parseManifest(children[i], options);
                     child.index = i;
                     child.parentCollection = collection;
                     collection.members.push(child);
@@ -79,24 +79,26 @@ namespace Manifesto {
             }
         }
 
-        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource {
+        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource | null {
             if (json['@type'].toLowerCase() === 'sc:manifest'){
                 return <IIIIFResource>this.parseManifest(json, options);
             } else if (json['@type'].toLowerCase() === 'sc:collection'){
                 return <IIIIFResource>this.parseCollection(json, options);
             }
+            return null;
         }
 
         static parseMembers(collection: ICollection, options?: IManifestoOptions): void {
-            var children = collection.__jsonld.members;
+            const children = collection.__jsonld.members;
             if (children) {
-                for (var i = 0; i < children.length; i++) {
+                for (let i = 0; i < children.length; i++) {
                     if (options){
                         options.index = i;
                     }
-                    var child: IIIIFResource = this.parseMember(children[i], options);
+                    var child: IIIIFResource | null = this.parseMember(children[i], options);
+                    if (!child) return;
                     // only add to members if not already parsed from backwards-compatible collections/manifests arrays
-                    if (collection.members.en().where(m => m.id === child.id).first()) {
+                    if (collection.members.en().where(m => m.id === (<IIIFResource>child).id).first()) {
                         continue;
                     }
                     child.index = i;

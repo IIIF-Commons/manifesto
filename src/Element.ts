@@ -10,14 +10,13 @@ namespace Manifesto {
 
         getResources(): IAnnotation[] {
 
-            var resources: IAnnotation[] = [];
+            const resources: IAnnotation[] = [];
 
             if (!this.__jsonld.resources) return resources;
 
-            for (var i = 0; i < this.__jsonld.resources.length; i++) {
-                var a = this.__jsonld.resources[i];
-
-                var annotation = new Annotation(a, this.options);
+            for (let i = 0; i < this.__jsonld.resources.length; i++) {
+                const a = this.__jsonld.resources[i];
+                const annotation = new Annotation(a, this.options);
                 resources.push(annotation);
             }
 

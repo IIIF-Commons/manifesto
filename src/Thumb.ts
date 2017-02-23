@@ -14,7 +14,7 @@ namespace Manifesto {
             this.index = canvas.index;
             this.width = width;
 
-            var heightRatio = canvas.getHeight() / canvas.getWidth();
+            const heightRatio: number = canvas.getHeight() / canvas.getWidth();
 
             if (heightRatio) {
                 this.height = Math.floor(this.width * heightRatio);
@@ -23,7 +23,7 @@ namespace Manifesto {
             }
 
             this.uri = canvas.getCanonicalImageUri(width);
-            this.label = TranslationCollection.getValue(canvas.getLabel()); // todo: pass locale?
+            this.label = <string>TranslationCollection.getValue(canvas.getLabel()); // todo: pass locale?
         }
     }
 }

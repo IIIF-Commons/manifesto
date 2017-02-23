@@ -5,20 +5,20 @@ namespace Manifesto {
             super(jsonld, options);
         }
 
-        getFormat(): ResourceFormat {
-            var format: string = this.getProperty('format');
+        getFormat(): ResourceFormat | null {
+            const format: string = this.getProperty('format');
 
-            if (format){
+            if (format) {
                 return new ResourceFormat(format.toLowerCase());
             }
 
             return null;
         }
 
-        getType(): ResourceType {
-            var type: string = this.getProperty('@type');
+        getType(): ResourceType | null {
+            const type: string = this.getProperty('@type');
 
-            if (type){
+            if (type) {
                 return new ResourceType(type.toLowerCase());
             }
 
@@ -37,14 +37,16 @@ namespace Manifesto {
             return this.getProperty('maxWidth');
         }
 
-        getMaxHeight(): number {
-            var maxHeight = this.getProperty('maxHeight');
+        getMaxHeight(): number | null {
+            const maxHeight = this.getProperty('maxHeight');
 
             // if a maxHeight hasn't been specified, default to maxWidth.
             // maxWidth in essence becomes maxEdge
             if (!maxHeight) {
                 return this.getMaxWidth();
             }
+
+            return null;
         }
     }
 }

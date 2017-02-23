@@ -24,7 +24,7 @@
         RESTRICTED: 4
     },
 
-    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource {
+    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource | null {
         return Manifesto.Deserialiser.parse(manifest, options);
     },
 

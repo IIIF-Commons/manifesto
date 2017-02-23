@@ -69,11 +69,11 @@ namespace Manifesto {
 
         getImages(): IAnnotation[] {
 
-            var images: IAnnotation[] = [];
+            const images: IAnnotation[] = [];
 
             if (!this.__jsonld.images) return images;
 
-            for (var i = 0; i < this.__jsonld.images.length; i++) {
+            for (let i = 0; i < this.__jsonld.images.length; i++) {
                 var a = this.__jsonld.images[i];
 
                 var annotation = new Annotation(a, this.options);
@@ -102,7 +102,7 @@ namespace Manifesto {
         //        var resource: IResource = firstImage.getResource();
         //        var services: IService[] = resource.getServices();
         //
-        //        for (var i = 0; i < services.length; i++) {
+        //        for (let i = 0; i < services.length; i++) {
         //            var service: IService = services[i];
         //            var id = service.id;
         //

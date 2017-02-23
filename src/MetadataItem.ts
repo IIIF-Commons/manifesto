@@ -17,7 +17,7 @@ namespace Manifesto {
 
         // shortcuts to get/set values based on default locale
         
-        public getLabel(): string {
+        public getLabel(): string | null {
             if (this.label) {
                 return TranslationCollection.getValue(this.label, this.defaultLocale);
             }
@@ -32,7 +32,7 @@ namespace Manifesto {
             }
         }
 
-        public getValue(): string {
+        public getValue(): string | null {
             if (this.value) {
 
                 var locale: string = this.defaultLocale;

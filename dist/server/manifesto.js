@@ -597,7 +597,7 @@ var Manifesto;
         ManifestResource.prototype.getRendering = function (format) {
             var renderings = this.getRenderings();
             // normalise format to string
-            if (typeof format !== 'string') {
+            if (typeof (format) !== 'string') {
                 format = format.toString();
             }
             for (var i = 0; i < renderings.length; i++) {
@@ -790,7 +790,7 @@ var Manifesto;
         //        var resource: IResource = firstImage.getResource();
         //        var services: IService[] = resource.getServices();
         //
-        //        for (var i = 0; i < services.length; i++) {
+        //        for (let i = 0; i < services.length; i++) {
         //            var service: IService = services[i];
         //            var id = service.id;
         //
@@ -999,14 +999,14 @@ var Manifesto;
             }
             return null;
         };
-        Manifest.prototype._parseRangeCanvas = function (json, range) {
-            // todo: currently this isn't needed
-            //var canvas: IJSONLDResource = new JSONLDResource(json);
-            //range.members.push(<IManifestResource>canvas);
-        };
+        //private _parseRangeCanvas(json: any, range: IRange): void {
+        // todo: currently this isn't needed
+        //var canvas: IJSONLDResource = new JSONLDResource(json);
+        //range.members.push(<IManifestResource>canvas);
+        //}
         Manifest.prototype._parseRanges = function (r, path, parentRange) {
             var range;
-            var id;
+            var id = null;
             if (typeof (r) === 'string') {
                 id = r;
                 r = this._getRangeById(id);
@@ -1082,7 +1082,7 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getSequences = function () {
-            if (this._sequences != null)
+            if (this._sequences !== null)
                 return this._sequences;
             this._sequences = [];
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
@@ -1428,7 +1428,7 @@ var Manifesto;
                     continue;
                 regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
                 regExp = new RegExp(regStr);
-                if (regExp.test(canvas.getLabel())) {
+                if (regExp.test(canvas.getLabel().toString())) {
                     return i;
                 }
             }
@@ -1656,6 +1656,7 @@ var Manifesto;
             else if (json['@type'].toLowerCase() === 'sc:collection') {
                 return this.parseCollection(json, options);
             }
+            return null;
         };
         Deserialiser.parseMembers = function (collection, options) {
             var children = collection.__jsonld.members;
@@ -1665,6 +1666,8 @@ var Manifesto;
                         options.index = i;
                     }
                     var child = this.parseMember(children[i], options);
+                    if (!child)
+                        return;
                     // only add to members if not already parsed from backwards-compatible collections/manifests arrays
                     if (collection.members.en().where(function (m) { return m.id === child.id; }).first()) {
                         continue;
@@ -1722,7 +1725,7 @@ var Manifesto;
         };
         Service.prototype.getInfoUri = function () {
             var infoUri = this.id;
-            if (!String.endsWith(infoUri, '/')) {
+            if (!infoUri.endsWith('/')) {
                 infoUri += '/';
             }
             infoUri += 'info.json';
@@ -1857,10 +1860,10 @@ var Manifesto;
             }
             // test for exact match
             for (var i = 0; i < resource.length; i++) {
-                var value = resource[i];
-                var language = value['@language'];
-                if (locale === language) {
-                    return value['@value'];
+                var value_1 = resource[i];
+                var language_1 = value_1['@language'];
+                if (locale === language_1) {
+                    return value_1['@value'];
                 }
             }
             // test for inexact match
@@ -2219,7 +2222,7 @@ var Manifesto;
         Utils.getService = function (resource, profile) {
             var services = this.getServices(resource);
             // coerce profile to string
-            if (typeof profile !== 'string') {
+            if (typeof (profile) !== 'string') {
                 profile = profile.toString();
             }
             for (var i = 0; i < services.length; i++) {
@@ -2542,6 +2545,7 @@ var Manifesto;
             if (!maxHeight) {
                 return this.getMaxWidth();
             }
+            return null;
         };
         return Resource;
     }(Manifesto.ManifestResource));

@@ -9,7 +9,7 @@ namespace Manifesto {
 
         static getImageQuality(profile: Manifesto.ServiceProfile): string {
 
-            var p: string = profile.toString();
+            const p: string = profile.toString();
 
             if (p === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
                 p === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
@@ -37,7 +37,7 @@ namespace Manifesto {
             return locale;
         }
 
-        static getLocalisedValue(resource: any, locale: string): string {
+        static getLocalisedValue(resource: any, locale: string): string | null {
 
             // if the resource is not an array of translations, return the string.
             if (!Array.isArray(resource)){
@@ -45,19 +45,19 @@ namespace Manifesto {
             }
 
             // test for exact match
-            for (var i = 0; i < resource.length; i++){
-                var value = resource[i];
-                var language = value['@language'];
+            for (let i = 0; i < resource.length; i++){
+                const value = resource[i];
+                const language = value['@language'];
 
-                if (locale === language){
+                if (locale === language) {
                     return <string>value['@value'];
                 }
             }
 
             // test for inexact match
-            var match = locale.substr(0, locale.indexOf('-'));
+            const match: string = locale.substr(0, locale.indexOf('-'));
 
-            for (var i = 0; i < resource.length; i++){
+            for (let i = 0; i < resource.length; i++) {
                 var value = resource[i];
                 var language = value['@language'];
 
@@ -71,7 +71,7 @@ namespace Manifesto {
 
         static generateTreeNodeIds(treeNode: ITreeNode, index: number = 0): void {
 
-            var id: string;
+            let id: string;
 
             if (!treeNode.parentNode){
                 id = '0';
@@ -81,7 +81,7 @@ namespace Manifesto {
 
             treeNode.id = id;
 
-            for (var i = 0; i < treeNode.nodes.length; i++){
+            for (let i = 0; i < treeNode.nodes.length; i++) {
                 var n: ITreeNode = treeNode.nodes[i];
                 Utils.generateTreeNodeIds(n, i);
             }
@@ -166,7 +166,7 @@ namespace Manifesto {
         static loadResource (uri: string): Promise<string> {
 
             return new Promise<any>((resolve, reject) => {
-                var u = url.parse(uri);
+                const u: any = url.parse(uri);
 
                 var request: any;
 
@@ -179,9 +179,9 @@ namespace Manifesto {
                 };
                 
                 if (u.protocol === 'https:'){
-                    request = https.request(opts, (response) => {
+                    request = https.request(opts, (response: any) => {
                         var result = "";
-                        response.on('data', (chunk) => {
+                        response.on('data', (chunk: any) => {
                             result += chunk;
                         });
                         response.on('end', () => {
@@ -189,9 +189,9 @@ namespace Manifesto {
                         });
                     });
                 } else {
-                    request = http.request(opts, (response) => {
+                    request = http.request(opts, (response: any) => {
                         var result = "";
-                        response.on('data', (chunk) => {
+                        response.on('data', (chunk: any) => {
                             result += chunk;
                         });
                         response.on('end', () => {
@@ -200,7 +200,7 @@ namespace Manifesto {
                     });
                 }              
 
-                request.on('error', (error) => {
+                request.on('error', (error: any) => {
                     reject(error);
                 });
 
@@ -318,7 +318,7 @@ namespace Manifesto {
         }
 
         static createError(name: string, message: string): Error {
-            var error: Error = new Error();
+            const error: Error = new Error();
             error.message = message;
             error.name = name;
             return error;
@@ -464,15 +464,15 @@ namespace Manifesto {
         }
 
         private static showAuthInteraction(
-            resource,
-            tokenStorageStrategy,
-            clickThrough,
-            restricted,
-            login,
-            getAccessToken,
-            storeAccessToken,
-            resolve,
-            reject) {
+            resource: IExternalResource,
+            tokenStorageStrategy: any,
+            clickThrough: any,
+            restricted: any,
+            login: any,
+            getAccessToken: any,
+            storeAccessToken: any,
+            resolve: any,
+            reject: any) {
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
                 // if the resource was redirected to a degraded version
                 // and the response hasn't been handled yet.
@@ -485,51 +485,51 @@ namespace Manifesto {
             } else if (resource.clickThroughService && !resource.isResponseHandled) {
                 // if the resource has a click through service, use that.
                 clickThrough(resource).then(() => {
-                    getAccessToken(resource, true).then((accessToken) => {
+                    getAccessToken(resource, true).then((accessToken: IAccessToken) => {
                         storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
                             resource.getData(accessToken).then(() => {
                                 resolve(resource);
                             })["catch"]((message) => {
                                 reject(Utils.createInternalServerError(message));
                             });
-                        })["catch"]((message) => {
+                        })["catch"]((message: string) => {
                             reject(Utils.createInternalServerError(message));
                         });
-                    })["catch"]((message) => {
+                    })["catch"]((message: string) => {
                         reject(Utils.createInternalServerError(message));
                     });
                 });
             } else {
                 // get an access token
                 login(resource).then(() => {
-                    getAccessToken(resource, true).then((accessToken) => {
+                    getAccessToken(resource, true).then((accessToken: IAccessToken) => {
                         storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
                             resource.getData(accessToken).then(() => {
                                 resolve(resource);
                             })["catch"]((message) => {
                                 reject(Utils.createInternalServerError(message));
                             });
-                        })["catch"]((message) => {
+                        })["catch"]((message: string) => {
                             reject(Utils.createInternalServerError(message));
                         });
-                    })["catch"]((message) => {
+                    })["catch"]((message: string) => {
                         reject(Utils.createInternalServerError(message));
                     });
                 });
             }
         };
 
-        static getService(resource: any, profile: ServiceProfile | string): IService {
+        static getService(resource: any, profile: ServiceProfile | string): IService | null {
 
-            var services: IService[] = this.getServices(resource);
+            const services: IService[] = this.getServices(resource);
 
             // coerce profile to string
-            if (typeof profile !== 'string'){
+            if (typeof(profile) !== 'string'){
                 profile = (<ServiceProfile>profile).toString();
             }
 
-            for (var i = 0; i < services.length; i++){
-                var service: IService = services[i];
+            for (let i = 0; i < services.length; i++){
+                const service: IService = services[i];
 
                 if (service.getProfile().toString() === profile) {
                     return service;
@@ -549,10 +549,10 @@ namespace Manifesto {
 
             if (!obj) return all;
 
-            for (var key in obj) {
+            for (let key in obj) {
                 var val = obj[key];
                 if (Array.isArray(val)) {
-                    all = all.concat(val)
+                    all = all.concat(<never[]>val)
                 }
             }
 
@@ -560,17 +560,17 @@ namespace Manifesto {
         }
 
         static getServices(resource: any): IService[] {
-            var service;
+            let service: any;
 
             // if passing a manifesto-parsed object, use the __jsonld.service property,
             // otherwise look for a service property (info.json services)
-            if (resource.__jsonld){
+            if (resource.__jsonld) {
                 service = resource.__jsonld.service;
             } else {
                 service = (<any>resource).service;
             }
 
-            var services: IService[] = [];
+            const services: IService[] = [];
             if (!service) return services;
 
             // coerce to array
@@ -578,11 +578,11 @@ namespace Manifesto {
                 service = [service];
             }
 
-            for (var i = 0; i < service.length; i++){
-                var s: any = service[i];
+            for (let i = 0; i < service.length; i++){
+                const s: any = service[i];
 
                 if (typeof(s) === 'string'){
-                    var r: IJSONLDResource = this.getResourceById(resource.options.resource, s);
+                    const r: IJSONLDResource = this.getResourceById(resource.options.resource, s);
 
                     if (r){
                         services.push(new Service(r.__jsonld || r, resource.options));

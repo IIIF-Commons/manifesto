@@ -26,7 +26,7 @@ describe('#hasLabel', function() {
 
 describe('#loopThroughCanvases', function() {
     it('loopsQuickly', function () {
-        for (var imageIndex = 0; imageIndex < manifest.getSequenceByIndex(0).getTotalCanvases(); imageIndex++) {
+        for (let imageIndex = 0; imageIndex < manifest.getSequenceByIndex(0).getTotalCanvases(); imageIndex++) {
             var canvas = manifest.getSequenceByIndex(0).getCanvasByIndex(imageIndex);
             canvas.getLabel();
         }

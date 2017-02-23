@@ -222,13 +222,13 @@ declare namespace Manifesto {
     class ManifestResource extends JSONLDResource implements IManifestResource {
         externalResource: IExternalResource;
         options: IManifestoOptions;
-        constructor(jsonld?: any, options?: IManifestoOptions);
+        constructor(jsonld: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): TranslationCollection;
         getMetadata(): MetadataItem[];
-        getRendering(format: RenderingFormat | string): IRendering;
+        getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
-        getService(profile: ServiceProfile | string): IService;
+        getService(profile: ServiceProfile | string): IService | null;
         getServices(): IService[];
         isAnnotation(): boolean;
         isCanvas(): boolean;
@@ -272,8 +272,8 @@ declare namespace Manifesto {
         getAttribution(): TranslationCollection;
         getDescription(): TranslationCollection;
         getIIIFResourceType(): IIIFResourceType;
-        getLogo(): string;
-        getLicense(): string;
+        getLogo(): string | null;
+        getLicense(): string | null;
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
@@ -296,11 +296,10 @@ declare namespace Manifesto {
         private _getTopRanges();
         getTopRanges(): IRange[];
         private _getRangeById(id);
-        private _parseRangeCanvas(json, range);
         private _parseRanges(r, path, parentRange?);
         getAllRanges(): IRange[];
-        getRangeById(id: string): IRange;
-        getRangeByPath(path: string): IRange;
+        getRangeById(id: string): IRange | null;
+        getRangeByPath(path: string): IRange | null;
         getSequences(): ISequence[];
         getSequenceByIndex(sequenceIndex: number): ISequence;
         getTotalSequences(): number;
@@ -318,7 +317,7 @@ declare namespace Manifesto {
         members: IIIIFResource[];
         private _collections;
         private _manifests;
-        constructor(jsonld?: any, options?: IManifestoOptions);
+        constructor(jsonld: any, options: IManifestoOptions);
         getCollections(): ICollection[];
         getManifests(): IManifest[];
         getCollectionByIndex(collectionIndex: number): Promise<ICollection>;
@@ -337,8 +336,8 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Range extends ManifestResource implements IRange {
-        _canvases: ICanvas[];
-        _ranges: IRange[];
+        _canvases: ICanvas[] | null;
+        _ranges: IRange[] | null;
         parentRange: Range;
         path: string;
         members: IManifestResource[];
@@ -347,8 +346,8 @@ declare namespace Manifesto {
         getCanvasIds(): string[];
         getCanvases(): ICanvas[];
         getRanges(): IRange[];
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         getTree(treeRoot: ITreeNode): ITreeNode;
         private _parseTreeNode(node, range);
     }
@@ -366,9 +365,9 @@ declare namespace Manifesto {
         private canvases;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvases(): ICanvas[];
-        getCanvasById(id: string): ICanvas;
+        getCanvasById(id: string): ICanvas | null;
         getCanvasByIndex(canvasIndex: number): any;
-        getCanvasIndexById(id: string): number;
+        getCanvasIndexById(id: string): number | null;
         getCanvasIndexByLabel(label: string, foliated?: boolean): number;
         getLastCanvasLabel(alphanumeric?: boolean): string;
         getLastPageIndex(): number;
@@ -392,13 +391,13 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Deserialiser {
-        static parse(manifest: string, options?: IManifestoOptions): IIIIFResource;
-        static parseJson(json: any, options?: IManifestoOptions): IIIIFResource;
+        static parse(manifest: string, options?: IManifestoOptions): IIIIFResource | null;
+        static parseJson(json: any, options?: IManifestoOptions): IIIIFResource | null;
         static parseCollection(json: any, options?: IManifestoOptions): ICollection;
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void;
         static parseManifest(json: any, options?: IManifestoOptions): IManifest;
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void;
-        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource;
+        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource | null;
         static parseMembers(collection: ICollection, options?: IManifestoOptions): void;
     }
     class Serialiser {
@@ -410,7 +409,7 @@ declare namespace Manifesto {
     class Service extends ManifestResource implements IService {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getProfile(): ServiceProfile;
-        getDescription(): string;
+        getDescription(): string | null;
         getInfoUri(): string;
     }
 }
@@ -494,7 +493,7 @@ declare namespace Manifesto {
     class Utils {
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getInexactLocale(locale: string): string;
-        static getLocalisedValue(resource: any, locale: string): string;
+        static getLocalisedValue(resource: any, locale: string): string | null;
         static generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
         static isImageProfile(profile: Manifesto.ServiceProfile): boolean;
         static isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean;
@@ -509,7 +508,7 @@ declare namespace Manifesto {
         static loadExternalResources(resources: IExternalResource[], tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource[]>;
         static authorize(resource: IExternalResource, tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>): Promise<IExternalResource>;
         private static showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
-        static getService(resource: any, profile: ServiceProfile | string): IService;
+        static getService(resource: any, profile: ServiceProfile | string): IService | null;
         static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource;
         static getAllArrays(obj: any): exjs.IEnumerable<any>;
         static getServices(resource: any): IService[];
@@ -524,9 +523,9 @@ declare namespace Manifesto {
         resource: any;
         constructor(defaultLocale: string);
         parse(resource: any): void;
-        getLabel(): string;
+        getLabel(): string | null;
         setLabel(value: string): void;
-        getValue(): string;
+        getValue(): string | null;
         setValue(value: string): void;
     }
 }
@@ -542,7 +541,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     class TranslationCollection extends Array<Translation> {
         static parse(translation: any, defaultLocale: string): TranslationCollection;
-        static getValue(translationCollection: TranslationCollection, locale?: string): string;
+        static getValue(translationCollection: TranslationCollection, locale?: string): string | null;
     }
 }
 
@@ -634,8 +633,8 @@ declare namespace Manifesto {
         getDescription(): TranslationCollection;
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): TranslationCollection;
-        getLicense(): string;
-        getLogo(): string;
+        getLicense(): string | null;
+        getLogo(): string | null;
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
@@ -662,8 +661,8 @@ declare namespace Manifesto {
     interface IManifest extends Manifesto.IIIIFResource {
         getAllRanges(): IRange[];
         getManifestType(): ManifestType;
-        getRangeById(id: string): Manifesto.IRange;
-        getRangeByPath(path: string): IRange;
+        getRangeById(id: string): Manifesto.IRange | null;
+        getRangeByPath(path: string): IRange | null;
         getSequenceByIndex(index: number): ISequence;
         getSequences(): ISequence[];
         getTopRanges(): IRange[];
@@ -715,9 +714,9 @@ declare namespace Manifesto {
         options: IManifestoOptions;
         getLabel(): TranslationCollection;
         getMetadata(): MetadataItem[];
-        getRendering(format: RenderingFormat | string): IRendering;
+        getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
-        getService(profile: ServiceProfile | string): IService;
+        getService(profile: ServiceProfile | string): IService | null;
         getServices(): IService[];
         isAnnotation(): boolean;
         isCanvas(): boolean;
@@ -733,10 +732,10 @@ declare namespace Manifesto {
         getCanvases(): ICanvas[];
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         members: IManifestResource[];
-        parentRange: IRange;
+        parentRange: IRange | undefined;
         path: string;
         treeNode: ITreeNode;
     }
@@ -750,8 +749,10 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IResource extends IManifestResource {
-        getFormat(): ResourceFormat;
+        getFormat(): ResourceFormat | null;
         getHeight(): number;
+        getMaxHeight(): number | null;
+        getType(): ResourceType | null;
         getWidth(): number;
     }
 }
@@ -759,16 +760,16 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface ISequence extends IManifestResource {
         getCanvases(): ICanvas[];
-        getCanvasById(id: string): ICanvas;
+        getCanvasById(id: string): ICanvas | null;
         getCanvasByIndex(index: number): ICanvas;
-        getCanvasIndexById(id: string): number;
+        getCanvasIndexById(id: string): number | null;
         getCanvasIndexByLabel(label: string, foliated: boolean): number;
         getLastCanvasLabel(digitsOnly?: boolean): string;
         getLastPageIndex(): number;
         getNextPageIndex(index: number): number;
         getPagedIndices(index: number): number[];
         getPrevPageIndex(index: number): number;
-        getRendering(format: RenderingFormat | string): IRendering;
+        getRendering(format: RenderingFormat | string): IRendering | null;
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height: number): Manifesto.IThumb[];
@@ -787,6 +788,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IService extends IManifestResource {
         getProfile(): ServiceProfile;
+        getDescription(): string | null;
         getInfoUri(): string;
     }
 }
@@ -803,11 +805,11 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     class Resource extends ManifestResource implements IResource {
         constructor(jsonld?: any, options?: IManifestoOptions);
-        getFormat(): ResourceFormat;
-        getType(): ResourceType;
+        getFormat(): ResourceFormat | null;
+        getType(): ResourceType | null;
         getWidth(): number;
         getHeight(): number;
         getMaxWidth(): number;
-        getMaxHeight(): number;
+        getMaxHeight(): number | null;
     }
 }
