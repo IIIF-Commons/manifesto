@@ -6,7 +6,7 @@ module.exports = function(config) {
 
     gulp.task('prependHeaders', function(cb){
         Promise.all([
-            utils.prependHeader(config.header, path.join(config.directories.dist, config.dtsOut), config.directories.dist),
+            utils.prependHeader(config.header, path.join(config.directories.dist, config.fileNames.dtsOut), config.directories.dist),
             utils.prependHeader(config.header, path.join(config.directories.client, config.fileNames.jsOut), config.directories.client),
             utils.prependHeader(config.header, path.join(config.directories.client, config.fileNames.jsMinOut), config.directories.client),
             utils.prependHeader(config.header, path.join(config.directories.server, config.fileNames.jsOut), config.directories.server),

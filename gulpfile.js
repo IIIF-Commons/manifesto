@@ -30,12 +30,11 @@ bundle(c);
 clean(c);
 copy(c);
 minify(c);
-//mocha(c);
+mocha(c);
 prependHeaders(c);
 
 gulp.task('default', function(cb) {
-    //runSequence('clean:dist', 'build', 'browserify', 'minify', 'bundle', 'prependHeaders', cb);
-    runSequence('clean:dist', 'build', cb);
+    runSequence('clean:dist', 'build', 'browserify', 'minify', 'bundle', 'prependHeaders', cb);
 });
 
-//gulp.task('test', ['mocha']);
+gulp.task('test', ['mocha']);

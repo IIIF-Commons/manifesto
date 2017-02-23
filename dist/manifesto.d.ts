@@ -1,3 +1,4 @@
+// manifesto v2.0.7 https://github.com/viewdir/manifesto
 declare namespace Manifesto {
     class StringValue {
         value: string;
