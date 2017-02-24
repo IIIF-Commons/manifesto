@@ -3,7 +3,6 @@
   "dependencies": {},
   "globalDependencies": {
     "ex": "github:edsilv/exjs/dist/ex.d.ts",
-    "http-status-codes": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts",
-    "node": "registry:dt/node#7.0.0+20170204020307"
+    "http-status-codes": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts"
   }
 }

@@ -5,6 +5,7 @@ const bundle = require('./tasks/bundle');
 const clean = require('./tasks/clean');
 const config = require('./config');
 const copy = require('./tasks/copy');
+const docs = require('./tasks/docs');
 const gulp = require('gulp');
 const metadata = require('./package');
 const minify = require('./tasks/minify');
@@ -18,7 +19,6 @@ metadata.name = 'manifesto';
 opts.metadata = metadata;
 opts.libs = [
     'node_modules/exjs/dist/ex.es3.min.js',
-    'node_modules/extensions/dist/extensions.min.js',
     'node_modules/http-status-codes/dist/http-status-codes.js'
 ];
 
@@ -29,6 +29,7 @@ build(c);
 bundle(c);
 clean(c);
 copy(c);
+docs(c);
 minify(c);
 mocha(c);
 prependHeaders(c);
