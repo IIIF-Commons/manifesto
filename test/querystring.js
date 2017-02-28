@@ -1,6 +1,4 @@
 // url contains querystring
-
-var _isDate = require("lodash.isdate");
 var expect = require('chai').expect;
 var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();

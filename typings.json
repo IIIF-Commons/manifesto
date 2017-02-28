@@ -3,6 +3,6 @@
   "dependencies": {},
   "globalDependencies": {
     "ex": "github:BSick7/exjs/dist/ex.d.ts",
-    "http-status-codes": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts#v0.0.3"
+    "http-status-codes": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts#v0.0.4"
   }
 }
