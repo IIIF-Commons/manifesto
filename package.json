@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "exjs": "BSick7/exjs",
-    "http-status-codes": "edsilv/http-status-codes"
+    "http-status-codes": "edsilv/http-status-codes#v0.0.3"
   },
   "directories": {
     "test": "test"
