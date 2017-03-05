@@ -48,7 +48,7 @@
     "yargs": "^3.10.0"
   },
   "dependencies": {
-    "exjs": "BSick7/exjs",
+    "exjs": "BSick7/exjs#0.5.0",
     "http-status-codes": "edsilv/http-status-codes#v0.0.4"
   },
   "directories": {

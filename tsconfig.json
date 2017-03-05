@@ -10,7 +10,8 @@
         "noUnusedParameters": false,
         "strictNullChecks": true,
         "target": "es3",
-        "lib": ["es6"]
+        "lib": ["es6"],
+        "types": ["node"]
     },
     "files": [
         "src/Definitions.ts",

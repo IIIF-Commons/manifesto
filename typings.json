@@ -2,7 +2,7 @@
   "name": "manifesto.js",
   "dependencies": {},
   "globalDependencies": {
-    "ex": "github:BSick7/exjs/dist/ex.d.ts",
+    "exjs": "github:BSick7/exjs/dist/ex.d.ts#0.5.0",
     "http-status-codes": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts#v0.0.4"
   }
 }
