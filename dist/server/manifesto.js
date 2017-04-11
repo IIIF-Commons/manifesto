@@ -1652,7 +1652,10 @@ var Manifesto;
         function Deserialiser() {
         }
         Deserialiser.parse = function (manifest, options) {
-            return this.parseJson(JSON.parse(manifest), options);
+            if (typeof manifest === 'string') {
+                manifest = JSON.parse(manifest);
+            }
+            return this.parseJson(manifest, options);
         };
         Deserialiser.parseJson = function (json, options) {
             var resource;

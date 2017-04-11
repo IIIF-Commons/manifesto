@@ -394,7 +394,7 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Deserialiser {
-        static parse(manifest: string, options?: IManifestoOptions): IIIIFResource | null;
+        static parse(manifest: any, options?: IManifestoOptions): IIIIFResource | null;
         static parseJson(json: any, options?: IManifestoOptions): IIIIFResource | null;
         static parseCollection(json: any, options?: IManifestoOptions): ICollection;
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void;

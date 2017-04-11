@@ -1,11 +1,15 @@
 namespace Manifesto {
     export class Deserialiser {
-        static parse(manifest: string, options?: IManifestoOptions): IIIIFResource | null {
-            return this.parseJson(JSON.parse(manifest), options);
+        static parse(manifest: any, options?: IManifestoOptions): IIIIFResource | null {
+            if (typeof manifest === 'string') {
+                manifest = JSON.parse(manifest);
+            }
+            
+            return this.parseJson(manifest, options);
         }
 
         static parseJson(json: any, options?: IManifestoOptions): IIIIFResource | null {
-            var resource: IIIIFResource;
+            let resource: IIIIFResource;
 
             // have options been passed for the manifest to inherit?
             if (options){
