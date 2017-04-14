@@ -4,6 +4,7 @@ node_js:
 before_install:
 - npm install -g gulp-cli
 - npm install -g bower
+- npm install -g typings
 install:
 - npm install
 - bower install

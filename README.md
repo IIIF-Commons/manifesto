@@ -26,6 +26,7 @@ http://blog.edsilv.com/manifesto/
 ### Developer Setup
 
     git clone https://github.com/viewdir/manifesto.git
+    npm install typings -g
     npm install
     gulp
     gulp test
