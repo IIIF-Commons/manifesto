@@ -27,8 +27,8 @@ describe('#hasIIIFResourceType', function() {
 });
 
 describe('#hasCollectionCount', function() {
-    it('has a collection count of 255', function () {
-        collection.getTotalCollections().should.equal(255);
+    it('has a collection count of 258', function () {
+        collection.getTotalCollections().should.equal(258);
     });
 });
 
