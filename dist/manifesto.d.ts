@@ -116,7 +116,6 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class ServiceProfile extends StringValue {
-        static AUTOCOMPLETE: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE0: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE1: ServiceProfile;
         static STANFORDIIIFIMAGECOMPLIANCE2: ServiceProfile;
@@ -141,18 +140,31 @@ declare namespace Manifesto {
         static IIIF2IMAGELEVEL1PROFILE: ServiceProfile;
         static IIIF2IMAGELEVEL2: ServiceProfile;
         static IIIF2IMAGELEVEL2PROFILE: ServiceProfile;
-        static IXIF: ServiceProfile;
-        static LOGIN: ServiceProfile;
-        static CLICKTHROUGH: ServiceProfile;
-        static RESTRICTED: ServiceProfile;
-        static LOGOUT: ServiceProfile;
-        static OTHERMANIFESTATIONS: ServiceProfile;
-        static SEARCHWITHIN: ServiceProfile;
-        static TOKEN: ServiceProfile;
+        static AUTH1CLICKTHROUGH: ServiceProfile;
+        static AUTH1EXTERNAL: ServiceProfile;
+        static AUTH1KIOSK: ServiceProfile;
+        static AUTH1LOGIN: ServiceProfile;
+        static AUTH1LOGOUT: ServiceProfile;
+        static AUTH1TOKEN: ServiceProfile;
+        static AUTHCLICKTHROUGH: ServiceProfile;
+        static AUTHLOGIN: ServiceProfile;
+        static AUTHLOGOUT: ServiceProfile;
+        static AUTHRESTRICTED: ServiceProfile;
+        static AUTHTOKEN: ServiceProfile;
+        static AUTOCOMPLETE: ServiceProfile;
+        static SEARCH: ServiceProfile;
         static TRACKINGEXTENSIONS: ServiceProfile;
         static UIEXTENSIONS: ServiceProfile;
         static PRINTEXTENSIONS: ServiceProfile;
         static SHAREEXTENSIONS: ServiceProfile;
+        static OTHERMANIFESTATIONS: ServiceProfile;
+        static IXIF: ServiceProfile;
+        auth1Clickthrough(): ServiceProfile;
+        auth1External(): ServiceProfile;
+        auth1Kiosk(): ServiceProfile;
+        auth1Login(): ServiceProfile;
+        auth1Logout(): ServiceProfile;
+        auth1Token(): ServiceProfile;
         autoComplete(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
         iiif1ImageLevel2(): ServiceProfile;
@@ -164,7 +176,7 @@ declare namespace Manifesto {
         restricted(): ServiceProfile;
         logout(): ServiceProfile;
         otherManifestations(): ServiceProfile;
-        searchWithin(): ServiceProfile;
+        search(): ServiceProfile;
         stanfordIIIFImageCompliance1(): ServiceProfile;
         stanfordIIIFImageCompliance2(): ServiceProfile;
         stanfordIIIFImageConformance1(): ServiceProfile;
@@ -613,13 +625,14 @@ declare namespace Manifesto {
         data: any;
         dataUri: string;
         error: any;
+        externalService: IService;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
         height: number;
         isAccessControlled(): boolean;
         isResponseHandled: boolean;
+        kioskService: IService;
         loginService: IService;
         logoutService: IService;
-        restrictedService: IService;
         status: number;
         tokenService: IService;
         width: number;

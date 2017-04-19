@@ -404,6 +404,24 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
+        ServiceProfile.prototype.auth1Clickthrough = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1CLICKTHROUGH.toString());
+        };
+        ServiceProfile.prototype.auth1External = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1EXTERNAL.toString());
+        };
+        ServiceProfile.prototype.auth1Kiosk = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1KIOSK.toString());
+        };
+        ServiceProfile.prototype.auth1Login = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1LOGIN.toString());
+        };
+        ServiceProfile.prototype.auth1Logout = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1LOGOUT.toString());
+        };
+        ServiceProfile.prototype.auth1Token = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1TOKEN.toString());
+        };
         ServiceProfile.prototype.autoComplete = function () {
             return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
         };
@@ -423,22 +441,22 @@ var Manifesto;
             return new ServiceProfile(ServiceProfile.IXIF.toString());
         };
         ServiceProfile.prototype.login = function () {
-            return new ServiceProfile(ServiceProfile.LOGIN.toString());
+            return new ServiceProfile(ServiceProfile.AUTHLOGIN.toString());
         };
         ServiceProfile.prototype.clickThrough = function () {
-            return new ServiceProfile(ServiceProfile.CLICKTHROUGH.toString());
+            return new ServiceProfile(ServiceProfile.AUTHCLICKTHROUGH.toString());
         };
         ServiceProfile.prototype.restricted = function () {
-            return new ServiceProfile(ServiceProfile.RESTRICTED.toString());
+            return new ServiceProfile(ServiceProfile.AUTHRESTRICTED.toString());
         };
         ServiceProfile.prototype.logout = function () {
-            return new ServiceProfile(ServiceProfile.LOGOUT.toString());
+            return new ServiceProfile(ServiceProfile.AUTHLOGOUT.toString());
         };
         ServiceProfile.prototype.otherManifestations = function () {
             return new ServiceProfile(ServiceProfile.OTHERMANIFESTATIONS.toString());
         };
-        ServiceProfile.prototype.searchWithin = function () {
-            return new ServiceProfile(ServiceProfile.SEARCHWITHIN.toString());
+        ServiceProfile.prototype.search = function () {
+            return new ServiceProfile(ServiceProfile.SEARCH.toString());
         };
         ServiceProfile.prototype.stanfordIIIFImageCompliance1 = function () {
             return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString());
@@ -465,7 +483,7 @@ var Manifesto;
             return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString());
         };
         ServiceProfile.prototype.token = function () {
-            return new ServiceProfile(ServiceProfile.TOKEN.toString());
+            return new ServiceProfile(ServiceProfile.AUTHTOKEN.toString());
         };
         ServiceProfile.prototype.trackingExtensions = function () {
             return new ServiceProfile(ServiceProfile.TRACKINGEXTENSIONS.toString());
@@ -481,7 +499,7 @@ var Manifesto;
         };
         return ServiceProfile;
     }(Manifesto.StringValue));
-    ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
+    // image api
     ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");
     ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
     ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
@@ -506,18 +524,29 @@ var Manifesto;
     ServiceProfile.IIIF2IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level1.json");
     ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
     ServiceProfile.IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
-    ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
-    ServiceProfile.LOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
-    ServiceProfile.CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
-    ServiceProfile.RESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
-    ServiceProfile.LOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
-    ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
-    ServiceProfile.SEARCHWITHIN = new ServiceProfile("http://iiif.io/api/search/0/search");
-    ServiceProfile.TOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
+    // auth api
+    ServiceProfile.AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/login/clickthrough");
+    ServiceProfile.AUTH1EXTERNAL = new ServiceProfile("http://iiif.io/api/auth/1/external");
+    ServiceProfile.AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
+    ServiceProfile.AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
+    ServiceProfile.AUTH1LOGOUT = new ServiceProfile("http://iiif.io/api/auth/1/logout");
+    ServiceProfile.AUTH1TOKEN = new ServiceProfile("http://iiif.io/api/auth/1/token");
+    ServiceProfile.AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
+    ServiceProfile.AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
+    ServiceProfile.AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
+    ServiceProfile.AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
+    ServiceProfile.AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
+    // search api
+    ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
+    ServiceProfile.SEARCH = new ServiceProfile("http://iiif.io/api/search/0/search");
+    // extensions
     ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
     ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
     ServiceProfile.PRINTEXTENSIONS = new ServiceProfile("http://universalviewer.io/print-extensions-profile");
     ServiceProfile.SHAREEXTENSIONS = new ServiceProfile("http://universalviewer.io/share-extensions-profile");
+    // other
+    ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+    ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
     Manifesto.ServiceProfile = ServiceProfile;
 })(Manifesto || (Manifesto = {}));
 
@@ -2083,8 +2112,7 @@ var Manifesto;
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService) {
                                 resolve(clickThrough(resource));
-                            }
-                            else if (resource.restrictedService) {
+                                //} else if(resource.restrictedService) {
                                 resolve(restricted(resource));
                             }
                             else {
@@ -2131,12 +2159,11 @@ var Manifesto;
                                     Utils.authorize(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
                                         resolve(handleResourceResponse(resource));
                                     })["catch"](function (error) {
-                                        if (resource.restrictedService) {
-                                            reject(Utils.createRestrictedError());
-                                        }
-                                        else {
-                                            reject(Utils.createAuthorizationFailedError());
-                                        }
+                                        // if (resource.restrictedService){
+                                        //     reject(Utils.createRestrictedError());
+                                        // } else {
+                                        reject(Utils.createAuthorizationFailedError());
+                                        //}
                                     });
                                 }
                             })["catch"](function (error) {
@@ -2249,10 +2276,9 @@ var Manifesto;
                 // if the client wishes to trigger a login, set resource.isResponseHandled to true
                 // and call loadExternalResources() again passing the resource.
                 resolve(resource);
-            }
-            else if (resource.restrictedService) {
-                resolve(restricted(resource));
-                // TODO: move to next etc
+                // } else if (resource.restrictedService) {
+                //     resolve(restricted(resource));
+                //     // TODO: move to next etc
             }
             else if (resource.clickThroughService && !resource.isResponseHandled) {
                 // if the resource has a click through service, use that.

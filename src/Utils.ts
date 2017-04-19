@@ -232,7 +232,7 @@ namespace Manifesto {
                             // if the resource has a click through service, use that.
                             if (resource.clickThroughService){
                                 resolve(clickThrough(resource));
-                            } else if(resource.restrictedService) {
+                            //} else if(resource.restrictedService) {
                                 resolve(restricted(resource));
                             } else {
                                 login(resource).then(() => {
@@ -285,11 +285,11 @@ namespace Manifesto {
                                         getStoredAccessToken).then(() => {
                                             resolve(handleResourceResponse(resource));
                                         })["catch"]((error) => {
-                                            if (resource.restrictedService){
-                                                reject(Utils.createRestrictedError());
-                                            } else {
+                                            // if (resource.restrictedService){
+                                            //     reject(Utils.createRestrictedError());
+                                            // } else {
                                                 reject(Utils.createAuthorizationFailedError());
-                                            }
+                                            //}
                                         });
                                 }
                             })["catch"]((error) => {
@@ -479,9 +479,9 @@ namespace Manifesto {
                 // if the client wishes to trigger a login, set resource.isResponseHandled to true
                 // and call loadExternalResources() again passing the resource.
                 resolve(resource);
-            } else if (resource.restrictedService) {
-                resolve(restricted(resource));
-                // TODO: move to next etc
+            // } else if (resource.restrictedService) {
+            //     resolve(restricted(resource));
+            //     // TODO: move to next etc
             } else if (resource.clickThroughService && !resource.isResponseHandled) {
                 // if the resource has a click through service, use that.
                 clickThrough(resource).then(() => {
