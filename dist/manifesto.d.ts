@@ -621,20 +621,20 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IExternalResource {
-        clickThroughService: IService;
+        clickThroughService: IService | null;
         data: any;
         dataUri: string;
         error: any;
-        externalService: IService;
+        externalService: IService | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
         height: number;
         isAccessControlled(): boolean;
         isResponseHandled: boolean;
-        kioskService: IService;
-        loginService: IService;
-        logoutService: IService;
+        kioskService: IService | null;
+        loginService: IService | null;
+        logoutService: IService | null;
         status: number;
-        tokenService: IService;
+        tokenService: IService | null;
         width: number;
         x: number;
         y: number;
