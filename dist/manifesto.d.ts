@@ -638,6 +638,7 @@ declare namespace Manifesto {
         kioskService: IService | null;
         loginService: IService | null;
         logoutService: IService | null;
+        restrictedService: IService | null;
         status: number;
         tokenService: IService | null;
         width: number;
