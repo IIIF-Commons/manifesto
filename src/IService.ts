@@ -1,7 +1,9 @@
 namespace Manifesto {
     export interface IService extends IManifestResource {
-        getProfile(): ServiceProfile;
         getDescription(): string | null;
+        getFailureDescription(): string | null;
+        getFailureHeader(): string | null;
         getInfoUri(): string;
+        getProfile(): ServiceProfile;
     }
 }

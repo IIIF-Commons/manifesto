@@ -425,6 +425,8 @@ declare namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getProfile(): ServiceProfile;
         getDescription(): string | null;
+        getFailureHeader(): string | null;
+        getFailureDescription(): string | null;
         getInfoUri(): string;
     }
 }
@@ -515,12 +517,15 @@ declare namespace Manifesto {
         static isLevel1ImageProfile(profile: Manifesto.ServiceProfile): boolean;
         static isLevel2ImageProfile(profile: Manifesto.ServiceProfile): boolean;
         static loadResource(uri: string): Promise<string>;
-        static loadExternalResource(resource: IExternalResource, tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource>;
+        static loadExternalResourceAuth1(resource: IExternalResource, openContentProviderWindow: (service: Manifesto.IService) => Window, userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>, getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>, showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource>;
+        static doAuthChain(resource: IExternalResource, openContentProviderWindow: (service: Manifesto.IService) => Window, userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>, getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>, showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<void>;
+        static attemptResourceWithToken(authService: Manifesto.IService, resourceId: string): Promise<boolean>;
+        static loadExternalResourceAuth0(resource: IExternalResource, tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource>;
         static createError(name: string, message: string): Error;
         static createAuthorizationFailedError(): Error;
         static createRestrictedError(): Error;
         static createInternalServerError(message: string): Error;
-        static loadExternalResources(resources: IExternalResource[], tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource[]>;
+        static loadExternalResourcesAuth0(resources: IExternalResource[], tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>, handleResourceResponse: (resource: IExternalResource) => Promise<any>, options?: IManifestoOptions): Promise<IExternalResource[]>;
         static authorize(resource: IExternalResource, tokenStorageStrategy: string, clickThrough: (resource: IExternalResource) => Promise<void>, restricted: (resource: IExternalResource) => Promise<void>, login: (resource: IExternalResource) => Promise<void>, getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>, storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>, getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>): Promise<IExternalResource>;
         private static showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
         static getService(resource: any, profile: ServiceProfile | string): IService | null;
@@ -803,9 +808,11 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IService extends IManifestResource {
-        getProfile(): ServiceProfile;
         getDescription(): string | null;
+        getFailureDescription(): string | null;
+        getFailureHeader(): string | null;
         getInfoUri(): string;
+        getProfile(): ServiceProfile;
     }
 }
 

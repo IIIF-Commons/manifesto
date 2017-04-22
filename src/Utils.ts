@@ -208,7 +208,134 @@ namespace Manifesto {
             });
         }
 
-        static loadExternalResource(resource: IExternalResource,
+        static loadExternalResourceAuth1(
+            resource: IExternalResource, 
+            openContentProviderWindow: (service: Manifesto.IService) => Window,
+            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
+            getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
+            return new Promise<any>((resolve, reject) => {
+                resource.getData().then(() => {
+                    if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED){
+                        Utils.doAuthChain(resource, openContentProviderWindow, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                    }
+                })["catch"]((error) => {
+                    reject(Utils.createAuthorizationFailedError());
+                });
+            });
+        }
+
+        static async doAuthChain(
+            resource: IExternalResource, 
+            openContentProviderWindow: (service: Manifesto.IService) => Window,
+            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
+            getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<void> {
+            // This function enters the flowchart at the < External? > junction
+            // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
+            if (!resource.isAccessControlled()) {
+                return; // no services found
+            }
+
+            let serviceToTry: Manifesto.IService | null = null;
+            let lastAttempted: Manifesto.IService | null = null;
+            let requestedId: string = resource.dataUri;
+
+            // repetition of logic is left in these steps for clarity:
+            
+            // Looking for external pattern
+            serviceToTry = resource.externalService;
+
+            if (serviceToTry) {
+                lastAttempted = serviceToTry;
+                let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                if (success) return;
+            }
+
+            // Looking for kiosk pattern
+            serviceToTry = resource.kioskService;
+
+            if (serviceToTry) {
+                lastAttempted = serviceToTry;
+                let kioskWindow = openContentProviderWindow(serviceToTry);
+                if (kioskWindow) {
+                    await userInteractionWithContentProvider(kioskWindow);
+                    let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                    if (success) return;
+                } else {
+                    // Could not open kiosk window
+                }
+            }
+
+            // The code for the next two patterns is identical (other than the profile name).
+            // The difference is in the expected behaviour of
+            //
+            //    await userInteractionWithContentProvider(contentProviderWindow);
+            // 
+            // For clickthrough the opened window should close immediately having established
+            // a session, whereas for login the user might spend some time entering credentials etc.
+
+            // Looking for clickthrough pattern
+            serviceToTry = resource.clickThroughService;
+
+            if (serviceToTry) {
+                lastAttempted = serviceToTry;
+                let contentProviderWindow = await getContentProviderWindow(serviceToTry);
+                if (contentProviderWindow) {
+                    // should close immediately
+                    await userInteractionWithContentProvider(contentProviderWindow);
+                    let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                    if (success) return;
+                } 
+            }
+
+            // Looking for login pattern
+            serviceToTry = resource.loginService;
+
+            if (serviceToTry) {
+                lastAttempted = serviceToTry;
+                let contentProviderWindow = await getContentProviderWindow(serviceToTry);
+                if (contentProviderWindow) {
+                    // we expect the user to spend some time interacting
+                    await userInteractionWithContentProvider(contentProviderWindow);
+                    let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                    if (success) return;
+                } 
+            }
+
+            // nothing worked! Use the most recently tried service as the source of
+            // messages to show to the user.
+            if (lastAttempted) {
+                showOutOfOptionsMessages(lastAttempted);
+            }
+        }
+
+        static async attemptResourceWithToken(
+            authService: Manifesto.IService, 
+            resourceId: string
+            ) {
+            // attempting token interaction for " + authService["@id"]
+            const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH1TOKEN.toString());
+
+            if (tokenService) {
+                // found token service: " + tokenService["@id"]);
+                //let tokenMessage = await openTokenService(tokenService); 
+                //if (tokenMessage && tokenMessage.accessToken) {
+                    //let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
+                    // info request with token resulted in " + withTokenInfoResponse.status
+                    //if (withTokenInfoResponse.status == 200) {
+                        //renderImage(withTokenInfoResponse.info);
+                        //return true;
+                    //}
+                //}  
+            }
+            // Didn't get a 200 info response.
+            return false;
+        }
+
+        // IIIF auth api pre v1.0
+        // Keeping this around for now until the auth 1.0 implementation is stable
+        static loadExternalResourceAuth0(resource: IExternalResource,
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
             restricted: (resource: IExternalResource) => Promise<void>,
@@ -336,7 +463,7 @@ namespace Manifesto {
             return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
         }
 
-        static loadExternalResources(resources: IExternalResource[],
+        static loadExternalResourcesAuth0(resources: IExternalResource[],
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
             restricted: (resource: IExternalResource) => Promise<void>,
@@ -349,8 +476,8 @@ namespace Manifesto {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
 
-                var promises = resources.map((resource: IExternalResource) => {
-                    return Utils.loadExternalResource(
+                const promises = resources.map((resource: IExternalResource) => {
+                    return Utils.loadExternalResourceAuth0(
                         resource,
                         tokenStorageStrategy,
                         clickThrough,
