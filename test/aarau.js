@@ -17,9 +17,9 @@ describe('#loadsAarau', function() {
     });
 });
 
-describe('#hasNoSearchWithinService', function() {
-    it('has no search within service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.searchWithin());
+describe('#hasNoSearchService', function() {
+    it('has no search service', function () {
+        var service = manifest.getService(manifesto.ServiceProfile.search());
         expect(service).to.not.exist;
     });
 });

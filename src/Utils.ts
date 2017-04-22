@@ -312,8 +312,7 @@ namespace Manifesto {
 
         static async attemptResourceWithToken(
             authService: Manifesto.IService, 
-            resourceId: string
-            ) {
+            resourceId: string) {
             // attempting token interaction for " + authService["@id"]
             const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH1TOKEN.toString());
 

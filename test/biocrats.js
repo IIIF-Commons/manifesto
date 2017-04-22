@@ -51,9 +51,9 @@ describe('#hasTree', function() {
     });
 });
 
-describe('#hasSearchWithinService', function() {
-    it('has a search within service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.searchWithin());
+describe('#hasSearchService', function() {
+    it('has a search service', function () {
+        var service = manifest.getService(manifesto.ServiceProfile.search());
         expect(service).to.exist;
     });
 });
