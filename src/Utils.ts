@@ -334,7 +334,7 @@ namespace Manifesto {
 
         // IIIF auth api pre v1.0
         // Keeping this around for now until the auth 1.0 implementation is stable
-        static loadExternalResourceAuth0(resource: IExternalResource,
+        static loadExternalResourceAuth09(resource: IExternalResource,
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
             restricted: (resource: IExternalResource) => Promise<void>,
@@ -462,7 +462,7 @@ namespace Manifesto {
             return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
         }
 
-        static loadExternalResourcesAuth0(resources: IExternalResource[],
+        static loadExternalResourcesAuth09(resources: IExternalResource[],
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
             restricted: (resource: IExternalResource) => Promise<void>,
@@ -476,7 +476,7 @@ namespace Manifesto {
             return new Promise<IExternalResource[]>((resolve, reject) => {
 
                 const promises = resources.map((resource: IExternalResource) => {
-                    return Utils.loadExternalResourceAuth0(
+                    return Utils.loadExternalResourceAuth09(
                         resource,
                         tokenStorageStrategy,
                         clickThrough,
