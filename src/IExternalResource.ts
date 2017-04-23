@@ -7,6 +7,7 @@ namespace Manifesto {
         externalService: IService | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
         height: number;
+        index: number;
         isAccessControlled(): boolean;
         isResponseHandled: boolean;
         kioskService: IService | null;
