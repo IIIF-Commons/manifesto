@@ -2143,11 +2143,11 @@ var Manifesto;
                 request.end();
             });
         };
-        Utils.loadExternalResourceAuth1 = function (resource, openContentProviderWindow, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
+        Utils.loadExternalResourceAuth1 = function (resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
                     if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                        Utils.doAuthChain(resource, openContentProviderWindow, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                        Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
                     }
                 })["catch"](function (error) {
                     reject(Utils.createAuthorizationFailedError());
@@ -2172,7 +2172,7 @@ var Manifesto;
                             serviceToTry = resource.externalService;
                             if (!serviceToTry) return [3 /*break*/, 2];
                             lastAttempted = serviceToTry;
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 1:
                             success = _a.sent();
                             if (success)
@@ -2188,7 +2188,7 @@ var Manifesto;
                             return [4 /*yield*/, userInteractionWithContentProvider(kioskWindow)];
                         case 3:
                             _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 4:
                             success = _a.sent();
                             if (success)
@@ -2215,7 +2215,7 @@ var Manifesto;
                         case 7:
                             // should close immediately
                             _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 8:
                             success = _a.sent();
                             if (success)
@@ -2235,7 +2235,7 @@ var Manifesto;
                         case 11:
                             // we expect the user to spend some time interacting
                             _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 12:
                             success = _a.sent();
                             if (success)
@@ -2252,7 +2252,7 @@ var Manifesto;
                 });
             });
         };
-        Utils.attemptResourceWithToken = function (openTokenService, authService, resource) {
+        Utils.attemptResourceWithToken = function (resource, openTokenService, authService) {
             return __awaiter(this, void 0, void 0, function () {
                 var tokenService, tokenMessage;
                 return __generator(this, function (_a) {

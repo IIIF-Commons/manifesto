@@ -211,13 +211,14 @@ namespace Manifesto {
         static loadExternalResourceAuth1(
             resource: IExternalResource, 
             openContentProviderWindow: (service: Manifesto.IService) => Window,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
             userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
             return new Promise<any>((resolve, reject) => {
                 resource.getData().then(() => {
                     if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED){
-                        Utils.doAuthChain(resource, openContentProviderWindow, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                        Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
                     }
                 })["catch"]((error) => {
                     reject(Utils.createAuthorizationFailedError());
