@@ -460,17 +460,17 @@ var Manifesto;
     ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
     ServiceProfile.IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
     // auth api
+    ServiceProfile.AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
+    ServiceProfile.AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
+    ServiceProfile.AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
+    ServiceProfile.AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
+    ServiceProfile.AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
     ServiceProfile.AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/login/clickthrough");
     ServiceProfile.AUTH1EXTERNAL = new ServiceProfile("http://iiif.io/api/auth/1/external");
     ServiceProfile.AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
     ServiceProfile.AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
     ServiceProfile.AUTH1LOGOUT = new ServiceProfile("http://iiif.io/api/auth/1/logout");
     ServiceProfile.AUTH1TOKEN = new ServiceProfile("http://iiif.io/api/auth/1/token");
-    ServiceProfile.AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
-    ServiceProfile.AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
-    ServiceProfile.AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
-    ServiceProfile.AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
-    ServiceProfile.AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
     // search api
     ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
     ServiceProfile.SEARCH = new ServiceProfile("http://iiif.io/api/search/0/search");
@@ -1757,14 +1757,23 @@ var Manifesto;
             }
             return new Manifesto.ServiceProfile(profile);
         };
+        Service.prototype.getConfirmLabel = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('confirmLabel'), this.options.locale);
+        };
         Service.prototype.getDescription = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        };
+        Service.prototype.getFailureDescription = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('failureDescription'), this.options.locale);
         };
         Service.prototype.getFailureHeader = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('failureHeader'), this.options.locale);
         };
-        Service.prototype.getFailureDescription = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('failureDescription'), this.options.locale);
+        Service.prototype.getHeader = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('header'), this.options.locale);
+        };
+        Service.prototype.getServiceLabel = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         };
         Service.prototype.getInfoUri = function () {
             var infoUri = this.id;

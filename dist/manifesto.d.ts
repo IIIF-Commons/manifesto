@@ -140,17 +140,17 @@ declare namespace Manifesto {
         static IIIF2IMAGELEVEL1PROFILE: ServiceProfile;
         static IIIF2IMAGELEVEL2: ServiceProfile;
         static IIIF2IMAGELEVEL2PROFILE: ServiceProfile;
+        static AUTHCLICKTHROUGH: ServiceProfile;
+        static AUTHLOGIN: ServiceProfile;
+        static AUTHLOGOUT: ServiceProfile;
+        static AUTHRESTRICTED: ServiceProfile;
+        static AUTHTOKEN: ServiceProfile;
         static AUTH1CLICKTHROUGH: ServiceProfile;
         static AUTH1EXTERNAL: ServiceProfile;
         static AUTH1KIOSK: ServiceProfile;
         static AUTH1LOGIN: ServiceProfile;
         static AUTH1LOGOUT: ServiceProfile;
         static AUTH1TOKEN: ServiceProfile;
-        static AUTHCLICKTHROUGH: ServiceProfile;
-        static AUTHLOGIN: ServiceProfile;
-        static AUTHLOGOUT: ServiceProfile;
-        static AUTHRESTRICTED: ServiceProfile;
-        static AUTHTOKEN: ServiceProfile;
         static AUTOCOMPLETE: ServiceProfile;
         static SEARCH: ServiceProfile;
         static TRACKINGEXTENSIONS: ServiceProfile;
@@ -424,9 +424,12 @@ declare namespace Manifesto {
     class Service extends ManifestResource implements IService {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getProfile(): ServiceProfile;
+        getConfirmLabel(): string | null;
         getDescription(): string | null;
-        getFailureHeader(): string | null;
         getFailureDescription(): string | null;
+        getFailureHeader(): string | null;
+        getHeader(): string | null;
+        getServiceLabel(): string | null;
         getInfoUri(): string;
     }
 }
@@ -812,11 +815,14 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IService extends IManifestResource {
+        getConfirmLabel(): string | null;
         getDescription(): string | null;
         getFailureDescription(): string | null;
         getFailureHeader(): string | null;
+        getHeader(): string | null;
         getInfoUri(): string;
         getProfile(): ServiceProfile;
+        getServiceLabel(): string | null;
     }
 }
 

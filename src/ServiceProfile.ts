@@ -28,17 +28,18 @@ namespace Manifesto {
         public static IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
 
         // auth api
+        public static AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
+        public static AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
+        public static AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
+        public static AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
+        public static AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
+
         public static AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/login/clickthrough");
         public static AUTH1EXTERNAL = new ServiceProfile("http://iiif.io/api/auth/1/external");
         public static AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
         public static AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
         public static AUTH1LOGOUT = new ServiceProfile("http://iiif.io/api/auth/1/logout");
         public static AUTH1TOKEN = new ServiceProfile("http://iiif.io/api/auth/1/token");
-        public static AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
-        public static AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
-        public static AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
-        public static AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
-        public static AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
 
         // search api
         public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");

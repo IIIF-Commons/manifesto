@@ -19,16 +19,29 @@ namespace Manifesto {
             return new ServiceProfile(profile);
         }
 
+        
+        getConfirmLabel(): string | null {
+            return Utils.getLocalisedValue(this.getProperty('confirmLabel'), this.options.locale);
+        }
+
         getDescription(): string | null {
             return Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        }
+
+        getFailureDescription(): string | null {
+            return Utils.getLocalisedValue(this.getProperty('failureDescription'), this.options.locale);
         }
 
         getFailureHeader(): string | null {
             return Utils.getLocalisedValue(this.getProperty('failureHeader'), this.options.locale);
         }
 
-        getFailureDescription(): string | null {
-            return Utils.getLocalisedValue(this.getProperty('failureDescription'), this.options.locale);
+        getHeader(): string | null {
+            return Utils.getLocalisedValue(this.getProperty('header'), this.options.locale);
+        }
+
+        getServiceLabel(): string | null {
+            return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
         }
 
         getInfoUri(): string {
