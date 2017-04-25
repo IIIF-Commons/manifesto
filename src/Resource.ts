@@ -16,7 +16,7 @@ namespace Manifesto {
         }
 
         getType(): ResourceType | null {
-            const type: string = this.getProperty('@type');
+            const type: string = this.getProperty('type');
 
             if (type) {
                 return new ResourceType(type.toLowerCase());

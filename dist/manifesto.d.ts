@@ -100,10 +100,16 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class ResourceFormat extends StringValue {
-        static JPGIMAGE: ResourceFormat;
+        static JPG: ResourceFormat;
+        static MP4: ResourceFormat;
         static PDF: ResourceFormat;
-        jpgimage(): ResourceFormat;
+        static THREEJS: ResourceFormat;
+        static WEBM: ResourceFormat;
+        jpg(): ResourceFormat;
+        mp4(): ResourceFormat;
         pdf(): ResourceFormat;
+        threejs(): ResourceFormat;
+        webm(): ResourceFormat;
     }
 }
 
@@ -269,6 +275,7 @@ declare namespace Manifesto {
         ranges: IRange[];
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
+        getContent(): IAnnotation[];
         getImages(): IAnnotation[];
         getIndex(): number;
         getWidth(): number;
@@ -511,6 +518,7 @@ declare var url: any;
 declare var manifesto: IManifesto;
 declare namespace Manifesto {
     class Utils {
+        static getResourceFormat(format: string): string;
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getInexactLocale(locale: string): string;
         static getLocalisedValue(resource: any, locale: string): string | null;
@@ -573,9 +581,26 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
         constructor(jsonld: any, options: IManifestoOptions);
+        getBody(): IAnnotationBody[];
         getMotivation(): AnnotationMotivation | null;
         getOn(): string;
+        getTarget(): string | null;
         getResource(): Resource;
+    }
+}
+
+declare namespace Manifesto {
+    class AnnotationBody extends ManifestResource {
+        constructor(jsonld?: any, options?: IManifestoOptions);
+        getFormat(): ResourceFormat | null;
+        getType(): ResourceType | null;
+    }
+}
+
+declare namespace Manifesto {
+    class AnnotationPage extends ManifestResource implements IAnnotationPage {
+        constructor(jsonld: any, options: IManifestoOptions);
+        getItems(): IAnnotation[];
     }
 }
 
@@ -591,9 +616,24 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IAnnotation extends IManifestResource {
+        getBody(): IAnnotationBody[];
         getMotivation(): AnnotationMotivation | null;
         getOn(): string;
         getResource(): Resource;
+        getTarget(): string | null;
+    }
+}
+
+declare namespace Manifesto {
+    interface IAnnotationBody extends IManifestResource {
+        getFormat(): ResourceFormat | null;
+        getType(): ResourceType | null;
+    }
+}
+
+declare namespace Manifesto {
+    interface IAnnotationPage extends IManifestResource {
+        getItems(): IAnnotation[];
     }
 }
 

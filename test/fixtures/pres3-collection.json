@@ -1,0 +1,18 @@
+{
+    "id": "http://tomcrane.github.io/scratch/manifests/3/collection.json",
+    "type": "Collection",
+    "members": [
+        {
+            "id": "http://tomcrane.github.io/scratch/manifests/3/av-basic.json",
+            "type": "Manifest"
+        },
+        {
+            "id": "http://tomcrane.github.io/scratch/manifests/3/pdf.json",
+            "type": "Manifest"
+        },
+        {
+            "id": "http://tomcrane.github.io/scratch/manifests/3/3d.json",
+            "type": "Manifest"
+        }
+    ]
+}

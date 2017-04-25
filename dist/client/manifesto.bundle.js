@@ -347,16 +347,28 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
-        ResourceFormat.prototype.jpgimage = function () {
-            return new ResourceFormat(ResourceFormat.JPGIMAGE.toString());
+        ResourceFormat.prototype.jpg = function () {
+            return new ResourceFormat(ResourceFormat.JPG.toString());
+        };
+        ResourceFormat.prototype.mp4 = function () {
+            return new ResourceFormat(ResourceFormat.MP4.toString());
         };
         ResourceFormat.prototype.pdf = function () {
             return new ResourceFormat(ResourceFormat.PDF.toString());
         };
+        ResourceFormat.prototype.threejs = function () {
+            return new ResourceFormat(ResourceFormat.THREEJS.toString());
+        };
+        ResourceFormat.prototype.webm = function () {
+            return new ResourceFormat(ResourceFormat.WEBM.toString());
+        };
         return ResourceFormat;
     }(Manifesto.StringValue));
-    ResourceFormat.JPGIMAGE = new ResourceFormat("image/jpeg");
+    ResourceFormat.JPG = new ResourceFormat("image/jpeg");
+    ResourceFormat.MP4 = new ResourceFormat("video/mp4");
     ResourceFormat.PDF = new ResourceFormat("application/pdf");
+    ResourceFormat.THREEJS = new ResourceFormat("application/vnd.threejs+json");
+    ResourceFormat.WEBM = new ResourceFormat("video/webm");
     Manifesto.ResourceFormat = ResourceFormat;
 })(Manifesto || (Manifesto = {}));
 
@@ -642,14 +654,19 @@ var Manifesto;
     var JSONLDResource = (function () {
         function JSONLDResource(jsonld) {
             this.__jsonld = jsonld;
-            this.context = this.getProperty('@context');
-            this.id = this.getProperty('@id');
+            this.context = this.getProperty('context');
+            this.id = this.getProperty('id');
         }
         JSONLDResource.prototype.getProperty = function (name) {
+            var prop = null;
             if (this.__jsonld) {
-                return this.__jsonld[name];
+                prop = this.__jsonld[name];
+                if (!prop) {
+                    // property may have a prepended '@'
+                    prop = this.__jsonld['@' + name];
+                }
             }
-            return null;
+            return prop;
         };
         return JSONLDResource;
     }());
@@ -789,7 +806,7 @@ var Manifesto;
             return resources;
         };
         Element.prototype.getType = function () {
-            return new Manifesto.ElementType(this.getProperty('@type'));
+            return new Manifesto.ElementType(this.getProperty('type'));
         };
         return Element;
     }(Manifesto.ManifestResource));
@@ -860,6 +877,27 @@ var Manifesto;
             size = width + ',';
             var uri = [id, region, size, rotation, quality + '.jpg'].join('/');
             return uri;
+        };
+        // Presentation API 3.0
+        Canvas.prototype.getContent = function () {
+            var content = [];
+            if (!this.__jsonld.content)
+                return content;
+            // should be contained in an AnnotationPage
+            var annotationPage = null;
+            if (this.__jsonld.content.length) {
+                annotationPage = new Manifesto.AnnotationPage(this.__jsonld.content[0], this.options);
+            }
+            if (!annotationPage) {
+                return content;
+            }
+            var annotations = annotationPage.getItems();
+            for (var i = 0; i < annotations.length; i++) {
+                var a = annotations[i];
+                var annotation = new Manifesto.Annotation(a, this.options);
+                content.push(annotation);
+            }
+            return content;
         };
         Canvas.prototype.getImages = function () {
             var images = [];
@@ -1695,15 +1733,30 @@ var Manifesto;
                     json.navDate = options.navDate.toString();
                 }
             }
-            switch (json['@type']) {
-                case 'sc:Collection':
-                    resource = this.parseCollection(json, options);
-                    break;
-                case 'sc:Manifest':
-                    resource = this.parseManifest(json, options);
-                    break;
-                default:
-                    return null;
+            if (json['@type']) {
+                switch (json['@type']) {
+                    case 'sc:Collection':
+                        resource = this.parseCollection(json, options);
+                        break;
+                    case 'sc:Manifest':
+                        resource = this.parseManifest(json, options);
+                        break;
+                    default:
+                        return null;
+                }
+            }
+            else {
+                // presentation 3
+                switch (json['type']) {
+                    case 'Collection':
+                        resource = this.parseCollection(json, options);
+                        break;
+                    case 'Manifest':
+                        resource = this.parseManifest(json, options);
+                        break;
+                    default:
+                        return null;
+                }
             }
             // Top-level resource was loaded from a URI, so flag it to prevent
             // unnecessary reload:
@@ -1982,6 +2035,11 @@ var Manifesto;
     var Utils = (function () {
         function Utils() {
         }
+        Utils.getResourceFormat = function (format) {
+            format = format.toLowerCase();
+            format = format.split(';')[0];
+            return format.trim();
+        };
         Utils.getImageQuality = function (profile) {
             var p = profile.toString();
             if (p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
@@ -2772,6 +2830,22 @@ var Manifesto;
         function Annotation(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
         }
+        Annotation.prototype.getBody = function () {
+            var bodies = [];
+            var body = this.getProperty('body');
+            if (body) {
+                if (body.items) {
+                    for (var i = 0; i < body.items.length; i++) {
+                        var b = body.items[i];
+                        bodies.push(b);
+                    }
+                }
+                else {
+                    bodies.push(new Manifesto.AnnotationBody(body));
+                }
+            }
+            return bodies;
+        };
         Annotation.prototype.getMotivation = function () {
             var motivation = this.getProperty('motivation');
             if (motivation) {
@@ -2779,8 +2853,12 @@ var Manifesto;
             }
             return null;
         };
+        // open annotation
         Annotation.prototype.getOn = function () {
             return this.getProperty('on');
+        };
+        Annotation.prototype.getTarget = function () {
+            return this.getProperty('target');
         };
         Annotation.prototype.getResource = function () {
             return new Manifesto.Resource(this.getProperty('resource'), this.options);
@@ -2789,6 +2867,69 @@ var Manifesto;
     }(Manifesto.ManifestResource));
     Manifesto.Annotation = Annotation;
 })(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationBody = (function (_super) {
+        __extends(AnnotationBody, _super);
+        function AnnotationBody(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        AnnotationBody.prototype.getFormat = function () {
+            var format = this.getProperty('format');
+            if (format) {
+                return new Manifesto.ResourceFormat(Manifesto.Utils.getResourceFormat(format));
+            }
+            return null;
+        };
+        AnnotationBody.prototype.getType = function () {
+            var type = this.getProperty('type');
+            if (type) {
+                return new Manifesto.ResourceType(type.toLowerCase());
+            }
+            return null;
+        };
+        return AnnotationBody;
+    }(Manifesto.ManifestResource));
+    Manifesto.AnnotationBody = AnnotationBody;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationPage = (function (_super) {
+        __extends(AnnotationPage, _super);
+        function AnnotationPage(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        AnnotationPage.prototype.getItems = function () {
+            return this.getProperty('items');
+        };
+        return AnnotationPage;
+    }(Manifesto.ManifestResource));
+    Manifesto.AnnotationPage = AnnotationPage;
+})(Manifesto || (Manifesto = {}));
+
+
 
 
 
@@ -2833,7 +2974,7 @@ var Manifesto;
             return null;
         };
         Resource.prototype.getType = function () {
-            var type = this.getProperty('@type');
+            var type = this.getProperty('type');
             if (type) {
                 return new Manifesto.ResourceType(type.toLowerCase());
             }

@@ -18,15 +18,29 @@ namespace Manifesto {
                 }
             }
 
-            switch (json['@type']) {
-                case 'sc:Collection':
-                    resource = this.parseCollection(json, options);
-                    break;
-                case 'sc:Manifest':
-                    resource = this.parseManifest(json, options);
-                    break;
-                default:
-                    return null;
+            if (json['@type']) {
+                switch (json['@type']) {
+                    case 'sc:Collection':
+                        resource = this.parseCollection(json, options);
+                        break;
+                    case 'sc:Manifest':
+                        resource = this.parseManifest(json, options);
+                        break;
+                    default:
+                        return null;
+                }
+            } else {
+                // presentation 3
+                switch (json['type']) {
+                    case 'Collection':
+                        resource = this.parseCollection(json, options);
+                        break;
+                    case 'Manifest':
+                        resource = this.parseManifest(json, options);
+                        break;
+                    default:
+                        return null;
+                }
             }
 
             // Top-level resource was loaded from a URI, so flag it to prevent

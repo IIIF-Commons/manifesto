@@ -7,6 +7,12 @@ declare var manifesto: IManifesto;
 namespace Manifesto {
     export class Utils {
 
+        static getResourceFormat(format: string): string {
+            format = format.toLowerCase();
+            format = format.split(';')[0];
+            return format.trim();
+        }
+
         static getImageQuality(profile: Manifesto.ServiceProfile): string {
 
             const p: string = profile.toString();

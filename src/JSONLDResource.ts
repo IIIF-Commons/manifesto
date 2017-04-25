@@ -4,17 +4,26 @@ namespace Manifesto{
         id: string;
         __jsonld: any;
 
-        constructor(jsonld?: any){
+        constructor(jsonld?: any) {
             this.__jsonld = jsonld;
-            this.context = this.getProperty('@context');
-            this.id = this.getProperty('@id');
+            this.context = this.getProperty('context');
+            this.id = this.getProperty('id');
         }
 
         getProperty(name: string): any {
-            if (this.__jsonld){
-                return this.__jsonld[name];
+            
+            let prop: any = null;
+            
+            if (this.__jsonld) {
+                prop = this.__jsonld[name];
+
+                if (!prop) {
+                    // property may have a prepended '@'
+                    prop = this.__jsonld['@' + name];
+                }
             }
-            return null;
+            
+            return prop;
         }
     }
 }

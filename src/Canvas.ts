@@ -67,6 +67,36 @@ namespace Manifesto {
             return uri;
         }
 
+        // Presentation API 3.0
+        getContent(): IAnnotation[] {
+
+            const content: IAnnotation[] = [];
+
+            if (!this.__jsonld.content) return content;
+
+            // should be contained in an AnnotationPage
+            let annotationPage: AnnotationPage | null = null;
+
+            if (this.__jsonld.content.length) {
+                annotationPage = new AnnotationPage(this.__jsonld.content[0], this.options);
+            }
+
+            if (!annotationPage) {
+                return content;
+            }
+
+            const annotations: IAnnotation[] = annotationPage.getItems();
+
+            for (let i = 0; i < annotations.length; i++) {
+                var a = annotations[i];
+
+                var annotation = new Annotation(a, this.options);
+                content.push(annotation);
+            }
+
+            return content;
+        }
+
         getImages(): IAnnotation[] {
 
             const images: IAnnotation[] = [];
