@@ -2088,9 +2088,9 @@ var Manifesto;
                 });
             });
         };
-        Utils.doAuthChain = function (resource, openContentProviderWindow, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
+        Utils.doAuthChain = function (resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function () {
-                var serviceToTry, lastAttempted, requestedId, success, kioskWindow, success, contentProviderWindow, success, contentProviderWindow, success;
+                var serviceToTry, lastAttempted, success, kioskWindow, success, contentProviderWindow, success, contentProviderWindow, success;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -2101,13 +2101,12 @@ var Manifesto;
                             }
                             serviceToTry = null;
                             lastAttempted = null;
-                            requestedId = resource.dataUri;
                             // repetition of logic is left in these steps for clarity:
                             // Looking for external pattern
                             serviceToTry = resource.externalService;
                             if (!serviceToTry) return [3 /*break*/, 2];
                             lastAttempted = serviceToTry;
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(serviceToTry, requestedId)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
                         case 1:
                             success = _a.sent();
                             if (success)
@@ -2123,7 +2122,7 @@ var Manifesto;
                             return [4 /*yield*/, userInteractionWithContentProvider(kioskWindow)];
                         case 3:
                             _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(serviceToTry, requestedId)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
                         case 4:
                             success = _a.sent();
                             if (success)
@@ -2150,7 +2149,7 @@ var Manifesto;
                         case 7:
                             // should close immediately
                             _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(serviceToTry, requestedId)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
                         case 8:
                             success = _a.sent();
                             if (success)
@@ -2170,7 +2169,7 @@ var Manifesto;
                         case 11:
                             // we expect the user to spend some time interacting
                             _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(serviceToTry, requestedId)];
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(openTokenService, serviceToTry, resource)];
                         case 12:
                             success = _a.sent();
                             if (success)
@@ -2187,25 +2186,39 @@ var Manifesto;
                 });
             });
         };
-        Utils.attemptResourceWithToken = function (authService, resourceId) {
+        Utils.attemptResourceWithToken = function (openTokenService, authService, resource) {
             return __awaiter(this, void 0, void 0, function () {
-                var tokenService;
+                var tokenService, tokenMessage;
                 return __generator(this, function (_a) {
-                    tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
-                    if (tokenService) {
-                        // found token service: " + tokenService["@id"]);
-                        //let tokenMessage = await openTokenService(tokenService); 
-                        //if (tokenMessage && tokenMessage.accessToken) {
-                        //let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
-                        // info request with token resulted in " + withTokenInfoResponse.status
-                        //if (withTokenInfoResponse.status == 200) {
-                        //renderImage(withTokenInfoResponse.info);
-                        //return true;
-                        //}
-                        //}  
+                    switch (_a.label) {
+                        case 0:
+                            tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
+                            if (!tokenService) return [3 /*break*/, 2];
+                            return [4 /*yield*/, openTokenService(tokenService)];
+                        case 1:
+                            tokenMessage = _a.sent();
+                            if (tokenMessage && tokenMessage.accessToken) {
+                                resource.getData(tokenMessage.accessToken).then(function () {
+                                    // if the info.json loaded using the stored access token
+                                    if (resource.status === HTTPStatusCode.OK) {
+                                        return true;
+                                    }
+                                    return false;
+                                })["catch"](function (error) {
+                                    return false;
+                                });
+                                // let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
+                                // // info request with token resulted in " + withTokenInfoResponse.status
+                                // if (withTokenInfoResponse.status === HTTPStatusCode.OK) {
+                                //     renderImage(withTokenInfoResponse.info);
+                                //     return true;
+                                // }
+                            }
+                            _a.label = 2;
+                        case 2: 
+                        // Didn't get a 200 info response.
+                        return [2 /*return*/, false];
                     }
-                    // Didn't get a 200 info response.
-                    return [2 /*return*/, false];
                 });
             });
         };

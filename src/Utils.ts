@@ -228,6 +228,7 @@ namespace Manifesto {
         static async doAuthChain(
             resource: IExternalResource, 
             openContentProviderWindow: (service: Manifesto.IService) => Window,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
             userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<void> {
@@ -239,7 +240,6 @@ namespace Manifesto {
 
             let serviceToTry: Manifesto.IService | null = null;
             let lastAttempted: Manifesto.IService | null = null;
-            let requestedId: string = resource.dataUri;
 
             // repetition of logic is left in these steps for clarity:
             
@@ -248,7 +248,7 @@ namespace Manifesto {
 
             if (serviceToTry) {
                 lastAttempted = serviceToTry;
-                let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                 if (success) return;
             }
 
@@ -260,7 +260,7 @@ namespace Manifesto {
                 let kioskWindow = openContentProviderWindow(serviceToTry);
                 if (kioskWindow) {
                     await userInteractionWithContentProvider(kioskWindow);
-                    let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     if (success) return;
                 } else {
                     // Could not open kiosk window
@@ -284,7 +284,7 @@ namespace Manifesto {
                 if (contentProviderWindow) {
                     // should close immediately
                     await userInteractionWithContentProvider(contentProviderWindow);
-                    let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     if (success) return;
                 } 
             }
@@ -298,7 +298,7 @@ namespace Manifesto {
                 if (contentProviderWindow) {
                     // we expect the user to spend some time interacting
                     await userInteractionWithContentProvider(contentProviderWindow);
-                    let success = await Utils.attemptResourceWithToken(serviceToTry, requestedId);
+                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     if (success) return;
                 } 
             }
@@ -311,22 +311,38 @@ namespace Manifesto {
         }
 
         static async attemptResourceWithToken(
-            authService: Manifesto.IService, 
-            resourceId: string) {
+            resource: Manifesto.IExternalResource,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
+            authService: Manifesto.IService): Promise<boolean> {
+
             // attempting token interaction for " + authService["@id"]
             const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH1TOKEN.toString());
 
             if (tokenService) {
                 // found token service: " + tokenService["@id"]);
-                //let tokenMessage = await openTokenService(tokenService); 
-                //if (tokenMessage && tokenMessage.accessToken) {
-                    //let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
-                    // info request with token resulted in " + withTokenInfoResponse.status
-                    //if (withTokenInfoResponse.status == 200) {
-                        //renderImage(withTokenInfoResponse.info);
-                        //return true;
-                    //}
-                //}  
+                let tokenMessage: any = await openTokenService(tokenService); 
+
+                if (tokenMessage && tokenMessage.accessToken) {
+
+                    resource.getData(tokenMessage.accessToken).then(() => {
+                        // if the info.json loaded using the stored access token
+                        if (resource.status === HTTPStatusCode.OK) {
+                            return true;
+                        }
+
+                        return false;
+
+                    })["catch"]((error) => {
+                        return false;
+                    });
+
+                    // let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
+                    // // info request with token resulted in " + withTokenInfoResponse.status
+                    // if (withTokenInfoResponse.status === HTTPStatusCode.OK) {
+                    //     renderImage(withTokenInfoResponse.info);
+                    //     return true;
+                    // }
+                }  
             }
             // Didn't get a 200 info response.
             return false;
@@ -347,7 +363,7 @@ namespace Manifesto {
 
             return new Promise<any>((resolve, reject) => {
 
-                if (options && options.pessimisticAccessControl){
+                if (options && options.pessimisticAccessControl) {
 
                     // pessimistic: access control cookies may have been deleted.
                     // always request the access token for every access controlled info.json request

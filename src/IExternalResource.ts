@@ -1,5 +1,6 @@
 namespace Manifesto {
     export interface IExternalResource {
+        authAPIVersion: number;
         clickThroughService: IService | null;
         data: any;
         dataUri: string;
