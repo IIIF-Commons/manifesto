@@ -208,6 +208,35 @@ namespace Manifesto {
             });
         }
 
+        static loadExternalResourcesAuth1(
+            resources: IExternalResource[],
+            openContentProviderWindow: (service: Manifesto.IService) => Window,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
+            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
+            getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]> {
+
+            return new Promise<IExternalResource[]>((resolve, reject) => {
+
+                const promises = resources.map((resource: IExternalResource) => {
+                    return Utils.loadExternalResourceAuth1(
+                        resource,
+                        openContentProviderWindow,
+                        openTokenService,
+                        userInteractionWithContentProvider,
+                        getContentProviderWindow,
+                        showOutOfOptionsMessages);
+                });
+
+                Promise.all(promises)
+                    .then(() => {
+                        resolve(resources)
+                    })["catch"]((error) => {
+                        reject(error);
+                    });
+            });
+        }
+
         static loadExternalResourceAuth1(
             resource: IExternalResource, 
             openContentProviderWindow: (service: Manifesto.IService) => Window,
@@ -349,9 +378,47 @@ namespace Manifesto {
             return false;
         }
 
+        static loadExternalResourcesAuth09(
+            resources: IExternalResource[],
+            tokenStorageStrategy: string,
+            clickThrough: (resource: IExternalResource) => Promise<void>,
+            restricted: (resource: IExternalResource) => Promise<void>,
+            login: (resource: IExternalResource) => Promise<void>,
+            getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
+            getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>,
+            handleResourceResponse: (resource: IExternalResource) => Promise<any>,
+            options?: IManifestoOptions): Promise<IExternalResource[]> {
+
+            return new Promise<IExternalResource[]>((resolve, reject) => {
+
+                const promises = resources.map((resource: IExternalResource) => {
+                    return Utils.loadExternalResourceAuth09(
+                        resource,
+                        tokenStorageStrategy,
+                        clickThrough,
+                        restricted,
+                        login,
+                        getAccessToken,
+                        storeAccessToken,
+                        getStoredAccessToken,
+                        handleResourceResponse,
+                        options);
+                });
+
+                Promise.all(promises)
+                    .then(() => {
+                        resolve(resources)
+                    })["catch"]((error) => {
+                        reject(error);
+                    });
+            });
+        }
+
         // IIIF auth api pre v1.0
         // Keeping this around for now until the auth 1.0 implementation is stable
-        static loadExternalResourceAuth09(resource: IExternalResource,
+        static loadExternalResourceAuth09(
+            resource: IExternalResource,
             tokenStorageStrategy: string,
             clickThrough: (resource: IExternalResource) => Promise<void>,
             restricted: (resource: IExternalResource) => Promise<void>,
@@ -477,42 +544,6 @@ namespace Manifesto {
 
         static createInternalServerError(message: string): Error {
             return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
-        }
-
-        static loadExternalResourcesAuth09(resources: IExternalResource[],
-            tokenStorageStrategy: string,
-            clickThrough: (resource: IExternalResource) => Promise<void>,
-            restricted: (resource: IExternalResource) => Promise<void>,
-            login: (resource: IExternalResource) => Promise<void>,
-            getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
-            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
-            getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>,
-            handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-            options?: IManifestoOptions): Promise<IExternalResource[]> {
-
-            return new Promise<IExternalResource[]>((resolve, reject) => {
-
-                const promises = resources.map((resource: IExternalResource) => {
-                    return Utils.loadExternalResourceAuth09(
-                        resource,
-                        tokenStorageStrategy,
-                        clickThrough,
-                        restricted,
-                        login,
-                        getAccessToken,
-                        storeAccessToken,
-                        getStoredAccessToken,
-                        handleResourceResponse,
-                        options);
-                });
-
-                Promise.all(promises)
-                    .then(() => {
-                        resolve(resources)
-                    })["catch"]((error) => {
-                        reject(error);
-                    });
-            });
         }
 
         static authorize(

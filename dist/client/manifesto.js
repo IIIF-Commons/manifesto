@@ -2077,6 +2077,19 @@ var Manifesto;
                 request.end();
             });
         };
+        Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
+            return new Promise(function (resolve, reject) {
+                var promises = resources.map(function (resource) {
+                    return Utils.loadExternalResourceAuth1(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                })["catch"](function (error) {
+                    reject(error);
+                });
+            });
+        };
         Utils.loadExternalResourceAuth1 = function (resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
@@ -2222,6 +2235,19 @@ var Manifesto;
                 });
             });
         };
+        Utils.loadExternalResourcesAuth09 = function (resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
+            return new Promise(function (resolve, reject) {
+                var promises = resources.map(function (resource) {
+                    return Utils.loadExternalResourceAuth09(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                })["catch"](function (error) {
+                    reject(error);
+                });
+            });
+        };
         // IIIF auth api pre v1.0
         // Keeping this around for now until the auth 1.0 implementation is stable
         Utils.loadExternalResourceAuth09 = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
@@ -2320,19 +2346,6 @@ var Manifesto;
         };
         Utils.createInternalServerError = function (message) {
             return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
-        };
-        Utils.loadExternalResourcesAuth09 = function (resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
-            return new Promise(function (resolve, reject) {
-                var promises = resources.map(function (resource) {
-                    return Utils.loadExternalResourceAuth09(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
-                });
-                Promise.all(promises)
-                    .then(function () {
-                    resolve(resources);
-                })["catch"](function (error) {
-                    reject(error);
-                });
-            });
         };
         Utils.authorize = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
             return new Promise(function (resolve, reject) {
