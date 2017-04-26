@@ -283,6 +283,7 @@ namespace Manifesto {
             serviceToTry = resource.externalService;
 
             if (serviceToTry) {
+                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                 if (success) return;
@@ -292,6 +293,7 @@ namespace Manifesto {
             serviceToTry = resource.kioskService;
 
             if (serviceToTry) {
+                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let kioskWindow = openContentProviderWindow(serviceToTry);
                 if (kioskWindow) {
@@ -315,6 +317,7 @@ namespace Manifesto {
             serviceToTry = resource.clickThroughService;
 
             if (serviceToTry) {
+                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let contentProviderWindow = await getContentProviderWindow(serviceToTry);
                 if (contentProviderWindow) {
@@ -329,6 +332,7 @@ namespace Manifesto {
             serviceToTry = resource.loginService;
 
             if (serviceToTry) {
+                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let contentProviderWindow = await getContentProviderWindow(serviceToTry);
                 if (contentProviderWindow) {
@@ -754,17 +758,17 @@ namespace Manifesto {
             if (!service) return services;
 
             // coerce to array
-            if (!Array.isArray(service)){
+            if (!Array.isArray(service)) {
                 service = [service];
             }
 
-            for (let i = 0; i < service.length; i++){
+            for (let i = 0; i < service.length; i++) {
                 const s: any = service[i];
 
-                if (typeof(s) === 'string'){
+                if (typeof(s) === 'string') {
                     const r: IJSONLDResource = this.getResourceById(resource.options.resource, s);
 
-                    if (r){
+                    if (r) {
                         services.push(new Service(r.__jsonld || r, resource.options));
                     }
                 } else {

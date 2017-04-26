@@ -11,6 +11,7 @@ namespace Manifesto {
         index: number;
         isAccessControlled(): boolean;
         isResponseHandled: boolean;
+        options?: IManifestoOptions;
         kioskService: IService | null;
         loginService: IService | null;
         logoutService: IService | null;

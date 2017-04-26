@@ -2250,6 +2250,7 @@ var Manifesto;
                             // Looking for external pattern
                             serviceToTry = resource.externalService;
                             if (!serviceToTry) return [3 /*break*/, 2];
+                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 1:
@@ -2261,6 +2262,7 @@ var Manifesto;
                             // Looking for kiosk pattern
                             serviceToTry = resource.kioskService;
                             if (!serviceToTry) return [3 /*break*/, 5];
+                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             kioskWindow = openContentProviderWindow(serviceToTry);
                             if (!kioskWindow) return [3 /*break*/, 5];
@@ -2284,6 +2286,7 @@ var Manifesto;
                             // Looking for clickthrough pattern
                             serviceToTry = resource.clickThroughService;
                             if (!serviceToTry) return [3 /*break*/, 9];
+                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, getContentProviderWindow(serviceToTry)];
                         case 6:
@@ -2304,6 +2307,7 @@ var Manifesto;
                             // Looking for login pattern
                             serviceToTry = resource.loginService;
                             if (!serviceToTry) return [3 /*break*/, 13];
+                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, getContentProviderWindow(serviceToTry)];
                         case 10:
