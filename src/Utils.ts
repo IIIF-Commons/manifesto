@@ -364,7 +364,7 @@ namespace Manifesto {
 
                 if (tokenMessage && tokenMessage.accessToken) {
 
-                    resource.getData(tokenMessage.accessToken).then(() => {
+                    resource.getData(tokenMessage).then(() => {
                         // if the info.json loaded using the stored access token
                         if (resource.status === HTTPStatusCode.OK) {
                             return true;

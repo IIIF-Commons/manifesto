@@ -2348,7 +2348,7 @@ var Manifesto;
                         case 1:
                             tokenMessage = _a.sent();
                             if (tokenMessage && tokenMessage.accessToken) {
-                                resource.getData(tokenMessage.accessToken).then(function () {
+                                resource.getData(tokenMessage).then(function () {
                                     // if the info.json loaded using the stored access token
                                     if (resource.status === HTTPStatusCode.OK) {
                                         return true;
