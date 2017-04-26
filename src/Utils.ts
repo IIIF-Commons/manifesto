@@ -268,87 +268,91 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<any> {
-            // This function enters the flowchart at the < External? > junction
-            // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
-            if (!resource.isAccessControlled()) {
-                return; // no services found
-            }
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
 
-            let serviceToTry: Manifesto.IService | null = null;
-            let lastAttempted: Manifesto.IService | null = null;
-
-            // repetition of logic is left in these steps for clarity:
+            //return new Promise<IExternalResource>((resolve, reject) => {
             
-            // Looking for external pattern
-            serviceToTry = resource.externalService;
-
-            if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
-                lastAttempted = serviceToTry;
-                let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                if (success) return;
-            }
-
-            // Looking for kiosk pattern
-            serviceToTry = resource.kioskService;
-
-            if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
-                lastAttempted = serviceToTry;
-                let kioskWindow = openContentProviderWindow(serviceToTry);
-                if (kioskWindow) {
-                    await userInteractionWithContentProvider(kioskWindow);
-                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    if (success) return;
-                } else {
-                    // Could not open kiosk window
+                // This function enters the flowchart at the < External? > junction
+                // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
+                if (!resource.isAccessControlled()) {
+                    return; // no services found
                 }
-            }
 
-            // The code for the next two patterns is identical (other than the profile name).
-            // The difference is in the expected behaviour of
-            //
-            //    await userInteractionWithContentProvider(contentProviderWindow);
-            // 
-            // For clickthrough the opened window should close immediately having established
-            // a session, whereas for login the user might spend some time entering credentials etc.
+                let serviceToTry: Manifesto.IService | null = null;
+                let lastAttempted: Manifesto.IService | null = null;
 
-            // Looking for clickthrough pattern
-            serviceToTry = resource.clickThroughService;
+                // repetition of logic is left in these steps for clarity:
+                
+                // Looking for external pattern
+                serviceToTry = resource.externalService;
 
-            if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
-                lastAttempted = serviceToTry;
-                let contentProviderWindow = await getContentProviderWindow(serviceToTry);
-                if (contentProviderWindow) {
-                    // should close immediately
-                    await userInteractionWithContentProvider(contentProviderWindow);
+                if (serviceToTry) {
+                    serviceToTry.options = <IManifestoOptions>resource.options;
+                    lastAttempted = serviceToTry;
                     let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     if (success) return;
-                } 
-            }
+                }
 
-            // Looking for login pattern
-            serviceToTry = resource.loginService;
+                // Looking for kiosk pattern
+                serviceToTry = resource.kioskService;
 
-            if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
-                lastAttempted = serviceToTry;
-                let contentProviderWindow = await getContentProviderWindow(serviceToTry);
-                if (contentProviderWindow) {
-                    // we expect the user to spend some time interacting
-                    await userInteractionWithContentProvider(contentProviderWindow);
-                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    if (success) return;
-                } 
-            }
+                if (serviceToTry) {
+                    serviceToTry.options = <IManifestoOptions>resource.options;
+                    lastAttempted = serviceToTry;
+                    let kioskWindow = openContentProviderWindow(serviceToTry);
+                    if (kioskWindow) {
+                        await userInteractionWithContentProvider(kioskWindow);
+                        let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                        if (success) return;
+                    } else {
+                        // Could not open kiosk window
+                    }
+                }
 
-            // nothing worked! Use the most recently tried service as the source of
-            // messages to show to the user.
-            if (lastAttempted) {
-                showOutOfOptionsMessages(lastAttempted);
-            }
+                // The code for the next two patterns is identical (other than the profile name).
+                // The difference is in the expected behaviour of
+                //
+                //    await userInteractionWithContentProvider(contentProviderWindow);
+                // 
+                // For clickthrough the opened window should close immediately having established
+                // a session, whereas for login the user might spend some time entering credentials etc.
+
+                // Looking for clickthrough pattern
+                serviceToTry = resource.clickThroughService;
+
+                if (serviceToTry) {
+                    serviceToTry.options = <IManifestoOptions>resource.options;
+                    lastAttempted = serviceToTry;
+                    let contentProviderWindow = await getContentProviderWindow(serviceToTry);
+                    if (contentProviderWindow) {
+                        // should close immediately
+                        await userInteractionWithContentProvider(contentProviderWindow);
+                        let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                        if (success) return;
+                    } 
+                }
+
+                // Looking for login pattern
+                serviceToTry = resource.loginService;
+
+                if (serviceToTry) {
+                    serviceToTry.options = <IManifestoOptions>resource.options;
+                    lastAttempted = serviceToTry;
+                    let contentProviderWindow = await getContentProviderWindow(serviceToTry);
+                    if (contentProviderWindow) {
+                        // we expect the user to spend some time interacting
+                        await userInteractionWithContentProvider(contentProviderWindow);
+                        let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                        if (success) return;
+                    } 
+                }
+
+                // nothing worked! Use the most recently tried service as the source of
+                // messages to show to the user.
+                if (lastAttempted) {
+                    showOutOfOptionsMessages(lastAttempted);
+                }
+            //});
         }
 
         static async attemptResourceWithToken(

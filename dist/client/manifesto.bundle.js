@@ -2241,6 +2241,7 @@ var Manifesto;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
+                            //return new Promise<IExternalResource>((resolve, reject) => {
                             // This function enters the flowchart at the < External? > junction
                             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
                             if (!resource.isAccessControlled()) {
