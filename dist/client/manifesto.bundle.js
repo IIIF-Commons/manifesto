@@ -2227,8 +2227,9 @@ var Manifesto;
             return new Promise(function (resolve, reject) {
                 resource.getData().then(function () {
                     if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                        Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                        return Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
                     }
+                    return null;
                 })["catch"](function (error) {
                     reject(Utils.createAuthorizationFailedError());
                 });

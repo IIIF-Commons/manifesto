@@ -217,8 +217,8 @@ namespace Manifesto {
         static loadExternalResourcesAuth1(
             resources: IExternalResource[],
             openContentProviderWindow: (service: Manifesto.IService) => Window,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
-            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
+            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]> {
 
@@ -253,8 +253,9 @@ namespace Manifesto {
             return new Promise<any>((resolve, reject) => {
                 resource.getData().then(() => {
                     if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED){
-                        Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                        return Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
                     }
+                    return null;
                 })["catch"]((error) => {
                     reject(Utils.createAuthorizationFailedError());
                 });
@@ -264,10 +265,10 @@ namespace Manifesto {
         static async doAuthChain(
             resource: IExternalResource, 
             openContentProviderWindow: (service: Manifesto.IService) => Window,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
-            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
+            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<void> {
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<any> {
             // This function enters the flowchart at the < External? > junction
             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
             if (!resource.isAccessControlled()) {
@@ -352,7 +353,7 @@ namespace Manifesto {
 
         static async attemptResourceWithToken(
             resource: Manifesto.IExternalResource,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
+            openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             authService: Manifesto.IService): Promise<boolean> {
 
             // attempting token interaction for " + authService["@id"]
@@ -391,11 +392,11 @@ namespace Manifesto {
         static loadExternalResourcesAuth09(
             resources: IExternalResource[],
             tokenStorageStrategy: string,
-            clickThrough: (resource: IExternalResource) => Promise<void>,
-            restricted: (resource: IExternalResource) => Promise<void>,
-            login: (resource: IExternalResource) => Promise<void>,
+            clickThrough: (resource: IExternalResource) => Promise<any>,
+            restricted: (resource: IExternalResource) => Promise<any>,
+            login: (resource: IExternalResource) => Promise<any>,
             getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
-            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<any>,
             getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>,
             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
             options?: IManifestoOptions): Promise<IExternalResource[]> {
@@ -430,11 +431,11 @@ namespace Manifesto {
         static loadExternalResourceAuth09(
             resource: IExternalResource,
             tokenStorageStrategy: string,
-            clickThrough: (resource: IExternalResource) => Promise<void>,
-            restricted: (resource: IExternalResource) => Promise<void>,
-            login: (resource: IExternalResource) => Promise<void>,
+            clickThrough: (resource: IExternalResource) => Promise<any>,
+            restricted: (resource: IExternalResource) => Promise<any>,
+            login: (resource: IExternalResource) => Promise<any>,
             getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
-            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<any>,
             getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>,
             handleResourceResponse: (resource: IExternalResource) => Promise<any>,
             options?: IManifestoOptions): Promise<IExternalResource> {
@@ -559,11 +560,11 @@ namespace Manifesto {
         static authorize(
             resource: IExternalResource,
             tokenStorageStrategy: string,
-            clickThrough: (resource: IExternalResource) => Promise<void>,
-            restricted: (resource: IExternalResource) => Promise<void>,
-            login: (resource: IExternalResource) => Promise<void>,
+            clickThrough: (resource: IExternalResource) => Promise<any>,
+            restricted: (resource: IExternalResource) => Promise<any>,
+            login: (resource: IExternalResource) => Promise<any>,
             getAccessToken: (resource: IExternalResource, rejectOnError: boolean) => Promise<IAccessToken>,
-            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<void>,
+            storeAccessToken: (resource: IExternalResource, token: IAccessToken, tokenStorageStrategy: string) => Promise<any>,
             getStoredAccessToken: (resource: IExternalResource, tokenStorageStrategy: string) => Promise<IAccessToken>): Promise<IExternalResource> {
 
             return new Promise<IExternalResource>((resolve, reject) => {
