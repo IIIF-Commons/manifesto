@@ -254,7 +254,7 @@ namespace Manifesto {
             await resource.getData();
 
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                resource = await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
             }
             
             return resource;
@@ -341,9 +341,8 @@ namespace Manifesto {
                 if (contentProviderWindow) {
                     // we expect the user to spend some time interacting
                     await userInteractionWithContentProvider(contentProviderWindow);
-                    //let success = 
-                    await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    //if (success) return resource;
+                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                    if (success) return resource;
                 } 
             }
 

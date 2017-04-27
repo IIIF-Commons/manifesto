@@ -1892,7 +1892,7 @@ var Manifesto;
             return __awaiter(this, void 0, void 0, function* () {
                 yield resource.getData();
                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                    yield Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                    resource = yield Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
                 }
                 return resource;
             });
@@ -1962,9 +1962,9 @@ var Manifesto;
                     if (contentProviderWindow) {
                         // we expect the user to spend some time interacting
                         yield userInteractionWithContentProvider(contentProviderWindow);
-                        //let success = 
-                        yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                        //if (success) return resource;
+                        let success = yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                        if (success)
+                            return resource;
                     }
                 }
                 // nothing worked! Use the most recently tried service as the source of
