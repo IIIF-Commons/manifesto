@@ -367,6 +367,7 @@ namespace Manifesto {
 
                 if (tokenMessage && tokenMessage.accessToken) {
                     await resource.getData();
+                    return resource;
                 }  
             }
             // Didn't get a 200 info response.

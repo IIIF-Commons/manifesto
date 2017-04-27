@@ -1982,6 +1982,7 @@ var Manifesto;
                     let tokenMessage = yield openTokenService(tokenService);
                     if (tokenMessage && tokenMessage.accessToken) {
                         yield resource.getData();
+                        return resource;
                     }
                 }
                 // Didn't get a 200 info response.
