@@ -2348,31 +2348,18 @@ var Manifesto;
                     switch (_a.label) {
                         case 0:
                             tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
-                            if (!tokenService) return [3 /*break*/, 2];
+                            if (!tokenService) return [3 /*break*/, 3];
                             return [4 /*yield*/, openTokenService(tokenService)];
                         case 1:
                             tokenMessage = _a.sent();
-                            if (tokenMessage && tokenMessage.accessToken) {
-                                resource.getData(tokenMessage).then(function () {
-                                    // if the info.json loaded using the stored access token
-                                    if (resource.status === HTTPStatusCode.OK) {
-                                        return true;
-                                    }
-                                    return false;
-                                })["catch"](function (error) {
-                                    return false;
-                                });
-                                // let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
-                                // // info request with token resulted in " + withTokenInfoResponse.status
-                                // if (withTokenInfoResponse.status === HTTPStatusCode.OK) {
-                                //     renderImage(withTokenInfoResponse.info);
-                                //     return true;
-                                // }
-                            }
-                            _a.label = 2;
-                        case 2: 
+                            if (!(tokenMessage && tokenMessage.accessToken)) return [3 /*break*/, 3];
+                            return [4 /*yield*/, resource.getData()];
+                        case 2:
+                            _a.sent();
+                            _a.label = 3;
+                        case 3: 
                         // Didn't get a 200 info response.
-                        return [2 /*return*/, false];
+                        return [2 /*return*/, resource];
                     }
                 });
             });

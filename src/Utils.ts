@@ -359,7 +359,7 @@ namespace Manifesto {
         static async attemptResourceWithToken(
             resource: Manifesto.IExternalResource,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
-            authService: Manifesto.IService): Promise<boolean> {
+            authService: Manifesto.IService): Promise<Manifesto.IExternalResource> {
 
             // attempting token interaction for " + authService["@id"]
             const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH1TOKEN.toString());
@@ -369,29 +369,11 @@ namespace Manifesto {
                 let tokenMessage: any = await openTokenService(tokenService); 
 
                 if (tokenMessage && tokenMessage.accessToken) {
-
-                    resource.getData(tokenMessage).then(() => {
-                        // if the info.json loaded using the stored access token
-                        if (resource.status === HTTPStatusCode.OK) {
-                            return true;
-                        }
-
-                        return false;
-
-                    })["catch"]((error) => {
-                        return false;
-                    });
-
-                    // let withTokenInfoResponse = await loadImage(imageService, tokenMessage.accessToken);
-                    // // info request with token resulted in " + withTokenInfoResponse.status
-                    // if (withTokenInfoResponse.status === HTTPStatusCode.OK) {
-                    //     renderImage(withTokenInfoResponse.info);
-                    //     return true;
-                    // }
+                    await resource.getData();
                 }  
             }
             // Didn't get a 200 info response.
-            return false;
+            return resource;
         }
 
         static loadExternalResourcesAuth09(
