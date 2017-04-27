@@ -254,7 +254,7 @@ namespace Manifesto {
             await resource.getData();
 
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                resource = await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
             }
             
             return resource;
@@ -266,7 +266,7 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource> {
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
 
             // This function enters the flowchart at the < External? > junction
             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
@@ -340,11 +340,9 @@ namespace Manifesto {
                 let contentProviderWindow = await getContentProviderWindow(serviceToTry);
                 if (contentProviderWindow) {
                     // we expect the user to spend some time interacting
-                    userInteractionWithContentProvider(contentProviderWindow).then(() => {
-                        Utils.attemptResourceWithToken(resource, openTokenService, <Manifesto.IService>serviceToTry).then(() => {
-                            return resource;
-                        });
-                    });
+                    await userInteractionWithContentProvider(contentProviderWindow);
+                    await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                    return resource;
                 } 
             }
 
@@ -353,8 +351,6 @@ namespace Manifesto {
             if (lastAttempted) {
                 showOutOfOptionsMessages(lastAttempted);
             }
-
-            return resource;
         }
 
         static async attemptResourceWithToken(
