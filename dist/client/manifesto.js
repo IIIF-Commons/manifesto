@@ -1919,7 +1919,7 @@ var Manifesto;
                     }
                 }
                 // Didn't get a 200 info response.
-                return resource;
+                //return resource;
             });
         }
         static loadExternalResourcesAuth09(resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {

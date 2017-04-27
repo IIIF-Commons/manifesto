@@ -356,7 +356,7 @@ namespace Manifesto {
         static async attemptResourceWithToken(
             resource: Manifesto.IExternalResource,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
-            authService: Manifesto.IService): Promise<Manifesto.IExternalResource> {
+            authService: Manifesto.IService): Promise<Manifesto.IExternalResource | void> {
 
             // attempting token interaction for " + authService["@id"]
             const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH1TOKEN.toString());
@@ -370,7 +370,7 @@ namespace Manifesto {
                 }  
             }
             // Didn't get a 200 info response.
-            return resource;
+            //return resource;
         }
 
         static loadExternalResourcesAuth09(
