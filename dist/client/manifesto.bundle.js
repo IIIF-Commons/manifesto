@@ -2242,14 +2242,14 @@ var Manifesto;
         };
         Utils.doAuthChain = function (resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function () {
-                var serviceToTry, lastAttempted, success, kioskWindow, success, contentProviderWindow, success, contentProviderWindow, success;
+                var serviceToTry, lastAttempted, kioskWindow, contentProviderWindow, contentProviderWindow;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             // This function enters the flowchart at the < External? > junction
                             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
                             if (!resource.isAccessControlled()) {
-                                return [2 /*return*/, false]; // no services found
+                                return [2 /*return*/, resource]; // no services found
                             }
                             serviceToTry = null;
                             lastAttempted = null;
@@ -2259,11 +2259,11 @@ var Manifesto;
                             if (!serviceToTry) return [3 /*break*/, 2];
                             serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
+                            //let success = 
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 1:
-                            success = _a.sent();
-                            if (success)
-                                return [2 /*return*/, true];
+                            //let success = 
+                            _a.sent();
                             _a.label = 2;
                         case 2:
                             // Looking for kiosk pattern
@@ -2276,11 +2276,11 @@ var Manifesto;
                             return [4 /*yield*/, userInteractionWithContentProvider(kioskWindow)];
                         case 3:
                             _a.sent();
+                            //let success = 
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 4:
-                            success = _a.sent();
-                            if (success)
-                                return [2 /*return*/, true];
+                            //let success = 
+                            _a.sent();
                             return [3 /*break*/, 5];
                         case 5:
                             // The code for the next two patterns is identical (other than the profile name).
@@ -2304,11 +2304,11 @@ var Manifesto;
                         case 7:
                             // should close immediately
                             _a.sent();
+                            //let success = 
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 8:
-                            success = _a.sent();
-                            if (success)
-                                return [2 /*return*/, true];
+                            //let success = 
+                            _a.sent();
                             _a.label = 9;
                         case 9:
                             // Looking for login pattern
@@ -2325,11 +2325,11 @@ var Manifesto;
                         case 11:
                             // we expect the user to spend some time interacting
                             _a.sent();
+                            //let success = 
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 12:
-                            success = _a.sent();
-                            if (success)
-                                return [2 /*return*/, true];
+                            //let success = 
+                            _a.sent();
                             _a.label = 13;
                         case 13:
                             // nothing worked! Use the most recently tried service as the source of
@@ -2337,7 +2337,7 @@ var Manifesto;
                             if (lastAttempted) {
                                 showOutOfOptionsMessages(lastAttempted);
                             }
-                            return [2 /*return*/, false];
+                            return [2 /*return*/, resource];
                     }
                 });
             });

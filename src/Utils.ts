@@ -266,12 +266,12 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<boolean> {
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource> {
 
             // This function enters the flowchart at the < External? > junction
             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
             if (!resource.isAccessControlled()) {
-                return false; // no services found
+                return resource; // no services found
             }
 
             let serviceToTry: Manifesto.IService | null = null;
@@ -285,8 +285,9 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                if (success) return true;
+                //let success = 
+                await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                //if (success) return resource;
             }
 
             // Looking for kiosk pattern
@@ -298,8 +299,9 @@ namespace Manifesto {
                 let kioskWindow = openContentProviderWindow(serviceToTry);
                 if (kioskWindow) {
                     await userInteractionWithContentProvider(kioskWindow);
-                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    if (success) return true;
+                    //let success = 
+                    await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                    //if (success) return resource;
                 } else {
                     // Could not open kiosk window
                 }
@@ -323,8 +325,9 @@ namespace Manifesto {
                 if (contentProviderWindow) {
                     // should close immediately
                     await userInteractionWithContentProvider(contentProviderWindow);
-                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    if (success) return true;
+                    //let success = 
+                    await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                    //if (success) return resource;
                 } 
             }
 
@@ -338,8 +341,9 @@ namespace Manifesto {
                 if (contentProviderWindow) {
                     // we expect the user to spend some time interacting
                     await userInteractionWithContentProvider(contentProviderWindow);
-                    let success = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    if (success) return true;
+                    //let success = 
+                    await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                    //if (success) return resource;
                 } 
             }
 
@@ -349,7 +353,7 @@ namespace Manifesto {
                 showOutOfOptionsMessages(lastAttempted);
             }
 
-            return false;
+            return resource;
         }
 
         static async attemptResourceWithToken(

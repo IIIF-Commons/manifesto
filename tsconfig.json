@@ -9,7 +9,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": false,
         "strictNullChecks": true,
-        "target": "es3",
+        "target": "es5",
         "lib": ["es6"],
         "types": ["node"]
     },
