@@ -340,11 +340,10 @@ namespace Manifesto {
                 let contentProviderWindow = await getContentProviderWindow(serviceToTry);
                 if (contentProviderWindow) {
                     // we expect the user to spend some time interacting
-                    let userInteraction = await userInteractionWithContentProvider(contentProviderWindow);
+                    let userInteraction: boolean = await userInteractionWithContentProvider(contentProviderWindow);
                     if (userInteraction) {
-                        Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry).then(() => {
-                            return resource;
-                        });
+                        resource = await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                        return resource;
                     }
                 } 
             }

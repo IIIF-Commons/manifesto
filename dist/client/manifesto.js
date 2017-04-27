@@ -1897,9 +1897,8 @@ var Manifesto;
                         // we expect the user to spend some time interacting
                         let userInteraction = yield userInteractionWithContentProvider(contentProviderWindow);
                         if (userInteraction) {
-                            Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry).then(() => {
-                                return resource;
-                            });
+                            resource = yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
+                            return resource;
                         }
                     }
                 }
