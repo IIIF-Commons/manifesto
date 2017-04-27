@@ -35,7 +35,8 @@ mocha(c);
 prependHeaders(c);
 
 gulp.task('default', function(cb) {
-    runSequence('clean:dist', 'build', 'browserify', 'minify', 'bundle', 'prependHeaders', cb);
+    //runSequence('clean:dist', 'build', 'browserify', 'minify', 'bundle', 'prependHeaders', cb);
+    runSequence('clean:dist', 'build', 'browserify', 'bundle', 'prependHeaders', cb);
 });
 
 gulp.task('test', ['mocha']);
