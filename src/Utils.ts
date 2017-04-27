@@ -216,10 +216,10 @@ namespace Manifesto {
 
         static loadExternalResourcesAuth1(
             resources: IExternalResource[],
-            openContentProviderWindow: (service: Manifesto.IService) => Window,
+            openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
-            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
-            getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
+            userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
+            getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]> {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
@@ -227,10 +227,10 @@ namespace Manifesto {
                 const promises = resources.map((resource: IExternalResource) => {
                     return Utils.loadExternalResourceAuth1(
                         resource,
-                        openContentProviderWindow,
+                        openContentProviderInteraction,
                         openTokenService,
-                        userInteractionWithContentProvider,
-                        getContentProviderWindow,
+                        userInteractedWithContentProvider,
+                        getContentProviderInteraction,
                         showOutOfOptionsMessages);
                 });
 
@@ -245,16 +245,16 @@ namespace Manifesto {
 
         static async loadExternalResourceAuth1(
             resource: IExternalResource, 
-            openContentProviderWindow: (service: Manifesto.IService) => Window,
+            openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
-            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
-            getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
+            userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
+            getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
 
             await resource.getData();
 
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
             }
             
             return resource;
@@ -262,10 +262,10 @@ namespace Manifesto {
 
         static async doAuthChain(
             resource: IExternalResource, 
-            openContentProviderWindow: (service: Manifesto.IService) => Window,
+            openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
-            userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<any>,
-            getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
+            userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
+            getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
 
             // This function enters the flowchart at the < External? > junction
@@ -285,9 +285,8 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                //let success = 
                 await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                //if (success) return resource;
+                return resource;
             }
 
             // Looking for kiosk pattern
@@ -296,21 +295,18 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                let kioskWindow = openContentProviderWindow(serviceToTry);
-                if (kioskWindow) {
-                    await userInteractionWithContentProvider(kioskWindow);
-                    //let success = 
+                let kioskInteraction = openContentProviderInteraction(serviceToTry);
+                if (kioskInteraction) {
+                    await userInteractedWithContentProvider(kioskInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    //if (success) return resource;
-                } else {
-                    // Could not open kiosk window
+                    return resource;
                 }
             }
 
             // The code for the next two patterns is identical (other than the profile name).
             // The difference is in the expected behaviour of
             //
-            //    await userInteractionWithContentProvider(contentProviderWindow);
+            //    await userInteractedWithContentProvider(contentProviderInteraction);
             // 
             // For clickthrough the opened window should close immediately having established
             // a session, whereas for login the user might spend some time entering credentials etc.
@@ -321,13 +317,12 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                let contentProviderWindow = await getContentProviderWindow(serviceToTry);
-                if (contentProviderWindow) {
+                let contentProviderInteraction = await getContentProviderInteraction(serviceToTry);
+                if (contentProviderInteraction) {
                     // should close immediately
-                    await userInteractionWithContentProvider(contentProviderWindow);
-                    //let success = 
+                    await userInteractedWithContentProvider(contentProviderInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    //if (success) return resource;
+                    return resource;
                 } 
             }
 
@@ -337,10 +332,10 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                let contentProviderWindow = await getContentProviderWindow(serviceToTry);
-                if (contentProviderWindow) {
+                let contentProviderInteraction = await getContentProviderInteraction(serviceToTry);
+                if (contentProviderInteraction) {
                     // we expect the user to spend some time interacting
-                    await userInteractionWithContentProvider(contentProviderWindow);
+                    await userInteractedWithContentProvider(contentProviderInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     return resource;
                 } 
@@ -370,8 +365,6 @@ namespace Manifesto {
                     return resource;
                 }  
             }
-            // Didn't get a 200 info response.
-            //return resource;
         }
 
         static loadExternalResourcesAuth09(

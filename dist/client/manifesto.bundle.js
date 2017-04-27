@@ -1875,10 +1875,10 @@ var Manifesto;
                 request.end();
             });
         }
-        static loadExternalResourcesAuth1(resources, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
+        static loadExternalResourcesAuth1(resources, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages) {
             return new Promise((resolve, reject) => {
                 const promises = resources.map((resource) => {
-                    return Utils.loadExternalResourceAuth1(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                    return Utils.loadExternalResourceAuth1(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
                 });
                 Promise.all(promises)
                     .then(() => {
@@ -1888,16 +1888,16 @@ var Manifesto;
                 });
             });
         }
-        static loadExternalResourceAuth1(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
+        static loadExternalResourceAuth1(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function* () {
                 yield resource.getData();
                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                    yield Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
+                    yield Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
                 }
                 return resource;
             });
         }
-        static doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
+        static doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function* () {
                 // This function enters the flowchart at the < External? > junction
                 // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
@@ -1912,30 +1912,25 @@ var Manifesto;
                 if (serviceToTry) {
                     serviceToTry.options = resource.options;
                     lastAttempted = serviceToTry;
-                    //let success = 
                     yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                    //if (success) return resource;
+                    return resource;
                 }
                 // Looking for kiosk pattern
                 serviceToTry = resource.kioskService;
                 if (serviceToTry) {
                     serviceToTry.options = resource.options;
                     lastAttempted = serviceToTry;
-                    let kioskWindow = openContentProviderWindow(serviceToTry);
-                    if (kioskWindow) {
-                        yield userInteractionWithContentProvider(kioskWindow);
-                        //let success = 
+                    let kioskInteraction = openContentProviderInteraction(serviceToTry);
+                    if (kioskInteraction) {
+                        yield userInteractedWithContentProvider(kioskInteraction);
                         yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                        //if (success) return resource;
-                    }
-                    else {
-                        // Could not open kiosk window
+                        return resource;
                     }
                 }
                 // The code for the next two patterns is identical (other than the profile name).
                 // The difference is in the expected behaviour of
                 //
-                //    await userInteractionWithContentProvider(contentProviderWindow);
+                //    await userInteractedWithContentProvider(contentProviderInteraction);
                 // 
                 // For clickthrough the opened window should close immediately having established
                 // a session, whereas for login the user might spend some time entering credentials etc.
@@ -1944,13 +1939,12 @@ var Manifesto;
                 if (serviceToTry) {
                     serviceToTry.options = resource.options;
                     lastAttempted = serviceToTry;
-                    let contentProviderWindow = yield getContentProviderWindow(serviceToTry);
-                    if (contentProviderWindow) {
+                    let contentProviderInteraction = yield getContentProviderInteraction(serviceToTry);
+                    if (contentProviderInteraction) {
                         // should close immediately
-                        yield userInteractionWithContentProvider(contentProviderWindow);
-                        //let success = 
+                        yield userInteractedWithContentProvider(contentProviderInteraction);
                         yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                        //if (success) return resource;
+                        return resource;
                     }
                 }
                 // Looking for login pattern
@@ -1958,10 +1952,10 @@ var Manifesto;
                 if (serviceToTry) {
                     serviceToTry.options = resource.options;
                     lastAttempted = serviceToTry;
-                    let contentProviderWindow = yield getContentProviderWindow(serviceToTry);
-                    if (contentProviderWindow) {
+                    let contentProviderInteraction = yield getContentProviderInteraction(serviceToTry);
+                    if (contentProviderInteraction) {
                         // we expect the user to spend some time interacting
-                        yield userInteractionWithContentProvider(contentProviderWindow);
+                        yield userInteractedWithContentProvider(contentProviderInteraction);
                         yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                         return resource;
                     }
@@ -1985,8 +1979,6 @@ var Manifesto;
                         return resource;
                     }
                 }
-                // Didn't get a 200 info response.
-                //return resource;
             });
         }
         static loadExternalResourcesAuth09(resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
