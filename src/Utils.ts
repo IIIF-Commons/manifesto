@@ -366,7 +366,7 @@ namespace Manifesto {
                 let tokenMessage: any = await openTokenService(tokenService); 
 
                 if (tokenMessage && tokenMessage.accessToken) {
-                    await resource.getData();
+                    await resource.getData(tokenMessage);
                     return resource;
                 }  
             }

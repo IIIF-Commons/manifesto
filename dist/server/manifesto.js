@@ -1980,7 +1980,7 @@ var Manifesto;
                     // found token service: " + tokenService["@id"]);
                     let tokenMessage = yield openTokenService(tokenService);
                     if (tokenMessage && tokenMessage.accessToken) {
-                        yield resource.getData();
+                        yield resource.getData(tokenMessage);
                         return resource;
                     }
                 }
