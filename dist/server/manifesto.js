@@ -1960,11 +1960,11 @@ var Manifesto;
                     let contentProviderWindow = yield getContentProviderWindow(serviceToTry);
                     if (contentProviderWindow) {
                         // we expect the user to spend some time interacting
-                        let userInteraction = yield userInteractionWithContentProvider(contentProviderWindow);
-                        if (userInteraction) {
-                            resource = yield Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
-                            return resource;
-                        }
+                        userInteractionWithContentProvider(contentProviderWindow).then(() => {
+                            Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry).then(() => {
+                                return resource;
+                            });
+                        });
                     }
                 }
                 // nothing worked! Use the most recently tried service as the source of
