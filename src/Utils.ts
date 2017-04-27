@@ -249,16 +249,15 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
             userInteractionWithContentProvider: (contentProviderWindow: Window) => Promise<void>,
             getContentProviderWindow: (service: Manifesto.IService) => Promise<Window>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<boolean> {
+            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
 
             await resource.getData();
 
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                let result: boolean = await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
-                return result;
-            } else {
-                return true;
+                await Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages);
             }
+            
+            return resource;
         }
 
         static async doAuthChain(

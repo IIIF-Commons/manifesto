@@ -2225,7 +2225,6 @@ var Manifesto;
         };
         Utils.loadExternalResourceAuth1 = function (resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function () {
-                var result;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, resource.getData()];
@@ -2234,9 +2233,9 @@ var Manifesto;
                             if (!(resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED)) return [3 /*break*/, 3];
                             return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderWindow, openTokenService, userInteractionWithContentProvider, getContentProviderWindow, showOutOfOptionsMessages)];
                         case 2:
-                            result = _a.sent();
-                            return [2 /*return*/, result];
-                        case 3: return [2 /*return*/, true];
+                            _a.sent();
+                            _a.label = 3;
+                        case 3: return [2 /*return*/, resource];
                     }
                 });
             });
