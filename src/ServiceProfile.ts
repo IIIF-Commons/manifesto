@@ -34,7 +34,7 @@ namespace Manifesto {
         public static AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
         public static AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
 
-        public static AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/login/clickthrough");
+        public static AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/clickthrough");
         public static AUTH1EXTERNAL = new ServiceProfile("http://iiif.io/api/auth/1/external");
         public static AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
         public static AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
