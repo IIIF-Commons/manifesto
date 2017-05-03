@@ -257,7 +257,7 @@ namespace Manifesto {
                 await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
             }
             
-            if (resource.data) {
+            if (resource.status === HTTPStatusCode.OK) {
                 return resource;
             }
             

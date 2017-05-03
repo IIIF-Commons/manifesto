@@ -1893,7 +1893,7 @@ var Manifesto;
                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
                     yield Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
                 }
-                if (resource.data) {
+                if (resource.status === HTTPStatusCode.OK) {
                     return resource;
                 }
                 throw Utils.createAuthorizationFailedError();
