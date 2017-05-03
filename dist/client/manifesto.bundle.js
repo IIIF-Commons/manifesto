@@ -1894,7 +1894,10 @@ var Manifesto;
                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
                     yield Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
                 }
-                return resource;
+                if (resource.data) {
+                    return resource;
+                }
+                throw Utils.createAuthorizationFailedError();
             });
         }
         static doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages) {

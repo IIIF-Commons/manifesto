@@ -250,14 +250,18 @@ namespace Manifesto {
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
-
+                
             await resource.getData();
 
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
                 await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
             }
             
-            return resource;
+            if (resource.data) {
+                return resource;
+            }
+            
+            throw Utils.createAuthorizationFailedError();
         }
 
         static async doAuthChain(
