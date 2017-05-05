@@ -5,11 +5,11 @@ namespace Manifesto {
             super(jsonld, options);
         }
 
-        getFormat(): ResourceFormat | null {
+        getFormat(): MediaType | null {
             const format: string = this.getProperty('format');
 
             if (format) {
-                return new ResourceFormat(format.toLowerCase());
+                return new MediaType(format.toLowerCase());
             }
 
             return null;

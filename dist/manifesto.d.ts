@@ -99,17 +99,17 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    class ResourceFormat extends StringValue {
-        static JPG: ResourceFormat;
-        static MP4: ResourceFormat;
-        static PDF: ResourceFormat;
-        static THREEJS: ResourceFormat;
-        static WEBM: ResourceFormat;
-        jpg(): ResourceFormat;
-        mp4(): ResourceFormat;
-        pdf(): ResourceFormat;
-        threejs(): ResourceFormat;
-        webm(): ResourceFormat;
+    class MediaType extends StringValue {
+        static JPG: MediaType;
+        static MP4: MediaType;
+        static PDF: MediaType;
+        static THREEJS: MediaType;
+        static WEBM: MediaType;
+        jpg(): MediaType;
+        mp4(): MediaType;
+        pdf(): MediaType;
+        threejs(): MediaType;
+        webm(): MediaType;
     }
 }
 
@@ -518,7 +518,7 @@ declare var url: any;
 declare var manifesto: IManifesto;
 declare namespace Manifesto {
     class Utils {
-        static getResourceFormat(format: string): string;
+        static getMediaType(type: string): string;
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getInexactLocale(locale: string): string;
         static getLocalisedValue(resource: any, locale: string): string | null;
@@ -592,7 +592,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     class AnnotationBody extends ManifestResource {
         constructor(jsonld?: any, options?: IManifestoOptions);
-        getFormat(): ResourceFormat | null;
+        getFormat(): MediaType | null;
         getType(): ResourceType | null;
     }
 }
@@ -626,7 +626,7 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IAnnotationBody extends IManifestResource {
-        getFormat(): ResourceFormat | null;
+        getFormat(): MediaType | null;
         getType(): ResourceType | null;
     }
 }
@@ -751,9 +751,9 @@ interface IManifesto {
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
+    MediaType: Manifesto.MediaType;
     MetadataItem: any;
     RenderingFormat: Manifesto.RenderingFormat;
-    ResourceFormat: Manifesto.ResourceFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
     StatusCodes: Manifesto.IStatusCodes;
@@ -818,7 +818,7 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IResource extends IManifestResource {
-        getFormat(): ResourceFormat | null;
+        getFormat(): MediaType | null;
         getHeight(): number;
         getMaxHeight(): number | null;
         getType(): ResourceType | null;
@@ -879,7 +879,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     class Resource extends ManifestResource implements IResource {
         constructor(jsonld?: any, options?: IManifestoOptions);
-        getFormat(): ResourceFormat | null;
+        getFormat(): MediaType | null;
         getType(): ResourceType | null;
         getWidth(): number;
         getHeight(): number;

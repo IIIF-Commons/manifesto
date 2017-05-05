@@ -7,10 +7,10 @@ declare var manifesto: IManifesto;
 namespace Manifesto {
     export class Utils {
 
-        static getResourceFormat(format: string): string {
-            format = format.toLowerCase();
-            format = format.split(';')[0];
-            return format.trim();
+        static getMediaType(type: string): string {
+            type = type.toLowerCase();
+            type = type.split(';')[0];
+            return type.trim();
         }
 
         static getImageQuality(profile: Manifesto.ServiceProfile): string {

@@ -21,7 +21,7 @@
         "src/IIIFResourceType.ts",
         "src/ManifestType.ts",
         "src/RenderingFormat.ts",
-        "src/ResourceFormat.ts",
+        "src/MediaType.ts",
         "src/ResourceType.ts",
         "src/ServiceProfile.ts",
         "src/ViewingDirection.ts",

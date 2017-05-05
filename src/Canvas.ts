@@ -15,7 +15,7 @@ namespace Manifesto {
             const rotation: number = 0;
             let quality: string = 'default';
             let width: number | undefined = w;
-            var size: string;
+            let size: string;
 
             // if an info.json has been loaded
             if (this.externalResource && this.externalResource.data && this.externalResource.data['@id']) {
@@ -35,19 +35,19 @@ namespace Manifesto {
                 
             } else {
                 // info.json hasn't been loaded yet
-                var images: IAnnotation[] = this.getImages();
+                const images: IAnnotation[] = this.getImages();
 
                 if (images && images.length) {
-                    var firstImage = images[0];
-                    var resource: IResource = firstImage.getResource();
-                    var services: IService[] = resource.getServices();
+                    const firstImage = images[0];
+                    const resource: IResource = firstImage.getResource();
+                    const services: IService[] = resource.getServices();
 
                     if (!width) {
                         width = resource.getWidth();
                     }
                     
                     if (services.length) {
-                        var service: IService = services[0];
+                        const service: IService = services[0];
                         id = service.id;
                         quality = Utils.getImageQuality(service.getProfile());
                     }
@@ -62,7 +62,7 @@ namespace Manifesto {
 
             size = width + ',';
 
-            var uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
+            const uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
 
             return uri;
         }
@@ -88,9 +88,8 @@ namespace Manifesto {
             const annotations: IAnnotation[] = annotationPage.getItems();
 
             for (let i = 0; i < annotations.length; i++) {
-                var a = annotations[i];
-
-                var annotation = new Annotation(a, this.options);
+                const a = annotations[i];
+                const annotation = new Annotation(a, this.options);
                 content.push(annotation);
             }
 
@@ -104,9 +103,8 @@ namespace Manifesto {
             if (!this.__jsonld.images) return images;
 
             for (let i = 0; i < this.__jsonld.images.length; i++) {
-                var a = this.__jsonld.images[i];
-
-                var annotation = new Annotation(a, this.options);
+                const a = this.__jsonld.images[i];
+                const annotation = new Annotation(a, this.options);
                 images.push(annotation);
             }
 

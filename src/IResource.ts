@@ -1,6 +1,6 @@
 namespace Manifesto {
     export interface IResource extends IManifestResource {
-        getFormat(): ResourceFormat | null;
+        getFormat(): MediaType | null;
         getHeight(): number;
         getMaxHeight(): number | null;
         getType(): ResourceType | null;

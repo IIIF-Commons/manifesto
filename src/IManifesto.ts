@@ -5,9 +5,9 @@ interface IManifesto {
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
+    MediaType: Manifesto.MediaType;
     MetadataItem: any;
     RenderingFormat: Manifesto.RenderingFormat;
-    ResourceFormat: Manifesto.ResourceFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
     StatusCodes: Manifesto.IStatusCodes;
