@@ -9,5 +9,6 @@ namespace Manifesto {
         //getThumbUri(width: number): string;
         //getType(): CanvasType;
         getWidth(): number;
+        getContent(): IAnnotation[];
     }
 }

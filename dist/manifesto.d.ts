@@ -645,6 +645,7 @@ declare namespace Manifesto {
         getImages(): IAnnotation[];
         getIndex(): number;
         getWidth(): number;
+        getContent(): IAnnotation[];
     }
 }
 
