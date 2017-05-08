@@ -14,10 +14,10 @@ namespace Manifesto {
                 if (body.items) {
                     for (var i = 0; i < body.items.length; i++) {
                         const b: any = body.items[i];
-                        bodies.push(b);
+                        bodies.push(new AnnotationBody(b, this.options));
                     }
                 } else {
-                    bodies.push(new AnnotationBody(body));
+                    bodies.push(new AnnotationBody(body, this.options));
                 }
             }
 
