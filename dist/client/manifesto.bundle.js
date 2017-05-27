@@ -1038,10 +1038,22 @@ var Manifesto;
             return this.defaultTree;
         };
         IIIFResource.prototype.isCollection = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+            if (this.getIIIFResourceType().toString().toLowerCase() === 'collection') {
+                return true;
+            }
+            else if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
+                return true;
+            }
+            return false;
         };
         IIIFResource.prototype.isManifest = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+            if (this.getIIIFResourceType().toString().toLowerCase() === 'manifest') {
+                return true;
+            }
+            else if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
+                return true;
+            }
+            return false;
         };
         IIIFResource.prototype.load = function () {
             var that = this;
