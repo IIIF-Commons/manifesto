@@ -1061,13 +1061,17 @@ var Manifesto;
                     resolve(that);
                 }
                 else {
-                    var options = that.options;
-                    options.navDate = that.getNavDate();
-                    Manifesto.Utils.loadResource(that.__jsonld['@id']).then(function (data) {
-                        that.parentLabel = Manifesto.TranslationCollection.getValue(that.getLabel(), options.locale);
-                        var parsed = Manifesto.Deserialiser.parse(data, options);
+                    var options_1 = that.options;
+                    options_1.navDate = that.getNavDate();
+                    var id = that.__jsonld.id;
+                    if (!id) {
+                        id = that.__jsonld['@id'];
+                    }
+                    Manifesto.Utils.loadResource(id).then(function (data) {
+                        that.parentLabel = Manifesto.TranslationCollection.getValue(that.getLabel(), options_1.locale);
+                        var parsed = Manifesto.Deserialiser.parse(data, options_1);
                         that = Object.assign(that, parsed);
-                        that.index = options.index;
+                        that.index = options_1.index;
                         resolve(that);
                     });
                 }

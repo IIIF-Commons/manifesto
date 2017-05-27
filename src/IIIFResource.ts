@@ -114,11 +114,18 @@ namespace Manifesto {
                 if (that.isLoaded) {
                     resolve(that);
                 } else {
-                    var options = that.options;
+                    const options = that.options;
                     options.navDate = that.getNavDate();
-                    Utils.loadResource(that.__jsonld['@id']).then(function(data) {
+
+                    let id: string = that.__jsonld.id;
+
+                    if (!id) {
+                        id = that.__jsonld['@id']
+                    }
+
+                    Utils.loadResource(id).then(function(data) {
                         that.parentLabel = <string>TranslationCollection.getValue(that.getLabel(), options.locale);
-                        var parsed = Deserialiser.parse(data, options);
+                        const parsed = Deserialiser.parse(data, options);
                         that = Object.assign(that, parsed);
                         that.index = <number>options.index;
 
