@@ -998,7 +998,12 @@ var Manifesto;
             return [];
         };
         IIIFResource.prototype.getIIIFResourceType = function () {
-            return new Manifesto.IIIFResourceType(this.getProperty('@type'));
+            var type = this.getProperty('type');
+            if (type) {
+                return new Manifesto.IIIFResourceType(type);
+            }
+            type = this.getProperty('@type');
+            return new Manifesto.IIIFResourceType(type);
         };
         IIIFResource.prototype.getLogo = function () {
             var logo = this.getProperty('logo');

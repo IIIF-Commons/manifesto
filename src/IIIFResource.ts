@@ -40,7 +40,15 @@ namespace Manifesto {
         }
 
         getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(this.getProperty('@type'));
+
+            let type: string = this.getProperty('type');
+
+            if (type) {
+                return new IIIFResourceType(type);
+            }
+
+            type = this.getProperty('@type');
+            return new IIIFResourceType(type);
         }
 
         getLogo(): string | null {
