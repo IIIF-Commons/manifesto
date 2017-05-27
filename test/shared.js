@@ -14,7 +14,7 @@ var server;
             serve(req, res, final)
         });
 
-        server.listen(3000);
+        server.listen(3001);
 
         done();
     });

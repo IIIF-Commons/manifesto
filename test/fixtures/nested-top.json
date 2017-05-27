@@ -6,7 +6,7 @@
     "collections": [
         {
             "label": "Dime Novel and Popular Literature",
-            "@id": "http://localhost:3000/nested-middle.json",
+            "@id": "http://localhost:3001/nested-middle.json",
             "@type": "sc:Collection"
         }
     ]

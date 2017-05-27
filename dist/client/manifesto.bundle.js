@@ -1806,11 +1806,21 @@ var Manifesto;
             }
         };
         Deserialiser.parseMember = function (json, options) {
-            if (json['@type'].toLowerCase() === 'sc:manifest') {
-                return this.parseManifest(json, options);
+            if (json['@type']) {
+                if (json['@type'].toLowerCase() === 'sc:manifest') {
+                    return this.parseManifest(json, options);
+                }
+                else if (json['@type'].toLowerCase() === 'sc:collection') {
+                    return this.parseCollection(json, options);
+                }
             }
-            else if (json['@type'].toLowerCase() === 'sc:collection') {
-                return this.parseCollection(json, options);
+            else if (json.type) {
+                if (json.type.toLowerCase() === 'manifest') {
+                    return this.parseManifest(json, options);
+                }
+                else if (json.type.toLowerCase() === 'collection') {
+                    return this.parseCollection(json, options);
+                }
             }
             return null;
         };

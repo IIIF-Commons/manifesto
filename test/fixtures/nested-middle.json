@@ -6,7 +6,7 @@
     "collections": [
         {
             "label": "Covers and Illustrations",
-            "@id": "http://localhost:3000/nested-bottom.json",
+            "@id": "http://localhost:3001/nested-bottom.json",
             "@type": "sc:Collection"
         }
     ]

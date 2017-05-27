@@ -6,7 +6,7 @@
     "manifests": [
         {
             "label": "Wunder der Vererbung",
-            "@id": "http://localhost:3000/wunder.json",
+            "@id": "http://localhost:3001/wunder.json",
             "@type": "sc:Manifest"
         },
         {

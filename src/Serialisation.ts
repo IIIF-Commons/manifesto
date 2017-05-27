@@ -98,11 +98,20 @@ namespace Manifesto {
         }
 
         static parseMember(json: any, options?: IManifestoOptions): IIIIFResource | null {
-            if (json['@type'].toLowerCase() === 'sc:manifest'){
-                return <IIIIFResource>this.parseManifest(json, options);
-            } else if (json['@type'].toLowerCase() === 'sc:collection'){
-                return <IIIIFResource>this.parseCollection(json, options);
+            if (json['@type']) {
+                if (json['@type'].toLowerCase() === 'sc:manifest') {
+                    return <IIIIFResource>this.parseManifest(json, options);
+                } else if (json['@type'].toLowerCase() === 'sc:collection') {
+                    return <IIIIFResource>this.parseCollection(json, options);
+                }
+            } else if (json.type) {
+                if (json.type.toLowerCase() === 'manifest') {
+                    return <IIIIFResource>this.parseManifest(json, options);
+                } else if (json.type.toLowerCase() === 'collection') {
+                    return <IIIIFResource>this.parseCollection(json, options);
+                }
             }
+            
             return null;
         }
 
