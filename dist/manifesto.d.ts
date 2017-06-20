@@ -523,6 +523,7 @@ declare namespace Manifesto {
         static getInexactLocale(locale: string): string;
         static getLocalisedValue(resource: any, locale: string): string | null;
         static generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
+        static normalisedUrlsMatch(url1: string, url2: string): boolean;
         static isImageProfile(profile: Manifesto.ServiceProfile): boolean;
         static isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean;
         static isLevel1ImageProfile(profile: Manifesto.ServiceProfile): boolean;

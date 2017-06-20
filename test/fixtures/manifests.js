@@ -17,6 +17,7 @@ module.exports = {
     "nested-bottom": "http://localhost:3001/nested-bottom.json",
     "nested-middle": "http://localhost:3001/nested-middle.json",
     "nested-top": "http://localhost:3001/nested-top.json",
+    "ngaHighlights": "http://localhost:3001/nga-highlights.json",
     "plato": "http://localhost:3001/plato.json",
     "potterselectric": "http://localhost:3001/potterselectric.json",
     "pseudoalbert": "http://localhost:3001/pseudoalbert.json",
