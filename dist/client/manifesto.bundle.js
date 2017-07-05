@@ -2331,7 +2331,7 @@ var Manifesto;
                             if (!serviceToTry) return [3 /*break*/, 9];
                             serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
-                            return [4 /*yield*/, getContentProviderInteraction(serviceToTry)];
+                            return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
                         case 6:
                             contentProviderInteraction = _a.sent();
                             if (!contentProviderInteraction) return [3 /*break*/, 9];
@@ -2350,7 +2350,7 @@ var Manifesto;
                             if (!serviceToTry) return [3 /*break*/, 13];
                             serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
-                            return [4 /*yield*/, getContentProviderInteraction(serviceToTry)];
+                            return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
                         case 10:
                             contentProviderInteraction = _a.sent();
                             if (!contentProviderInteraction) return [3 /*break*/, 13];

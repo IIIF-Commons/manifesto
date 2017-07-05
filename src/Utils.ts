@@ -226,7 +226,7 @@ namespace Manifesto {
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
-            getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
+            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]> {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
@@ -255,7 +255,7 @@ namespace Manifesto {
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
-            getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
+            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
                 
             await resource.getData();
@@ -276,7 +276,7 @@ namespace Manifesto {
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
-            getContentProviderInteraction: (service: Manifesto.IService) => Promise<any>,
+            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
 
             // This function enters the flowchart at the < External? > junction
@@ -328,7 +328,7 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                let contentProviderInteraction = await getContentProviderInteraction(serviceToTry);
+                let contentProviderInteraction = await getContentProviderInteraction(resource, serviceToTry);
                 if (contentProviderInteraction) {
                     // should close immediately
                     await userInteractedWithContentProvider(contentProviderInteraction);
@@ -343,7 +343,7 @@ namespace Manifesto {
             if (serviceToTry) {
                 serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
-                let contentProviderInteraction = await getContentProviderInteraction(serviceToTry);
+                let contentProviderInteraction = await getContentProviderInteraction(resource, serviceToTry);
                 if (contentProviderInteraction) {
                     // we expect the user to spend some time interacting
                     await userInteractedWithContentProvider(contentProviderInteraction);
