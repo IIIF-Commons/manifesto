@@ -227,6 +227,7 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
+            handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]> {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
@@ -238,6 +239,7 @@ namespace Manifesto {
                         openTokenService,
                         userInteractedWithContentProvider,
                         getContentProviderInteraction,
+                        handleMovedTemporarily,
                         showOutOfOptionsMessages);
                 });
 
@@ -256,12 +258,13 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
+            handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
                 
             await resource.getData();
 
             if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, showOutOfOptionsMessages);
+                await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
             }
             
             if (resource.status === HTTPStatusCode.OK) {
@@ -277,6 +280,7 @@ namespace Manifesto {
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
+            handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
 
             // This function enters the flowchart at the < External? > junction
@@ -284,6 +288,11 @@ namespace Manifesto {
             if (!resource.isAccessControlled()) {
                 return resource; // no services found
             }
+
+            if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                await handleMovedTemporarily(resource);
+                return resource;
+            } 
 
             let serviceToTry: Manifesto.IService | null = null;
             let lastAttempted: Manifesto.IService | null = null;
