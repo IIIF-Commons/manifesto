@@ -2291,7 +2291,7 @@ var Manifesto;
                             if (!resource.isAccessControlled()) {
                                 return [2 /*return*/, resource]; // no services found
                             }
-                            if (!(resource.status === HTTPStatusCode.MOVED_TEMPORARILY)) return [3 /*break*/, 2];
+                            if (!(!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY)) return [3 /*break*/, 2];
                             return [4 /*yield*/, handleMovedTemporarily(resource)];
                         case 1:
                             _a.sent();

@@ -289,7 +289,7 @@ namespace Manifesto {
                 return resource; // no services found
             }
 
-            if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+            if (!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                 await handleMovedTemporarily(resource);
                 return resource;
             } 
