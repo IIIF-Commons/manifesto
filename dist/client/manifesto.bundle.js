@@ -2272,7 +2272,7 @@ var Manifesto;
                             _a.sent();
                             _a.label = 3;
                         case 3:
-                            if (resource.status === HTTPStatusCode.OK) {
+                            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                                 return [2 /*return*/, resource];
                             }
                             throw Utils.createAuthorizationFailedError();

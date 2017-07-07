@@ -267,7 +267,7 @@ namespace Manifesto {
                 await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
             }
             
-            if (resource.status === HTTPStatusCode.OK) {
+            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                 return resource;
             }
             
