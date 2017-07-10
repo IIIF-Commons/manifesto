@@ -781,7 +781,6 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IManifestResource extends IJSONLDResource {
-        externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
         getLabel(): TranslationCollection;
         getMetadata(): MetadataItem[];
