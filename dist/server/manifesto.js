@@ -877,6 +877,17 @@ var Manifesto;
             var uri = [id, region, size, rotation, quality + '.jpg'].join('/');
             return uri;
         };
+        Canvas.prototype.getMaxDimensions = function () {
+            var maxDimensions = null;
+            var profile;
+            if (this.externalResource.data && this.externalResource.data.profile) {
+                profile = this.externalResource.data.profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
+                if (profile) {
+                    maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                }
+            }
+            return maxDimensions;
+        };
         // Presentation API 3.0
         Canvas.prototype.getContent = function () {
             var content = [];
@@ -3033,4 +3044,16 @@ var Manifesto;
         return Resource;
     }(Manifesto.ManifestResource));
     Manifesto.Resource = Resource;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var Size = (function () {
+        function Size(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+        return Size;
+    }());
+    Manifesto.Size = Size;
 })(Manifesto || (Manifesto = {}));

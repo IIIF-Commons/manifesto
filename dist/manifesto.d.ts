@@ -275,6 +275,7 @@ declare namespace Manifesto {
         ranges: IRange[];
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
+        getMaxDimensions(): Size | null;
         getContent(): IAnnotation[];
         getImages(): IAnnotation[];
         getIndex(): number;
@@ -642,11 +643,12 @@ declare namespace Manifesto {
     interface ICanvas extends IElement {
         ranges: IRange[];
         getCanonicalImageUri(width?: number): string;
+        getContent(): IAnnotation[];
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
+        getMaxDimensions(): Size | null;
         getWidth(): number;
-        getContent(): IAnnotation[];
     }
 }
 
@@ -887,5 +889,13 @@ declare namespace Manifesto {
         getHeight(): number;
         getMaxWidth(): number;
         getMaxHeight(): number | null;
+    }
+}
+
+declare namespace Manifesto {
+    class Size {
+        width: number;
+        height: number;
+        constructor(width: number, height: number);
     }
 }

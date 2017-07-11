@@ -67,6 +67,22 @@ namespace Manifesto {
             return uri;
         }
 
+        getMaxDimensions(): Size | null {
+            
+            let maxDimensions: Size | null = null;
+            let profile: any;
+
+            if (this.externalResource.data && this.externalResource.data.profile) {
+                profile = (<any[]>this.externalResource.data.profile).en().where(p => p["maxWidth" || "maxwidth"]).first();
+
+                if (profile) {
+                    maxDimensions = new Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                }
+            }
+
+            return maxDimensions;
+        }
+
         // Presentation API 3.0
         getContent(): IAnnotation[] {
 
