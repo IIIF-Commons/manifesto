@@ -2770,6 +2770,7 @@ global.manifesto = global.Manifesto = module.exports = {
     RenderingFormat: new Manifesto.RenderingFormat(),
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
+    Size: Manifesto.Size,
     Translation: Manifesto.Translation,
     TranslationCollection: Manifesto.TranslationCollection,
     TreeNode: Manifesto.TreeNode,

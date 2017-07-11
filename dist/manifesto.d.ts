@@ -760,6 +760,7 @@ interface IManifesto {
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
+    Size: any;
     StatusCodes: Manifesto.IStatusCodes;
     Translation: any;
     TranslationCollection: any;
