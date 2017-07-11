@@ -579,6 +579,14 @@ declare namespace Manifesto {
     }
 }
 
+declare namespace Manifesto {
+    class Size {
+        width: number;
+        height: number;
+        constructor(width: number, height: number);
+    }
+}
+
 
 declare namespace Manifesto {
     class Annotation extends ManifestResource implements IAnnotation {
@@ -890,13 +898,5 @@ declare namespace Manifesto {
         getHeight(): number;
         getMaxWidth(): number;
         getMaxHeight(): number | null;
-    }
-}
-
-declare namespace Manifesto {
-    class Size {
-        width: number;
-        height: number;
-        constructor(width: number, height: number);
     }
 }

@@ -47,6 +47,7 @@
         "src/MetadataItem.ts",
         "src/Translation.ts",
         "src/TranslationCollection.ts",
+        "src/Size.ts",
         "src/Manifesto.ts"
     ],
     "include": [

@@ -2825,6 +2825,18 @@ var Manifesto;
     Manifesto.TranslationCollection = TranslationCollection;
 })(Manifesto || (Manifesto = {}));
 
+var Manifesto;
+(function (Manifesto) {
+    var Size = (function () {
+        function Size(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+        return Size;
+    }());
+    Manifesto.Size = Size;
+})(Manifesto || (Manifesto = {}));
+
 global.manifesto = global.Manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     ElementType: new Manifesto.ElementType(),
@@ -3045,16 +3057,4 @@ var Manifesto;
         return Resource;
     }(Manifesto.ManifestResource));
     Manifesto.Resource = Resource;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Size = (function () {
-        function Size(width, height) {
-            this.width = width;
-            this.height = height;
-        }
-        return Size;
-    }());
-    Manifesto.Size = Size;
 })(Manifesto || (Manifesto = {}));
