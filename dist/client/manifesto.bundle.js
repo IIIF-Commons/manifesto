@@ -889,9 +889,12 @@ var Manifesto;
             var maxDimensions = null;
             var profile;
             if (this.externalResource.data && this.externalResource.data.profile) {
-                profile = this.externalResource.data.profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
-                if (profile) {
-                    maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                profile = this.externalResource.data.profile;
+                if (profile.length) {
+                    profile = profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
+                    if (profile) {
+                        maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                    }
                 }
             }
             return maxDimensions;

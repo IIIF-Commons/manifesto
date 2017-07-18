@@ -73,10 +73,14 @@ namespace Manifesto {
             let profile: any;
 
             if (this.externalResource.data && this.externalResource.data.profile) {
-                profile = (<any[]>this.externalResource.data.profile).en().where(p => p["maxWidth" || "maxwidth"]).first();
+                profile = (<any[]>this.externalResource.data.profile);
+                
+                if (profile.length) {
+                    profile = profile.en().where(p => p["maxWidth" || "maxwidth"]).first();
 
-                if (profile) {
-                    maxDimensions = new Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                    if (profile) {
+                        maxDimensions = new Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                    }
                 }
             }
 
