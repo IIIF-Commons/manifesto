@@ -817,7 +817,7 @@ var Manifesto;
             var profile;
             if (this.externalResource.data && this.externalResource.data.profile) {
                 profile = this.externalResource.data.profile;
-                if (profile.length) {
+                if (Array.isArray(profile)) {
                     profile = profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
                     if (profile) {
                         maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);

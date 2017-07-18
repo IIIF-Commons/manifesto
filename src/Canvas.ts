@@ -75,7 +75,7 @@ namespace Manifesto {
             if (this.externalResource.data && this.externalResource.data.profile) {
                 profile = (<any[]>this.externalResource.data.profile);
                 
-                if (profile.length) {
+                if (Array.isArray(profile)) {
                     profile = profile.en().where(p => p["maxWidth" || "maxwidth"]).first();
 
                     if (profile) {
