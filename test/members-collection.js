@@ -32,3 +32,12 @@ describe('#hasManifestsCount', function() {
         manifest.getTotalManifests().should.equal(1);
     });
 });
+
+describe('#loadsEmptyMembersCollection', function() {
+    it('loads empty collection successfully', function (done) {
+        manifesto.loadManifest(manifests.emptymemberscollection).then(function(data) {
+            manifest = manifesto.create(data);
+            done();
+        });
+    });
+});
