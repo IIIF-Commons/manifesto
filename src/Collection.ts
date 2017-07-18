@@ -9,33 +9,33 @@ namespace Manifesto {
             jsonld.__collection = this;
         }
 
-        getCollections(): ICollection[]{
-            if (this._collections){
+        getCollections(): ICollection[] {
+            if (this._collections) {
                 return this._collections;
             }
             
             return this._collections = <ICollection[]>this.members.en().where(m => m.isCollection()).toArray();
         }
 
-        getManifests(): IManifest[]{
-            if (this._manifests){
+        getManifests(): IManifest[] {
+            if (this._manifests) {
                 return this._manifests;
             }
             
             return this._manifests = <IManifest[]>this.members.en().where(m => m.isManifest()).toArray();
         }
 
-        getCollectionByIndex(collectionIndex: number): Promise<ICollection>  {
+        getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
             const collection: ICollection = this.getCollections()[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
-            return collection.load();
+            return <Promise<ICollection>>collection.load();
         }
 
         getManifestByIndex(manifestIndex: number): Promise<IManifest> {
             const manifest: IManifest = this.getManifests()[manifestIndex];
             manifest.options.index = manifestIndex;
-            return manifest.load();
+            return <Promise<IManifest>>manifest.load();
         }
 
         getTotalCollections(): number {
@@ -53,7 +53,7 @@ namespace Manifesto {
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
-        getDefaultTree(): ITreeNode{
+        getDefaultTree(): ITreeNode {
 
             super.getDefaultTree();
             

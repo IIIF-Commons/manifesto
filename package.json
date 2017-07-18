@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "2.0.7",
+  "version": "2.1.0",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "dist/server/manifesto.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "gulp-typedoc": "^2.0.2",
     "gulp-typescript": "^3.1.5",
     "gulp-uglify": "^2.1.2",
-    "gulp-utils": "viewdir/gulp-utils",
+    "gulp-utils": "viewdir/gulp-utils#v1.0.0",
     "http": "0.0.0",
     "merge2": "^0.3.5",
     "mocha": "^2.2.4",
@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "exjs": "BSick7/exjs#0.5.0",
-    "http-status-codes": "edsilv/http-status-codes#v0.0.4"
+    "http-status-codes": "edsilv/http-status-codes#v0.0.5"
   },
   "directories": {
     "test": "test"
