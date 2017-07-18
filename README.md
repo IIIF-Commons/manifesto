@@ -1,6 +1,6 @@
 # manifesto
 
-[![Build Status](https://travis-ci.org/viewdir/manifesto.svg?branch=master)](https://travis-ci.org/viewdir/manifesto) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)]
+[![Build Status](https://travis-ci.org/viewdir/manifesto.svg?branch=master)](https://travis-ci.org/viewdir/manifesto)
 
 IIIF Presentation API client and server utility library.
 
