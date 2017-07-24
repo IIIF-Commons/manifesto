@@ -289,6 +289,31 @@ namespace Manifesto {
                 return resource; // no services found
             }
 
+            // add options to all services.
+            const externalService: Manifesto.IService | null = resource.externalService;
+
+            if (externalService) {
+                externalService.options = <IManifestoOptions>resource.options;
+            }
+
+            const kioskService: Manifesto.IService | null = resource.kioskService;
+
+            if (kioskService) {
+                kioskService.options = <IManifestoOptions>resource.options;
+            }
+
+            const clickThroughService: Manifesto.IService | null = resource.clickThroughService;
+
+            if (clickThroughService) {
+                clickThroughService.options = <IManifestoOptions>resource.options;
+            }
+
+            const loginService: Manifesto.IService | null = resource.loginService;
+
+            if (loginService) {
+                loginService.options = <IManifestoOptions>resource.options;
+            }
+
             if (!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                 await handleMovedTemporarily(resource);
                 return resource;
@@ -300,20 +325,18 @@ namespace Manifesto {
             // repetition of logic is left in these steps for clarity:
             
             // Looking for external pattern
-            serviceToTry = resource.externalService;
+            serviceToTry = externalService;
 
             if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                 return resource;
             }
 
             // Looking for kiosk pattern
-            serviceToTry = resource.kioskService;
+            serviceToTry = kioskService;
 
             if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let kioskInteraction = openContentProviderInteraction(serviceToTry);
                 if (kioskInteraction) {
@@ -332,10 +355,9 @@ namespace Manifesto {
             // a session, whereas for login the user might spend some time entering credentials etc.
 
             // Looking for clickthrough pattern
-            serviceToTry = resource.clickThroughService;
+            serviceToTry = clickThroughService;
 
             if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let contentProviderInteraction = await getContentProviderInteraction(resource, serviceToTry);
                 if (contentProviderInteraction) {
@@ -347,10 +369,9 @@ namespace Manifesto {
             }
 
             // Looking for login pattern
-            serviceToTry = resource.loginService;
+            serviceToTry = loginService;
 
             if (serviceToTry) {
-                serviceToTry.options = <IManifestoOptions>resource.options;
                 lastAttempted = serviceToTry;
                 let contentProviderInteraction = await getContentProviderInteraction(resource, serviceToTry);
                 if (contentProviderInteraction) {

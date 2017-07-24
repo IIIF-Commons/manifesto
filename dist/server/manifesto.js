@@ -2302,7 +2302,7 @@ var Manifesto;
         };
         Utils.doAuthChain = function (resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function () {
-                var serviceToTry, lastAttempted, kioskInteraction, contentProviderInteraction, contentProviderInteraction;
+                var externalService, kioskService, clickThroughService, loginService, serviceToTry, lastAttempted, kioskInteraction, contentProviderInteraction, contentProviderInteraction;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -2310,6 +2310,22 @@ var Manifesto;
                             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
                             if (!resource.isAccessControlled()) {
                                 return [2 /*return*/, resource]; // no services found
+                            }
+                            externalService = resource.externalService;
+                            if (externalService) {
+                                externalService.options = resource.options;
+                            }
+                            kioskService = resource.kioskService;
+                            if (kioskService) {
+                                kioskService.options = resource.options;
+                            }
+                            clickThroughService = resource.clickThroughService;
+                            if (clickThroughService) {
+                                clickThroughService.options = resource.options;
+                            }
+                            loginService = resource.loginService;
+                            if (loginService) {
+                                loginService.options = resource.options;
                             }
                             if (!(!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY)) return [3 /*break*/, 2];
                             return [4 /*yield*/, handleMovedTemporarily(resource)];
@@ -2321,9 +2337,8 @@ var Manifesto;
                             lastAttempted = null;
                             // repetition of logic is left in these steps for clarity:
                             // Looking for external pattern
-                            serviceToTry = resource.externalService;
+                            serviceToTry = externalService;
                             if (!serviceToTry) return [3 /*break*/, 4];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 3:
@@ -2331,9 +2346,8 @@ var Manifesto;
                             return [2 /*return*/, resource];
                         case 4:
                             // Looking for kiosk pattern
-                            serviceToTry = resource.kioskService;
+                            serviceToTry = kioskService;
                             if (!serviceToTry) return [3 /*break*/, 7];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             kioskInteraction = openContentProviderInteraction(serviceToTry);
                             if (!kioskInteraction) return [3 /*break*/, 7];
@@ -2353,9 +2367,8 @@ var Manifesto;
                             // For clickthrough the opened window should close immediately having established
                             // a session, whereas for login the user might spend some time entering credentials etc.
                             // Looking for clickthrough pattern
-                            serviceToTry = resource.clickThroughService;
+                            serviceToTry = clickThroughService;
                             if (!serviceToTry) return [3 /*break*/, 11];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
                         case 8:
@@ -2372,9 +2385,8 @@ var Manifesto;
                             return [2 /*return*/, resource];
                         case 11:
                             // Looking for login pattern
-                            serviceToTry = resource.loginService;
+                            serviceToTry = loginService;
                             if (!serviceToTry) return [3 /*break*/, 15];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
                         case 12:
