@@ -684,6 +684,7 @@ declare namespace Manifesto {
     interface IExternalResource {
         authAPIVersion: number;
         clickThroughService: IService | null;
+        contentProviderInteractionEnabled: boolean;
         data: any;
         dataUri: string;
         error: any;
