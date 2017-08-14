@@ -1,4 +1,4 @@
-// manifesto v2.1.1 https://github.com/viewdir/manifesto
+// manifesto v2.1.3 https://github.com/viewdir/manifesto
 /// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
 
 declare namespace Manifesto {
@@ -684,7 +684,7 @@ declare namespace Manifesto {
     interface IExternalResource {
         authAPIVersion: number;
         clickThroughService: IService | null;
-        contentProviderInteractionEnabled: boolean;
+        authHoldingPage: any;
         data: any;
         dataUri: string;
         error: any;

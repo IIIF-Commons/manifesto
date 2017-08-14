@@ -2,7 +2,7 @@ namespace Manifesto {
     export interface IExternalResource {
         authAPIVersion: number;
         clickThroughService: IService | null;
-        contentProviderInteractionEnabled: boolean;
+        authHoldingPage: any;
         data: any;
         dataUri: string;
         error: any;
