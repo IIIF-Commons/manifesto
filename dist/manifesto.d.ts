@@ -115,8 +115,12 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class ResourceType extends StringValue {
+        static CHOICE: ResourceType;
         static IMAGE: ResourceType;
+        static TEXT: ResourceType;
+        choice(): ResourceType;
         image(): ResourceType;
+        text(): ResourceType;
     }
 }
 
@@ -277,6 +281,7 @@ declare namespace Manifesto {
         getCanonicalImageUri(w?: number): string;
         getMaxDimensions(): Size | null;
         getContent(): IAnnotation[];
+        getDuration(): number | null;
         getImages(): IAnnotation[];
         getIndex(): number;
         getWidth(): number;
@@ -652,6 +657,7 @@ declare namespace Manifesto {
         ranges: IRange[];
         getCanonicalImageUri(width?: number): string;
         getContent(): IAnnotation[];
+        getDuration(): number | null;
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;

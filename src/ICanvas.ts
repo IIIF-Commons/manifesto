@@ -6,6 +6,7 @@ namespace Manifesto {
         //getType(): CanvasType;
         getCanonicalImageUri(width?: number): string;
         getContent(): IAnnotation[];
+        getDuration(): number | null;
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;

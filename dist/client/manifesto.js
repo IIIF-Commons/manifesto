@@ -324,10 +324,18 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
+        ResourceType.prototype.choice = function () {
+            return new ResourceType(ResourceType.CHOICE.toString());
+        };
         ResourceType.prototype.image = function () {
             return new ResourceType(ResourceType.IMAGE.toString());
         };
+        ResourceType.prototype.text = function () {
+            return new ResourceType(ResourceType.TEXT.toString());
+        };
+        ResourceType.CHOICE = new ResourceType("choice");
         ResourceType.IMAGE = new ResourceType("dctypes:image");
+        ResourceType.TEXT = new ResourceType("textualbody");
         return ResourceType;
     }(Manifesto.StringValue));
     Manifesto.ResourceType = ResourceType;
@@ -846,6 +854,9 @@ var Manifesto;
                 content.push(annotation);
             }
             return content;
+        };
+        Canvas.prototype.getDuration = function () {
+            return this.getProperty('duration');
         };
         Canvas.prototype.getImages = function () {
             var images = [];

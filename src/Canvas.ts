@@ -116,6 +116,10 @@ namespace Manifesto {
             return content;
         }
 
+        getDuration(): number | null {
+            return this.getProperty('duration');
+        }
+
         getImages(): IAnnotation[] {
 
             const images: IAnnotation[] = [];
