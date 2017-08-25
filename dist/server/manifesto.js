@@ -2453,7 +2453,7 @@ var Manifesto;
                         case 0:
                             tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
                             if (!tokenService) return [3 /*break*/, 3];
-                            return [4 /*yield*/, openTokenService(tokenService)];
+                            return [4 /*yield*/, openTokenService(resource, tokenService)];
                         case 1:
                             tokenMessage = _a.sent();
                             if (!(tokenMessage && tokenMessage.accessToken)) return [3 /*break*/, 3];

@@ -224,7 +224,7 @@ namespace Manifesto {
         static loadExternalResourcesAuth1(
             resources: IExternalResource[],
             openContentProviderInteraction: (service: Manifesto.IService) => any,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
@@ -257,7 +257,7 @@ namespace Manifesto {
         static async loadExternalResourceAuth1(
             resource: IExternalResource, 
             openContentProviderInteraction: (service: Manifesto.IService) => any,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<void>,
             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
@@ -303,7 +303,7 @@ namespace Manifesto {
         static async doAuthChain(
             resource: IExternalResource, 
             openContentProviderInteraction: (service: Manifesto.IService) => any,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
@@ -417,7 +417,7 @@ namespace Manifesto {
 
         static async attemptResourceWithToken(
             resource: Manifesto.IExternalResource,
-            openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
             authService: Manifesto.IService): Promise<Manifesto.IExternalResource | void> {
 
             // attempting token interaction for " + authService["@id"]
@@ -425,7 +425,7 @@ namespace Manifesto {
 
             if (tokenService) {
                 // found token service: " + tokenService["@id"]);
-                let tokenMessage: any = await openTokenService(tokenService); 
+                let tokenMessage: any = await openTokenService(resource, tokenService); 
 
                 if (tokenMessage && tokenMessage.accessToken) {
                     await resource.getData(tokenMessage);
