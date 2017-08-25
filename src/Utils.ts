@@ -225,6 +225,7 @@ namespace Manifesto {
             resources: IExternalResource[],
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<any>,
+            getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
@@ -237,6 +238,7 @@ namespace Manifesto {
                         resource,
                         openContentProviderInteraction,
                         openTokenService,
+                        getStoredAccessToken,
                         userInteractedWithContentProvider,
                         getContentProviderInteraction,
                         handleMovedTemporarily,
@@ -256,22 +258,46 @@ namespace Manifesto {
             resource: IExternalResource, 
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (tokenService: Manifesto.IService) => Promise<void>,
+            getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
-                
-            await resource.getData();
+            
+            const storedAccessToken: IAccessToken | null = await getStoredAccessToken(resource);
+            
+            if (storedAccessToken) {
 
-            if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
-                await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
+                await resource.getData(storedAccessToken);
+
+                if (resource.status === HTTPStatusCode.OK) {
+                    return resource;
+                } else {
+                    // the stored token is no good for this resource
+                    await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
+                }
+
+                if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                    return resource;
+                }
+                
+                throw Utils.createAuthorizationFailedError();
+
+            } else {
+
+                await resource.getData();
+
+                if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
+                    await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
+                }
+                
+                if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                    return resource;
+                }
+                
+                throw Utils.createAuthorizationFailedError();
+
             }
-            
-            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
-                return resource;
-            }
-            
-            throw Utils.createAuthorizationFailedError();
         }
 
         static async doAuthChain(
