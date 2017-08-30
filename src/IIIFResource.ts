@@ -42,12 +42,6 @@ namespace Manifesto {
         getIIIFResourceType(): IIIFResourceType {
 
             let type: string = this.getProperty('type');
-
-            if (type) {
-                return new IIIFResourceType(type);
-            }
-
-            type = this.getProperty('@type');
             return new IIIFResourceType(type);
         }
 

@@ -635,7 +635,7 @@ var Manifesto;
             return _this;
         }
         ManifestResource.prototype.getIIIFResourceType = function () {
-            return new Manifesto.IIIFResourceType(this.getProperty('@type'));
+            return new Manifesto.IIIFResourceType(this.getProperty('type'));
         };
         ManifestResource.prototype.getLabel = function () {
             return Manifesto.TranslationCollection.parse(this.getProperty('label'), this.options.locale);
@@ -958,10 +958,6 @@ var Manifesto;
         };
         IIIFResource.prototype.getIIIFResourceType = function () {
             var type = this.getProperty('type');
-            if (type) {
-                return new Manifesto.IIIFResourceType(type);
-            }
-            type = this.getProperty('@type');
             return new Manifesto.IIIFResourceType(type);
         };
         IIIFResource.prototype.getLogo = function () {
