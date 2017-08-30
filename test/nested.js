@@ -38,7 +38,7 @@ describe('#hasLabel', function() {
 
 describe('#firstCollectionHasLabel', function() {
     it('has a first collection with a label', function(done) {
-         collection.getCollectionByIndex(0).then(function(data) {
+        collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
             Manifesto.TranslationCollection.getValue(firstCollection.getLabel()).should.equal('Dime Novel and Popular Literature');
             done();

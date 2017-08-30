@@ -111,26 +111,26 @@ namespace Manifesto {
                 parentRange.members.push(range);
             }
 
-            if (r.ranges) {
-                for (let i = 0; i < r.ranges.length; i++) {
-                    this._parseRanges(r.ranges[i], path + '/' + i, range);
-                }
-            }
-
             if (r.members) {
                 for (let i = 0; i < r.members.length; i++) {
                     const child: any = r.members[i];
 
                     // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
-                    if (r.members.en().where(m => m.id === child.id).first()) {
-                        continue;
-                    }
+                    // if (range.members.en().where(m => m.id === child.id).first()) {
+                    //     continue;
+                    // }
 
-                    if (child['@type'].toLowerCase() === 'sc:range'){
+                    if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range'){
                         this._parseRanges(child, path + '/' + i, range);
                     }
                 }
+            } else if (r.ranges) {
+                for (let i = 0; i < r.ranges.length; i++) {
+                    this._parseRanges(r.ranges[i], path + '/' + i, range);
+                }
             }
+
+            
         }
 
         getAllRanges(): IRange[] {

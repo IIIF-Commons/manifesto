@@ -1214,25 +1214,21 @@ var Manifesto;
             else {
                 parentRange.members.push(range);
             }
-            if (r.ranges) {
-                for (var i = 0; i < r.ranges.length; i++) {
-                    this._parseRanges(r.ranges[i], path + '/' + i, range);
-                }
-            }
             if (r.members) {
-                var _loop_1 = function (i) {
+                for (var i = 0; i < r.members.length; i++) {
                     var child = r.members[i];
                     // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
-                    if (r.members.en().where(function (m) { return m.id === child.id; }).first()) {
-                        return "continue";
+                    // if (range.members.en().where(m => m.id === child.id).first()) {
+                    //     continue;
+                    // }
+                    if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range') {
+                        this._parseRanges(child, path + '/' + i, range);
                     }
-                    if (child['@type'].toLowerCase() === 'sc:range') {
-                        this_1._parseRanges(child, path + '/' + i, range);
-                    }
-                };
-                var this_1 = this;
-                for (var i = 0; i < r.members.length; i++) {
-                    _loop_1(i);
+                }
+            }
+            else if (r.ranges) {
+                for (var i = 0; i < r.ranges.length; i++) {
+                    this._parseRanges(r.ranges[i], path + '/' + i, range);
                 }
             }
         };
