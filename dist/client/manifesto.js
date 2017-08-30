@@ -1380,10 +1380,11 @@ var Manifesto;
             return this._canvases = this.members.en().where(function (m) { return m.isCanvas(); }).toArray();
         };
         Range.prototype.getRanges = function () {
-            if (this._ranges) {
-                return this._ranges;
-            }
-            return this._ranges = this.members.en().where(function (m) { return m.isRange(); }).toArray();
+            return this.members;
+            // if (this._ranges){
+            //     return this._ranges;
+            // }
+            // return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
         };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {

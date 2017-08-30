@@ -29,11 +29,13 @@ namespace Manifesto {
         }
 
         getRanges(): IRange[] {
-            if (this._ranges){
-                return this._ranges;
-            }
             
-            return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
+            return <IRange[]>this.members;
+            // if (this._ranges){
+            //     return this._ranges;
+            // }
+            
+            // return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
         }
 
         getViewingDirection(): ViewingDirection | null {
