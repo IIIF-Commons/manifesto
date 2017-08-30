@@ -18,6 +18,6 @@ describe('#loadsMembersRanges', function() {
 describe('#hasRanges', function() {
     it('has ranges', function () {
         topRange = manifest.getTopRanges()[0];
-        topRange.members.length.should.equal(3);
+        topRange.members.length.should.equal(2);
     });
 });

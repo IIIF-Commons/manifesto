@@ -1,4 +1,3 @@
-
 {
     "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners",
     "type": "Manifest",
@@ -65,23 +64,6 @@
         }
     ],
     "structures": [
-        {
-            "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/0",
-            "type": "Range",
-            "label": "Table of Contents",
-            "members": [
-                {
-                    "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/1", 
-                    "type": "Range",
-                    "label": "Getting Ready for Lunch"
-                },
-                {
-                    "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/3", 
-                    "type": "Range",
-                    "label": "In the Lunchroom"
-                }
-            ]
-        },
         {
             "id": "http://dlib.indiana.edu/iiif_av/lunchroom_manners/range/1",
             "type": "Range",
