@@ -1568,7 +1568,9 @@ var Manifesto;
         Sequence.prototype.getCanvasById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
                 var canvas = this.getCanvasByIndex(i);
-                if (canvas.id === id) {
+                // normalise canvas id
+                var canvasId = Manifesto.Utils.normaliseUrl(canvas.id);
+                if (Manifesto.Utils.normaliseUrl(id) === canvasId) {
                     return canvas;
                 }
             }
@@ -2166,10 +2168,15 @@ var Manifesto;
             }
             return type;
         };
+        Utils.normaliseUrl = function (url) {
+            url = url.substr(url.indexOf('://'));
+            if (url.indexOf('#') !== -1) {
+                url = url.split('#')[0];
+            }
+            return url;
+        };
         Utils.normalisedUrlsMatch = function (url1, url2) {
-            var url1norm = url1.substr(url1.indexOf('://'));
-            var url2norm = url1.substr(url1.indexOf('://'));
-            return url1norm === url2norm;
+            return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
         };
         Utils.isImageProfile = function (profile) {
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||

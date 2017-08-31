@@ -104,11 +104,18 @@ namespace Manifesto {
             return type;
         }
 
+        static normaliseUrl(url: string): string {
+            url = url.substr(url.indexOf('://'));
+
+            if (url.indexOf('#') !== -1) {
+                url = url.split('#')[0];
+            }
+
+            return url;
+        }
+
         static normalisedUrlsMatch(url1: string, url2: string): boolean {
-            const url1norm: string = url1.substr(url1.indexOf('://'));
-            const url2norm: string = url1.substr(url1.indexOf('://'));
-            
-            return url1norm === url2norm;
+            return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
         }
 
         static isImageProfile(profile: Manifesto.ServiceProfile): boolean {

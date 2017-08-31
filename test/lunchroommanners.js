@@ -24,5 +24,6 @@ describe('#hasRanges', function() {
         var usingSoap = washingHands.members[0];
         var canvasid = usingSoap.canvases[0];
         expect(canvasid).to.equal("http://dlib.indiana.edu/iiif_av/lunchroom_manners/canvas/1#t=157,160");
+        // get sequence and use .getCanvasById trimming http/s and hash fragment
     });
 });
