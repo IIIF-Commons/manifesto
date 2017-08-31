@@ -1207,12 +1207,17 @@ var Manifesto;
             if (r.members) {
                 for (var i = 0; i < r.members.length; i++) {
                     var child = r.members[i];
-                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
-                    // if (range.members.en().where(m => m.id === child.id).first()) {
-                    //     continue;
-                    // }
+                    // todo: use constants
                     if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range') {
                         this._parseRanges(child, path + '/' + i, range);
+                    }
+                    else if (child['@type'] && child['@type'].toLowerCase() === 'sc:canvas' || child['type'] && child['type'].toLowerCase() === 'canvas') {
+                        // store the ids on the __jsonld object to be used by Range.getCanvasIds()
+                        if (!range.canvases) {
+                            range.canvases = [];
+                        }
+                        var id_1 = child['@id'] || child.id;
+                        range.canvases.push(id_1);
                     }
                 }
             }
@@ -1428,14 +1433,17 @@ var Manifesto;
         __extends(Range, _super);
         function Range(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
-            _this._canvases = null;
             _this._ranges = null;
+            _this.canvases = null;
             _this.members = [];
             return _this;
         }
         Range.prototype.getCanvasIds = function () {
             if (this.__jsonld.canvases) {
                 return this.__jsonld.canvases;
+            }
+            else if (this.canvases) {
+                return this.canvases;
             }
             return [];
         };

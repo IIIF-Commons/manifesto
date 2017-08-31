@@ -1,5 +1,6 @@
 namespace Manifesto {
     export interface IRange extends IManifestResource {
+        canvases: string[] | null;
         getCanvasIds(): string[];
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;

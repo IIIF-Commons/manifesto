@@ -115,20 +115,25 @@ namespace Manifesto {
                 for (let i = 0; i < r.members.length; i++) {
                     const child: any = r.members[i];
 
-                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
-                    // if (range.members.en().where(m => m.id === child.id).first()) {
-                    //     continue;
-                    // }
-
+                    // todo: use constants
                     if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range'){
                         this._parseRanges(child, path + '/' + i, range);
-                    }
+                    } else if (child['@type'] && child['@type'].toLowerCase() === 'sc:canvas' || child['type'] && child['type'].toLowerCase() === 'canvas') {
+                        // store the ids on the __jsonld object to be used by Range.getCanvasIds()
+                        if (!range.canvases) {
+                            range.canvases = [];
+                        }
+
+                        const id: string = child['@id'] || child.id;
+
+                        range.canvases.push(id);
+                    } 
                 }
             } else if (r.ranges) {
                 for (let i = 0; i < r.ranges.length; i++) {
                     this._parseRanges(r.ranges[i], path + '/' + i, range);
                 }
-            }            
+            }       
         }
 
         getAllRanges(): IRange[] {

@@ -364,11 +364,11 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Range extends ManifestResource implements IRange {
-        _canvases: ICanvas[] | null;
-        _ranges: IRange[] | null;
+        private _ranges;
+        canvases: string[] | null;
+        members: IManifestResource[];
         parentRange: Range;
         path: string;
-        members: IManifestResource[];
         treeNode: ITreeNode;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
@@ -817,6 +817,7 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IRange extends IManifestResource {
+        canvases: string[] | null;
         getCanvasIds(): string[];
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
