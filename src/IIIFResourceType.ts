@@ -1,11 +1,11 @@
 namespace Manifesto {
     export class IIIFResourceType extends StringValue{
-        public static ANNOTATION = new IIIFResourceType("oa:annotation");
-        public static CANVAS = new IIIFResourceType("sc:canvas");
-        public static COLLECTION = new IIIFResourceType("sc:collection");
-        public static MANIFEST = new IIIFResourceType("sc:manifest");
-        public static RANGE = new IIIFResourceType("sc:range");
-        public static SEQUENCE = new IIIFResourceType("sc:sequence");
+        public static ANNOTATION = new IIIFResourceType("annotation");
+        public static CANVAS = new IIIFResourceType("canvas");
+        public static COLLECTION = new IIIFResourceType("collection");
+        public static MANIFEST = new IIIFResourceType("manifest");
+        public static RANGE = new IIIFResourceType("range");
+        public static SEQUENCE = new IIIFResourceType("sequence");
 
         // todo: use getters when ES3 target is no longer required.
 

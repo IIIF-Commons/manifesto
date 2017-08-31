@@ -13,6 +13,7 @@ namespace Manifesto {
         }
 
         getCanvasIds(): string[] {
+
             if (this.__jsonld.canvases) {
                 return this.__jsonld.canvases;
             }
@@ -20,22 +21,21 @@ namespace Manifesto {
             return [];
         }
 
-        getCanvases(): ICanvas[] {
-            if (this._canvases){
-                return this._canvases;
-            }
+        // getCanvases(): ICanvas[] {
+        //     if (this._canvases) {
+        //         return this._canvases;
+        //     }
             
-            return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
-        }
+        //     return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
+        // }
 
         getRanges(): IRange[] {
+
+            if (this._ranges) {
+                return this._ranges;
+            }
             
-            return <IRange[]>this.members;
-            // if (this._ranges){
-            //     return this._ranges;
-            // }
-            
-            // return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
+            return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
         }
 
         getViewingDirection(): ViewingDirection | null {

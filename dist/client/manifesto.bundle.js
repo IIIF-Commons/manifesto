@@ -255,12 +255,12 @@ var Manifesto;
         IIIFResourceType.prototype.sequence = function () {
             return new IIIFResourceType(IIIFResourceType.SEQUENCE.toString());
         };
-        IIIFResourceType.ANNOTATION = new IIIFResourceType("oa:annotation");
-        IIIFResourceType.CANVAS = new IIIFResourceType("sc:canvas");
-        IIIFResourceType.COLLECTION = new IIIFResourceType("sc:collection");
-        IIIFResourceType.MANIFEST = new IIIFResourceType("sc:manifest");
-        IIIFResourceType.RANGE = new IIIFResourceType("sc:range");
-        IIIFResourceType.SEQUENCE = new IIIFResourceType("sc:sequence");
+        IIIFResourceType.ANNOTATION = new IIIFResourceType("annotation");
+        IIIFResourceType.CANVAS = new IIIFResourceType("canvas");
+        IIIFResourceType.COLLECTION = new IIIFResourceType("collection");
+        IIIFResourceType.MANIFEST = new IIIFResourceType("manifest");
+        IIIFResourceType.RANGE = new IIIFResourceType("range");
+        IIIFResourceType.SEQUENCE = new IIIFResourceType("sequence");
         return IIIFResourceType;
     }(Manifesto.StringValue));
     Manifesto.IIIFResourceType = IIIFResourceType;
@@ -708,7 +708,7 @@ var Manifesto;
             return _this;
         }
         ManifestResource.prototype.getIIIFResourceType = function () {
-            return new Manifesto.IIIFResourceType(this.getProperty('type'));
+            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
         };
         ManifestResource.prototype.getLabel = function () {
             return Manifesto.TranslationCollection.parse(this.getProperty('label'), this.options.locale);
@@ -1030,8 +1030,7 @@ var Manifesto;
             return [];
         };
         IIIFResource.prototype.getIIIFResourceType = function () {
-            var type = this.getProperty('type');
-            return new Manifesto.IIIFResourceType(type);
+            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
         };
         IIIFResource.prototype.getLogo = function () {
             var logo = this.getProperty('logo');
@@ -1066,19 +1065,13 @@ var Manifesto;
             return this.defaultTree;
         };
         IIIFResource.prototype.isCollection = function () {
-            if (this.getIIIFResourceType().toString().toLowerCase() === 'collection') {
-                return true;
-            }
-            else if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
+            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
                 return true;
             }
             return false;
         };
         IIIFResource.prototype.isManifest = function () {
-            if (this.getIIIFResourceType().toString().toLowerCase() === 'manifest') {
-                return true;
-            }
-            else if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
+            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
                 return true;
             }
             return false;
@@ -1179,7 +1172,7 @@ var Manifesto;
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 for (var i = 0; i < this.__jsonld.structures.length; i++) {
                     var r = this.__jsonld.structures[i];
-                    if (r['@id'] === id) {
+                    if (r['@id'] === id || r.id === id) {
                         return r;
                     }
                 }
@@ -1446,18 +1439,17 @@ var Manifesto;
             }
             return [];
         };
-        Range.prototype.getCanvases = function () {
-            if (this._canvases) {
-                return this._canvases;
-            }
-            return this._canvases = this.members.en().where(function (m) { return m.isCanvas(); }).toArray();
-        };
+        // getCanvases(): ICanvas[] {
+        //     if (this._canvases) {
+        //         return this._canvases;
+        //     }
+        //     return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
+        // }
         Range.prototype.getRanges = function () {
-            return this.members;
-            // if (this._ranges){
-            //     return this._ranges;
-            // }
-            // return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
+            if (this._ranges) {
+                return this._ranges;
+            }
+            return this._ranges = this.members.en().where(function (m) { return m.isRange(); }).toArray();
         };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
@@ -2158,6 +2150,14 @@ var Manifesto;
                 var n = treeNode.nodes[i];
                 Utils.generateTreeNodeIds(n, i);
             }
+        };
+        Utils.normaliseType = function (type) {
+            type = type.toLowerCase();
+            if (type.indexOf(':') !== -1) {
+                var split = type.split(':');
+                return split[1];
+            }
+            return type;
         };
         Utils.normalisedUrlsMatch = function (url1, url2) {
             var url1norm = url1.substr(url1.indexOf('://'));

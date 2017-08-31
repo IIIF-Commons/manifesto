@@ -9,7 +9,7 @@ namespace Manifesto {
         }
 
         getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(this.getProperty('type'));
+            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
         }
 
         getLabel(): TranslationCollection {

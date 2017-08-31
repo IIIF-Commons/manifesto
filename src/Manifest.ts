@@ -72,7 +72,7 @@ namespace Manifesto {
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 for (let i = 0; i < this.__jsonld.structures.length; i++) {
                     const r = this.__jsonld.structures[i];
-                    if (r['@id'] === id){
+                    if (r['@id'] === id || r.id === id) {
                         return r;
                     }
                 }
@@ -128,9 +128,7 @@ namespace Manifesto {
                 for (let i = 0; i < r.ranges.length; i++) {
                     this._parseRanges(r.ranges[i], path + '/' + i, range);
                 }
-            }
-
-            
+            }            
         }
 
         getAllRanges(): IRange[] {

@@ -93,6 +93,17 @@ namespace Manifesto {
             }
         }
 
+        static normaliseType(type: string): string {
+            type = type.toLowerCase();
+            
+            if (type.indexOf(':') !== -1) {
+                const split: string[] = type.split(':');
+                return split[1];
+            }
+
+            return type;
+        }
+
         static normalisedUrlsMatch(url1: string, url2: string): boolean {
             const url1norm: string = url1.substr(url1.indexOf('://'));
             const url2norm: string = url1.substr(url1.indexOf('://'));

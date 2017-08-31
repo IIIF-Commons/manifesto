@@ -40,9 +40,7 @@ namespace Manifesto {
         }
 
         getIIIFResourceType(): IIIFResourceType {
-
-            let type: string = this.getProperty('type');
-            return new IIIFResourceType(type);
+            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
         }
 
         getLogo(): string | null {
@@ -85,18 +83,14 @@ namespace Manifesto {
         }
 
         isCollection(): boolean {
-            if (this.getIIIFResourceType().toString().toLowerCase() === 'collection') { // todo: use constant
-                return true;
-            } else if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
+            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
                 return true;
             }
             return false;
         }
 
         isManifest(): boolean {
-            if (this.getIIIFResourceType().toString().toLowerCase() === 'manifest') { // todo: use constant
-                return true;
-            } else if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
+            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
                 return true;
             }
             return false;

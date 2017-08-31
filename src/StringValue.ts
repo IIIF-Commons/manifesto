@@ -4,7 +4,7 @@ namespace Manifesto {
         public value: string = "";
 
         constructor(value?: string) {
-            if (value){
+            if (value) {
                 this.value = value.toLowerCase();
             }
         }
