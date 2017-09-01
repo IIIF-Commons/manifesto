@@ -72,7 +72,7 @@ namespace Manifesto {
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 for (let i = 0; i < this.__jsonld.structures.length; i++) {
                     const r = this.__jsonld.structures[i];
-                    if (r['@id'] === id){
+                    if (r['@id'] === id || r.id === id) {
                         return r;
                     }
                 }
@@ -111,26 +111,29 @@ namespace Manifesto {
                 parentRange.members.push(range);
             }
 
-            if (r.ranges) {
-                for (let i = 0; i < r.ranges.length; i++) {
-                    this._parseRanges(r.ranges[i], path + '/' + i, range);
-                }
-            }
-
             if (r.members) {
                 for (let i = 0; i < r.members.length; i++) {
                     const child: any = r.members[i];
 
-                    // only add to members if not already parsed from backwards-compatible ranges/canvases arrays
-                    if (r.members.en().where(m => m.id === child.id).first()) {
-                        continue;
-                    }
-
-                    if (child['@type'].toLowerCase() === 'sc:range'){
+                    // todo: use constants
+                    if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range'){
                         this._parseRanges(child, path + '/' + i, range);
-                    }
+                    } else if (child['@type'] && child['@type'].toLowerCase() === 'sc:canvas' || child['type'] && child['type'].toLowerCase() === 'canvas') {
+                        // store the ids on the __jsonld object to be used by Range.getCanvasIds()
+                        if (!range.canvases) {
+                            range.canvases = [];
+                        }
+
+                        const id: string = child['@id'] || child.id;
+
+                        range.canvases.push(id);
+                    } 
                 }
-            }
+            } else if (r.ranges) {
+                for (let i = 0; i < r.ranges.length; i++) {
+                    this._parseRanges(r.ranges[i], path + '/' + i, range);
+                }
+            }       
         }
 
         getAllRanges(): IRange[] {

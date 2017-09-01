@@ -93,11 +93,29 @@ namespace Manifesto {
             }
         }
 
-        static normalisedUrlsMatch(url1: string, url2: string): boolean {
-            const url1norm: string = url1.substr(url1.indexOf('://'));
-            const url2norm: string = url1.substr(url1.indexOf('://'));
+        static normaliseType(type: string): string {
+            type = type.toLowerCase();
             
-            return url1norm === url2norm;
+            if (type.indexOf(':') !== -1) {
+                const split: string[] = type.split(':');
+                return split[1];
+            }
+
+            return type;
+        }
+
+        static normaliseUrl(url: string): string {
+            url = url.substr(url.indexOf('://'));
+
+            if (url.indexOf('#') !== -1) {
+                url = url.split('#')[0];
+            }
+
+            return url;
+        }
+
+        static normalisedUrlsMatch(url1: string, url2: string): boolean {
+            return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
         }
 
         static isImageProfile(profile: Manifesto.ServiceProfile): boolean {

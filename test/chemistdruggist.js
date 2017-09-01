@@ -18,9 +18,9 @@ describe('#loadsChemistDruggist', function() {
 });
 
 describe('#hasIIIFResourceType', function() {
-    it('has a IIIFResourceType property of "sc:collection"', function () {
+    it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();
-        type.toString().should.equal('sc:collection');
+        type.toString().should.equal('collection');
         expect(collection.isManifest()).to.equal(false);  
         expect(collection.isCollection()).to.equal(true);        
     });

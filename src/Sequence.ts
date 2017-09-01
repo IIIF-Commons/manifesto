@@ -31,7 +31,10 @@ namespace Manifesto {
             for (let i = 0; i < this.getTotalCanvases(); i++) {
                 const canvas = this.getCanvasByIndex(i);
 
-                if (canvas.id === id){
+                // normalise canvas id
+                const canvasId: string = Utils.normaliseUrl(canvas.id);
+
+                if (Utils.normaliseUrl(id) === canvasId){
                     return canvas;
                 }
             }

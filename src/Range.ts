@@ -1,35 +1,39 @@
 
 namespace Manifesto {
     export class Range extends ManifestResource implements IRange{
-        _canvases: ICanvas[] | null = null;
-        _ranges: IRange[] | null = null;
-        parentRange: Range;
-        path: string;
-        members: IManifestResource[] = [];
-        treeNode: ITreeNode;
+        private _ranges: IRange[] | null = null;
+        public canvases: string[] | null = null;
+        public members: IManifestResource[] = [];
+        public parentRange: Range;
+        public path: string;
+        public treeNode: ITreeNode;
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 
         getCanvasIds(): string[] {
+
             if (this.__jsonld.canvases) {
                 return this.__jsonld.canvases;
+            } else if (this.canvases) {
+                return this.canvases;
             }
 
             return [];
         }
 
-        getCanvases(): ICanvas[] {
-            if (this._canvases){
-                return this._canvases;
-            }
+        // getCanvases(): ICanvas[] {
+        //     if (this._canvases) {
+        //         return this._canvases;
+        //     }
             
-            return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
-        }
+        //     return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
+        // }
 
         getRanges(): IRange[] {
-            if (this._ranges){
+
+            if (this._ranges) {
                 return this._ranges;
             }
             

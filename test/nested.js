@@ -18,9 +18,9 @@ describe('#loadsTopNestedManifest', function() {
 });
 
 describe('#hasIIIFResourceType', function() {
-    it('has a IIIFResourceType property of "sc:collection"', function () {
+    it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();
-        type.toString().should.equal('sc:collection');
+        type.toString().should.equal('collection');
     });
 });
 
@@ -38,7 +38,7 @@ describe('#hasLabel', function() {
 
 describe('#firstCollectionHasLabel', function() {
     it('has a first collection with a label', function(done) {
-         collection.getCollectionByIndex(0).then(function(data) {
+        collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
             Manifesto.TranslationCollection.getValue(firstCollection.getLabel()).should.equal('Dime Novel and Popular Literature');
             done();

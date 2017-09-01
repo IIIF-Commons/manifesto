@@ -364,15 +364,14 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Range extends ManifestResource implements IRange {
-        _canvases: ICanvas[] | null;
-        _ranges: IRange[] | null;
+        private _ranges;
+        canvases: string[] | null;
+        members: IManifestResource[];
         parentRange: Range;
         path: string;
-        members: IManifestResource[];
         treeNode: ITreeNode;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
-        getCanvases(): ICanvas[];
         getRanges(): IRange[];
         getViewingDirection(): ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
@@ -529,6 +528,8 @@ declare namespace Manifesto {
         static getInexactLocale(locale: string): string;
         static getLocalisedValue(resource: any, locale: string): string | null;
         static generateTreeNodeIds(treeNode: ITreeNode, index?: number): void;
+        static normaliseType(type: string): string;
+        static normaliseUrl(url: string): string;
         static normalisedUrlsMatch(url1: string, url2: string): boolean;
         static isImageProfile(profile: Manifesto.ServiceProfile): boolean;
         static isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean;
@@ -817,8 +818,8 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IRange extends IManifestResource {
+        canvases: string[] | null;
         getCanvasIds(): string[];
-        getCanvases(): ICanvas[];
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;
