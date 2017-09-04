@@ -1,8 +1,8 @@
 namespace Manifesto {
     export class TreeNodeType extends StringValue {
-        public static COLLECTION = new TreeNodeType("sc:collection");
-        public static MANIFEST = new TreeNodeType("sc:manifest");
-        public static RANGE = new TreeNodeType("sc:range");
+        public static COLLECTION = new TreeNodeType("collection");
+        public static MANIFEST = new TreeNodeType("manifest");
+        public static RANGE = new TreeNodeType("range");
 
         // todo: use getters when ES3 target is no longer required.
 
