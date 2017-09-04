@@ -22,15 +22,15 @@ namespace Manifesto {
         }
 
         public isCollection(): boolean {
-            return this.data.type === TreeNodeType.COLLECTION.toString();
+            return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION.toString());
         }
 
         public isManifest(): boolean {
-            return this.data.type === TreeNodeType.MANIFEST.toString();
+            return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST.toString());
         }
 
         public isRange(): boolean {
-            return this.data.type === TreeNodeType.RANGE.toString();
+            return this.data.type === Utils.normaliseType(TreeNodeType.RANGE.toString());
         }
     }
 }

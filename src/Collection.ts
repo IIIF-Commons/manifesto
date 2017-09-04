@@ -57,7 +57,7 @@ namespace Manifesto {
 
             super.getDefaultTree();
             
-            this.defaultTree.data.type = TreeNodeType.COLLECTION.toString();
+            this.defaultTree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION.toString());
 
             this._parseManifests(this);
             this._parseCollections(this);
@@ -75,7 +75,7 @@ namespace Manifesto {
                     tree.label = manifest.parentLabel || TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
-                    tree.data.type = TreeNodeType.MANIFEST.toString();
+                    tree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST.toString());
                     parentCollection.defaultTree.addNode(tree);
                 }
             }
@@ -89,7 +89,7 @@ namespace Manifesto {
                     tree.label = collection.parentLabel || TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
-                    tree.data.type = TreeNodeType.COLLECTION.toString();
+                    tree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION.toString());
                     parentCollection.defaultTree.addNode(tree);
 
                     this._parseCollections(collection);

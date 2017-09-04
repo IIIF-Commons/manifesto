@@ -22,7 +22,7 @@ namespace Manifesto {
             
             super.getDefaultTree();
 
-            this.defaultTree.data.type = TreeNodeType.MANIFEST.toString();
+            this.defaultTree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST.toString());
 
             if (!this.isLoaded) {
                 return this.defaultTree;

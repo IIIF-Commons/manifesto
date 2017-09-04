@@ -893,7 +893,7 @@ var Manifesto;
         //
         //            if (!_endsWith(id, '/')) {
         //                id += '/';
-        //            }
+        //            } 
         //
         //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
         //        }
@@ -1062,7 +1062,7 @@ var Manifesto;
         }
         Manifest.prototype.getDefaultTree = function () {
             _super.prototype.getDefaultTree.call(this);
-            this.defaultTree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
+            this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
             if (!this.isLoaded) {
                 return this.defaultTree;
             }
@@ -1306,7 +1306,7 @@ var Manifesto;
          */
         Collection.prototype.getDefaultTree = function () {
             _super.prototype.getDefaultTree.call(this);
-            this.defaultTree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
+            this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
             this._parseManifests(this);
             this._parseCollections(this);
             Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
@@ -1320,7 +1320,7 @@ var Manifesto;
                     tree.label = manifest.parentLabel || Manifesto.TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
-                    tree.data.type = Manifesto.TreeNodeType.MANIFEST.toString();
+                    tree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
                     parentCollection.defaultTree.addNode(tree);
                 }
             }
@@ -1333,7 +1333,7 @@ var Manifesto;
                     tree.label = collection.parentLabel || Manifesto.TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
-                    tree.data.type = Manifesto.TreeNodeType.COLLECTION.toString();
+                    tree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
                     parentCollection.defaultTree.addNode(tree);
                     this._parseCollections(collection);
                 }
@@ -1416,7 +1416,7 @@ var Manifesto;
         Range.prototype._parseTreeNode = function (node, range) {
             node.label = Manifesto.TranslationCollection.getValue(range.getLabel(), this.options.locale);
             node.data = range;
-            node.data.type = Manifesto.TreeNodeType.RANGE.toString();
+            node.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.RANGE.toString());
             range.treeNode = node;
             var ranges = range.getRanges();
             if (ranges && ranges.length) {
@@ -1929,13 +1929,13 @@ var Manifesto;
             node.parentNode = this;
         };
         TreeNode.prototype.isCollection = function () {
-            return this.data.type === Manifesto.TreeNodeType.COLLECTION.toString();
+            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
         };
         TreeNode.prototype.isManifest = function () {
-            return this.data.type === Manifesto.TreeNodeType.MANIFEST.toString();
+            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
         };
         TreeNode.prototype.isRange = function () {
-            return this.data.type === Manifesto.TreeNodeType.RANGE.toString();
+            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.RANGE.toString());
         };
         return TreeNode;
     }());

@@ -80,7 +80,7 @@ namespace Manifesto {
         private _parseTreeNode(node: ITreeNode, range: IRange): void {
             node.label = <string>TranslationCollection.getValue(range.getLabel(), this.options.locale);
             node.data = range;
-            node.data.type = TreeNodeType.RANGE.toString();
+            node.data.type = Utils.normaliseType(TreeNodeType.RANGE.toString());
             range.treeNode = node;
 
             const ranges: IRange[] = range.getRanges();

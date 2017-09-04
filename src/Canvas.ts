@@ -160,7 +160,7 @@ namespace Manifesto {
         //
         //            if (!_endsWith(id, '/')) {
         //                id += '/';
-        //            }
+        //            } 
         //
         //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
         //        }
