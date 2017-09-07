@@ -116,7 +116,7 @@ var Manifesto;
         function ElementType() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        // todo: use getters when ES3 target is no longer required.
+        // todo: deprecate - use ResourceType instead
         ElementType.prototype.canvas = function () {
             return new ElementType(ElementType.CANVAS.toString());
         };
@@ -768,7 +768,11 @@ var Manifesto;
             return resources;
         };
         Element.prototype.getType = function () {
-            return new Manifesto.ElementType(this.getProperty('type'));
+            var type = this.getProperty('type');
+            if (type) {
+                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(type));
+            }
+            return null;
         };
         return Element;
     }(Manifesto.ManifestResource));
@@ -3043,7 +3047,7 @@ var Manifesto;
         Resource.prototype.getType = function () {
             var type = this.getProperty('type');
             if (type) {
-                return new Manifesto.ResourceType(type.toLowerCase());
+                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(type));
             }
             return null;
         };

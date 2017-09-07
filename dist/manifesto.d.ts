@@ -280,7 +280,7 @@ declare namespace Manifesto {
         type: ElementType;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getResources(): IAnnotation[];
-        getType(): ElementType;
+        getType(): ResourceType | null;
     }
 }
 
@@ -693,7 +693,7 @@ declare namespace Manifesto {
     interface IElement extends IManifestResource {
         index: number;
         getResources(): IAnnotation[];
-        getType(): ElementType;
+        getType(): ResourceType | null;
     }
 }
 

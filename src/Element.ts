@@ -1,6 +1,8 @@
 namespace Manifesto {
     export class Element extends ManifestResource implements IElement {
 
+        // todo: can this be merged with Resource?
+
         public index: number;
         public type: ElementType;
 
@@ -23,8 +25,14 @@ namespace Manifesto {
             return resources;
         }
 
-        getType(): ElementType {
-            return new ElementType(this.getProperty('type'));
+        getType(): ResourceType | null {
+            const type: string = this.getProperty('type');
+
+            if (type) {
+                return new ResourceType(Utils.normaliseType(type));
+            }
+
+            return null;
         }
     }
 }
