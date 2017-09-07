@@ -19,7 +19,7 @@ namespace Manifesto {
             const type: string = this.getProperty('type');
 
             if (type) {
-                return new ResourceType(type.toLowerCase());
+                return new ResourceType(Utils.normaliseType(this.getProperty('type')));
             }
 
             return null;

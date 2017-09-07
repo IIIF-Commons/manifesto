@@ -7,7 +7,7 @@ namespace Manifesto {
         public static PHYSICALOBJECT = new ElementType("dctypes:physicalobject");
         public static SOUND = new ElementType("dctypes:sound");
 
-        // todo: use getters when ES3 target is no longer required.
+        // todo: deprecate - use ResourceType instead
 
         canvas(): ElementType {
             return new ElementType(ElementType.CANVAS.toString());

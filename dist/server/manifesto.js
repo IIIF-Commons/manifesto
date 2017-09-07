@@ -396,17 +396,37 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
+        ResourceType.prototype.canvas = function () {
+            return new ResourceType(ResourceType.CANVAS.toString());
+        };
         ResourceType.prototype.choice = function () {
             return new ResourceType(ResourceType.CHOICE.toString());
+        };
+        ResourceType.prototype.document = function () {
+            return new ResourceType(ResourceType.DOCUMENT.toString());
         };
         ResourceType.prototype.image = function () {
             return new ResourceType(ResourceType.IMAGE.toString());
         };
+        ResourceType.prototype.movingimage = function () {
+            return new ResourceType(ResourceType.MOVINGIMAGE.toString());
+        };
+        ResourceType.prototype.physicalobject = function () {
+            return new ResourceType(ResourceType.PHYSICALOBJECT.toString());
+        };
+        ResourceType.prototype.sound = function () {
+            return new ResourceType(ResourceType.SOUND.toString());
+        };
         ResourceType.prototype.text = function () {
             return new ResourceType(ResourceType.TEXT.toString());
         };
+        ResourceType.CANVAS = new ResourceType("canvas");
         ResourceType.CHOICE = new ResourceType("choice");
-        ResourceType.IMAGE = new ResourceType("dctypes:image");
+        ResourceType.DOCUMENT = new ResourceType("document");
+        ResourceType.IMAGE = new ResourceType("image");
+        ResourceType.MOVINGIMAGE = new ResourceType("movingimage");
+        ResourceType.PHYSICALOBJECT = new ResourceType("physicalobject");
+        ResourceType.SOUND = new ResourceType("sound");
         ResourceType.TEXT = new ResourceType("textualbody");
         return ResourceType;
     }(Manifesto.StringValue));
@@ -3014,7 +3034,7 @@ var Manifesto;
         AnnotationBody.prototype.getType = function () {
             var type = this.getProperty('type');
             if (type) {
-                return new Manifesto.ResourceType(type.toLowerCase());
+                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
             }
             return null;
         };

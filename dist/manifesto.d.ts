@@ -115,11 +115,21 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class ResourceType extends StringValue {
+        static CANVAS: ResourceType;
         static CHOICE: ResourceType;
+        static DOCUMENT: ResourceType;
         static IMAGE: ResourceType;
+        static MOVINGIMAGE: ResourceType;
+        static PHYSICALOBJECT: ResourceType;
+        static SOUND: ResourceType;
         static TEXT: ResourceType;
+        canvas(): ResourceType;
         choice(): ResourceType;
+        document(): ResourceType;
         image(): ResourceType;
+        movingimage(): ResourceType;
+        physicalobject(): ResourceType;
+        sound(): ResourceType;
         text(): ResourceType;
     }
 }
