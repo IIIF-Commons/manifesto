@@ -77,7 +77,7 @@ var HTTPStatusCode;
 
 var Manifesto;
 (function (Manifesto) {
-    var StringValue = (function () {
+    var StringValue = /** @class */ (function () {
         function StringValue(value) {
             this.value = "";
             if (value) {
@@ -104,7 +104,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var AnnotationMotivation = (function (_super) {
+    var AnnotationMotivation = /** @class */ (function (_super) {
         __extends(AnnotationMotivation, _super);
         function AnnotationMotivation() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -183,7 +183,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var IIIFResourceType = (function (_super) {
+    var IIIFResourceType = /** @class */ (function (_super) {
         __extends(IIIFResourceType, _super);
         function IIIFResourceType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -230,7 +230,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var ManifestType = (function (_super) {
+    var ManifestType = /** @class */ (function (_super) {
         __extends(ManifestType, _super);
         function ManifestType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -265,7 +265,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var RenderingFormat = (function (_super) {
+    var RenderingFormat = /** @class */ (function (_super) {
         __extends(RenderingFormat, _super);
         function RenderingFormat() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -300,7 +300,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var MediaType = (function (_super) {
+    var MediaType = /** @class */ (function (_super) {
         __extends(MediaType, _super);
         function MediaType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -343,7 +343,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var ResourceType = (function (_super) {
+    var ResourceType = /** @class */ (function (_super) {
         __extends(ResourceType, _super);
         function ResourceType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -398,7 +398,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var ServiceProfile = (function (_super) {
+    var ServiceProfile = /** @class */ (function (_super) {
         __extends(ServiceProfile, _super);
         function ServiceProfile() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -562,7 +562,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var ViewingDirection = (function (_super) {
+    var ViewingDirection = /** @class */ (function (_super) {
         __extends(ViewingDirection, _super);
         function ViewingDirection() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -601,7 +601,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var ViewingHint = (function (_super) {
+    var ViewingHint = /** @class */ (function (_super) {
         __extends(ViewingHint, _super);
         function ViewingHint() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -638,7 +638,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var JSONLDResource = (function () {
+    var JSONLDResource = /** @class */ (function () {
         function JSONLDResource(jsonld) {
             this.__jsonld = jsonld;
             this.context = this.getProperty('context');
@@ -672,7 +672,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var ManifestResource = (function (_super) {
+    var ManifestResource = /** @class */ (function (_super) {
         __extends(ManifestResource, _super);
         function ManifestResource(jsonld, options) {
             var _this = _super.call(this, jsonld) || this;
@@ -776,7 +776,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Resource = (function (_super) {
+    var Resource = /** @class */ (function (_super) {
         __extends(Resource, _super);
         function Resource(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
@@ -841,7 +841,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Canvas = (function (_super) {
+    var Canvas = /** @class */ (function (_super) {
         __extends(Canvas, _super);
         function Canvas(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
@@ -1001,7 +1001,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var IIIFResource = (function (_super) {
+    var IIIFResource = /** @class */ (function (_super) {
         __extends(IIIFResource, _super);
         function IIIFResource(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
@@ -1117,7 +1117,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Manifest = (function (_super) {
+    var Manifest = /** @class */ (function (_super) {
         __extends(Manifest, _super);
         function Manifest(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
@@ -1333,7 +1333,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Collection = (function (_super) {
+    var Collection = /** @class */ (function (_super) {
         __extends(Collection, _super);
         function Collection(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
@@ -1430,7 +1430,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Range = (function (_super) {
+    var Range = /** @class */ (function (_super) {
         __extends(Range, _super);
         function Range(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
@@ -1519,7 +1519,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Rendering = (function (_super) {
+    var Rendering = /** @class */ (function (_super) {
         __extends(Rendering, _super);
         function Rendering(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
@@ -1544,7 +1544,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Sequence = (function (_super) {
+    var Sequence = /** @class */ (function (_super) {
         __extends(Sequence, _super);
         function Sequence(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
@@ -1765,7 +1765,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var Deserialiser = (function () {
+    var Deserialiser = /** @class */ (function () {
         function Deserialiser() {
         }
         Deserialiser.parse = function (manifest, options) {
@@ -1896,7 +1896,7 @@ var Manifesto;
         return Deserialiser;
     }());
     Manifesto.Deserialiser = Deserialiser;
-    var Serialiser = (function () {
+    var Serialiser = /** @class */ (function () {
         function Serialiser() {
         }
         Serialiser.serialise = function (manifest) {
@@ -1920,7 +1920,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Service = (function (_super) {
+    var Service = /** @class */ (function (_super) {
         __extends(Service, _super);
         function Service(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
@@ -1969,7 +1969,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var Thumb = (function () {
+    var Thumb = /** @class */ (function () {
         function Thumb(width, canvas) {
             this.data = canvas;
             this.index = canvas.index;
@@ -1992,7 +1992,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var TreeNode = (function () {
+    var TreeNode = /** @class */ (function () {
         function TreeNode(label, data) {
             this.label = label;
             this.data = data || {};
@@ -2028,7 +2028,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var TreeNodeType = (function (_super) {
+    var TreeNodeType = /** @class */ (function (_super) {
         __extends(TreeNodeType, _super);
         function TreeNodeType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -2091,7 +2091,7 @@ var https = require("https");
 var url = require("url");
 var Manifesto;
 (function (Manifesto) {
-    var Utils = (function () {
+    var Utils = /** @class */ (function () {
         function Utils() {
         }
         Utils.getMediaType = function (type) {
@@ -2763,7 +2763,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var MetadataItem = (function () {
+    var MetadataItem = /** @class */ (function () {
         function MetadataItem(defaultLocale) {
             this.defaultLocale = defaultLocale;
         }
@@ -2813,7 +2813,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var Translation = (function () {
+    var Translation = /** @class */ (function () {
         function Translation(value, locale) {
             this.value = value;
             this.locale = locale;
@@ -2835,7 +2835,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var TranslationCollection = (function (_super) {
+    var TranslationCollection = /** @class */ (function (_super) {
         __extends(TranslationCollection, _super);
         function TranslationCollection() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -2892,7 +2892,7 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var Size = (function () {
+    var Size = /** @class */ (function () {
         function Size(width, height) {
             this.width = width;
             this.height = height;
@@ -2945,7 +2945,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var Annotation = (function (_super) {
+    var Annotation = /** @class */ (function (_super) {
         __extends(Annotation, _super);
         function Annotation(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
@@ -3000,7 +3000,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var AnnotationBody = (function (_super) {
+    var AnnotationBody = /** @class */ (function (_super) {
         __extends(AnnotationBody, _super);
         function AnnotationBody(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
@@ -3036,7 +3036,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
-    var AnnotationPage = (function (_super) {
+    var AnnotationPage = /** @class */ (function (_super) {
         __extends(AnnotationPage, _super);
         function AnnotationPage(jsonld, options) {
             return _super.call(this, jsonld, options) || this;
