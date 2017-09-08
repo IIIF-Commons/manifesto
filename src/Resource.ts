@@ -1,6 +1,8 @@
 namespace Manifesto {
     export class Resource extends ManifestResource implements IResource{
 
+        public index: number;
+
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
@@ -13,6 +15,21 @@ namespace Manifesto {
             }
 
             return null;
+        }
+
+        getResources(): IAnnotation[] {
+            
+            const resources: IAnnotation[] = [];
+
+            if (!this.__jsonld.resources) return resources;
+
+            for (let i = 0; i < this.__jsonld.resources.length; i++) {
+                const a = this.__jsonld.resources[i];
+                const annotation = new Annotation(a, this.options);
+                resources.push(annotation);
+            }
+
+            return resources;
         }
 
         getType(): ResourceType | null {
