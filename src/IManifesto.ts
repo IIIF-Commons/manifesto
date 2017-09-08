@@ -1,7 +1,6 @@
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
-    ElementType: Manifesto.ElementType;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;

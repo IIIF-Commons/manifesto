@@ -43,23 +43,6 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    class ElementType extends StringValue {
-        static CANVAS: ElementType;
-        static DOCUMENT: ElementType;
-        static IMAGE: ElementType;
-        static MOVINGIMAGE: ElementType;
-        static PHYSICALOBJECT: ElementType;
-        static SOUND: ElementType;
-        canvas(): ElementType;
-        document(): ElementType;
-        image(): ElementType;
-        movingimage(): ElementType;
-        physicalobject(): ElementType;
-        sound(): ElementType;
-    }
-}
-
-declare namespace Manifesto {
     class IIIFResourceType extends StringValue {
         static ANNOTATION: IIIFResourceType;
         static CANVAS: IIIFResourceType;
@@ -115,11 +98,21 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class ResourceType extends StringValue {
+        static CANVAS: ResourceType;
         static CHOICE: ResourceType;
+        static DOCUMENT: ResourceType;
         static IMAGE: ResourceType;
+        static MOVINGIMAGE: ResourceType;
+        static PHYSICALOBJECT: ResourceType;
+        static SOUND: ResourceType;
         static TEXT: ResourceType;
+        canvas(): ResourceType;
         choice(): ResourceType;
+        document(): ResourceType;
         image(): ResourceType;
+        movingimage(): ResourceType;
+        physicalobject(): ResourceType;
+        sound(): ResourceType;
         text(): ResourceType;
     }
 }
@@ -265,17 +258,21 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    class Element extends ManifestResource implements IElement {
+    class Resource extends ManifestResource implements IResource {
         index: number;
-        type: ElementType;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getFormat(): MediaType | null;
         getResources(): IAnnotation[];
-        getType(): ElementType;
+        getType(): ResourceType | null;
+        getWidth(): number;
+        getHeight(): number;
+        getMaxWidth(): number;
+        getMaxHeight(): number | null;
     }
 }
 
 declare namespace Manifesto {
-    class Canvas extends Element implements ICanvas {
+    class Canvas extends Resource implements ICanvas {
         ranges: IRange[];
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
@@ -654,7 +651,7 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    interface ICanvas extends IElement {
+    interface ICanvas extends IResource {
         ranges: IRange[];
         getCanonicalImageUri(width?: number): string;
         getContent(): IAnnotation[];
@@ -676,14 +673,6 @@ declare namespace Manifesto {
         getTotalCollections(): number;
         getTotalManifests(): number;
         members: IIIIFResource[];
-    }
-}
-
-declare namespace Manifesto {
-    interface IElement extends IManifestResource {
-        index: number;
-        getResources(): IAnnotation[];
-        getType(): ElementType;
     }
 }
 
@@ -767,7 +756,6 @@ declare namespace Manifesto {
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
-    ElementType: Manifesto.ElementType;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
@@ -842,8 +830,10 @@ declare namespace Manifesto {
         getFormat(): MediaType | null;
         getHeight(): number;
         getMaxHeight(): number | null;
+        getResources(): IAnnotation[];
         getType(): ResourceType | null;
         getWidth(): number;
+        index: number;
     }
 }
 
@@ -894,17 +884,5 @@ declare namespace Manifesto {
         FORBIDDEN: number;
         INTERNAL_SERVER_ERROR: number;
         RESTRICTED: number;
-    }
-}
-
-declare namespace Manifesto {
-    class Resource extends ManifestResource implements IResource {
-        constructor(jsonld?: any, options?: IManifestoOptions);
-        getFormat(): MediaType | null;
-        getType(): ResourceType | null;
-        getWidth(): number;
-        getHeight(): number;
-        getMaxWidth(): number;
-        getMaxHeight(): number | null;
     }
 }

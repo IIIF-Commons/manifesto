@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export class Canvas extends Element implements ICanvas{
+    export class Canvas extends Resource implements ICanvas{
 
         public ranges: IRange[];
 

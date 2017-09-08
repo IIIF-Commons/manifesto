@@ -3,7 +3,9 @@ namespace Manifesto {
         getFormat(): MediaType | null;
         getHeight(): number;
         getMaxHeight(): number | null;
+        getResources(): IAnnotation[];
         getType(): ResourceType | null;
         getWidth(): number;
+        index: number;
     }
 }

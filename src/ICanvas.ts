@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export interface ICanvas extends IElement {
+    export interface ICanvas extends IResource {
         ranges: IRange[];
 
         //getThumbUri(width: number): string;
