@@ -1,4 +1,4 @@
-// manifesto v2.1.7 https://github.com/viewdir/manifesto
+// manifesto v2.1.8 https://github.com/viewdir/manifesto
 /// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
 
 declare namespace Manifesto {
