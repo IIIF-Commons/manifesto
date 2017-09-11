@@ -1,75 +1,77 @@
 {
-   "id": "http://tomcrane.github.io/scratch/manifests/3/av-basic.json",
-   "type":"Manifest",
-   "label":"A choice of video, followed by some audio, 2 canvases. Second canvas has no w,h; only duration",
-   "sequences":[
-      {
-         "type":"Sequence",
-         "canvases":[
-            {
-                "id":"http://tomcrane.github.io/scratch/manifests/3/canvas/1",
-                "type":"Canvas",
-                "label":"Associate multiple Video representations as Choice",
-                "height":1000,
-                "width":1000,
-                "duration":100,
-                "content":[
-                    {
-                        "id":"http://tomcrane.github.io/scratch/annos/3/page/1",
-                        "type":"AnnotationPage",
-                        "items":[
-                            {
-                        "id":"http://tomcrane.github.io/scratch/annos/3/anno/1",
-                            "type":"Annotation",
-                            "motivation":"painting",
-                            "body":{
-                                "type":"Choice",
-                                "choiceHint":"client",
-                                "items":[
-                                    {
-                                        "id":"http://example.org/foo.mp4",
-                                        "type":"Video",
-                                        "format":"video/mp4; codec..xxxxx"
-                                    },
-                                    {
-                                        "id":"http://example.org/foo.webm",
-                                        "type":"Video",
-                                        "format":"video/webm"
-                                    }
-                                ]
-                            },
-                            "target":"http://tomcrane.github.io/scratch/manifests/3/canvas/1"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-               "id":"http://tomcrane.github.io/scratch/manifests/3/canvas/2",
-               "type":"Canvas",
-               "label":"Track 2",
-               "description":"",
-               "duration":45,
-               "content":[
-                  {
-                     "id":"...",
-                     "type":"AnnotationPage",
-                     "items":[
+    "id": "http://tomcrane.github.io/scratch/manifests/3/av-basic.json",
+    "type": "Manifest",
+    "label": "A choice of video, followed by some audio, 2 canvases. Second canvas has no w,h; only duration",
+    "sequences": [
+        {
+            "type": "Sequence",
+            "canvases": [
+                {
+                    "id": "http://tomcrane.github.io/scratch/manifests/3/canvas/1",
+                    "type": "Canvas",
+                    "label": "Associate multiple Video representations as Choice",
+                    "height": 1000,
+                    "width": 1000,
+                    "duration": 100,
+                    "content": [
                         {
-                           "id":"...",
-                           "type":"Annotation",
-                           "motivation":"painting",
-                           "body":{
-                              "id":"http://example.org/iiif/foo2.mp3",
-                              "type":"Audio"
-                           },
-                           "target":"http://tomcrane.github.io/scratch/manifests/3/canvas/2"
+                            "id": "http://tomcrane.github.io/scratch/annos/3/page/1",
+                            "type": "AnnotationPage",
+                            "items": [
+                                {
+                                    "id": "http://tomcrane.github.io/scratch/annos/3/anno/1",
+                                    "type": "Annotation",
+                                    "motivation": "painting",
+                                    "body": [
+                                        {
+                                            "type": "Choice",
+                                            "choiceHint": "client",
+                                            "items": [
+                                                {
+                                                    "id": "http://example.org/foo.mp4",
+                                                    "type": "Video",
+                                                    "format": "video/mp4; codec..xxxxx"
+                                                },
+                                                {
+                                                    "id": "http://example.org/foo.webm",
+                                                    "type": "Video",
+                                                    "format": "video/webm"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "target": "http://tomcrane.github.io/scratch/manifests/3/canvas/1"
+                                }
+                            ]
                         }
-                     ]
-                  }
-               ]
-            }
-         ]
-      }
-   ]
+                    ]
+                },
+                {
+                    "id": "http://tomcrane.github.io/scratch/manifests/3/canvas/2",
+                    "type": "Canvas",
+                    "label": "Track 2",
+                    "description": "",
+                    "duration": 45,
+                    "content": [
+                        {
+                            "id": "...",
+                            "type": "AnnotationPage",
+                            "items": [
+                                {
+                                    "id": "...",
+                                    "type": "Annotation",
+                                    "motivation": "painting",
+                                    "body": {
+                                        "id": "http://example.org/iiif/foo2.mp3",
+                                        "type": "Audio"
+                                    },
+                                    "target": "http://tomcrane.github.io/scratch/manifests/3/canvas/2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -2954,8 +2954,23 @@ var Manifesto;
         Annotation.prototype.getBody = function () {
             var bodies = [];
             var body = this.getProperty('body');
+            // todo: make this a generic "property that can be an object or array enumerator" util
             if (body) {
-                if (body.items) {
+                if (Array.isArray(body)) {
+                    for (var i = 0; i < body.length; i++) {
+                        var b = body[i];
+                        if (b.items) {
+                            for (var i_1 = 0; i_1 < b.items.length; i_1++) {
+                                var c = b.items[i_1];
+                                bodies.push(new Manifesto.AnnotationBody(c, this.options));
+                            }
+                        }
+                        else {
+                            bodies.push(new Manifesto.AnnotationBody(b, this.options));
+                        }
+                    }
+                }
+                else if (body.items) {
                     for (var i = 0; i < body.items.length; i++) {
                         var b = body.items[i];
                         bodies.push(new Manifesto.AnnotationBody(b, this.options));

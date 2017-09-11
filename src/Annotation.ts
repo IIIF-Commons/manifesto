@@ -10,9 +10,22 @@ namespace Manifesto {
             const bodies: AnnotationBody[] = [];
             const body: any = this.getProperty('body');
 
+            // todo: make this a generic "property that can be an object or array enumerator" util
             if (body) {
-                if (body.items) {
-                    for (var i = 0; i < body.items.length; i++) {
+                if (Array.isArray(body)) {
+                    for (let i = 0; i < body.length; i++) {
+                        const b: any = body[i];
+                        if (b.items) {
+                            for (let i = 0; i < b.items.length; i++) { // todo: don't ignore that it's a choice. maybe add isChoice() to IAnnotationBody?
+                                const c: any = b.items[i];
+                                bodies.push(new AnnotationBody(c, this.options));
+                            }
+                        } else {
+                            bodies.push(new AnnotationBody(b, this.options));
+                        }
+                    }
+                } else if (body.items) {
+                    for (let i = 0; i < body.items.length; i++) {
                         const b: any = body.items[i];
                         bodies.push(new AnnotationBody(b, this.options));
                     }

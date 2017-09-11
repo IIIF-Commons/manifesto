@@ -6,7 +6,7 @@ require('./shared');
 
 var manifest, sequence, canvas;
 
-describe('#loadsPres3PDF', function() {
+describe('#loadsPres3AV', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.pres3avbasic).then(function(data) {
             manifest = manifesto.create(data);
@@ -37,5 +37,23 @@ describe('#hasAV', function() {
         var body = annotation.getBody()[0];
         expect(body).to.exist;
         expect(body.id).to.equal("http://example.org/foo.mp4");
+    });
+});
+
+describe('#hasSecondCanvas', function() {
+    it('has a second canvas', function () {
+        canvas = sequence.getCanvases()[1];
+        canvas.id.should.equal("http://tomcrane.github.io/scratch/manifests/3/canvas/2");
+    });
+});
+
+describe('#secondHasAV', function() {
+    it('second canvas has AV', function () {
+        var content = canvas.getContent();
+        var annotation = content[0];
+        expect(annotation).to.exist;
+        var body = annotation.getBody()[0];
+        expect(body).to.exist;
+        expect(body.id).to.equal("http://example.org/iiif/foo2.mp3");
     });
 });
