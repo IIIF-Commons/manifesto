@@ -546,7 +546,7 @@ declare namespace Manifesto {
         private static showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
         static getService(resource: any, profile: ServiceProfile | string): IService | null;
         static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource;
-        static getAllArrays(obj: any): exjs.IEnumerable<any>;
+        static getAllArrays(obj: any): any[];
         static getServices(resource: any): IService[];
     }
 }

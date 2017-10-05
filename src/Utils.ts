@@ -792,8 +792,8 @@ namespace Manifesto {
                 .first(r => r['@id'] === id);
         }
 
-        static getAllArrays(obj: any): exjs.IEnumerable<any> {
-            var all = [].en();
+        static getAllArrays(obj: any): any[] {
+            let all: any[] = <any>[].en();
 
             if (!obj) return all;
 
