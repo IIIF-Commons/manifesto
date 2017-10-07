@@ -35,6 +35,7 @@ describe('#hasCollectionCount', function() {
 describe('#hasLabel', function() {
     it('has a label', function() {
         Manifesto.TranslationCollection.getValue(collection.getLabel()).should.equal('The chemist and druggist.');
+        collection.getDefaultLabel().should.equal('The chemist and druggist.');
     })
 });
 

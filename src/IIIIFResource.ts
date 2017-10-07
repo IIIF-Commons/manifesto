@@ -2,6 +2,7 @@ namespace Manifesto {
     export interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode; // the tree generated from the first viewingHint="top" range
         getAttribution(): TranslationCollection;
+        getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
         getDescription(): TranslationCollection;
         getIIIFResourceType(): IIIFResourceType;

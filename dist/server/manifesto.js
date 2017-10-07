@@ -1059,6 +1059,9 @@ var Manifesto;
             }
             return [];
         };
+        IIIFResource.prototype.getDefaultLabel = function () {
+            return Manifesto.TranslationCollection.getValue(this.getLabel());
+        };
         IIIFResource.prototype.getDefaultTree = function () {
             this.defaultTree = new Manifesto.TreeNode('root');
             this.defaultTree.data = this;

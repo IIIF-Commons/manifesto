@@ -302,6 +302,7 @@ declare namespace Manifesto {
         getRelated(): any;
         getSeeAlso(): any;
         getLabel(): TranslationCollection;
+        getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
         isCollection(): boolean;
         isManifest(): boolean;
@@ -706,6 +707,7 @@ declare namespace Manifesto {
     interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode;
         getAttribution(): TranslationCollection;
+        getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
         getDescription(): TranslationCollection;
         getIIIFResourceType(): IIIFResourceType;

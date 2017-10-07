@@ -76,6 +76,10 @@ namespace Manifesto {
             return [];
         }
 
+        getDefaultLabel(): string | null {
+            return Manifesto.TranslationCollection.getValue(this.getLabel());
+        }
+
         getDefaultTree(): ITreeNode{
             this.defaultTree = new TreeNode('root');
             this.defaultTree.data = this;
