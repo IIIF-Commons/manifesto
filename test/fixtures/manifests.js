@@ -26,6 +26,7 @@ module.exports = {
     "pres33d": "http://localhost:3001/pres3-3d.json",
     "pres3avbasic": "http://localhost:3001/pres3-av-basic.json",
     "pres3collection": "http://localhost:3001/pres3-collection.json",
+    "pres3collection2": "http://localhost:3001/pres3-collection2.json",
     "pres3pdf": "http://localhost:3001/pres3-pdf.json",
     "qatarRightToLeft": "http://localhost:3001/qatar-right-to-left.json",
     "riksarkivetscblarge": "http://localhost:3001/riksarkivetscblarge.json",
