@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist/server/manifesto.js",
   "types": "./dist/manifesto.d.ts",
@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/viewdir/manifesto.git"
+    "url": "git+https://github.com/iiif-commons/manifesto.git"
   },
   "keywords": [
     "IIIF"
   ],
-  "author": "Edward Silverton <ed@edsilv.com> (http://edsilv.com)",
+  "author": "@edsilv",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/viewdir/manifesto/issues"
+    "url": "https://github.com/iiif-commons/manifesto/issues"
   },
-  "homepage": "https://github.com/viewdir/manifesto",
+  "homepage": "https://github.com/iiif-commons/manifesto",
   "devDependencies": {
     "browserify": "^13.0.1",
     "chai": "^2.3.0",
@@ -36,7 +36,7 @@
     "gulp-typedoc": "^2.0.2",
     "gulp-typescript": "^3.1.5",
     "gulp-uglify": "^2.1.2",
-    "gulp-utils": "viewdir/gulp-utils#v1.0.0",
+    "gulp-utils": "iiif-commons/gulp-utils#v1.0.0",
     "http": "0.0.0",
     "merge2": "^0.3.5",
     "mocha": "^2.2.4",
