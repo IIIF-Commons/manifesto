@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/edsilv/http-status-codes/v0.0.4/dist/http-status-codes.d.ts",
+    "raw": "github:edsilv/http-status-codes/dist/http-status-codes.d.ts#v0.0.4",
+    "typings": "https://raw.githubusercontent.com/edsilv/http-status-codes/v0.0.4/dist/http-status-codes.d.ts"
+  }
+}

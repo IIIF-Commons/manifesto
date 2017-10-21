@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/BSick7/exjs/0.5.0/dist/ex.d.ts",
+    "raw": "github:BSick7/exjs/dist/ex.d.ts#0.5.0",
+    "typings": "https://raw.githubusercontent.com/BSick7/exjs/0.5.0/dist/ex.d.ts"
+  }
+}
