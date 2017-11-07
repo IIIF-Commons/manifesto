@@ -1,6 +1,6 @@
 # manifesto
 
-[![Build Status](https://travis-ci.org/viewdir/manifesto.svg?branch=master)](https://travis-ci.org/viewdir/manifesto)
+[![Build Status](https://travis-ci.org/iiif-commons/manifesto.svg?branch=master)](https://travis-ci.org/iiif-commons/manifesto)
 
 IIIF Presentation API client and server utility library.
 
@@ -15,7 +15,7 @@ Getting Started
 
 ### Documentation
 
-https://viewdir.github.io/manifesto/
+https://iiif-commons.github.io/manifesto/
 
 
 ### Tutorial
@@ -25,7 +25,7 @@ http://blog.edsilv.com/manifesto/
 
 ### Developer Setup
 
-    git clone https://github.com/viewdir/manifesto.git
+    git clone https://github.com/iiif-commons/manifesto.git
     npm install typings -g
     npm install
     gulp
