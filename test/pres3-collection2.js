@@ -18,7 +18,7 @@ describe('#loadsPres3Collection', function() {
 describe('#hasManifests', function() {
     it('has manifests', function () {
         var manifest = collection.getManifestByIndex(0).then(function(m) {
-            expect(m).to.exist();
+            expect(m).to.exist;
         });
     });
 });
