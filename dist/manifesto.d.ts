@@ -694,6 +694,7 @@ declare namespace Manifesto {
         externalService: IService | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
         isAccessControlled(): boolean;
+        index: number;
         isResponseHandled: boolean;
         options?: IManifestoOptions;
         kioskService: IService | null;
