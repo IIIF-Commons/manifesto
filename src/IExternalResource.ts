@@ -8,8 +8,6 @@ namespace Manifesto {
         error: any;
         externalService: IService | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
-        height: number;
-        index: number;
         isAccessControlled(): boolean;
         isResponseHandled: boolean;
         options?: IManifestoOptions;
@@ -19,8 +17,5 @@ namespace Manifesto {
         restrictedService: IService | null;
         status: number;
         tokenService: IService | null;
-        width: number;
-        x: number;
-        y: number;
     }
 }
