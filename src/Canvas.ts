@@ -22,7 +22,7 @@ namespace Manifesto {
                 id = this.externalResource.data['@id'];
 
                 if (!width) {
-                    width = this.externalResource.data.width;
+                    width = (<IExternalImageResourceData>this.externalResource.data).width;
                 }
 
                 if (this.externalResource.data['@context']) {
@@ -73,7 +73,7 @@ namespace Manifesto {
             let profile: any;
 
             if (this.externalResource.data && this.externalResource.data.profile) {
-                profile = (<any[]>this.externalResource.data.profile);
+                profile = this.externalResource.data.profile;
                 
                 if (Array.isArray(profile)) {
                     profile = profile.en().where(p => p["maxWidth" || "maxwidth"]).first();

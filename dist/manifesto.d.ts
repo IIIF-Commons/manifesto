@@ -677,11 +677,18 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
+    interface IExternalImageResourceData extends IExternalResourceData {
+        width: number;
+        height: number;
+    }
+}
+
+declare namespace Manifesto {
     interface IExternalResource {
         authAPIVersion: number;
         clickThroughService: IService | null;
         authHoldingPage: any;
-        data: any;
+        data: IExternalResourceData;
         dataUri: string;
         error: any;
         externalService: IService | null;
@@ -695,6 +702,13 @@ declare namespace Manifesto {
         restrictedService: IService | null;
         status: number;
         tokenService: IService | null;
+    }
+}
+
+declare namespace Manifesto {
+    interface IExternalResourceData {
+        id: string;
+        profile: string | any[];
     }
 }
 

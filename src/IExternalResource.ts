@@ -3,7 +3,7 @@ namespace Manifesto {
         authAPIVersion: number;
         clickThroughService: IService | null;
         authHoldingPage: any;
-        data: any;
+        data: IExternalResourceData;
         dataUri: string;
         error: any;
         externalService: IService | null;
