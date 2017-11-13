@@ -693,6 +693,7 @@ declare namespace Manifesto {
         error: any;
         externalService: IService | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
+        hasServiceDescriptor(): boolean;
         height: number;
         index: number;
         isAccessControlled(): boolean;
@@ -710,9 +711,10 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IExternalResourceData {
+        hasServiceDescriptor: boolean;
         id: string;
-        profile: string | any[];
         index: number;
+        profile: string | any[];
     }
 }
 

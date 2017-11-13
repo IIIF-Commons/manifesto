@@ -8,6 +8,7 @@ namespace Manifesto {
         error: any;
         externalService: IService | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
+        hasServiceDescriptor(): boolean;
         height: number;
         index: number;
         isAccessControlled(): boolean;

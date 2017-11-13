@@ -1,7 +1,8 @@
 namespace Manifesto {
     export interface IExternalResourceData {
+        hasServiceDescriptor: boolean;
         id: string;
-        profile: string | any[];
         index: number;
+        profile: string | any[];
     }
 }
