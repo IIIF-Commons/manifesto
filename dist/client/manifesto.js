@@ -810,15 +810,23 @@ var Manifesto;
                         id = service.id;
                         quality = Manifesto.Utils.getImageQuality(service.getProfile());
                     }
-                    else {
-                        // no image services, use resource id
+                    else if (!w) {
+                        // if an original width wasn't passed i.e. not looking for a thumbnail
+                        // return the full size image.
                         return resource.id;
                     }
                 }
-                // todo: this is not compatible and should be moved to getThumbUri
+                // todo: should this be moved to getThumbUri?
                 if (!id) {
-                    return "undefined" == typeof this.__jsonld.thumbnail
-                        ? null : this.__jsonld.thumbnail;
+                    var thumbnail = this.getProperty('thumbnail');
+                    if (thumbnail) {
+                        if (typeof (thumbnail) === 'string') {
+                            return thumbnail;
+                        }
+                        else {
+                            return thumbnail['@id'];
+                        }
+                    }
                 }
             }
             size = width + ',';
