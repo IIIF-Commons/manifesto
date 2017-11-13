@@ -882,8 +882,9 @@ var Manifesto;
                         id = service.id;
                         quality = Manifesto.Utils.getImageQuality(service.getProfile());
                     }
-                    else if (!w) {
-                        // if an original width wasn't passed i.e. not looking for a thumbnail
+                    else if (w === width) {
+                        // if the originally passed width is the same as the resource width
+                        // i.e. not looking for a thumbnail
                         // return the full size image.
                         return resource.id;
                     }
