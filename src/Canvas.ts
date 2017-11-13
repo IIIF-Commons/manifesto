@@ -52,7 +52,7 @@ namespace Manifesto {
                         quality = Utils.getImageQuality(service.getProfile());
                     } else {
                         // no image services, use resource id
-                        id = resource.id;
+                        return resource.id;
                     }
                 }
                 
