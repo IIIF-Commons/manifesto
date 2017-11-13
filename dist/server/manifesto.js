@@ -882,6 +882,10 @@ var Manifesto;
                         id = service.id;
                         quality = Manifesto.Utils.getImageQuality(service.getProfile());
                     }
+                    else {
+                        // no image services, use resource id
+                        id = resource.id;
+                    }
                 }
                 // todo: this is not compatible and should be moved to getThumbUri
                 if (!id) {

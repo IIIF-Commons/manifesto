@@ -50,6 +50,9 @@ namespace Manifesto {
                         const service: IService = services[0];
                         id = service.id;
                         quality = Utils.getImageQuality(service.getProfile());
+                    } else {
+                        // no image services, use resource id
+                        id = resource.id;
                     }
                 }
                 
