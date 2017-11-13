@@ -50,10 +50,11 @@ namespace Manifesto {
                         const service: IService = services[0];
                         id = service.id;
                         quality = Utils.getImageQuality(service.getProfile());
-                    } else if (w === width) {
-                        // if the originally passed width is the same as the resource width
+                    } else if (width === resource.getWidth()) {
+                        // if the passed width is the same as the resource width
                         // i.e. not looking for a thumbnail
                         // return the full size image.
+                        // used for download options when loading static images.
                         return resource.id;
                     }
                 }
