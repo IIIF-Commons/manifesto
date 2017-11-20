@@ -29,6 +29,7 @@ module.exports = {
     "pres3collection2": "http://localhost:3001/pres3-collection2.json",
     "pres3pdf": "http://localhost:3001/pres3-pdf.json",
     "qatarRightToLeft": "http://localhost:3001/qatar-right-to-left.json",
+    "getResource": "http://localhost:3001/get-resource.json",
     "riksarkivetscblarge": "http://localhost:3001/riksarkivetscblarge.json",
     "https": "https://iiif.riksarkivet.se/arkis!C0000263/manifest",
     "scroll": "http://localhost:3001/scroll.json",
