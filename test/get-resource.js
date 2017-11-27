@@ -24,7 +24,7 @@ describe('#getsResourceID', function() {
         expect(annotation).to.exist;
         var resource = annotation.getResource();
         expect(resource).to.exist;
-        expect(resource.id).to.equal("80b02791-4bd9-4566-9a9f-4b3062ba2e0d")
+        expect(resource.id).to.equal("50b5e49b-ade7-4278-8265-4f72081f26a5")
     });
 });
 
