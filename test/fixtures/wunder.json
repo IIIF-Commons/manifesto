@@ -184,7 +184,7 @@
           ],
           "otherContent": [
             {
-              "@id": "http://wellcomelibrary.org/iiif/b18035723/contentAsText/2",
+              "@id": "https://wellcomelibrary.org/iiif/b18035723/contentAsText/2",
               "@type": "sc:AnnotationList",
               "label": "Text of this page"
             }
