@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist/server/manifesto.js",
   "types": "./dist/manifesto.d.ts",
