@@ -247,6 +247,7 @@ declare namespace Manifesto {
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;
         getServices(): IService[];
+        getThumbnail(): Thumbnail | null;
         isAnnotation(): boolean;
         isCanvas(): boolean;
         isCollection(): boolean;
@@ -386,7 +387,8 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Sequence extends ManifestResource implements ISequence {
-        private canvases;
+        private _canvases;
+        private _thumbnails;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas | null;
@@ -400,6 +402,7 @@ declare namespace Manifesto {
         getPrevPageIndex(canvasIndex: number, pagingEnabled?: boolean): number;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height?: number): Manifesto.IThumb[];
+        getThumbnails(): Manifesto.IThumbnail[];
         getStartCanvas(): string;
         getTotalCanvases(): number;
         getViewingDirection(): ViewingDirection;
@@ -818,6 +821,7 @@ declare namespace Manifesto {
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;
         getServices(): IService[];
+        getThumbnail(): Thumbnail | null;
         isAnnotation(): boolean;
         isCanvas(): boolean;
         isManifest(): boolean;
@@ -875,6 +879,7 @@ declare namespace Manifesto {
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
         getThumbs(width: number, height: number): Manifesto.IThumb[];
+        getThumbnails(): Manifesto.IThumbnail[];
         getTotalCanvases(): number;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): Manifesto.ViewingHint;
@@ -906,5 +911,16 @@ declare namespace Manifesto {
         FORBIDDEN: number;
         INTERNAL_SERVER_ERROR: number;
         RESTRICTED: number;
+    }
+}
+
+declare namespace Manifesto {
+    interface IThumbnail {
+    }
+}
+
+declare namespace Manifesto {
+    class Thumbnail extends Resource implements IThumbnail {
+        constructor(jsonld: any, options: IManifestoOptions);
     }
 }

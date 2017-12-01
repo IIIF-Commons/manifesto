@@ -57,7 +57,7 @@ namespace Manifesto {
 
             // if passing a manifesto-parsed object, use the __jsonld.rendering property,
             // otherwise look for a rendering property
-            if (this.__jsonld){
+            if (this.__jsonld) {
                 rendering = this.__jsonld.rendering;
             } else {
                 rendering = (<any>this).rendering;
@@ -67,7 +67,7 @@ namespace Manifesto {
             if (!rendering) return renderings;
 
             // coerce to array
-            if (!Array.isArray(rendering)){
+            if (!Array.isArray(rendering)) {
                 rendering = [rendering];
             }
 
@@ -85,6 +85,20 @@ namespace Manifesto {
 
         getServices(): IService[] {
             return Utils.getServices(this);
+        }
+
+        getThumbnail(): Thumbnail | null {
+            let thumbnail: any = this.getProperty('thumbnail');
+
+            if (Array.isArray(thumbnail)) {
+                thumbnail = thumbnail[0];
+            }
+
+            if (thumbnail) {
+                return new Thumbnail(thumbnail, this.options);
+            }
+
+            return null;
         }
 
         isAnnotation(): boolean {

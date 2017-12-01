@@ -1,4 +1,6 @@
 namespace Manifesto {
+    // todo: deprecate
+    // this is used by Sequence.getThumbs
     export interface IThumb {
         data: any;
         height: number;

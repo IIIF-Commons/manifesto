@@ -3,6 +3,14 @@
    "type":"Manifest",
    "label":"Animal skull annotating a 'canvas' - what is happening spatially here?",
    "description":"The canvas needs to represent a 3d space into which the object is annotated, but it probably won't have whd (a cuboid); notion of xyz origin; annotations may be external (e.g., light source). Does it still define a cuboid coordinate space to make the boundary of permitted annotation? How then is the object scaled into the annotation space?",
+   "thumbnail": [
+        {
+            "id": "http://files.universalviewer.io/manifests/nelis/animal-skull/thumb.jpg", 
+            "type": "Image",
+            "width": 90,
+            "height": 100
+        }
+    ],
    "sequences":[
       {
          "type":"Sequence",
@@ -10,11 +18,18 @@
             {
                "id":"http://tomcrane.github.io/scratch/manifests/3/canvas/3d",
                "type":"Canvas",
-               "thumbnail":"http://files.universalviewer.io/manifests/nelis/animal-skull/thumb.jpg",
                "width":10000,
                "height":10000,
                "depth":10000,
                "label":"A stage for an object",
+               "thumbnail": [
+                    {
+                        "id": "http://files.universalviewer.io/manifests/nelis/animal-skull/thumb2.jpg", 
+                        "type": "Image",
+                        "width": 90,
+                        "height": 100
+                    }
+                ],
                "content":[
                   {
                      "id":"...",

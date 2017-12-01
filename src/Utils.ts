@@ -46,12 +46,12 @@ namespace Manifesto {
         static getLocalisedValue(resource: any, locale: string): string | null {
 
             // if the resource is not an array of translations, return the string.
-            if (!Array.isArray(resource)){
+            if (!Array.isArray(resource)) {
                 return resource;
             }
 
             // test for exact match
-            for (let i = 0; i < resource.length; i++){
+            for (let i = 0; i < resource.length; i++) {
                 const value = resource[i];
                 const language = value['@language'];
 

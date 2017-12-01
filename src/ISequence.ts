@@ -13,7 +13,8 @@ namespace Manifesto {
         getRendering(format: RenderingFormat | string): IRendering | null;
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
-        getThumbs(width: number, height: number): Manifesto.IThumb[];
+        getThumbs(width: number, height: number): Manifesto.IThumb[]; // todo: deprecate
+        getThumbnails(): Manifesto.IThumbnail[];
         getTotalCanvases(): number;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): Manifesto.ViewingHint;

@@ -1,5 +1,6 @@
-
 namespace Manifesto {
+    // todo: deprecate
+    // this is used by Sequence.getThumbs
     export class Thumb implements IThumb {
         public data: any;
         public index: number;

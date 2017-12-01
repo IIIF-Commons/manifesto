@@ -4,15 +4,39 @@
     "members": [
         {
             "id": "https://edsilv.github.io/test-manifests/pres3-3d.json",
-            "type": "Manifest"
+            "type": "Manifest",
+            "thumbnail": [
+                {
+                    "id": "https://example.org/img/thumb1.jpg", 
+                    "type": "Image",
+                    "width": 90,
+                    "height": 100
+                }
+            ]
         },
         {
             "id": "https://edsilv.github.io/test-manifests/pres3-pdf.json",
-            "type": "Manifest"
+            "type": "Manifest",
+            "thumbnail": [
+                {
+                    "id": "https://example.org/img/thumb2.jpg", 
+                    "type": "Image",
+                    "width": 90,
+                    "height": 100
+                }
+            ]
         },
         {
             "id": "https://edsilv.github.io/test-manifests/pres3-video.json",
-            "type": "Manifest"
+            "type": "Manifest",
+            "thumbnail": [
+                {
+                    "id": "https://example.org/img/thumb3.jpg", 
+                    "type": "Image",
+                    "width": 90,
+                    "height": 100
+                }
+            ]
         }
     ]
 }

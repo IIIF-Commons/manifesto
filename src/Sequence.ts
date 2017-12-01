@@ -1,15 +1,16 @@
 namespace Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
-        private canvases: ICanvas[] | null = null;
+        private _canvases: ICanvas[] | null = null;
+        private _thumbnails: IThumbnail[] | null = null;
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 
         getCanvases(): ICanvas[] {
-            if (this.canvases != null) return this.canvases;
+            if (this._canvases != null) return this._canvases;
 
-            this.canvases = [];
+            this._canvases = [];
 
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
             const children = this.__jsonld.elements || this.__jsonld.canvases;
@@ -19,11 +20,11 @@ namespace Manifesto {
                     var c = children[i];
                     var canvas: ICanvas = new Canvas(c, this.options);
                     canvas.index = i;
-                    this.canvases.push(canvas);
+                    this._canvases.push(canvas);
                 }
             }
 
-            return this.canvases;
+            return this._canvases;
         }
 
         getCanvasById(id: string): ICanvas | null {
@@ -196,7 +197,7 @@ namespace Manifesto {
             if (startCanvas) {
                 // if there's a startCanvas attribute, loop through the canvases and return the matching index.
                 for (let i = 0; i < this.getTotalCanvases(); i++) {
-                    var canvas = this.getCanvasByIndex(i);
+                    const canvas = this.getCanvasByIndex(i);
 
                     if (canvas.id === startCanvas) return i;
                 }
@@ -206,30 +207,49 @@ namespace Manifesto {
             return 0;
         }
 
+        // todo: deprecate
         getThumbs(width: number, height?: number): Manifesto.IThumb[] {
+            console.warn('getThumbs will be deprecated, use getThumbnails instead');
             const thumbs: Manifesto.IThumb[] = [];
             const totalCanvases: number = this.getTotalCanvases();
 
             for (let i = 0; i < totalCanvases; i++) {
-                var canvas: ICanvas = this.getCanvasByIndex(i);
-                thumbs.push(new Manifesto.Thumb(width, canvas));
+                const canvas: ICanvas = this.getCanvasByIndex(i);
+                const thumb: Manifesto.IThumb = new Manifesto.Thumb(width, canvas);
+                thumbs.push(thumb);
             }
 
             return thumbs;
+        }
+
+        getThumbnails(): Manifesto.IThumbnail[] {
+            if (this._thumbnails != null) return this._thumbnails;            
+            this._thumbnails = [];
+
+            const canvases: Manifesto.ICanvas[] = this.getCanvases();
+
+            for (let i = 0; i < canvases.length; i++) {
+                const thumbnail: Manifesto.IThumbnail | null = canvases[i].getThumbnail();
+                if (thumbnail) {
+                    this._thumbnails.push(thumbnail);
+                }                
+            }
+
+            return this._thumbnails;
         }
 
         getStartCanvas(): string {
             return this.getProperty('startCanvas');
         }
 
-        getTotalCanvases(): number{
+        getTotalCanvases(): number {
             return this.getCanvases().length;
         }
 
         getViewingDirection(): ViewingDirection {
-            if (this.getProperty('viewingDirection')){
+            if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
-            } else if ((<IManifest>this.options.resource).getViewingDirection){
+            } else if ((<IManifest>this.options.resource).getViewingDirection) {
                 return (<IManifest>this.options.resource).getViewingDirection();
             }
 
@@ -237,7 +257,7 @@ namespace Manifesto {
         }
 
         getViewingHint(): ViewingHint {
-            if (this.getProperty('viewingHint')){
+            if (this.getProperty('viewingHint')) {
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
@@ -256,11 +276,11 @@ namespace Manifesto {
             return canvasIndex === this.getTotalCanvases() - 1;
         }
 
-        isMultiCanvas(): boolean{
+        isMultiCanvas(): boolean {
             return this.getTotalCanvases() > 1;
         }
 
-        isPagingEnabled(): boolean{
+        isPagingEnabled(): boolean {
             return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
         }
 

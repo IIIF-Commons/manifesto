@@ -740,6 +740,16 @@ var Manifesto;
         ManifestResource.prototype.getServices = function () {
             return Manifesto.Utils.getServices(this);
         };
+        ManifestResource.prototype.getThumbnail = function () {
+            var thumbnail = this.getProperty('thumbnail');
+            if (Array.isArray(thumbnail)) {
+                thumbnail = thumbnail[0];
+            }
+            if (thumbnail) {
+                return new Manifesto.Thumbnail(thumbnail, this.options);
+            }
+            return null;
+        };
         ManifestResource.prototype.isAnnotation = function () {
             return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
         };
@@ -1572,13 +1582,14 @@ var Manifesto;
         __extends(Sequence, _super);
         function Sequence(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
-            _this.canvases = null;
+            _this._canvases = null;
+            _this._thumbnails = null;
             return _this;
         }
         Sequence.prototype.getCanvases = function () {
-            if (this.canvases != null)
-                return this.canvases;
-            this.canvases = [];
+            if (this._canvases != null)
+                return this._canvases;
+            this._canvases = [];
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
             var children = this.__jsonld.elements || this.__jsonld.canvases;
             if (children) {
@@ -1586,10 +1597,10 @@ var Manifesto;
                     var c = children[i];
                     var canvas = new Manifesto.Canvas(c, this.options);
                     canvas.index = i;
-                    this.canvases.push(canvas);
+                    this._canvases.push(canvas);
                 }
             }
-            return this.canvases;
+            return this._canvases;
         };
         Sequence.prototype.getCanvasById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
@@ -1733,14 +1744,30 @@ var Manifesto;
             // default to first canvas.
             return 0;
         };
+        // todo: deprecate
         Sequence.prototype.getThumbs = function (width, height) {
+            console.warn('getThumbs will be deprecated, use getThumbnails instead');
             var thumbs = [];
             var totalCanvases = this.getTotalCanvases();
             for (var i = 0; i < totalCanvases; i++) {
                 var canvas = this.getCanvasByIndex(i);
-                thumbs.push(new Manifesto.Thumb(width, canvas));
+                var thumb = new Manifesto.Thumb(width, canvas);
+                thumbs.push(thumb);
             }
             return thumbs;
+        };
+        Sequence.prototype.getThumbnails = function () {
+            if (this._thumbnails != null)
+                return this._thumbnails;
+            this._thumbnails = [];
+            var canvases = this.getCanvases();
+            for (var i = 0; i < canvases.length; i++) {
+                var thumbnail = canvases[i].getThumbnail();
+                if (thumbnail) {
+                    this._thumbnails.push(thumbnail);
+                }
+            }
+            return this._thumbnails;
         };
         Sequence.prototype.getStartCanvas = function () {
             return this.getProperty('startCanvas');
@@ -1993,6 +2020,8 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
+    // todo: deprecate
+    // this is used by Sequence.getThumbs
     var Thumb = /** @class */ (function () {
         function Thumb(width, canvas) {
             this.data = canvas;
@@ -3109,3 +3138,26 @@ var Manifesto;
 
 
 
+
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Thumbnail = /** @class */ (function (_super) {
+        __extends(Thumbnail, _super);
+        function Thumbnail(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        return Thumbnail;
+    }(Manifesto.Resource));
+    Manifesto.Thumbnail = Thumbnail;
+})(Manifesto || (Manifesto = {}));
