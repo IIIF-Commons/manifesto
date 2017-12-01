@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export interface IThumbnail {
+    export interface IThumbnail extends IResource {
 
     }
 }

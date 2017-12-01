@@ -1,4 +1,4 @@
-// manifesto v2.1.13 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.0 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -934,7 +934,7 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    interface IThumbnail {
+    interface IThumbnail extends IResource {
     }
 }
 
