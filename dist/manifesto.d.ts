@@ -281,6 +281,7 @@ declare namespace Manifesto {
         getDuration(): number | null;
         getImages(): IAnnotation[];
         getIndex(): number;
+        getOtherContent(): Promise<AnnotationList[]>;
         getWidth(): number;
         getHeight(): number;
     }
@@ -614,6 +615,19 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
+    class AnnotationList extends JSONLDResource implements IAnnotationList {
+        options: IManifestoOptions;
+        label: string;
+        isLoaded: boolean;
+        constructor(label: any, jsonld?: any, options?: IManifestoOptions);
+        getIIIFResourceType(): IIIFResourceType;
+        getLabel(): string;
+        getResources(): Annotation[];
+        load(): Promise<AnnotationList>;
+    }
+}
+
+declare namespace Manifesto {
     class AnnotationPage extends ManifestResource implements IAnnotationPage {
         constructor(jsonld: any, options: IManifestoOptions);
         getItems(): IAnnotation[];
@@ -644,6 +658,11 @@ declare namespace Manifesto {
     interface IAnnotationBody extends IManifestResource {
         getFormat(): MediaType | null;
         getType(): ResourceType | null;
+    }
+}
+
+declare namespace Manifesto {
+    interface IAnnotationList extends IJSONLDResource {
     }
 }
 
