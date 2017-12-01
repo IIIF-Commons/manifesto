@@ -32,7 +32,7 @@ namespace Manifesto {
                         quality = 'native';
                     }
                 }
-                
+
             } else {
                 // info.json hasn't been loaded yet
                 const images: IAnnotation[] = this.getImages();
@@ -45,7 +45,7 @@ namespace Manifesto {
                     if (!width) {
                         width = resource.getWidth();
                     }
-                    
+
                     if (services.length) {
                         const service: IService = services[0];
                         id = service.id;
@@ -58,7 +58,7 @@ namespace Manifesto {
                         return resource.id;
                     }
                 }
-                
+
                 // todo: should this be moved to getThumbUri?
                 if (!id) {
 
@@ -83,13 +83,13 @@ namespace Manifesto {
         }
 
         getMaxDimensions(): Size | null {
-            
+
             let maxDimensions: Size | null = null;
             let profile: any;
 
             if (this.externalResource.data && this.externalResource.data.profile) {
                 profile = this.externalResource.data.profile;
-                
+
                 if (Array.isArray(profile)) {
                     profile = profile.en().where(p => p["maxWidth" || "maxwidth"]).first();
 
@@ -154,6 +154,28 @@ namespace Manifesto {
             return this.getProperty('index');
         }
 
+        getOtherContent(): Promise<AnnotationList[]> {
+            const otherContent = Array.isArray(this.getProperty('otherContent')) ?
+                this.getProperty('otherContent') :
+                [this.getProperty('otherContent')];
+
+            const canonicalComparison = (typeA, typeB): boolean => {
+                if (typeof typeA !== 'string' || typeof typeB !== 'string') {
+                    return false;
+                }
+                return typeA.toLowerCase() === typeA.toLowerCase();
+            };
+
+            const otherPromises: Promise<AnnotationList>[] = otherContent
+                .filter(otherContent => otherContent && canonicalComparison(otherContent['@type'], 'sc:AnnotationList'))
+                .map((annotationList, i) => (
+                    (new AnnotationList(annotationList['label'] || `Annotation list ${i}`, annotationList, this.options))
+                ))
+                .map(annotationList => annotationList.load());
+
+            return Promise.all(otherPromises);
+        }
+
         // Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         // this is used to get thumb URIs *before* the info.json has been requested
@@ -175,7 +197,7 @@ namespace Manifesto {
         //
         //            if (!_endsWith(id, '/')) {
         //                id += '/';
-        //            } 
+        //            }
         //
         //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
         //        }
