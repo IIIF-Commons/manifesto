@@ -1,3 +1,5 @@
+/// <reference types="http-status-codes" />
+
 (<any>global).manifesto = (<any>global).Manifesto = module.exports = <IManifesto>{
 
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),

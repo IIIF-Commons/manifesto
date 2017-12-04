@@ -5,7 +5,7 @@
   "main": "./dist/server/manifesto.js",
   "types": "./dist/manifesto.d.ts",
   "scripts": {
-    "postinstall": "typings install"
+
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "exjs": "BSick7/exjs#0.5.0",
-    "http-status-codes": "edsilv/http-status-codes#v0.0.5"
+    "http-status-codes": "edsilv/http-status-codes#v0.0.7"
   },
   "directories": {
     "test": "test"
