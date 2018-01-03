@@ -48,8 +48,8 @@
   },
   "dependencies": {
     "exjs": "edsilv/exjs",
-    "extensions": "edsilv/extensions",
-    "http-status-codes": "edsilv/http-status-codes",
+    "extensions": "edsilv/extensions#v0.1.11",
+    "http-status-codes": "edsilv/http-status-codes#v0.0.8",
     "lodash.assign": "^3.2.0",
     "lodash.endswith": "^3.0.2",
     "lodash.findindex": "^4.3.0",
