@@ -1,5 +1,4 @@
 // manifesto.js v2.0.7 https://github.com/viewdir/manifesto
-/// <reference path="node_modules/typescript/lib/lib.es6.d.ts" />
 declare module exjs {
 }
 declare module exjs {
