@@ -65,6 +65,11 @@ module Manifesto {
 
             size = width + ',';
 
+            // trim off trailing '/'
+            if (_endsWith(id, '/')) {
+                id = id.substr(0, id.length - 1);
+            }
+
             var uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
 
             return uri;

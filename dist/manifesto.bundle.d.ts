@@ -1,4 +1,5 @@
 // manifesto.js v2.0.7 https://github.com/viewdir/manifesto
+/// <reference path="node_modules/typescript/lib/lib.es6.d.ts" />
 declare module exjs {
 }
 declare module exjs {
@@ -296,118 +297,107 @@ declare var ex: typeof exjs.en;
 declare module exjs {
 }
 
-// extensions v0.1.11 https://github.com/edsilv/extensions
+// extensions v0.2.1 https://github.com/edsilv/extensions
 declare function escape(s: string): any;
 declare function unescape(s: string): any;
-
-interface Array<T>{
+interface Array<T> {
     clone(): Array<T>;
-    contains(val: any): boolean;
-    indexOf(searchElement: any, fromIndex?: number): number;
-    indexOfTest(test: (item: any) => boolean, fromIndex?: number): number;
+    includes(val: any): boolean;
     insert(item: any, index: number): void;
-    last(): any;
     move(fromIndex: number, toIndex: number): void;
     remove(item: any): void;
     removeAt(index: number): void;
 }
-
 interface Math {
     clamp(value: number, min: number, max: number): number;
-    constrain(value: number, low: number, high: number): number;
-    degreesToRadians(degrees: number): number;
+    degrees(radians: number): number;
     distanceBetween(x1: number, y1: number, x2: number, y2: number): number;
     lerp(start: number, stop: number, amount: number): number;
     mag(a: number, b: number, c: number): number;
     map(value: number, start1: number, stop1: number, start2: number, stop2: number): number;
     median(values: number[]): number;
+    normalise(num: number, min: number, max: number): number;
+    radians(degrees: number): number;
     randomBetween(low: number, high?: number): number;
     roundToDecimalPlace(num: number, dec: number): number;
-    radiansToDegrees(radians: number): number;
-    normalise(num: number, min: number, max: number): number;
-    sq(n: number): number;
     TAU: number;
 }
-
-interface Number {
-    isInteger(): boolean;
-}
-
 interface String {
     b64_to_utf8(str: string): string;
-    contains(str: string): boolean;
-    endsWith(text: string): boolean;
-    hashCode(): string;
+    includes(str: string): boolean;
     isAlphanumeric(): boolean;
     ltrim(): string;
     rtrim(): string;
-    startsWith(text: string): boolean;
     toCssClass(): string;
     toFileName(): string;
     trim(): string;
     utf8_to_b64(str: string): string;
 }
-
 interface StringConstructor {
     format(template: string, ...args: any[]): string;
 }
-declare module HTTPStatusCode {
-    var CONTINUE: number;
-    var SWITCHING_PROTOCOLS: number;
-    var PROCESSING: number;
-    var OK: number;
-    var CREATED: number;
-    var ACCEPTED: number;
-    var NON_AUTHORITATIVE_INFORMATION: number;
-    var NO_CONTENT: number;
-    var RESET_CONTENT: number;
-    var PARTIAL_CONTENT: number;
-    var MULTI_STATUS: number;
-    var MULTIPLE_CHOICES: number;
-    var MOVED_PERMANENTLY: number;
-    var MOVED_TEMPORARILY: number;
-    var SEE_OTHER: number;
-    var NOT_MODIFIED: number;
-    var USE_PROXY: number;
-    var TEMPORARY_REDIRECT: number;
-    var BAD_REQUEST: number;
-    var UNAUTHORIZED: number;
-    var PAYMENT_REQUIRED: number;
-    var FORBIDDEN: number;
-    var NOT_FOUND: number;
-    var METHOD_NOT_ALLOWED: number;
-    var NOT_ACCEPTABLE: number;
-    var PROXY_AUTHENTICATION_REQUIRED: number;
-    var REQUEST_TIME_OUT: number;
-    var CONFLICT: number;
-    var GONE: number;
-    var LENGTH_REQUIRED: number;
-    var PRECONDITION_FAILED: number;
-    var REQUEST_ENTITY_TOO_LARGE: number;
-    var REQUEST_URI_TOO_LARGE: number;
-    var UNSUPPORTED_MEDIA_TYPE: number;
-    var REQUESTED_RANGE_NOT_SATISFIABLE: number;
-    var EXPECTATION_FAILED: number;
-    var IM_A_TEAPOT: number;
-    var UNPROCESSABLE_ENTITY: number;
-    var LOCKED: number;
-    var FAILED_DEPENDENCY: number;
-    var UNORDERED_COLLECTION: number;
-    var UPGRADE_REQUIRED: number;
-    var PRECONDITION_REQUIRED: number;
-    var TOO_MANY_REQUESTS: number;
-    var REQUEST_HEADER_FIELDS_TOO_LARGE: number;
-    var INTERNAL_SERVER_ERROR: number;
-    var NOT_IMPLEMENTED: number;
-    var BAD_GATEWAY: number;
-    var SERVICE_UNAVAILABLE: number;
-    var GATEWAY_TIME_OUT: number;
-    var HTTP_VERSION_NOT_SUPPORTED: number;
-    var VARIANT_ALSO_NEGOTIATES: number;
-    var INSUFFICIENT_STORAGE: number;
-    var BANDWIDTH_LIMIT_EXCEEDED: number;
-    var NOT_EXTENDED: number;
-    var NETWORK_AUTHENTICATION_REQUIRED: number;
+
+
+
+
+// http-status-codes v0.0.7 https://github.com/edsilv/http-status-codes
+declare namespace HTTPStatusCode {
+    const CONTINUE: number;
+    const SWITCHING_PROTOCOLS: number;
+    const PROCESSING: number;
+    const OK: number;
+    const CREATED: number;
+    const ACCEPTED: number;
+    const NON_AUTHORITATIVE_INFORMATION: number;
+    const NO_CONTENT: number;
+    const RESET_CONTENT: number;
+    const PARTIAL_CONTENT: number;
+    const MULTI_STATUS: number;
+    const MULTIPLE_CHOICES: number;
+    const MOVED_PERMANENTLY: number;
+    const MOVED_TEMPORARILY: number;
+    const SEE_OTHER: number;
+    const NOT_MODIFIED: number;
+    const USE_PROXY: number;
+    const TEMPORARY_REDIRECT: number;
+    const BAD_REQUEST: number;
+    const UNAUTHORIZED: number;
+    const PAYMENT_REQUIRED: number;
+    const FORBIDDEN: number;
+    const NOT_FOUND: number;
+    const METHOD_NOT_ALLOWED: number;
+    const NOT_ACCEPTABLE: number;
+    const PROXY_AUTHENTICATION_REQUIRED: number;
+    const REQUEST_TIME_OUT: number;
+    const CONFLICT: number;
+    const GONE: number;
+    const LENGTH_REQUIRED: number;
+    const PRECONDITION_FAILED: number;
+    const REQUEST_ENTITY_TOO_LARGE: number;
+    const REQUEST_URI_TOO_LARGE: number;
+    const UNSUPPORTED_MEDIA_TYPE: number;
+    const REQUESTED_RANGE_NOT_SATISFIABLE: number;
+    const EXPECTATION_FAILED: number;
+    const IM_A_TEAPOT: number;
+    const UNPROCESSABLE_ENTITY: number;
+    const LOCKED: number;
+    const FAILED_DEPENDENCY: number;
+    const UNORDERED_COLLECTION: number;
+    const UPGRADE_REQUIRED: number;
+    const PRECONDITION_REQUIRED: number;
+    const TOO_MANY_REQUESTS: number;
+    const REQUEST_HEADER_FIELDS_TOO_LARGE: number;
+    const INTERNAL_SERVER_ERROR: number;
+    const NOT_IMPLEMENTED: number;
+    const BAD_GATEWAY: number;
+    const SERVICE_UNAVAILABLE: number;
+    const GATEWAY_TIME_OUT: number;
+    const HTTP_VERSION_NOT_SUPPORTED: number;
+    const VARIANT_ALSO_NEGOTIATES: number;
+    const INSUFFICIENT_STORAGE: number;
+    const BANDWIDTH_LIMIT_EXCEEDED: number;
+    const NOT_EXTENDED: number;
+    const NETWORK_AUTHENTICATION_REQUIRED: number;
 }
 
 declare module Manifesto {
