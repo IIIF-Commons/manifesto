@@ -1,4 +1,3 @@
-// http-status-codes v0.0.7 https://github.com/edsilv/http-status-codes
 declare namespace HTTPStatusCode {
     const CONTINUE: number;
     const SWITCHING_PROTOCOLS: number;
