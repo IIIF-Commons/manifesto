@@ -914,6 +914,10 @@ var Manifesto;
                 }
             }
             size = width + ',';
+            // trim off trailing '/'
+            if (id && id.endsWith('/')) {
+                id = id.substr(0, id.length - 1);
+            }
             var uri = [id, region, size, rotation, quality + '.jpg'].join('/');
             return uri;
         };

@@ -77,6 +77,11 @@ namespace Manifesto {
 
             size = width + ',';
 
+            // trim off trailing '/'
+            if (id && id.endsWith('/')) {
+                id = id.substr(0, id.length - 1);
+            }
+
             const uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
 
             return uri;
