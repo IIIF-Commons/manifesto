@@ -25,6 +25,7 @@ module.exports = {
     "plato": "http://localhost:3001/plato.json",
     "potterselectric": "http://localhost:3001/potterselectric.json",
     "pseudoalbert": "http://localhost:3001/pseudoalbert.json",
+    "pres3": "http://localhost:3001/pres3.json",
     "pres33d": "http://localhost:3001/pres3-3d.json",
     "pres3avbasic": "http://localhost:3001/pres3-av-basic.json",
     "pres3collection": "http://localhost:3001/pres3-collection.json",

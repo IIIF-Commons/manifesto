@@ -107,18 +107,24 @@ namespace Manifesto {
             return maxDimensions;
         }
 
+        getItems(): IAnnotation[] {
+            return this.getContent();
+        }
+
         // Presentation API 3.0
         getContent(): IAnnotation[] {
 
             const content: IAnnotation[] = [];
 
-            if (!this.__jsonld.content) return content;
+            const children = this.__jsonld.content || this.__jsonld.items;
+
+            if (!children) return content;
 
             // should be contained in an AnnotationPage
             let annotationPage: AnnotationPage | null = null;
 
-            if (this.__jsonld.content.length) {
-                annotationPage = new AnnotationPage(this.__jsonld.content[0], this.options);
+            if (children.length) {
+                annotationPage = new AnnotationPage(children[0], this.options);
             }
 
             if (!annotationPage) {

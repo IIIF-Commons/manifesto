@@ -1,4 +1,4 @@
-// manifesto v2.2.2 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.3 https://github.com/iiif-commons/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 
@@ -863,15 +863,19 @@ var Manifesto;
             }
             return maxDimensions;
         };
+        Canvas.prototype.getItems = function () {
+            return this.getContent();
+        };
         // Presentation API 3.0
         Canvas.prototype.getContent = function () {
             var content = [];
-            if (!this.__jsonld.content)
+            var children = this.__jsonld.content || this.__jsonld.items;
+            if (!children)
                 return content;
             // should be contained in an AnnotationPage
             var annotationPage = null;
-            if (this.__jsonld.content.length) {
-                annotationPage = new Manifesto.AnnotationPage(this.__jsonld.content[0], this.options);
+            if (children.length) {
+                annotationPage = new Manifesto.AnnotationPage(children[0], this.options);
             }
             if (!annotationPage) {
                 return content;
@@ -1243,7 +1247,7 @@ var Manifesto;
                 return this._sequences;
             this._sequences = [];
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences || this.__jsonld.items;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
                     var s = children[i];
@@ -1535,12 +1539,15 @@ var Manifesto;
             _this._thumbnails = null;
             return _this;
         }
+        Sequence.prototype.getItems = function () {
+            return this.getCanvases();
+        };
         Sequence.prototype.getCanvases = function () {
             if (this._canvases != null)
                 return this._canvases;
             this._canvases = [];
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            var children = this.__jsonld.elements || this.__jsonld.canvases;
+            var children = this.__jsonld.elements || this.__jsonld.canvases || this.__jsonld.items;
             if (children) {
                 for (var i = 0; i < children.length; i++) {
                     var c = children[i];
@@ -2868,9 +2875,24 @@ var Manifesto;
             }
             else {
                 // it's an object
-                t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
-                tc.push(t);
-                return tc;
+                if (translation['@value']) {
+                    // presentation 2
+                    t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
+                    tc.push(t);
+                }
+                else {
+                    // presentation 3
+                    Object.keys(translation).forEach(function (key) {
+                        // todo: support multiple values in array
+                        if (translation[key].length) {
+                            t = new Manifesto.Translation(translation[key][0], key);
+                            tc.push(t);
+                        }
+                        else {
+                            throw new Error('Translation must have a value');
+                        }
+                    });
+                }
             }
             return tc;
         };
@@ -2882,7 +2904,7 @@ var Manifesto;
                         return translation.value;
                     }
                 }
-                // return the first value
+                // return the first valuel
                 return translationCollection[0].value;
             }
             return null;

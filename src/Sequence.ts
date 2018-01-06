@@ -7,13 +7,17 @@ namespace Manifesto {
             super(jsonld, options);
         }
 
+        getItems(): ICanvas[] {
+            return this.getCanvases();
+        }
+
         getCanvases(): ICanvas[] {
             if (this._canvases != null) return this._canvases;
 
             this._canvases = [];
 
             // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            const children = this.__jsonld.elements || this.__jsonld.canvases;
+            const children = this.__jsonld.elements || this.__jsonld.canvases || this.__jsonld.items;
 
             if (children) {
                 for (let i = 0; i < children.length; i++) {

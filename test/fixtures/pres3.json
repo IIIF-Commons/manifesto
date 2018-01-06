@@ -1,0 +1,158 @@
+{
+    "@context": [
+        "http://www.w3.org/ns/anno.jsonld",
+        "http://iiif.io/api/presentation/3/context.json"
+    ],
+    "id": "https://example.org/iiif/book1/manifest",
+    "type": "Manifest",
+    "label": {
+        "en": [
+            "Book 1"
+        ]
+    },
+    "metadata": [
+        {
+            "label": {
+                "en": [
+                    "Author"
+                ]
+            },
+            "value": {
+                "@none": [
+                    "Anne Author"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Published"
+                ]
+            },
+            "value": {
+                "en": [
+                    "Paris, circa 1400"
+                ],
+                "fr": [
+                    "Paris, environ 1400"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Notes"
+                ]
+            },
+            "value": {
+                "en": [
+                    "Text of note 1",
+                    "Text of note 2"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Source"
+                ]
+            },
+            "value": {
+                "@none": [
+                    "<span>From: <a href=\"http://example.org/db/1.html\">Some Collection</a></span>"
+                ]
+            }
+        }
+    ],
+    "summary": {
+        "en": [
+            "Book 1, written be Anne Author, published in Paris around 1400."
+        ]
+    },
+    "thumbnail": [
+        {
+            "id": "https://example.org/images/book1-page1/full/80,100/0/default.jpg",
+            "type": "Image",
+            "service": {
+                "id": "https://example.org/images/book1-page1",
+                "type": "ImageService3",
+                "profile": "level1"
+            }
+        }
+    ],
+    "viewingDirection": "right-to-left",
+    "behavior": [
+        "paged"
+    ],
+    "navDate": "1856-01-01T00:00:00Z",
+    "rights": [
+        {
+            "id": "http://example.org/license.html",
+            "type": "Text",
+            "language": "en",
+            "format": "text/html"
+        }
+    ],
+    "attribution": {
+        "en": [
+            "Provided by Example Organization"
+        ]
+    },
+    "logo": {
+        "id": "https://example.org/logos/institution1.jpg",
+        "service": {
+            "id": "https://example.org/service/inst1",
+            "type": "ImageService3",
+            "profile": "level2"
+        }
+    },
+    "items": [
+        {
+            "id": "http://example.org/iiif/book1/sequence/normal",
+            "type": "Sequence",
+            "label": {
+                "en": [
+                    "Current Page Order"
+                ]
+            },
+            "items": [
+                {
+                    "id": "http://example.org/iiif/book1/canvas/0",
+                    "type": "Canvas",
+                    "label": {
+                        "@none": [
+                            "p. 1"
+                        ]
+                    },
+                    "height": 1000,
+                    "width": 750,
+                    "duration": 180.0,
+                    "items": [
+                        {
+                            "id": "http://example.org/iiif/book1/canvas/0/annotationpage/0",
+                            "type": "AnnotationPage",
+                            "items": [
+                                {
+                                    "id": "http://example.org/iiif/book1/canvas/0/annotation/0",
+                                    "type": "Annotation",
+                                    "motivation": "painting",
+                                    "body": {
+                                        "id": "http://example.org/iiif/book1/canvas/0/images/page1.jpg",
+                                        "type": "Image",
+                                        "format": "image/jpeg",
+                                        "label": {
+                                            "@none": [
+                                                "Page 1"
+                                            ]
+                                        }
+                                    },
+                                    "target": "http://example.org/iiif/book1/canvas/0"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

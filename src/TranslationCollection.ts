@@ -26,9 +26,24 @@ namespace Manifesto {
                 return tc;
             } else {
                 // it's an object
-                t = new Translation(translation['@value'], translation['@language'] || defaultLocale);
-                tc.push(t);
-                return tc;
+                if (translation['@value']) {
+                    // presentation 2
+                    t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
+                    tc.push(t);
+                } else {
+                    // presentation 3
+                    Object.keys(translation).forEach((key) => {
+                        
+                        // todo: support multiple values in array
+                        if (translation[key].length) {
+                            t = new Manifesto.Translation(translation[key][0], key);
+                            tc.push(t);
+                        } else {
+                            throw new Error('Translation must have a value');
+                        }
+                
+                    });
+                }
             }
 
             return tc;
@@ -45,7 +60,7 @@ namespace Manifesto {
                     }
                 }
 
-                // return the first value
+                // return the first valuel
                 return translationCollection[0].value;
             }
 

@@ -5,11 +5,12 @@ namespace Manifesto {
         //getThumbUri(width: number): string;
         //getType(): CanvasType;
         getCanonicalImageUri(width?: number): string;
-        getContent(): IAnnotation[];
+        getContent(): IAnnotation[]; // deprecate - use getItems instead
         getDuration(): number | null;
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
+        getItems(): IAnnotation[];
         getMaxDimensions(): Size | null;
         getWidth(): number;
     }

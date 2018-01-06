@@ -192,7 +192,7 @@ namespace Manifesto {
             this._sequences = [];
 
             // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            const children: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            const children: any = this.__jsonld.mediaSequences || this.__jsonld.sequences || this.__jsonld.items;
 
             if (children) {
                 for (let i = 0; i < children.length; i++) {

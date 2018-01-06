@@ -1,4 +1,4 @@
-// manifesto v2.2.2 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.3 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -277,6 +277,7 @@ declare namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
         getMaxDimensions(): Size | null;
+        getItems(): IAnnotation[];
         getContent(): IAnnotation[];
         getDuration(): number | null;
         getImages(): IAnnotation[];
@@ -391,6 +392,7 @@ declare namespace Manifesto {
         private _canvases;
         private _thumbnails;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getItems(): ICanvas[];
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas | null;
         getCanvasByIndex(canvasIndex: number): any;
@@ -681,6 +683,7 @@ declare namespace Manifesto {
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
+        getItems(): IAnnotation[];
         getMaxDimensions(): Size | null;
         getWidth(): number;
     }
@@ -884,11 +887,12 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface ISequence extends IManifestResource {
-        getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas | null;
         getCanvasByIndex(index: number): ICanvas;
+        getCanvases(): ICanvas[];
         getCanvasIndexById(id: string): number | null;
         getCanvasIndexByLabel(label: string, foliated: boolean): number;
+        getItems(): ICanvas[];
         getLastCanvasLabel(digitsOnly?: boolean): string;
         getLastPageIndex(): number;
         getNextPageIndex(index: number): number;
@@ -897,8 +901,8 @@ declare namespace Manifesto {
         getRendering(format: RenderingFormat | string): IRendering | null;
         getStartCanvas(): string;
         getStartCanvasIndex(): number;
-        getThumbs(width: number, height: number): Manifesto.IThumb[];
         getThumbnails(): Manifesto.IThumbnail[];
+        getThumbs(width: number, height: number): Manifesto.IThumb[];
         getTotalCanvases(): number;
         getViewingDirection(): Manifesto.ViewingDirection;
         getViewingHint(): Manifesto.ViewingHint;
