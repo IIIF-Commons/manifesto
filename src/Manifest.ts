@@ -84,14 +84,14 @@ namespace Manifesto {
         //private _parseRangeCanvas(json: any, range: IRange): void {
             // todo: currently this isn't needed
             //var canvas: IJSONLDResource = new JSONLDResource(json);
-            //range.members.push(<IManifestResource>canvas);
+            //range.items.push(<IManifestResource>canvas);
         //}
 
         private _parseRanges(r: any, path: string, parentRange?: IRange): void{
             let range: IRange;
             let id: string | null = null;
 
-            if (typeof(r) === 'string'){
+            if (typeof(r) === 'string') {
                 id = r;
                 r = this._getRangeById(id);
             }
@@ -108,23 +108,25 @@ namespace Manifesto {
             if (!parentRange) {
                 this._topRanges.push(range);
             } else {
-                parentRange.members.push(range);
+                parentRange.items.push(range);
             }
 
-            if (r.members) {
-                for (let i = 0; i < r.members.length; i++) {
-                    const child: any = r.members[i];
+            const items = r.items || r.members;
 
-                    // todo: use constants
-                    if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range'){
-                        this._parseRanges(child, path + '/' + i, range);
-                    } else if (child['@type'] && child['@type'].toLowerCase() === 'sc:canvas' || child['type'] && child['type'].toLowerCase() === 'canvas') {
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    const item: any = items[i];
+
+                    // todo: use an ItemType constant?
+                    if (item['@type'] && item['@type'].toLowerCase() === 'sc:range' || item['type'] && item['type'].toLowerCase() === 'range'){
+                        this._parseRanges(item, path + '/' + i, range);
+                    } else if (item['@type'] && item['@type'].toLowerCase() === 'sc:canvas' || item['type'] && item['type'].toLowerCase() === 'canvas') {
                         // store the ids on the __jsonld object to be used by Range.getCanvasIds()
                         if (!range.canvases) {
                             range.canvases = [];
                         }
 
-                        const id: string = child['@id'] || child.id;
+                        const id: string = item.id || item['@id'];
 
                         range.canvases.push(id);
                     } 
@@ -191,12 +193,13 @@ namespace Manifesto {
 
             this._sequences = [];
 
-            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            const children: any = this.__jsonld.mediaSequences || this.__jsonld.sequences || this.__jsonld.items;
+            // IxIF mediaSequences overrode sequences, so need to be checked first.
+            // deprecate this when presentation 3 ships
+            const items: any = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
 
-            if (children) {
-                for (let i = 0; i < children.length; i++) {
-                    const s: any = children[i];
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    const s: any = items[i];
                     const sequence: any = new Sequence(s, this.options);
                     this._sequences.push(sequence);
                 }

@@ -116,15 +116,15 @@ namespace Manifesto {
 
             const content: IAnnotation[] = [];
 
-            const children = this.__jsonld.content || this.__jsonld.items;
+            const items = this.__jsonld.items || this.__jsonld.content;
 
-            if (!children) return content;
+            if (!items) return content;
 
             // should be contained in an AnnotationPage
             let annotationPage: AnnotationPage | null = null;
 
-            if (children.length) {
-                annotationPage = new AnnotationPage(children[0], this.options);
+            if (items.length) {
+                annotationPage = new AnnotationPage(items[0], this.options);
             }
 
             if (!annotationPage) {

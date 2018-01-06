@@ -18,6 +18,6 @@ describe('#loadsMembersRanges', function() {
 describe('#hasMembersCount', function() {
     it('has a members count of 1', function () {
         topRange = manifest.getTopRanges()[0]; // canvases are not currently parsed
-        topRange.members.length.should.equal(1);
+        topRange.items.length.should.equal(1);
     });
 });

@@ -17,7 +17,7 @@ describe('#loadsAudio', function() {
 });
 
 describe('#hasThumbnails', function() {
-    it('has thumbnails', function () {
+    it('has thumbnails', function() {
         var thumbs = manifest.getSequenceByIndex(0).getThumbs(100, 100);
         thumbs.length.should.equal(2);
         thumbs[0].uri.should.equal('http://digital.library.villanova.edu/themes/vudiglib3/images/vudl/audio.png');

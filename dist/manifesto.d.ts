@@ -1,4 +1,4 @@
-// manifesto v2.2.3 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.4 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -342,7 +342,7 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Collection extends IIIFResource implements ICollection {
-        members: IIIIFResource[];
+        items: IIIIFResource[];
         private _collections;
         private _manifests;
         constructor(jsonld: any, options: IManifestoOptions);
@@ -352,7 +352,7 @@ declare namespace Manifesto {
         getManifestByIndex(manifestIndex: number): Promise<IManifest>;
         getTotalCollections(): number;
         getTotalManifests(): number;
-        getTotalMembers(): number;
+        getTotalItems(): number;
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
@@ -366,7 +366,7 @@ declare namespace Manifesto {
     class Range extends ManifestResource implements IRange {
         private _ranges;
         canvases: string[] | null;
-        members: IManifestResource[];
+        items: IManifestResource[];
         parentRange: Range;
         path: string;
         treeNode: ITreeNode;
@@ -427,8 +427,8 @@ declare namespace Manifesto {
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void;
         static parseManifest(json: any, options?: IManifestoOptions): IManifest;
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void;
-        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource | null;
-        static parseMembers(collection: ICollection, options?: IManifestoOptions): void;
+        static parseItem(json: any, options?: IManifestoOptions): IIIIFResource | null;
+        static parseItems(collection: ICollection, options?: IManifestoOptions): void;
     }
     class Serialiser {
         static serialise(manifest: IManifest): string;
@@ -697,7 +697,7 @@ declare namespace Manifesto {
         getManifests(): IManifest[];
         getTotalCollections(): number;
         getTotalManifests(): number;
-        members: IIIIFResource[];
+        items: IIIIFResource[];
     }
 }
 
@@ -860,7 +860,7 @@ declare namespace Manifesto {
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
-        members: IManifestResource[];
+        items: IManifestResource[];
         parentRange: IRange | undefined;
         path: string;
         treeNode: ITreeNode;

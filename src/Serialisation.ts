@@ -60,22 +60,22 @@ namespace Manifesto {
 
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
-            this.parseMembers(collection, options);
+            this.parseItems(collection, options);
 
             return collection;
         }
 
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void {
-            const children = collection.__jsonld.collections;
-            if (children) {
-                for (let i = 0; i < children.length; i++) {
-                    if (options){
+            const items = collection.__jsonld.collections || collection.__jsonld.items;
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    if (options) {
                         options.index = i;
                     }
-                    const child: ICollection = this.parseCollection(children[i], options);
-                    child.index = i;
-                    child.parentCollection = collection;
-                    collection.members.push(child);
+                    const item: ICollection = this.parseCollection(items[i], options);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
                 }
             }
         }
@@ -86,18 +86,18 @@ namespace Manifesto {
         }
 
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void {
-            const children = collection.__jsonld.manifests;
-            if (children) {
-                for (let i = 0; i < children.length; i++) {
-                    const child: IManifest = this.parseManifest(children[i], options);
-                    child.index = i;
-                    child.parentCollection = collection;
-                    collection.members.push(child);
+            const items = collection.__jsonld.manifests || collection.__jsonld.items;
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    const item: IManifest = this.parseManifest(items[i], options);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
                 }
             }
         }
 
-        static parseMember(json: any, options?: IManifestoOptions): IIIIFResource | null {
+        static parseItem(json: any, options?: IManifestoOptions): IIIIFResource | null {
             if (json['@type']) {
                 if (json['@type'].toLowerCase() === 'sc:manifest') {
                     return <IIIIFResource>this.parseManifest(json, options);
@@ -115,22 +115,22 @@ namespace Manifesto {
             return null;
         }
 
-        static parseMembers(collection: ICollection, options?: IManifestoOptions): void {
-            const children = collection.__jsonld.members;
-            if (children) {
-                for (let i = 0; i < children.length; i++) {
-                    if (options){
+        static parseItems(collection: ICollection, options?: IManifestoOptions): void {
+            const items = collection.__jsonld.members || collection.__jsonld.items;
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    if (options) {
                         options.index = i;
                     }
-                    var child: IIIIFResource | null = this.parseMember(children[i], options);
-                    if (!child) return;
-                    // only add to members if not already parsed from backwards-compatible collections/manifests arrays
-                    if (collection.members.en().where(m => m.id === (<IIIFResource>child).id).first()) {
+                    const item: IIIIFResource | null = this.parseItem(items[i], options);
+                    if (!item) return;
+                    // only add to items if not already parsed from backwards-compatible collections/manifests arrays
+                    if (collection.items.en().where(m => m.id === (<IIIFResource>item).id).first()) {
                         continue;
                     }
-                    child.index = i;
-                    child.parentCollection = collection;
-                    collection.members.push(child);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
                 }
             }
         }

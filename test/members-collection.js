@@ -17,7 +17,7 @@ describe('#loadsMembersCollection', function() {
 
 describe('#hasMembersCount', function() {
     it('has a members count of 2', function () {
-        manifest.getTotalMembers().should.equal(2);
+        manifest.getTotalItems().should.equal(2);
     });
 });
 

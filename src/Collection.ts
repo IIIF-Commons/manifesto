@@ -1,6 +1,6 @@
 namespace Manifesto {
     export class Collection extends IIIFResource implements ICollection {
-        public members: IIIIFResource[] = [];
+        public items: IIIIFResource[] = [];
         private _collections: ICollection[] | null = null;
         private _manifests: IManifest[] | null = null;
 
@@ -14,7 +14,7 @@ namespace Manifesto {
                 return this._collections;
             }
             
-            return this._collections = <ICollection[]>this.members.en().where(m => m.isCollection()).toArray();
+            return this._collections = <ICollection[]>this.items.en().where(m => m.isCollection()).toArray();
         }
 
         getManifests(): IManifest[] {
@@ -22,7 +22,7 @@ namespace Manifesto {
                 return this._manifests;
             }
             
-            return this._manifests = <IManifest[]>this.members.en().where(m => m.isManifest()).toArray();
+            return this._manifests = <IManifest[]>this.items.en().where(m => m.isManifest()).toArray();
         }
 
         getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
@@ -58,8 +58,8 @@ namespace Manifesto {
             return this.getManifests().length;
         }
 
-        getTotalMembers(): number {
-            return this.members.length;
+        getTotalItems(): number {
+            return this.items.length;
         }
 
         /**

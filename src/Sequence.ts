@@ -16,13 +16,12 @@ namespace Manifesto {
 
             this._canvases = [];
 
-            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            const children = this.__jsonld.elements || this.__jsonld.canvases || this.__jsonld.items;
+            const items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
 
-            if (children) {
-                for (let i = 0; i < children.length; i++) {
-                    var c = children[i];
-                    var canvas: ICanvas = new Canvas(c, this.options);
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    const c = items[i];
+                    const canvas: ICanvas = new Canvas(c, this.options);
                     canvas.index = i;
                     this._canvases.push(canvas);
                 }

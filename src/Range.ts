@@ -3,7 +3,7 @@ namespace Manifesto {
     export class Range extends ManifestResource implements IRange{
         private _ranges: IRange[] | null = null;
         public canvases: string[] | null = null;
-        public members: IManifestResource[] = [];
+        public items: IManifestResource[] = [];
         public parentRange: Range;
         public path: string;
         public treeNode: ITreeNode;
@@ -28,7 +28,7 @@ namespace Manifesto {
         //         return this._canvases;
         //     }
             
-        //     return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
+        //     return this._canvases = <ICanvas[]>this.items.en().where(m => m.isCanvas()).toArray();
         // }
 
         getRanges(): IRange[] {
@@ -37,7 +37,7 @@ namespace Manifesto {
                 return this._ranges;
             }
             
-            return this._ranges = <IRange[]>this.members.en().where(m => m.isRange()).toArray();
+            return this._ranges = <IRange[]>this.items.en().where(m => m.isRange()).toArray();
         }
 
         getViewingDirection(): ViewingDirection | null {

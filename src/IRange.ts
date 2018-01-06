@@ -6,7 +6,7 @@ namespace Manifesto {
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
-        members: IManifestResource[];
+        items: IManifestResource[];
         parentRange: IRange | undefined;
         path: string;
         treeNode: ITreeNode;

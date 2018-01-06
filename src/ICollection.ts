@@ -6,6 +6,6 @@ namespace Manifesto {
         getManifests(): IManifest[];
         getTotalCollections(): number;
         getTotalManifests(): number;
-        members: IIIIFResource[];
+        items: IIIIFResource[];
     }
 }
