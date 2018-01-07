@@ -10,4 +10,4 @@ install:
 - bower install
 script:
 - gulp
-- gulp test
+- gulp test 
