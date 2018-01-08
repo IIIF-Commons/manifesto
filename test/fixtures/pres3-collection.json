@@ -1,6 +1,7 @@
 {
     "id": "http://tomcrane.github.io/scratch/manifests/3/collection.json",
     "type": "Collection",
+    "viewingDirection": "right-to-left",
     "members": [
         {
             "id": "http://tomcrane.github.io/scratch/manifests/3/av-basic.json",

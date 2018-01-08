@@ -15,6 +15,13 @@ describe('#loadsPres3Collection', function() {
     });
 });
 
+describe('#hasViewingDirection', function() {
+    it('has a viewingdirection of right-to-left', function () {
+        var viewingDirection = collection.getViewingDirection();
+        expect(viewingDirection.toString()).to.equal("right-to-left");
+    });
+});
+
 describe('#hasIIIFResourceType', function() {
     it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();

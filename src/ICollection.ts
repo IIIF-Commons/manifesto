@@ -6,6 +6,7 @@ namespace Manifesto {
         getManifests(): IManifest[];
         getTotalCollections(): number;
         getTotalManifests(): number;
+        getViewingDirection(): Manifesto.ViewingDirection;
         items: IIIIFResource[];
     }
 }

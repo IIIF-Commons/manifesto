@@ -1364,6 +1364,12 @@ var Manifesto;
         Collection.prototype.getTotalItems = function () {
             return this.items.length;
         };
+        Collection.prototype.getViewingDirection = function () {
+            if (this.getProperty('viewingDirection')) {
+                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
+            }
+            return Manifesto.ViewingDirection.LEFTTORIGHT;
+        };
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */

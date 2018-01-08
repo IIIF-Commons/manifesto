@@ -62,6 +62,14 @@ namespace Manifesto {
             return this.items.length;
         }
 
+        getViewingDirection(): ViewingDirection {
+            if (this.getProperty('viewingDirection')) {
+                return new ViewingDirection(this.getProperty('viewingDirection'));
+            }
+
+            return ViewingDirection.LEFTTORIGHT;
+        }
+
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */

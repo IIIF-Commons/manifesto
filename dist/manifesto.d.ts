@@ -353,6 +353,7 @@ declare namespace Manifesto {
         getTotalCollections(): number;
         getTotalManifests(): number;
         getTotalItems(): number;
+        getViewingDirection(): ViewingDirection;
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
@@ -697,6 +698,7 @@ declare namespace Manifesto {
         getManifests(): IManifest[];
         getTotalCollections(): number;
         getTotalManifests(): number;
+        getViewingDirection(): Manifesto.ViewingDirection;
         items: IIIIFResource[];
     }
 }
