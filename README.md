@@ -1,6 +1,6 @@
 # manifesto
 
-[![Build Status](https://travis-ci.org/IIIF-Commons/manifesto.svg?branch=master)](https://travis-ci.org/iiif-commons/manifesto)
+<!-- [![Build Status](https://travis-ci.org/IIIF-Commons/manifesto.svg?branch=master)](https://travis-ci.org/iiif-commons/manifesto) -->
 
 IIIF Presentation API client and server utility library.
 
