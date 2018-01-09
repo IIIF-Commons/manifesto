@@ -30,6 +30,8 @@ module.exports = {
     "pres3avbasic": "http://localhost:3001/pres3-av-basic.json",
     "pres3collection": "http://localhost:3001/pres3-collection.json",
     "pres3collection2": "http://localhost:3001/pres3-collection2.json",
+    "pres3collection3": "http://localhost:3001/pres3-collection3.json",
+    "pres3collection4": "http://localhost:3001/pres3-collection4.json",
     "pres3pdf": "http://localhost:3001/pres3-pdf.json",
     "qatarRightToLeft": "http://localhost:3001/qatar-right-to-left.json",
     "getResource": "http://localhost:3001/get-resource.json",

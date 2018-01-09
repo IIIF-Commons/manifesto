@@ -1912,7 +1912,13 @@ var Manifesto;
             return collection;
         };
         Deserialiser.parseCollections = function (collection, options) {
-            var items = collection.__jsonld.collections || collection.__jsonld.items;
+            var items;
+            if (collection.__jsonld.collections) {
+                items = collection.__jsonld.collections;
+            }
+            else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'collection'; }).toArray();
+            }
             if (items) {
                 for (var i = 0; i < items.length; i++) {
                     if (options) {
@@ -1930,7 +1936,13 @@ var Manifesto;
             return manifest;
         };
         Deserialiser.parseManifests = function (collection, options) {
-            var items = collection.__jsonld.manifests || collection.__jsonld.items;
+            var items;
+            if (collection.__jsonld.manifests) {
+                items = collection.__jsonld.manifests;
+            }
+            else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'manifest'; }).toArray();
+            }
             if (items) {
                 for (var i = 0; i < items.length; i++) {
                     var item = this.parseManifest(items[i], options);

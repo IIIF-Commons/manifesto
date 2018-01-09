@@ -1,0 +1,56 @@
+{
+  "id": "https://edsilv.github.io/uv-app-starter/collection/index.json",
+  "type": "Collection",
+  "items": [
+    {
+      "id": "https://edsilv.github.io/uv-app-starter/collection/animal_skull/index.json",
+      "type": "Manifest",
+      "label": {
+        "@none": [
+          "Animal Skull"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/uv-app-starter/collection/animal_skull/thumb.jpg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/uv-app-starter/collection/human_skull/index.json",
+      "type": "Manifest",
+      "label": {
+        "@none": [
+          "Human Skull"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/uv-app-starter/collection/human_skull/thumb.jpg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/uv-app-starter/collection/vertebra/index.json",
+      "type": "Manifest",
+      "label": {
+        "@none": [
+          "Vertebra"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/uv-app-starter/collection/vertebra/thumb.jpg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "label": {
+    "@none": [
+      "Bones"
+    ]
+  }
+}

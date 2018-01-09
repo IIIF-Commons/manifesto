@@ -66,7 +66,15 @@ namespace Manifesto {
         }
 
         static parseCollections(collection: ICollection, options?: IManifestoOptions): void {
-            const items = collection.__jsonld.collections || collection.__jsonld.items;
+            
+            let items;
+            
+            if (collection.__jsonld.collections) {
+                items = collection.__jsonld.collections;
+            } else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(m => m.type.toLowerCase() === 'collection').toArray();
+            }
+
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     if (options) {
@@ -86,7 +94,15 @@ namespace Manifesto {
         }
 
         static parseManifests(collection: ICollection, options?: IManifestoOptions): void {
-            const items = collection.__jsonld.manifests || collection.__jsonld.items;
+
+            let items;
+            
+            if (collection.__jsonld.manifests) {
+                items = collection.__jsonld.manifests;
+            } else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(m => m.type.toLowerCase() === 'manifest').toArray();
+            }
+
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     const item: IManifest = this.parseManifest(items[i], options);
