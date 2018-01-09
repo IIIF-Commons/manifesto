@@ -1,4 +1,4 @@
-// manifesto v2.2.9 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.10 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -277,7 +277,6 @@ declare namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanonicalImageUri(w?: number): string;
         getMaxDimensions(): Size | null;
-        getItems(): IAnnotation[];
         getContent(): IAnnotation[];
         getDuration(): number | null;
         getImages(): IAnnotation[];
@@ -317,7 +316,7 @@ declare namespace Manifesto {
     class Manifest extends IIIFResource implements IManifest {
         index: number;
         private _allRanges;
-        private _sequences;
+        items: ISequence[];
         private _topRanges;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getDefaultTree(): ITreeNode;
@@ -390,10 +389,9 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Sequence extends ManifestResource implements ISequence {
-        private _canvases;
+        items: ICanvas[];
         private _thumbnails;
         constructor(jsonld?: any, options?: IManifestoOptions);
-        getItems(): ICanvas[];
         getCanvases(): ICanvas[];
         getCanvasById(id: string): ICanvas | null;
         getCanvasByIndex(canvasIndex: number): any;
@@ -684,7 +682,6 @@ declare namespace Manifesto {
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getItems(): IAnnotation[];
         getMaxDimensions(): Size | null;
         getWidth(): number;
     }
@@ -799,6 +796,7 @@ declare namespace Manifesto {
         getViewingHint(): ViewingHint;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
+        items: ISequence[];
     }
 }
 
@@ -894,7 +892,6 @@ declare namespace Manifesto {
         getCanvases(): ICanvas[];
         getCanvasIndexById(id: string): number | null;
         getCanvasIndexByLabel(label: string, foliated: boolean): number;
-        getItems(): ICanvas[];
         getLastCanvasLabel(digitsOnly?: boolean): string;
         getLastPageIndex(): number;
         getNextPageIndex(index: number): number;
@@ -914,6 +911,7 @@ declare namespace Manifesto {
         isMultiCanvas(): boolean;
         isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
+        items: ICanvas[];
     }
 }
 

@@ -5,7 +5,6 @@ namespace Manifesto {
         getCanvases(): ICanvas[];
         getCanvasIndexById(id: string): number | null;
         getCanvasIndexByLabel(label: string, foliated: boolean): number;
-        getItems(): ICanvas[];
         getLastCanvasLabel(digitsOnly?: boolean): string;
         getLastPageIndex(): number;
         getNextPageIndex(index: number): number;
@@ -25,5 +24,6 @@ namespace Manifesto {
         isMultiCanvas(): boolean;
         isPagingEnabled(): boolean;
         isTotalCanvasesEven(): boolean;
+        items: ICanvas[];
     }
 }

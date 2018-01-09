@@ -13,5 +13,6 @@ namespace Manifesto {
         getViewingHint(): ViewingHint;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
+        items: ISequence[];
     }
 }

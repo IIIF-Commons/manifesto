@@ -1,4 +1,4 @@
-// manifesto v2.2.9 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.10 https://github.com/iiif-commons/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 
@@ -863,9 +863,6 @@ var Manifesto;
             }
             return maxDimensions;
         };
-        Canvas.prototype.getItems = function () {
-            return this.getContent();
-        };
         // Presentation API 3.0
         Canvas.prototype.getContent = function () {
             var content = [];
@@ -1102,7 +1099,7 @@ var Manifesto;
             var _this = _super.call(this, jsonld, options) || this;
             _this.index = 0;
             _this._allRanges = null;
-            _this._sequences = null;
+            _this.items = [];
             _this._topRanges = [];
             if (_this.__jsonld.structures && _this.__jsonld.structures.length) {
                 var topRanges = _this._getTopRanges();
@@ -1244,9 +1241,9 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getSequences = function () {
-            if (this._sequences !== null)
-                return this._sequences;
-            this._sequences = [];
+            if (this.items.length) {
+                return this.items;
+            }
             // IxIF mediaSequences overrode sequences, so need to be checked first.
             // deprecate this when presentation 3 ships
             var items = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
@@ -1254,10 +1251,10 @@ var Manifesto;
                 for (var i = 0; i < items.length; i++) {
                     var s = items[i];
                     var sequence = new Manifesto.Sequence(s, this.options);
-                    this._sequences.push(sequence);
+                    this.items.push(sequence);
                 }
             }
-            return this._sequences;
+            return this.items;
         };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
             return this.getSequences()[sequenceIndex];
@@ -1543,27 +1540,24 @@ var Manifesto;
         __extends(Sequence, _super);
         function Sequence(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
-            _this._canvases = null;
+            _this.items = [];
             _this._thumbnails = null;
             return _this;
         }
-        Sequence.prototype.getItems = function () {
-            return this.getCanvases();
-        };
         Sequence.prototype.getCanvases = function () {
-            if (this._canvases != null)
-                return this._canvases;
-            this._canvases = [];
+            if (this.items.length) {
+                return this.items;
+            }
             var items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
             if (items) {
                 for (var i = 0; i < items.length; i++) {
                     var c = items[i];
                     var canvas = new Manifesto.Canvas(c, this.options);
                     canvas.index = i;
-                    this._canvases.push(canvas);
+                    this.items.push(canvas);
                 }
             }
-            return this._canvases;
+            return this.items;
         };
         Sequence.prototype.getCanvasById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {

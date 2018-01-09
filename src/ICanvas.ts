@@ -10,7 +10,6 @@ namespace Manifesto {
         getHeight(): number;
         getImages(): IAnnotation[];
         getIndex(): number;
-        getItems(): IAnnotation[];
         getMaxDimensions(): Size | null;
         getWidth(): number;
     }

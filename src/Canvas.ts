@@ -107,10 +107,6 @@ namespace Manifesto {
             return maxDimensions;
         }
 
-        getItems(): IAnnotation[] {
-            return this.getContent();
-        }
-
         // Presentation API 3.0
         getContent(): IAnnotation[] {
 

@@ -1,20 +1,16 @@
 namespace Manifesto {
     export class Sequence extends ManifestResource implements ISequence {
-        private _canvases: ICanvas[] | null = null;
+        public items: ICanvas[] = [];
         private _thumbnails: IThumbnail[] | null = null;
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
         }
 
-        getItems(): ICanvas[] {
-            return this.getCanvases();
-        }
-
         getCanvases(): ICanvas[] {
-            if (this._canvases != null) return this._canvases;
-
-            this._canvases = [];
+            if (this.items.length) {
+                return this.items;
+            }
 
             const items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
 
@@ -23,11 +19,11 @@ namespace Manifesto {
                     const c = items[i];
                     const canvas: ICanvas = new Canvas(c, this.options);
                     canvas.index = i;
-                    this._canvases.push(canvas);
+                    this.items.push(canvas);
                 }
             }
 
-            return this._canvases;
+            return this.items;
         }
 
         getCanvasById(id: string): ICanvas | null {

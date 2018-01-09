@@ -29,12 +29,12 @@ describe('presentation 3', function() {
     });
 
     it('has a canvas', function() {
-        canvas = sequence.getItems()[0];
+        canvas = sequence.getCanvases()[0];
         expect(canvas).to.exist;
     });
 
     it('has an annotation body', function() {
-        content = canvas.getItems();
+        content = canvas.getContent();
         annotation = content[0];
         expect(annotation).to.exist;
         body = annotation.getBody()[0];

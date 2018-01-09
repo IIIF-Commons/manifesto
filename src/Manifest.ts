@@ -2,7 +2,7 @@ namespace Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
         private _allRanges: IRange[] | null = null; 
-        private _sequences: ISequence[] | null = null;
+        public items: ISequence[] = [];
         private _topRanges: IRange[] = [];
 
         constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -188,10 +188,10 @@ namespace Manifesto {
         }
 
         getSequences(): ISequence[]{
-            if (this._sequences !== null)
-                return this._sequences;
-
-            this._sequences = [];
+            
+            if (this.items.length)  {
+                return this.items;
+            }
 
             // IxIF mediaSequences overrode sequences, so need to be checked first.
             // deprecate this when presentation 3 ships
@@ -201,11 +201,11 @@ namespace Manifesto {
                 for (let i = 0; i < items.length; i++) {
                     const s: any = items[i];
                     const sequence: any = new Sequence(s, this.options);
-                    this._sequences.push(sequence);
+                    this.items.push(sequence);
                 }
             }
 
-            return this._sequences;
+            return this.items;
         }
 
         getSequenceByIndex(sequenceIndex: number): ISequence {
