@@ -1,7 +1,9 @@
-var http = require("http");
-var https = require("https");
-var url = require("url");
+const http = require("http");
+const https = require("https");
+const url = require("url");
 
+declare var require: any;
+declare var module: any;
 declare var manifesto: IManifesto;
 
 namespace Manifesto {
@@ -39,7 +41,7 @@ namespace Manifesto {
             if (locale.indexOf('-') !== -1) {
                 return locale.substr(0, locale.indexOf('-'));
             }
-            
+
             return locale;
         }
 
@@ -95,7 +97,7 @@ namespace Manifesto {
 
         static normaliseType(type: string): string {
             type = type.toLowerCase();
-            
+
             if (type.indexOf(':') !== -1) {
                 const split: string[] = type.split(':');
                 return split[1];
@@ -208,7 +210,7 @@ namespace Manifesto {
                     method: "GET",
                     withCredentials: false
                 };
-                
+
                 if (u.protocol === 'https:'){
                     request = https.request(opts, (response: any) => {
                         var result = "";
@@ -229,7 +231,7 @@ namespace Manifesto {
                             resolve(result);
                         });
                     });
-                }              
+                }
 
                 request.on('error', (error: any) => {
                     reject(error);
@@ -273,7 +275,7 @@ namespace Manifesto {
         }
 
         static async loadExternalResourceAuth1(
-            resource: IExternalResource, 
+            resource: IExternalResource,
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<void>,
             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
@@ -281,9 +283,9 @@ namespace Manifesto {
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
-            
+
             const storedAccessToken: IAccessToken | null = await getStoredAccessToken(resource);
-            
+
             if (storedAccessToken) {
 
                 await resource.getData(storedAccessToken);
@@ -298,7 +300,7 @@ namespace Manifesto {
                 if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                     return resource;
                 }
-                
+
                 throw Utils.createAuthorizationFailedError();
 
             } else {
@@ -308,18 +310,18 @@ namespace Manifesto {
                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
                     await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
                 }
-                
+
                 if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                     return resource;
                 }
-                
+
                 throw Utils.createAuthorizationFailedError();
 
             }
         }
 
         static async doAuthChain(
-            resource: IExternalResource, 
+            resource: IExternalResource,
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
@@ -361,13 +363,13 @@ namespace Manifesto {
             if (!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                 await handleMovedTemporarily(resource);
                 return resource;
-            } 
+            }
 
             let serviceToTry: Manifesto.IService | null = null;
             let lastAttempted: Manifesto.IService | null = null;
 
             // repetition of logic is left in these steps for clarity:
-            
+
             // Looking for external pattern
             serviceToTry = externalService;
 
@@ -394,7 +396,7 @@ namespace Manifesto {
             // The difference is in the expected behaviour of
             //
             //    await userInteractedWithContentProvider(contentProviderInteraction);
-            // 
+            //
             // For clickthrough the opened window should close immediately having established
             // a session, whereas for login the user might spend some time entering credentials etc.
 
@@ -409,7 +411,7 @@ namespace Manifesto {
                     await userInteractedWithContentProvider(contentProviderInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     return resource;
-                } 
+                }
             }
 
             // Looking for login pattern
@@ -423,7 +425,7 @@ namespace Manifesto {
                     await userInteractedWithContentProvider(contentProviderInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     return resource;
-                } 
+                }
             }
 
             // nothing worked! Use the most recently tried service as the source of
@@ -443,12 +445,12 @@ namespace Manifesto {
 
             if (tokenService) {
                 // found token service: " + tokenService["@id"]);
-                let tokenMessage: any = await openTokenService(resource, tokenService); 
+                let tokenMessage: any = await openTokenService(resource, tokenService);
 
                 if (tokenMessage && tokenMessage.accessToken) {
                     await resource.getData(tokenMessage);
                     return resource;
-                }  
+                }
             }
         }
 
@@ -809,13 +811,20 @@ namespace Manifesto {
 
         static getServices(resource: any): IService[] {
             let service: any;
+            const resourceToQuery = resource.__jsonld ? resource.__jsonld : resource;
 
             // if passing a manifesto-parsed object, use the __jsonld.service property,
             // otherwise look for a service property (info.json services)
-            if (resource.__jsonld) {
-                service = resource.__jsonld.service;
-            } else {
-                service = (<any>resource).service;
+            if (resourceToQuery.service) {
+                service = resourceToQuery.service;
+            }
+
+            if (!service && resourceToQuery.body) {
+              if (Array.isArray(resourceToQuery.body)) {
+                service = resourceToQuery.body[0].service;
+              } else {
+                service = resourceToQuery.body.service;
+              }
             }
 
             const services: IService[] = [];

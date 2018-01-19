@@ -230,8 +230,9 @@ declare namespace Manifesto {
         context: string;
         id: string;
         __jsonld: any;
+        aliases: any;
         constructor(jsonld?: any);
-        getProperty(name: string): any;
+        getProperty(name: string, defaultValue?: any): any;
     }
 }
 
@@ -519,9 +520,11 @@ declare namespace Manifesto {
     }
 }
 
-declare var http: any;
-declare var https: any;
-declare var url: any;
+declare const http: any;
+declare const https: any;
+declare const url: any;
+declare var require: any;
+declare var module: any;
 declare var manifesto: IManifesto;
 declare namespace Manifesto {
     class Utils {

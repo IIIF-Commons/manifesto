@@ -77,6 +77,8 @@ namespace Manifesto {
 
             size = width + ',';
 
+            console.log('=>', id);
+
             // trim off trailing '/'
             if (id && id.endsWith('/')) {
                 id = id.substr(0, id.length - 1);
@@ -144,17 +146,21 @@ namespace Manifesto {
 
         getImages(): IAnnotation[] {
 
-            const images: IAnnotation[] = [];
+            const iterable: any[] = this.getProperty('images', []);
 
-            if (!this.__jsonld.images) return images;
+            return iterable.reduce(
+              (list, annotation) => {
+                if (annotation.type === 'AnnotationPage') {
+                  return annotation.items.reduce((list, annotation) => {
+                    list.push(new Annotation(annotation, this.options));
+                    return list;
+                  }, list);
+                }
+                list.push(new Annotation(annotation, this.options));
 
-            for (let i = 0; i < this.__jsonld.images.length; i++) {
-                const a = this.__jsonld.images[i];
-                const annotation = new Annotation(a, this.options);
-                images.push(annotation);
-            }
-
-            return images;
+                return list;
+              }, []
+            );
         }
 
         getIndex(): number {

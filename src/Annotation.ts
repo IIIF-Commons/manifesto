@@ -6,7 +6,7 @@ namespace Manifesto {
         }
 
         getBody(): IAnnotationBody[] {
-            
+
             const bodies: AnnotationBody[] = [];
             const body: any = this.getProperty('body');
 
@@ -57,7 +57,8 @@ namespace Manifesto {
         }
 
         getResource(): Resource {
-            return new Resource(this.getProperty('resource'), this.options);
+            return new Resource(
+              this.getProperty('resource') || this.getProperty('body'), this.options);
         }
     }
 }
