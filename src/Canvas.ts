@@ -9,7 +9,6 @@ namespace Manifesto {
 
         // http://iiif.io/api/image/2.1/#canonical-uri-syntax
         getCanonicalImageUri(w?: number): string {
-
             let id: string | null = null;
             const region: string = 'full';
             const rotation: number = 0;
@@ -77,16 +76,12 @@ namespace Manifesto {
 
             size = width + ',';
 
-            console.log('=>', id);
-
             // trim off trailing '/'
             if (id && id.endsWith('/')) {
                 id = id.substr(0, id.length - 1);
             }
 
-            const uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
-
-            return uri;
+            return [id, region, size, rotation, quality + '.jpg'].join('/');
         }
 
         getMaxDimensions(): Size | null {
@@ -144,6 +139,22 @@ namespace Manifesto {
             return this.getProperty('duration');
         }
 
+        getP3Images(): IAnnotation[] {
+          return this.getContent().filter((annotation: IAnnotation) => {
+            // Grab all bodies
+            const bodies: IAnnotationBody[] = annotation.getBody();
+            // No bodies, definitely not an image.
+            if (!bodies.length) {
+              return false;
+            }
+            // Reduce all the bodies into a boolean
+            return bodies.reduce((hasImage: boolean, body: IAnnotationBody) : boolean => {
+              // Check for the image type in the body
+              return hasImage || body.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.IMAGE.toString();
+            }, false);
+          });
+        }
+
         getImages(): IAnnotation[] {
 
             const iterable: any[] = this.getProperty('images', []);
@@ -165,6 +176,25 @@ namespace Manifesto {
 
         getIndex(): number {
             return this.getProperty('index');
+        }
+
+        getAnnotations(): Promise<AnnotationList[]> {
+            const annotationProperty = this.getProperty('annotations');
+            if (!annotationProperty) {
+              return Promise.resolve([]);
+            }
+
+            const annotations = Array.isArray(annotationProperty) ?
+              annotationProperty :
+              [annotationProperty];
+
+            const annotationPromises: Promise<AnnotationList>[] = annotations
+              .map((annotationList, i) => (
+                (new AnnotationList(annotationList.label || `Annotation list ${i}`, annotationList, this.options))
+              ))
+              .map(annotationList => annotationList.load());
+
+            return Promise.all(annotationPromises);
         }
 
         getOtherContent(): Promise<AnnotationList[]> {

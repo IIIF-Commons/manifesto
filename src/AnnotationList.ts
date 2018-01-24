@@ -8,6 +8,9 @@ namespace Manifesto {
             super(jsonld);
             this.label = label;
             this.options = <IManifestoOptions>options;
+            if (this.getResources().length) {
+              this.isLoaded = true;
+            }
         }
 
         getIIIFResourceType(): IIIFResourceType {
@@ -19,7 +22,7 @@ namespace Manifesto {
         }
 
         getResources(): Annotation[] {
-            const resources = this.getProperty('resources');
+            const resources = this.getProperty('resources') || this.getProperty('items') || [];
 
             return resources.map(resource => new Annotation(resource, this.options));
         }

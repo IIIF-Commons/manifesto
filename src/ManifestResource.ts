@@ -24,8 +24,8 @@ namespace Manifesto {
             if (!_metadata) return metadata;
 
             for (let i = 0; i < _metadata.length; i++) {
-                var item: any = _metadata[i];
-                var metadataItem: MetadataItem = new MetadataItem(this.options.locale);
+                const item: any = _metadata[i];
+                const metadataItem: MetadataItem = new MetadataItem(this.options.locale);
                 metadataItem.parse(item);
                 metadata.push(metadataItem);
             }

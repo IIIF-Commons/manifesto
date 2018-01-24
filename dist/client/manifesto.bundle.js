@@ -7761,6 +7761,9 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
+        IIIFResourceType.prototype.image = function () {
+            return new IIIFResourceType(IIIFResourceType.IMAGE.toString());
+        };
         IIIFResourceType.prototype.annotation = function () {
             return new IIIFResourceType(IIIFResourceType.ANNOTATION.toString());
         };
@@ -7785,6 +7788,7 @@ var Manifesto;
         IIIFResourceType.MANIFEST = new IIIFResourceType("manifest");
         IIIFResourceType.RANGE = new IIIFResourceType("range");
         IIIFResourceType.SEQUENCE = new IIIFResourceType("sequence");
+        IIIFResourceType.IMAGE = new IIIFResourceType("image");
         return IIIFResourceType;
     }(Manifesto.StringValue));
     Manifesto.IIIFResourceType = IIIFResourceType;
@@ -8094,6 +8098,10 @@ var Manifesto;
         ServiceProfile.IIIF2IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level1.json");
         ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         ServiceProfile.IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
+        // P3
+        ServiceProfile.IIIF3IMAGELEVEL0 = new ServiceProfile("level0");
+        ServiceProfile.IIIF3IMAGELEVEL1 = new ServiceProfile("level1");
+        ServiceProfile.IIIF3IMAGELEVEL2 = new ServiceProfile("level2");
         // auth api
         ServiceProfile.AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
         ServiceProfile.AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
@@ -8498,13 +8506,11 @@ var Manifesto;
                 }
             }
             size = width + ',';
-            console.log('=>', id);
             // trim off trailing '/'
             if (id && id.endsWith('/')) {
                 id = id.substr(0, id.length - 1);
             }
-            var uri = [id, region, size, rotation, quality + '.jpg'].join('/');
-            return uri;
+            return [id, region, size, rotation, quality + '.jpg'].join('/');
         };
         Canvas.prototype.getMaxDimensions = function () {
             var maxDimensions = null;
@@ -8545,6 +8551,21 @@ var Manifesto;
         Canvas.prototype.getDuration = function () {
             return this.getProperty('duration');
         };
+        Canvas.prototype.getP3Images = function () {
+            return this.getContent().filter(function (annotation) {
+                // Grab all bodies
+                var bodies = annotation.getBody();
+                // No bodies, definitely not an image.
+                if (!bodies.length) {
+                    return false;
+                }
+                // Reduce all the bodies into a boolean
+                return bodies.reduce(function (hasImage, body) {
+                    // Check for the image type in the body
+                    return hasImage || body.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.IMAGE.toString();
+                }, false);
+            });
+        };
         Canvas.prototype.getImages = function () {
             var _this = this;
             var iterable = this.getProperty('images', []);
@@ -8561,6 +8582,20 @@ var Manifesto;
         };
         Canvas.prototype.getIndex = function () {
             return this.getProperty('index');
+        };
+        Canvas.prototype.getAnnotations = function () {
+            var _this = this;
+            var annotationProperty = this.getProperty('annotations');
+            if (!annotationProperty) {
+                return Promise.resolve([]);
+            }
+            var annotations = Array.isArray(annotationProperty) ?
+                annotationProperty :
+                [annotationProperty];
+            var annotationPromises = annotations
+                .map(function (annotationList, i) { return ((new Manifesto.AnnotationList(annotationList.label || "Annotation list " + i, annotationList, _this.options))); })
+                .map(function (annotationList) { return annotationList.load(); });
+            return Promise.all(annotationPromises);
         };
         Canvas.prototype.getOtherContent = function () {
             var _this = this;
@@ -9892,7 +9927,10 @@ var Manifesto;
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString())) {
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL2.toString())) {
                 return true;
             }
             return false;
@@ -10708,6 +10746,13 @@ var Manifesto;
         Annotation.prototype.getResource = function () {
             return new Manifesto.Resource(this.getProperty('resource') || this.getProperty('body'), this.options);
         };
+        Annotation.prototype.getImageService = function () {
+            return this.getBody().reduce(function (finalImageService, body) {
+                return finalImageService || body.getServices().reduce(function (imageService, service) {
+                    return imageService || (Manifesto.Utils.isImageProfile(service.getProfile()) ? service : null);
+                }, finalImageService);
+            }, null);
+        };
         return Annotation;
     }(Manifesto.ManifestResource));
     Manifesto.Annotation = Annotation;
@@ -10767,6 +10812,9 @@ var Manifesto;
             var _this = _super.call(this, jsonld) || this;
             _this.label = label;
             _this.options = options;
+            if (_this.getResources().length) {
+                _this.isLoaded = true;
+            }
             return _this;
         }
         AnnotationList.prototype.getIIIFResourceType = function () {
@@ -10777,7 +10825,7 @@ var Manifesto;
         };
         AnnotationList.prototype.getResources = function () {
             var _this = this;
-            var resources = this.getProperty('resources');
+            var resources = this.getProperty('resources') || this.getProperty('items') || [];
             return resources.map(function (resource) { return new Manifesto.Annotation(resource, _this.options); });
         };
         AnnotationList.prototype.load = function () {

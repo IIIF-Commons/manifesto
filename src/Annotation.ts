@@ -60,5 +60,15 @@ namespace Manifesto {
             return new Resource(
               this.getProperty('resource') || this.getProperty('body'), this.options);
         }
+
+        getImageService(): IService | null {
+            return this.getBody().reduce((finalImageService: IService | null, body: AnnotationBody) => {
+                return finalImageService || body.getServices().reduce((imageService: IService | null, service : IService) => {
+                    return imageService || (
+                        Manifesto.Utils.isImageProfile(service.getProfile()) ? service : null
+                    );
+                }, finalImageService);
+            }, null);
+        }
     }
 }

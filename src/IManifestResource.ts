@@ -4,6 +4,7 @@ namespace Manifesto {
         options: IManifestoOptions;
         getLabel(): TranslationCollection;
         getMetadata(): MetadataItem[];
+        getIIIFResourceType(): IIIFResourceType;
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;

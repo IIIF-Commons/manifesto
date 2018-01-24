@@ -49,6 +49,8 @@ declare namespace Manifesto {
         static MANIFEST: IIIFResourceType;
         static RANGE: IIIFResourceType;
         static SEQUENCE: IIIFResourceType;
+        static IMAGE: IIIFResourceType;
+        image(): IIIFResourceType;
         annotation(): IIIFResourceType;
         canvas(): IIIFResourceType;
         collection(): IIIFResourceType;
@@ -142,6 +144,9 @@ declare namespace Manifesto {
         static IIIF2IMAGELEVEL1PROFILE: ServiceProfile;
         static IIIF2IMAGELEVEL2: ServiceProfile;
         static IIIF2IMAGELEVEL2PROFILE: ServiceProfile;
+        static IIIF3IMAGELEVEL0: ServiceProfile;
+        static IIIF3IMAGELEVEL1: ServiceProfile;
+        static IIIF3IMAGELEVEL2: ServiceProfile;
         static AUTHCLICKTHROUGH: ServiceProfile;
         static AUTHLOGIN: ServiceProfile;
         static AUTHLOGOUT: ServiceProfile;
@@ -280,8 +285,10 @@ declare namespace Manifesto {
         getMaxDimensions(): Size | null;
         getContent(): IAnnotation[];
         getDuration(): number | null;
+        getP3Images(): IAnnotation[];
         getImages(): IAnnotation[];
         getIndex(): number;
+        getAnnotations(): Promise<AnnotationList[]>;
         getOtherContent(): Promise<AnnotationList[]>;
         getWidth(): number;
         getHeight(): number;
@@ -607,6 +614,7 @@ declare namespace Manifesto {
         getOn(): string;
         getTarget(): string | null;
         getResource(): Resource;
+        getImageService(): IService | null;
     }
 }
 
@@ -842,6 +850,7 @@ declare namespace Manifesto {
         options: IManifestoOptions;
         getLabel(): TranslationCollection;
         getMetadata(): MetadataItem[];
+        getIIIFResourceType(): IIIFResourceType;
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;

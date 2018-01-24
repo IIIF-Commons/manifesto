@@ -1,6 +1,6 @@
 namespace Manifesto {
     export class ServiceProfile extends StringValue {
-        
+
         // image api
         public static STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");
         public static STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
@@ -26,6 +26,12 @@ namespace Manifesto {
         public static IIIF2IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level1.json");
         public static IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
         public static IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
+
+        // P3
+        public static IIIF3IMAGELEVEL0 = new ServiceProfile("level0");
+        public static IIIF3IMAGELEVEL1 = new ServiceProfile("level1");
+        public static IIIF3IMAGELEVEL2 = new ServiceProfile("level2");
+
 
         // auth api
         public static AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
