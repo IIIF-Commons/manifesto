@@ -8118,6 +8118,7 @@ var Manifesto;
         // search api
         ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         ServiceProfile.SEARCH = new ServiceProfile("http://iiif.io/api/search/0/search");
+        ServiceProfile.SEARCH_P3 = new ServiceProfile("search");
         // extensions
         ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
         ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
@@ -8990,6 +8991,15 @@ var Manifesto;
             }
             return Manifesto.ViewingHint.EMPTY;
         };
+        Manifest.prototype.getSearchService = function () {
+            var services = this.getServices();
+            return services.reduce(function (found, candidateService) {
+                return found || ((candidateService.getProfile().toString() === Manifesto.ServiceProfile.SEARCH.toString() ||
+                    candidateService.getProfile().toString() === Manifesto.ServiceProfile.SEARCH_P3.toString())
+                    ? candidateService
+                    : null);
+            }, null);
+        };
         return Manifest;
     }(Manifesto.IIIFResource));
     Manifesto.Manifest = Manifest;
@@ -9818,6 +9828,9 @@ var Manifesto;
     var Utils = /** @class */ (function () {
         function Utils() {
         }
+        Utils.createAnnotation = function (jsonLd, options) {
+            return new Manifesto.Annotation(jsonLd, options);
+        };
         Utils.getMediaType = function (type) {
             type = type.toLowerCase();
             type = type.split(';')[0];

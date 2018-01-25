@@ -50,6 +50,7 @@ namespace Manifesto {
         // search api
         public static AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
         public static SEARCH = new ServiceProfile("http://iiif.io/api/search/0/search");
+        public static SEARCH_P3 = new ServiceProfile("search");
 
         // extensions
         public static TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");

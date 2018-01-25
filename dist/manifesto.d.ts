@@ -160,6 +160,7 @@ declare namespace Manifesto {
         static AUTH1TOKEN: ServiceProfile;
         static AUTOCOMPLETE: ServiceProfile;
         static SEARCH: ServiceProfile;
+        static SEARCH_P3: ServiceProfile;
         static TRACKINGEXTENSIONS: ServiceProfile;
         static UIEXTENSIONS: ServiceProfile;
         static PRINTEXTENSIONS: ServiceProfile;
@@ -344,6 +345,7 @@ declare namespace Manifesto {
         isPagingEnabled(): boolean;
         getViewingDirection(): ViewingDirection;
         getViewingHint(): ViewingHint;
+        getSearchService(): IService | null;
     }
 }
 
@@ -535,6 +537,7 @@ declare var module: any;
 declare var manifesto: IManifesto;
 declare namespace Manifesto {
     class Utils {
+        static createAnnotation(jsonLd: any, options: any): Annotation;
         static getMediaType(type: string): string;
         static getImageQuality(profile: Manifesto.ServiceProfile): string;
         static getInexactLocale(locale: string): string;

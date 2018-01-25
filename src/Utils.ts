@@ -9,6 +9,10 @@ declare var manifesto: IManifesto;
 namespace Manifesto {
     export class Utils {
 
+        static createAnnotation(jsonLd, options): Annotation {
+            return new Annotation(jsonLd, options);
+        }
+
         static getMediaType(type: string): string {
             type = type.toLowerCase();
             type = type.split(';')[0];

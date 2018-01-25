@@ -255,5 +255,20 @@ namespace Manifesto {
 
             return ViewingHint.EMPTY;
         }
+
+        public getSearchService(): IService | null {
+            const services = this.getServices();
+
+            return services.reduce((found: IService | null, candidateService: IService) => {
+                return found || (
+                    (
+                        candidateService.getProfile().toString() === ServiceProfile.SEARCH.toString() ||
+                        candidateService.getProfile().toString() === ServiceProfile.SEARCH_P3.toString()
+                    )
+                    ? candidateService
+                    : null
+                )
+            }, null);
+        }
     }
 }
