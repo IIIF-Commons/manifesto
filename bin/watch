@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+watchman-make -p './src/*.ts' --make="./node_modules/.bin/gulp && echo " -t .
