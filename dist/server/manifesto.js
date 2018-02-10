@@ -2383,9 +2383,15 @@ var Manifesto;
                         });
                         break;
                     case 'dat:':
-                        request(uri, function (error, response, body) {
+                        var oReq = new XMLHttpRequest();
+                        oReq.addEventListener("load", function (body) {
                             resolve(body);
                         });
+                        oReq.open("GET", uri);
+                        oReq.send();
+                        // request(uri, (error, response, body) => {
+                        //     resolve(body);
+                        // });
                         break;
                 }
                 request.on('error', function (error) {

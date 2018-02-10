@@ -234,9 +234,15 @@ namespace Manifesto {
                         });
                     break;
                     case 'dat:':
-                        request(uri, (error, response, body) => {
+                        const oReq = new XMLHttpRequest();
+                        oReq.addEventListener("load", (body) => {
                             resolve(body);
                         });
+                        oReq.open("GET", uri);
+                        oReq.send();
+                        // request(uri, (error, response, body) => {
+                        //     resolve(body);
+                        // });
                     break;
                 }            
 
