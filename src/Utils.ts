@@ -221,6 +221,12 @@ namespace Manifesto {
                                 resolve(result);
                             });
                         });
+
+                        req.on('error', (error: any) => {
+                            reject(error);
+                        });
+        
+                        req.end();
                     break;
                     case 'http:':
                         req = http.request(opts, (response: any) => {
@@ -232,25 +238,24 @@ namespace Manifesto {
                                 resolve(result);
                             });
                         });
+
+                        req.on('error', (error: any) => {
+                            reject(error);
+                        });
+        
+                        req.end();
                     break;
                     case 'dat:':
-                        const oReq = new XMLHttpRequest();
-                        oReq.addEventListener("load", (body) => {
-                            resolve(body);
-                        });
-                        oReq.open("GET", uri);
-                        oReq.send();
-                        // request(uri, (error, response, body) => {
-                        //     resolve(body);
-                        // });
+                        const xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4) {
+                                resolve(xhr.response);
+                            }
+                        }
+                        xhr.open("GET", uri, true);
+                        xhr.send();
                     break;
-                }            
-
-                request.on('error', (error: any) => {
-                    reject(error);
-                });
-
-                request.end();
+                }
             });
         }
 

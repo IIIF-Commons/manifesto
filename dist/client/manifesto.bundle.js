@@ -2371,6 +2371,10 @@ var Manifesto;
                                 resolve(result);
                             });
                         });
+                        req.on('error', function (error) {
+                            reject(error);
+                        });
+                        req.end();
                         break;
                     case 'http:':
                         req = http.request(opts, function (response) {
@@ -2382,23 +2386,22 @@ var Manifesto;
                                 resolve(result);
                             });
                         });
+                        req.on('error', function (error) {
+                            reject(error);
+                        });
+                        req.end();
                         break;
                     case 'dat:':
-                        var oReq = new XMLHttpRequest();
-                        oReq.addEventListener("load", function (body) {
-                            resolve(body);
-                        });
-                        oReq.open("GET", uri);
-                        oReq.send();
-                        // request(uri, (error, response, body) => {
-                        //     resolve(body);
-                        // });
+                        var xhr_1 = new XMLHttpRequest();
+                        xhr_1.onreadystatechange = function () {
+                            if (xhr_1.readyState === 4) {
+                                resolve(xhr_1.response);
+                            }
+                        };
+                        xhr_1.open("GET", uri, true);
+                        xhr_1.send();
                         break;
                 }
-                request.on('error', function (error) {
-                    reject(error);
-                });
-                request.end();
             });
         };
         Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
