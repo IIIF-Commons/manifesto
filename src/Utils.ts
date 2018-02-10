@@ -1,6 +1,7 @@
-var http = require("http");
-var https = require("https");
-var url = require("url");
+const http = require('http');
+const https = require('https');
+const request = require('request');
+const url = require('url');
 
 declare var manifesto: IManifesto;
 
@@ -199,7 +200,7 @@ namespace Manifesto {
             return new Promise<any>((resolve, reject) => {
                 const u: any = url.parse(uri);
 
-                var request: any;
+                var req: any;
 
                 var opts: any = {
                     host: u.hostname,
@@ -211,7 +212,7 @@ namespace Manifesto {
 
                 switch (u.protocol) {
                     case 'https:':
-                        request = https.request(opts, (response: any) => {
+                        req = https.request(opts, (response: any) => {
                             var result = "";
                             response.on('data', (chunk: any) => {
                                 result += chunk;
@@ -222,7 +223,7 @@ namespace Manifesto {
                         });
                     break;
                     case 'http:':
-                        request = http.request(opts, (response: any) => {
+                        req = http.request(opts, (response: any) => {
                             var result = "";
                             response.on('data', (chunk: any) => {
                                 result += chunk;
@@ -233,24 +234,11 @@ namespace Manifesto {
                         });
                     break;
                     case 'dat:':
-                        opts.host = 'dat://' + opts.host;
-                        request = http.request(opts, (response: any) => {
-                            var result = "";
-                            response.on('data', (chunk: any) => {
-                                result += chunk;
-                            });
-                            response.on('end', () => {
-                                resolve(result);
-                            });
+                        request(uri, (error, response, body) => {
+                            resolve(body);
                         });
                     break;
-                }
-                
-                if (u.protocol === 'https:'){
-                    
-                } else {
-                    
-                }              
+                }            
 
                 request.on('error', (error: any) => {
                     reject(error);

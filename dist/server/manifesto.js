@@ -2185,9 +2185,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var http = require("http");
-var https = require("https");
-var url = require("url");
+var http = require('http');
+var https = require('https');
+var request = require('request');
+var url = require('url');
 var Manifesto;
 (function (Manifesto) {
     var Utils = /** @class */ (function () {
@@ -2350,7 +2351,7 @@ var Manifesto;
         Utils.loadResource = function (uri) {
             return new Promise(function (resolve, reject) {
                 var u = url.parse(uri);
-                var request;
+                var req;
                 var opts = {
                     host: u.hostname,
                     port: u.port,
@@ -2360,7 +2361,7 @@ var Manifesto;
                 };
                 switch (u.protocol) {
                     case 'https:':
-                        request = https.request(opts, function (response) {
+                        req = https.request(opts, function (response) {
                             var result = "";
                             response.on('data', function (chunk) {
                                 result += chunk;
@@ -2371,7 +2372,7 @@ var Manifesto;
                         });
                         break;
                     case 'http:':
-                        request = http.request(opts, function (response) {
+                        req = http.request(opts, function (response) {
                             var result = "";
                             response.on('data', function (chunk) {
                                 result += chunk;
@@ -2382,21 +2383,10 @@ var Manifesto;
                         });
                         break;
                     case 'dat:':
-                        opts.host = 'dat://' + opts.host;
-                        request = http.request(opts, function (response) {
-                            var result = "";
-                            response.on('data', function (chunk) {
-                                result += chunk;
-                            });
-                            response.on('end', function () {
-                                resolve(result);
-                            });
+                        request(uri, function (error, response, body) {
+                            resolve(body);
                         });
                         break;
-                }
-                if (u.protocol === 'https:') {
-                }
-                else {
                 }
                 request.on('error', function (error) {
                     reject(error);
