@@ -2359,27 +2359,45 @@ var Manifesto;
                     method: "GET",
                     withCredentials: false
                 };
+                switch (u.protocol) {
+                    case 'https:':
+                        request = https.request(opts, function (response) {
+                            var result = "";
+                            response.on('data', function (chunk) {
+                                result += chunk;
+                            });
+                            response.on('end', function () {
+                                resolve(result);
+                            });
+                        });
+                        break;
+                    case 'http:':
+                        request = http.request(opts, function (response) {
+                            var result = "";
+                            response.on('data', function (chunk) {
+                                result += chunk;
+                            });
+                            response.on('end', function () {
+                                resolve(result);
+                            });
+                        });
+                        break;
+                    case 'dat:':
+                        opts.host = 'dat://' + opts.host;
+                        request = http.request(opts, function (response) {
+                            var result = "";
+                            response.on('data', function (chunk) {
+                                result += chunk;
+                            });
+                            response.on('end', function () {
+                                resolve(result);
+                            });
+                        });
+                        break;
+                }
                 if (u.protocol === 'https:') {
-                    request = https.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
-                    });
                 }
                 else {
-                    request = http.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
-                    });
                 }
                 request.on('error', function (error) {
                     reject(error);

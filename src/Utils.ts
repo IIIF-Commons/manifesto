@@ -208,27 +208,48 @@ namespace Manifesto {
                     method: "GET",
                     withCredentials: false
                 };
+
+                switch (u.protocol) {
+                    case 'https:':
+                        request = https.request(opts, (response: any) => {
+                            var result = "";
+                            response.on('data', (chunk: any) => {
+                                result += chunk;
+                            });
+                            response.on('end', () => {
+                                resolve(result);
+                            });
+                        });
+                    break;
+                    case 'http:':
+                        request = http.request(opts, (response: any) => {
+                            var result = "";
+                            response.on('data', (chunk: any) => {
+                                result += chunk;
+                            });
+                            response.on('end', () => {
+                                resolve(result);
+                            });
+                        });
+                    break;
+                    case 'dat:':
+                        opts.host = 'dat://' + opts.host;
+                        request = http.request(opts, (response: any) => {
+                            var result = "";
+                            response.on('data', (chunk: any) => {
+                                result += chunk;
+                            });
+                            response.on('end', () => {
+                                resolve(result);
+                            });
+                        });
+                    break;
+                }
                 
                 if (u.protocol === 'https:'){
-                    request = https.request(opts, (response: any) => {
-                        var result = "";
-                        response.on('data', (chunk: any) => {
-                            result += chunk;
-                        });
-                        response.on('end', () => {
-                            resolve(result);
-                        });
-                    });
+                    
                 } else {
-                    request = http.request(opts, (response: any) => {
-                        var result = "";
-                        response.on('data', (chunk: any) => {
-                            result += chunk;
-                        });
-                        response.on('end', () => {
-                            resolve(result);
-                        });
-                    });
+                    
                 }              
 
                 request.on('error', (error: any) => {
