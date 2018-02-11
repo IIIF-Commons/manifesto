@@ -2187,7 +2187,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var http = require('http');
 var https = require('https');
-var request = require('request');
 var url = require('url');
 var Manifesto;
 (function (Manifesto) {

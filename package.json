@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "2.2.10",
+  "version": "2.2.11",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist/server/manifesto.js",
   "types": "./dist/manifesto.d.ts",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/iiif-commons/manifesto",
   "devDependencies": {
+    "@types/node": "^8.0.53",
     "browserify": "^13.0.1",
     "chai": "^2.3.0",
     "del": "^1.1.1",

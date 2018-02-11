@@ -1,6 +1,5 @@
 const http = require('http');
 const https = require('https');
-const request = require('request');
 const url = require('url');
 
 declare var manifesto: IManifesto;

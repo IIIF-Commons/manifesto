@@ -50,7 +50,6 @@
         "src/Manifesto.ts"
     ],
     "include": [
-        "src/**/*",
-        "typings/**/*"
+        "src/**/*"
     ]
 }

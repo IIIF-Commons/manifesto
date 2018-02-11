@@ -521,7 +521,6 @@ declare namespace Manifesto {
 
 declare const http: any;
 declare const https: any;
-declare const request: any;
 declare const url: any;
 declare var manifesto: IManifesto;
 declare namespace Manifesto {
