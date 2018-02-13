@@ -2375,7 +2375,17 @@ var Manifesto;
                         });
                         req.end();
                         break;
-                    case 'http:':
+                    case 'dat:':
+                        var xhr_1 = new XMLHttpRequest();
+                        xhr_1.onreadystatechange = function () {
+                            if (xhr_1.readyState === 4) {
+                                resolve(xhr_1.response);
+                            }
+                        };
+                        xhr_1.open("GET", uri, true);
+                        xhr_1.send();
+                        break;
+                    default:
                         req = http.request(opts, function (response) {
                             var result = "";
                             response.on('data', function (chunk) {
@@ -2389,16 +2399,6 @@ var Manifesto;
                             reject(error);
                         });
                         req.end();
-                        break;
-                    case 'dat:':
-                        var xhr_1 = new XMLHttpRequest();
-                        xhr_1.onreadystatechange = function () {
-                            if (xhr_1.readyState === 4) {
-                                resolve(xhr_1.response);
-                            }
-                        };
-                        xhr_1.open("GET", uri, true);
-                        xhr_1.send();
                         break;
                 }
             });

@@ -227,7 +227,17 @@ namespace Manifesto {
         
                         req.end();
                     break;
-                    case 'http:':
+                    case 'dat:':
+                        const xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4) {
+                                resolve(xhr.response);
+                            }
+                        }
+                        xhr.open("GET", uri, true);
+                        xhr.send();
+                    break;
+                    default: 
                         req = http.request(opts, (response: any) => {
                             var result = "";
                             response.on('data', (chunk: any) => {
@@ -243,16 +253,6 @@ namespace Manifesto {
                         });
         
                         req.end();
-                    break;
-                    case 'dat:':
-                        const xhr = new XMLHttpRequest();
-                        xhr.onreadystatechange = function() {
-                            if (xhr.readyState === 4) {
-                                resolve(xhr.response);
-                            }
-                        }
-                        xhr.open("GET", uri, true);
-                        xhr.send();
                     break;
                 }
             });
