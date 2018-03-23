@@ -195,7 +195,8 @@ namespace Manifesto {
 
             // IxIF mediaSequences overrode sequences, so need to be checked first.
             // deprecate this when presentation 3 ships
-            const items: any = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            let items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+
 
             if (items) {
                 for (let i = 0; i < items.length; i++) {
@@ -203,6 +204,9 @@ namespace Manifesto {
                     const sequence: any = new Sequence(s, this.options);
                     this.items.push(sequence);
                 }
+            } else if (this.__jsonld.items) {
+                const sequence: any = new Sequence(this.__jsonld.items, this.options);
+                this.items.push(sequence);
             }
 
             return this.items;

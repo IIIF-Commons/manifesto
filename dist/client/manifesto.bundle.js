@@ -1318,13 +1318,17 @@ var Manifesto;
             }
             // IxIF mediaSequences overrode sequences, so need to be checked first.
             // deprecate this when presentation 3 ships
-            var items = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            var items = this.__jsonld.mediaSequences || this.__jsonld.sequences;
             if (items) {
                 for (var i = 0; i < items.length; i++) {
                     var s = items[i];
                     var sequence = new Manifesto.Sequence(s, this.options);
                     this.items.push(sequence);
                 }
+            }
+            else if (this.__jsonld.items) {
+                var sequence = new Manifesto.Sequence(this.__jsonld.items, this.options);
+                this.items.push(sequence);
             }
             return this.items;
         };
@@ -1620,10 +1624,18 @@ var Manifesto;
             if (this.items.length) {
                 return this.items;
             }
-            var items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
+            var items = this.__jsonld.canvases || this.__jsonld.elements;
             if (items) {
                 for (var i = 0; i < items.length; i++) {
                     var c = items[i];
+                    var canvas = new Manifesto.Canvas(c, this.options);
+                    canvas.index = i;
+                    this.items.push(canvas);
+                }
+            }
+            else if (this.__jsonld) {
+                for (var i = 0; i < this.__jsonld.length; i++) {
+                    var c = this.__jsonld[i];
                     var canvas = new Manifesto.Canvas(c, this.options);
                     canvas.index = i;
                     this.items.push(canvas);
