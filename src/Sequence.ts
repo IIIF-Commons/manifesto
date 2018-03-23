@@ -12,11 +12,18 @@ namespace Manifesto {
                 return this.items;
             }
 
-            const items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
+            let items = this.__jsonld.canvases || this.__jsonld.elements;
 
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     const c = items[i];
+                    const canvas: ICanvas = new Canvas(c, this.options);
+                    canvas.index = i;
+                    this.items.push(canvas);
+                }
+            } else if (this.__jsonld) {
+                for (let i = 0; i < this.__jsonld.length; i++) {
+                    const c = this.__jsonld[i];
                     const canvas: ICanvas = new Canvas(c, this.options);
                     canvas.index = i;
                     this.items.push(canvas);
