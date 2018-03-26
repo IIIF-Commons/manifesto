@@ -373,6 +373,7 @@ declare namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
         getRanges(): IRange[];
+        getBehavior(): Behavior | null;
         getViewingDirection(): ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
         getTree(treeRoot: ITreeNode): ITreeNode;
@@ -636,6 +637,13 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
+    class Behavior extends StringValue {
+        static NONAV: Behavior;
+        nonav(): Behavior;
+    }
+}
+
+declare namespace Manifesto {
     interface IAccessToken {
         accessToken: string;
         error: string;
@@ -855,6 +863,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IRange extends IManifestResource {
         canvases: string[] | null;
+        getBehavior(): Behavior | null;
         getCanvasIds(): string[];
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;

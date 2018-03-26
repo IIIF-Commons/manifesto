@@ -40,6 +40,14 @@ namespace Manifesto {
             return this._ranges = <IRange[]>this.items.en().where(m => m.isRange()).toArray();
         }
 
+        getBehavior(): Behavior | null {
+            if (this.getProperty('behavior')) {
+                return new Behavior(this.getProperty('behavior'));
+            }
+
+            return null;
+        }
+
         getViewingDirection(): ViewingDirection | null {
             if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
@@ -89,9 +97,15 @@ namespace Manifesto {
 
                 for (let i = 0; i < ranges.length; i++) {
                     const childRange = ranges[i];
-                    const childNode: ITreeNode = new TreeNode();
-                    node.addNode(childNode);
-                    this._parseTreeNode(childNode, childRange);
+                    const behavior: Behavior | null = childRange.getBehavior();
+
+                    if (behavior && behavior.toString() === Behavior.NONAV.toString()) {
+                        continue;
+                    } else {
+                        const childNode: ITreeNode = new TreeNode();
+                        node.addNode(childNode);
+                        this._parseTreeNode(childNode, childRange);
+                    }                    
                 }
             }
         }
