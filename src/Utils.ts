@@ -266,7 +266,7 @@ namespace Manifesto {
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]> {
+            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<IExternalResource[]> {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
 
@@ -299,7 +299,7 @@ namespace Manifesto {
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
+            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<IExternalResource> {
             
             const storedAccessToken: IAccessToken | null = await getStoredAccessToken(resource);
             
@@ -344,7 +344,7 @@ namespace Manifesto {
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
-            showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
+            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
 
             // This function enters the flowchart at the < External? > junction
             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
@@ -448,7 +448,7 @@ namespace Manifesto {
             // nothing worked! Use the most recently tried service as the source of
             // messages to show to the user.
             if (lastAttempted) {
-                showOutOfOptionsMessages(lastAttempted);
+                showOutOfOptionsMessages(resource, lastAttempted);
             }
         }
 

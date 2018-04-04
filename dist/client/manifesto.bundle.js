@@ -2588,7 +2588,7 @@ var Manifesto;
                             // nothing worked! Use the most recently tried service as the source of
                             // messages to show to the user.
                             if (lastAttempted) {
-                                showOutOfOptionsMessages(lastAttempted);
+                                showOutOfOptionsMessages(resource, lastAttempted);
                             }
                             return [2 /*return*/];
                     }
