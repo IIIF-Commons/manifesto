@@ -1,4 +1,4 @@
-// manifesto v2.2.16 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.17 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {

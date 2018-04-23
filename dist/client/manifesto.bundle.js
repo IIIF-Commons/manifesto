@@ -3066,6 +3066,7 @@ var Manifesto;
 /// <reference types="http-status-codes" />
 global.manifesto = global.Manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
+    Behavior: new Manifesto.Behavior(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),
     MediaType: new Manifesto.MediaType(),
