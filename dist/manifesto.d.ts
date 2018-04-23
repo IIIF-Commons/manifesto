@@ -1,4 +1,4 @@
-// manifesto v2.2.18 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.19 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -38,6 +38,15 @@ declare namespace Manifesto {
         replying(): AnnotationMotivation;
         tagging(): AnnotationMotivation;
         transcribing(): AnnotationMotivation;
+    }
+}
+
+declare namespace Manifesto {
+    class Behavior extends StringValue {
+        static AUTOADVANCE: Behavior;
+        static NONAV: Behavior;
+        autoadvance(): Behavior;
+        nonav(): Behavior;
     }
 }
 
@@ -634,15 +643,6 @@ declare namespace Manifesto {
     class AnnotationPage extends ManifestResource implements IAnnotationPage {
         constructor(jsonld: any, options: IManifestoOptions);
         getItems(): IAnnotation[];
-    }
-}
-
-declare namespace Manifesto {
-    class Behavior extends StringValue {
-        static AUTOADVANCE: Behavior;
-        static NONAV: Behavior;
-        autoadvance(): Behavior;
-        nonav(): Behavior;
     }
 }
 

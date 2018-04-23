@@ -17,6 +17,7 @@
         "src/Definitions.ts",
         "src/StringValue.ts",
         "src/AnnotationMotivation.ts",
+        "src/Behavior.ts",
         "src/IIIFResourceType.ts",
         "src/ManifestType.ts",
         "src/RenderingFormat.ts",
