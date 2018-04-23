@@ -1,4 +1,4 @@
-// manifesto v2.2.17 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.18 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -795,6 +795,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IManifest extends Manifesto.IIIIFResource {
         getAllRanges(): IRange[];
+        getBehavior(): Behavior | null;
         getManifestType(): ManifestType;
         getRangeById(id: string): Manifesto.IRange | null;
         getRangeByPath(path: string): IRange | null;
