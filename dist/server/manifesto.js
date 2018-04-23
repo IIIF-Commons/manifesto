@@ -1181,6 +1181,12 @@ var Manifesto;
             }
             return _this;
         }
+        Manifest.prototype.getBehavior = function () {
+            if (this.getProperty('behavior')) {
+                return new Manifesto.Behavior(this.getProperty('behavior'));
+            }
+            return null;
+        };
         Manifest.prototype.getDefaultTree = function () {
             _super.prototype.getDefaultTree.call(this);
             this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
@@ -3294,9 +3300,13 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
+        Behavior.prototype.autoadvance = function () {
+            return new Behavior(Behavior.AUTOADVANCE.toString());
+        };
         Behavior.prototype.nonav = function () {
             return new Behavior(Behavior.NONAV.toString());
         };
+        Behavior.AUTOADVANCE = new Behavior("auto-advance");
         Behavior.NONAV = new Behavior("no-nav");
         return Behavior;
     }(Manifesto.StringValue));

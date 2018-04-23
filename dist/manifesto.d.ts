@@ -319,6 +319,7 @@ declare namespace Manifesto {
         items: ISequence[];
         private _topRanges;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getBehavior(): Behavior | null;
         getDefaultTree(): ITreeNode;
         private _getTopRanges();
         getTopRanges(): IRange[];
@@ -638,7 +639,9 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class Behavior extends StringValue {
+        static AUTOADVANCE: Behavior;
         static NONAV: Behavior;
+        autoadvance(): Behavior;
         nonav(): Behavior;
     }
 }

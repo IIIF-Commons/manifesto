@@ -18,6 +18,14 @@ namespace Manifesto {
             }
         }
 
+        getBehavior(): Behavior | null {
+            if (this.getProperty('behavior')) {
+                return new Behavior(this.getProperty('behavior'));
+            }
+
+            return null;
+        }
+
         public getDefaultTree(): ITreeNode {
             
             super.getDefaultTree();
