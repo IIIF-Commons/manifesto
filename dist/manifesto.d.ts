@@ -1,4 +1,4 @@
-// manifesto v2.2.19 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.20 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -814,6 +814,7 @@ declare namespace Manifesto {
 
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
+    Behavior: Manifesto.Behavior;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadManifest: (uri: string) => Promise<string>;
