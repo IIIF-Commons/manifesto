@@ -6,6 +6,7 @@ module.exports = {
     "biocrats": "http://localhost:3001/biocrats.json",
     "canvasMetadata": "http://localhost:3001/canvas-metadata.json",
     "cardiganshire": "http://localhost:3001/cardiganshire.json",
+    "cats": "http://localhost:3001/cats.json",
     "chemistdruggist": "http://localhost:3001/chemistdruggist.json",
     "collectionwiththumbnail": "http://localhost:3001/collection-with-thumbnail.json",
     "correspondance": "http://localhost:3001/correspondance.json",

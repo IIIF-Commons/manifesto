@@ -68,7 +68,11 @@ namespace Manifesto {
                         if (typeof(thumbnail) === 'string') {
                             return thumbnail;
                         } else {
-                            return thumbnail['@id'];
+                            if (thumbnail['@id']) {
+                                return thumbnail['@id'];
+                            } else if (thumbnail.length) { 
+                                return thumbnail[0].id;
+                            }
                         }
                     }
 
