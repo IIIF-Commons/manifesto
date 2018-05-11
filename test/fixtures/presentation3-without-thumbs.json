@@ -1,0 +1,849 @@
+{
+    "@context": [
+        "http://www.w3.org/ns/anno.jsonld",
+        "http://iiif.io/api/presentation/3/context.json"
+    ],
+    "id": "https://scrc.lib.ncsu.edu/sal_staging/catalog/nubian-message-2003-04-01/manifest?v3=true",
+    "type": "Manifest",
+    "label": {
+        "en": [
+            "Nubian Message, April 1, 2003"
+        ]
+    },
+    "logo": [
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/assets/ncsu-libraries-white-logo-placement-002a6fe7050e9980aaf700a188c26ded.jpg",
+            "type": "Image"
+        }
+    ],
+    "homepage": {
+        "id": "https://scrc.lib.ncsu.edu/sal_staging/catalog/nubian-message-2003-04-01",
+        "type": "Text",
+        "label": {
+            "en": [
+                "Homepage"
+            ]
+        },
+        "format": "text/html"
+    },
+    "requiredStatement": {
+        "label": {
+            "en": [
+                "Attribution"
+            ]
+        },
+        "value": {
+            "en": [
+                "The Nubian Message (LH1 .H6 N83), Special Collections Research Center at NCSU Libraries"
+            ]
+        }
+    },
+    "metadata": [
+        {
+            "label": {
+                "en": [
+                    "title"
+                ]
+            },
+            "value": {
+                "en": [
+                    "Nubian Message, April 1, 2003"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Creator"
+                ]
+            },
+            "value": {
+                "en": [
+                    "\u003cspan\u003e\u003ca href=\"https://scrc.lib.ncsu.edu/sal_staging/catalog?f%5Bnames_facet%5D%5B%5D=Nubian+Message+%28Raleigh%2C+N.C.%29\"\u003eNubian Message (Raleigh, N.C.)\u003c/a\u003e (Publisher)\u003c/span\u003e"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Created Date"
+                ]
+            },
+            "value": {
+                "en": [
+                    "2003-04-01"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Rights and Use"
+                ]
+            },
+            "value": {
+                "en": [
+                    "\u003ca href=\"https://d.lib.ncsu.edu/collections/about#rights_and_use\"\u003ehttps://d.lib.ncsu.edu/collections/about#rights_and_use\u003c/a\u003e"
+                ]
+            }
+        }
+    ],
+    "thumbnail": [
+        {
+            "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01/full/150,/0/default.jpg",
+            "type": "Image",
+            "service": {
+                "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01",
+                "@type": "ImageService2",
+                "profile": "http://iiif.io/api/image/2/level2.json"
+            }
+        }
+    ],
+    "items": [
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0001",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "1"
+                ]
+            },
+            "height": 7130,
+            "width": 4712,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0001/nubian-message-2003-04-01_0001.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0001/nubian-message-2003-04-01_0001.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0001/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0001",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0001/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1770,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0001",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0001/nubian-message-2003-04-01_0001-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0001/nubian-message-2003-04-01_0001-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0001/nubian-message-2003-04-01_0001-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0002",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "2"
+                ]
+            },
+            "height": 7095,
+            "width": 4715,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0002/nubian-message-2003-04-01_0002.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0002/nubian-message-2003-04-01_0002.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0002/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0002",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0002/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1761,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0002",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0002/nubian-message-2003-04-01_0002-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0002/nubian-message-2003-04-01_0002-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0002/nubian-message-2003-04-01_0002-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0003",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "3"
+                ]
+            },
+            "height": 7133,
+            "width": 4736,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0003/nubian-message-2003-04-01_0003.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0003/nubian-message-2003-04-01_0003.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0003/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0003",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0003/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1762,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0003",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0003/nubian-message-2003-04-01_0003-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0003/nubian-message-2003-04-01_0003-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0003/nubian-message-2003-04-01_0003-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0004",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "4"
+                ]
+            },
+            "height": 7133,
+            "width": 4716,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0004/nubian-message-2003-04-01_0004.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0004/nubian-message-2003-04-01_0004.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0004/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0004",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0004/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1770,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0004",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0004/nubian-message-2003-04-01_0004-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0004/nubian-message-2003-04-01_0004-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0004/nubian-message-2003-04-01_0004-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0005",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "5"
+                ]
+            },
+            "height": 7140,
+            "width": 4730,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0005/nubian-message-2003-04-01_0005.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0005/nubian-message-2003-04-01_0005.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0005/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0005",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0005/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1766,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0005",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0005/nubian-message-2003-04-01_0005-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0005/nubian-message-2003-04-01_0005-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0005/nubian-message-2003-04-01_0005-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0006",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "6"
+                ]
+            },
+            "height": 7134,
+            "width": 4744,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0006/nubian-message-2003-04-01_0006.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0006/nubian-message-2003-04-01_0006.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0006/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0006",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0006/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1759,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0006",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0006/nubian-message-2003-04-01_0006-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0006/nubian-message-2003-04-01_0006-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0006/nubian-message-2003-04-01_0006-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0007",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "7"
+                ]
+            },
+            "height": 7099,
+            "width": 4730,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0007/nubian-message-2003-04-01_0007.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0007/nubian-message-2003-04-01_0007.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0007/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0007",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0007/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 1756,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0007",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0007/nubian-message-2003-04-01_0007-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0007/nubian-message-2003-04-01_0007-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0007/nubian-message-2003-04-01_0007-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0008",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "8"
+                ]
+            },
+            "height": 4712,
+            "width": 7133,
+            "seeAlso": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0008/nubian-message-2003-04-01_0008.hocr",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "hOCR"
+                        ]
+                    },
+                    "profile": "https://github.com/kba/hocr-spec/blob/master/hocr-spec.md",
+                    "format": "text/vnd.hocr+html"
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0008/nubian-message-2003-04-01_0008.txt",
+                    "type": "Dataset",
+                    "label": {
+                        "en": [
+                            "plain text OCR"
+                        ]
+                    },
+                    "format": "text/plain"
+                }
+            ],
+            "items": [
+                {
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0008/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://scrc.lib.ncsu.edu/sal_staging/canvas/nubian-message-2003-04-01_0008",
+                            "body": {
+                                "id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0008/full/1170,/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "width": 1170,
+                                "height": 773,
+                                "service": [
+                                    {
+                                        "@id": "https://iiif.lib.ncsu.edu/iiif/nubian-message-2003-04-01_0008",
+                                        "@type": "ImageService2",
+                                        "profile": "http://iiif.io/api/image/2/level2.json"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0008/nubian-message-2003-04-01_0008-annotation-list-word.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (word level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0008/nubian-message-2003-04-01_0008-annotation-list-line.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (line level)"
+                        ]
+                    }
+                },
+                {
+                    "id": "https://ocr-staging01.lib.ncsu.edu/ocr/nu/nubian-message-2003-04-01_0008/nubian-message-2003-04-01_0008-annotation-list-paragraph.json",
+                    "type": "AnnotationList",
+                    "label": {
+                        "en": [
+                            "Text of this page (paragraph level)"
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "seeAlso": [
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/catalog/oai?identifier=ncsul%2Fnubian-message-2003-04-01\u0026metadataPrefix=oai_dc\u0026verb=GetRecord",
+            "type": "Dataset",
+            "label": {
+                "en": [
+                    "Dublin Core XML via OAI-PMH"
+                ]
+            },
+            "format": "text/xml"
+        },
+        {
+            "id": "https://scrc.lib.ncsu.edu/sal_staging/catalog/nubian-message-2003-04-01/schemaorg.json",
+            "type": "Dataset",
+            "label": {
+                "en": [
+                    "Schema.org metadata as JSON-LD"
+                ]
+            },
+            "profile": "https://schema.org",
+            "format": "application/ld+json"
+        }
+    ],
+    "dcterms:modified": "2018-05-04T19:53:56.000Z",
+    "dcterms:created": "2016-02-25T15:38:08.000Z"
+}

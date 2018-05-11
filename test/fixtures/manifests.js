@@ -26,6 +26,7 @@ module.exports = {
     "ngaHighlights": "http://localhost:3001/nga-highlights.json",
     "plato": "http://localhost:3001/plato.json",
     "potterselectric": "http://localhost:3001/potterselectric.json",
+    "presentation3withoutthumbs": "http://localhost:3001/presentation3-without-thumbs.json",
     "pseudoalbert": "http://localhost:3001/pseudoalbert.json",
     "pres3": "http://localhost:3001/pres3.json",
     "pres33d": "http://localhost:3001/pres3-3d.json",

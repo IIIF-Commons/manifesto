@@ -998,10 +998,17 @@ var Manifesto;
         };
         Canvas.prototype.getImages = function () {
             var images = [];
-            if (!this.__jsonld.images)
+            var annotations;
+            if (this.__jsonld.items && this.__jsonld.items.length) {
+                annotations = this.__jsonld.items[0].items;
+            }
+            else if (this.__jsonld.images) {
+                annotations = this.__jsonld.images;
+            }
+            if (!annotations)
                 return images;
-            for (var i = 0; i < this.__jsonld.images.length; i++) {
-                var a = this.__jsonld.images[i];
+            for (var i = 0; i < annotations.length; i++) {
+                var a = annotations[i];
                 var annotation = new Manifesto.Annotation(a, this.options);
                 images.push(annotation);
             }

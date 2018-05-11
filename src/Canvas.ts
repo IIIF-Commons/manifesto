@@ -39,6 +39,9 @@ namespace Manifesto {
 
                 if (images && images.length) {
                     const firstImage: IAnnotation = images[0];
+
+                    // if it's an annotation, get its body and find the service on that.
+
                     const resource: IResource = firstImage.getResource();
                     const services: IService[] = resource.getServices();
 
@@ -150,10 +153,18 @@ namespace Manifesto {
 
             const images: IAnnotation[] = [];
 
-            if (!this.__jsonld.images) return images;
+            let annotations;
+            
+            if (this.__jsonld.items && this.__jsonld.items.length) {
+                annotations = this.__jsonld.items[0].items;
+            } else if (this.__jsonld.images) {
+                annotations = this.__jsonld.images;
+            }
+            
+            if (!annotations) return images;
 
-            for (let i = 0; i < this.__jsonld.images.length; i++) {
-                const a = this.__jsonld.images[i];
+            for (let i = 0; i < annotations.length; i++) {
+                const a = annotations[i];
                 const annotation = new Annotation(a, this.options);
                 images.push(annotation);
             }
