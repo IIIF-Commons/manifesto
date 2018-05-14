@@ -841,6 +841,8 @@ var Manifesto;
                 var images = this.getImages();
                 if (images && images.length) {
                     var firstImage = images[0];
+                    // if it's an annotation, get its body and find the service on that.
+                    var body = firstImage.getBody();
                     var resource = firstImage.getResource();
                     var services = resource.getServices();
                     if (!width) {
@@ -927,8 +929,9 @@ var Manifesto;
         Canvas.prototype.getImages = function () {
             var images = [];
             var annotations;
+            // if presentation 3
             if (this.__jsonld.items && this.__jsonld.items.length) {
-                annotations = this.__jsonld.items[0].items;
+                return this.getContent();
             }
             else if (this.__jsonld.images) {
                 annotations = this.__jsonld.images;
