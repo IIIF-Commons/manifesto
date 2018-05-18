@@ -1218,8 +1218,12 @@ var Manifesto;
             return _this;
         }
         Manifest.prototype.getBehavior = function () {
-            if (this.getProperty('behavior')) {
-                return new Manifesto.Behavior(this.getProperty('behavior'));
+            var behavior = this.getProperty('behavior');
+            if (Array.isArray(behavior)) {
+                behavior = behavior[0];
+            }
+            if (behavior) {
+                return new Manifesto.Behavior(behavior);
             }
             return null;
         };
@@ -1570,8 +1574,12 @@ var Manifesto;
             return this._ranges = this.items.en().where(function (m) { return m.isRange(); }).toArray();
         };
         Range.prototype.getBehavior = function () {
-            if (this.getProperty('behavior')) {
-                return new Manifesto.Behavior(this.getProperty('behavior'));
+            var behavior = this.getProperty('behavior');
+            if (Array.isArray(behavior)) {
+                behavior = behavior[0];
+            }
+            if (behavior) {
+                return new Manifesto.Behavior(behavior);
             }
             return null;
         };

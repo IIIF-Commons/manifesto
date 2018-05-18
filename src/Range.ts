@@ -41,8 +41,15 @@ namespace Manifesto {
         }
 
         getBehavior(): Behavior | null {
-            if (this.getProperty('behavior')) {
-                return new Behavior(this.getProperty('behavior'));
+
+            let behavior: any = this.getProperty('behavior');
+
+            if (Array.isArray(behavior)) {
+                behavior = behavior[0];
+            }
+
+            if (behavior) {
+                return new Behavior(behavior);
             }
 
             return null;
