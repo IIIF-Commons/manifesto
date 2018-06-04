@@ -1,13 +1,13 @@
 {
   "name": "manifesto.js",
-  "version": "2.2.22",
+  "version": "2.2.23",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist/server/manifesto.js",
   "types": "./dist/manifesto.d.ts",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iiif-commons/manifesto.git" 
+    "url": "git+https://github.com/iiif-commons/manifesto.git"
   },
   "keywords": [
     "IIIF"
