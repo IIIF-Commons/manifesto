@@ -7,7 +7,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iiif-commons/manifesto.git"
+    "url": "git+https://github.com/iiif-commons/manifesto.git" 
   },
   "keywords": [
     "IIIF"
