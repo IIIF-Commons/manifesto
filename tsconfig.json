@@ -11,11 +11,12 @@
         "strictNullChecks": true,
         "target": "es5",
         "lib": ["es6", "dom"],
-        "types": ["node"]
+        "types": ["node", "http-status-codes"]
     },
     "files": [
         "src/Definitions.ts",
         "src/StringValue.ts",
+        "src/Duration.ts",
         "src/AnnotationMotivation.ts",
         "src/Behavior.ts",
         "src/IIIFResourceType.ts",

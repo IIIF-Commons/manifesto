@@ -3,6 +3,7 @@ namespace Manifesto {
         canvases: string[] | null;
         getBehavior(): Behavior | null;
         getCanvasIds(): string[];
+        getDuration(): Duration | undefined;
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;

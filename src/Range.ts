@@ -23,6 +23,56 @@ namespace Manifesto {
             return [];
         }
 
+        getDuration(): Duration | undefined {
+
+            let start: number | undefined;
+            let end: number | undefined;
+
+            if (this.canvases && this.canvases.length) {
+                for (let i = 0; i < this.canvases.length; i++) {
+                    const canvas: string = this.canvases[i];
+                    let temporal: number[] | null = Utils.getTemporalComponent(canvas);
+                    if (temporal && temporal.length > 1) {
+                        if (i === 0) {
+                            start = Number(temporal[0]);
+                        }
+    
+                        if (i === this.canvases.length - 1) {
+                            end = Number(temporal[1]);
+                        }
+                    }
+                }
+            } else {
+
+                // get child ranges and calculate the start and end based on them
+                const childRanges: Manifesto.IRange[] = this.getRanges();
+
+                for (let i = 0; i < childRanges.length; i++) {
+                    const childRange: Manifesto.IRange = childRanges[i];
+
+                    const duration: Duration | undefined = childRange.getDuration();
+
+                    if (duration) {
+                        if (i === 0) {
+                            start = duration.start;
+                        }
+    
+                        if (i === childRanges.length - 1) {
+                            end = duration.end;
+                        }
+                    }
+                }
+
+            }
+
+            if (start !== undefined && end !== undefined) {
+                return new Duration(start, end);
+            }
+
+            return undefined;
+
+        }
+
         // getCanvases(): ICanvas[] {
         //     if (this._canvases) {
         //         return this._canvases;
@@ -76,7 +126,7 @@ namespace Manifesto {
             treeRoot.data = this;
             this.treeNode = treeRoot;
 
-            var ranges: IRange[] = this.getRanges();
+            const ranges: IRange[] = this.getRanges();
 
             if (ranges && ranges.length) {
                 for (let i = 0; i < ranges.length; i++) {
@@ -90,6 +140,19 @@ namespace Manifesto {
             Manifesto.Utils.generateTreeNodeIds(treeRoot);
 
             return treeRoot;
+        }
+
+        public spansTime(time: number): boolean {
+
+            const duration: Duration | undefined = this.getDuration();
+
+            if (duration) {
+                if (time >= duration.start && time <= duration.end) {
+                    return true;
+                }
+            }
+
+            return false;            
         }
 
         private _parseTreeNode(node: ITreeNode, range: IRange): void {

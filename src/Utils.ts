@@ -861,5 +861,16 @@ namespace Manifesto {
 
             return services;
         }
+
+        static getTemporalComponent(target: string): number[] | null {
+            const temporal: RegExpExecArray | null = /t=([^&]+)/g.exec(target);
+            let t: number[] | null = null;
+
+            if (temporal && temporal[1]) {
+                t = <any>temporal[1].split(',');
+            }
+
+            return t;
+        }
     }
 }

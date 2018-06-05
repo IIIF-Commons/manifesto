@@ -9,6 +9,15 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
+    class Duration {
+        start: number;
+        end: number;
+        constructor(start: number, end: number);
+        getLength(): number;
+    }
+}
+
+declare namespace Manifesto {
     class AnnotationMotivation extends StringValue {
         static BOOKMARKING: AnnotationMotivation;
         static CLASSIFYING: AnnotationMotivation;
@@ -382,11 +391,13 @@ declare namespace Manifesto {
         treeNode: ITreeNode;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
+        getDuration(): Duration | undefined;
         getRanges(): IRange[];
         getBehavior(): Behavior | null;
         getViewingDirection(): ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
         getTree(treeRoot: ITreeNode): ITreeNode;
+        spansTime(time: number): boolean;
         private _parseTreeNode(node, range);
     }
 }
@@ -565,6 +576,7 @@ declare namespace Manifesto {
         static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource;
         static getAllArrays(obj: any): any[];
         static getServices(resource: any): IService[];
+        static getTemporalComponent(target: string): number[] | null;
     }
 }
 
@@ -870,6 +882,7 @@ declare namespace Manifesto {
         canvases: string[] | null;
         getBehavior(): Behavior | null;
         getCanvasIds(): string[];
+        getDuration(): Duration | undefined;
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;

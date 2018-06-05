@@ -90,6 +90,21 @@ var Manifesto;
     Manifesto.StringValue = StringValue;
 })(Manifesto || (Manifesto = {}));
 
+var Manifesto;
+(function (Manifesto) {
+    var Duration = /** @class */ (function () {
+        function Duration(start, end) {
+            this.start = start;
+            this.end = end;
+        }
+        Duration.prototype.getLength = function () {
+            return this.end - this.start;
+        };
+        return Duration;
+    }());
+    Manifesto.Duration = Duration;
+})(Manifesto || (Manifesto = {}));
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1561,6 +1576,44 @@ var Manifesto;
             }
             return [];
         };
+        Range.prototype.getDuration = function () {
+            var start;
+            var end;
+            if (this.canvases && this.canvases.length) {
+                for (var i = 0; i < this.canvases.length; i++) {
+                    var canvas = this.canvases[i];
+                    var temporal = Manifesto.Utils.getTemporalComponent(canvas);
+                    if (temporal && temporal.length > 1) {
+                        if (i === 0) {
+                            start = Number(temporal[0]);
+                        }
+                        if (i === this.canvases.length - 1) {
+                            end = Number(temporal[1]);
+                        }
+                    }
+                }
+            }
+            else {
+                // get child ranges and calculate the start and end based on them
+                var childRanges = this.getRanges();
+                for (var i = 0; i < childRanges.length; i++) {
+                    var childRange = childRanges[i];
+                    var duration = childRange.getDuration();
+                    if (duration) {
+                        if (i === 0) {
+                            start = duration.start;
+                        }
+                        if (i === childRanges.length - 1) {
+                            end = duration.end;
+                        }
+                    }
+                }
+            }
+            if (start !== undefined && end !== undefined) {
+                return new Manifesto.Duration(start, end);
+            }
+            return undefined;
+        };
         // getCanvases(): ICanvas[] {
         //     if (this._canvases) {
         //         return this._canvases;
@@ -1609,6 +1662,15 @@ var Manifesto;
             }
             Manifesto.Utils.generateTreeNodeIds(treeRoot);
             return treeRoot;
+        };
+        Range.prototype.spansTime = function (time) {
+            var duration = this.getDuration();
+            if (duration) {
+                if (time >= duration.start && time <= duration.end) {
+                    return true;
+                }
+            }
+            return false;
         };
         Range.prototype._parseTreeNode = function (node, range) {
             node.label = Manifesto.TranslationCollection.getValue(range.getLabel(), this.options.locale);
@@ -2945,6 +3007,14 @@ var Manifesto;
             }
             return services;
         };
+        Utils.getTemporalComponent = function (target) {
+            var temporal = /t=([^&]+)/g.exec(target);
+            var t = null;
+            if (temporal && temporal[1]) {
+                t = temporal[1].split(',');
+            }
+            return t;
+        };
         return Utils;
     }());
     Manifesto.Utils = Utils;
@@ -3106,7 +3176,6 @@ var Manifesto;
     Manifesto.Size = Size;
 })(Manifesto || (Manifesto = {}));
 
-/// <reference types="http-status-codes" />
 global.manifesto = global.Manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     Behavior: new Manifesto.Behavior(),
