@@ -890,6 +890,7 @@ declare namespace Manifesto {
         items: IManifestResource[];
         parentRange: IRange | undefined;
         path: string;
+        spansTime(time: number): boolean;
         treeNode: ITreeNode;
     }
 }
