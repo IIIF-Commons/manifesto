@@ -16,8 +16,8 @@ namespace Manifesto {
         getThumbnails(): Manifesto.IThumbnail[];
         getThumbs(width: number, height: number): Manifesto.IThumb[]; // todo: deprecate
         getTotalCanvases(): number;
-        getViewingDirection(): Manifesto.ViewingDirection;
-        getViewingHint(): Manifesto.ViewingHint;
+        getViewingDirection(): Manifesto.ViewingDirection | null;
+        getViewingHint(): Manifesto.ViewingHint | null;
         isCanvasIndexOutOfRange(index: number): boolean;
         isFirstCanvas(index: number): boolean;
         isLastCanvas(index: number): boolean;

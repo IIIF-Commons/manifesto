@@ -353,8 +353,8 @@ declare namespace Manifesto {
         getTrackingLabel(): string;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
     }
 }
 
@@ -429,8 +429,8 @@ declare namespace Manifesto {
         getThumbnails(): Manifesto.IThumbnail[];
         getStartCanvas(): string;
         getTotalCanvases(): number;
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         isCanvasIndexOutOfRange(canvasIndex: number): boolean;
         isFirstCanvas(canvasIndex: number): boolean;
         isLastCanvas(canvasIndex: number): boolean;
@@ -816,8 +816,8 @@ declare namespace Manifesto {
         getTopRanges(): IRange[];
         getTotalSequences(): number;
         getTrackingLabel(): string;
-        getViewingDirection(): Manifesto.ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): Manifesto.ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
         items: ISequence[];
@@ -931,8 +931,8 @@ declare namespace Manifesto {
         getThumbnails(): Manifesto.IThumbnail[];
         getThumbs(width: number, height: number): Manifesto.IThumb[];
         getTotalCanvases(): number;
-        getViewingDirection(): Manifesto.ViewingDirection;
-        getViewingHint(): Manifesto.ViewingHint;
+        getViewingDirection(): Manifesto.ViewingDirection | null;
+        getViewingHint(): Manifesto.ViewingHint | null;
         isCanvasIndexOutOfRange(index: number): boolean;
         isFirstCanvas(index: number): boolean;
         isLastCanvas(index: number): boolean;

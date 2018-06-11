@@ -10,8 +10,8 @@ namespace Manifesto {
         getTopRanges(): IRange[];
         getTotalSequences(): number;
         getTrackingLabel(): string;
-        getViewingDirection(): Manifesto.ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): Manifesto.ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
         items: ISequence[];

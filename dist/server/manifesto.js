@@ -1416,19 +1416,23 @@ var Manifesto;
             return this.getTotalSequences() > 1;
         };
         Manifest.prototype.isPagingEnabled = function () {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+            var viewingHint = this.getViewingHint();
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+            return false;
         };
         Manifest.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
                 return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
             }
-            return Manifesto.ViewingDirection.LEFTTORIGHT;
+            return null;
         };
         Manifest.prototype.getViewingHint = function () {
             if (this.getProperty('viewingHint')) {
                 return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
             }
-            return Manifesto.ViewingHint.EMPTY;
+            return null;
         };
         return Manifest;
     }(Manifesto.IIIFResource));
@@ -1843,7 +1847,8 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
+                var viewingDirection = this.getViewingDirection();
+                if (viewingDirection && viewingDirection.toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
                     index = indices[0] + 1;
                 }
                 else {
@@ -1873,7 +1878,8 @@ var Manifesto;
                 else {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
+                var viewingDirection = this.getViewingDirection();
+                if (viewingDirection && viewingDirection.toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
                     indices = indices.reverse();
                 }
             }
@@ -1883,7 +1889,8 @@ var Manifesto;
             var index;
             if (pagingEnabled) {
                 var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
+                var viewingDirection = this.getViewingDirection();
+                if (viewingDirection && viewingDirection.toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
                     index = indices[indices.length - 1] - 1;
                 }
                 else {
@@ -1946,13 +1953,13 @@ var Manifesto;
             else if (this.options.resource.getViewingDirection) {
                 return this.options.resource.getViewingDirection();
             }
-            return Manifesto.ViewingDirection.LEFTTORIGHT;
+            return null;
         };
         Sequence.prototype.getViewingHint = function () {
             if (this.getProperty('viewingHint')) {
                 return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
             }
-            return Manifesto.ViewingHint.EMPTY;
+            return null;
         };
         Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
             return canvasIndex > this.getTotalCanvases() - 1;
@@ -1967,7 +1974,11 @@ var Manifesto;
             return this.getTotalCanvases() > 1;
         };
         Sequence.prototype.isPagingEnabled = function () {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+            var viewingHint = this.getViewingHint();
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+            return false;
         };
         // checks if the number of canvases is even - therefore has a front and back cover
         Sequence.prototype.isTotalCanvasesEven = function () {

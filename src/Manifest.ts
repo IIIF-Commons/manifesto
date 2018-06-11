@@ -255,23 +255,30 @@ namespace Manifesto {
         }
 
         isPagingEnabled(): boolean {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+
+            const viewingHint: ViewingHint | null = this.getViewingHint();
+
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+
+            return false;
         }
 
-        getViewingDirection(): ViewingDirection {
-            if (this.getProperty('viewingDirection')){
+        getViewingDirection(): ViewingDirection | null {
+            if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
             }
 
-            return ViewingDirection.LEFTTORIGHT;
+            return null;
         }
 
-        getViewingHint(): ViewingHint {
+        getViewingHint(): ViewingHint | null {
             if (this.getProperty('viewingHint')){
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
-            return ViewingHint.EMPTY;
+            return null;
         }
     }
 }
