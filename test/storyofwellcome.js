@@ -27,7 +27,7 @@ describe('#hasSequence', function() {
 describe('#hasViewingHint', function() {
     it('sequence has no viewingHint', function () {
         var viewingHint = sequence.getViewingHint();
-        viewingHint.toString().should.equal('');
+        expect(viewingHint).to.not.exist;
     });
 });
 

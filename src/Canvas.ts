@@ -159,7 +159,7 @@ namespace Manifesto {
 
             const iterable: any[] = this.getProperty('images', []);
 
-            return iterable.reduce(
+            return (iterable || []).reduce(
               (list, annotation) => {
                 if (annotation.type === 'AnnotationPage') {
                   return annotation.items.reduce((list, annotation) => {

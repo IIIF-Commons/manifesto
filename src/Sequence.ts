@@ -12,11 +12,18 @@ namespace Manifesto {
                 return this.items;
             }
 
-            const items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
+            let items = this.__jsonld.canvases || this.__jsonld.elements;
 
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     const c = items[i];
+                    const canvas: ICanvas = new Canvas(c, this.options);
+                    canvas.index = i;
+                    this.items.push(canvas);
+                }
+            } else if (this.__jsonld) {
+                for (let i = 0; i < this.__jsonld.length; i++) {
+                    const c = this.__jsonld[i];
                     const canvas: ICanvas = new Canvas(c, this.options);
                     canvas.index = i;
                     this.items.push(canvas);
@@ -131,7 +138,9 @@ namespace Manifesto {
             if (pagingEnabled) {
                 const indices: number[] = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
+                const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+
+                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
                     index = indices[0] + 1;
                 } else {
                     index = indices[indices.length - 1] + 1;
@@ -162,7 +171,9 @@ namespace Manifesto {
                     indices = [canvasIndex - 1, canvasIndex];
                 }
 
-                if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
+                const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+
+                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
                     indices = indices.reverse();
                 }
             }
@@ -177,7 +188,9 @@ namespace Manifesto {
             if (pagingEnabled) {
                 const indices = this.getPagedIndices(canvasIndex);
 
-                if (this.getViewingDirection().toString() === ViewingDirection.RIGHTTOLEFT.toString()){
+                const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+
+                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
                     index = indices[indices.length - 1] - 1;
                 } else {
                     index = indices[0] - 1;
@@ -245,22 +258,22 @@ namespace Manifesto {
             return this.getCanvases().length;
         }
 
-        getViewingDirection(): ViewingDirection {
+        getViewingDirection(): ViewingDirection | null {
             if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
             } else if ((<IManifest>this.options.resource).getViewingDirection) {
                 return (<IManifest>this.options.resource).getViewingDirection();
             }
 
-            return ViewingDirection.LEFTTORIGHT;
+            return null;
         }
 
-        getViewingHint(): ViewingHint {
+        getViewingHint(): ViewingHint | null {
             if (this.getProperty('viewingHint')) {
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
-            return ViewingHint.EMPTY;
+            return null;
         }
 
         isCanvasIndexOutOfRange(canvasIndex: number): boolean {
@@ -280,7 +293,13 @@ namespace Manifesto {
         }
 
         isPagingEnabled(): boolean {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+            const viewingHint: ViewingHint | null = this.getViewingHint();
+
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+            
+            return false;
         }
 
         // checks if the number of canvases is even - therefore has a front and back cover

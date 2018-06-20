@@ -1,7 +1,9 @@
 namespace Manifesto {
     export interface IRange extends IManifestResource {
         canvases: string[] | null;
+        getBehavior(): Behavior | null;
         getCanvasIds(): string[];
+        getDuration(): Duration | undefined;
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;
@@ -9,6 +11,7 @@ namespace Manifesto {
         items: IManifestResource[];
         parentRange: IRange | undefined;
         path: string;
+        spansTime(time: number): boolean;
         treeNode: ITreeNode;
     }
 }

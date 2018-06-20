@@ -1,0 +1,94 @@
+diff a/src/Canvas.ts b/src/Canvas.ts	(rejected hunks)
+@@ -9,7 +9,6 @@ namespace Manifesto {
+ 
+         // http://iiif.io/api/image/2.1/#canonical-uri-syntax
+         getCanonicalImageUri(w?: number): string {
+-
+             let id: string | null = null;
+             const region: string = 'full';
+             const rotation: number = 0;
+@@ -82,9 +81,7 @@ namespace Manifesto {
+                 id = id.substr(0, id.length - 1);
+             }
+ 
+-            const uri: string = [id, region, size, rotation, quality + '.jpg'].join('/');
+-
+-            return uri;
++            return [id, region, size, rotation, quality + '.jpg'].join('/');
+         }
+ 
+         getMaxDimensions(): Size | null {
+@@ -142,25 +139,64 @@ namespace Manifesto {
+             return this.getProperty('duration');
+         }
+ 
+-        getImages(): IAnnotation[] {
++        getP3Images(): IAnnotation[] {
++          return this.getContent().filter((annotation: IAnnotation) => {
++            // Grab all bodies
++            const bodies: IAnnotationBody[] = annotation.getBody();
++            // No bodies, definitely not an image.
++            if (!bodies.length) {
++              return false;
++            }
++            // Reduce all the bodies into a boolean
++            return bodies.reduce((hasImage: boolean, body: IAnnotationBody) : boolean => {
++              // Check for the image type in the body
++              return hasImage || body.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.IMAGE.toString();
++            }, false);
++          });
++        }
+ 
+-            const images: IAnnotation[] = [];
++        getImages(): IAnnotation[] {
+ 
+-            if (!this.__jsonld.images) return images;
++            const iterable: any[] = this.getProperty('images', []);
+ 
+-            for (let i = 0; i < this.__jsonld.images.length; i++) {
+-                const a = this.__jsonld.images[i];
+-                const annotation = new Annotation(a, this.options);
+-                images.push(annotation);
+-            }
++            return iterable.reduce(
++              (list, annotation) => {
++                if (annotation.type === 'AnnotationPage') {
++                  return annotation.items.reduce((list, annotation) => {
++                    list.push(new Annotation(annotation, this.options));
++                    return list;
++                  }, list);
++                }
++                list.push(new Annotation(annotation, this.options));
+ 
+-            return images;
++                return list;
++              }, []
++            );
+         }
+ 
+         getIndex(): number {
+             return this.getProperty('index');
+         }
+ 
++        getAnnotations(): Promise<AnnotationList[]> {
++            const annotationProperty = this.getProperty('annotations');
++            if (!annotationProperty) {
++              return Promise.resolve([]);
++            }
++
++            const annotations = Array.isArray(annotationProperty) ?
++              annotationProperty :
++              [annotationProperty];
++
++            const annotationPromises: Promise<AnnotationList>[] = annotations
++              .map((annotationList, i) => (
++                (new AnnotationList(annotationList.label || `Annotation list ${i}`, annotationList, this.options))
++              ))
++              .map(annotationList => annotationList.load());
++
++            return Promise.all(annotationPromises);
++        }
++
+         getOtherContent(): Promise<AnnotationList[]> {
+             const otherContent = Array.isArray(this.getProperty('otherContent')) ?
+                 this.getProperty('otherContent') :

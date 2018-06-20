@@ -1,10 +1,19 @@
-// manifesto v2.2.10 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.25 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
         value: string;
         constructor(value?: string);
         toString(): string;
+    }
+}
+
+declare namespace Manifesto {
+    class Duration {
+        start: number;
+        end: number;
+        constructor(start: number, end: number);
+        getLength(): number;
     }
 }
 
@@ -38,6 +47,15 @@ declare namespace Manifesto {
         replying(): AnnotationMotivation;
         tagging(): AnnotationMotivation;
         transcribing(): AnnotationMotivation;
+    }
+}
+
+declare namespace Manifesto {
+    class Behavior extends StringValue {
+        static AUTOADVANCE: Behavior;
+        static NONAV: Behavior;
+        autoadvance(): Behavior;
+        nonav(): Behavior;
     }
 }
 
@@ -328,6 +346,7 @@ declare namespace Manifesto {
         items: ISequence[];
         private _topRanges;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getBehavior(): Behavior | null;
         getDefaultTree(): ITreeNode;
         private _getTopRanges();
         getTopRanges(): IRange[];
@@ -343,8 +362,8 @@ declare namespace Manifesto {
         getTrackingLabel(): string;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         getSearchService(): IService | null;
     }
 }
@@ -382,10 +401,13 @@ declare namespace Manifesto {
         treeNode: ITreeNode;
         constructor(jsonld?: any, options?: IManifestoOptions);
         getCanvasIds(): string[];
+        getDuration(): Duration | undefined;
         getRanges(): IRange[];
+        getBehavior(): Behavior | null;
         getViewingDirection(): ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
         getTree(treeRoot: ITreeNode): ITreeNode;
+        spansTime(time: number): boolean;
         private _parseTreeNode(node, range);
     }
 }
@@ -417,8 +439,8 @@ declare namespace Manifesto {
         getThumbnails(): Manifesto.IThumbnail[];
         getStartCanvas(): string;
         getTotalCanvases(): number;
-        getViewingDirection(): ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         isCanvasIndexOutOfRange(canvasIndex: number): boolean;
         isFirstCanvas(canvasIndex: number): boolean;
         isLastCanvas(canvasIndex: number): boolean;
@@ -798,6 +820,7 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IManifest extends Manifesto.IIIIFResource {
         getAllRanges(): IRange[];
+        getBehavior(): Behavior | null;
         getManifestType(): ManifestType;
         getRangeById(id: string): Manifesto.IRange | null;
         getRangeByPath(path: string): IRange | null;
@@ -806,8 +829,8 @@ declare namespace Manifesto {
         getTopRanges(): IRange[];
         getTotalSequences(): number;
         getTrackingLabel(): string;
-        getViewingDirection(): Manifesto.ViewingDirection;
-        getViewingHint(): ViewingHint;
+        getViewingDirection(): Manifesto.ViewingDirection | null;
+        getViewingHint(): ViewingHint | null;
         isMultiSequence(): boolean;
         isPagingEnabled(): boolean;
         items: ISequence[];
@@ -816,6 +839,7 @@ declare namespace Manifesto {
 
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
+    Behavior: Manifesto.Behavior;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
     loadManifest: (uri: string) => Promise<string>;
@@ -870,7 +894,9 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IRange extends IManifestResource {
         canvases: string[] | null;
+        getBehavior(): Behavior | null;
         getCanvasIds(): string[];
+        getDuration(): Duration | undefined;
         getRanges(): IRange[];
         getTree(treeRoot: ITreeNode): ITreeNode;
         getViewingDirection(): ViewingDirection | null;
@@ -878,6 +904,7 @@ declare namespace Manifesto {
         items: IManifestResource[];
         parentRange: IRange | undefined;
         path: string;
+        spansTime(time: number): boolean;
         treeNode: ITreeNode;
     }
 }
@@ -918,8 +945,8 @@ declare namespace Manifesto {
         getThumbnails(): Manifesto.IThumbnail[];
         getThumbs(width: number, height: number): Manifesto.IThumb[];
         getTotalCanvases(): number;
-        getViewingDirection(): Manifesto.ViewingDirection;
-        getViewingHint(): Manifesto.ViewingHint;
+        getViewingDirection(): Manifesto.ViewingDirection | null;
+        getViewingHint(): Manifesto.ViewingHint | null;
         isCanvasIndexOutOfRange(index: number): boolean;
         isFirstCanvas(index: number): boolean;
         isLastCanvas(index: number): boolean;

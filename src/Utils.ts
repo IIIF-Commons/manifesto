@@ -45,7 +45,7 @@ namespace Manifesto {
             if (locale.indexOf('-') !== -1) {
                 return locale.substr(0, locale.indexOf('-'));
             }
-
+            
             return locale;
         }
 
@@ -101,7 +101,7 @@ namespace Manifesto {
 
         static normaliseType(type: string): string {
             type = type.toLowerCase();
-
+            
             if (type.indexOf(':') !== -1) {
                 const split: string[] = type.split(':');
                 return split[1];
@@ -218,7 +218,7 @@ namespace Manifesto {
                     method: "GET",
                     withCredentials: false
                 };
-
+                
                 if (u.protocol === 'https:'){
                     request = https.request(opts, (response: any) => {
                         var result = "";
@@ -239,7 +239,7 @@ namespace Manifesto {
                             resolve(result);
                         });
                     });
-                }
+                }              
 
                 request.on('error', (error: any) => {
                     reject(error);
@@ -283,7 +283,7 @@ namespace Manifesto {
         }
 
         static async loadExternalResourceAuth1(
-            resource: IExternalResource,
+            resource: IExternalResource, 
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<void>,
             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
@@ -291,9 +291,9 @@ namespace Manifesto {
             getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
             showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource> {
-
+            
             const storedAccessToken: IAccessToken | null = await getStoredAccessToken(resource);
-
+            
             if (storedAccessToken) {
 
                 await resource.getData(storedAccessToken);
@@ -308,7 +308,7 @@ namespace Manifesto {
                 if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                     return resource;
                 }
-
+                
                 throw Utils.createAuthorizationFailedError();
 
             } else {
@@ -318,18 +318,18 @@ namespace Manifesto {
                 if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED) {
                     await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
                 }
-
+                
                 if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                     return resource;
                 }
-
+                
                 throw Utils.createAuthorizationFailedError();
 
             }
         }
 
         static async doAuthChain(
-            resource: IExternalResource,
+            resource: IExternalResource, 
             openContentProviderInteraction: (service: Manifesto.IService) => any,
             openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
@@ -371,13 +371,13 @@ namespace Manifesto {
             if (!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                 await handleMovedTemporarily(resource);
                 return resource;
-            }
+            } 
 
             let serviceToTry: Manifesto.IService | null = null;
             let lastAttempted: Manifesto.IService | null = null;
 
             // repetition of logic is left in these steps for clarity:
-
+            
             // Looking for external pattern
             serviceToTry = externalService;
 
@@ -419,7 +419,7 @@ namespace Manifesto {
                     await userInteractedWithContentProvider(contentProviderInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     return resource;
-                }
+                } 
             }
 
             // Looking for login pattern
@@ -433,7 +433,7 @@ namespace Manifesto {
                     await userInteractedWithContentProvider(contentProviderInteraction);
                     await Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry);
                     return resource;
-                }
+                } 
             }
 
             // nothing worked! Use the most recently tried service as the source of
@@ -453,12 +453,12 @@ namespace Manifesto {
 
             if (tokenService) {
                 // found token service: " + tokenService["@id"]);
-                let tokenMessage: any = await openTokenService(resource, tokenService);
+                let tokenMessage: any = await openTokenService(resource, tokenService); 
 
                 if (tokenMessage && tokenMessage.accessToken) {
                     await resource.getData(tokenMessage);
                     return resource;
-                }
+                }  
             }
         }
 

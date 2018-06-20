@@ -1,0 +1,68 @@
+diff a/src/Utils.ts b/src/Utils.ts	(rejected hunks)
+@@ -267,8 +277,8 @@ namespace Manifesto {
+                     .then(() => {
+                         resolve(resources)
+                     })["catch"]((error) => {
+-                    reject(error);
+-                });
++                        reject(error);
++                    });
+             });
+         }
+ 
+@@ -484,8 +494,8 @@ namespace Manifesto {
+                     .then(() => {
+                         resolve(resources)
+                     })["catch"]((error) => {
+-                    reject(error);
+-                });
++                        reject(error);
++                    });
+             });
+         }
+ 
+@@ -516,7 +526,7 @@ namespace Manifesto {
+                             // if the resource has a click through service, use that.
+                             if (resource.clickThroughService){
+                                 resolve(clickThrough(resource));
+-                                //} else if(resource.restrictedService) {
++                            //} else if(resource.restrictedService) {
+                                 resolve(restricted(resource));
+                             } else {
+                                 login(resource).then(() => {
+@@ -567,14 +577,14 @@ namespace Manifesto {
+                                         getAccessToken,
+                                         storeAccessToken,
+                                         getStoredAccessToken).then(() => {
+-                                        resolve(handleResourceResponse(resource));
+-                                    })["catch"]((error) => {
+-                                        // if (resource.restrictedService){
+-                                        //     reject(Utils.createRestrictedError());
+-                                        // } else {
+-                                        reject(Utils.createAuthorizationFailedError());
+-                                        //}
+-                                    });
++                                            resolve(handleResourceResponse(resource));
++                                        })["catch"]((error) => {
++                                            // if (resource.restrictedService){
++                                            //     reject(Utils.createRestrictedError());
++                                            // } else {
++                                                reject(Utils.createAuthorizationFailedError());
++                                            //}
++                                        });
+                                 }
+                             })["catch"]((error) => {
+                                 reject(Utils.createAuthorizationFailedError());
+@@ -727,9 +737,9 @@ namespace Manifesto {
+                 // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                 // and call loadExternalResources() again passing the resource.
+                 resolve(resource);
+-                // } else if (resource.restrictedService) {
+-                //     resolve(restricted(resource));
+-                //     // TODO: move to next etc
++            // } else if (resource.restrictedService) {
++            //     resolve(restricted(resource));
++            //     // TODO: move to next etc
+             } else if (resource.clickThroughService && !resource.isResponseHandled) {
+                 // if the resource has a click through service, use that.
+                 clickThrough(resource).then(() => {

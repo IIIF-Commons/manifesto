@@ -18,6 +18,20 @@ namespace Manifesto {
             }
         }
 
+        getBehavior(): Behavior | null {
+            let behavior: any = this.getProperty('behavior');
+
+            if (Array.isArray(behavior)) {
+                behavior = behavior[0];
+            }
+
+            if (behavior) {
+                return new Behavior(behavior);
+            }
+
+            return null;
+        }
+
         public getDefaultTree(): ITreeNode {
 
             super.getDefaultTree();
@@ -195,7 +209,8 @@ namespace Manifesto {
 
             // IxIF mediaSequences overrode sequences, so need to be checked first.
             // deprecate this when presentation 3 ships
-            const items: any = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            let items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+
 
             if (items) {
                 for (let i = 0; i < items.length; i++) {
@@ -203,6 +218,9 @@ namespace Manifesto {
                     const sequence: any = new Sequence(s, this.options);
                     this.items.push(sequence);
                 }
+            } else if (this.__jsonld.items) {
+                const sequence: any = new Sequence(this.__jsonld.items, this.options);
+                this.items.push(sequence);
             }
 
             return this.items;
@@ -237,23 +255,30 @@ namespace Manifesto {
         }
 
         isPagingEnabled(): boolean {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
+
+            const viewingHint: ViewingHint | null = this.getViewingHint();
+
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+
+            return false;
         }
 
-        getViewingDirection(): ViewingDirection {
-            if (this.getProperty('viewingDirection')){
+        getViewingDirection(): ViewingDirection | null {
+            if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
             }
 
-            return ViewingDirection.LEFTTORIGHT;
+            return null;
         }
 
-        getViewingHint(): ViewingHint {
+        getViewingHint(): ViewingHint | null {
             if (this.getProperty('viewingHint')){
                 return new ViewingHint(this.getProperty('viewingHint'));
             }
 
-            return ViewingHint.EMPTY;
+            return null;
         }
 
         public getSearchService(): IService | null {

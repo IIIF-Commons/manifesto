@@ -1,5 +1,3442 @@
-// manifesto v2.2.10 https://github.com/iiif-commons/manifesto
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// manifesto v2.2.25 https://github.com/iiif-commons/manifesto
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function (global){
+
+var Manifesto;
+(function (Manifesto) {
+    var StringValue = /** @class */ (function () {
+        function StringValue(value) {
+            this.value = "";
+            if (value) {
+                this.value = value.toLowerCase();
+            }
+        }
+        StringValue.prototype.toString = function () {
+            return this.value;
+        };
+        return StringValue;
+    }());
+    Manifesto.StringValue = StringValue;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var Duration = /** @class */ (function () {
+        function Duration(start, end) {
+            this.start = start;
+            this.end = end;
+        }
+        Duration.prototype.getLength = function () {
+            return this.end - this.start;
+        };
+        return Duration;
+    }());
+    Manifesto.Duration = Duration;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationMotivation = /** @class */ (function (_super) {
+        __extends(AnnotationMotivation, _super);
+        function AnnotationMotivation() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        AnnotationMotivation.prototype.bookmarking = function () {
+            return new AnnotationMotivation(AnnotationMotivation.BOOKMARKING.toString());
+        };
+        AnnotationMotivation.prototype.classifying = function () {
+            return new AnnotationMotivation(AnnotationMotivation.CLASSIFYING.toString());
+        };
+        AnnotationMotivation.prototype.commenting = function () {
+            return new AnnotationMotivation(AnnotationMotivation.COMMENTING.toString());
+        };
+        AnnotationMotivation.prototype.describing = function () {
+            return new AnnotationMotivation(AnnotationMotivation.DESCRIBING.toString());
+        };
+        AnnotationMotivation.prototype.editing = function () {
+            return new AnnotationMotivation(AnnotationMotivation.EDITING.toString());
+        };
+        AnnotationMotivation.prototype.highlighting = function () {
+            return new AnnotationMotivation(AnnotationMotivation.HIGHLIGHTING.toString());
+        };
+        AnnotationMotivation.prototype.identifying = function () {
+            return new AnnotationMotivation(AnnotationMotivation.IDENTIFYING.toString());
+        };
+        AnnotationMotivation.prototype.linking = function () {
+            return new AnnotationMotivation(AnnotationMotivation.LINKING.toString());
+        };
+        AnnotationMotivation.prototype.moderating = function () {
+            return new AnnotationMotivation(AnnotationMotivation.MODERATING.toString());
+        };
+        AnnotationMotivation.prototype.painting = function () {
+            return new AnnotationMotivation(AnnotationMotivation.PAINTING.toString());
+        };
+        AnnotationMotivation.prototype.questioning = function () {
+            return new AnnotationMotivation(AnnotationMotivation.QUESTIONING.toString());
+        };
+        AnnotationMotivation.prototype.replying = function () {
+            return new AnnotationMotivation(AnnotationMotivation.REPLYING.toString());
+        };
+        AnnotationMotivation.prototype.tagging = function () {
+            return new AnnotationMotivation(AnnotationMotivation.TAGGING.toString());
+        };
+        AnnotationMotivation.prototype.transcribing = function () {
+            return new AnnotationMotivation(AnnotationMotivation.TRANSCRIBING.toString());
+        };
+        AnnotationMotivation.BOOKMARKING = new AnnotationMotivation("oa:bookmarking");
+        AnnotationMotivation.CLASSIFYING = new AnnotationMotivation("oa:classifying");
+        AnnotationMotivation.COMMENTING = new AnnotationMotivation("oa:commenting");
+        AnnotationMotivation.DESCRIBING = new AnnotationMotivation("oa:describing");
+        AnnotationMotivation.EDITING = new AnnotationMotivation("oa:editing");
+        AnnotationMotivation.HIGHLIGHTING = new AnnotationMotivation("oa:highlighting");
+        AnnotationMotivation.IDENTIFYING = new AnnotationMotivation("oa:identifying");
+        AnnotationMotivation.LINKING = new AnnotationMotivation("oa:linking");
+        AnnotationMotivation.MODERATING = new AnnotationMotivation("oa:moderating");
+        AnnotationMotivation.PAINTING = new AnnotationMotivation("sc:painting");
+        AnnotationMotivation.QUESTIONING = new AnnotationMotivation("oa:questioning");
+        AnnotationMotivation.REPLYING = new AnnotationMotivation("oa:replying");
+        AnnotationMotivation.TAGGING = new AnnotationMotivation("oa:tagging");
+        AnnotationMotivation.TRANSCRIBING = new AnnotationMotivation("oad:transcribing");
+        return AnnotationMotivation;
+    }(Manifesto.StringValue));
+    Manifesto.AnnotationMotivation = AnnotationMotivation;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Behavior = /** @class */ (function (_super) {
+        __extends(Behavior, _super);
+        function Behavior() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        Behavior.prototype.autoadvance = function () {
+            return new Behavior(Behavior.AUTOADVANCE.toString());
+        };
+        Behavior.prototype.nonav = function () {
+            return new Behavior(Behavior.NONAV.toString());
+        };
+        Behavior.AUTOADVANCE = new Behavior("auto-advance");
+        Behavior.NONAV = new Behavior("no-nav");
+        return Behavior;
+    }(Manifesto.StringValue));
+    Manifesto.Behavior = Behavior;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var IIIFResourceType = /** @class */ (function (_super) {
+        __extends(IIIFResourceType, _super);
+        function IIIFResourceType() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        IIIFResourceType.prototype.image = function () {
+            return new IIIFResourceType(IIIFResourceType.IMAGE.toString());
+        };
+        IIIFResourceType.prototype.annotation = function () {
+            return new IIIFResourceType(IIIFResourceType.ANNOTATION.toString());
+        };
+        IIIFResourceType.prototype.canvas = function () {
+            return new IIIFResourceType(IIIFResourceType.CANVAS.toString());
+        };
+        IIIFResourceType.prototype.collection = function () {
+            return new IIIFResourceType(IIIFResourceType.COLLECTION.toString());
+        };
+        IIIFResourceType.prototype.manifest = function () {
+            return new IIIFResourceType(IIIFResourceType.MANIFEST.toString());
+        };
+        IIIFResourceType.prototype.range = function () {
+            return new IIIFResourceType(IIIFResourceType.RANGE.toString());
+        };
+        IIIFResourceType.prototype.sequence = function () {
+            return new IIIFResourceType(IIIFResourceType.SEQUENCE.toString());
+        };
+        IIIFResourceType.ANNOTATION = new IIIFResourceType("annotation");
+        IIIFResourceType.CANVAS = new IIIFResourceType("canvas");
+        IIIFResourceType.COLLECTION = new IIIFResourceType("collection");
+        IIIFResourceType.MANIFEST = new IIIFResourceType("manifest");
+        IIIFResourceType.RANGE = new IIIFResourceType("range");
+        IIIFResourceType.SEQUENCE = new IIIFResourceType("sequence");
+        IIIFResourceType.IMAGE = new IIIFResourceType("image");
+        return IIIFResourceType;
+    }(Manifesto.StringValue));
+    Manifesto.IIIFResourceType = IIIFResourceType;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var ManifestType = /** @class */ (function (_super) {
+        __extends(ManifestType, _super);
+        function ManifestType() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ManifestType.prototype.empty = function () {
+            return new ManifestType(ManifestType.EMPTY.toString());
+        };
+        ManifestType.prototype.manuscript = function () {
+            return new ManifestType(ManifestType.MANUSCRIPT.toString());
+        };
+        ManifestType.prototype.monograph = function () {
+            return new ManifestType(ManifestType.MONOGRAPH.toString());
+        };
+        ManifestType.EMPTY = new ManifestType("");
+        ManifestType.MANUSCRIPT = new ManifestType("manuscript");
+        ManifestType.MONOGRAPH = new ManifestType("monograph");
+        return ManifestType;
+    }(Manifesto.StringValue));
+    Manifesto.ManifestType = ManifestType;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var RenderingFormat = /** @class */ (function (_super) {
+        __extends(RenderingFormat, _super);
+        function RenderingFormat() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        RenderingFormat.prototype.pdf = function () {
+            return new RenderingFormat(RenderingFormat.PDF.toString());
+        };
+        RenderingFormat.prototype.doc = function () {
+            return new RenderingFormat(RenderingFormat.DOC.toString());
+        };
+        RenderingFormat.prototype.docx = function () {
+            return new RenderingFormat(RenderingFormat.DOCX.toString());
+        };
+        RenderingFormat.PDF = new RenderingFormat("application/pdf");
+        RenderingFormat.DOC = new RenderingFormat("application/msword");
+        RenderingFormat.DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        return RenderingFormat;
+    }(Manifesto.StringValue));
+    Manifesto.RenderingFormat = RenderingFormat;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var MediaType = /** @class */ (function (_super) {
+        __extends(MediaType, _super);
+        function MediaType() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        MediaType.prototype.jpg = function () {
+            return new MediaType(MediaType.JPG.toString());
+        };
+        MediaType.prototype.mp4 = function () {
+            return new MediaType(MediaType.MP4.toString());
+        };
+        MediaType.prototype.pdf = function () {
+            return new MediaType(MediaType.PDF.toString());
+        };
+        MediaType.prototype.threejs = function () {
+            return new MediaType(MediaType.THREEJS.toString());
+        };
+        MediaType.prototype.webm = function () {
+            return new MediaType(MediaType.WEBM.toString());
+        };
+        MediaType.JPG = new MediaType("image/jpeg");
+        MediaType.MP4 = new MediaType("video/mp4");
+        MediaType.PDF = new MediaType("application/pdf");
+        MediaType.THREEJS = new MediaType("application/vnd.threejs+json");
+        MediaType.WEBM = new MediaType("video/webm");
+        return MediaType;
+    }(Manifesto.StringValue));
+    Manifesto.MediaType = MediaType;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var ResourceType = /** @class */ (function (_super) {
+        __extends(ResourceType, _super);
+        function ResourceType() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ResourceType.prototype.canvas = function () {
+            return new ResourceType(ResourceType.CANVAS.toString());
+        };
+        ResourceType.prototype.choice = function () {
+            return new ResourceType(ResourceType.CHOICE.toString());
+        };
+        ResourceType.prototype.document = function () {
+            return new ResourceType(ResourceType.DOCUMENT.toString());
+        };
+        ResourceType.prototype.image = function () {
+            return new ResourceType(ResourceType.IMAGE.toString());
+        };
+        ResourceType.prototype.movingimage = function () {
+            return new ResourceType(ResourceType.MOVINGIMAGE.toString());
+        };
+        ResourceType.prototype.physicalobject = function () {
+            return new ResourceType(ResourceType.PHYSICALOBJECT.toString());
+        };
+        ResourceType.prototype.sound = function () {
+            return new ResourceType(ResourceType.SOUND.toString());
+        };
+        ResourceType.prototype.text = function () {
+            return new ResourceType(ResourceType.TEXT.toString());
+        };
+        ResourceType.CANVAS = new ResourceType("canvas");
+        ResourceType.CHOICE = new ResourceType("choice");
+        ResourceType.DOCUMENT = new ResourceType("document");
+        ResourceType.IMAGE = new ResourceType("image");
+        ResourceType.MOVINGIMAGE = new ResourceType("movingimage");
+        ResourceType.PHYSICALOBJECT = new ResourceType("physicalobject");
+        ResourceType.SOUND = new ResourceType("sound");
+        ResourceType.TEXT = new ResourceType("textualbody");
+        return ResourceType;
+    }(Manifesto.StringValue));
+    Manifesto.ResourceType = ResourceType;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var ServiceProfile = /** @class */ (function (_super) {
+        __extends(ServiceProfile, _super);
+        function ServiceProfile() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ServiceProfile.prototype.auth1Clickthrough = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1CLICKTHROUGH.toString());
+        };
+        ServiceProfile.prototype.auth1External = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1EXTERNAL.toString());
+        };
+        ServiceProfile.prototype.auth1Kiosk = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1KIOSK.toString());
+        };
+        ServiceProfile.prototype.auth1Login = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1LOGIN.toString());
+        };
+        ServiceProfile.prototype.auth1Logout = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1LOGOUT.toString());
+        };
+        ServiceProfile.prototype.auth1Token = function () {
+            return new ServiceProfile(ServiceProfile.AUTH1TOKEN.toString());
+        };
+        ServiceProfile.prototype.autoComplete = function () {
+            return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
+        };
+        ServiceProfile.prototype.iiif1ImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.iiif1ImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL2.toString());
+        };
+        ServiceProfile.prototype.iiif2ImageLevel1 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL1.toString());
+        };
+        ServiceProfile.prototype.iiif2ImageLevel2 = function () {
+            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL2.toString());
+        };
+        ServiceProfile.prototype.ixif = function () {
+            return new ServiceProfile(ServiceProfile.IXIF.toString());
+        };
+        ServiceProfile.prototype.login = function () {
+            return new ServiceProfile(ServiceProfile.AUTHLOGIN.toString());
+        };
+        ServiceProfile.prototype.clickThrough = function () {
+            return new ServiceProfile(ServiceProfile.AUTHCLICKTHROUGH.toString());
+        };
+        ServiceProfile.prototype.restricted = function () {
+            return new ServiceProfile(ServiceProfile.AUTHRESTRICTED.toString());
+        };
+        ServiceProfile.prototype.logout = function () {
+            return new ServiceProfile(ServiceProfile.AUTHLOGOUT.toString());
+        };
+        ServiceProfile.prototype.otherManifestations = function () {
+            return new ServiceProfile(ServiceProfile.OTHERMANIFESTATIONS.toString());
+        };
+        ServiceProfile.prototype.search = function () {
+            return new ServiceProfile(ServiceProfile.SEARCH.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIFImageCompliance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIFImageCompliance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIFImageConformance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIFImageConformance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageCompliance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageCompliance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageConformance1 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString());
+        };
+        ServiceProfile.prototype.stanfordIIIF1ImageConformance2 = function () {
+            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString());
+        };
+        ServiceProfile.prototype.token = function () {
+            return new ServiceProfile(ServiceProfile.AUTHTOKEN.toString());
+        };
+        ServiceProfile.prototype.trackingExtensions = function () {
+            return new ServiceProfile(ServiceProfile.TRACKINGEXTENSIONS.toString());
+        };
+        ServiceProfile.prototype.uiExtensions = function () {
+            return new ServiceProfile(ServiceProfile.UIEXTENSIONS.toString());
+        };
+        ServiceProfile.prototype.printExtensions = function () {
+            return new ServiceProfile(ServiceProfile.PRINTEXTENSIONS.toString());
+        };
+        ServiceProfile.prototype.shareExtensions = function () {
+            return new ServiceProfile(ServiceProfile.SHAREEXTENSIONS.toString());
+        };
+        // image api
+        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");
+        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
+        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
+        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level0");
+        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level1");
+        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level2");
+        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
+        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
+        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0");
+        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1");
+        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
+        ServiceProfile.IIIF1IMAGELEVEL0 = new ServiceProfile("http://iiif.io/api/image/1/level0.json");
+        ServiceProfile.IIIF1IMAGELEVEL0PROFILE = new ServiceProfile("http://iiif.io/api/image/1/profiles/level0.json");
+        ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/1/level1.json");
+        ServiceProfile.IIIF1IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/1/profiles/level1.json");
+        ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/1/level2.json");
+        ServiceProfile.IIIF1IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/1/profiles/level2.json");
+        ServiceProfile.IIIF2IMAGELEVEL0 = new ServiceProfile("http://iiif.io/api/image/2/level0.json");
+        ServiceProfile.IIIF2IMAGELEVEL0PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level0.json");
+        ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
+        ServiceProfile.IIIF2IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level1.json");
+        ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
+        ServiceProfile.IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
+        // P3
+        ServiceProfile.IIIF3IMAGELEVEL0 = new ServiceProfile("level0");
+        ServiceProfile.IIIF3IMAGELEVEL1 = new ServiceProfile("level1");
+        ServiceProfile.IIIF3IMAGELEVEL2 = new ServiceProfile("level2");
+        // auth api
+        ServiceProfile.AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
+        ServiceProfile.AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
+        ServiceProfile.AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
+        ServiceProfile.AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
+        ServiceProfile.AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
+        ServiceProfile.AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/clickthrough");
+        ServiceProfile.AUTH1EXTERNAL = new ServiceProfile("http://iiif.io/api/auth/1/external");
+        ServiceProfile.AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
+        ServiceProfile.AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
+        ServiceProfile.AUTH1LOGOUT = new ServiceProfile("http://iiif.io/api/auth/1/logout");
+        ServiceProfile.AUTH1TOKEN = new ServiceProfile("http://iiif.io/api/auth/1/token");
+        // search api
+        ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
+        ServiceProfile.SEARCH = new ServiceProfile("http://iiif.io/api/search/0/search");
+        ServiceProfile.SEARCH_P3 = new ServiceProfile("search");
+        // extensions
+        ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
+        ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
+        ServiceProfile.PRINTEXTENSIONS = new ServiceProfile("http://universalviewer.io/print-extensions-profile");
+        ServiceProfile.SHAREEXTENSIONS = new ServiceProfile("http://universalviewer.io/share-extensions-profile");
+        // other
+        ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
+        ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
+        return ServiceProfile;
+    }(Manifesto.StringValue));
+    Manifesto.ServiceProfile = ServiceProfile;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var ViewingDirection = /** @class */ (function (_super) {
+        __extends(ViewingDirection, _super);
+        function ViewingDirection() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ViewingDirection.prototype.leftToRight = function () {
+            return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
+        };
+        ViewingDirection.prototype.rightToLeft = function () {
+            return new ViewingDirection(ViewingDirection.RIGHTTOLEFT.toString());
+        };
+        ViewingDirection.prototype.topToBottom = function () {
+            return new ViewingDirection(ViewingDirection.TOPTOBOTTOM.toString());
+        };
+        ViewingDirection.prototype.bottomToTop = function () {
+            return new ViewingDirection(ViewingDirection.BOTTOMTOTOP.toString());
+        };
+        ViewingDirection.LEFTTORIGHT = new ViewingDirection("left-to-right");
+        ViewingDirection.RIGHTTOLEFT = new ViewingDirection("right-to-left");
+        ViewingDirection.TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
+        ViewingDirection.BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
+        return ViewingDirection;
+    }(Manifesto.StringValue));
+    Manifesto.ViewingDirection = ViewingDirection;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var ViewingHint = /** @class */ (function (_super) {
+        __extends(ViewingHint, _super);
+        function ViewingHint() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        ViewingHint.prototype.continuous = function () {
+            return new ViewingHint(ViewingHint.CONTINUOUS.toString());
+        };
+        ViewingHint.prototype.empty = function () {
+            return new ViewingHint(ViewingHint.EMPTY.toString());
+        };
+        ViewingHint.prototype.individuals = function () {
+            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
+        };
+        ViewingHint.prototype.nonPaged = function () {
+            return new ViewingHint(ViewingHint.NONPAGED.toString());
+        };
+        ViewingHint.prototype.paged = function () {
+            return new ViewingHint(ViewingHint.PAGED.toString());
+        };
+        ViewingHint.prototype.top = function () {
+            return new ViewingHint(ViewingHint.TOP.toString());
+        };
+        ViewingHint.CONTINUOUS = new ViewingHint("continuous");
+        ViewingHint.EMPTY = new ViewingHint("");
+        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
+        ViewingHint.NONPAGED = new ViewingHint("non-paged");
+        ViewingHint.PAGED = new ViewingHint("paged");
+        ViewingHint.TOP = new ViewingHint("top");
+        return ViewingHint;
+    }(Manifesto.StringValue));
+    Manifesto.ViewingHint = ViewingHint;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var JSONLDResource = /** @class */ (function () {
+        function JSONLDResource(jsonld) {
+            this.__jsonld = jsonld;
+            this.aliases = {
+                images: 'items',
+                sequences: 'items',
+                canvases: 'items',
+            };
+            this.context = this.getProperty('context');
+            this.id = this.getProperty('id');
+        }
+        JSONLDResource.prototype.getProperty = function (name, defaultValue) {
+            var prop = null;
+            if (this.__jsonld) {
+                prop = this.__jsonld[name];
+                if (!prop && this.aliases[name]) {
+                    return this.getProperty(this.aliases[name]);
+                }
+                if (!prop) {
+                    // property may have a prepended '@'
+                    prop = this.__jsonld['@' + name];
+                }
+            }
+            if (!prop && typeof defaultValue !== 'undefined') {
+                prop = defaultValue;
+            }
+            return prop;
+        };
+        return JSONLDResource;
+    }());
+    Manifesto.JSONLDResource = JSONLDResource;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var ManifestResource = /** @class */ (function (_super) {
+        __extends(ManifestResource, _super);
+        function ManifestResource(jsonld, options) {
+            var _this = _super.call(this, jsonld) || this;
+            _this.options = options;
+            return _this;
+        }
+        ManifestResource.prototype.getIIIFResourceType = function () {
+            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
+        };
+        ManifestResource.prototype.getLabel = function () {
+            return Manifesto.TranslationCollection.parse(this.getProperty('label'), this.options.locale);
+        };
+        ManifestResource.prototype.getMetadata = function () {
+            var _metadata = this.getProperty('metadata');
+            var metadata = [];
+            if (!_metadata)
+                return metadata;
+            for (var i = 0; i < _metadata.length; i++) {
+                var item = _metadata[i];
+                var metadataItem = new Manifesto.MetadataItem(this.options.locale);
+                metadataItem.parse(item);
+                metadata.push(metadataItem);
+            }
+            return metadata;
+        };
+        ManifestResource.prototype.getRendering = function (format) {
+            var renderings = this.getRenderings();
+            // normalise format to string
+            if (typeof (format) !== 'string') {
+                format = format.toString();
+            }
+            for (var i = 0; i < renderings.length; i++) {
+                var rendering = renderings[i];
+                if (rendering.getFormat().toString() === format) {
+                    return rendering;
+                }
+            }
+            return null;
+        };
+        ManifestResource.prototype.getRenderings = function () {
+            var rendering;
+            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+            // otherwise look for a rendering property
+            if (this.__jsonld) {
+                rendering = this.__jsonld.rendering;
+            }
+            else {
+                rendering = this.rendering;
+            }
+            var renderings = [];
+            if (!rendering)
+                return renderings;
+            // coerce to array
+            if (!Array.isArray(rendering)) {
+                rendering = [rendering];
+            }
+            for (var i = 0; i < rendering.length; i++) {
+                var r = rendering[i];
+                renderings.push(new Manifesto.Rendering(r, this.options));
+            }
+            return renderings;
+        };
+        ManifestResource.prototype.getService = function (profile) {
+            return Manifesto.Utils.getService(this, profile);
+        };
+        ManifestResource.prototype.getServices = function () {
+            return Manifesto.Utils.getServices(this);
+        };
+        ManifestResource.prototype.getThumbnail = function () {
+            var thumbnail = this.getProperty('thumbnail');
+            if (Array.isArray(thumbnail)) {
+                thumbnail = thumbnail[0];
+            }
+            if (thumbnail) {
+                return new Manifesto.Thumbnail(thumbnail, this.options);
+            }
+            return null;
+        };
+        ManifestResource.prototype.isAnnotation = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
+        };
+        ManifestResource.prototype.isCanvas = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
+        };
+        ManifestResource.prototype.isCollection = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+        };
+        ManifestResource.prototype.isManifest = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+        };
+        ManifestResource.prototype.isRange = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
+        };
+        ManifestResource.prototype.isSequence = function () {
+            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.SEQUENCE.toString();
+        };
+        return ManifestResource;
+    }(Manifesto.JSONLDResource));
+    Manifesto.ManifestResource = ManifestResource;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Resource = /** @class */ (function (_super) {
+        __extends(Resource, _super);
+        function Resource(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        Resource.prototype.getFormat = function () {
+            var format = this.getProperty('format');
+            if (format) {
+                return new Manifesto.MediaType(format.toLowerCase());
+            }
+            return null;
+        };
+        Resource.prototype.getResources = function () {
+            var resources = [];
+            if (!this.__jsonld.resources)
+                return resources;
+            for (var i = 0; i < this.__jsonld.resources.length; i++) {
+                var a = this.__jsonld.resources[i];
+                var annotation = new Manifesto.Annotation(a, this.options);
+                resources.push(annotation);
+            }
+            return resources;
+        };
+        Resource.prototype.getType = function () {
+            var type = this.getProperty('type');
+            if (type) {
+                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(type));
+            }
+            return null;
+        };
+        Resource.prototype.getWidth = function () {
+            return this.getProperty('width');
+        };
+        Resource.prototype.getHeight = function () {
+            return this.getProperty('height');
+        };
+        Resource.prototype.getMaxWidth = function () {
+            return this.getProperty('maxWidth');
+        };
+        Resource.prototype.getMaxHeight = function () {
+            var maxHeight = this.getProperty('maxHeight');
+            // if a maxHeight hasn't been specified, default to maxWidth.
+            // maxWidth in essence becomes maxEdge
+            if (!maxHeight) {
+                return this.getMaxWidth();
+            }
+            return null;
+        };
+        return Resource;
+    }(Manifesto.ManifestResource));
+    Manifesto.Resource = Resource;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Canvas = /** @class */ (function (_super) {
+        __extends(Canvas, _super);
+        function Canvas(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        // http://iiif.io/api/image/2.1/#canonical-uri-syntax
+        Canvas.prototype.getCanonicalImageUri = function (w) {
+            var id = null;
+            var region = 'full';
+            var rotation = 0;
+            var quality = 'default';
+            var width = w;
+            var size;
+            // if an info.json has been loaded
+            if (this.externalResource && this.externalResource.data && this.externalResource.data['@id']) {
+                id = this.externalResource.data['@id'];
+                if (!width) {
+                    width = this.externalResource.data.width;
+                }
+                if (this.externalResource.data['@context']) {
+                    if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
+                        this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
+                        this.externalResource.data['@context'].indexOf('/1/context.json') > -1) {
+                        quality = 'native';
+                    }
+                }
+            }
+            else {
+                // info.json hasn't been loaded yet
+                var images = this.getImages();
+                if (images && images.length) {
+                    var firstImage = images[0];
+                    var resource = firstImage.getResource();
+                    var services = resource.getServices();
+                    if (!width) {
+                        width = resource.getWidth();
+                    }
+                    if (services.length) {
+                        var service = services[0];
+                        id = service.id;
+                        quality = Manifesto.Utils.getImageQuality(service.getProfile());
+                    }
+                    else if (width === resource.getWidth()) {
+                        // if the passed width is the same as the resource width
+                        // i.e. not looking for a thumbnail
+                        // return the full size image.
+                        // used for download options when loading static images.
+                        return resource.id;
+                    }
+                }
+                // todo: should this be moved to getThumbUri?
+                if (!id) {
+                    var thumbnail = this.getProperty('thumbnail');
+                    if (thumbnail) {
+                        if (typeof (thumbnail) === 'string') {
+                            return thumbnail;
+                        }
+                        else {
+                            return thumbnail['@id'];
+                        }
+                    }
+                }
+            }
+            size = width + ',';
+            // trim off trailing '/'
+            if (id && id.endsWith('/')) {
+                id = id.substr(0, id.length - 1);
+            }
+            return [id, region, size, rotation, quality + '.jpg'].join('/');
+        };
+        Canvas.prototype.getMaxDimensions = function () {
+            var maxDimensions = null;
+            var profile;
+            if (this.externalResource.data && this.externalResource.data.profile) {
+                profile = this.externalResource.data.profile;
+                if (Array.isArray(profile)) {
+                    profile = profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
+                    if (profile) {
+                        maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
+                    }
+                }
+            }
+            return maxDimensions;
+        };
+        // Presentation API 3.0
+        Canvas.prototype.getContent = function () {
+            var content = [];
+            var items = this.__jsonld.items || this.__jsonld.content;
+            if (!items)
+                return content;
+            // should be contained in an AnnotationPage
+            var annotationPage = null;
+            if (items.length) {
+                annotationPage = new Manifesto.AnnotationPage(items[0], this.options);
+            }
+            if (!annotationPage) {
+                return content;
+            }
+            var annotations = annotationPage.getItems();
+            for (var i = 0; i < annotations.length; i++) {
+                var a = annotations[i];
+                var annotation = new Manifesto.Annotation(a, this.options);
+                content.push(annotation);
+            }
+            return content;
+        };
+        Canvas.prototype.getDuration = function () {
+            return this.getProperty('duration');
+        };
+        Canvas.prototype.getP3Images = function () {
+            return this.getContent().filter(function (annotation) {
+                // Grab all bodies
+                var bodies = annotation.getBody();
+                // No bodies, definitely not an image.
+                if (!bodies.length) {
+                    return false;
+                }
+                // Reduce all the bodies into a boolean
+                return bodies.reduce(function (hasImage, body) {
+                    // Check for the image type in the body
+                    return hasImage || body.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.IMAGE.toString();
+                }, false);
+            });
+        };
+        Canvas.prototype.getImages = function () {
+            var _this = this;
+            var iterable = this.getProperty('images', []);
+            return (iterable || []).reduce(function (list, annotation) {
+                if (annotation.type === 'AnnotationPage') {
+                    return annotation.items.reduce(function (list, annotation) {
+                        list.push(new Manifesto.Annotation(annotation, _this.options));
+                        return list;
+                    }, list);
+                }
+                list.push(new Manifesto.Annotation(annotation, _this.options));
+                return list;
+            }, []);
+        };
+        Canvas.prototype.getIndex = function () {
+            return this.getProperty('index');
+        };
+        Canvas.prototype.getAnnotations = function () {
+            var _this = this;
+            var annotationProperty = this.getProperty('annotations');
+            if (!annotationProperty) {
+                return Promise.resolve([]);
+            }
+            var annotations = Array.isArray(annotationProperty) ?
+                annotationProperty :
+                [annotationProperty];
+            var annotationPromises = annotations
+                .map(function (annotationList, i) { return ((new Manifesto.AnnotationList(annotationList.label || "Annotation list " + i, annotationList, _this.options))); })
+                .map(function (annotationList) { return annotationList.load(); });
+            return Promise.all(annotationPromises);
+        };
+        Canvas.prototype.getOtherContent = function () {
+            var _this = this;
+            var otherContent = Array.isArray(this.getProperty('otherContent')) ?
+                this.getProperty('otherContent') :
+                [this.getProperty('otherContent')];
+            var canonicalComparison = function (typeA, typeB) {
+                if (typeof typeA !== 'string' || typeof typeB !== 'string') {
+                    return false;
+                }
+                return typeA.toLowerCase() === typeA.toLowerCase();
+            };
+            var otherPromises = otherContent
+                .filter(function (otherContent) { return otherContent && canonicalComparison(otherContent['@type'], 'sc:AnnotationList'); })
+                .map(function (annotationList, i) { return ((new Manifesto.AnnotationList(annotationList['label'] || "Annotation list " + i, annotationList, _this.options))); })
+                .map(function (annotationList) { return annotationList.load(); });
+            return Promise.all(otherPromises);
+        };
+        // Prefer thumbnail service to image service if supplied and if
+        // the thumbnail service can provide a satisfactory size +/- x pixels.
+        // this is used to get thumb URIs *before* the info.json has been requested
+        // and populate thumbnails in a viewer.
+        // the publisher may also provide pre-computed fixed-size thumbs for better performance.
+        //getThumbUri(width: number): string {
+        //
+        //    var uri;
+        //    var images: IAnnotation[] = this.getImages();
+        //
+        //    if (images && images.length) {
+        //        var firstImage = images[0];
+        //        var resource: IResource = firstImage.getResource();
+        //        var services: IService[] = resource.getServices();
+        //
+        //        for (let i = 0; i < services.length; i++) {
+        //            var service: IService = services[i];
+        //            var id = service.id;
+        //
+        //            if (!_endsWith(id, '/')) {
+        //                id += '/';
+        //            }
+        //
+        //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
+        //        }
+        //    }
+        //
+        //    return uri;
+        //}
+        //getType(): CanvasType {
+        //    return new CanvasType(this.getProperty('@type').toLowerCase());
+        //}
+        Canvas.prototype.getWidth = function () {
+            return this.getProperty('width');
+        };
+        Canvas.prototype.getHeight = function () {
+            return this.getProperty('height');
+        };
+        return Canvas;
+    }(Manifesto.Resource));
+    Manifesto.Canvas = Canvas;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var IIIFResource = /** @class */ (function (_super) {
+        __extends(IIIFResource, _super);
+        function IIIFResource(jsonld, options) {
+            var _this = _super.call(this, jsonld, options) || this;
+            _this.index = -1;
+            _this.isLoaded = false;
+            var defaultOptions = {
+                defaultLabel: '-',
+                locale: 'en-GB',
+                resource: _this,
+                pessimisticAccessControl: false
+            };
+            _this.options = Object.assign(defaultOptions, options);
+            return _this;
+        }
+        IIIFResource.prototype.getAttribution = function () {
+            var attribution = this.getProperty('attribution');
+            if (attribution) {
+                return Manifesto.TranslationCollection.parse(attribution, this.options.locale);
+            }
+            return [];
+        };
+        IIIFResource.prototype.getDescription = function () {
+            var description = this.getProperty('description');
+            if (description) {
+                return Manifesto.TranslationCollection.parse(description, this.options.locale);
+            }
+            return [];
+        };
+        IIIFResource.prototype.getIIIFResourceType = function () {
+            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
+        };
+        IIIFResource.prototype.getLogo = function () {
+            var logo = this.getProperty('logo');
+            if (!logo)
+                return null;
+            if (typeof (logo) === 'string')
+                return logo;
+            return logo['@id'];
+        };
+        IIIFResource.prototype.getLicense = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
+        };
+        IIIFResource.prototype.getNavDate = function () {
+            return new Date(this.getProperty('navDate'));
+        };
+        IIIFResource.prototype.getRelated = function () {
+            return this.getProperty('related');
+        };
+        IIIFResource.prototype.getSeeAlso = function () {
+            return this.getProperty('seeAlso');
+        };
+        IIIFResource.prototype.getLabel = function () {
+            var label = this.getProperty('label');
+            if (label) {
+                return Manifesto.TranslationCollection.parse(label, this.options.locale);
+            }
+            return [];
+        };
+        IIIFResource.prototype.getDefaultLabel = function () {
+            return Manifesto.TranslationCollection.getValue(this.getLabel());
+        };
+        IIIFResource.prototype.getDefaultTree = function () {
+            this.defaultTree = new Manifesto.TreeNode('root');
+            this.defaultTree.data = this;
+            return this.defaultTree;
+        };
+        IIIFResource.prototype.isCollection = function () {
+            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
+                return true;
+            }
+            return false;
+        };
+        IIIFResource.prototype.isManifest = function () {
+            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
+                return true;
+            }
+            return false;
+        };
+        IIIFResource.prototype.load = function () {
+            var that = this;
+            return new Promise(function (resolve, reject) {
+                if (that.isLoaded) {
+                    resolve(that);
+                }
+                else {
+                    var options_1 = that.options;
+                    options_1.navDate = that.getNavDate();
+                    var id = that.__jsonld.id;
+                    if (!id) {
+                        id = that.__jsonld['@id'];
+                    }
+                    Manifesto.Utils.loadResource(id).then(function (data) {
+                        that.parentLabel = Manifesto.TranslationCollection.getValue(that.getLabel(), options_1.locale);
+                        var parsed = Manifesto.Deserialiser.parse(data, options_1);
+                        that = Object.assign(that, parsed);
+                        that.index = options_1.index;
+                        resolve(that);
+                    });
+                }
+            });
+        };
+        return IIIFResource;
+    }(Manifesto.ManifestResource));
+    Manifesto.IIIFResource = IIIFResource;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Manifest = /** @class */ (function (_super) {
+        __extends(Manifest, _super);
+        function Manifest(jsonld, options) {
+            var _this = _super.call(this, jsonld, options) || this;
+            _this.index = 0;
+            _this._allRanges = null;
+            _this.items = [];
+            _this._topRanges = [];
+            if (_this.__jsonld.structures && _this.__jsonld.structures.length) {
+                var topRanges = _this._getTopRanges();
+                for (var i = 0; i < topRanges.length; i++) {
+                    var range = topRanges[i];
+                    _this._parseRanges(range, String(i));
+                }
+            }
+            return _this;
+        }
+        Manifest.prototype.getBehavior = function () {
+            var behavior = this.getProperty('behavior');
+            if (Array.isArray(behavior)) {
+                behavior = behavior[0];
+            }
+            if (behavior) {
+                return new Manifesto.Behavior(behavior);
+            }
+            return null;
+        };
+        Manifest.prototype.getDefaultTree = function () {
+            _super.prototype.getDefaultTree.call(this);
+            this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
+            if (!this.isLoaded) {
+                return this.defaultTree;
+            }
+            var topRanges = this.getTopRanges();
+            // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
+            if (topRanges.length) {
+                topRanges[0].getTree(this.defaultTree);
+            }
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+            return this.defaultTree;
+        };
+        Manifest.prototype._getTopRanges = function () {
+            var topRanges = [];
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var json = this.__jsonld.structures[i];
+                    if (json.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
+                        topRanges.push(json);
+                    }
+                }
+                // if no viewingHint="top" range was found, create a default one
+                if (!topRanges.length) {
+                    var range = {};
+                    range.ranges = this.__jsonld.structures;
+                    topRanges.push(range);
+                }
+            }
+            return topRanges;
+        };
+        Manifest.prototype.getTopRanges = function () {
+            return this._topRanges;
+        };
+        Manifest.prototype._getRangeById = function (id) {
+            if (this.__jsonld.structures && this.__jsonld.structures.length) {
+                for (var i = 0; i < this.__jsonld.structures.length; i++) {
+                    var r = this.__jsonld.structures[i];
+                    if (r['@id'] === id || r.id === id) {
+                        return r;
+                    }
+                }
+            }
+            return null;
+        };
+        //private _parseRangeCanvas(json: any, range: IRange): void {
+        // todo: currently this isn't needed
+        //var canvas: IJSONLDResource = new JSONLDResource(json);
+        //range.items.push(<IManifestResource>canvas);
+        //}
+        Manifest.prototype._parseRanges = function (r, path, parentRange) {
+            var range;
+            var id = null;
+            if (typeof (r) === 'string') {
+                id = r;
+                r = this._getRangeById(id);
+            }
+            if (!r) {
+                console.warn("Range:", id, "does not exist");
+                return;
+            }
+            range = new Manifesto.Range(r, this.options);
+            range.parentRange = parentRange;
+            range.path = path;
+            if (!parentRange) {
+                this._topRanges.push(range);
+            }
+            else {
+                parentRange.items.push(range);
+            }
+            var items = r.items || r.members;
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    // todo: use an ItemType constant?
+                    if (item['@type'] && item['@type'].toLowerCase() === 'sc:range' || item['type'] && item['type'].toLowerCase() === 'range') {
+                        this._parseRanges(item, path + '/' + i, range);
+                    }
+                    else if (item['@type'] && item['@type'].toLowerCase() === 'sc:canvas' || item['type'] && item['type'].toLowerCase() === 'canvas') {
+                        // store the ids on the __jsonld object to be used by Range.getCanvasIds()
+                        if (!range.canvases) {
+                            range.canvases = [];
+                        }
+                        var id_1 = item.id || item['@id'];
+                        range.canvases.push(id_1);
+                    }
+                }
+            }
+            else if (r.ranges) {
+                for (var i = 0; i < r.ranges.length; i++) {
+                    this._parseRanges(r.ranges[i], path + '/' + i, range);
+                }
+            }
+        };
+        Manifest.prototype.getAllRanges = function () {
+            if (this._allRanges != null)
+                return this._allRanges;
+            this._allRanges = [];
+            var topRanges = this.getTopRanges();
+            for (var i = 0; i < topRanges.length; i++) {
+                var topRange = topRanges[i];
+                if (topRange.id) {
+                    this._allRanges.push(topRange); // it might be a placeholder root range
+                }
+                var subRanges = topRange.getRanges();
+                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(function (range) { return range.getRanges(); }).toArray());
+            }
+            return this._allRanges;
+        };
+        Manifest.prototype.getRangeById = function (id) {
+            var ranges = this.getAllRanges();
+            for (var i = 0; i < ranges.length; i++) {
+                var range = ranges[i];
+                if (range.id === id) {
+                    return range;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getRangeByPath = function (path) {
+            var ranges = this.getAllRanges();
+            for (var i = 0; i < ranges.length; i++) {
+                var range = ranges[i];
+                if (range.path === path) {
+                    return range;
+                }
+            }
+            return null;
+        };
+        Manifest.prototype.getSequences = function () {
+            if (this.items.length) {
+                return this.items;
+            }
+            // IxIF mediaSequences overrode sequences, so need to be checked first.
+            // deprecate this when presentation 3 ships
+            var items = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    var sequence = new Manifesto.Sequence(s, this.options);
+                    this.items.push(sequence);
+                }
+            }
+            else if (this.__jsonld.items) {
+                var sequence = new Manifesto.Sequence(this.__jsonld.items, this.options);
+                this.items.push(sequence);
+            }
+            return this.items;
+        };
+        Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
+            return this.getSequences()[sequenceIndex];
+        };
+        Manifest.prototype.getTotalSequences = function () {
+            return this.getSequences().length;
+        };
+        Manifest.prototype.getManifestType = function () {
+            var service = this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
+            if (service) {
+                return new Manifesto.ManifestType(service.getProperty('manifestType'));
+            }
+            return new Manifesto.ManifestType('');
+        };
+        Manifest.prototype.getTrackingLabel = function () {
+            var service = this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
+            if (service) {
+                return service.getProperty('trackingLabel');
+            }
+            return '';
+        };
+        Manifest.prototype.isMultiSequence = function () {
+            return this.getTotalSequences() > 1;
+        };
+        Manifest.prototype.isPagingEnabled = function () {
+            var viewingHint = this.getViewingHint();
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+            return false;
+        };
+        Manifest.prototype.getViewingDirection = function () {
+            if (this.getProperty('viewingDirection')) {
+                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
+            }
+            return null;
+        };
+        Manifest.prototype.getViewingHint = function () {
+            if (this.getProperty('viewingHint')) {
+                return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
+            }
+            return null;
+        };
+        Manifest.prototype.getSearchService = function () {
+            var services = this.getServices();
+            return services.reduce(function (found, candidateService) {
+                return found || ((candidateService.getProfile().toString() === Manifesto.ServiceProfile.SEARCH.toString() ||
+                    candidateService.getProfile().toString() === Manifesto.ServiceProfile.SEARCH_P3.toString())
+                    ? candidateService
+                    : null);
+            }, null);
+        };
+        return Manifest;
+    }(Manifesto.IIIFResource));
+    Manifesto.Manifest = Manifest;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Collection = /** @class */ (function (_super) {
+        __extends(Collection, _super);
+        function Collection(jsonld, options) {
+            var _this = _super.call(this, jsonld, options) || this;
+            _this.items = [];
+            _this._collections = null;
+            _this._manifests = null;
+            jsonld.__collection = _this;
+            return _this;
+        }
+        Collection.prototype.getCollections = function () {
+            if (this._collections) {
+                return this._collections;
+            }
+            return this._collections = this.items.en().where(function (m) { return m.isCollection(); }).toArray();
+        };
+        Collection.prototype.getManifests = function () {
+            if (this._manifests) {
+                return this._manifests;
+            }
+            return this._manifests = this.items.en().where(function (m) { return m.isManifest(); }).toArray();
+        };
+        Collection.prototype.getCollectionByIndex = function (collectionIndex) {
+            var collections = this.getCollections();
+            if (!collections[collectionIndex]) {
+                throw new Error("Collection index is outside range of array");
+            }
+            var collection = collections[collectionIndex];
+            collection.options.index = collectionIndex;
+            // id for collection MUST be dereferenceable
+            return collection.load();
+        };
+        Collection.prototype.getManifestByIndex = function (manifestIndex) {
+            var manifests = this.getManifests();
+            if (!manifests[manifestIndex]) {
+                throw new Error("Manifest index is outside range of array");
+            }
+            var manifest = manifests[manifestIndex];
+            manifest.options.index = manifestIndex;
+            return manifest.load();
+        };
+        Collection.prototype.getTotalCollections = function () {
+            return this.getCollections().length;
+        };
+        Collection.prototype.getTotalManifests = function () {
+            return this.getManifests().length;
+        };
+        Collection.prototype.getTotalItems = function () {
+            return this.items.length;
+        };
+        Collection.prototype.getViewingDirection = function () {
+            if (this.getProperty('viewingDirection')) {
+                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
+            }
+            return Manifesto.ViewingDirection.LEFTTORIGHT;
+        };
+        /**
+         * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
+         */
+        Collection.prototype.getDefaultTree = function () {
+            _super.prototype.getDefaultTree.call(this);
+            this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
+            this._parseManifests(this);
+            this._parseCollections(this);
+            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
+            return this.defaultTree;
+        };
+        Collection.prototype._parseManifests = function (parentCollection) {
+            if (parentCollection.getManifests() && parentCollection.getManifests().length) {
+                for (var i = 0; i < parentCollection.getManifests().length; i++) {
+                    var manifest = parentCollection.getManifests()[i];
+                    var tree = manifest.getDefaultTree();
+                    tree.label = manifest.parentLabel || Manifesto.TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
+                    tree.navDate = manifest.getNavDate();
+                    tree.data.id = manifest.id;
+                    tree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
+                    parentCollection.defaultTree.addNode(tree);
+                }
+            }
+        };
+        Collection.prototype._parseCollections = function (parentCollection) {
+            if (parentCollection.getCollections() && parentCollection.getCollections().length) {
+                for (var i = 0; i < parentCollection.getCollections().length; i++) {
+                    var collection = parentCollection.getCollections()[i];
+                    var tree = collection.getDefaultTree();
+                    tree.label = collection.parentLabel || Manifesto.TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
+                    tree.navDate = collection.getNavDate();
+                    tree.data.id = collection.id;
+                    tree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
+                    parentCollection.defaultTree.addNode(tree);
+                    this._parseCollections(collection);
+                }
+            }
+        };
+        return Collection;
+    }(Manifesto.IIIFResource));
+    Manifesto.Collection = Collection;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Range = /** @class */ (function (_super) {
+        __extends(Range, _super);
+        function Range(jsonld, options) {
+            var _this = _super.call(this, jsonld, options) || this;
+            _this._ranges = null;
+            _this.canvases = null;
+            _this.items = [];
+            return _this;
+        }
+        Range.prototype.getCanvasIds = function () {
+            if (this.__jsonld.canvases) {
+                return this.__jsonld.canvases;
+            }
+            else if (this.canvases) {
+                return this.canvases;
+            }
+            return [];
+        };
+        Range.prototype.getDuration = function () {
+            var start;
+            var end;
+            if (this.canvases && this.canvases.length) {
+                for (var i = 0; i < this.canvases.length; i++) {
+                    var canvas = this.canvases[i];
+                    var temporal = Manifesto.Utils.getTemporalComponent(canvas);
+                    if (temporal && temporal.length > 1) {
+                        if (i === 0) {
+                            start = Number(temporal[0]);
+                        }
+                        if (i === this.canvases.length - 1) {
+                            end = Number(temporal[1]);
+                        }
+                    }
+                }
+            }
+            else {
+                // get child ranges and calculate the start and end based on them
+                var childRanges = this.getRanges();
+                for (var i = 0; i < childRanges.length; i++) {
+                    var childRange = childRanges[i];
+                    var duration = childRange.getDuration();
+                    if (duration) {
+                        if (i === 0) {
+                            start = duration.start;
+                        }
+                        if (i === childRanges.length - 1) {
+                            end = duration.end;
+                        }
+                    }
+                }
+            }
+            if (start !== undefined && end !== undefined) {
+                return new Manifesto.Duration(start, end);
+            }
+            return undefined;
+        };
+        // getCanvases(): ICanvas[] {
+        //     if (this._canvases) {
+        //         return this._canvases;
+        //     }
+        //     return this._canvases = <ICanvas[]>this.items.en().where(m => m.isCanvas()).toArray();
+        // }
+        Range.prototype.getRanges = function () {
+            if (this._ranges) {
+                return this._ranges;
+            }
+            return this._ranges = this.items.en().where(function (m) { return m.isRange(); }).toArray();
+        };
+        Range.prototype.getBehavior = function () {
+            var behavior = this.getProperty('behavior');
+            if (Array.isArray(behavior)) {
+                behavior = behavior[0];
+            }
+            if (behavior) {
+                return new Manifesto.Behavior(behavior);
+            }
+            return null;
+        };
+        Range.prototype.getViewingDirection = function () {
+            if (this.getProperty('viewingDirection')) {
+                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
+            }
+            return null;
+        };
+        Range.prototype.getViewingHint = function () {
+            if (this.getProperty('viewingHint')) {
+                return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
+            }
+            return null;
+        };
+        Range.prototype.getTree = function (treeRoot) {
+            treeRoot.data = this;
+            this.treeNode = treeRoot;
+            var ranges = this.getRanges();
+            if (ranges && ranges.length) {
+                for (var i = 0; i < ranges.length; i++) {
+                    var range = ranges[i];
+                    var node = new Manifesto.TreeNode();
+                    treeRoot.addNode(node);
+                    this._parseTreeNode(node, range);
+                }
+            }
+            Manifesto.Utils.generateTreeNodeIds(treeRoot);
+            return treeRoot;
+        };
+        Range.prototype.spansTime = function (time) {
+            var duration = this.getDuration();
+            if (duration) {
+                if (time >= duration.start && time <= duration.end) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        Range.prototype._parseTreeNode = function (node, range) {
+            node.label = Manifesto.TranslationCollection.getValue(range.getLabel(), this.options.locale);
+            node.data = range;
+            node.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.RANGE.toString());
+            range.treeNode = node;
+            var ranges = range.getRanges();
+            if (ranges && ranges.length) {
+                for (var i = 0; i < ranges.length; i++) {
+                    var childRange = ranges[i];
+                    var behavior = childRange.getBehavior();
+                    if (behavior && behavior.toString() === Manifesto.Behavior.NONAV.toString()) {
+                        continue;
+                    }
+                    else {
+                        var childNode = new Manifesto.TreeNode();
+                        node.addNode(childNode);
+                        this._parseTreeNode(childNode, childRange);
+                    }
+                }
+            }
+        };
+        return Range;
+    }(Manifesto.ManifestResource));
+    Manifesto.Range = Range;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Rendering = /** @class */ (function (_super) {
+        __extends(Rendering, _super);
+        function Rendering(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        Rendering.prototype.getFormat = function () {
+            return new Manifesto.RenderingFormat(this.getProperty('format'));
+        };
+        return Rendering;
+    }(Manifesto.ManifestResource));
+    Manifesto.Rendering = Rendering;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Sequence = /** @class */ (function (_super) {
+        __extends(Sequence, _super);
+        function Sequence(jsonld, options) {
+            var _this = _super.call(this, jsonld, options) || this;
+            _this.items = [];
+            _this._thumbnails = null;
+            return _this;
+        }
+        Sequence.prototype.getCanvases = function () {
+            if (this.items.length) {
+                return this.items;
+            }
+            var items = this.__jsonld.canvases || this.__jsonld.elements;
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var c = items[i];
+                    var canvas = new Manifesto.Canvas(c, this.options);
+                    canvas.index = i;
+                    this.items.push(canvas);
+                }
+            }
+            else if (this.__jsonld) {
+                for (var i = 0; i < this.__jsonld.length; i++) {
+                    var c = this.__jsonld[i];
+                    var canvas = new Manifesto.Canvas(c, this.options);
+                    canvas.index = i;
+                    this.items.push(canvas);
+                }
+            }
+            return this.items;
+        };
+        Sequence.prototype.getCanvasById = function (id) {
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                // normalise canvas id
+                var canvasId = Manifesto.Utils.normaliseUrl(canvas.id);
+                if (Manifesto.Utils.normaliseUrl(id) === canvasId) {
+                    return canvas;
+                }
+            }
+            return null;
+        };
+        Sequence.prototype.getCanvasByIndex = function (canvasIndex) {
+            return this.getCanvases()[canvasIndex];
+        };
+        Sequence.prototype.getCanvasIndexById = function (id) {
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                if (canvas.id === id) {
+                    return i;
+                }
+            }
+            return null;
+        };
+        Sequence.prototype.getCanvasIndexByLabel = function (label, foliated) {
+            label = label.trim();
+            if (!isNaN(label)) {
+                label = parseInt(label, 10).toString(); // trim any preceding zeros.
+                if (foliated)
+                    label += 'r'; // default to recto
+            }
+            var doublePageRegExp = /(\d*)\D+(\d*)/;
+            var match, regExp, regStr, labelPart1, labelPart2;
+            for (var i = 0; i < this.getTotalCanvases(); i++) {
+                var canvas = this.getCanvasByIndex(i);
+                // check if there's a literal match
+                if (Manifesto.TranslationCollection.getValue(canvas.getLabel(), this.options.locale) === label) {
+                    return i;
+                }
+                // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
+                match = doublePageRegExp.exec(label);
+                if (!match)
+                    continue;
+                labelPart1 = match[1];
+                labelPart2 = match[2];
+                if (!labelPart2)
+                    continue;
+                regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
+                regExp = new RegExp(regStr);
+                if (regExp.test(canvas.getLabel().toString())) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+        Sequence.prototype.getLastCanvasLabel = function (alphanumeric) {
+            for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
+                var canvas = this.getCanvasByIndex(i);
+                var label = Manifesto.TranslationCollection.getValue(canvas.getLabel(), this.options.locale);
+                if (alphanumeric) {
+                    var regExp = /^[a-zA-Z0-9]*$/;
+                    if (regExp.test(label)) {
+                        return label;
+                    }
+                }
+                else if (label) {
+                    return label;
+                }
+            }
+            return this.options.defaultLabel;
+        };
+        Sequence.prototype.getLastPageIndex = function () {
+            return this.getTotalCanvases() - 1;
+        };
+        Sequence.prototype.getNextPageIndex = function (canvasIndex, pagingEnabled) {
+            var index;
+            if (pagingEnabled) {
+                var indices = this.getPagedIndices(canvasIndex);
+                var viewingDirection = this.getViewingDirection();
+                if (viewingDirection && viewingDirection.toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
+                    index = indices[0] + 1;
+                }
+                else {
+                    index = indices[indices.length - 1] + 1;
+                }
+            }
+            else {
+                index = canvasIndex + 1;
+            }
+            if (index > this.getLastPageIndex()) {
+                return -1;
+            }
+            return index;
+        };
+        Sequence.prototype.getPagedIndices = function (canvasIndex, pagingEnabled) {
+            var indices = [];
+            if (!pagingEnabled) {
+                indices.push(canvasIndex);
+            }
+            else {
+                if (this.isFirstCanvas(canvasIndex) || this.isLastCanvas(canvasIndex)) {
+                    indices = [canvasIndex];
+                }
+                else if (canvasIndex % 2) {
+                    indices = [canvasIndex, canvasIndex + 1];
+                }
+                else {
+                    indices = [canvasIndex - 1, canvasIndex];
+                }
+                var viewingDirection = this.getViewingDirection();
+                if (viewingDirection && viewingDirection.toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
+                    indices = indices.reverse();
+                }
+            }
+            return indices;
+        };
+        Sequence.prototype.getPrevPageIndex = function (canvasIndex, pagingEnabled) {
+            var index;
+            if (pagingEnabled) {
+                var indices = this.getPagedIndices(canvasIndex);
+                var viewingDirection = this.getViewingDirection();
+                if (viewingDirection && viewingDirection.toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
+                    index = indices[indices.length - 1] - 1;
+                }
+                else {
+                    index = indices[0] - 1;
+                }
+            }
+            else {
+                index = canvasIndex - 1;
+            }
+            return index;
+        };
+        Sequence.prototype.getStartCanvasIndex = function () {
+            var startCanvas = this.getStartCanvas();
+            if (startCanvas) {
+                // if there's a startCanvas attribute, loop through the canvases and return the matching index.
+                for (var i = 0; i < this.getTotalCanvases(); i++) {
+                    var canvas = this.getCanvasByIndex(i);
+                    if (canvas.id === startCanvas)
+                        return i;
+                }
+            }
+            // default to first canvas.
+            return 0;
+        };
+        // todo: deprecate
+        Sequence.prototype.getThumbs = function (width, height) {
+            console.warn('getThumbs will be deprecated, use getThumbnails instead');
+            var thumbs = [];
+            var totalCanvases = this.getTotalCanvases();
+            for (var i = 0; i < totalCanvases; i++) {
+                var canvas = this.getCanvasByIndex(i);
+                var thumb = new Manifesto.Thumb(width, canvas);
+                thumbs.push(thumb);
+            }
+            return thumbs;
+        };
+        Sequence.prototype.getThumbnails = function () {
+            if (this._thumbnails != null)
+                return this._thumbnails;
+            this._thumbnails = [];
+            var canvases = this.getCanvases();
+            for (var i = 0; i < canvases.length; i++) {
+                var thumbnail = canvases[i].getThumbnail();
+                if (thumbnail) {
+                    this._thumbnails.push(thumbnail);
+                }
+            }
+            return this._thumbnails;
+        };
+        Sequence.prototype.getStartCanvas = function () {
+            return this.getProperty('startCanvas');
+        };
+        Sequence.prototype.getTotalCanvases = function () {
+            return this.getCanvases().length;
+        };
+        Sequence.prototype.getViewingDirection = function () {
+            if (this.getProperty('viewingDirection')) {
+                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
+            }
+            else if (this.options.resource.getViewingDirection) {
+                return this.options.resource.getViewingDirection();
+            }
+            return null;
+        };
+        Sequence.prototype.getViewingHint = function () {
+            if (this.getProperty('viewingHint')) {
+                return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
+            }
+            return null;
+        };
+        Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
+            return canvasIndex > this.getTotalCanvases() - 1;
+        };
+        Sequence.prototype.isFirstCanvas = function (canvasIndex) {
+            return canvasIndex === 0;
+        };
+        Sequence.prototype.isLastCanvas = function (canvasIndex) {
+            return canvasIndex === this.getTotalCanvases() - 1;
+        };
+        Sequence.prototype.isMultiCanvas = function () {
+            return this.getTotalCanvases() > 1;
+        };
+        Sequence.prototype.isPagingEnabled = function () {
+            var viewingHint = this.getViewingHint();
+            if (viewingHint) {
+                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+            return false;
+        };
+        // checks if the number of canvases is even - therefore has a front and back cover
+        Sequence.prototype.isTotalCanvasesEven = function () {
+            return this.getTotalCanvases() % 2 === 0;
+        };
+        return Sequence;
+    }(Manifesto.ManifestResource));
+    Manifesto.Sequence = Sequence;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var Deserialiser = /** @class */ (function () {
+        function Deserialiser() {
+        }
+        Deserialiser.parse = function (manifest, options) {
+            if (typeof manifest === 'string') {
+                manifest = JSON.parse(manifest);
+            }
+            return this.parseJson(manifest, options);
+        };
+        Deserialiser.parseJson = function (json, options) {
+            var resource;
+            // have options been passed for the manifest to inherit?
+            if (options) {
+                if (options.navDate && !isNaN(options.navDate.getTime())) {
+                    json.navDate = options.navDate.toString();
+                }
+            }
+            if (json['@type']) {
+                switch (json['@type']) {
+                    case 'sc:Collection':
+                        resource = this.parseCollection(json, options);
+                        break;
+                    case 'sc:Manifest':
+                        resource = this.parseManifest(json, options);
+                        break;
+                    default:
+                        return null;
+                }
+            }
+            else {
+                // presentation 3
+                switch (json['type']) {
+                    case 'Collection':
+                        resource = this.parseCollection(json, options);
+                        break;
+                    case 'Manifest':
+                        resource = this.parseManifest(json, options);
+                        break;
+                    default:
+                        return null;
+                }
+            }
+            // Top-level resource was loaded from a URI, so flag it to prevent
+            // unnecessary reload:
+            resource.isLoaded = true;
+            return resource;
+        };
+        Deserialiser.parseCollection = function (json, options) {
+            var collection = new Manifesto.Collection(json, options);
+            if (options) {
+                collection.index = options.index || 0;
+            }
+            else {
+                collection.index = 0;
+            }
+            this.parseCollections(collection, options);
+            this.parseManifests(collection, options);
+            this.parseItems(collection, options);
+            return collection;
+        };
+        Deserialiser.parseCollections = function (collection, options) {
+            var items;
+            if (collection.__jsonld.collections) {
+                items = collection.__jsonld.collections;
+            }
+            else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'collection'; }).toArray();
+            }
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    if (options) {
+                        options.index = i;
+                    }
+                    var item = this.parseCollection(items[i], options);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
+                }
+            }
+        };
+        Deserialiser.parseManifest = function (json, options) {
+            var manifest = new Manifesto.Manifest(json, options);
+            return manifest;
+        };
+        Deserialiser.parseManifests = function (collection, options) {
+            var items;
+            if (collection.__jsonld.manifests) {
+                items = collection.__jsonld.manifests;
+            }
+            else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'manifest'; }).toArray();
+            }
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var item = this.parseManifest(items[i], options);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
+                }
+            }
+        };
+        Deserialiser.parseItem = function (json, options) {
+            if (json['@type']) {
+                if (json['@type'].toLowerCase() === 'sc:manifest') {
+                    return this.parseManifest(json, options);
+                }
+                else if (json['@type'].toLowerCase() === 'sc:collection') {
+                    return this.parseCollection(json, options);
+                }
+            }
+            else if (json.type) {
+                if (json.type.toLowerCase() === 'manifest') {
+                    return this.parseManifest(json, options);
+                }
+                else if (json.type.toLowerCase() === 'collection') {
+                    return this.parseCollection(json, options);
+                }
+            }
+            return null;
+        };
+        Deserialiser.parseItems = function (collection, options) {
+            var items = collection.__jsonld.members || collection.__jsonld.items;
+            if (items) {
+                var _loop_1 = function (i) {
+                    if (options) {
+                        options.index = i;
+                    }
+                    var item = this_1.parseItem(items[i], options);
+                    if (!item)
+                        return { value: void 0 };
+                    // only add to items if not already parsed from backwards-compatible collections/manifests arrays
+                    if (collection.items.en().where(function (m) { return m.id === item.id; }).first()) {
+                        return "continue";
+                    }
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
+                };
+                var this_1 = this;
+                for (var i = 0; i < items.length; i++) {
+                    var state_1 = _loop_1(i);
+                    if (typeof state_1 === "object")
+                        return state_1.value;
+                }
+            }
+        };
+        return Deserialiser;
+    }());
+    Manifesto.Deserialiser = Deserialiser;
+    var Serialiser = /** @class */ (function () {
+        function Serialiser() {
+        }
+        Serialiser.serialise = function (manifest) {
+            // todo
+            return "";
+        };
+        return Serialiser;
+    }());
+    Manifesto.Serialiser = Serialiser;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Service = /** @class */ (function (_super) {
+        __extends(Service, _super);
+        function Service(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        Service.prototype.getProfile = function () {
+            var profile = this.getProperty('profile');
+            if (!profile) {
+                profile = this.getProperty('dcterms:conformsTo');
+            }
+            if (Array.isArray(profile)) {
+                return new Manifesto.ServiceProfile(profile[0]);
+            }
+            return new Manifesto.ServiceProfile(profile);
+        };
+        Service.prototype.getConfirmLabel = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('confirmLabel'), this.options.locale);
+        };
+        Service.prototype.getDescription = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
+        };
+        Service.prototype.getFailureDescription = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('failureDescription'), this.options.locale);
+        };
+        Service.prototype.getFailureHeader = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('failureHeader'), this.options.locale);
+        };
+        Service.prototype.getHeader = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('header'), this.options.locale);
+        };
+        Service.prototype.getServiceLabel = function () {
+            return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
+        };
+        Service.prototype.getInfoUri = function () {
+            var infoUri = this.id;
+            if (!infoUri.endsWith('/')) {
+                infoUri += '/';
+            }
+            infoUri += 'info.json';
+            return infoUri;
+        };
+        return Service;
+    }(Manifesto.ManifestResource));
+    Manifesto.Service = Service;
+})(Manifesto || (Manifesto = {}));
+
+
+var Manifesto;
+(function (Manifesto) {
+    // todo: deprecate
+    // this is used by Sequence.getThumbs
+    var Thumb = /** @class */ (function () {
+        function Thumb(width, canvas) {
+            this.data = canvas;
+            this.index = canvas.index;
+            this.width = width;
+            var heightRatio = canvas.getHeight() / canvas.getWidth();
+            if (heightRatio) {
+                this.height = Math.floor(this.width * heightRatio);
+            }
+            else {
+                this.height = width;
+            }
+            this.uri = canvas.getCanonicalImageUri(width);
+            this.label = Manifesto.TranslationCollection.getValue(canvas.getLabel()); // todo: pass locale?
+        }
+        return Thumb;
+    }());
+    Manifesto.Thumb = Thumb;
+})(Manifesto || (Manifesto = {}));
+
+
+var Manifesto;
+(function (Manifesto) {
+    var TreeNode = /** @class */ (function () {
+        function TreeNode(label, data) {
+            this.label = label;
+            this.data = data || {};
+            this.nodes = [];
+        }
+        TreeNode.prototype.addNode = function (node) {
+            this.nodes.push(node);
+            node.parentNode = this;
+        };
+        TreeNode.prototype.isCollection = function () {
+            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
+        };
+        TreeNode.prototype.isManifest = function () {
+            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
+        };
+        TreeNode.prototype.isRange = function () {
+            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.RANGE.toString());
+        };
+        return TreeNode;
+    }());
+    Manifesto.TreeNode = TreeNode;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var TreeNodeType = /** @class */ (function (_super) {
+        __extends(TreeNodeType, _super);
+        function TreeNodeType() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        // todo: use getters when ES3 target is no longer required.
+        TreeNodeType.prototype.collection = function () {
+            return new TreeNodeType(TreeNodeType.COLLECTION.toString());
+        };
+        TreeNodeType.prototype.manifest = function () {
+            return new TreeNodeType(TreeNodeType.MANIFEST.toString());
+        };
+        TreeNodeType.prototype.range = function () {
+            return new TreeNodeType(TreeNodeType.RANGE.toString());
+        };
+        TreeNodeType.COLLECTION = new TreeNodeType("collection");
+        TreeNodeType.MANIFEST = new TreeNodeType("manifest");
+        TreeNodeType.RANGE = new TreeNodeType("range");
+        return TreeNodeType;
+    }(Manifesto.StringValue));
+    Manifesto.TreeNodeType = TreeNodeType;
+})(Manifesto || (Manifesto = {}));
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var http = require("http");
+var https = require("https");
+var url = require("url");
+var Manifesto;
+(function (Manifesto) {
+    var Utils = /** @class */ (function () {
+        function Utils() {
+        }
+        Utils.createAnnotation = function (jsonLd, options) {
+            return new Manifesto.Annotation(jsonLd, options);
+        };
+        Utils.getMediaType = function (type) {
+            type = type.toLowerCase();
+            type = type.split(';')[0];
+            return type.trim();
+        };
+        Utils.getImageQuality = function (profile) {
+            var p = profile.toString();
+            if (p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
+                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
+                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) {
+                return 'native';
+            }
+            return 'default';
+        };
+        Utils.getInexactLocale = function (locale) {
+            if (locale.indexOf('-') !== -1) {
+                return locale.substr(0, locale.indexOf('-'));
+            }
+            return locale;
+        };
+        Utils.getLocalisedValue = function (resource, locale) {
+            // if the resource is not an array of translations, return the string.
+            if (!Array.isArray(resource)) {
+                return resource;
+            }
+            // test for exact match
+            for (var i = 0; i < resource.length; i++) {
+                var value_1 = resource[i];
+                var language_1 = value_1['@language'];
+                if (locale === language_1) {
+                    return value_1['@value'];
+                }
+            }
+            // test for inexact match
+            var match = locale.substr(0, locale.indexOf('-'));
+            for (var i = 0; i < resource.length; i++) {
+                var value = resource[i];
+                var language = value['@language'];
+                if (language === match) {
+                    return value['@value'];
+                }
+            }
+            return null;
+        };
+        Utils.generateTreeNodeIds = function (treeNode, index) {
+            if (index === void 0) { index = 0; }
+            var id;
+            if (!treeNode.parentNode) {
+                id = '0';
+            }
+            else {
+                id = treeNode.parentNode.id + "-" + index;
+            }
+            treeNode.id = id;
+            for (var i = 0; i < treeNode.nodes.length; i++) {
+                var n = treeNode.nodes[i];
+                Utils.generateTreeNodeIds(n, i);
+            }
+        };
+        Utils.normaliseType = function (type) {
+            type = type.toLowerCase();
+            if (type.indexOf(':') !== -1) {
+                var split = type.split(':');
+                return split[1];
+            }
+            return type;
+        };
+        Utils.normaliseUrl = function (url) {
+            url = url.substr(url.indexOf('://'));
+            if (url.indexOf('#') !== -1) {
+                url = url.split('#')[0];
+            }
+            return url;
+        };
+        Utils.normalisedUrlsMatch = function (url1, url2) {
+            return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
+        };
+        Utils.isImageProfile = function (profile) {
+            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL2.toString())) {
+                return true;
+            }
+            return false;
+        };
+        Utils.isLevel0ImageProfile = function (profile) {
+            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString())) {
+                return true;
+            }
+            return false;
+        };
+        Utils.isLevel1ImageProfile = function (profile) {
+            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString())) {
+                return true;
+            }
+            return false;
+        };
+        Utils.isLevel2ImageProfile = function (profile) {
+            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
+                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString())) {
+                return true;
+            }
+            return false;
+        };
+        Utils.loadResource = function (uri) {
+            return new Promise(function (resolve, reject) {
+                var u = url.parse(uri);
+                var request;
+                var opts = {
+                    host: u.hostname,
+                    port: u.port,
+                    path: u.path,
+                    method: "GET",
+                    withCredentials: false
+                };
+                if (u.protocol === 'https:') {
+                    request = https.request(opts, function (response) {
+                        var result = "";
+                        response.on('data', function (chunk) {
+                            result += chunk;
+                        });
+                        response.on('end', function () {
+                            resolve(result);
+                        });
+                    });
+                }
+                else {
+                    request = http.request(opts, function (response) {
+                        var result = "";
+                        response.on('data', function (chunk) {
+                            result += chunk;
+                        });
+                        response.on('end', function () {
+                            resolve(result);
+                        });
+                    });
+                }
+                request.on('error', function (error) {
+                    reject(error);
+                });
+                request.end();
+            });
+        };
+        Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
+            return new Promise(function (resolve, reject) {
+                var promises = resources.map(function (resource) {
+                    return Utils.loadExternalResourceAuth1(resource, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                })["catch"](function (error) {
+                    reject(error);
+                });
+            });
+        };
+        Utils.loadExternalResourceAuth1 = function (resource, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storedAccessToken;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, getStoredAccessToken(resource)];
+                        case 1:
+                            storedAccessToken = _a.sent();
+                            if (!storedAccessToken) return [3 /*break*/, 6];
+                            return [4 /*yield*/, resource.getData(storedAccessToken)];
+                        case 2:
+                            _a.sent();
+                            if (!(resource.status === HTTPStatusCode.OK)) return [3 /*break*/, 3];
+                            return [2 /*return*/, resource];
+                        case 3: 
+                        // the stored token is no good for this resource
+                        return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
+                        case 4:
+                            // the stored token is no good for this resource
+                            _a.sent();
+                            _a.label = 5;
+                        case 5:
+                            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                                return [2 /*return*/, resource];
+                            }
+                            throw Utils.createAuthorizationFailedError();
+                        case 6: return [4 /*yield*/, resource.getData()];
+                        case 7:
+                            _a.sent();
+                            if (!(resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED)) return [3 /*break*/, 9];
+                            return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
+                        case 8:
+                            _a.sent();
+                            _a.label = 9;
+                        case 9:
+                            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                                return [2 /*return*/, resource];
+                            }
+                            throw Utils.createAuthorizationFailedError();
+                    }
+                });
+            });
+        };
+        Utils.doAuthChain = function (resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
+            return __awaiter(this, void 0, void 0, function () {
+                var externalService, kioskService, clickThroughService, loginService, serviceToTry, lastAttempted, kioskInteraction, contentProviderInteraction, contentProviderInteraction;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            // This function enters the flowchart at the < External? > junction
+                            // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
+                            if (!resource.isAccessControlled()) {
+                                return [2 /*return*/, resource]; // no services found
+                            }
+                            externalService = resource.externalService;
+                            if (externalService) {
+                                externalService.options = resource.options;
+                            }
+                            kioskService = resource.kioskService;
+                            if (kioskService) {
+                                kioskService.options = resource.options;
+                            }
+                            clickThroughService = resource.clickThroughService;
+                            if (clickThroughService) {
+                                clickThroughService.options = resource.options;
+                            }
+                            loginService = resource.loginService;
+                            if (loginService) {
+                                loginService.options = resource.options;
+                            }
+                            if (!(!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, handleMovedTemporarily(resource)];
+                        case 1:
+                            _a.sent();
+                            return [2 /*return*/, resource];
+                        case 2:
+                            serviceToTry = null;
+                            lastAttempted = null;
+                            // repetition of logic is left in these steps for clarity:
+                            // Looking for external pattern
+                            serviceToTry = externalService;
+                            if (!serviceToTry) return [3 /*break*/, 4];
+                            lastAttempted = serviceToTry;
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
+                        case 3:
+                            _a.sent();
+                            return [2 /*return*/, resource];
+                        case 4:
+                            // Looking for kiosk pattern
+                            serviceToTry = kioskService;
+                            if (!serviceToTry) return [3 /*break*/, 7];
+                            lastAttempted = serviceToTry;
+                            kioskInteraction = openContentProviderInteraction(serviceToTry);
+                            if (!kioskInteraction) return [3 /*break*/, 7];
+                            return [4 /*yield*/, userInteractedWithContentProvider(kioskInteraction)];
+                        case 5:
+                            _a.sent();
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
+                        case 6:
+                            _a.sent();
+                            return [2 /*return*/, resource];
+                        case 7:
+                            // The code for the next two patterns is identical (other than the profile name).
+                            // The difference is in the expected behaviour of
+                            //
+                            //    await userInteractedWithContentProvider(contentProviderInteraction);
+                            //
+                            // For clickthrough the opened window should close immediately having established
+                            // a session, whereas for login the user might spend some time entering credentials etc.
+                            // Looking for clickthrough pattern
+                            serviceToTry = clickThroughService;
+                            if (!serviceToTry) return [3 /*break*/, 11];
+                            lastAttempted = serviceToTry;
+                            return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
+                        case 8:
+                            contentProviderInteraction = _a.sent();
+                            if (!contentProviderInteraction) return [3 /*break*/, 11];
+                            // should close immediately
+                            return [4 /*yield*/, userInteractedWithContentProvider(contentProviderInteraction)];
+                        case 9:
+                            // should close immediately
+                            _a.sent();
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
+                        case 10:
+                            _a.sent();
+                            return [2 /*return*/, resource];
+                        case 11:
+                            // Looking for login pattern
+                            serviceToTry = loginService;
+                            if (!serviceToTry) return [3 /*break*/, 15];
+                            lastAttempted = serviceToTry;
+                            return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
+                        case 12:
+                            contentProviderInteraction = _a.sent();
+                            if (!contentProviderInteraction) return [3 /*break*/, 15];
+                            // we expect the user to spend some time interacting
+                            return [4 /*yield*/, userInteractedWithContentProvider(contentProviderInteraction)];
+                        case 13:
+                            // we expect the user to spend some time interacting
+                            _a.sent();
+                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
+                        case 14:
+                            _a.sent();
+                            return [2 /*return*/, resource];
+                        case 15:
+                            // nothing worked! Use the most recently tried service as the source of
+                            // messages to show to the user.
+                            if (lastAttempted) {
+                                showOutOfOptionsMessages(lastAttempted);
+                            }
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        };
+        Utils.attemptResourceWithToken = function (resource, openTokenService, authService) {
+            return __awaiter(this, void 0, void 0, function () {
+                var tokenService, tokenMessage;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
+                            if (!tokenService) return [3 /*break*/, 3];
+                            return [4 /*yield*/, openTokenService(resource, tokenService)];
+                        case 1:
+                            tokenMessage = _a.sent();
+                            if (!(tokenMessage && tokenMessage.accessToken)) return [3 /*break*/, 3];
+                            return [4 /*yield*/, resource.getData(tokenMessage)];
+                        case 2:
+                            _a.sent();
+                            return [2 /*return*/, resource];
+                        case 3: return [2 /*return*/];
+                    }
+                });
+            });
+        };
+        Utils.loadExternalResourcesAuth09 = function (resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
+            return new Promise(function (resolve, reject) {
+                var promises = resources.map(function (resource) {
+                    return Utils.loadExternalResourceAuth09(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
+                });
+                Promise.all(promises)
+                    .then(function () {
+                    resolve(resources);
+                })["catch"](function (error) {
+                    reject(error);
+                });
+            });
+        };
+        // IIIF auth api pre v1.0
+        // Keeping this around for now until the auth 1.0 implementation is stable
+        Utils.loadExternalResourceAuth09 = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
+            return new Promise(function (resolve, reject) {
+                if (options && options.pessimisticAccessControl) {
+                    // pessimistic: access control cookies may have been deleted.
+                    // always request the access token for every access controlled info.json request
+                    // returned access tokens are not stored, therefore the login window flashes for every request.
+                    resource.getData().then(function () {
+                        if (resource.isAccessControlled()) {
+                            // if the resource has a click through service, use that.
+                            if (resource.clickThroughService) {
+                                resolve(clickThrough(resource));
+                                //} else if(resource.restrictedService) {
+                                resolve(restricted(resource));
+                            }
+                            else {
+                                login(resource).then(function () {
+                                    getAccessToken(resource, true).then(function (token) {
+                                        resource.getData(token).then(function () {
+                                            resolve(handleResourceResponse(resource));
+                                        })["catch"](function (message) {
+                                            reject(Utils.createInternalServerError(message));
+                                        });
+                                    })["catch"](function (message) {
+                                        reject(Utils.createInternalServerError(message));
+                                    });
+                                })["catch"](function (message) {
+                                    reject(Utils.createInternalServerError(message));
+                                });
+                            }
+                        }
+                        else {
+                            // this info.json isn't access controlled, therefore no need to request an access token.
+                            resolve(resource);
+                        }
+                    })["catch"](function (message) {
+                        reject(Utils.createInternalServerError(message));
+                    });
+                }
+                else {
+                    // optimistic: access control cookies may not have been deleted.
+                    // store access tokens to avoid login window flashes.
+                    // if cookies are deleted a page refresh is required.
+                    // try loading the resource using an access token that matches the info.json domain.
+                    // if an access token is found, request the resource using it regardless of whether it is access controlled.
+                    getStoredAccessToken(resource, tokenStorageStrategy).then(function (storedAccessToken) {
+                        if (storedAccessToken) {
+                            // try using the stored access token
+                            resource.getData(storedAccessToken).then(function () {
+                                // if the info.json loaded using the stored access token
+                                if (resource.status === HTTPStatusCode.OK) {
+                                    resolve(handleResourceResponse(resource));
+                                }
+                                else {
+                                    // otherwise, load the resource data to determine the correct access control services.
+                                    // if access controlled, do login.
+                                    Utils.authorize(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                        resolve(handleResourceResponse(resource));
+                                    })["catch"](function (error) {
+                                        // if (resource.restrictedService){
+                                        //     reject(Utils.createRestrictedError());
+                                        // } else {
+                                        reject(Utils.createAuthorizationFailedError());
+                                        //}
+                                    });
+                                }
+                            })["catch"](function (error) {
+                                reject(Utils.createAuthorizationFailedError());
+                            });
+                        }
+                        else {
+                            Utils.authorize(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
+                                resolve(handleResourceResponse(resource));
+                            })["catch"](function (error) {
+                                reject(Utils.createAuthorizationFailedError());
+                            });
+                        }
+                    })["catch"](function (error) {
+                        reject(Utils.createAuthorizationFailedError());
+                    });
+                }
+            });
+        };
+        Utils.createError = function (name, message) {
+            var error = new Error();
+            error.message = message;
+            error.name = name;
+            return error;
+        };
+        Utils.createAuthorizationFailedError = function () {
+            return Utils.createError(manifesto.StatusCodes.AUTHORIZATION_FAILED.toString(), "Authorization failed");
+        };
+        Utils.createRestrictedError = function () {
+            return Utils.createError(manifesto.StatusCodes.RESTRICTED.toString(), "Restricted");
+        };
+        Utils.createInternalServerError = function (message) {
+            return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
+        };
+        Utils.authorize = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
+            return new Promise(function (resolve, reject) {
+                resource.getData().then(function () {
+                    if (resource.isAccessControlled()) {
+                        getStoredAccessToken(resource, tokenStorageStrategy).then(function (storedAccessToken) {
+                            if (storedAccessToken) {
+                                // try using the stored access token
+                                resource.getData(storedAccessToken).then(function () {
+                                    if (resource.status === HTTPStatusCode.OK) {
+                                        resolve(resource); // happy path ended
+                                    }
+                                    else {
+                                        // the stored token is no good for this resource
+                                        Utils.showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
+                                    }
+                                })["catch"](function (message) {
+                                    reject(Utils.createInternalServerError(message));
+                                });
+                            }
+                            else {
+                                // There was no stored token, but the user might have a cookie that will grant a token
+                                getAccessToken(resource, false).then(function (accessToken) {
+                                    if (accessToken) {
+                                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
+                                            // try using the fresh access token
+                                            resource.getData(accessToken).then(function () {
+                                                if (resource.status === HTTPStatusCode.OK) {
+                                                    resolve(resource);
+                                                }
+                                                else {
+                                                    // User has a token, but it's not good enough
+                                                    Utils.showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
+                                                }
+                                            })["catch"](function (message) {
+                                                reject(Utils.createInternalServerError(message));
+                                            });
+                                        })["catch"](function (message) {
+                                            // not able to store access token
+                                            reject(Utils.createInternalServerError(message));
+                                        });
+                                    }
+                                    else {
+                                        // The user did not have a cookie that granted a token
+                                        Utils.showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
+                                    }
+                                });
+                            }
+                        })["catch"](function (message) {
+                            reject(Utils.createInternalServerError(message));
+                        });
+                    }
+                    else {
+                        // this info.json isn't access controlled, therefore there's no need to request an access token
+                        resolve(resource);
+                    }
+                });
+            });
+        };
+        Utils.showAuthInteraction = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject) {
+            if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+                // if the resource was redirected to a degraded version
+                // and the response hasn't been handled yet.
+                // if the client wishes to trigger a login, set resource.isResponseHandled to true
+                // and call loadExternalResources() again passing the resource.
+                resolve(resource);
+                // } else if (resource.restrictedService) {
+                //     resolve(restricted(resource));
+                //     // TODO: move to next etc
+            }
+            else if (resource.clickThroughService && !resource.isResponseHandled) {
+                // if the resource has a click through service, use that.
+                clickThrough(resource).then(function () {
+                    getAccessToken(resource, true).then(function (accessToken) {
+                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
+                            resource.getData(accessToken).then(function () {
+                                resolve(resource);
+                            })["catch"](function (message) {
+                                reject(Utils.createInternalServerError(message));
+                            });
+                        })["catch"](function (message) {
+                            reject(Utils.createInternalServerError(message));
+                        });
+                    })["catch"](function (message) {
+                        reject(Utils.createInternalServerError(message));
+                    });
+                });
+            }
+            else {
+                // get an access token
+                login(resource).then(function () {
+                    getAccessToken(resource, true).then(function (accessToken) {
+                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
+                            resource.getData(accessToken).then(function () {
+                                resolve(resource);
+                            })["catch"](function (message) {
+                                reject(Utils.createInternalServerError(message));
+                            });
+                        })["catch"](function (message) {
+                            reject(Utils.createInternalServerError(message));
+                        });
+                    })["catch"](function (message) {
+                        reject(Utils.createInternalServerError(message));
+                    });
+                });
+            }
+        };
+        ;
+        Utils.getService = function (resource, profile) {
+            var services = this.getServices(resource);
+            // coerce profile to string
+            if (typeof (profile) !== 'string') {
+                profile = profile.toString();
+            }
+            for (var i = 0; i < services.length; i++) {
+                var service = services[i];
+                if (service.getProfile().toString() === profile) {
+                    return service;
+                }
+            }
+            return null;
+        };
+        Utils.getResourceById = function (parentResource, id) {
+            return [parentResource.__jsonld].en().traverseUnique(function (x) { return Utils.getAllArrays(x); })
+                .first(function (r) { return r['@id'] === id; });
+        };
+        Utils.getAllArrays = function (obj) {
+            var all = [].en();
+            if (!obj)
+                return all;
+            for (var key in obj) {
+                var val = obj[key];
+                if (Array.isArray(val)) {
+                    all = all.concat(val);
+                }
+            }
+            return all;
+        };
+        Utils.getServices = function (resource) {
+            var service;
+            var resourceToQuery = resource.__jsonld ? resource.__jsonld : resource;
+            // if passing a manifesto-parsed object, use the __jsonld.service property,
+            // otherwise look for a service property (info.json services)
+            if (resourceToQuery.service) {
+                service = resourceToQuery.service;
+            }
+            if (!service && resourceToQuery.body) {
+                if (Array.isArray(resourceToQuery.body)) {
+                    service = resourceToQuery.body[0].service;
+                }
+                else {
+                    service = resourceToQuery.body.service;
+                }
+            }
+            var services = [];
+            if (!service)
+                return services;
+            // coerce to array
+            if (!Array.isArray(service)) {
+                service = [service];
+            }
+            for (var i = 0; i < service.length; i++) {
+                var s = service[i];
+                if (typeof (s) === 'string') {
+                    var r = this.getResourceById(resource.options.resource, s);
+                    if (r) {
+                        services.push(new Manifesto.Service(r.__jsonld || r, resource.options));
+                    }
+                }
+                else {
+                    services.push(new Manifesto.Service(s, resource.options));
+                }
+            }
+            return services;
+        };
+        return Utils;
+    }());
+    Manifesto.Utils = Utils;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var MetadataItem = /** @class */ (function () {
+        function MetadataItem(defaultLocale) {
+            this.defaultLocale = defaultLocale;
+        }
+        MetadataItem.prototype.parse = function (resource) {
+            this.resource = resource;
+            this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
+            this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
+        };
+        // shortcuts to get/set values based on default locale
+        MetadataItem.prototype.getLabel = function () {
+            if (this.label) {
+                return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
+            }
+            return null;
+        };
+        MetadataItem.prototype.setLabel = function (value) {
+            var _this = this;
+            if (this.label && this.label.length) {
+                var t = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (t)
+                    t.value = value;
+            }
+        };
+        MetadataItem.prototype.getValue = function () {
+            if (this.value) {
+                var locale = this.defaultLocale;
+                // if the label has a locale, prefer that to the default locale
+                if (this.label.length && this.label[0].locale) {
+                    locale = this.label[0].locale;
+                }
+                return Manifesto.TranslationCollection.getValue(this.value, locale);
+            }
+            return null;
+        };
+        MetadataItem.prototype.setValue = function (value) {
+            var _this = this;
+            if (this.value && this.value.length) {
+                var t = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (t)
+                    t.value = value;
+            }
+        };
+        return MetadataItem;
+    }());
+    Manifesto.MetadataItem = MetadataItem;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var Translation = /** @class */ (function () {
+        function Translation(value, locale) {
+            this.value = value;
+            this.locale = locale;
+        }
+        return Translation;
+    }());
+    Manifesto.Translation = Translation;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var TranslationCollection = /** @class */ (function (_super) {
+        __extends(TranslationCollection, _super);
+        function TranslationCollection() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TranslationCollection.parse = function (translation, defaultLocale) {
+            var tc = [];
+            var t;
+            if (!translation) {
+                return tc;
+            }
+            else if (Array.isArray(translation)) {
+                for (var i = 0; i < translation.length; i++) {
+                    var value = translation[i];
+                    if (typeof (value) === 'string') {
+                        t = new Manifesto.Translation(value, defaultLocale);
+                    }
+                    else {
+                        t = new Manifesto.Translation(value['@value'], value['@language'] || defaultLocale);
+                    }
+                    tc.push(t);
+                }
+            }
+            else if (typeof (translation) === 'string') {
+                // if it's just a single string value, create one translation in the configured locale
+                t = new Manifesto.Translation(translation, defaultLocale);
+                tc.push(t);
+                return tc;
+            }
+            else {
+                // it's an object
+                if (translation['@value']) {
+                    // presentation 2
+                    t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
+                    tc.push(t);
+                }
+                else {
+                    // presentation 3
+                    Object.keys(translation).forEach(function (key) {
+                        // todo: support multiple values in array
+                        if (translation[key].length) {
+                            t = new Manifesto.Translation(translation[key][0], key);
+                            tc.push(t);
+                        }
+                        else {
+                            throw new Error('Translation must have a value');
+                        }
+                    });
+                }
+            }
+            return tc;
+        };
+        TranslationCollection.getValue = function (translationCollection, locale) {
+            if (translationCollection.length) {
+                if (locale) {
+                    var translation = translationCollection.en().where(function (t) { return t.locale === locale || Manifesto.Utils.getInexactLocale(t.locale) === Manifesto.Utils.getInexactLocale(locale); }).first();
+                    if (translation) {
+                        return translation.value;
+                    }
+                }
+                // return the first valuel
+                return translationCollection[0].value;
+            }
+            return null;
+        };
+        return TranslationCollection;
+    }(Array));
+    Manifesto.TranslationCollection = TranslationCollection;
+})(Manifesto || (Manifesto = {}));
+
+var Manifesto;
+(function (Manifesto) {
+    var Size = /** @class */ (function () {
+        function Size(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+        return Size;
+    }());
+    Manifesto.Size = Size;
+})(Manifesto || (Manifesto = {}));
+
+global.manifesto = global.Manifesto = module.exports = {
+    AnnotationMotivation: new Manifesto.AnnotationMotivation(),
+    Behavior: new Manifesto.Behavior(),
+    IIIFResourceType: new Manifesto.IIIFResourceType(),
+    ManifestType: new Manifesto.ManifestType(),
+    MediaType: new Manifesto.MediaType(),
+    MetadataItem: Manifesto.MetadataItem,
+    RenderingFormat: new Manifesto.RenderingFormat(),
+    ResourceType: new Manifesto.ResourceType(),
+    ServiceProfile: new Manifesto.ServiceProfile(),
+    Size: Manifesto.Size,
+    Translation: Manifesto.Translation,
+    TranslationCollection: Manifesto.TranslationCollection,
+    TreeNode: Manifesto.TreeNode,
+    TreeNodeType: new Manifesto.TreeNodeType(),
+    Utils: Manifesto.Utils,
+    ViewingDirection: new Manifesto.ViewingDirection(),
+    ViewingHint: new Manifesto.ViewingHint(),
+    StatusCodes: {
+        AUTHORIZATION_FAILED: 1,
+        FORBIDDEN: 2,
+        INTERNAL_SERVER_ERROR: 3,
+        RESTRICTED: 4
+    },
+    create: function (manifest, options) {
+        return Manifesto.Deserialiser.parse(manifest, options);
+    },
+    loadManifest: function (uri) {
+        return Manifesto.Utils.loadResource(uri);
+    }
+};
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Annotation = /** @class */ (function (_super) {
+        __extends(Annotation, _super);
+        function Annotation(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        Annotation.prototype.getBody = function () {
+            var bodies = [];
+            var body = this.getProperty('body');
+            // todo: make this a generic "property that can be an object or array enumerator" util
+            if (body) {
+                if (Array.isArray(body)) {
+                    for (var i = 0; i < body.length; i++) {
+                        var b = body[i];
+                        if (b.items) {
+                            for (var i_1 = 0; i_1 < b.items.length; i_1++) {
+                                var c = b.items[i_1];
+                                bodies.push(new Manifesto.AnnotationBody(c, this.options));
+                            }
+                        }
+                        else {
+                            bodies.push(new Manifesto.AnnotationBody(b, this.options));
+                        }
+                    }
+                }
+                else if (body.items) {
+                    for (var i = 0; i < body.items.length; i++) {
+                        var b = body.items[i];
+                        bodies.push(new Manifesto.AnnotationBody(b, this.options));
+                    }
+                }
+                else {
+                    bodies.push(new Manifesto.AnnotationBody(body, this.options));
+                }
+            }
+            return bodies;
+        };
+        Annotation.prototype.getMotivation = function () {
+            var motivation = this.getProperty('motivation');
+            if (motivation) {
+                return new Manifesto.AnnotationMotivation(motivation.toLowerCase());
+            }
+            return null;
+        };
+        // open annotation
+        Annotation.prototype.getOn = function () {
+            return this.getProperty('on');
+        };
+        Annotation.prototype.getTarget = function () {
+            return this.getProperty('target');
+        };
+        Annotation.prototype.getResource = function () {
+            return new Manifesto.Resource(this.getProperty('resource') || this.getProperty('body'), this.options);
+        };
+        Annotation.prototype.getImageService = function () {
+            return this.getBody().reduce(function (finalImageService, body) {
+                return finalImageService || body.getServices().reduce(function (imageService, service) {
+                    return imageService || (Manifesto.Utils.isImageProfile(service.getProfile()) ? service : null);
+                }, finalImageService);
+            }, null);
+        };
+        return Annotation;
+    }(Manifesto.ManifestResource));
+    Manifesto.Annotation = Annotation;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationBody = /** @class */ (function (_super) {
+        __extends(AnnotationBody, _super);
+        function AnnotationBody(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        AnnotationBody.prototype.getFormat = function () {
+            var format = this.getProperty('format');
+            if (format) {
+                return new Manifesto.MediaType(Manifesto.Utils.getMediaType(format));
+            }
+            return null;
+        };
+        AnnotationBody.prototype.getType = function () {
+            var type = this.getProperty('type');
+            if (type) {
+                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
+            }
+            return null;
+        };
+        return AnnotationBody;
+    }(Manifesto.ManifestResource));
+    Manifesto.AnnotationBody = AnnotationBody;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationList = /** @class */ (function (_super) {
+        __extends(AnnotationList, _super);
+        function AnnotationList(label, jsonld, options) {
+            var _this = _super.call(this, jsonld) || this;
+            _this.label = label;
+            _this.options = options;
+            if (_this.getResources().length) {
+                _this.isLoaded = true;
+            }
+            return _this;
+        }
+        AnnotationList.prototype.getIIIFResourceType = function () {
+            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
+        };
+        AnnotationList.prototype.getLabel = function () {
+            return this.label;
+        };
+        AnnotationList.prototype.getResources = function () {
+            var _this = this;
+            var resources = this.getProperty('resources') || this.getProperty('items') || [];
+            return resources.map(function (resource) { return new Manifesto.Annotation(resource, _this.options); });
+        };
+        AnnotationList.prototype.load = function () {
+            var _this = this;
+            return new Promise(function (resolve, reject) {
+                if (_this.isLoaded) {
+                    resolve(_this);
+                }
+                else {
+                    var id = _this.__jsonld.id;
+                    if (!id) {
+                        id = _this.__jsonld['@id'];
+                    }
+                    Manifesto.Utils.loadResource(id).then(function (data) {
+                        _this.__jsonld = JSON.parse(data);
+                        _this.context = _this.getProperty('context');
+                        _this.id = _this.getProperty('id');
+                        _this.isLoaded = true;
+                        resolve(_this);
+                    }).catch(reject);
+                }
+            });
+        };
+        return AnnotationList;
+    }(Manifesto.JSONLDResource));
+    Manifesto.AnnotationList = AnnotationList;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var AnnotationPage = /** @class */ (function (_super) {
+        __extends(AnnotationPage, _super);
+        function AnnotationPage(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        AnnotationPage.prototype.getItems = function () {
+            return this.getProperty('items');
+        };
+        return AnnotationPage;
+    }(Manifesto.ManifestResource));
+    Manifesto.AnnotationPage = AnnotationPage;
+})(Manifesto || (Manifesto = {}));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Thumbnail = /** @class */ (function (_super) {
+        __extends(Thumbnail, _super);
+        function Thumbnail(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        return Thumbnail;
+    }(Manifesto.Resource));
+    Manifesto.Thumbnail = Thumbnail;
+})(Manifesto || (Manifesto = {}));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"http":30,"https":8,"url":36}],2:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -16,68 +3453,102 @@ for (var i = 0, len = code.length; i < len; ++i) {
   revLookup[code.charCodeAt(i)] = i
 }
 
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
 revLookup['-'.charCodeAt(0)] = 62
 revLookup['_'.charCodeAt(0)] = 63
 
-function placeHoldersCount (b64) {
+function getLens (b64) {
   var len = b64.length
+
   if (len % 4 > 0) {
     throw new Error('Invalid string. Length must be a multiple of 4')
   }
 
-  // the number of equal signs (place holders)
-  // if there are two placeholders, than the two characters before it
-  // represent one byte
-  // if there is only one, then the three characters before it represent 2 bytes
-  // this is just a cheap hack to not do indexOf twice
-  return b64[len - 2] === '=' ? 2 : b64[len - 1] === '=' ? 1 : 0
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
 }
 
+// base64 is 4/3 + up to two characters of the original data
 function byteLength (b64) {
-  // base64 is 4/3 + up to two characters of the original data
-  return (b64.length * 3 / 4) - placeHoldersCount(b64)
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
 }
 
 function toByteArray (b64) {
-  var i, l, tmp, placeHolders, arr
-  var len = b64.length
-  placeHolders = placeHoldersCount(b64)
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
 
-  arr = new Arr((len * 3 / 4) - placeHolders)
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
 
   // if there are placeholders, only get up to the last complete 4 chars
-  l = placeHolders > 0 ? len - 4 : len
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
 
-  var L = 0
-
-  for (i = 0; i < l; i += 4) {
-    tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
-    arr[L++] = (tmp >> 16) & 0xFF
-    arr[L++] = (tmp >> 8) & 0xFF
-    arr[L++] = tmp & 0xFF
+  for (var i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
   }
 
-  if (placeHolders === 2) {
-    tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4)
-    arr[L++] = tmp & 0xFF
-  } else if (placeHolders === 1) {
-    tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2)
-    arr[L++] = (tmp >> 8) & 0xFF
-    arr[L++] = tmp & 0xFF
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
   }
 
   return arr
 }
 
 function tripletToBase64 (num) {
-  return lookup[num >> 18 & 0x3F] + lookup[num >> 12 & 0x3F] + lookup[num >> 6 & 0x3F] + lookup[num & 0x3F]
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
 }
 
 function encodeChunk (uint8, start, end) {
   var tmp
   var output = []
   for (var i = start; i < end; i += 3) {
-    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
     output.push(tripletToBase64(tmp))
   }
   return output.join('')
@@ -87,53 +3558,40 @@ function fromByteArray (uint8) {
   var tmp
   var len = uint8.length
   var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
-  var output = ''
   var parts = []
   var maxChunkLength = 16383 // must be multiple of 3
 
   // go through the array every three bytes, we'll deal with trailing stuff later
   for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
-    parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)))
+    parts.push(encodeChunk(
+      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
+    ))
   }
 
   // pad the end with zeros, but make sure to not forget the extra bytes
   if (extraBytes === 1) {
     tmp = uint8[len - 1]
-    output += lookup[tmp >> 2]
-    output += lookup[(tmp << 4) & 0x3F]
-    output += '=='
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
   } else if (extraBytes === 2) {
-    tmp = (uint8[len - 2] << 8) + (uint8[len - 1])
-    output += lookup[tmp >> 10]
-    output += lookup[(tmp >> 4) & 0x3F]
-    output += lookup[(tmp << 2) & 0x3F]
-    output += '='
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
   }
-
-  parts.push(output)
 
   return parts.join('')
 }
 
-},{}],2:[function(require,module,exports){
-
 },{}],3:[function(require,module,exports){
-var http = require('http');
 
-var https = module.exports;
-
-for (var key in http) {
-    if (http.hasOwnProperty(key)) https[key] = http[key];
-};
-
-https.request = function (params, cb) {
-    if (!params) params = {};
-    params.scheme = 'https';
-    params.protocol = 'https:';
-    return http.request.call(this, params, cb);
-}
-
-},{"http":30}],4:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1926,14 +5384,7 @@ function isnan (val) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":1,"ieee754":9,"isarray":5}],5:[function(require,module,exports){
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-},{}],6:[function(require,module,exports){
+},{"base64-js":2,"ieee754":9,"isarray":12}],5:[function(require,module,exports){
 module.exports = {
   "100": "Continue",
   "101": "Switching Protocols",
@@ -1999,7 +5450,7 @@ module.exports = {
   "511": "Network Authentication Required"
 }
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2110,7 +5561,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":11}],8:[function(require,module,exports){
+},{"../../is-buffer/index.js":11}],7:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2414,10 +5865,26 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+var http = require('http');
+
+var https = module.exports;
+
+for (var key in http) {
+    if (http.hasOwnProperty(key)) https[key] = http[key];
+};
+
+https.request = function (params, cb) {
+    if (!params) params = {};
+    params.scheme = 'https';
+    params.protocol = 'https:';
+    return http.request.call(this, params, cb);
+}
+
+},{"http":30}],9:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
-  var eLen = nBytes * 8 - mLen - 1
+  var eLen = (nBytes * 8) - mLen - 1
   var eMax = (1 << eLen) - 1
   var eBias = eMax >> 1
   var nBits = -7
@@ -2430,12 +5897,12 @@ exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   e = s & ((1 << (-nBits)) - 1)
   s >>= (-nBits)
   nBits += eLen
-  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
 
   m = e & ((1 << (-nBits)) - 1)
   e >>= (-nBits)
   nBits += mLen
-  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
 
   if (e === 0) {
     e = 1 - eBias
@@ -2450,7 +5917,7 @@ exports.read = function (buffer, offset, isLE, mLen, nBytes) {
 
 exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   var e, m, c
-  var eLen = nBytes * 8 - mLen - 1
+  var eLen = (nBytes * 8) - mLen - 1
   var eMax = (1 << eLen) - 1
   var eBias = eMax >> 1
   var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
@@ -2483,7 +5950,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
       m = 0
       e = eMax
     } else if (e + eBias >= 1) {
-      m = (value * c - 1) * Math.pow(2, mLen)
+      m = ((value * c) - 1) * Math.pow(2, mLen)
       e = e + eBias
     } else {
       m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
@@ -2549,15 +6016,22 @@ function isSlowBuffer (obj) {
 }
 
 },{}],12:[function(require,module,exports){
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+},{}],13:[function(require,module,exports){
 (function (process){
 'use strict';
 
 if (!process.version ||
     process.version.indexOf('v0.') === 0 ||
     process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
+  module.exports = { nextTick: nextTick };
 } else {
-  module.exports = process.nextTick;
+  module.exports = process
 }
 
 function nextTick(fn, arg1, arg2, arg3) {
@@ -2594,8 +6068,9 @@ function nextTick(fn, arg1, arg2, arg3) {
   }
 }
 
+
 }).call(this,require('_process'))
-},{"_process":13}],13:[function(require,module,exports){
+},{"_process":14}],14:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2781,7 +6256,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -3318,7 +6793,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3404,7 +6879,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3491,13 +6966,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":15,"./encode":16}],18:[function(require,module,exports){
+},{"./decode":16,"./encode":17}],19:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3528,7 +7003,7 @@ exports.encode = exports.stringify = require('./encode');
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 /*<replacement>*/
@@ -3552,10 +7027,13 @@ var Writable = require('./_stream_writable');
 
 util.inherits(Duplex, Readable);
 
-var keys = objectKeys(Writable.prototype);
-for (var v = 0; v < keys.length; v++) {
-  var method = keys[v];
-  if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+{
+  // avoid scope creep, the keys array can then be collected
+  var keys = objectKeys(Writable.prototype);
+  for (var v = 0; v < keys.length; v++) {
+    var method = keys[v];
+    if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
+  }
 }
 
 function Duplex(options) {
@@ -3574,6 +7052,16 @@ function Duplex(options) {
   this.once('end', onend);
 }
 
+Object.defineProperty(Duplex.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
+
 // the no-half-open enforcer
 function onend() {
   // if we allow half-open state, or if the writable side ended,
@@ -3582,7 +7070,7 @@ function onend() {
 
   // no more data can be written.
   // But allow more writes to happen in this tick.
-  processNextTick(onEndNT, this);
+  pna.nextTick(onEndNT, this);
 }
 
 function onEndNT(self) {
@@ -3614,15 +7102,9 @@ Duplex.prototype._destroy = function (err, cb) {
   this.push(null);
   this.end();
 
-  processNextTick(cb, err);
+  pna.nextTick(cb, err);
 };
-
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
-  }
-}
-},{"./_stream_readable":20,"./_stream_writable":22,"core-util-is":7,"inherits":10,"process-nextick-args":12}],19:[function(require,module,exports){
+},{"./_stream_readable":21,"./_stream_writable":23,"core-util-is":6,"inherits":10,"process-nextick-args":13}],20:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3670,7 +7152,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":21,"core-util-is":7,"inherits":10}],20:[function(require,module,exports){
+},{"./_stream_transform":22,"core-util-is":6,"inherits":10}],21:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3697,7 +7179,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 module.exports = Readable;
@@ -3724,9 +7206,8 @@ var EElistenerCount = function (emitter, type) {
 var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
-// TODO(bmeurer): Change this back to const once hole checks are
-// properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -3735,6 +7216,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 /*<replacement>*/
@@ -3763,15 +7245,13 @@ var kProxyEvents = ['error', 'close', 'destroy', 'pause', 'resume'];
 function prependListener(emitter, event, fn) {
   // Sadly this is not cacheable as some libraries bundle their own
   // event emitter implementation with them.
-  if (typeof emitter.prependListener === 'function') {
-    return emitter.prependListener(event, fn);
-  } else {
-    // This is a hack to make sure that our error handler is attached before any
-    // userland ones.  NEVER DO THIS. This is here only because this code needs
-    // to continue to work with older versions of Node.js that do not include
-    // the prependListener() method. The goal is to eventually remove this hack.
-    if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
-  }
+  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn);
+
+  // This is a hack to make sure that our error handler is attached before any
+  // userland ones.  NEVER DO THIS. This is here only because this code needs
+  // to continue to work with older versions of Node.js that do not include
+  // the prependListener() method. The goal is to eventually remove this hack.
+  if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
 }
 
 function ReadableState(options, stream) {
@@ -3779,17 +7259,26 @@ function ReadableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag. Used to make read(n) ignore n and to
   // make all the buffer merging and length checks go away
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
 
   // the point at which it stops calling _read() to fill the buffer
   // Note: 0 is a valid value, means "don't call _read preemptively ever"
   var hwm = options.highWaterMark;
+  var readableHwm = options.readableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (readableHwm || readableHwm === 0)) this.highWaterMark = readableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -4162,7 +7651,7 @@ function emitReadable(stream) {
   if (!state.emittedReadable) {
     debug('emitReadable', state.flowing);
     state.emittedReadable = true;
-    if (state.sync) processNextTick(emitReadable_, stream);else emitReadable_(stream);
+    if (state.sync) pna.nextTick(emitReadable_, stream);else emitReadable_(stream);
   }
 }
 
@@ -4181,7 +7670,7 @@ function emitReadable_(stream) {
 function maybeReadMore(stream, state) {
   if (!state.readingMore) {
     state.readingMore = true;
-    processNextTick(maybeReadMore_, stream, state);
+    pna.nextTick(maybeReadMore_, stream, state);
   }
 }
 
@@ -4226,7 +7715,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
   var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
 
   var endFn = doEnd ? onend : unpipe;
-  if (state.endEmitted) processNextTick(endFn);else src.once('end', endFn);
+  if (state.endEmitted) pna.nextTick(endFn);else src.once('end', endFn);
 
   dest.on('unpipe', onunpipe);
   function onunpipe(readable, unpipeInfo) {
@@ -4416,7 +7905,7 @@ Readable.prototype.on = function (ev, fn) {
       state.readableListening = state.needReadable = true;
       state.emittedReadable = false;
       if (!state.reading) {
-        processNextTick(nReadingNextTick, this);
+        pna.nextTick(nReadingNextTick, this);
       } else if (state.length) {
         emitReadable(this);
       }
@@ -4447,7 +7936,7 @@ Readable.prototype.resume = function () {
 function resume(stream, state) {
   if (!state.resumeScheduled) {
     state.resumeScheduled = true;
-    processNextTick(resume_, stream, state);
+    pna.nextTick(resume_, stream, state);
   }
 }
 
@@ -4484,18 +7973,19 @@ function flow(stream) {
 // This is *not* part of the readable stream interface.
 // It is an ugly unfortunate mess of history.
 Readable.prototype.wrap = function (stream) {
+  var _this = this;
+
   var state = this._readableState;
   var paused = false;
 
-  var self = this;
   stream.on('end', function () {
     debug('wrapped end');
     if (state.decoder && !state.ended) {
       var chunk = state.decoder.end();
-      if (chunk && chunk.length) self.push(chunk);
+      if (chunk && chunk.length) _this.push(chunk);
     }
 
-    self.push(null);
+    _this.push(null);
   });
 
   stream.on('data', function (chunk) {
@@ -4505,7 +7995,7 @@ Readable.prototype.wrap = function (stream) {
     // don't skip over falsy values in objectMode
     if (state.objectMode && (chunk === null || chunk === undefined)) return;else if (!state.objectMode && (!chunk || !chunk.length)) return;
 
-    var ret = self.push(chunk);
+    var ret = _this.push(chunk);
     if (!ret) {
       paused = true;
       stream.pause();
@@ -4526,12 +8016,12 @@ Readable.prototype.wrap = function (stream) {
 
   // proxy certain important events.
   for (var n = 0; n < kProxyEvents.length; n++) {
-    stream.on(kProxyEvents[n], self.emit.bind(self, kProxyEvents[n]));
+    stream.on(kProxyEvents[n], this.emit.bind(this, kProxyEvents[n]));
   }
 
   // when we try to consume some more bytes, simply unpause the
   // underlying stream.
-  self._read = function (n) {
+  this._read = function (n) {
     debug('wrapped _read', n);
     if (paused) {
       paused = false;
@@ -4539,8 +8029,18 @@ Readable.prototype.wrap = function (stream) {
     }
   };
 
-  return self;
+  return this;
 };
+
+Object.defineProperty(Readable.prototype, 'readableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._readableState.highWaterMark;
+  }
+});
 
 // exposed for testing purposes only.
 Readable._fromList = fromList;
@@ -4654,7 +8154,7 @@ function endReadable(stream) {
 
   if (!state.endEmitted) {
     state.ended = true;
-    processNextTick(endReadableNT, state, stream);
+    pna.nextTick(endReadableNT, state, stream);
   }
 }
 
@@ -4667,12 +8167,6 @@ function endReadableNT(state, stream) {
   }
 }
 
-function forEach(xs, f) {
-  for (var i = 0, l = xs.length; i < l; i++) {
-    f(xs[i], i);
-  }
-}
-
 function indexOf(xs, x) {
   for (var i = 0, l = xs.length; i < l; i++) {
     if (xs[i] === x) return i;
@@ -4680,7 +8174,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":18,"./internal/streams/BufferList":23,"./internal/streams/destroy":24,"./internal/streams/stream":25,"_process":13,"core-util-is":7,"events":8,"inherits":10,"isarray":26,"process-nextick-args":12,"safe-buffer":29,"string_decoder/":27,"util":2}],21:[function(require,module,exports){
+},{"./_stream_duplex":19,"./internal/streams/BufferList":24,"./internal/streams/destroy":25,"./internal/streams/stream":26,"_process":14,"core-util-is":6,"events":7,"inherits":10,"isarray":12,"process-nextick-args":13,"safe-buffer":29,"string_decoder/":27,"util":3}],22:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4757,39 +8251,28 @@ util.inherits = require('inherits');
 
 util.inherits(Transform, Duplex);
 
-function TransformState(stream) {
-  this.afterTransform = function (er, data) {
-    return afterTransform(stream, er, data);
-  };
-
-  this.needTransform = false;
-  this.transforming = false;
-  this.writecb = null;
-  this.writechunk = null;
-  this.writeencoding = null;
-}
-
-function afterTransform(stream, er, data) {
-  var ts = stream._transformState;
+function afterTransform(er, data) {
+  var ts = this._transformState;
   ts.transforming = false;
 
   var cb = ts.writecb;
 
   if (!cb) {
-    return stream.emit('error', new Error('write callback called multiple times'));
+    return this.emit('error', new Error('write callback called multiple times'));
   }
 
   ts.writechunk = null;
   ts.writecb = null;
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    this.push(data);
 
   cb(er);
 
-  var rs = stream._readableState;
+  var rs = this._readableState;
   rs.reading = false;
   if (rs.needReadable || rs.length < rs.highWaterMark) {
-    stream._read(rs.highWaterMark);
+    this._read(rs.highWaterMark);
   }
 }
 
@@ -4798,9 +8281,14 @@ function Transform(options) {
 
   Duplex.call(this, options);
 
-  this._transformState = new TransformState(this);
-
-  var stream = this;
+  this._transformState = {
+    afterTransform: afterTransform.bind(this),
+    needTransform: false,
+    transforming: false,
+    writecb: null,
+    writechunk: null,
+    writeencoding: null
+  };
 
   // start out asking for a readable event once data is transformed.
   this._readableState.needReadable = true;
@@ -4817,11 +8305,19 @@ function Transform(options) {
   }
 
   // When the writable side finishes, then flush out anything remaining.
-  this.once('prefinish', function () {
-    if (typeof this._flush === 'function') this._flush(function (er, data) {
-      done(stream, er, data);
-    });else done(stream);
-  });
+  this.on('prefinish', prefinish);
+}
+
+function prefinish() {
+  var _this = this;
+
+  if (typeof this._flush === 'function') {
+    this._flush(function (er, data) {
+      done(_this, er, data);
+    });
+  } else {
+    done(this, null, null);
+  }
 }
 
 Transform.prototype.push = function (chunk, encoding) {
@@ -4871,32 +8367,30 @@ Transform.prototype._read = function (n) {
 };
 
 Transform.prototype._destroy = function (err, cb) {
-  var _this = this;
+  var _this2 = this;
 
   Duplex.prototype._destroy.call(this, err, function (err2) {
     cb(err2);
-    _this.emit('close');
+    _this2.emit('close');
   });
 };
 
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    stream.push(data);
 
   // if there's nothing in the write buffer, then that means
   // that nothing more will ever be provided
-  var ws = stream._writableState;
-  var ts = stream._transformState;
+  if (stream._writableState.length) throw new Error('Calling transform done when ws.length != 0');
 
-  if (ws.length) throw new Error('Calling transform done when ws.length != 0');
-
-  if (ts.transforming) throw new Error('Calling transform done when still transforming');
+  if (stream._transformState.transforming) throw new Error('Calling transform done when still transforming');
 
   return stream.push(null);
 }
-},{"./_stream_duplex":18,"core-util-is":7,"inherits":10}],22:[function(require,module,exports){
-(function (process,global){
+},{"./_stream_duplex":19,"core-util-is":6,"inherits":10}],23:[function(require,module,exports){
+(function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4926,7 +8420,7 @@ function done(stream, er, data) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 module.exports = Writable;
@@ -4953,7 +8447,7 @@ function CorkedRequest(state) {
 /* </replacement> */
 
 /*<replacement>*/
-var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : processNextTick;
+var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
 /*</replacement>*/
 
 /*<replacement>*/
@@ -4978,6 +8472,7 @@ var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -4986,6 +8481,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 var destroyImpl = require('./internal/streams/destroy');
@@ -4999,18 +8495,27 @@ function WritableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag to indicate whether or not this stream
   // contains buffers or objects.
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
 
   // the point at which write() starts returning false
   // Note: 0 is a valid value, means that we always return false if
   // the entire buffer is not flushed immediately on write()
   var hwm = options.highWaterMark;
+  var writableHwm = options.writableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (writableHwm || writableHwm === 0)) this.highWaterMark = writableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -5124,6 +8629,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
   Object.defineProperty(Writable, Symbol.hasInstance, {
     value: function (object) {
       if (realHasInstance.call(this, object)) return true;
+      if (this !== Writable) return false;
 
       return object && object._writableState instanceof WritableState;
     }
@@ -5175,7 +8681,7 @@ function writeAfterEnd(stream, cb) {
   var er = new Error('write after end');
   // TODO: defer error events consistently everywhere, not just the cb
   stream.emit('error', er);
-  processNextTick(cb, er);
+  pna.nextTick(cb, er);
 }
 
 // Checks that a user-supplied chunk is valid, especially for the particular
@@ -5192,7 +8698,7 @@ function validChunk(stream, state, chunk, cb) {
   }
   if (er) {
     stream.emit('error', er);
-    processNextTick(cb, er);
+    pna.nextTick(cb, er);
     valid = false;
   }
   return valid;
@@ -5201,7 +8707,7 @@ function validChunk(stream, state, chunk, cb) {
 Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
-  var isBuf = _isUint8Array(chunk) && !state.objectMode;
+  var isBuf = !state.objectMode && _isUint8Array(chunk);
 
   if (isBuf && !Buffer.isBuffer(chunk)) {
     chunk = _uint8ArrayToBuffer(chunk);
@@ -5254,6 +8760,16 @@ function decodeChunk(state, chunk, encoding) {
   }
   return chunk;
 }
+
+Object.defineProperty(Writable.prototype, 'writableHighWaterMark', {
+  // making it explicit this property is not enumerable
+  // because otherwise some prototype manipulation in
+  // userland will fail
+  enumerable: false,
+  get: function () {
+    return this._writableState.highWaterMark;
+  }
+});
 
 // if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
@@ -5312,10 +8828,10 @@ function onwriteError(stream, state, sync, er, cb) {
   if (sync) {
     // defer the callback if we are being called synchronously
     // to avoid piling up things on the stack
-    processNextTick(cb, er);
+    pna.nextTick(cb, er);
     // this can emit finish, and it will always happen
     // after error
-    processNextTick(finishMaybe, stream, state);
+    pna.nextTick(finishMaybe, stream, state);
     stream._writableState.errorEmitted = true;
     stream.emit('error', er);
   } else {
@@ -5413,6 +8929,7 @@ function clearBuffer(stream, state) {
     } else {
       state.corkedRequestsFree = new CorkedRequest(state);
     }
+    state.bufferedRequestCount = 0;
   } else {
     // Slow case, write chunks one-by-one
     while (entry) {
@@ -5423,6 +8940,7 @@ function clearBuffer(stream, state) {
 
       doWrite(stream, state, false, len, chunk, encoding, cb);
       entry = entry.next;
+      state.bufferedRequestCount--;
       // if we didn't call the onwrite immediately, then
       // it means that we need to wait until it does.
       // also, that means that the chunk and cb are currently
@@ -5435,7 +8953,6 @@ function clearBuffer(stream, state) {
     if (entry === null) state.lastBufferedRequest = null;
   }
 
-  state.bufferedRequestCount = 0;
   state.bufferedRequest = entry;
   state.bufferProcessing = false;
 }
@@ -5489,7 +9006,7 @@ function prefinish(stream, state) {
     if (typeof stream._final === 'function') {
       state.pendingcb++;
       state.finalCalled = true;
-      processNextTick(callFinal, stream, state);
+      pna.nextTick(callFinal, stream, state);
     } else {
       state.prefinished = true;
       stream.emit('prefinish');
@@ -5513,7 +9030,7 @@ function endWritable(stream, state, cb) {
   state.ending = true;
   finishMaybe(stream, state);
   if (cb) {
-    if (state.finished) processNextTick(cb);else stream.once('finish', cb);
+    if (state.finished) pna.nextTick(cb);else stream.once('finish', cb);
   }
   state.ended = true;
   stream.writable = false;
@@ -5561,16 +9078,14 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":18,"./internal/streams/destroy":24,"./internal/streams/stream":25,"_process":13,"core-util-is":7,"inherits":10,"process-nextick-args":12,"safe-buffer":29,"util-deprecate":37}],23:[function(require,module,exports){
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
+},{"./_stream_duplex":19,"./internal/streams/destroy":25,"./internal/streams/stream":26,"_process":14,"core-util-is":6,"inherits":10,"process-nextick-args":13,"safe-buffer":29,"timers":34,"util-deprecate":38}],24:[function(require,module,exports){
 'use strict';
-
-/*<replacement>*/
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = require('safe-buffer').Buffer;
-/*</replacement>*/
+var util = require('util');
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -5637,12 +9152,19 @@ module.exports = function () {
 
   return BufferList;
 }();
-},{"safe-buffer":29}],24:[function(require,module,exports){
+
+if (util && util.inspect && util.inspect.custom) {
+  module.exports.prototype[util.inspect.custom] = function () {
+    var obj = util.inspect({ length: this.length });
+    return this.constructor.name + ' ' + obj;
+  };
+}
+},{"safe-buffer":29,"util":3}],25:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var pna = require('process-nextick-args');
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -5656,9 +9178,9 @@ function destroy(err, cb) {
     if (cb) {
       cb(err);
     } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
-      processNextTick(emitErrorNT, this, err);
+      pna.nextTick(emitErrorNT, this, err);
     }
-    return;
+    return this;
   }
 
   // we set destroyed to true before firing error callbacks in order
@@ -5675,7 +9197,7 @@ function destroy(err, cb) {
 
   this._destroy(err || null, function (err) {
     if (!cb && err) {
-      processNextTick(emitErrorNT, _this, err);
+      pna.nextTick(emitErrorNT, _this, err);
       if (_this._writableState) {
         _this._writableState.errorEmitted = true;
       }
@@ -5683,6 +9205,8 @@ function destroy(err, cb) {
       cb(err);
     }
   });
+
+  return this;
 }
 
 function undestroy() {
@@ -5710,15 +9234,37 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":12}],25:[function(require,module,exports){
+},{"process-nextick-args":13}],26:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":8}],26:[function(require,module,exports){
-arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}],27:[function(require,module,exports){
+},{"events":7}],27:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 'use strict';
 
+/*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
+/*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
   encoding = '' + encoding;
@@ -5830,10 +9376,10 @@ StringDecoder.prototype.fillLast = function (buf) {
 };
 
 // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
-// continuation byte.
+// continuation byte. If an invalid byte is detected, -2 is returned.
 function utf8CheckByte(byte) {
   if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return -1;
+  return byte >> 6 === 0x02 ? -1 : -2;
 }
 
 // Checks at most 3 bytes at the end of a Buffer in order to detect an
@@ -5847,13 +9393,13 @@ function utf8CheckIncomplete(self, buf, i) {
     if (nb > 0) self.lastNeed = nb - 1;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) self.lastNeed = nb - 2;
     return nb;
   }
-  if (--j < i) return 0;
+  if (--j < i || nb === -2) return 0;
   nb = utf8CheckByte(buf[j]);
   if (nb >= 0) {
     if (nb > 0) {
@@ -5867,7 +9413,7 @@ function utf8CheckIncomplete(self, buf, i) {
 // Validates as many continuation bytes for a multi-byte UTF-8 character as
 // needed or are available. If we see a non-continuation byte where we expect
 // one, we "replace" the validated continuation bytes we've seen so far with
-// UTF-8 replacement characters ('\ufffd'), to match v8's UTF-8 decoding
+// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
 // behavior. The continuation byte check is included three times in the case
 // where all of the continuation bytes for a character exist in the same buffer.
 // It is also done this way as a slight performance increase instead of using a
@@ -5875,17 +9421,17 @@ function utf8CheckIncomplete(self, buf, i) {
 function utf8CheckExtraBytes(self, buf, p) {
   if ((buf[0] & 0xC0) !== 0x80) {
     self.lastNeed = 0;
-    return '\ufffd'.repeat(p);
+    return '\ufffd';
   }
   if (self.lastNeed > 1 && buf.length > 1) {
     if ((buf[1] & 0xC0) !== 0x80) {
       self.lastNeed = 1;
-      return '\ufffd'.repeat(p + 1);
+      return '\ufffd';
     }
     if (self.lastNeed > 2 && buf.length > 2) {
       if ((buf[2] & 0xC0) !== 0x80) {
         self.lastNeed = 2;
-        return '\ufffd'.repeat(p + 2);
+        return '\ufffd';
       }
     }
   }
@@ -5916,11 +9462,11 @@ function utf8Text(buf, i) {
   return buf.toString('utf8', i, end);
 }
 
-// For UTF-8, a replacement character for each buffered byte of a (partial)
-// character needs to be added to the output.
+// For UTF-8, a replacement character is added when ending on a partial
+// character.
 function utf8End(buf) {
   var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\ufffd'.repeat(this.lastTotal - this.lastNeed);
+  if (this.lastNeed) return r + '\ufffd';
   return r;
 }
 
@@ -5997,7 +9543,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":18,"./lib/_stream_passthrough.js":19,"./lib/_stream_readable.js":20,"./lib/_stream_transform.js":21,"./lib/_stream_writable.js":22}],29:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":19,"./lib/_stream_passthrough.js":20,"./lib/_stream_readable.js":21,"./lib/_stream_transform.js":22,"./lib/_stream_writable.js":23}],29:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -6064,7 +9610,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 },{"buffer":4}],30:[function(require,module,exports){
 (function (global){
 var ClientRequest = require('./lib/request')
-var IncomingMessage = require('./lib/response')
+var response = require('./lib/response')
 var extend = require('xtend')
 var statusCodes = require('builtin-status-codes')
 var url = require('url')
@@ -6111,10 +9657,12 @@ http.get = function get (opts, cb) {
 }
 
 http.ClientRequest = ClientRequest
-http.IncomingMessage = IncomingMessage
+http.IncomingMessage = response.IncomingMessage
 
 http.Agent = function () {}
 http.Agent.defaultMaxSockets = 4
+
+http.globalAgent = new http.Agent()
 
 http.STATUS_CODES = statusCodes
 
@@ -6147,7 +9695,7 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":32,"./lib/response":33,"builtin-status-codes":6,"url":35,"xtend":38}],31:[function(require,module,exports){
+},{"./lib/request":32,"./lib/response":33,"builtin-status-codes":5,"url":36,"xtend":39}],31:[function(require,module,exports){
 (function (global){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
 
@@ -6284,6 +9832,7 @@ var ClientRequest = module.exports = function (opts) {
 		throw new Error('Invalid value for opts.mode')
 	}
 	self._mode = decideMode(preferBinary, useFetch)
+	self._fetchTimer = null
 
 	self.on('finish', function () {
 		self._onFinish()
@@ -6359,13 +9908,14 @@ ClientRequest.prototype._onFinish = function () {
 
 	if (self._mode === 'fetch') {
 		var signal = null
+		var fetchTimer = null
 		if (capability.abortController) {
 			var controller = new AbortController()
 			signal = controller.signal
 			self._fetchAbortController = controller
 
 			if ('requestTimeout' in opts && opts.requestTimeout !== 0) {
-				global.setTimeout(function () {
+				self._fetchTimer = global.setTimeout(function () {
 					self.emit('requestTimeout')
 					if (self._fetchAbortController)
 						self._fetchAbortController.abort()
@@ -6384,7 +9934,9 @@ ClientRequest.prototype._onFinish = function () {
 			self._fetchResponse = response
 			self._connect()
 		}, function (reason) {
-			self.emit('error', reason)
+			global.clearTimeout(self._fetchTimer)
+			if (!self._destroyed)
+				self.emit('error', reason)
 		})
 	} else {
 		var xhr = self._xhr = new global.XMLHttpRequest()
@@ -6484,7 +10036,7 @@ ClientRequest.prototype._connect = function () {
 	if (self._destroyed)
 		return
 
-	self._response = new IncomingMessage(self._xhr, self._fetchResponse, self._mode)
+	self._response = new IncomingMessage(self._xhr, self._fetchResponse, self._mode, self._fetchTimer)
 	self._response.on('error', function(err) {
 		self.emit('error', err)
 	})
@@ -6502,6 +10054,7 @@ ClientRequest.prototype._write = function (chunk, encoding, cb) {
 ClientRequest.prototype.abort = ClientRequest.prototype.destroy = function () {
 	var self = this
 	self._destroyed = true
+	global.clearTimeout(self._fetchTimer)
 	if (self._response)
 		self._response._destroyed = true
 	if (self._xhr)
@@ -6546,12 +10099,11 @@ var unsafeHeaders = [
 	'trailer',
 	'transfer-encoding',
 	'upgrade',
-	'user-agent',
 	'via'
 ]
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":31,"./response":33,"_process":13,"buffer":4,"inherits":10,"readable-stream":28,"to-arraybuffer":34}],33:[function(require,module,exports){
+},{"./capability":31,"./response":33,"_process":14,"buffer":4,"inherits":10,"readable-stream":28,"to-arraybuffer":35}],33:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -6565,7 +10117,7 @@ var rStates = exports.readyStates = {
 	DONE: 4
 }
 
-var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
+var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode, fetchTimer) {
 	var self = this
 	stream.Readable.call(self)
 
@@ -6600,7 +10152,7 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 				write: function (chunk) {
 					return new Promise(function (resolve, reject) {
 						if (self._destroyed) {
-							return
+							reject()
 						} else if(self.push(new Buffer(chunk))) {
 							resolve()
 						} else {
@@ -6609,6 +10161,7 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 					})
 				},
 				close: function () {
+					global.clearTimeout(fetchTimer)
 					if (!self._destroyed)
 						self.push(null)
 				},
@@ -6619,7 +10172,11 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 			})
 
 			try {
-				response.body.pipeTo(writable)
+				response.body.pipeTo(writable).catch(function (err) {
+					global.clearTimeout(fetchTimer)
+					if (!self._destroyed)
+						self.emit('error', err)
+				})
 				return
 			} catch (e) {} // pipeTo method isn't defined. Can't find a better way to feature test this
 		}
@@ -6630,12 +10187,14 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 				if (self._destroyed)
 					return
 				if (result.done) {
+					global.clearTimeout(fetchTimer)
 					self.push(null)
 					return
 				}
 				self.push(new Buffer(result.value))
 				read()
-			}).catch(function(err) {
+			}).catch(function (err) {
+				global.clearTimeout(fetchTimer)
 				if (!self._destroyed)
 					self.emit('error', err)
 			})
@@ -6772,7 +10331,86 @@ IncomingMessage.prototype._onXHRProgress = function () {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":31,"_process":13,"buffer":4,"inherits":10,"readable-stream":28}],34:[function(require,module,exports){
+},{"./capability":31,"_process":14,"buffer":4,"inherits":10,"readable-stream":28}],34:[function(require,module,exports){
+(function (setImmediate,clearImmediate){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+},{"process/browser.js":14,"timers":34}],35:[function(require,module,exports){
 var Buffer = require('buffer').Buffer
 
 module.exports = function (buf) {
@@ -6801,7 +10439,7 @@ module.exports = function (buf) {
 	}
 }
 
-},{"buffer":4}],35:[function(require,module,exports){
+},{"buffer":4}],36:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7535,7 +11173,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":36,"punycode":14,"querystring":17}],36:[function(require,module,exports){
+},{"./util":37,"punycode":15,"querystring":18}],37:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -7553,7 +11191,7 @@ module.exports = {
   }
 };
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 
 /**
@@ -7624,7 +11262,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -7645,3300 +11283,5 @@ function extend() {
     return target
 }
 
-},{}],39:[function(require,module,exports){
-(function (global){
-
-var Manifesto;
-(function (Manifesto) {
-    var StringValue = /** @class */ (function () {
-        function StringValue(value) {
-            this.value = "";
-            if (value) {
-                this.value = value.toLowerCase();
-            }
-        }
-        StringValue.prototype.toString = function () {
-            return this.value;
-        };
-        return StringValue;
-    }());
-    Manifesto.StringValue = StringValue;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var AnnotationMotivation = /** @class */ (function (_super) {
-        __extends(AnnotationMotivation, _super);
-        function AnnotationMotivation() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        AnnotationMotivation.prototype.bookmarking = function () {
-            return new AnnotationMotivation(AnnotationMotivation.BOOKMARKING.toString());
-        };
-        AnnotationMotivation.prototype.classifying = function () {
-            return new AnnotationMotivation(AnnotationMotivation.CLASSIFYING.toString());
-        };
-        AnnotationMotivation.prototype.commenting = function () {
-            return new AnnotationMotivation(AnnotationMotivation.COMMENTING.toString());
-        };
-        AnnotationMotivation.prototype.describing = function () {
-            return new AnnotationMotivation(AnnotationMotivation.DESCRIBING.toString());
-        };
-        AnnotationMotivation.prototype.editing = function () {
-            return new AnnotationMotivation(AnnotationMotivation.EDITING.toString());
-        };
-        AnnotationMotivation.prototype.highlighting = function () {
-            return new AnnotationMotivation(AnnotationMotivation.HIGHLIGHTING.toString());
-        };
-        AnnotationMotivation.prototype.identifying = function () {
-            return new AnnotationMotivation(AnnotationMotivation.IDENTIFYING.toString());
-        };
-        AnnotationMotivation.prototype.linking = function () {
-            return new AnnotationMotivation(AnnotationMotivation.LINKING.toString());
-        };
-        AnnotationMotivation.prototype.moderating = function () {
-            return new AnnotationMotivation(AnnotationMotivation.MODERATING.toString());
-        };
-        AnnotationMotivation.prototype.painting = function () {
-            return new AnnotationMotivation(AnnotationMotivation.PAINTING.toString());
-        };
-        AnnotationMotivation.prototype.questioning = function () {
-            return new AnnotationMotivation(AnnotationMotivation.QUESTIONING.toString());
-        };
-        AnnotationMotivation.prototype.replying = function () {
-            return new AnnotationMotivation(AnnotationMotivation.REPLYING.toString());
-        };
-        AnnotationMotivation.prototype.tagging = function () {
-            return new AnnotationMotivation(AnnotationMotivation.TAGGING.toString());
-        };
-        AnnotationMotivation.prototype.transcribing = function () {
-            return new AnnotationMotivation(AnnotationMotivation.TRANSCRIBING.toString());
-        };
-        AnnotationMotivation.BOOKMARKING = new AnnotationMotivation("oa:bookmarking");
-        AnnotationMotivation.CLASSIFYING = new AnnotationMotivation("oa:classifying");
-        AnnotationMotivation.COMMENTING = new AnnotationMotivation("oa:commenting");
-        AnnotationMotivation.DESCRIBING = new AnnotationMotivation("oa:describing");
-        AnnotationMotivation.EDITING = new AnnotationMotivation("oa:editing");
-        AnnotationMotivation.HIGHLIGHTING = new AnnotationMotivation("oa:highlighting");
-        AnnotationMotivation.IDENTIFYING = new AnnotationMotivation("oa:identifying");
-        AnnotationMotivation.LINKING = new AnnotationMotivation("oa:linking");
-        AnnotationMotivation.MODERATING = new AnnotationMotivation("oa:moderating");
-        AnnotationMotivation.PAINTING = new AnnotationMotivation("sc:painting");
-        AnnotationMotivation.QUESTIONING = new AnnotationMotivation("oa:questioning");
-        AnnotationMotivation.REPLYING = new AnnotationMotivation("oa:replying");
-        AnnotationMotivation.TAGGING = new AnnotationMotivation("oa:tagging");
-        AnnotationMotivation.TRANSCRIBING = new AnnotationMotivation("oad:transcribing");
-        return AnnotationMotivation;
-    }(Manifesto.StringValue));
-    Manifesto.AnnotationMotivation = AnnotationMotivation;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var IIIFResourceType = /** @class */ (function (_super) {
-        __extends(IIIFResourceType, _super);
-        function IIIFResourceType() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        IIIFResourceType.prototype.image = function () {
-            return new IIIFResourceType(IIIFResourceType.IMAGE.toString());
-        };
-        IIIFResourceType.prototype.annotation = function () {
-            return new IIIFResourceType(IIIFResourceType.ANNOTATION.toString());
-        };
-        IIIFResourceType.prototype.canvas = function () {
-            return new IIIFResourceType(IIIFResourceType.CANVAS.toString());
-        };
-        IIIFResourceType.prototype.collection = function () {
-            return new IIIFResourceType(IIIFResourceType.COLLECTION.toString());
-        };
-        IIIFResourceType.prototype.manifest = function () {
-            return new IIIFResourceType(IIIFResourceType.MANIFEST.toString());
-        };
-        IIIFResourceType.prototype.range = function () {
-            return new IIIFResourceType(IIIFResourceType.RANGE.toString());
-        };
-        IIIFResourceType.prototype.sequence = function () {
-            return new IIIFResourceType(IIIFResourceType.SEQUENCE.toString());
-        };
-        IIIFResourceType.ANNOTATION = new IIIFResourceType("annotation");
-        IIIFResourceType.CANVAS = new IIIFResourceType("canvas");
-        IIIFResourceType.COLLECTION = new IIIFResourceType("collection");
-        IIIFResourceType.MANIFEST = new IIIFResourceType("manifest");
-        IIIFResourceType.RANGE = new IIIFResourceType("range");
-        IIIFResourceType.SEQUENCE = new IIIFResourceType("sequence");
-        IIIFResourceType.IMAGE = new IIIFResourceType("image");
-        return IIIFResourceType;
-    }(Manifesto.StringValue));
-    Manifesto.IIIFResourceType = IIIFResourceType;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var ManifestType = /** @class */ (function (_super) {
-        __extends(ManifestType, _super);
-        function ManifestType() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        ManifestType.prototype.empty = function () {
-            return new ManifestType(ManifestType.EMPTY.toString());
-        };
-        ManifestType.prototype.manuscript = function () {
-            return new ManifestType(ManifestType.MANUSCRIPT.toString());
-        };
-        ManifestType.prototype.monograph = function () {
-            return new ManifestType(ManifestType.MONOGRAPH.toString());
-        };
-        ManifestType.EMPTY = new ManifestType("");
-        ManifestType.MANUSCRIPT = new ManifestType("manuscript");
-        ManifestType.MONOGRAPH = new ManifestType("monograph");
-        return ManifestType;
-    }(Manifesto.StringValue));
-    Manifesto.ManifestType = ManifestType;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var RenderingFormat = /** @class */ (function (_super) {
-        __extends(RenderingFormat, _super);
-        function RenderingFormat() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        RenderingFormat.prototype.pdf = function () {
-            return new RenderingFormat(RenderingFormat.PDF.toString());
-        };
-        RenderingFormat.prototype.doc = function () {
-            return new RenderingFormat(RenderingFormat.DOC.toString());
-        };
-        RenderingFormat.prototype.docx = function () {
-            return new RenderingFormat(RenderingFormat.DOCX.toString());
-        };
-        RenderingFormat.PDF = new RenderingFormat("application/pdf");
-        RenderingFormat.DOC = new RenderingFormat("application/msword");
-        RenderingFormat.DOCX = new RenderingFormat("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        return RenderingFormat;
-    }(Manifesto.StringValue));
-    Manifesto.RenderingFormat = RenderingFormat;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var MediaType = /** @class */ (function (_super) {
-        __extends(MediaType, _super);
-        function MediaType() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        MediaType.prototype.jpg = function () {
-            return new MediaType(MediaType.JPG.toString());
-        };
-        MediaType.prototype.mp4 = function () {
-            return new MediaType(MediaType.MP4.toString());
-        };
-        MediaType.prototype.pdf = function () {
-            return new MediaType(MediaType.PDF.toString());
-        };
-        MediaType.prototype.threejs = function () {
-            return new MediaType(MediaType.THREEJS.toString());
-        };
-        MediaType.prototype.webm = function () {
-            return new MediaType(MediaType.WEBM.toString());
-        };
-        MediaType.JPG = new MediaType("image/jpeg");
-        MediaType.MP4 = new MediaType("video/mp4");
-        MediaType.PDF = new MediaType("application/pdf");
-        MediaType.THREEJS = new MediaType("application/vnd.threejs+json");
-        MediaType.WEBM = new MediaType("video/webm");
-        return MediaType;
-    }(Manifesto.StringValue));
-    Manifesto.MediaType = MediaType;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var ResourceType = /** @class */ (function (_super) {
-        __extends(ResourceType, _super);
-        function ResourceType() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        ResourceType.prototype.canvas = function () {
-            return new ResourceType(ResourceType.CANVAS.toString());
-        };
-        ResourceType.prototype.choice = function () {
-            return new ResourceType(ResourceType.CHOICE.toString());
-        };
-        ResourceType.prototype.document = function () {
-            return new ResourceType(ResourceType.DOCUMENT.toString());
-        };
-        ResourceType.prototype.image = function () {
-            return new ResourceType(ResourceType.IMAGE.toString());
-        };
-        ResourceType.prototype.movingimage = function () {
-            return new ResourceType(ResourceType.MOVINGIMAGE.toString());
-        };
-        ResourceType.prototype.physicalobject = function () {
-            return new ResourceType(ResourceType.PHYSICALOBJECT.toString());
-        };
-        ResourceType.prototype.sound = function () {
-            return new ResourceType(ResourceType.SOUND.toString());
-        };
-        ResourceType.prototype.text = function () {
-            return new ResourceType(ResourceType.TEXT.toString());
-        };
-        ResourceType.CANVAS = new ResourceType("canvas");
-        ResourceType.CHOICE = new ResourceType("choice");
-        ResourceType.DOCUMENT = new ResourceType("document");
-        ResourceType.IMAGE = new ResourceType("image");
-        ResourceType.MOVINGIMAGE = new ResourceType("movingimage");
-        ResourceType.PHYSICALOBJECT = new ResourceType("physicalobject");
-        ResourceType.SOUND = new ResourceType("sound");
-        ResourceType.TEXT = new ResourceType("textualbody");
-        return ResourceType;
-    }(Manifesto.StringValue));
-    Manifesto.ResourceType = ResourceType;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var ServiceProfile = /** @class */ (function (_super) {
-        __extends(ServiceProfile, _super);
-        function ServiceProfile() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        ServiceProfile.prototype.auth1Clickthrough = function () {
-            return new ServiceProfile(ServiceProfile.AUTH1CLICKTHROUGH.toString());
-        };
-        ServiceProfile.prototype.auth1External = function () {
-            return new ServiceProfile(ServiceProfile.AUTH1EXTERNAL.toString());
-        };
-        ServiceProfile.prototype.auth1Kiosk = function () {
-            return new ServiceProfile(ServiceProfile.AUTH1KIOSK.toString());
-        };
-        ServiceProfile.prototype.auth1Login = function () {
-            return new ServiceProfile(ServiceProfile.AUTH1LOGIN.toString());
-        };
-        ServiceProfile.prototype.auth1Logout = function () {
-            return new ServiceProfile(ServiceProfile.AUTH1LOGOUT.toString());
-        };
-        ServiceProfile.prototype.auth1Token = function () {
-            return new ServiceProfile(ServiceProfile.AUTH1TOKEN.toString());
-        };
-        ServiceProfile.prototype.autoComplete = function () {
-            return new ServiceProfile(ServiceProfile.AUTOCOMPLETE.toString());
-        };
-        ServiceProfile.prototype.iiif1ImageLevel1 = function () {
-            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL1.toString());
-        };
-        ServiceProfile.prototype.iiif1ImageLevel2 = function () {
-            return new ServiceProfile(ServiceProfile.IIIF1IMAGELEVEL2.toString());
-        };
-        ServiceProfile.prototype.iiif2ImageLevel1 = function () {
-            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL1.toString());
-        };
-        ServiceProfile.prototype.iiif2ImageLevel2 = function () {
-            return new ServiceProfile(ServiceProfile.IIIF2IMAGELEVEL2.toString());
-        };
-        ServiceProfile.prototype.ixif = function () {
-            return new ServiceProfile(ServiceProfile.IXIF.toString());
-        };
-        ServiceProfile.prototype.login = function () {
-            return new ServiceProfile(ServiceProfile.AUTHLOGIN.toString());
-        };
-        ServiceProfile.prototype.clickThrough = function () {
-            return new ServiceProfile(ServiceProfile.AUTHCLICKTHROUGH.toString());
-        };
-        ServiceProfile.prototype.restricted = function () {
-            return new ServiceProfile(ServiceProfile.AUTHRESTRICTED.toString());
-        };
-        ServiceProfile.prototype.logout = function () {
-            return new ServiceProfile(ServiceProfile.AUTHLOGOUT.toString());
-        };
-        ServiceProfile.prototype.otherManifestations = function () {
-            return new ServiceProfile(ServiceProfile.OTHERMANIFESTATIONS.toString());
-        };
-        ServiceProfile.prototype.search = function () {
-            return new ServiceProfile(ServiceProfile.SEARCH.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIFImageCompliance1 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIFImageCompliance2 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIFImageConformance1 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIFImageConformance2 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIF1ImageCompliance1 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIF1ImageCompliance2 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIF1ImageConformance1 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString());
-        };
-        ServiceProfile.prototype.stanfordIIIF1ImageConformance2 = function () {
-            return new ServiceProfile(ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString());
-        };
-        ServiceProfile.prototype.token = function () {
-            return new ServiceProfile(ServiceProfile.AUTHTOKEN.toString());
-        };
-        ServiceProfile.prototype.trackingExtensions = function () {
-            return new ServiceProfile(ServiceProfile.TRACKINGEXTENSIONS.toString());
-        };
-        ServiceProfile.prototype.uiExtensions = function () {
-            return new ServiceProfile(ServiceProfile.UIEXTENSIONS.toString());
-        };
-        ServiceProfile.prototype.printExtensions = function () {
-            return new ServiceProfile(ServiceProfile.PRINTEXTENSIONS.toString());
-        };
-        ServiceProfile.prototype.shareExtensions = function () {
-            return new ServiceProfile(ServiceProfile.SHAREEXTENSIONS.toString());
-        };
-        // image api
-        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level0");
-        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level1");
-        ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/compliance.html#level2");
-        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level0");
-        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level1");
-        ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/conformance.html#level2");
-        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
-        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
-        ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
-        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE0 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0");
-        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1");
-        ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2 = new ServiceProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
-        ServiceProfile.IIIF1IMAGELEVEL0 = new ServiceProfile("http://iiif.io/api/image/1/level0.json");
-        ServiceProfile.IIIF1IMAGELEVEL0PROFILE = new ServiceProfile("http://iiif.io/api/image/1/profiles/level0.json");
-        ServiceProfile.IIIF1IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/1/level1.json");
-        ServiceProfile.IIIF1IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/1/profiles/level1.json");
-        ServiceProfile.IIIF1IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/1/level2.json");
-        ServiceProfile.IIIF1IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/1/profiles/level2.json");
-        ServiceProfile.IIIF2IMAGELEVEL0 = new ServiceProfile("http://iiif.io/api/image/2/level0.json");
-        ServiceProfile.IIIF2IMAGELEVEL0PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level0.json");
-        ServiceProfile.IIIF2IMAGELEVEL1 = new ServiceProfile("http://iiif.io/api/image/2/level1.json");
-        ServiceProfile.IIIF2IMAGELEVEL1PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level1.json");
-        ServiceProfile.IIIF2IMAGELEVEL2 = new ServiceProfile("http://iiif.io/api/image/2/level2.json");
-        ServiceProfile.IIIF2IMAGELEVEL2PROFILE = new ServiceProfile("http://iiif.io/api/image/2/profiles/level2.json");
-        // P3
-        ServiceProfile.IIIF3IMAGELEVEL0 = new ServiceProfile("level0");
-        ServiceProfile.IIIF3IMAGELEVEL1 = new ServiceProfile("level1");
-        ServiceProfile.IIIF3IMAGELEVEL2 = new ServiceProfile("level2");
-        // auth api
-        ServiceProfile.AUTHCLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/0/login/clickthrough");
-        ServiceProfile.AUTHLOGIN = new ServiceProfile("http://iiif.io/api/auth/0/login");
-        ServiceProfile.AUTHLOGOUT = new ServiceProfile("http://iiif.io/api/auth/0/logout");
-        ServiceProfile.AUTHRESTRICTED = new ServiceProfile("http://iiif.io/api/auth/0/login/restricted");
-        ServiceProfile.AUTHTOKEN = new ServiceProfile("http://iiif.io/api/auth/0/token");
-        ServiceProfile.AUTH1CLICKTHROUGH = new ServiceProfile("http://iiif.io/api/auth/1/clickthrough");
-        ServiceProfile.AUTH1EXTERNAL = new ServiceProfile("http://iiif.io/api/auth/1/external");
-        ServiceProfile.AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
-        ServiceProfile.AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
-        ServiceProfile.AUTH1LOGOUT = new ServiceProfile("http://iiif.io/api/auth/1/logout");
-        ServiceProfile.AUTH1TOKEN = new ServiceProfile("http://iiif.io/api/auth/1/token");
-        // search api
-        ServiceProfile.AUTOCOMPLETE = new ServiceProfile("http://iiif.io/api/search/0/autocomplete");
-        ServiceProfile.SEARCH = new ServiceProfile("http://iiif.io/api/search/0/search");
-        ServiceProfile.SEARCH_P3 = new ServiceProfile("search");
-        // extensions
-        ServiceProfile.TRACKINGEXTENSIONS = new ServiceProfile("http://universalviewer.io/tracking-extensions-profile");
-        ServiceProfile.UIEXTENSIONS = new ServiceProfile("http://universalviewer.io/ui-extensions-profile");
-        ServiceProfile.PRINTEXTENSIONS = new ServiceProfile("http://universalviewer.io/print-extensions-profile");
-        ServiceProfile.SHAREEXTENSIONS = new ServiceProfile("http://universalviewer.io/share-extensions-profile");
-        // other
-        ServiceProfile.OTHERMANIFESTATIONS = new ServiceProfile("http://iiif.io/api/otherManifestations.json");
-        ServiceProfile.IXIF = new ServiceProfile("http://wellcomelibrary.org/ld/ixif/0/alpha.json");
-        return ServiceProfile;
-    }(Manifesto.StringValue));
-    Manifesto.ServiceProfile = ServiceProfile;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var ViewingDirection = /** @class */ (function (_super) {
-        __extends(ViewingDirection, _super);
-        function ViewingDirection() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        ViewingDirection.prototype.leftToRight = function () {
-            return new ViewingDirection(ViewingDirection.LEFTTORIGHT.toString());
-        };
-        ViewingDirection.prototype.rightToLeft = function () {
-            return new ViewingDirection(ViewingDirection.RIGHTTOLEFT.toString());
-        };
-        ViewingDirection.prototype.topToBottom = function () {
-            return new ViewingDirection(ViewingDirection.TOPTOBOTTOM.toString());
-        };
-        ViewingDirection.prototype.bottomToTop = function () {
-            return new ViewingDirection(ViewingDirection.BOTTOMTOTOP.toString());
-        };
-        ViewingDirection.LEFTTORIGHT = new ViewingDirection("left-to-right");
-        ViewingDirection.RIGHTTOLEFT = new ViewingDirection("right-to-left");
-        ViewingDirection.TOPTOBOTTOM = new ViewingDirection("top-to-bottom");
-        ViewingDirection.BOTTOMTOTOP = new ViewingDirection("bottom-to-top");
-        return ViewingDirection;
-    }(Manifesto.StringValue));
-    Manifesto.ViewingDirection = ViewingDirection;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var ViewingHint = /** @class */ (function (_super) {
-        __extends(ViewingHint, _super);
-        function ViewingHint() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        ViewingHint.prototype.continuous = function () {
-            return new ViewingHint(ViewingHint.CONTINUOUS.toString());
-        };
-        ViewingHint.prototype.empty = function () {
-            return new ViewingHint(ViewingHint.EMPTY.toString());
-        };
-        ViewingHint.prototype.individuals = function () {
-            return new ViewingHint(ViewingHint.INDIVIDUALS.toString());
-        };
-        ViewingHint.prototype.nonPaged = function () {
-            return new ViewingHint(ViewingHint.NONPAGED.toString());
-        };
-        ViewingHint.prototype.paged = function () {
-            return new ViewingHint(ViewingHint.PAGED.toString());
-        };
-        ViewingHint.prototype.top = function () {
-            return new ViewingHint(ViewingHint.TOP.toString());
-        };
-        ViewingHint.CONTINUOUS = new ViewingHint("continuous");
-        ViewingHint.EMPTY = new ViewingHint("");
-        ViewingHint.INDIVIDUALS = new ViewingHint("individuals");
-        ViewingHint.NONPAGED = new ViewingHint("non-paged");
-        ViewingHint.PAGED = new ViewingHint("paged");
-        ViewingHint.TOP = new ViewingHint("top");
-        return ViewingHint;
-    }(Manifesto.StringValue));
-    Manifesto.ViewingHint = ViewingHint;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var JSONLDResource = /** @class */ (function () {
-        function JSONLDResource(jsonld) {
-            this.__jsonld = jsonld;
-            this.aliases = {
-                images: 'items',
-                sequences: 'items',
-                canvases: 'items',
-            };
-            this.context = this.getProperty('context');
-            this.id = this.getProperty('id');
-        }
-        JSONLDResource.prototype.getProperty = function (name, defaultValue) {
-            var prop = null;
-            if (this.__jsonld) {
-                prop = this.__jsonld[name];
-                if (!prop && this.aliases[name]) {
-                    return this.getProperty(this.aliases[name]);
-                }
-                if (!prop) {
-                    // property may have a prepended '@'
-                    prop = this.__jsonld['@' + name];
-                }
-            }
-            if (!prop && typeof defaultValue !== 'undefined') {
-                prop = defaultValue;
-            }
-            return prop;
-        };
-        return JSONLDResource;
-    }());
-    Manifesto.JSONLDResource = JSONLDResource;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var ManifestResource = /** @class */ (function (_super) {
-        __extends(ManifestResource, _super);
-        function ManifestResource(jsonld, options) {
-            var _this = _super.call(this, jsonld) || this;
-            _this.options = options;
-            return _this;
-        }
-        ManifestResource.prototype.getIIIFResourceType = function () {
-            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
-        };
-        ManifestResource.prototype.getLabel = function () {
-            return Manifesto.TranslationCollection.parse(this.getProperty('label'), this.options.locale);
-        };
-        ManifestResource.prototype.getMetadata = function () {
-            var _metadata = this.getProperty('metadata');
-            var metadata = [];
-            if (!_metadata)
-                return metadata;
-            for (var i = 0; i < _metadata.length; i++) {
-                var item = _metadata[i];
-                var metadataItem = new Manifesto.MetadataItem(this.options.locale);
-                metadataItem.parse(item);
-                metadata.push(metadataItem);
-            }
-            return metadata;
-        };
-        ManifestResource.prototype.getRendering = function (format) {
-            var renderings = this.getRenderings();
-            // normalise format to string
-            if (typeof (format) !== 'string') {
-                format = format.toString();
-            }
-            for (var i = 0; i < renderings.length; i++) {
-                var rendering = renderings[i];
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-            return null;
-        };
-        ManifestResource.prototype.getRenderings = function () {
-            var rendering;
-            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (this.__jsonld) {
-                rendering = this.__jsonld.rendering;
-            }
-            else {
-                rendering = this.rendering;
-            }
-            var renderings = [];
-            if (!rendering)
-                return renderings;
-            // coerce to array
-            if (!Array.isArray(rendering)) {
-                rendering = [rendering];
-            }
-            for (var i = 0; i < rendering.length; i++) {
-                var r = rendering[i];
-                renderings.push(new Manifesto.Rendering(r, this.options));
-            }
-            return renderings;
-        };
-        ManifestResource.prototype.getService = function (profile) {
-            return Manifesto.Utils.getService(this, profile);
-        };
-        ManifestResource.prototype.getServices = function () {
-            return Manifesto.Utils.getServices(this);
-        };
-        ManifestResource.prototype.getThumbnail = function () {
-            var thumbnail = this.getProperty('thumbnail');
-            if (Array.isArray(thumbnail)) {
-                thumbnail = thumbnail[0];
-            }
-            if (thumbnail) {
-                return new Manifesto.Thumbnail(thumbnail, this.options);
-            }
-            return null;
-        };
-        ManifestResource.prototype.isAnnotation = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
-        };
-        ManifestResource.prototype.isCanvas = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
-        };
-        ManifestResource.prototype.isCollection = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
-        };
-        ManifestResource.prototype.isManifest = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
-        };
-        ManifestResource.prototype.isRange = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
-        };
-        ManifestResource.prototype.isSequence = function () {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.SEQUENCE.toString();
-        };
-        return ManifestResource;
-    }(Manifesto.JSONLDResource));
-    Manifesto.ManifestResource = ManifestResource;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Resource = /** @class */ (function (_super) {
-        __extends(Resource, _super);
-        function Resource(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        Resource.prototype.getFormat = function () {
-            var format = this.getProperty('format');
-            if (format) {
-                return new Manifesto.MediaType(format.toLowerCase());
-            }
-            return null;
-        };
-        Resource.prototype.getResources = function () {
-            var resources = [];
-            if (!this.__jsonld.resources)
-                return resources;
-            for (var i = 0; i < this.__jsonld.resources.length; i++) {
-                var a = this.__jsonld.resources[i];
-                var annotation = new Manifesto.Annotation(a, this.options);
-                resources.push(annotation);
-            }
-            return resources;
-        };
-        Resource.prototype.getType = function () {
-            var type = this.getProperty('type');
-            if (type) {
-                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(type));
-            }
-            return null;
-        };
-        Resource.prototype.getWidth = function () {
-            return this.getProperty('width');
-        };
-        Resource.prototype.getHeight = function () {
-            return this.getProperty('height');
-        };
-        Resource.prototype.getMaxWidth = function () {
-            return this.getProperty('maxWidth');
-        };
-        Resource.prototype.getMaxHeight = function () {
-            var maxHeight = this.getProperty('maxHeight');
-            // if a maxHeight hasn't been specified, default to maxWidth.
-            // maxWidth in essence becomes maxEdge
-            if (!maxHeight) {
-                return this.getMaxWidth();
-            }
-            return null;
-        };
-        return Resource;
-    }(Manifesto.ManifestResource));
-    Manifesto.Resource = Resource;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Canvas = /** @class */ (function (_super) {
-        __extends(Canvas, _super);
-        function Canvas(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        // http://iiif.io/api/image/2.1/#canonical-uri-syntax
-        Canvas.prototype.getCanonicalImageUri = function (w) {
-            var id = null;
-            var region = 'full';
-            var rotation = 0;
-            var quality = 'default';
-            var width = w;
-            var size;
-            // if an info.json has been loaded
-            if (this.externalResource && this.externalResource.data && this.externalResource.data['@id']) {
-                id = this.externalResource.data['@id'];
-                if (!width) {
-                    width = this.externalResource.data.width;
-                }
-                if (this.externalResource.data['@context']) {
-                    if (this.externalResource.data['@context'].indexOf('/1.0/context.json') > -1 ||
-                        this.externalResource.data['@context'].indexOf('/1.1/context.json') > -1 ||
-                        this.externalResource.data['@context'].indexOf('/1/context.json') > -1) {
-                        quality = 'native';
-                    }
-                }
-            }
-            else {
-                // info.json hasn't been loaded yet
-                var images = this.getImages();
-                if (images && images.length) {
-                    var firstImage = images[0];
-                    var resource = firstImage.getResource();
-                    var services = resource.getServices();
-                    if (!width) {
-                        width = resource.getWidth();
-                    }
-                    if (services.length) {
-                        var service = services[0];
-                        id = service.id;
-                        quality = Manifesto.Utils.getImageQuality(service.getProfile());
-                    }
-                    else if (width === resource.getWidth()) {
-                        // if the passed width is the same as the resource width
-                        // i.e. not looking for a thumbnail
-                        // return the full size image.
-                        // used for download options when loading static images.
-                        return resource.id;
-                    }
-                }
-                // todo: should this be moved to getThumbUri?
-                if (!id) {
-                    var thumbnail = this.getProperty('thumbnail');
-                    if (thumbnail) {
-                        if (typeof (thumbnail) === 'string') {
-                            return thumbnail;
-                        }
-                        else {
-                            return thumbnail['@id'];
-                        }
-                    }
-                }
-            }
-            size = width + ',';
-            // trim off trailing '/'
-            if (id && id.endsWith('/')) {
-                id = id.substr(0, id.length - 1);
-            }
-            return [id, region, size, rotation, quality + '.jpg'].join('/');
-        };
-        Canvas.prototype.getMaxDimensions = function () {
-            var maxDimensions = null;
-            var profile;
-            if (this.externalResource.data && this.externalResource.data.profile) {
-                profile = this.externalResource.data.profile;
-                if (Array.isArray(profile)) {
-                    profile = profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
-                    if (profile) {
-                        maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
-                    }
-                }
-            }
-            return maxDimensions;
-        };
-        // Presentation API 3.0
-        Canvas.prototype.getContent = function () {
-            var content = [];
-            var items = this.__jsonld.items || this.__jsonld.content;
-            if (!items)
-                return content;
-            // should be contained in an AnnotationPage
-            var annotationPage = null;
-            if (items.length) {
-                annotationPage = new Manifesto.AnnotationPage(items[0], this.options);
-            }
-            if (!annotationPage) {
-                return content;
-            }
-            var annotations = annotationPage.getItems();
-            for (var i = 0; i < annotations.length; i++) {
-                var a = annotations[i];
-                var annotation = new Manifesto.Annotation(a, this.options);
-                content.push(annotation);
-            }
-            return content;
-        };
-        Canvas.prototype.getDuration = function () {
-            return this.getProperty('duration');
-        };
-        Canvas.prototype.getP3Images = function () {
-            return this.getContent().filter(function (annotation) {
-                // Grab all bodies
-                var bodies = annotation.getBody();
-                // No bodies, definitely not an image.
-                if (!bodies.length) {
-                    return false;
-                }
-                // Reduce all the bodies into a boolean
-                return bodies.reduce(function (hasImage, body) {
-                    // Check for the image type in the body
-                    return hasImage || body.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.IMAGE.toString();
-                }, false);
-            });
-        };
-        Canvas.prototype.getImages = function () {
-            var _this = this;
-            var iterable = this.getProperty('images', []);
-            return iterable.reduce(function (list, annotation) {
-                if (annotation.type === 'AnnotationPage') {
-                    return annotation.items.reduce(function (list, annotation) {
-                        list.push(new Manifesto.Annotation(annotation, _this.options));
-                        return list;
-                    }, list);
-                }
-                list.push(new Manifesto.Annotation(annotation, _this.options));
-                return list;
-            }, []);
-        };
-        Canvas.prototype.getIndex = function () {
-            return this.getProperty('index');
-        };
-        Canvas.prototype.getAnnotations = function () {
-            var _this = this;
-            var annotationProperty = this.getProperty('annotations');
-            if (!annotationProperty) {
-                return Promise.resolve([]);
-            }
-            var annotations = Array.isArray(annotationProperty) ?
-                annotationProperty :
-                [annotationProperty];
-            var annotationPromises = annotations
-                .map(function (annotationList, i) { return ((new Manifesto.AnnotationList(annotationList.label || "Annotation list " + i, annotationList, _this.options))); })
-                .map(function (annotationList) { return annotationList.load(); });
-            return Promise.all(annotationPromises);
-        };
-        Canvas.prototype.getOtherContent = function () {
-            var _this = this;
-            var otherContent = Array.isArray(this.getProperty('otherContent')) ?
-                this.getProperty('otherContent') :
-                [this.getProperty('otherContent')];
-            var canonicalComparison = function (typeA, typeB) {
-                if (typeof typeA !== 'string' || typeof typeB !== 'string') {
-                    return false;
-                }
-                return typeA.toLowerCase() === typeA.toLowerCase();
-            };
-            var otherPromises = otherContent
-                .filter(function (otherContent) { return otherContent && canonicalComparison(otherContent['@type'], 'sc:AnnotationList'); })
-                .map(function (annotationList, i) { return ((new Manifesto.AnnotationList(annotationList['label'] || "Annotation list " + i, annotationList, _this.options))); })
-                .map(function (annotationList) { return annotationList.load(); });
-            return Promise.all(otherPromises);
-        };
-        // Prefer thumbnail service to image service if supplied and if
-        // the thumbnail service can provide a satisfactory size +/- x pixels.
-        // this is used to get thumb URIs *before* the info.json has been requested
-        // and populate thumbnails in a viewer.
-        // the publisher may also provide pre-computed fixed-size thumbs for better performance.
-        //getThumbUri(width: number): string {
-        //
-        //    var uri;
-        //    var images: IAnnotation[] = this.getImages();
-        //
-        //    if (images && images.length) {
-        //        var firstImage = images[0];
-        //        var resource: IResource = firstImage.getResource();
-        //        var services: IService[] = resource.getServices();
-        //
-        //        for (let i = 0; i < services.length; i++) {
-        //            var service: IService = services[i];
-        //            var id = service.id;
-        //
-        //            if (!_endsWith(id, '/')) {
-        //                id += '/';
-        //            }
-        //
-        //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
-        //        }
-        //    }
-        //
-        //    return uri;
-        //}
-        //getType(): CanvasType {
-        //    return new CanvasType(this.getProperty('@type').toLowerCase());
-        //}
-        Canvas.prototype.getWidth = function () {
-            return this.getProperty('width');
-        };
-        Canvas.prototype.getHeight = function () {
-            return this.getProperty('height');
-        };
-        return Canvas;
-    }(Manifesto.Resource));
-    Manifesto.Canvas = Canvas;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var IIIFResource = /** @class */ (function (_super) {
-        __extends(IIIFResource, _super);
-        function IIIFResource(jsonld, options) {
-            var _this = _super.call(this, jsonld, options) || this;
-            _this.index = -1;
-            _this.isLoaded = false;
-            var defaultOptions = {
-                defaultLabel: '-',
-                locale: 'en-GB',
-                resource: _this,
-                pessimisticAccessControl: false
-            };
-            _this.options = Object.assign(defaultOptions, options);
-            return _this;
-        }
-        IIIFResource.prototype.getAttribution = function () {
-            var attribution = this.getProperty('attribution');
-            if (attribution) {
-                return Manifesto.TranslationCollection.parse(attribution, this.options.locale);
-            }
-            return [];
-        };
-        IIIFResource.prototype.getDescription = function () {
-            var description = this.getProperty('description');
-            if (description) {
-                return Manifesto.TranslationCollection.parse(description, this.options.locale);
-            }
-            return [];
-        };
-        IIIFResource.prototype.getIIIFResourceType = function () {
-            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
-        };
-        IIIFResource.prototype.getLogo = function () {
-            var logo = this.getProperty('logo');
-            if (!logo)
-                return null;
-            if (typeof (logo) === 'string')
-                return logo;
-            return logo['@id'];
-        };
-        IIIFResource.prototype.getLicense = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
-        };
-        IIIFResource.prototype.getNavDate = function () {
-            return new Date(this.getProperty('navDate'));
-        };
-        IIIFResource.prototype.getRelated = function () {
-            return this.getProperty('related');
-        };
-        IIIFResource.prototype.getSeeAlso = function () {
-            return this.getProperty('seeAlso');
-        };
-        IIIFResource.prototype.getLabel = function () {
-            var label = this.getProperty('label');
-            if (label) {
-                return Manifesto.TranslationCollection.parse(label, this.options.locale);
-            }
-            return [];
-        };
-        IIIFResource.prototype.getDefaultLabel = function () {
-            return Manifesto.TranslationCollection.getValue(this.getLabel());
-        };
-        IIIFResource.prototype.getDefaultTree = function () {
-            this.defaultTree = new Manifesto.TreeNode('root');
-            this.defaultTree.data = this;
-            return this.defaultTree;
-        };
-        IIIFResource.prototype.isCollection = function () {
-            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
-                return true;
-            }
-            return false;
-        };
-        IIIFResource.prototype.isManifest = function () {
-            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
-                return true;
-            }
-            return false;
-        };
-        IIIFResource.prototype.load = function () {
-            var that = this;
-            return new Promise(function (resolve, reject) {
-                if (that.isLoaded) {
-                    resolve(that);
-                }
-                else {
-                    var options_1 = that.options;
-                    options_1.navDate = that.getNavDate();
-                    var id = that.__jsonld.id;
-                    if (!id) {
-                        id = that.__jsonld['@id'];
-                    }
-                    Manifesto.Utils.loadResource(id).then(function (data) {
-                        that.parentLabel = Manifesto.TranslationCollection.getValue(that.getLabel(), options_1.locale);
-                        var parsed = Manifesto.Deserialiser.parse(data, options_1);
-                        that = Object.assign(that, parsed);
-                        that.index = options_1.index;
-                        resolve(that);
-                    });
-                }
-            });
-        };
-        return IIIFResource;
-    }(Manifesto.ManifestResource));
-    Manifesto.IIIFResource = IIIFResource;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Manifest = /** @class */ (function (_super) {
-        __extends(Manifest, _super);
-        function Manifest(jsonld, options) {
-            var _this = _super.call(this, jsonld, options) || this;
-            _this.index = 0;
-            _this._allRanges = null;
-            _this.items = [];
-            _this._topRanges = [];
-            if (_this.__jsonld.structures && _this.__jsonld.structures.length) {
-                var topRanges = _this._getTopRanges();
-                for (var i = 0; i < topRanges.length; i++) {
-                    var range = topRanges[i];
-                    _this._parseRanges(range, String(i));
-                }
-            }
-            return _this;
-        }
-        Manifest.prototype.getDefaultTree = function () {
-            _super.prototype.getDefaultTree.call(this);
-            this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
-            if (!this.isLoaded) {
-                return this.defaultTree;
-            }
-            var topRanges = this.getTopRanges();
-            // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
-            if (topRanges.length) {
-                topRanges[0].getTree(this.defaultTree);
-            }
-            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
-            return this.defaultTree;
-        };
-        Manifest.prototype._getTopRanges = function () {
-            var topRanges = [];
-            if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var json = this.__jsonld.structures[i];
-                    if (json.viewingHint === Manifesto.ViewingHint.TOP.toString()) {
-                        topRanges.push(json);
-                    }
-                }
-                // if no viewingHint="top" range was found, create a default one
-                if (!topRanges.length) {
-                    var range = {};
-                    range.ranges = this.__jsonld.structures;
-                    topRanges.push(range);
-                }
-            }
-            return topRanges;
-        };
-        Manifest.prototype.getTopRanges = function () {
-            return this._topRanges;
-        };
-        Manifest.prototype._getRangeById = function (id) {
-            if (this.__jsonld.structures && this.__jsonld.structures.length) {
-                for (var i = 0; i < this.__jsonld.structures.length; i++) {
-                    var r = this.__jsonld.structures[i];
-                    if (r['@id'] === id || r.id === id) {
-                        return r;
-                    }
-                }
-            }
-            return null;
-        };
-        //private _parseRangeCanvas(json: any, range: IRange): void {
-        // todo: currently this isn't needed
-        //var canvas: IJSONLDResource = new JSONLDResource(json);
-        //range.items.push(<IManifestResource>canvas);
-        //}
-        Manifest.prototype._parseRanges = function (r, path, parentRange) {
-            var range;
-            var id = null;
-            if (typeof (r) === 'string') {
-                id = r;
-                r = this._getRangeById(id);
-            }
-            if (!r) {
-                console.warn("Range:", id, "does not exist");
-                return;
-            }
-            range = new Manifesto.Range(r, this.options);
-            range.parentRange = parentRange;
-            range.path = path;
-            if (!parentRange) {
-                this._topRanges.push(range);
-            }
-            else {
-                parentRange.items.push(range);
-            }
-            var items = r.items || r.members;
-            if (items) {
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    // todo: use an ItemType constant?
-                    if (item['@type'] && item['@type'].toLowerCase() === 'sc:range' || item['type'] && item['type'].toLowerCase() === 'range') {
-                        this._parseRanges(item, path + '/' + i, range);
-                    }
-                    else if (item['@type'] && item['@type'].toLowerCase() === 'sc:canvas' || item['type'] && item['type'].toLowerCase() === 'canvas') {
-                        // store the ids on the __jsonld object to be used by Range.getCanvasIds()
-                        if (!range.canvases) {
-                            range.canvases = [];
-                        }
-                        var id_1 = item.id || item['@id'];
-                        range.canvases.push(id_1);
-                    }
-                }
-            }
-            else if (r.ranges) {
-                for (var i = 0; i < r.ranges.length; i++) {
-                    this._parseRanges(r.ranges[i], path + '/' + i, range);
-                }
-            }
-        };
-        Manifest.prototype.getAllRanges = function () {
-            if (this._allRanges != null)
-                return this._allRanges;
-            this._allRanges = [];
-            var topRanges = this.getTopRanges();
-            for (var i = 0; i < topRanges.length; i++) {
-                var topRange = topRanges[i];
-                if (topRange.id) {
-                    this._allRanges.push(topRange); // it might be a placeholder root range
-                }
-                var subRanges = topRange.getRanges();
-                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(function (range) { return range.getRanges(); }).toArray());
-            }
-            return this._allRanges;
-        };
-        Manifest.prototype.getRangeById = function (id) {
-            var ranges = this.getAllRanges();
-            for (var i = 0; i < ranges.length; i++) {
-                var range = ranges[i];
-                if (range.id === id) {
-                    return range;
-                }
-            }
-            return null;
-        };
-        Manifest.prototype.getRangeByPath = function (path) {
-            var ranges = this.getAllRanges();
-            for (var i = 0; i < ranges.length; i++) {
-                var range = ranges[i];
-                if (range.path === path) {
-                    return range;
-                }
-            }
-            return null;
-        };
-        Manifest.prototype.getSequences = function () {
-            if (this.items.length) {
-                return this.items;
-            }
-            // IxIF mediaSequences overrode sequences, so need to be checked first.
-            // deprecate this when presentation 3 ships
-            var items = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
-            if (items) {
-                for (var i = 0; i < items.length; i++) {
-                    var s = items[i];
-                    var sequence = new Manifesto.Sequence(s, this.options);
-                    this.items.push(sequence);
-                }
-            }
-            return this.items;
-        };
-        Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
-            return this.getSequences()[sequenceIndex];
-        };
-        Manifest.prototype.getTotalSequences = function () {
-            return this.getSequences().length;
-        };
-        Manifest.prototype.getManifestType = function () {
-            var service = this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
-            if (service) {
-                return new Manifesto.ManifestType(service.getProperty('manifestType'));
-            }
-            return new Manifesto.ManifestType('');
-        };
-        Manifest.prototype.getTrackingLabel = function () {
-            var service = this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
-            if (service) {
-                return service.getProperty('trackingLabel');
-            }
-            return '';
-        };
-        Manifest.prototype.isMultiSequence = function () {
-            return this.getTotalSequences() > 1;
-        };
-        Manifest.prototype.isPagingEnabled = function () {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
-        };
-        Manifest.prototype.getViewingDirection = function () {
-            if (this.getProperty('viewingDirection')) {
-                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
-            }
-            return Manifesto.ViewingDirection.LEFTTORIGHT;
-        };
-        Manifest.prototype.getViewingHint = function () {
-            if (this.getProperty('viewingHint')) {
-                return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
-            }
-            return Manifesto.ViewingHint.EMPTY;
-        };
-        Manifest.prototype.getSearchService = function () {
-            var services = this.getServices();
-            return services.reduce(function (found, candidateService) {
-                return found || ((candidateService.getProfile().toString() === Manifesto.ServiceProfile.SEARCH.toString() ||
-                    candidateService.getProfile().toString() === Manifesto.ServiceProfile.SEARCH_P3.toString())
-                    ? candidateService
-                    : null);
-            }, null);
-        };
-        return Manifest;
-    }(Manifesto.IIIFResource));
-    Manifesto.Manifest = Manifest;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Collection = /** @class */ (function (_super) {
-        __extends(Collection, _super);
-        function Collection(jsonld, options) {
-            var _this = _super.call(this, jsonld, options) || this;
-            _this.items = [];
-            _this._collections = null;
-            _this._manifests = null;
-            jsonld.__collection = _this;
-            return _this;
-        }
-        Collection.prototype.getCollections = function () {
-            if (this._collections) {
-                return this._collections;
-            }
-            return this._collections = this.items.en().where(function (m) { return m.isCollection(); }).toArray();
-        };
-        Collection.prototype.getManifests = function () {
-            if (this._manifests) {
-                return this._manifests;
-            }
-            return this._manifests = this.items.en().where(function (m) { return m.isManifest(); }).toArray();
-        };
-        Collection.prototype.getCollectionByIndex = function (collectionIndex) {
-            var collections = this.getCollections();
-            if (!collections[collectionIndex]) {
-                throw new Error("Collection index is outside range of array");
-            }
-            var collection = collections[collectionIndex];
-            collection.options.index = collectionIndex;
-            // id for collection MUST be dereferenceable
-            return collection.load();
-        };
-        Collection.prototype.getManifestByIndex = function (manifestIndex) {
-            var manifests = this.getManifests();
-            if (!manifests[manifestIndex]) {
-                throw new Error("Manifest index is outside range of array");
-            }
-            var manifest = manifests[manifestIndex];
-            manifest.options.index = manifestIndex;
-            return manifest.load();
-        };
-        Collection.prototype.getTotalCollections = function () {
-            return this.getCollections().length;
-        };
-        Collection.prototype.getTotalManifests = function () {
-            return this.getManifests().length;
-        };
-        Collection.prototype.getTotalItems = function () {
-            return this.items.length;
-        };
-        Collection.prototype.getViewingDirection = function () {
-            if (this.getProperty('viewingDirection')) {
-                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
-            }
-            return Manifesto.ViewingDirection.LEFTTORIGHT;
-        };
-        /**
-         * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
-         */
-        Collection.prototype.getDefaultTree = function () {
-            _super.prototype.getDefaultTree.call(this);
-            this.defaultTree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
-            this._parseManifests(this);
-            this._parseCollections(this);
-            Manifesto.Utils.generateTreeNodeIds(this.defaultTree);
-            return this.defaultTree;
-        };
-        Collection.prototype._parseManifests = function (parentCollection) {
-            if (parentCollection.getManifests() && parentCollection.getManifests().length) {
-                for (var i = 0; i < parentCollection.getManifests().length; i++) {
-                    var manifest = parentCollection.getManifests()[i];
-                    var tree = manifest.getDefaultTree();
-                    tree.label = manifest.parentLabel || Manifesto.TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
-                    tree.navDate = manifest.getNavDate();
-                    tree.data.id = manifest.id;
-                    tree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
-                    parentCollection.defaultTree.addNode(tree);
-                }
-            }
-        };
-        Collection.prototype._parseCollections = function (parentCollection) {
-            if (parentCollection.getCollections() && parentCollection.getCollections().length) {
-                for (var i = 0; i < parentCollection.getCollections().length; i++) {
-                    var collection = parentCollection.getCollections()[i];
-                    var tree = collection.getDefaultTree();
-                    tree.label = collection.parentLabel || Manifesto.TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
-                    tree.navDate = collection.getNavDate();
-                    tree.data.id = collection.id;
-                    tree.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
-                    parentCollection.defaultTree.addNode(tree);
-                    this._parseCollections(collection);
-                }
-            }
-        };
-        return Collection;
-    }(Manifesto.IIIFResource));
-    Manifesto.Collection = Collection;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Range = /** @class */ (function (_super) {
-        __extends(Range, _super);
-        function Range(jsonld, options) {
-            var _this = _super.call(this, jsonld, options) || this;
-            _this._ranges = null;
-            _this.canvases = null;
-            _this.items = [];
-            return _this;
-        }
-        Range.prototype.getCanvasIds = function () {
-            if (this.__jsonld.canvases) {
-                return this.__jsonld.canvases;
-            }
-            else if (this.canvases) {
-                return this.canvases;
-            }
-            return [];
-        };
-        // getCanvases(): ICanvas[] {
-        //     if (this._canvases) {
-        //         return this._canvases;
-        //     }
-        //     return this._canvases = <ICanvas[]>this.items.en().where(m => m.isCanvas()).toArray();
-        // }
-        Range.prototype.getRanges = function () {
-            if (this._ranges) {
-                return this._ranges;
-            }
-            return this._ranges = this.items.en().where(function (m) { return m.isRange(); }).toArray();
-        };
-        Range.prototype.getViewingDirection = function () {
-            if (this.getProperty('viewingDirection')) {
-                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
-            }
-            return null;
-        };
-        Range.prototype.getViewingHint = function () {
-            if (this.getProperty('viewingHint')) {
-                return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
-            }
-            return null;
-        };
-        Range.prototype.getTree = function (treeRoot) {
-            treeRoot.data = this;
-            this.treeNode = treeRoot;
-            var ranges = this.getRanges();
-            if (ranges && ranges.length) {
-                for (var i = 0; i < ranges.length; i++) {
-                    var range = ranges[i];
-                    var node = new Manifesto.TreeNode();
-                    treeRoot.addNode(node);
-                    this._parseTreeNode(node, range);
-                }
-            }
-            Manifesto.Utils.generateTreeNodeIds(treeRoot);
-            return treeRoot;
-        };
-        Range.prototype._parseTreeNode = function (node, range) {
-            node.label = Manifesto.TranslationCollection.getValue(range.getLabel(), this.options.locale);
-            node.data = range;
-            node.data.type = Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.RANGE.toString());
-            range.treeNode = node;
-            var ranges = range.getRanges();
-            if (ranges && ranges.length) {
-                for (var i = 0; i < ranges.length; i++) {
-                    var childRange = ranges[i];
-                    var childNode = new Manifesto.TreeNode();
-                    node.addNode(childNode);
-                    this._parseTreeNode(childNode, childRange);
-                }
-            }
-        };
-        return Range;
-    }(Manifesto.ManifestResource));
-    Manifesto.Range = Range;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Rendering = /** @class */ (function (_super) {
-        __extends(Rendering, _super);
-        function Rendering(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        Rendering.prototype.getFormat = function () {
-            return new Manifesto.RenderingFormat(this.getProperty('format'));
-        };
-        return Rendering;
-    }(Manifesto.ManifestResource));
-    Manifesto.Rendering = Rendering;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Sequence = /** @class */ (function (_super) {
-        __extends(Sequence, _super);
-        function Sequence(jsonld, options) {
-            var _this = _super.call(this, jsonld, options) || this;
-            _this.items = [];
-            _this._thumbnails = null;
-            return _this;
-        }
-        Sequence.prototype.getCanvases = function () {
-            if (this.items.length) {
-                return this.items;
-            }
-            var items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
-            if (items) {
-                for (var i = 0; i < items.length; i++) {
-                    var c = items[i];
-                    var canvas = new Manifesto.Canvas(c, this.options);
-                    canvas.index = i;
-                    this.items.push(canvas);
-                }
-            }
-            return this.items;
-        };
-        Sequence.prototype.getCanvasById = function (id) {
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
-                var canvas = this.getCanvasByIndex(i);
-                // normalise canvas id
-                var canvasId = Manifesto.Utils.normaliseUrl(canvas.id);
-                if (Manifesto.Utils.normaliseUrl(id) === canvasId) {
-                    return canvas;
-                }
-            }
-            return null;
-        };
-        Sequence.prototype.getCanvasByIndex = function (canvasIndex) {
-            return this.getCanvases()[canvasIndex];
-        };
-        Sequence.prototype.getCanvasIndexById = function (id) {
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
-                var canvas = this.getCanvasByIndex(i);
-                if (canvas.id === id) {
-                    return i;
-                }
-            }
-            return null;
-        };
-        Sequence.prototype.getCanvasIndexByLabel = function (label, foliated) {
-            label = label.trim();
-            if (!isNaN(label)) {
-                label = parseInt(label, 10).toString(); // trim any preceding zeros.
-                if (foliated)
-                    label += 'r'; // default to recto
-            }
-            var doublePageRegExp = /(\d*)\D+(\d*)/;
-            var match, regExp, regStr, labelPart1, labelPart2;
-            for (var i = 0; i < this.getTotalCanvases(); i++) {
-                var canvas = this.getCanvasByIndex(i);
-                // check if there's a literal match
-                if (Manifesto.TranslationCollection.getValue(canvas.getLabel(), this.options.locale) === label) {
-                    return i;
-                }
-                // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
-                match = doublePageRegExp.exec(label);
-                if (!match)
-                    continue;
-                labelPart1 = match[1];
-                labelPart2 = match[2];
-                if (!labelPart2)
-                    continue;
-                regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
-                regExp = new RegExp(regStr);
-                if (regExp.test(canvas.getLabel().toString())) {
-                    return i;
-                }
-            }
-            return -1;
-        };
-        Sequence.prototype.getLastCanvasLabel = function (alphanumeric) {
-            for (var i = this.getTotalCanvases() - 1; i >= 0; i--) {
-                var canvas = this.getCanvasByIndex(i);
-                var label = Manifesto.TranslationCollection.getValue(canvas.getLabel(), this.options.locale);
-                if (alphanumeric) {
-                    var regExp = /^[a-zA-Z0-9]*$/;
-                    if (regExp.test(label)) {
-                        return label;
-                    }
-                }
-                else if (label) {
-                    return label;
-                }
-            }
-            return this.options.defaultLabel;
-        };
-        Sequence.prototype.getLastPageIndex = function () {
-            return this.getTotalCanvases() - 1;
-        };
-        Sequence.prototype.getNextPageIndex = function (canvasIndex, pagingEnabled) {
-            var index;
-            if (pagingEnabled) {
-                var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
-                    index = indices[0] + 1;
-                }
-                else {
-                    index = indices[indices.length - 1] + 1;
-                }
-            }
-            else {
-                index = canvasIndex + 1;
-            }
-            if (index > this.getLastPageIndex()) {
-                return -1;
-            }
-            return index;
-        };
-        Sequence.prototype.getPagedIndices = function (canvasIndex, pagingEnabled) {
-            var indices = [];
-            if (!pagingEnabled) {
-                indices.push(canvasIndex);
-            }
-            else {
-                if (this.isFirstCanvas(canvasIndex) || this.isLastCanvas(canvasIndex)) {
-                    indices = [canvasIndex];
-                }
-                else if (canvasIndex % 2) {
-                    indices = [canvasIndex, canvasIndex + 1];
-                }
-                else {
-                    indices = [canvasIndex - 1, canvasIndex];
-                }
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
-                    indices = indices.reverse();
-                }
-            }
-            return indices;
-        };
-        Sequence.prototype.getPrevPageIndex = function (canvasIndex, pagingEnabled) {
-            var index;
-            if (pagingEnabled) {
-                var indices = this.getPagedIndices(canvasIndex);
-                if (this.getViewingDirection().toString() === Manifesto.ViewingDirection.RIGHTTOLEFT.toString()) {
-                    index = indices[indices.length - 1] - 1;
-                }
-                else {
-                    index = indices[0] - 1;
-                }
-            }
-            else {
-                index = canvasIndex - 1;
-            }
-            return index;
-        };
-        Sequence.prototype.getStartCanvasIndex = function () {
-            var startCanvas = this.getStartCanvas();
-            if (startCanvas) {
-                // if there's a startCanvas attribute, loop through the canvases and return the matching index.
-                for (var i = 0; i < this.getTotalCanvases(); i++) {
-                    var canvas = this.getCanvasByIndex(i);
-                    if (canvas.id === startCanvas)
-                        return i;
-                }
-            }
-            // default to first canvas.
-            return 0;
-        };
-        // todo: deprecate
-        Sequence.prototype.getThumbs = function (width, height) {
-            console.warn('getThumbs will be deprecated, use getThumbnails instead');
-            var thumbs = [];
-            var totalCanvases = this.getTotalCanvases();
-            for (var i = 0; i < totalCanvases; i++) {
-                var canvas = this.getCanvasByIndex(i);
-                var thumb = new Manifesto.Thumb(width, canvas);
-                thumbs.push(thumb);
-            }
-            return thumbs;
-        };
-        Sequence.prototype.getThumbnails = function () {
-            if (this._thumbnails != null)
-                return this._thumbnails;
-            this._thumbnails = [];
-            var canvases = this.getCanvases();
-            for (var i = 0; i < canvases.length; i++) {
-                var thumbnail = canvases[i].getThumbnail();
-                if (thumbnail) {
-                    this._thumbnails.push(thumbnail);
-                }
-            }
-            return this._thumbnails;
-        };
-        Sequence.prototype.getStartCanvas = function () {
-            return this.getProperty('startCanvas');
-        };
-        Sequence.prototype.getTotalCanvases = function () {
-            return this.getCanvases().length;
-        };
-        Sequence.prototype.getViewingDirection = function () {
-            if (this.getProperty('viewingDirection')) {
-                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
-            }
-            else if (this.options.resource.getViewingDirection) {
-                return this.options.resource.getViewingDirection();
-            }
-            return Manifesto.ViewingDirection.LEFTTORIGHT;
-        };
-        Sequence.prototype.getViewingHint = function () {
-            if (this.getProperty('viewingHint')) {
-                return new Manifesto.ViewingHint(this.getProperty('viewingHint'));
-            }
-            return Manifesto.ViewingHint.EMPTY;
-        };
-        Sequence.prototype.isCanvasIndexOutOfRange = function (canvasIndex) {
-            return canvasIndex > this.getTotalCanvases() - 1;
-        };
-        Sequence.prototype.isFirstCanvas = function (canvasIndex) {
-            return canvasIndex === 0;
-        };
-        Sequence.prototype.isLastCanvas = function (canvasIndex) {
-            return canvasIndex === this.getTotalCanvases() - 1;
-        };
-        Sequence.prototype.isMultiCanvas = function () {
-            return this.getTotalCanvases() > 1;
-        };
-        Sequence.prototype.isPagingEnabled = function () {
-            return this.getViewingHint().toString() === Manifesto.ViewingHint.PAGED.toString();
-        };
-        // checks if the number of canvases is even - therefore has a front and back cover
-        Sequence.prototype.isTotalCanvasesEven = function () {
-            return this.getTotalCanvases() % 2 === 0;
-        };
-        return Sequence;
-    }(Manifesto.ManifestResource));
-    Manifesto.Sequence = Sequence;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Deserialiser = /** @class */ (function () {
-        function Deserialiser() {
-        }
-        Deserialiser.parse = function (manifest, options) {
-            if (typeof manifest === 'string') {
-                manifest = JSON.parse(manifest);
-            }
-            return this.parseJson(manifest, options);
-        };
-        Deserialiser.parseJson = function (json, options) {
-            var resource;
-            // have options been passed for the manifest to inherit?
-            if (options) {
-                if (options.navDate && !isNaN(options.navDate.getTime())) {
-                    json.navDate = options.navDate.toString();
-                }
-            }
-            if (json['@type']) {
-                switch (json['@type']) {
-                    case 'sc:Collection':
-                        resource = this.parseCollection(json, options);
-                        break;
-                    case 'sc:Manifest':
-                        resource = this.parseManifest(json, options);
-                        break;
-                    default:
-                        return null;
-                }
-            }
-            else {
-                // presentation 3
-                switch (json['type']) {
-                    case 'Collection':
-                        resource = this.parseCollection(json, options);
-                        break;
-                    case 'Manifest':
-                        resource = this.parseManifest(json, options);
-                        break;
-                    default:
-                        return null;
-                }
-            }
-            // Top-level resource was loaded from a URI, so flag it to prevent
-            // unnecessary reload:
-            resource.isLoaded = true;
-            return resource;
-        };
-        Deserialiser.parseCollection = function (json, options) {
-            var collection = new Manifesto.Collection(json, options);
-            if (options) {
-                collection.index = options.index || 0;
-            }
-            else {
-                collection.index = 0;
-            }
-            this.parseCollections(collection, options);
-            this.parseManifests(collection, options);
-            this.parseItems(collection, options);
-            return collection;
-        };
-        Deserialiser.parseCollections = function (collection, options) {
-            var items;
-            if (collection.__jsonld.collections) {
-                items = collection.__jsonld.collections;
-            }
-            else if (collection.__jsonld.items) {
-                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'collection'; }).toArray();
-            }
-            if (items) {
-                for (var i = 0; i < items.length; i++) {
-                    if (options) {
-                        options.index = i;
-                    }
-                    var item = this.parseCollection(items[i], options);
-                    item.index = i;
-                    item.parentCollection = collection;
-                    collection.items.push(item);
-                }
-            }
-        };
-        Deserialiser.parseManifest = function (json, options) {
-            var manifest = new Manifesto.Manifest(json, options);
-            return manifest;
-        };
-        Deserialiser.parseManifests = function (collection, options) {
-            var items;
-            if (collection.__jsonld.manifests) {
-                items = collection.__jsonld.manifests;
-            }
-            else if (collection.__jsonld.items) {
-                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'manifest'; }).toArray();
-            }
-            if (items) {
-                for (var i = 0; i < items.length; i++) {
-                    var item = this.parseManifest(items[i], options);
-                    item.index = i;
-                    item.parentCollection = collection;
-                    collection.items.push(item);
-                }
-            }
-        };
-        Deserialiser.parseItem = function (json, options) {
-            if (json['@type']) {
-                if (json['@type'].toLowerCase() === 'sc:manifest') {
-                    return this.parseManifest(json, options);
-                }
-                else if (json['@type'].toLowerCase() === 'sc:collection') {
-                    return this.parseCollection(json, options);
-                }
-            }
-            else if (json.type) {
-                if (json.type.toLowerCase() === 'manifest') {
-                    return this.parseManifest(json, options);
-                }
-                else if (json.type.toLowerCase() === 'collection') {
-                    return this.parseCollection(json, options);
-                }
-            }
-            return null;
-        };
-        Deserialiser.parseItems = function (collection, options) {
-            var items = collection.__jsonld.members || collection.__jsonld.items;
-            if (items) {
-                var _loop_1 = function (i) {
-                    if (options) {
-                        options.index = i;
-                    }
-                    var item = this_1.parseItem(items[i], options);
-                    if (!item)
-                        return { value: void 0 };
-                    // only add to items if not already parsed from backwards-compatible collections/manifests arrays
-                    if (collection.items.en().where(function (m) { return m.id === item.id; }).first()) {
-                        return "continue";
-                    }
-                    item.index = i;
-                    item.parentCollection = collection;
-                    collection.items.push(item);
-                };
-                var this_1 = this;
-                for (var i = 0; i < items.length; i++) {
-                    var state_1 = _loop_1(i);
-                    if (typeof state_1 === "object")
-                        return state_1.value;
-                }
-            }
-        };
-        return Deserialiser;
-    }());
-    Manifesto.Deserialiser = Deserialiser;
-    var Serialiser = /** @class */ (function () {
-        function Serialiser() {
-        }
-        Serialiser.serialise = function (manifest) {
-            // todo
-            return "";
-        };
-        return Serialiser;
-    }());
-    Manifesto.Serialiser = Serialiser;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Service = /** @class */ (function (_super) {
-        __extends(Service, _super);
-        function Service(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        Service.prototype.getProfile = function () {
-            var profile = this.getProperty('profile');
-            if (!profile) {
-                profile = this.getProperty('dcterms:conformsTo');
-            }
-            if (Array.isArray(profile)) {
-                return new Manifesto.ServiceProfile(profile[0]);
-            }
-            return new Manifesto.ServiceProfile(profile);
-        };
-        Service.prototype.getConfirmLabel = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('confirmLabel'), this.options.locale);
-        };
-        Service.prototype.getDescription = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('description'), this.options.locale);
-        };
-        Service.prototype.getFailureDescription = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('failureDescription'), this.options.locale);
-        };
-        Service.prototype.getFailureHeader = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('failureHeader'), this.options.locale);
-        };
-        Service.prototype.getHeader = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('header'), this.options.locale);
-        };
-        Service.prototype.getServiceLabel = function () {
-            return Manifesto.Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
-        };
-        Service.prototype.getInfoUri = function () {
-            var infoUri = this.id;
-            if (!infoUri.endsWith('/')) {
-                infoUri += '/';
-            }
-            infoUri += 'info.json';
-            return infoUri;
-        };
-        return Service;
-    }(Manifesto.ManifestResource));
-    Manifesto.Service = Service;
-})(Manifesto || (Manifesto = {}));
-
-
-var Manifesto;
-(function (Manifesto) {
-    // todo: deprecate
-    // this is used by Sequence.getThumbs
-    var Thumb = /** @class */ (function () {
-        function Thumb(width, canvas) {
-            this.data = canvas;
-            this.index = canvas.index;
-            this.width = width;
-            var heightRatio = canvas.getHeight() / canvas.getWidth();
-            if (heightRatio) {
-                this.height = Math.floor(this.width * heightRatio);
-            }
-            else {
-                this.height = width;
-            }
-            this.uri = canvas.getCanonicalImageUri(width);
-            this.label = Manifesto.TranslationCollection.getValue(canvas.getLabel()); // todo: pass locale?
-        }
-        return Thumb;
-    }());
-    Manifesto.Thumb = Thumb;
-})(Manifesto || (Manifesto = {}));
-
-
-var Manifesto;
-(function (Manifesto) {
-    var TreeNode = /** @class */ (function () {
-        function TreeNode(label, data) {
-            this.label = label;
-            this.data = data || {};
-            this.nodes = [];
-        }
-        TreeNode.prototype.addNode = function (node) {
-            this.nodes.push(node);
-            node.parentNode = this;
-        };
-        TreeNode.prototype.isCollection = function () {
-            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.COLLECTION.toString());
-        };
-        TreeNode.prototype.isManifest = function () {
-            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.MANIFEST.toString());
-        };
-        TreeNode.prototype.isRange = function () {
-            return this.data.type === Manifesto.Utils.normaliseType(Manifesto.TreeNodeType.RANGE.toString());
-        };
-        return TreeNode;
-    }());
-    Manifesto.TreeNode = TreeNode;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var TreeNodeType = /** @class */ (function (_super) {
-        __extends(TreeNodeType, _super);
-        function TreeNodeType() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        // todo: use getters when ES3 target is no longer required.
-        TreeNodeType.prototype.collection = function () {
-            return new TreeNodeType(TreeNodeType.COLLECTION.toString());
-        };
-        TreeNodeType.prototype.manifest = function () {
-            return new TreeNodeType(TreeNodeType.MANIFEST.toString());
-        };
-        TreeNodeType.prototype.range = function () {
-            return new TreeNodeType(TreeNodeType.RANGE.toString());
-        };
-        TreeNodeType.COLLECTION = new TreeNodeType("collection");
-        TreeNodeType.MANIFEST = new TreeNodeType("manifest");
-        TreeNodeType.RANGE = new TreeNodeType("range");
-        return TreeNodeType;
-    }(Manifesto.StringValue));
-    Manifesto.TreeNodeType = TreeNodeType;
-})(Manifesto || (Manifesto = {}));
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var http = require("http");
-var https = require("https");
-var url = require("url");
-var Manifesto;
-(function (Manifesto) {
-    var Utils = /** @class */ (function () {
-        function Utils() {
-        }
-        Utils.createAnnotation = function (jsonLd, options) {
-            return new Manifesto.Annotation(jsonLd, options);
-        };
-        Utils.getMediaType = function (type) {
-            type = type.toLowerCase();
-            type = type.split(';')[0];
-            return type.trim();
-        };
-        Utils.getImageQuality = function (profile) {
-            var p = profile.toString();
-            if (p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
-                p === Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
-                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
-                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
-                p === Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) {
-                return 'native';
-            }
-            return 'default';
-        };
-        Utils.getInexactLocale = function (locale) {
-            if (locale.indexOf('-') !== -1) {
-                return locale.substr(0, locale.indexOf('-'));
-            }
-            return locale;
-        };
-        Utils.getLocalisedValue = function (resource, locale) {
-            // if the resource is not an array of translations, return the string.
-            if (!Array.isArray(resource)) {
-                return resource;
-            }
-            // test for exact match
-            for (var i = 0; i < resource.length; i++) {
-                var value_1 = resource[i];
-                var language_1 = value_1['@language'];
-                if (locale === language_1) {
-                    return value_1['@value'];
-                }
-            }
-            // test for inexact match
-            var match = locale.substr(0, locale.indexOf('-'));
-            for (var i = 0; i < resource.length; i++) {
-                var value = resource[i];
-                var language = value['@language'];
-                if (language === match) {
-                    return value['@value'];
-                }
-            }
-            return null;
-        };
-        Utils.generateTreeNodeIds = function (treeNode, index) {
-            if (index === void 0) { index = 0; }
-            var id;
-            if (!treeNode.parentNode) {
-                id = '0';
-            }
-            else {
-                id = treeNode.parentNode.id + "-" + index;
-            }
-            treeNode.id = id;
-            for (var i = 0; i < treeNode.nodes.length; i++) {
-                var n = treeNode.nodes[i];
-                Utils.generateTreeNodeIds(n, i);
-            }
-        };
-        Utils.normaliseType = function (type) {
-            type = type.toLowerCase();
-            if (type.indexOf(':') !== -1) {
-                var split = type.split(':');
-                return split[1];
-            }
-            return type;
-        };
-        Utils.normaliseUrl = function (url) {
-            url = url.substr(url.indexOf('://'));
-            if (url.indexOf('#') !== -1) {
-                url = url.split('#')[0];
-            }
-            return url;
-        };
-        Utils.normalisedUrlsMatch = function (url1, url2) {
-            return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
-        };
-        Utils.isImageProfile = function (profile) {
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF3IMAGELEVEL2.toString())) {
-                return true;
-            }
-            return false;
-        };
-        Utils.isLevel0ImageProfile = function (profile) {
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString())) {
-                return true;
-            }
-            return false;
-        };
-        Utils.isLevel1ImageProfile = function (profile) {
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString())) {
-                return true;
-            }
-            return false;
-        };
-        Utils.isLevel2ImageProfile = function (profile) {
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString())) {
-                return true;
-            }
-            return false;
-        };
-        Utils.loadResource = function (uri) {
-            return new Promise(function (resolve, reject) {
-                var u = url.parse(uri);
-                var request;
-                var opts = {
-                    host: u.hostname,
-                    port: u.port,
-                    path: u.path,
-                    method: "GET",
-                    withCredentials: false
-                };
-                if (u.protocol === 'https:') {
-                    request = https.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
-                    });
-                }
-                else {
-                    request = http.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
-                    });
-                }
-                request.on('error', function (error) {
-                    reject(error);
-                });
-                request.end();
-            });
-        };
-        Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
-            return new Promise(function (resolve, reject) {
-                var promises = resources.map(function (resource) {
-                    return Utils.loadExternalResourceAuth1(resource, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
-                });
-                Promise.all(promises)
-                    .then(function () {
-                    resolve(resources);
-                })["catch"](function (error) {
-                    reject(error);
-                });
-            });
-        };
-        Utils.loadExternalResourceAuth1 = function (resource, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
-            return __awaiter(this, void 0, void 0, function () {
-                var storedAccessToken;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, getStoredAccessToken(resource)];
-                        case 1:
-                            storedAccessToken = _a.sent();
-                            if (!storedAccessToken) return [3 /*break*/, 6];
-                            return [4 /*yield*/, resource.getData(storedAccessToken)];
-                        case 2:
-                            _a.sent();
-                            if (!(resource.status === HTTPStatusCode.OK)) return [3 /*break*/, 3];
-                            return [2 /*return*/, resource];
-                        case 3: 
-                        // the stored token is no good for this resource
-                        return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
-                        case 4:
-                            // the stored token is no good for this resource
-                            _a.sent();
-                            _a.label = 5;
-                        case 5:
-                            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
-                                return [2 /*return*/, resource];
-                            }
-                            throw Utils.createAuthorizationFailedError();
-                        case 6: return [4 /*yield*/, resource.getData()];
-                        case 7:
-                            _a.sent();
-                            if (!(resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED)) return [3 /*break*/, 9];
-                            return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
-                        case 8:
-                            _a.sent();
-                            _a.label = 9;
-                        case 9:
-                            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
-                                return [2 /*return*/, resource];
-                            }
-                            throw Utils.createAuthorizationFailedError();
-                    }
-                });
-            });
-        };
-        Utils.doAuthChain = function (resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
-            return __awaiter(this, void 0, void 0, function () {
-                var externalService, kioskService, clickThroughService, loginService, serviceToTry, lastAttempted, kioskInteraction, contentProviderInteraction, contentProviderInteraction;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            // This function enters the flowchart at the < External? > junction
-                            // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
-                            if (!resource.isAccessControlled()) {
-                                return [2 /*return*/, resource]; // no services found
-                            }
-                            externalService = resource.externalService;
-                            if (externalService) {
-                                externalService.options = resource.options;
-                            }
-                            kioskService = resource.kioskService;
-                            if (kioskService) {
-                                kioskService.options = resource.options;
-                            }
-                            clickThroughService = resource.clickThroughService;
-                            if (clickThroughService) {
-                                clickThroughService.options = resource.options;
-                            }
-                            loginService = resource.loginService;
-                            if (loginService) {
-                                loginService.options = resource.options;
-                            }
-                            if (!(!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY)) return [3 /*break*/, 2];
-                            return [4 /*yield*/, handleMovedTemporarily(resource)];
-                        case 1:
-                            _a.sent();
-                            return [2 /*return*/, resource];
-                        case 2:
-                            serviceToTry = null;
-                            lastAttempted = null;
-                            // repetition of logic is left in these steps for clarity:
-                            // Looking for external pattern
-                            serviceToTry = externalService;
-                            if (!serviceToTry) return [3 /*break*/, 4];
-                            lastAttempted = serviceToTry;
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
-                        case 3:
-                            _a.sent();
-                            return [2 /*return*/, resource];
-                        case 4:
-                            // Looking for kiosk pattern
-                            serviceToTry = kioskService;
-                            if (!serviceToTry) return [3 /*break*/, 7];
-                            lastAttempted = serviceToTry;
-                            kioskInteraction = openContentProviderInteraction(serviceToTry);
-                            if (!kioskInteraction) return [3 /*break*/, 7];
-                            return [4 /*yield*/, userInteractedWithContentProvider(kioskInteraction)];
-                        case 5:
-                            _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
-                        case 6:
-                            _a.sent();
-                            return [2 /*return*/, resource];
-                        case 7:
-                            // The code for the next two patterns is identical (other than the profile name).
-                            // The difference is in the expected behaviour of
-                            //
-                            //    await userInteractedWithContentProvider(contentProviderInteraction);
-                            //
-                            // For clickthrough the opened window should close immediately having established
-                            // a session, whereas for login the user might spend some time entering credentials etc.
-                            // Looking for clickthrough pattern
-                            serviceToTry = clickThroughService;
-                            if (!serviceToTry) return [3 /*break*/, 11];
-                            lastAttempted = serviceToTry;
-                            return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
-                        case 8:
-                            contentProviderInteraction = _a.sent();
-                            if (!contentProviderInteraction) return [3 /*break*/, 11];
-                            // should close immediately
-                            return [4 /*yield*/, userInteractedWithContentProvider(contentProviderInteraction)];
-                        case 9:
-                            // should close immediately
-                            _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
-                        case 10:
-                            _a.sent();
-                            return [2 /*return*/, resource];
-                        case 11:
-                            // Looking for login pattern
-                            serviceToTry = loginService;
-                            if (!serviceToTry) return [3 /*break*/, 15];
-                            lastAttempted = serviceToTry;
-                            return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
-                        case 12:
-                            contentProviderInteraction = _a.sent();
-                            if (!contentProviderInteraction) return [3 /*break*/, 15];
-                            // we expect the user to spend some time interacting
-                            return [4 /*yield*/, userInteractedWithContentProvider(contentProviderInteraction)];
-                        case 13:
-                            // we expect the user to spend some time interacting
-                            _a.sent();
-                            return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
-                        case 14:
-                            _a.sent();
-                            return [2 /*return*/, resource];
-                        case 15:
-                            // nothing worked! Use the most recently tried service as the source of
-                            // messages to show to the user.
-                            if (lastAttempted) {
-                                showOutOfOptionsMessages(lastAttempted);
-                            }
-                            return [2 /*return*/];
-                    }
-                });
-            });
-        };
-        Utils.attemptResourceWithToken = function (resource, openTokenService, authService) {
-            return __awaiter(this, void 0, void 0, function () {
-                var tokenService, tokenMessage;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
-                            if (!tokenService) return [3 /*break*/, 3];
-                            return [4 /*yield*/, openTokenService(resource, tokenService)];
-                        case 1:
-                            tokenMessage = _a.sent();
-                            if (!(tokenMessage && tokenMessage.accessToken)) return [3 /*break*/, 3];
-                            return [4 /*yield*/, resource.getData(tokenMessage)];
-                        case 2:
-                            _a.sent();
-                            return [2 /*return*/, resource];
-                        case 3: return [2 /*return*/];
-                    }
-                });
-            });
-        };
-        Utils.loadExternalResourcesAuth09 = function (resources, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
-            return new Promise(function (resolve, reject) {
-                var promises = resources.map(function (resource) {
-                    return Utils.loadExternalResourceAuth09(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options);
-                });
-                Promise.all(promises)
-                    .then(function () {
-                    resolve(resources);
-                })["catch"](function (error) {
-                    reject(error);
-                });
-            });
-        };
-        // IIIF auth api pre v1.0
-        // Keeping this around for now until the auth 1.0 implementation is stable
-        Utils.loadExternalResourceAuth09 = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken, handleResourceResponse, options) {
-            return new Promise(function (resolve, reject) {
-                if (options && options.pessimisticAccessControl) {
-                    // pessimistic: access control cookies may have been deleted.
-                    // always request the access token for every access controlled info.json request
-                    // returned access tokens are not stored, therefore the login window flashes for every request.
-                    resource.getData().then(function () {
-                        if (resource.isAccessControlled()) {
-                            // if the resource has a click through service, use that.
-                            if (resource.clickThroughService) {
-                                resolve(clickThrough(resource));
-                                //} else if(resource.restrictedService) {
-                                resolve(restricted(resource));
-                            }
-                            else {
-                                login(resource).then(function () {
-                                    getAccessToken(resource, true).then(function (token) {
-                                        resource.getData(token).then(function () {
-                                            resolve(handleResourceResponse(resource));
-                                        })["catch"](function (message) {
-                                            reject(Utils.createInternalServerError(message));
-                                        });
-                                    })["catch"](function (message) {
-                                        reject(Utils.createInternalServerError(message));
-                                    });
-                                })["catch"](function (message) {
-                                    reject(Utils.createInternalServerError(message));
-                                });
-                            }
-                        }
-                        else {
-                            // this info.json isn't access controlled, therefore no need to request an access token.
-                            resolve(resource);
-                        }
-                    })["catch"](function (message) {
-                        reject(Utils.createInternalServerError(message));
-                    });
-                }
-                else {
-                    // optimistic: access control cookies may not have been deleted.
-                    // store access tokens to avoid login window flashes.
-                    // if cookies are deleted a page refresh is required.
-                    // try loading the resource using an access token that matches the info.json domain.
-                    // if an access token is found, request the resource using it regardless of whether it is access controlled.
-                    getStoredAccessToken(resource, tokenStorageStrategy).then(function (storedAccessToken) {
-                        if (storedAccessToken) {
-                            // try using the stored access token
-                            resource.getData(storedAccessToken).then(function () {
-                                // if the info.json loaded using the stored access token
-                                if (resource.status === HTTPStatusCode.OK) {
-                                    resolve(handleResourceResponse(resource));
-                                }
-                                else {
-                                    // otherwise, load the resource data to determine the correct access control services.
-                                    // if access controlled, do login.
-                                    Utils.authorize(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
-                                        resolve(handleResourceResponse(resource));
-                                    })["catch"](function (error) {
-                                        // if (resource.restrictedService){
-                                        //     reject(Utils.createRestrictedError());
-                                        // } else {
-                                        reject(Utils.createAuthorizationFailedError());
-                                        //}
-                                    });
-                                }
-                            })["catch"](function (error) {
-                                reject(Utils.createAuthorizationFailedError());
-                            });
-                        }
-                        else {
-                            Utils.authorize(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken).then(function () {
-                                resolve(handleResourceResponse(resource));
-                            })["catch"](function (error) {
-                                reject(Utils.createAuthorizationFailedError());
-                            });
-                        }
-                    })["catch"](function (error) {
-                        reject(Utils.createAuthorizationFailedError());
-                    });
-                }
-            });
-        };
-        Utils.createError = function (name, message) {
-            var error = new Error();
-            error.message = message;
-            error.name = name;
-            return error;
-        };
-        Utils.createAuthorizationFailedError = function () {
-            return Utils.createError(manifesto.StatusCodes.AUTHORIZATION_FAILED.toString(), "Authorization failed");
-        };
-        Utils.createRestrictedError = function () {
-            return Utils.createError(manifesto.StatusCodes.RESTRICTED.toString(), "Restricted");
-        };
-        Utils.createInternalServerError = function (message) {
-            return Utils.createError(manifesto.StatusCodes.INTERNAL_SERVER_ERROR.toString(), message);
-        };
-        Utils.authorize = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, getStoredAccessToken) {
-            return new Promise(function (resolve, reject) {
-                resource.getData().then(function () {
-                    if (resource.isAccessControlled()) {
-                        getStoredAccessToken(resource, tokenStorageStrategy).then(function (storedAccessToken) {
-                            if (storedAccessToken) {
-                                // try using the stored access token
-                                resource.getData(storedAccessToken).then(function () {
-                                    if (resource.status === HTTPStatusCode.OK) {
-                                        resolve(resource); // happy path ended
-                                    }
-                                    else {
-                                        // the stored token is no good for this resource
-                                        Utils.showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
-                                    }
-                                })["catch"](function (message) {
-                                    reject(Utils.createInternalServerError(message));
-                                });
-                            }
-                            else {
-                                // There was no stored token, but the user might have a cookie that will grant a token
-                                getAccessToken(resource, false).then(function (accessToken) {
-                                    if (accessToken) {
-                                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
-                                            // try using the fresh access token
-                                            resource.getData(accessToken).then(function () {
-                                                if (resource.status === HTTPStatusCode.OK) {
-                                                    resolve(resource);
-                                                }
-                                                else {
-                                                    // User has a token, but it's not good enough
-                                                    Utils.showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
-                                                }
-                                            })["catch"](function (message) {
-                                                reject(Utils.createInternalServerError(message));
-                                            });
-                                        })["catch"](function (message) {
-                                            // not able to store access token
-                                            reject(Utils.createInternalServerError(message));
-                                        });
-                                    }
-                                    else {
-                                        // The user did not have a cookie that granted a token
-                                        Utils.showAuthInteraction(resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject);
-                                    }
-                                });
-                            }
-                        })["catch"](function (message) {
-                            reject(Utils.createInternalServerError(message));
-                        });
-                    }
-                    else {
-                        // this info.json isn't access controlled, therefore there's no need to request an access token
-                        resolve(resource);
-                    }
-                });
-            });
-        };
-        Utils.showAuthInteraction = function (resource, tokenStorageStrategy, clickThrough, restricted, login, getAccessToken, storeAccessToken, resolve, reject) {
-            if (resource.status === HTTPStatusCode.MOVED_TEMPORARILY && !resource.isResponseHandled) {
-                // if the resource was redirected to a degraded version
-                // and the response hasn't been handled yet.
-                // if the client wishes to trigger a login, set resource.isResponseHandled to true
-                // and call loadExternalResources() again passing the resource.
-                resolve(resource);
-                // } else if (resource.restrictedService) {
-                //     resolve(restricted(resource));
-                //     // TODO: move to next etc
-            }
-            else if (resource.clickThroughService && !resource.isResponseHandled) {
-                // if the resource has a click through service, use that.
-                clickThrough(resource).then(function () {
-                    getAccessToken(resource, true).then(function (accessToken) {
-                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
-                            resource.getData(accessToken).then(function () {
-                                resolve(resource);
-                            })["catch"](function (message) {
-                                reject(Utils.createInternalServerError(message));
-                            });
-                        })["catch"](function (message) {
-                            reject(Utils.createInternalServerError(message));
-                        });
-                    })["catch"](function (message) {
-                        reject(Utils.createInternalServerError(message));
-                    });
-                });
-            }
-            else {
-                // get an access token
-                login(resource).then(function () {
-                    getAccessToken(resource, true).then(function (accessToken) {
-                        storeAccessToken(resource, accessToken, tokenStorageStrategy).then(function () {
-                            resource.getData(accessToken).then(function () {
-                                resolve(resource);
-                            })["catch"](function (message) {
-                                reject(Utils.createInternalServerError(message));
-                            });
-                        })["catch"](function (message) {
-                            reject(Utils.createInternalServerError(message));
-                        });
-                    })["catch"](function (message) {
-                        reject(Utils.createInternalServerError(message));
-                    });
-                });
-            }
-        };
-        ;
-        Utils.getService = function (resource, profile) {
-            var services = this.getServices(resource);
-            // coerce profile to string
-            if (typeof (profile) !== 'string') {
-                profile = profile.toString();
-            }
-            for (var i = 0; i < services.length; i++) {
-                var service = services[i];
-                if (service.getProfile().toString() === profile) {
-                    return service;
-                }
-            }
-            return null;
-        };
-        Utils.getResourceById = function (parentResource, id) {
-            return [parentResource.__jsonld].en().traverseUnique(function (x) { return Utils.getAllArrays(x); })
-                .first(function (r) { return r['@id'] === id; });
-        };
-        Utils.getAllArrays = function (obj) {
-            var all = [].en();
-            if (!obj)
-                return all;
-            for (var key in obj) {
-                var val = obj[key];
-                if (Array.isArray(val)) {
-                    all = all.concat(val);
-                }
-            }
-            return all;
-        };
-        Utils.getServices = function (resource) {
-            var service;
-            var resourceToQuery = resource.__jsonld ? resource.__jsonld : resource;
-            // if passing a manifesto-parsed object, use the __jsonld.service property,
-            // otherwise look for a service property (info.json services)
-            if (resourceToQuery.service) {
-                service = resourceToQuery.service;
-            }
-            if (!service && resourceToQuery.body) {
-                if (Array.isArray(resourceToQuery.body)) {
-                    service = resourceToQuery.body[0].service;
-                }
-                else {
-                    service = resourceToQuery.body.service;
-                }
-            }
-            var services = [];
-            if (!service)
-                return services;
-            // coerce to array
-            if (!Array.isArray(service)) {
-                service = [service];
-            }
-            for (var i = 0; i < service.length; i++) {
-                var s = service[i];
-                if (typeof (s) === 'string') {
-                    var r = this.getResourceById(resource.options.resource, s);
-                    if (r) {
-                        services.push(new Manifesto.Service(r.__jsonld || r, resource.options));
-                    }
-                }
-                else {
-                    services.push(new Manifesto.Service(s, resource.options));
-                }
-            }
-            return services;
-        };
-        return Utils;
-    }());
-    Manifesto.Utils = Utils;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var MetadataItem = /** @class */ (function () {
-        function MetadataItem(defaultLocale) {
-            this.defaultLocale = defaultLocale;
-        }
-        MetadataItem.prototype.parse = function (resource) {
-            this.resource = resource;
-            this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
-            this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
-        };
-        // shortcuts to get/set values based on default locale
-        MetadataItem.prototype.getLabel = function () {
-            if (this.label) {
-                return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
-            }
-            return null;
-        };
-        MetadataItem.prototype.setLabel = function (value) {
-            var _this = this;
-            if (this.label && this.label.length) {
-                var t = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
-                if (t)
-                    t.value = value;
-            }
-        };
-        MetadataItem.prototype.getValue = function () {
-            if (this.value) {
-                var locale = this.defaultLocale;
-                // if the label has a locale, prefer that to the default locale
-                if (this.label.length && this.label[0].locale) {
-                    locale = this.label[0].locale;
-                }
-                return Manifesto.TranslationCollection.getValue(this.value, locale);
-            }
-            return null;
-        };
-        MetadataItem.prototype.setValue = function (value) {
-            var _this = this;
-            if (this.value && this.value.length) {
-                var t = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
-                if (t)
-                    t.value = value;
-            }
-        };
-        return MetadataItem;
-    }());
-    Manifesto.MetadataItem = MetadataItem;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Translation = /** @class */ (function () {
-        function Translation(value, locale) {
-            this.value = value;
-            this.locale = locale;
-        }
-        return Translation;
-    }());
-    Manifesto.Translation = Translation;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var TranslationCollection = /** @class */ (function (_super) {
-        __extends(TranslationCollection, _super);
-        function TranslationCollection() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        TranslationCollection.parse = function (translation, defaultLocale) {
-            var tc = [];
-            var t;
-            if (!translation) {
-                return tc;
-            }
-            else if (Array.isArray(translation)) {
-                for (var i = 0; i < translation.length; i++) {
-                    var value = translation[i];
-                    if (typeof (value) === 'string') {
-                        t = new Manifesto.Translation(value, defaultLocale);
-                    }
-                    else {
-                        t = new Manifesto.Translation(value['@value'], value['@language'] || defaultLocale);
-                    }
-                    tc.push(t);
-                }
-            }
-            else if (typeof (translation) === 'string') {
-                // if it's just a single string value, create one translation in the configured locale
-                t = new Manifesto.Translation(translation, defaultLocale);
-                tc.push(t);
-                return tc;
-            }
-            else {
-                // it's an object
-                if (translation['@value']) {
-                    // presentation 2
-                    t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
-                    tc.push(t);
-                }
-                else {
-                    // presentation 3
-                    Object.keys(translation).forEach(function (key) {
-                        // todo: support multiple values in array
-                        if (translation[key].length) {
-                            t = new Manifesto.Translation(translation[key][0], key);
-                            tc.push(t);
-                        }
-                        else {
-                            throw new Error('Translation must have a value');
-                        }
-                    });
-                }
-            }
-            return tc;
-        };
-        TranslationCollection.getValue = function (translationCollection, locale) {
-            if (translationCollection.length) {
-                if (locale) {
-                    var translation = translationCollection.en().where(function (t) { return t.locale === locale || Manifesto.Utils.getInexactLocale(t.locale) === Manifesto.Utils.getInexactLocale(locale); }).first();
-                    if (translation) {
-                        return translation.value;
-                    }
-                }
-                // return the first valuel
-                return translationCollection[0].value;
-            }
-            return null;
-        };
-        return TranslationCollection;
-    }(Array));
-    Manifesto.TranslationCollection = TranslationCollection;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Size = /** @class */ (function () {
-        function Size(width, height) {
-            this.width = width;
-            this.height = height;
-        }
-        return Size;
-    }());
-    Manifesto.Size = Size;
-})(Manifesto || (Manifesto = {}));
-
-/// <reference types="http-status-codes" />
-global.manifesto = global.Manifesto = module.exports = {
-    AnnotationMotivation: new Manifesto.AnnotationMotivation(),
-    IIIFResourceType: new Manifesto.IIIFResourceType(),
-    ManifestType: new Manifesto.ManifestType(),
-    MediaType: new Manifesto.MediaType(),
-    MetadataItem: Manifesto.MetadataItem,
-    RenderingFormat: new Manifesto.RenderingFormat(),
-    ResourceType: new Manifesto.ResourceType(),
-    ServiceProfile: new Manifesto.ServiceProfile(),
-    Size: Manifesto.Size,
-    Translation: Manifesto.Translation,
-    TranslationCollection: Manifesto.TranslationCollection,
-    TreeNode: Manifesto.TreeNode,
-    TreeNodeType: new Manifesto.TreeNodeType(),
-    Utils: Manifesto.Utils,
-    ViewingDirection: new Manifesto.ViewingDirection(),
-    ViewingHint: new Manifesto.ViewingHint(),
-    StatusCodes: {
-        AUTHORIZATION_FAILED: 1,
-        FORBIDDEN: 2,
-        INTERNAL_SERVER_ERROR: 3,
-        RESTRICTED: 4
-    },
-    create: function (manifest, options) {
-        return Manifesto.Deserialiser.parse(manifest, options);
-    },
-    loadManifest: function (uri) {
-        return Manifesto.Utils.loadResource(uri);
-    }
-};
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Annotation = /** @class */ (function (_super) {
-        __extends(Annotation, _super);
-        function Annotation(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        Annotation.prototype.getBody = function () {
-            var bodies = [];
-            var body = this.getProperty('body');
-            // todo: make this a generic "property that can be an object or array enumerator" util
-            if (body) {
-                if (Array.isArray(body)) {
-                    for (var i = 0; i < body.length; i++) {
-                        var b = body[i];
-                        if (b.items) {
-                            for (var i_1 = 0; i_1 < b.items.length; i_1++) {
-                                var c = b.items[i_1];
-                                bodies.push(new Manifesto.AnnotationBody(c, this.options));
-                            }
-                        }
-                        else {
-                            bodies.push(new Manifesto.AnnotationBody(b, this.options));
-                        }
-                    }
-                }
-                else if (body.items) {
-                    for (var i = 0; i < body.items.length; i++) {
-                        var b = body.items[i];
-                        bodies.push(new Manifesto.AnnotationBody(b, this.options));
-                    }
-                }
-                else {
-                    bodies.push(new Manifesto.AnnotationBody(body, this.options));
-                }
-            }
-            return bodies;
-        };
-        Annotation.prototype.getMotivation = function () {
-            var motivation = this.getProperty('motivation');
-            if (motivation) {
-                return new Manifesto.AnnotationMotivation(motivation.toLowerCase());
-            }
-            return null;
-        };
-        // open annotation
-        Annotation.prototype.getOn = function () {
-            return this.getProperty('on');
-        };
-        Annotation.prototype.getTarget = function () {
-            return this.getProperty('target');
-        };
-        Annotation.prototype.getResource = function () {
-            return new Manifesto.Resource(this.getProperty('resource') || this.getProperty('body'), this.options);
-        };
-        Annotation.prototype.getImageService = function () {
-            return this.getBody().reduce(function (finalImageService, body) {
-                return finalImageService || body.getServices().reduce(function (imageService, service) {
-                    return imageService || (Manifesto.Utils.isImageProfile(service.getProfile()) ? service : null);
-                }, finalImageService);
-            }, null);
-        };
-        return Annotation;
-    }(Manifesto.ManifestResource));
-    Manifesto.Annotation = Annotation;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var AnnotationBody = /** @class */ (function (_super) {
-        __extends(AnnotationBody, _super);
-        function AnnotationBody(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        AnnotationBody.prototype.getFormat = function () {
-            var format = this.getProperty('format');
-            if (format) {
-                return new Manifesto.MediaType(Manifesto.Utils.getMediaType(format));
-            }
-            return null;
-        };
-        AnnotationBody.prototype.getType = function () {
-            var type = this.getProperty('type');
-            if (type) {
-                return new Manifesto.ResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
-            }
-            return null;
-        };
-        return AnnotationBody;
-    }(Manifesto.ManifestResource));
-    Manifesto.AnnotationBody = AnnotationBody;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var AnnotationList = /** @class */ (function (_super) {
-        __extends(AnnotationList, _super);
-        function AnnotationList(label, jsonld, options) {
-            var _this = _super.call(this, jsonld) || this;
-            _this.label = label;
-            _this.options = options;
-            if (_this.getResources().length) {
-                _this.isLoaded = true;
-            }
-            return _this;
-        }
-        AnnotationList.prototype.getIIIFResourceType = function () {
-            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
-        };
-        AnnotationList.prototype.getLabel = function () {
-            return this.label;
-        };
-        AnnotationList.prototype.getResources = function () {
-            var _this = this;
-            var resources = this.getProperty('resources') || this.getProperty('items') || [];
-            return resources.map(function (resource) { return new Manifesto.Annotation(resource, _this.options); });
-        };
-        AnnotationList.prototype.load = function () {
-            var _this = this;
-            return new Promise(function (resolve, reject) {
-                if (_this.isLoaded) {
-                    resolve(_this);
-                }
-                else {
-                    var id = _this.__jsonld.id;
-                    if (!id) {
-                        id = _this.__jsonld['@id'];
-                    }
-                    Manifesto.Utils.loadResource(id).then(function (data) {
-                        _this.__jsonld = JSON.parse(data);
-                        _this.context = _this.getProperty('context');
-                        _this.id = _this.getProperty('id');
-                        _this.isLoaded = true;
-                        resolve(_this);
-                    }).catch(reject);
-                }
-            });
-        };
-        return AnnotationList;
-    }(Manifesto.JSONLDResource));
-    Manifesto.AnnotationList = AnnotationList;
-})(Manifesto || (Manifesto = {}));
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var AnnotationPage = /** @class */ (function (_super) {
-        __extends(AnnotationPage, _super);
-        function AnnotationPage(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        AnnotationPage.prototype.getItems = function () {
-            return this.getProperty('items');
-        };
-        return AnnotationPage;
-    }(Manifesto.ManifestResource));
-    Manifesto.AnnotationPage = AnnotationPage;
-})(Manifesto || (Manifesto = {}));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Manifesto;
-(function (Manifesto) {
-    var Thumbnail = /** @class */ (function (_super) {
-        __extends(Thumbnail, _super);
-        function Thumbnail(jsonld, options) {
-            return _super.call(this, jsonld, options) || this;
-        }
-        return Thumbnail;
-    }(Manifesto.Resource));
-    Manifesto.Thumbnail = Thumbnail;
-})(Manifesto || (Manifesto = {}));
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"http":30,"https":3,"url":35}]},{},[39])(39)
+},{}]},{},[1])(1)
 });
