@@ -1671,12 +1671,7 @@ var Manifesto;
         Range.prototype.spansTime = function (time) {
             var duration = this.getDuration();
             if (duration) {
-                // if the end is before the start, it means it spans multiple canvases.
-                // therefore just check to see if the time is after the start.
-                if (duration.end < duration.start && time >= duration.start || time <= duration.end) {
-                    return true;
-                }
-                else if (time >= duration.start && time <= duration.end) {
+                if (time >= duration.start && time <= duration.end) {
                     return true;
                 }
             }
