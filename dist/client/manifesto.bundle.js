@@ -3091,8 +3091,8 @@ var Manifesto;
                     this.value = value[0];
                 }
                 else {
-                    // concatenate all of the values with \n\n
-                    this.value = value.join('\n\n');
+                    // concatenate all of the values
+                    this.value = value.join('<br/>');
                 }
             }
             else {
