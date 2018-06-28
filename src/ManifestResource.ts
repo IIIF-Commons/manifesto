@@ -41,7 +41,7 @@ namespace Manifesto {
                 format = (<RenderingFormat>format).toString();
             }
 
-            for (let i = 0; i < renderings.length; i++){
+            for (let i = 0; i < renderings.length; i++) {
                 const rendering: IRendering = renderings[i];
 
                 if (rendering.getFormat().toString() === format) {
