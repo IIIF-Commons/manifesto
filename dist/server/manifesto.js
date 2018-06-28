@@ -3085,7 +3085,18 @@ var Manifesto;
 (function (Manifesto) {
     var Translation = /** @class */ (function () {
         function Translation(value, locale) {
-            this.value = value;
+            if (Array.isArray(value)) {
+                if (value.length === 1) {
+                    this.value = value[0];
+                }
+                else {
+                    // concatenate all of the values with \n\n
+                    this.value = value.join('\n\n');
+                }
+            }
+            else {
+                this.value = value;
+            }
             this.locale = locale;
         }
         return Translation;
@@ -3146,7 +3157,7 @@ var Manifesto;
                     Object.keys(translation).forEach(function (key) {
                         // todo: support multiple values in array
                         if (translation[key].length) {
-                            t = new Manifesto.Translation(translation[key][0], key);
+                            t = new Manifesto.Translation(translation[key], key);
                             tc.push(t);
                         }
                         else {

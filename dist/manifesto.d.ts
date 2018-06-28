@@ -599,7 +599,7 @@ declare namespace Manifesto {
     class Translation {
         value: string;
         locale: string;
-        constructor(value: string, locale: string);
+        constructor(value: string | string[], locale: string);
     }
 }
 

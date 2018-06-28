@@ -36,7 +36,7 @@ namespace Manifesto {
                         
                         // todo: support multiple values in array
                         if (translation[key].length) {
-                            t = new Manifesto.Translation(translation[key][0], key);
+                            t = new Manifesto.Translation(translation[key], key);
                             tc.push(t);
                         } else {
                             throw new Error('Translation must have a value');

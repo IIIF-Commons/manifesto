@@ -20,6 +20,7 @@ module.exports = {
     "members": "http://localhost:3001/members.json",
     "memberscollection": "http://localhost:3001/members-collection.json",
     "membersranges": "http://localhost:3001/members-ranges.json",
+    "multivaluerangemetadata": "http://localhost:3001/multi-value-range-metadata.json",
     "nested-bottom": "http://localhost:3001/nested-bottom.json",
     "nested-middle": "http://localhost:3001/nested-middle.json",
     "nested-top": "http://localhost:3001/nested-top.json",
