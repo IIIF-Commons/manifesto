@@ -3,6 +3,7 @@ namespace Manifesto {
         getAllRanges(): IRange[];
         getBehavior(): Behavior | null;
         getManifestType(): ManifestType;
+        getPosterCanvas(): ICanvas | null;
         getRangeById(id: string): Manifesto.IRange | null;
         getRangeByPath(path: string): IRange | null;
         getSequenceByIndex(index: number): ISequence;

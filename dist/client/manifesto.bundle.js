@@ -1233,6 +1233,13 @@ var Manifesto;
             }
             return _this;
         }
+        Manifest.prototype.getPosterCanvas = function () {
+            var posterCanvas = this.getProperty('posterCanvas');
+            if (posterCanvas) {
+                posterCanvas = new Manifesto.Canvas(posterCanvas, this.options);
+            }
+            return posterCanvas;
+        };
         Manifest.prototype.getBehavior = function () {
             var behavior = this.getProperty('behavior');
             if (Array.isArray(behavior)) {

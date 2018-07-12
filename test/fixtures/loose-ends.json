@@ -1,7 +1,10 @@
 
 {
-    "@context": "http://iiif.io/api/presentation/3/context.json",
-    "id": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/loose-ends/C1685_98_p3.json",
+    "@context": [
+        "http://www.w3.org/ns/anno.jsonld",
+        "http://iiif.io/api/presentation/3/context.json"
+    ],
+    "id": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/loose-ends/C1685_98_P3.json",
     "type": "Manifest",
     "label": {  "en": [ "C1685/98 Loose ends 17/7/99 No Nav"  ] },
     "metadata": [
@@ -14,6 +17,33 @@
             "value": { "en": [ "<p>Correct Range implementation</p>" ] }
         }
     ],
+    "posterCanvas": {
+        "id": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/C1685_98_P3/poster",
+        "type": "Canvas",
+        "height": 962,
+        "width": 962,
+        "items": [
+            {
+                "id": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/C1685_98_P3/poster/p1",
+                "type": "AnnotationPage",
+                "items": [
+                    {
+                        "id": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/C1685_98_P3/poster/p1/anno",
+                        "type": "Annotation",
+                        "motivation": "painting",
+                        "target": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/C1685_98_P3/poster",
+                        "body": {
+                            "id": "https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/posters/pop.jpg",
+                            "type": "Image",
+                            "format": "image/jpeg",
+                            "width": 962,
+                            "height": 962
+                        }
+                    }                    
+                ]
+            }
+        ]
+    },
     "behavior": ["auto-advance"],
     "items": [
         {
@@ -42,6 +72,14 @@
                                             "format": "audio/mp4"
                                         }
                                     ]
+                                }
+                            ],
+                            "seeAlso": [
+                                {
+                                    "id": "https://edsilv.github.io/peaksjs-test/vdc_100052359795.0x000018.dat",
+                                    "type": "Dataset",
+                                    "format": "application/octet-stream",
+                                    "profile": "http://waveform.prototyping.bbc.co.uk"
                                 }
                             ]
                         }
@@ -75,6 +113,14 @@
                                             "type": "Audio"
                                         }
                                     ]
+                                }
+                            ],
+                            "seeAlso": [
+                                {
+                                    "id": "https://edsilv.github.io/peaksjs-test/vdc_100052359795.0x00001a.dat",
+                                    "type": "Dataset",
+                                    "format": "application/octet-stream",
+                                    "profile": "http://waveform.prototyping.bbc.co.uk"
                                 }
                             ]
                         }

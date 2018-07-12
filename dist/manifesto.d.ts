@@ -337,6 +337,7 @@ declare namespace Manifesto {
         items: ISequence[];
         private _topRanges;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getPosterCanvas(): ICanvas | null;
         getBehavior(): Behavior | null;
         getDefaultTree(): ITreeNode;
         private _getTopRanges();
@@ -809,6 +810,7 @@ declare namespace Manifesto {
         getAllRanges(): IRange[];
         getBehavior(): Behavior | null;
         getManifestType(): ManifestType;
+        getPosterCanvas(): ICanvas | null;
         getRangeById(id: string): Manifesto.IRange | null;
         getRangeByPath(path: string): IRange | null;
         getSequenceByIndex(index: number): ISequence;

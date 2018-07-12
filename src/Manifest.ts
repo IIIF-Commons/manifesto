@@ -18,6 +18,16 @@ namespace Manifesto {
             }
         }
 
+        getPosterCanvas(): ICanvas | null {
+            let posterCanvas: any = this.getProperty('posterCanvas');
+
+            if (posterCanvas) {
+                posterCanvas = new Canvas(posterCanvas, this.options);
+            }
+            
+            return posterCanvas;
+        }
+
         getBehavior(): Behavior | null {
             let behavior: any = this.getProperty('behavior');
 
