@@ -11,7 +11,6 @@ const metadata = require('./package');
 const minify = require('./tasks/minify');
 const mocha = require('./tasks/mocha');
 const prependHeaders = require('./tasks/prependHeaders');
-const requireDir = require('require-dir');
 const runSequence = require('run-sequence');
 
 const opts = {};
