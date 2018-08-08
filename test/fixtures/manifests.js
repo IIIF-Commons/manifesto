@@ -15,6 +15,7 @@ module.exports = {
     "horriblemurders": "http://localhost:3001/horriblemurders.json",
     "illustrationsofchina": "http://localhost:3001/illustrationsofchina.json",
     "lunchroommanners": "http://localhost:3001/lunchroom-manners.json",
+    "logo": "http://localhost:3001/logo.json",
     "looseends": "http://localhost:3001/loose-ends.json",
     "manifestwiththumbnail": "http://localhost:3001/manifest-with-thumbnail.json",
     "members": "http://localhost:3001/members.json",

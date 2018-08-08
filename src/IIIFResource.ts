@@ -44,10 +44,13 @@ namespace Manifesto {
         }
 
         getLogo(): string | null {
-            const logo: any = this.getProperty('logo');
+            let logo: any = this.getProperty('logo');
             if (!logo) return null;
             if (typeof(logo) === 'string') return logo;
-            return logo['@id'];
+            if (Array.isArray(logo) && logo.length) {
+                logo = logo[0];
+            }
+            return logo['@id'] || logo.id;
         }
 
         getLicense(): string | null {

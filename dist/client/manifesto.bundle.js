@@ -1135,7 +1135,10 @@ var Manifesto;
                 return null;
             if (typeof (logo) === 'string')
                 return logo;
-            return logo['@id'];
+            if (Array.isArray(logo) && logo.length) {
+                logo = logo[0];
+            }
+            return logo['@id'] || logo.id;
         };
         IIIFResource.prototype.getLicense = function () {
             return Manifesto.Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
