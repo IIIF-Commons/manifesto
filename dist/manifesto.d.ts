@@ -1,4 +1,4 @@
-// manifesto v2.2.31 https://github.com/iiif-commons/manifesto
+// manifesto v2.2.32 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -556,10 +556,10 @@ declare namespace Manifesto {
         static normaliseType(type: string): string;
         static normaliseUrl(url: string): string;
         static normalisedUrlsMatch(url1: string, url2: string): boolean;
-        static isImageProfile(profile: Manifesto.ServiceProfile): boolean;
-        static isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean;
-        static isLevel1ImageProfile(profile: Manifesto.ServiceProfile): boolean;
-        static isLevel2ImageProfile(profile: Manifesto.ServiceProfile): boolean;
+        static isImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
+        static isLevel0ImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
+        static isLevel1ImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
+        static isLevel2ImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
         static loadResource(uri: string): Promise<string>;
         static loadExternalResourcesAuth1(resources: IExternalResource[], openContentProviderInteraction: (service: Manifesto.IService) => any, openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>, getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>, userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>, getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>, handleMovedTemporarily: (resource: IExternalResource) => Promise<any>, showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<IExternalResource[]>;
         static loadExternalResourceAuth1(resource: IExternalResource, openContentProviderInteraction: (service: Manifesto.IService) => any, openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<void>, getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>, userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>, getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>, handleMovedTemporarily: (resource: IExternalResource) => Promise<any>, showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<IExternalResource>;

@@ -2438,6 +2438,9 @@ var Manifesto;
             return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
         };
         Utils.isImageProfile = function (profile) {
+            if (typeof (profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
@@ -2467,6 +2470,9 @@ var Manifesto;
             return false;
         };
         Utils.isLevel0ImageProfile = function (profile) {
+            if (typeof (profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
@@ -2480,6 +2486,9 @@ var Manifesto;
             return false;
         };
         Utils.isLevel1ImageProfile = function (profile) {
+            if (typeof (profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
@@ -2493,6 +2502,9 @@ var Manifesto;
             return false;
         };
         Utils.isLevel2ImageProfile = function (profile) {
+            if (typeof (profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
