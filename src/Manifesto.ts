@@ -5,7 +5,7 @@
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),
     MediaType: new Manifesto.MediaType(),
-    MetadataItem: Manifesto.MetadataItem,
+    LabelValuePair: Manifesto.LabelValuePair,
     RenderingFormat: new Manifesto.RenderingFormat(),
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),

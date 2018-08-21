@@ -16,16 +16,16 @@ namespace Manifesto {
             return TranslationCollection.parse(this.getProperty('label'), this.options.locale);
         }
 
-        getMetadata(): MetadataItem[] {
+        getMetadata(): LabelValuePair[] {
             const _metadata: any[] = this.getProperty('metadata');
 
-            const metadata: MetadataItem[] = [];
+            const metadata: LabelValuePair[] = [];
 
             if (!_metadata) return metadata;
 
             for (let i = 0; i < _metadata.length; i++) {
-                var item: any = _metadata[i];
-                var metadataItem: MetadataItem = new MetadataItem(this.options.locale);
+                const item: any = _metadata[i];
+                const metadataItem: LabelValuePair = new LabelValuePair(this.options.locale);
                 metadataItem.parse(item);
                 metadata.push(metadataItem);
             }

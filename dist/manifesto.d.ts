@@ -1,4 +1,4 @@
-// manifesto v2.2.32 https://github.com/iiif-commons/manifesto
+// manifesto v2.3.0 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -260,7 +260,7 @@ declare namespace Manifesto {
         constructor(jsonld: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): TranslationCollection;
-        getMetadata(): MetadataItem[];
+        getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;
@@ -324,6 +324,7 @@ declare namespace Manifesto {
         getLabel(): TranslationCollection;
         getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
+        getRequiredStatement(): LabelValuePair | null;
         isCollection(): boolean;
         isManifest(): boolean;
         load(): Promise<IIIIFResource>;
@@ -582,21 +583,6 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    class MetadataItem {
-        label: TranslationCollection;
-        value: TranslationCollection;
-        defaultLocale: string;
-        resource: any;
-        constructor(defaultLocale: string);
-        parse(resource: any): void;
-        getLabel(): string | null;
-        setLabel(value: string): void;
-        getValue(): string | null;
-        setValue(value: string): void;
-    }
-}
-
-declare namespace Manifesto {
     class Translation {
         value: string;
         locale: string;
@@ -831,10 +817,10 @@ interface IManifesto {
     Behavior: Manifesto.Behavior;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
+    LabelValuePair: any;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
     MediaType: Manifesto.MediaType;
-    MetadataItem: any;
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
@@ -865,7 +851,7 @@ declare namespace Manifesto {
         externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
         getLabel(): TranslationCollection;
-        getMetadata(): MetadataItem[];
+        getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;
@@ -969,6 +955,21 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IThumbnail extends IResource {
+    }
+}
+
+declare namespace Manifesto {
+    class LabelValuePair {
+        label: TranslationCollection;
+        value: TranslationCollection;
+        defaultLocale: string;
+        resource: any;
+        constructor(defaultLocale: string);
+        parse(resource: any): void;
+        getLabel(): string | null;
+        setLabel(value: string): void;
+        getValue(): string | null;
+        setValue(value: string): void;
     }
 }
 

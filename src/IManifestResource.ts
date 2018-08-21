@@ -3,7 +3,7 @@ namespace Manifesto {
         externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
         getLabel(): TranslationCollection;
-        getMetadata(): MetadataItem[];
+        getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;

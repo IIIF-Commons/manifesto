@@ -737,7 +737,7 @@ var Manifesto;
                 return metadata;
             for (var i = 0; i < _metadata.length; i++) {
                 var item = _metadata[i];
-                var metadataItem = new Manifesto.MetadataItem(this.options.locale);
+                var metadataItem = new Manifesto.LabelValuePair(this.options.locale);
                 metadataItem.parse(item);
                 metadata.push(metadataItem);
             }
@@ -1166,6 +1166,14 @@ var Manifesto;
             this.defaultTree = new Manifesto.TreeNode('root');
             this.defaultTree.data = this;
             return this.defaultTree;
+        };
+        IIIFResource.prototype.getRequiredStatement = function () {
+            var _requiredStatement = this.getProperty('requiredStatement');
+            if (!_requiredStatement)
+                return null;
+            var requiredStatement = new Manifesto.LabelValuePair(this.options.locale);
+            requiredStatement.parse(_requiredStatement);
+            return requiredStatement;
         };
         IIIFResource.prototype.isCollection = function () {
             if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
@@ -3056,56 +3064,6 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
-    var MetadataItem = /** @class */ (function () {
-        function MetadataItem(defaultLocale) {
-            this.defaultLocale = defaultLocale;
-        }
-        MetadataItem.prototype.parse = function (resource) {
-            this.resource = resource;
-            this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
-            this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
-        };
-        // shortcuts to get/set values based on default locale
-        MetadataItem.prototype.getLabel = function () {
-            if (this.label) {
-                return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
-            }
-            return null;
-        };
-        MetadataItem.prototype.setLabel = function (value) {
-            var _this = this;
-            if (this.label && this.label.length) {
-                var t = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
-                if (t)
-                    t.value = value;
-            }
-        };
-        MetadataItem.prototype.getValue = function () {
-            if (this.value) {
-                var locale = this.defaultLocale;
-                // if the label has a locale, prefer that to the default locale
-                if (this.label.length && this.label[0].locale) {
-                    locale = this.label[0].locale;
-                }
-                return Manifesto.TranslationCollection.getValue(this.value, locale);
-            }
-            return null;
-        };
-        MetadataItem.prototype.setValue = function (value) {
-            var _this = this;
-            if (this.value && this.value.length) {
-                var t = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
-                if (t)
-                    t.value = value;
-            }
-        };
-        return MetadataItem;
-    }());
-    Manifesto.MetadataItem = MetadataItem;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
     var Translation = /** @class */ (function () {
         function Translation(value, locale) {
             if (Array.isArray(value)) {
@@ -3227,7 +3185,7 @@ global.manifesto = global.Manifesto = module.exports = {
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     ManifestType: new Manifesto.ManifestType(),
     MediaType: new Manifesto.MediaType(),
-    MetadataItem: Manifesto.MetadataItem,
+    LabelValuePair: Manifesto.LabelValuePair,
     RenderingFormat: new Manifesto.RenderingFormat(),
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
@@ -3464,6 +3422,56 @@ var Manifesto;
 
 
 
+
+var Manifesto;
+(function (Manifesto) {
+    var LabelValuePair = /** @class */ (function () {
+        function LabelValuePair(defaultLocale) {
+            this.defaultLocale = defaultLocale;
+        }
+        LabelValuePair.prototype.parse = function (resource) {
+            this.resource = resource;
+            this.label = Manifesto.TranslationCollection.parse(this.resource.label, this.defaultLocale);
+            this.value = Manifesto.TranslationCollection.parse(this.resource.value, this.defaultLocale);
+        };
+        // shortcuts to get/set values based on default locale
+        LabelValuePair.prototype.getLabel = function () {
+            if (this.label) {
+                return Manifesto.TranslationCollection.getValue(this.label, this.defaultLocale);
+            }
+            return null;
+        };
+        LabelValuePair.prototype.setLabel = function (value) {
+            var _this = this;
+            if (this.label && this.label.length) {
+                var t = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (t)
+                    t.value = value;
+            }
+        };
+        LabelValuePair.prototype.getValue = function () {
+            if (this.value) {
+                var locale = this.defaultLocale;
+                // if the label has a locale, prefer that to the default locale
+                if (this.label.length && this.label[0].locale) {
+                    locale = this.label[0].locale;
+                }
+                return Manifesto.TranslationCollection.getValue(this.value, locale);
+            }
+            return null;
+        };
+        LabelValuePair.prototype.setValue = function (value) {
+            var _this = this;
+            if (this.value && this.value.length) {
+                var t = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                if (t)
+                    t.value = value;
+            }
+        };
+        return LabelValuePair;
+    }());
+    Manifesto.LabelValuePair = LabelValuePair;
+})(Manifesto || (Manifesto = {}));
 
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||

@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export class MetadataItem {
+    export class LabelValuePair {
         public label: TranslationCollection;
         public value: TranslationCollection;
         public defaultLocale: string;

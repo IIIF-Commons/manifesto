@@ -89,6 +89,17 @@ namespace Manifesto {
             return this.defaultTree;
         }
 
+        getRequiredStatement(): LabelValuePair | null {
+            const _requiredStatement: any = this.getProperty('requiredStatement');
+
+            if (!_requiredStatement) return null;
+
+            const requiredStatement: LabelValuePair = new LabelValuePair(this.options.locale);
+            requiredStatement.parse(_requiredStatement);
+
+            return requiredStatement;
+        }
+
         isCollection(): boolean {
             if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
                 return true;
