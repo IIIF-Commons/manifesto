@@ -3273,7 +3273,7 @@ var Manifesto;
             if (this.value) {
                 var locale = this.defaultLocale;
                 // if the label has a locale, prefer that to the default locale
-                if (this.label.length && this.label[0].locale) {
+                if (this.label && this.label.length && this.label[0].locale) {
                     locale = this.label[0].locale;
                 }
                 return Manifesto.LanguageMap.getValue(this.value, locale);
