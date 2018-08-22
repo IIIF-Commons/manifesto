@@ -1,5 +1,5 @@
 {
-    "mode": "file",
+    "mode": "modules",
     "out": "docs",
     "name": "manifesto.js",
     "theme": "default",
