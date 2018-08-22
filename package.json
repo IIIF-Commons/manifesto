@@ -4,7 +4,9 @@
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist/server/manifesto.js",
   "types": "./dist/manifesto.d.ts",
-  "scripts": {},
+  "scripts": {
+    "build-docs": "rimraf docs && typedoc --options typedoc.json src/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iiif-commons/manifesto.git"
@@ -39,9 +41,11 @@
     "merge2": "0.3.5",
     "mocha": "2.2.4",
     "require-dir": "0.3.0",
+    "rimraf": "^2.6.2",
     "run-sequence": "1.1.0",
     "serve-static": "1.10.0",
     "through2": "2.0.1",
+    "typedoc": "^0.12.0",
     "typescript": "3.0.1",
     "yargs": "3.10.0"
   },
