@@ -1,4 +1,4 @@
-// manifesto v2.3.1 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.0 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -259,7 +259,7 @@ declare namespace Manifesto {
         options: IManifestoOptions;
         constructor(jsonld: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
-        getLabel(): TranslationCollection;
+        getLabel(): LanguageMap;
         getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
@@ -313,15 +313,15 @@ declare namespace Manifesto {
         parentCollection: ICollection;
         parentLabel: string;
         constructor(jsonld?: any, options?: IManifestoOptions);
-        getAttribution(): TranslationCollection;
-        getDescription(): TranslationCollection;
+        getAttribution(): LanguageMap;
+        getDescription(): LanguageMap;
         getIIIFResourceType(): IIIFResourceType;
         getLogo(): string | null;
         getLicense(): string | null;
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
-        getLabel(): TranslationCollection;
+        getLabel(): LanguageMap;
         getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
         getRequiredStatement(): LabelValuePair | null;
@@ -583,17 +583,9 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    class Translation {
-        value: string;
-        locale: string;
-        constructor(value: string | string[], locale: string);
-    }
-}
-
-declare namespace Manifesto {
-    class TranslationCollection extends Array<Translation> {
-        static parse(translation: any, defaultLocale: string): TranslationCollection;
-        static getValue(translationCollection: TranslationCollection, locale?: string): string | null;
+    class LanguageMap extends Array<Language> {
+        static parse(language: any, defaultLocale: string): LanguageMap;
+        static getValue(languageCollection: LanguageMap, locale?: string): string | null;
     }
 }
 
@@ -761,12 +753,12 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode;
-        getAttribution(): TranslationCollection;
+        getAttribution(): LanguageMap;
         getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
-        getDescription(): TranslationCollection;
+        getDescription(): LanguageMap;
         getIIIFResourceType(): IIIFResourceType;
-        getLabel(): TranslationCollection;
+        getLabel(): LanguageMap;
         getLicense(): string | null;
         getLogo(): string | null;
         getNavDate(): Date;
@@ -817,7 +809,7 @@ declare namespace Manifesto {
     interface IManifestResource extends IJSONLDResource {
         externalResource: Manifesto.IExternalResource;
         options: IManifestoOptions;
-        getLabel(): TranslationCollection;
+        getLabel(): LanguageMap;
         getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
@@ -838,6 +830,7 @@ interface IManifesto {
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
     LabelValuePair: any;
+    LanguageMap: any;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
     MediaType: Manifesto.MediaType;
@@ -847,7 +840,6 @@ interface IManifesto {
     Size: any;
     StatusCodes: Manifesto.IStatusCodes;
     Translation: any;
-    TranslationCollection: any;
     TreeNode: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;
@@ -961,8 +953,8 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     class LabelValuePair {
-        label: TranslationCollection;
-        value: TranslationCollection;
+        label: LanguageMap;
+        value: LanguageMap;
         defaultLocale: string;
         resource: any;
         constructor(defaultLocale: string);
@@ -971,6 +963,14 @@ declare namespace Manifesto {
         setLabel(value: string): void;
         getValue(): string | null;
         setValue(value: string): void;
+    }
+}
+
+declare namespace Manifesto {
+    class Language {
+        value: string;
+        locale: string;
+        constructor(value: string | string[], locale: string);
     }
 }
 

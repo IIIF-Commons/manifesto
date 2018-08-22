@@ -1,7 +1,7 @@
 namespace Manifesto {
     export class LabelValuePair {
-        public label: TranslationCollection;
-        public value: TranslationCollection;
+        public label: LanguageMap;
+        public value: LanguageMap;
         public defaultLocale: string;
         public resource: any;
 
@@ -11,15 +11,15 @@ namespace Manifesto {
 
         public parse(resource: any): void {
             this.resource = resource;
-            this.label = TranslationCollection.parse(this.resource.label, this.defaultLocale);
-            this.value = TranslationCollection.parse(this.resource.value, this.defaultLocale);
+            this.label = LanguageMap.parse(this.resource.label, this.defaultLocale);
+            this.value = LanguageMap.parse(this.resource.value, this.defaultLocale);
         }
 
         // shortcuts to get/set values based on default locale
         
         public getLabel(): string | null {
             if (this.label) {
-                return TranslationCollection.getValue(this.label, this.defaultLocale);
+                return LanguageMap.getValue(this.label, this.defaultLocale);
             }
             
             return null;
@@ -27,7 +27,7 @@ namespace Manifesto {
 
         public setLabel(value: string): void {
             if (this.label && this.label.length) {
-                var t: Manifesto.Translation = this.label.en().where(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale)).first();
+                var t: Manifesto.Language = this.label.en().where(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale)).first();
                 if (t) t.value = value;
             }
         }
@@ -42,7 +42,7 @@ namespace Manifesto {
                     locale = this.label[0].locale;
                 }
 
-                return TranslationCollection.getValue(this.value, locale);
+                return LanguageMap.getValue(this.value, locale);
             }
             
             return null;
@@ -50,7 +50,7 @@ namespace Manifesto {
 
         public setValue(value: string): void {
             if (this.value && this.value.length) {
-                var t: Manifesto.Translation = this.value.en().where(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale)).first();
+                var t: Manifesto.Language = this.value.en().where(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale)).first();
                 if (t) t.value = value;
             }
         }

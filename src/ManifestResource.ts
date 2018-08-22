@@ -12,8 +12,8 @@ namespace Manifesto {
             return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
         }
 
-        getLabel(): TranslationCollection {
-            return TranslationCollection.parse(this.getProperty('label'), this.options.locale);
+        getLabel(): LanguageMap {
+            return LanguageMap.parse(this.getProperty('label'), this.options.locale);
         }
 
         getMetadata(): LabelValuePair[] {

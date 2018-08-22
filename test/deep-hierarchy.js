@@ -20,7 +20,7 @@ describe('#getCollectionByIndex', function() {
         manifest.getCollectionByIndex(15).then(function(data){
             ceili = data;
             ceili.should.be.a("object");
-            var label = Manifesto.TranslationCollection.getValue(ceili.getLabel());
+            var label = Manifesto.LanguageMap.getValue(ceili.getLabel());
             label.should.be.a('string');
             label.should.equal('Philadelphia Ceili Group');
             done();
@@ -32,7 +32,7 @@ describe('#getManifestByIndex', function() {
     it('loads successfully', function (done) {
         ceili.getCollectionByIndex(0).then(function(data){
             data.should.be.a("object");
-            var label = Manifesto.TranslationCollection.getValue(data.getLabel());
+            var label = Manifesto.LanguageMap.getValue(data.getLabel());
             label.should.be.a('string');
             label.should.equal('Events');
             done();

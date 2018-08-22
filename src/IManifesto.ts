@@ -4,6 +4,7 @@ interface IManifesto {
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
     LabelValuePair: any;
+    LanguageMap: any;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
     MediaType: Manifesto.MediaType;
@@ -13,7 +14,6 @@ interface IManifesto {
     Size: any;
     StatusCodes: Manifesto.IStatusCodes;
     Translation: any;
-    TranslationCollection: any;
     TreeNode: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;

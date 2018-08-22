@@ -17,7 +17,7 @@ describe('#loadsPlato', function() {
 
 describe('#hasLabel', function() {
     it('has a label', function () {
-        var label = Manifesto.TranslationCollection.getValue(manifest.getLabel());
+        var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
         label.should.be.a('string');
         label.should.equal('Plato, with an English translation');
     });

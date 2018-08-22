@@ -41,7 +41,7 @@ describe('presentation 3', function() {
 
     it('has a label', function() {
         var label = body.getLabel();
-        var labelValue = Manifesto.TranslationCollection.getValue(label);
+        var labelValue = Manifesto.LanguageMap.getValue(label);
         expect(labelValue).to.equal('Page 1');
     });
 });

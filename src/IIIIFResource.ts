@@ -1,12 +1,12 @@
 namespace Manifesto {
     export interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode; // the tree generated from the first viewingHint="top" range
-        getAttribution(): TranslationCollection;
+        getAttribution(): LanguageMap;
         getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
-        getDescription(): TranslationCollection;
+        getDescription(): LanguageMap;
         getIIIFResourceType(): IIIFResourceType;
-        getLabel(): TranslationCollection;
+        getLabel(): LanguageMap;
         getLicense(): string | null;
         getLogo(): string | null;
         getNavDate(): Date;

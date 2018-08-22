@@ -24,7 +24,7 @@ namespace Manifesto {
             }
 
             this.uri = canvas.getCanonicalImageUri(width);
-            this.label = <string>TranslationCollection.getValue(canvas.getLabel()); // todo: pass locale?
+            this.label = <string>LanguageMap.getValue(canvas.getLabel()); // todo: pass locale?
         }
     }
 }

@@ -34,7 +34,7 @@ describe('#hasCollectionCount', function() {
 
 describe('#hasLabel', function() {
     it('has a label', function() {
-        Manifesto.TranslationCollection.getValue(collection.getLabel()).should.equal('The chemist and druggist.');
+        Manifesto.LanguageMap.getValue(collection.getLabel()).should.equal('The chemist and druggist.');
         collection.getDefaultLabel().should.equal('The chemist and druggist.');
     })
 });
@@ -43,7 +43,7 @@ describe('#firstCollectionHasLabel', function() {
     it('has a first collection with a label', function(done) {
          collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
-            Manifesto.TranslationCollection.getValue(firstCollection.getLabel()).should.equal('Volume 1, 1859');
+            Manifesto.LanguageMap.getValue(firstCollection.getLabel()).should.equal('Volume 1, 1859');
             done();
         });
     })
@@ -67,11 +67,11 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
     it('has a first manifest with metadata', function (done) {
         firstCollection.getManifestByIndex(0).then(function(data) {
             manifest = data;
-            var label = Manifesto.TranslationCollection.getValue(manifest.getLabel());
+            var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
             label.should.equal('The chemist and druggist.');
             var metadata = manifest.getMetadata();
-            Manifesto.TranslationCollection.getValue(metadata[0].label).should.equal('Title');
-            Manifesto.TranslationCollection.getValue(metadata[0].value).should.equal('The chemist and druggist.');
+            Manifesto.LanguageMap.getValue(metadata[0].label).should.equal('Title');
+            Manifesto.LanguageMap.getValue(metadata[0].value).should.equal('The chemist and druggist.');
             done();
         });
     })
@@ -79,7 +79,7 @@ describe('#firstCollectionHasFirstManifestWithMetadata', function() {
 
 describe('#firstCollectionFirstManifestHasLabel', function() {
     it('has a first manifest with a label', function() {
-        Manifesto.TranslationCollection.getValue(manifest.getLabel()).should.equal('The chemist and druggist.');
+        Manifesto.LanguageMap.getValue(manifest.getLabel()).should.equal('The chemist and druggist.');
     })
 });
 

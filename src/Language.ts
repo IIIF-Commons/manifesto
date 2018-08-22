@@ -1,5 +1,6 @@
 namespace Manifesto {
-    export class Translation {
+
+    export class Language {
         value: string;
         locale: string;
 

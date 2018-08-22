@@ -48,7 +48,7 @@
         "src/Utils.ts",
         "src/MetadataItem.ts",
         "src/Translation.ts",
-        "src/TranslationCollection.ts",
+        "src/LanguageMap.ts",
         "src/Size.ts",
         "src/Manifesto.ts"
     ],

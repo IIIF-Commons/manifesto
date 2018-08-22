@@ -19,21 +19,24 @@ namespace Manifesto {
             this.options = Object.assign(defaultOptions, options);
         }
 
-        getAttribution(): TranslationCollection {
+        getAttribution(): LanguageMap {
+
+            console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
+
             const attribution: any = this.getProperty('attribution');
 
             if (attribution) {
-                return TranslationCollection.parse(attribution, this.options.locale);
+                return LanguageMap.parse(attribution, this.options.locale);
             }
             
             return [];
         }
 
-        getDescription(): TranslationCollection {
+        getDescription(): LanguageMap {
             const description: any = this.getProperty('description');
 
             if (description) {
-                return TranslationCollection.parse(description, this.options.locale);
+                return LanguageMap.parse(description, this.options.locale);
             }
 
             return [];
@@ -69,18 +72,18 @@ namespace Manifesto {
             return this.getProperty('seeAlso');
         }
 
-        getLabel(): TranslationCollection {
+        getLabel(): LanguageMap {
             const label: any = this.getProperty('label');
 
             if (label) {
-                return TranslationCollection.parse(label, this.options.locale);
+                return LanguageMap.parse(label, this.options.locale);
             }
             
             return [];
         }
 
         getDefaultLabel(): string | null {
-            return Manifesto.TranslationCollection.getValue(this.getLabel());
+            return Manifesto.LanguageMap.getValue(this.getLabel());
         }
 
         getDefaultTree(): ITreeNode{
@@ -90,12 +93,26 @@ namespace Manifesto {
         }
 
         getRequiredStatement(): LabelValuePair | null {
+
+            let requiredStatement: LabelValuePair | null = null;
+            
             const _requiredStatement: any = this.getProperty('requiredStatement');
 
-            if (!_requiredStatement) return null;
+            if (_requiredStatement) {
 
-            const requiredStatement: LabelValuePair = new LabelValuePair(this.options.locale);
-            requiredStatement.parse(_requiredStatement);
+                requiredStatement = new LabelValuePair(this.options.locale);
+                requiredStatement.parse(_requiredStatement);
+
+            } else {
+
+                // fall back to attribution (if it exists)
+                const attribution: LanguageMap = this.getAttribution();
+
+                if (attribution) {
+                    requiredStatement = new LabelValuePair(this.options.locale);
+                    requiredStatement.value = attribution;
+                }
+            }
 
             return requiredStatement;
         }
@@ -130,7 +147,7 @@ namespace Manifesto {
                     }
 
                     Utils.loadResource(id).then(function(data) {
-                        that.parentLabel = <string>TranslationCollection.getValue(that.getLabel(), options.locale);
+                        that.parentLabel = <string>LanguageMap.getValue(that.getLabel(), options.locale);
                         const parsed = Deserialiser.parse(data, options);
                         that = Object.assign(that, parsed);
                         that.index = <number>options.index;

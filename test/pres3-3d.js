@@ -60,7 +60,7 @@ describe('presentation 3 3d', function() {
     });
 
     it('canvas has label', function() {
-        var label = Manifesto.TranslationCollection.getValue(body.getLabel());
+        var label = Manifesto.LanguageMap.getValue(body.getLabel());
         expect(label).to.equal('Animal Skull');
     });
 });
