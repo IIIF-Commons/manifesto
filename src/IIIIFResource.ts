@@ -11,6 +11,7 @@ namespace Manifesto {
         getLogo(): string | null;
         getNavDate(): Date;
         getRelated(): any;
+        getRequiredStatement(): Manifesto.LabelValuePair | null;
         getSeeAlso(): any;
         index: number;
         isCollection(): boolean;

@@ -11,6 +11,7 @@
         "strictNullChecks": true,
         "target": "es5",
         "lib": ["es6", "dom"],
+        "skipLibCheck": true,
         "types": ["node", "http-status-codes"]
     },
     "files": [
