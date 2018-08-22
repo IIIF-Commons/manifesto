@@ -1,7 +1,7 @@
 {
     "mode": "modules",
     "out": "docs",
-    "name": "manifesto.js",
+    "name": "manifesto",
     "theme": "default",
     "ignoreCompilerErrors": "true",
     "experimentalDecorators": "true",
