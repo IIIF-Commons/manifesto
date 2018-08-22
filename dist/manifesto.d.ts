@@ -1,4 +1,4 @@
-// manifesto v3.0.0 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.1 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -583,6 +583,14 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
+    class Language {
+        value: string;
+        locale: string;
+        constructor(value: string | string[], locale: string);
+    }
+}
+
+declare namespace Manifesto {
     class LanguageMap extends Array<Language> {
         static parse(language: any, defaultLocale: string): LanguageMap;
         static getValue(languageCollection: LanguageMap, locale?: string): string | null;
@@ -830,6 +838,7 @@ interface IManifesto {
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
     LabelValuePair: any;
+    Language: any;
     LanguageMap: any;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
@@ -839,7 +848,6 @@ interface IManifesto {
     ServiceProfile: Manifesto.ServiceProfile;
     Size: any;
     StatusCodes: Manifesto.IStatusCodes;
-    Translation: any;
     TreeNode: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;
@@ -963,14 +971,6 @@ declare namespace Manifesto {
         setLabel(value: string): void;
         getValue(): string | null;
         setValue(value: string): void;
-    }
-}
-
-declare namespace Manifesto {
-    class Language {
-        value: string;
-        locale: string;
-        constructor(value: string | string[], locale: string);
     }
 }
 

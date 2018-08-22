@@ -3135,6 +3135,29 @@ var Manifesto;
     Manifesto.Utils = Utils;
 })(Manifesto || (Manifesto = {}));
 
+var Manifesto;
+(function (Manifesto) {
+    var Language = /** @class */ (function () {
+        function Language(value, locale) {
+            if (Array.isArray(value)) {
+                if (value.length === 1) {
+                    this.value = value[0];
+                }
+                else {
+                    // concatenate all of the values
+                    this.value = value.join('<br/>');
+                }
+            }
+            else {
+                this.value = value;
+            }
+            this.locale = locale;
+        }
+        return Language;
+    }());
+    Manifesto.Language = Language;
+})(Manifesto || (Manifesto = {}));
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -3237,6 +3260,7 @@ global.manifesto = global.Manifesto = module.exports = {
     Behavior: new Manifesto.Behavior(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     LabelValuePair: Manifesto.LabelValuePair,
+    Language: Manifesto.Language,
     LanguageMap: Manifesto.LanguageMap,
     ManifestType: new Manifesto.ManifestType(),
     MediaType: new Manifesto.MediaType(),
@@ -3244,7 +3268,6 @@ global.manifesto = global.Manifesto = module.exports = {
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
     Size: Manifesto.Size,
-    Translation: Manifesto.Language,
     TreeNode: Manifesto.TreeNode,
     TreeNodeType: new Manifesto.TreeNodeType(),
     Utils: Manifesto.Utils,
@@ -3536,29 +3559,6 @@ var Manifesto;
         return LabelValuePair;
     }());
     Manifesto.LabelValuePair = LabelValuePair;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Language = /** @class */ (function () {
-        function Language(value, locale) {
-            if (Array.isArray(value)) {
-                if (value.length === 1) {
-                    this.value = value[0];
-                }
-                else {
-                    // concatenate all of the values
-                    this.value = value.join('<br/>');
-                }
-            }
-            else {
-                this.value = value;
-            }
-            this.locale = locale;
-        }
-        return Language;
-    }());
-    Manifesto.Language = Language;
 })(Manifesto || (Manifesto = {}));
 
 var __extends = (this && this.__extends) || (function () {

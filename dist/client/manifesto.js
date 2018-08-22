@@ -1,4 +1,4 @@
-// manifesto v3.0.0 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.1 https://github.com/iiif-commons/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (global){
 
@@ -3063,6 +3063,29 @@ var Manifesto;
     Manifesto.Utils = Utils;
 })(Manifesto || (Manifesto = {}));
 
+var Manifesto;
+(function (Manifesto) {
+    var Language = /** @class */ (function () {
+        function Language(value, locale) {
+            if (Array.isArray(value)) {
+                if (value.length === 1) {
+                    this.value = value[0];
+                }
+                else {
+                    // concatenate all of the values
+                    this.value = value.join('<br/>');
+                }
+            }
+            else {
+                this.value = value;
+            }
+            this.locale = locale;
+        }
+        return Language;
+    }());
+    Manifesto.Language = Language;
+})(Manifesto || (Manifesto = {}));
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -3165,6 +3188,7 @@ global.manifesto = global.Manifesto = module.exports = {
     Behavior: new Manifesto.Behavior(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
     LabelValuePair: Manifesto.LabelValuePair,
+    Language: Manifesto.Language,
     LanguageMap: Manifesto.LanguageMap,
     ManifestType: new Manifesto.ManifestType(),
     MediaType: new Manifesto.MediaType(),
@@ -3172,7 +3196,6 @@ global.manifesto = global.Manifesto = module.exports = {
     ResourceType: new Manifesto.ResourceType(),
     ServiceProfile: new Manifesto.ServiceProfile(),
     Size: Manifesto.Size,
-    Translation: Manifesto.Language,
     TreeNode: Manifesto.TreeNode,
     TreeNodeType: new Manifesto.TreeNodeType(),
     Utils: Manifesto.Utils,
@@ -3464,29 +3487,6 @@ var Manifesto;
         return LabelValuePair;
     }());
     Manifesto.LabelValuePair = LabelValuePair;
-})(Manifesto || (Manifesto = {}));
-
-var Manifesto;
-(function (Manifesto) {
-    var Language = /** @class */ (function () {
-        function Language(value, locale) {
-            if (Array.isArray(value)) {
-                if (value.length === 1) {
-                    this.value = value[0];
-                }
-                else {
-                    // concatenate all of the values
-                    this.value = value.join('<br/>');
-                }
-            }
-            else {
-                this.value = value;
-            }
-            this.locale = locale;
-        }
-        return Language;
-    }());
-    Manifesto.Language = Language;
 })(Manifesto || (Manifesto = {}));
 
 var __extends = (this && this.__extends) || (function () {

@@ -47,7 +47,7 @@
         "src/TreeNodeType.ts",
         "src/Utils.ts",
         "src/MetadataItem.ts",
-        "src/Translation.ts",
+        "src/Language.ts",
         "src/LanguageMap.ts",
         "src/Size.ts",
         "src/Manifesto.ts"
