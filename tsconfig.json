@@ -49,6 +49,7 @@
         "src/MetadataItem.ts",
         "src/Language.ts",
         "src/LanguageMap.ts",
+        "src/LabelValuePair.ts",
         "src/Size.ts",
         "src/Manifesto.ts"
     ],

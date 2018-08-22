@@ -1,4 +1,4 @@
-// manifesto v3.0.1 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.2 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -598,6 +598,21 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
+    class LabelValuePair {
+        label: LanguageMap;
+        value: LanguageMap;
+        defaultLocale: string;
+        resource: any;
+        constructor(defaultLocale: string);
+        parse(resource: any): void;
+        getLabel(): string | null;
+        setLabel(value: string): void;
+        getValue(): string | null;
+        setValue(value: string): void;
+    }
+}
+
+declare namespace Manifesto {
     class Size {
         width: number;
         height: number;
@@ -956,21 +971,6 @@ declare namespace Manifesto {
 
 declare namespace Manifesto {
     interface IThumbnail extends IResource {
-    }
-}
-
-declare namespace Manifesto {
-    class LabelValuePair {
-        label: LanguageMap;
-        value: LanguageMap;
-        defaultLocale: string;
-        resource: any;
-        constructor(defaultLocale: string);
-        parse(resource: any): void;
-        getLabel(): string | null;
-        setLabel(value: string): void;
-        getValue(): string | null;
-        setValue(value: string): void;
     }
 }
 
