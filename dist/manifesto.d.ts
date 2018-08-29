@@ -170,6 +170,7 @@ declare namespace Manifesto {
         static AUTH1KIOSK: ServiceProfile;
         static AUTH1LOGIN: ServiceProfile;
         static AUTH1LOGOUT: ServiceProfile;
+        static AUTH1PROBE: ServiceProfile;
         static AUTH1TOKEN: ServiceProfile;
         static AUTOCOMPLETE: ServiceProfile;
         static SEARCH: ServiceProfile;
