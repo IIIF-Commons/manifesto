@@ -78,6 +78,10 @@ namespace Manifesto {
             return new ServiceProfile(ServiceProfile.AUTH1LOGOUT.toString());
         }
 
+        auth1Probe(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.AUTH1PROBE.toString());
+        }
+
         auth1Token(): ServiceProfile {
             return new ServiceProfile(ServiceProfile.AUTH1TOKEN.toString());
         }

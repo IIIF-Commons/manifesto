@@ -185,6 +185,7 @@ declare namespace Manifesto {
         auth1Kiosk(): ServiceProfile;
         auth1Login(): ServiceProfile;
         auth1Logout(): ServiceProfile;
+        auth1Probe(): ServiceProfile;
         auth1Token(): ServiceProfile;
         autoComplete(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
