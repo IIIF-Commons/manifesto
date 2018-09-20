@@ -1,4 +1,4 @@
-// manifesto v3.0.4 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.5 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -262,6 +262,7 @@ declare namespace Manifesto {
         constructor(jsonld: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
         getLabel(): LanguageMap;
+        getDefaultLabel(): string | null;
         getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
@@ -323,8 +324,6 @@ declare namespace Manifesto {
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
-        getLabel(): LanguageMap;
-        getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
         getRequiredStatement(): LabelValuePair | null;
         isCollection(): boolean;

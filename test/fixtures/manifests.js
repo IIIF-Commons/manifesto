@@ -10,6 +10,7 @@ module.exports = {
     "chemistdruggist": "http://localhost:3001/chemistdruggist.json",
     "collectionwiththumbnail": "http://localhost:3001/collection-with-thumbnail.json",
     "correspondance": "http://localhost:3001/correspondance.json",
+    "defaultlabel": "http://localhost:3001/default-label.json",
     "emptymemberscollection": "http://localhost:3001/empty-collection.json",
     "herbal": "http://localhost:3001/herbal.json",
     "horriblemurders": "http://localhost:3001/horriblemurders.json",

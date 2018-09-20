@@ -72,20 +72,6 @@ namespace Manifesto {
             return this.getProperty('seeAlso');
         }
 
-        getLabel(): LanguageMap {
-            const label: any = this.getProperty('label');
-
-            if (label) {
-                return LanguageMap.parse(label, this.options.locale);
-            }
-            
-            return [];
-        }
-
-        getDefaultLabel(): string | null {
-            return Manifesto.LanguageMap.getValue(this.getLabel());
-        }
-
         getDefaultTree(): ITreeNode{
             this.defaultTree = new TreeNode('root');
             this.defaultTree.data = this;

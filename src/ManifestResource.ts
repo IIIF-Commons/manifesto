@@ -13,7 +13,17 @@ namespace Manifesto {
         }
 
         getLabel(): LanguageMap {
-            return LanguageMap.parse(this.getProperty('label'), this.options.locale);
+            const label: any = this.getProperty('label');
+
+            if (label) {
+                return LanguageMap.parse(label, this.options.locale);
+            }
+            
+            return [];
+        }
+
+        getDefaultLabel(): string | null {
+            return Manifesto.LanguageMap.getValue(this.getLabel());
         }
 
         getMetadata(): LabelValuePair[] {
