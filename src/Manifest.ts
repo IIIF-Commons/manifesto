@@ -272,6 +272,12 @@ namespace Manifesto {
                 return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
             }
 
+            const behavior: Behavior | null = this.getBehavior();
+
+            if (behavior) {
+                return behavior.toString() === Manifesto.Behavior.PAGED.toString();
+            }
+
             return false;
         }
 

@@ -1,4 +1,4 @@
-// manifesto v3.0.6 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.7 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -54,8 +54,10 @@ declare namespace Manifesto {
     class Behavior extends StringValue {
         static AUTOADVANCE: Behavior;
         static NONAV: Behavior;
+        static PAGED: Behavior;
         autoadvance(): Behavior;
         nonav(): Behavior;
+        paged(): Behavior;
     }
 }
 

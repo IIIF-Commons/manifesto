@@ -215,8 +215,12 @@ var Manifesto;
         Behavior.prototype.nonav = function () {
             return new Behavior(Behavior.NONAV.toString());
         };
+        Behavior.prototype.paged = function () {
+            return new Behavior(Behavior.PAGED.toString());
+        };
         Behavior.AUTOADVANCE = new Behavior("auto-advance");
         Behavior.NONAV = new Behavior("no-nav");
+        Behavior.PAGED = new Behavior("paged");
         return Behavior;
     }(Manifesto.StringValue));
     Manifesto.Behavior = Behavior;
@@ -1494,6 +1498,10 @@ var Manifesto;
             var viewingHint = this.getViewingHint();
             if (viewingHint) {
                 return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+            }
+            var behavior = this.getBehavior();
+            if (behavior) {
+                return behavior.toString() === Manifesto.Behavior.PAGED.toString();
             }
             return false;
         };
