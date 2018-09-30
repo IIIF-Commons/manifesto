@@ -1,4 +1,4 @@
-// manifesto v3.0.8 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.9 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -689,6 +689,8 @@ declare namespace Manifesto {
     interface IAnnotationBody extends IManifestResource {
         getFormat(): MediaType | null;
         getType(): ResourceType | null;
+        getWidth(): number;
+        getHeight(): number;
     }
 }
 
