@@ -14,9 +14,7 @@ describe('#loadsAudio', function() {
             done();
         });
     });
-});
 
-describe('#hasThumbnails', function() {
     it('has thumbnails', function() {
         var thumbs = manifest.getSequenceByIndex(0).getThumbs(100, 100);
         thumbs.length.should.equal(2);

@@ -13,9 +13,7 @@ describe('#loadsPlato', function() {
             done();
         });
     });
-});
 
-describe('#hasLabel', function() {
     it('has a label', function () {
         var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
         label.should.be.a('string');

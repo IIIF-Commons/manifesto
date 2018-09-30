@@ -15,9 +15,7 @@ describe('#loadsTankerysHouse', function() {
             done();
         });
     });
-});
 
-describe('#hasLogoAsImageService', function() {
     it('has a logo as an image service', function () {
         var logo = manifest.getLogo();
         expect(logo).to.exist;

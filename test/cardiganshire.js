@@ -15,23 +15,16 @@ describe('#loadsCardiganshire', function() {
             done();
         });
     });
-});
 
-describe('#hasTranslatedMetadata', function() {
     it('has translated metadata', function () {
         var metadata = manifest.getMetadata();
         var title = metadata[0];
         title.getLabel().should.equal('Teitl');
         title.getValue().should.equal('Cardiganshire Constabulary register of criminals');
     });
-});
 
-// has a tree despite no structures
-describe('#hasTree', function() {
     it('has a tree', function () {
         var tree = manifest.getDefaultTree();
         expect(tree).to.exist;
     });
 });
-
-

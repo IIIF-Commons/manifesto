@@ -13,9 +13,7 @@ describe('#loadsTop', function() {
             done();
         });
     });
-});
 
-describe('#getCollectionByIndex', function() {
     it('loads successfully', function (done) {
         manifest.getCollectionByIndex(15).then(function(data){
             ceili = data;
@@ -26,9 +24,7 @@ describe('#getCollectionByIndex', function() {
             done();
         });
     });
-});
 
-describe('#getManifestByIndex', function() {
     it('loads successfully', function (done) {
         ceili.getCollectionByIndex(0).then(function(data){
             data.should.be.a("object");

@@ -13,9 +13,7 @@ describe('#loadsCanvasMetadata', function() {
             done();
         });
     });
-});
 
-describe('#hasMetadata', function() {
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
         expect(metadata).to.exist;

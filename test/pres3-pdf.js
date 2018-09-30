@@ -13,23 +13,17 @@ describe('#loadsPres3PDF', function() {
             done();
         });
     });
-});
 
-describe('#hasSequence', function() {
     it('has a sequence', function () {
         sequence = manifest.getSequenceByIndex(0);
         expect(sequence).to.exist;
     });
-});
 
-describe('#hasCanvas', function() {
     it('has a canvas', function () {
         canvas = sequence.getCanvases()[0];
         canvas.id.should.equal("http://tomcrane.github.io/scratch/manifests/3/canvas/99");
     });
-});
 
-describe('#hasPDF', function() {
     it('canvas has pdf', function () {
         var content = canvas.getContent();
         var annotation = content[0];
