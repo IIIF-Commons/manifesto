@@ -24,5 +24,13 @@ namespace Manifesto {
 
             return null;
         }
+
+        getWidth(): number {
+            return this.getProperty('width');
+        }
+
+        getHeight(): number {
+            return this.getProperty('height');
+        }
     }
 }

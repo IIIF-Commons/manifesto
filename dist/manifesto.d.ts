@@ -1,4 +1,4 @@
-// manifesto v3.0.7 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.8 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -640,6 +640,8 @@ declare namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): MediaType | null;
         getType(): ResourceType | null;
+        getWidth(): number;
+        getHeight(): number;
     }
 }
 

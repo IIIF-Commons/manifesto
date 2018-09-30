@@ -1,5 +1,6 @@
 module.exports = {
     "aarau": "http://localhost:3001/aarau.json",
+    "annotationdimensions": "http://localhost:3001/annotation-dimensions.json",
     "anzacbulletin": "http://localhost:3001/anzacbulletin.json",
     "audio": "http://localhost:3001/audio.json",
     "bookofremembrance": "http://localhost:3001/book-of-remembrance.json",

@@ -3453,6 +3453,12 @@ var Manifesto;
             }
             return null;
         };
+        AnnotationBody.prototype.getWidth = function () {
+            return this.getProperty('width');
+        };
+        AnnotationBody.prototype.getHeight = function () {
+            return this.getProperty('height');
+        };
         return AnnotationBody;
     }(Manifesto.ManifestResource));
     Manifesto.AnnotationBody = AnnotationBody;
