@@ -19,4 +19,18 @@ interface IManifesto {
     Utils: any;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
+    // Extra exposure for internals.
+    Annotation: Manifesto.Annotation,
+    AnnotationBody: Manifesto.AnnotationBody,
+    AnnotationList: Manifesto.AnnotationList,
+    AnnotationPage: Manifesto.AnnotationPage,
+    Canvas: Manifesto.Canvas,
+    Collection: Manifesto.Collection,
+    Duration: Manifesto.Duration,
+    Manifest: Manifesto.Manifest,
+    Range: Manifesto.Range,
+    Sequence: Manifesto.Sequence,
+    Service: Manifesto.Service,
+    Thumbnail: Manifesto.Thumbnail,
+    Thumb: Manifesto.Thumb,
 }
