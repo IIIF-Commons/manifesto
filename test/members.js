@@ -13,9 +13,7 @@ describe('#loadsMembers', function() {
             done();
         });
     });
-});
 
-describe('#hasMembersCount', function() {
     it('has a members count of 4', function () {
         manifest.getTotalItems().should.equal(4);
     });

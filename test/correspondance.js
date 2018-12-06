@@ -17,9 +17,7 @@ describe('#loadsCorrespondance', function() {
             done();
         });
     });
-});
 
-describe('#hasImages', function() {
     it('canvas has images', function () {
         var images = canvas.getImages();
         var annotation = images[0];
@@ -30,9 +28,7 @@ describe('#hasImages', function() {
         imageService = resource.getService(profile);
         expect(imageService).to.exist;
     });
-});
 
-describe('#hasLoginService', function() {
     it('imageService has login service', function () {
         var profile = manifesto.ServiceProfile.login();
         var loginService = imageService.getService(profile);

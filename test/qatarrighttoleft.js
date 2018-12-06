@@ -14,16 +14,12 @@ describe('#loadsQatarRightToLeft', function() {
             done();
         });
     });
-});
 
-describe('#hasSequence', function() {
     it('has a sequence', function () {
         sequence = manifest.getSequenceByIndex(0);
         expect(sequence).to.exist;
     });
-});
 
-describe('#hasViewingDirection', function() {
     it('has a viewingdirection of right-to-left', function () {
         var viewingDirection = sequence.getViewingDirection();
         expect(viewingDirection.toString()).to.equal("right-to-left");

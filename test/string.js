@@ -8,7 +8,7 @@ var manifest = "{\"@context\":\"http://iiif.io/api/presentation/2/context.json\"
 describe('#parsesFromString', function() {
     it('parses successfully', function (done) {
         manifest = manifesto.create(manifest);
-        var label = Manifesto.TranslationCollection.getValue(manifest.getLabel());
+        var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
         label.should.be.a('string');
         label.should.equal('Wunder der Vererbung');
         done();

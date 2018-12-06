@@ -15,9 +15,7 @@ describe('#loadsScroll', function() {
             done();
         });
     });
-});
 
-describe('#hasImage', function() {
     it('canvas has image', function () {
         var images = canvas.getImages();
         var annotation = images[0];
@@ -29,4 +27,3 @@ describe('#hasImage', function() {
         expect(imageService).to.exist;
     });
 });
-

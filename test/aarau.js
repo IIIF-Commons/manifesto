@@ -15,9 +15,7 @@ describe('#loadsAarau', function() {
             done();
         });
     });
-});
 
-describe('#hasNoSearchService', function() {
     it('has no search service', function () {
         var service = manifest.getService(manifesto.ServiceProfile.search());
         expect(service).to.not.exist;

@@ -15,9 +15,7 @@ describe('#loadsScroll', function() {
             done();
         });
     });
-});
 
-describe('#getsResourceID', function() {
     it('resource id is returned as a string', function () {
         var images = canvas.getImages();
         var annotation = images[0];
@@ -27,4 +25,3 @@ describe('#getsResourceID', function() {
         expect(resource.id).to.equal("50b5e49b-ade7-4278-8265-4f72081f26a5")
     });
 });
-

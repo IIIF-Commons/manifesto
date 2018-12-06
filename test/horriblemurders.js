@@ -15,17 +15,13 @@ describe('#loadsHorribleMurders', function() {
             done();
         });
     });
-});
 
-describe('#hasNestedRanges', function() {
     it('has nested ranges', function () {
         var topRange = manifest.getTopRanges()[0];
         var path = topRange.getRanges()[0].getRanges()[0].path;
         expect(path).to.equal('0/0/0');
     });
-});
 
-describe('#hasNestedTreeNodes', function() {
     it('has nested tree nodes', function () {
         var tree = manifest.getDefaultTree();
         var label = tree.nodes[0].nodes[0].label;

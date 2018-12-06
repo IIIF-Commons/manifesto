@@ -124,7 +124,12 @@ namespace Manifesto {
             return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
         }
 
-        static isImageProfile(profile: Manifesto.ServiceProfile): boolean {
+        static isImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+
+            if (typeof(profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
+
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
@@ -159,7 +164,12 @@ namespace Manifesto {
             return false;
         }
 
-        static isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean {
+        static isLevel0ImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+
+            if (typeof(profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
+
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
@@ -174,7 +184,12 @@ namespace Manifesto {
             return false;
         }
 
-        static isLevel1ImageProfile(profile: Manifesto.ServiceProfile): boolean {
+        static isLevel1ImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+
+            if (typeof(profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
+
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
@@ -189,7 +204,12 @@ namespace Manifesto {
             return false;
         }
 
-        static isLevel2ImageProfile(profile: Manifesto.ServiceProfile): boolean {
+        static isLevel2ImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+
+            if (typeof(profile) === 'string') {
+                profile = new Manifesto.ServiceProfile(profile);
+            }
+            
             if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
                 Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||

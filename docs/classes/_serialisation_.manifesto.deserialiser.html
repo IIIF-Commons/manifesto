@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Deserialiser | manifesto.js</title>
+	<title>Deserialiser | manifesto</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">manifesto.js</a>
+					<a href="../index.html" class="title">manifesto</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -90,11 +90,11 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parse" class="tsd-kind-icon">parse</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsecollection" class="tsd-kind-icon">parse<wbr>Collection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsecollections" class="tsd-kind-icon">parse<wbr>Collections</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parseitem" class="tsd-kind-icon">parse<wbr>Item</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parseitems" class="tsd-kind-icon">parse<wbr>Items</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsejson" class="tsd-kind-icon">parse<wbr>Json</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsemanifest" class="tsd-kind-icon">parse<wbr>Manifest</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsemanifests" class="tsd-kind-icon">parse<wbr>Manifests</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsemember" class="tsd-kind-icon">parse<wbr>Member</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_serialisation_.manifesto.deserialiser.html#parsemembers" class="tsd-kind-icon">parse<wbr>Members</a></li>
 							</ul>
 						</section>
 					</div>
@@ -112,7 +112,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L3">Serialisation.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L3">Serialisation.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -141,7 +141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L52">Serialisation.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L52">Serialisation.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,7 +167,62 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L68">Serialisation.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L68">Serialisation.ts:68</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>collection: <a href="../interfaces/_icollection_.manifesto.icollection.html" class="tsd-signature-type">ICollection</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="parseitem" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> parse<wbr>Item</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Item<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iiiifresource_.manifesto.iiiifresource.html" class="tsd-signature-type">IIIIFResource</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L116">Serialisation.ts:116</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>json: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_iiiifresource_.manifesto.iiiifresource.html" class="tsd-signature-type">IIIIFResource</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">null</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="parseitems" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> parse<wbr>Items</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Items<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">: </span><a href="../interfaces/_icollection_.manifesto.icollection.html" class="tsd-signature-type">ICollection</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L134">Serialisation.ts:134</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -193,7 +248,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L11">Serialisation.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L11">Serialisation.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -222,7 +277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L83">Serialisation.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L91">Serialisation.ts:91</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -248,62 +303,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L88">Serialisation.ts:88</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>collection: <a href="../interfaces/_icollection_.manifesto.icollection.html" class="tsd-signature-type">ICollection</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="parsemember" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> parse<wbr>Member</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Member<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iiiifresource_.manifesto.iiiifresource.html" class="tsd-signature-type">IIIIFResource</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L100">Serialisation.ts:100</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>json: <span class="tsd-signature-type">any</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_iiiifresource_.manifesto.iiiifresource.html" class="tsd-signature-type">IIIIFResource</a>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">null</span>
-							</h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="parsemembers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> parse<wbr>Members</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Members<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">: </span><a href="../interfaces/_icollection_.manifesto.icollection.html" class="tsd-signature-type">ICollection</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_imanifestooptions_.manifesto.imanifestooptions.html" class="tsd-signature-type">IManifestoOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/Serialisation.ts#L118">Serialisation.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/Serialisation.ts#L96">Serialisation.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -354,6 +354,12 @@
 								<a href="_serialisation_.manifesto.deserialiser.html#parsecollections" class="tsd-kind-icon">parse<wbr>Collections</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="_serialisation_.manifesto.deserialiser.html#parseitem" class="tsd-kind-icon">parse<wbr>Item</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="_serialisation_.manifesto.deserialiser.html#parseitems" class="tsd-kind-icon">parse<wbr>Items</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="_serialisation_.manifesto.deserialiser.html#parsejson" class="tsd-kind-icon">parse<wbr>Json</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -361,12 +367,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="_serialisation_.manifesto.deserialiser.html#parsemanifests" class="tsd-kind-icon">parse<wbr>Manifests</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="_serialisation_.manifesto.deserialiser.html#parsemember" class="tsd-kind-icon">parse<wbr>Member</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="_serialisation_.manifesto.deserialiser.html#parsemembers" class="tsd-kind-icon">parse<wbr>Members</a>
 							</li>
 						</ul>
 					</li>

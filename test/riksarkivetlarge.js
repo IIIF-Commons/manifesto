@@ -14,16 +14,12 @@ describe('#loadsRiksarkivetLarge', function() {
             done();
         });
     });
-});
 
-describe('#hasLabel', function() {
     it('has a label', function () {
-        var label = Manifesto.TranslationCollection.getValue(manifest.getLabel());
+        var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
         label.should.be.a('string');
     });
-});
 
-describe('#loopThroughCanvases', function() {
     it('loopsQuickly', function () {
         for (let imageIndex = 0; imageIndex < manifest.getSequenceByIndex(0).getTotalCanvases(); imageIndex++) {
             var canvas = manifest.getSequenceByIndex(0).getCanvasByIndex(imageIndex);

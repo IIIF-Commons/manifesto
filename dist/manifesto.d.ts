@@ -1,4 +1,4 @@
-// manifesto v2.2.25 https://github.com/iiif-commons/manifesto
+// manifesto v3.0.9 https://github.com/iiif-commons/manifesto
 
 declare namespace Manifesto {
     class StringValue {
@@ -54,8 +54,10 @@ declare namespace Manifesto {
     class Behavior extends StringValue {
         static AUTOADVANCE: Behavior;
         static NONAV: Behavior;
+        static PAGED: Behavior;
         autoadvance(): Behavior;
         nonav(): Behavior;
+        paged(): Behavior;
     }
 }
 
@@ -175,6 +177,7 @@ declare namespace Manifesto {
         static AUTH1KIOSK: ServiceProfile;
         static AUTH1LOGIN: ServiceProfile;
         static AUTH1LOGOUT: ServiceProfile;
+        static AUTH1PROBE: ServiceProfile;
         static AUTH1TOKEN: ServiceProfile;
         static AUTOCOMPLETE: ServiceProfile;
         static SEARCH: ServiceProfile;
@@ -190,6 +193,7 @@ declare namespace Manifesto {
         auth1Kiosk(): ServiceProfile;
         auth1Login(): ServiceProfile;
         auth1Logout(): ServiceProfile;
+        auth1Probe(): ServiceProfile;
         auth1Token(): ServiceProfile;
         autoComplete(): ServiceProfile;
         iiif1ImageLevel1(): ServiceProfile;
@@ -266,8 +270,9 @@ declare namespace Manifesto {
         options: IManifestoOptions;
         constructor(jsonld: any, options?: IManifestoOptions);
         getIIIFResourceType(): IIIFResourceType;
-        getLabel(): TranslationCollection;
-        getMetadata(): MetadataItem[];
+        getLabel(): LanguageMap;
+        getDefaultLabel(): string | null;
+        getMetadata(): LabelValuePair[];
         getRendering(format: RenderingFormat | string): IRendering | null;
         getRenderings(): IRendering[];
         getService(profile: ServiceProfile | string): IService | null;
@@ -322,17 +327,16 @@ declare namespace Manifesto {
         parentCollection: ICollection;
         parentLabel: string;
         constructor(jsonld?: any, options?: IManifestoOptions);
-        getAttribution(): TranslationCollection;
-        getDescription(): TranslationCollection;
+        getAttribution(): LanguageMap;
+        getDescription(): LanguageMap;
         getIIIFResourceType(): IIIFResourceType;
         getLogo(): string | null;
         getLicense(): string | null;
         getNavDate(): Date;
         getRelated(): any;
         getSeeAlso(): any;
-        getLabel(): TranslationCollection;
-        getDefaultLabel(): string | null;
         getDefaultTree(): ITreeNode;
+        getRequiredStatement(): LabelValuePair | null;
         isCollection(): boolean;
         isManifest(): boolean;
         load(): Promise<IIIIFResource>;
@@ -346,6 +350,7 @@ declare namespace Manifesto {
         items: ISequence[];
         private _topRanges;
         constructor(jsonld?: any, options?: IManifestoOptions);
+        getPosterCanvas(): ICanvas | null;
         getBehavior(): Behavior | null;
         getDefaultTree(): ITreeNode;
         private _getTopRanges();
@@ -568,10 +573,10 @@ declare namespace Manifesto {
         static normaliseType(type: string): string;
         static normaliseUrl(url: string): string;
         static normalisedUrlsMatch(url1: string, url2: string): boolean;
-        static isImageProfile(profile: Manifesto.ServiceProfile): boolean;
-        static isLevel0ImageProfile(profile: Manifesto.ServiceProfile): boolean;
-        static isLevel1ImageProfile(profile: Manifesto.ServiceProfile): boolean;
-        static isLevel2ImageProfile(profile: Manifesto.ServiceProfile): boolean;
+        static isImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
+        static isLevel0ImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
+        static isLevel1ImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
+        static isLevel2ImageProfile(profile: string | Manifesto.ServiceProfile): boolean;
         static loadResource(uri: string): Promise<string>;
         static loadExternalResourcesAuth1(resources: IExternalResource[], openContentProviderInteraction: (service: Manifesto.IService) => any, openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>, getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>, userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>, getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>, handleMovedTemporarily: (resource: IExternalResource) => Promise<any>, showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource[]>;
         static loadExternalResourceAuth1(resource: IExternalResource, openContentProviderInteraction: (service: Manifesto.IService) => any, openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<void>, getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>, userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>, getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>, handleMovedTemporarily: (resource: IExternalResource) => Promise<any>, showOutOfOptionsMessages: (service: Manifesto.IService) => void): Promise<IExternalResource>;
@@ -593,9 +598,24 @@ declare namespace Manifesto {
 }
 
 declare namespace Manifesto {
-    class MetadataItem {
-        label: TranslationCollection;
-        value: TranslationCollection;
+    class Language {
+        value: string;
+        locale: string;
+        constructor(value: string | string[], locale: string);
+    }
+}
+
+declare namespace Manifesto {
+    class LanguageMap extends Array<Language> {
+        static parse(language: any, defaultLocale: string): LanguageMap;
+        static getValue(languageCollection: LanguageMap, locale?: string): string | null;
+    }
+}
+
+declare namespace Manifesto {
+    class LabelValuePair {
+        label: LanguageMap;
+        value: LanguageMap;
         defaultLocale: string;
         resource: any;
         constructor(defaultLocale: string);
@@ -604,21 +624,6 @@ declare namespace Manifesto {
         setLabel(value: string): void;
         getValue(): string | null;
         setValue(value: string): void;
-    }
-}
-
-declare namespace Manifesto {
-    class Translation {
-        value: string;
-        locale: string;
-        constructor(value: string, locale: string);
-    }
-}
-
-declare namespace Manifesto {
-    class TranslationCollection extends Array<Translation> {
-        static parse(translation: any, defaultLocale: string): TranslationCollection;
-        static getValue(translationCollection: TranslationCollection, locale?: string): string | null;
     }
 }
 
@@ -648,6 +653,8 @@ declare namespace Manifesto {
         constructor(jsonld?: any, options?: IManifestoOptions);
         getFormat(): MediaType | null;
         getType(): ResourceType | null;
+        getWidth(): number;
+        getHeight(): number;
     }
 }
 
@@ -695,6 +702,8 @@ declare namespace Manifesto {
     interface IAnnotationBody extends IManifestResource {
         getFormat(): MediaType | null;
         getType(): ResourceType | null;
+        getWidth(): number;
+        getHeight(): number;
     }
 }
 
@@ -787,16 +796,15 @@ declare namespace Manifesto {
 declare namespace Manifesto {
     interface IIIIFResource extends IManifestResource {
         defaultTree: ITreeNode;
-        getAttribution(): TranslationCollection;
-        getDefaultLabel(): string | null;
+        getAttribution(): LanguageMap;
         getDefaultTree(): ITreeNode;
-        getDescription(): TranslationCollection;
+        getDescription(): LanguageMap;
         getIIIFResourceType(): IIIFResourceType;
-        getLabel(): TranslationCollection;
         getLicense(): string | null;
         getLogo(): string | null;
         getNavDate(): Date;
         getRelated(): any;
+        getRequiredStatement(): Manifesto.LabelValuePair | null;
         getSeeAlso(): any;
         index: number;
         isCollection(): boolean;
@@ -822,6 +830,7 @@ declare namespace Manifesto {
         getAllRanges(): IRange[];
         getBehavior(): Behavior | null;
         getManifestType(): ManifestType;
+        getPosterCanvas(): ICanvas | null;
         getRangeById(id: string): Manifesto.IRange | null;
         getRangeByPath(path: string): IRange | null;
         getSequenceByIndex(index: number): ISequence;
@@ -842,17 +851,17 @@ interface IManifesto {
     Behavior: Manifesto.Behavior;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
+    LabelValuePair: any;
+    Language: any;
+    LanguageMap: any;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
     MediaType: Manifesto.MediaType;
-    MetadataItem: any;
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
     Size: any;
     StatusCodes: Manifesto.IStatusCodes;
-    Translation: any;
-    TranslationCollection: any;
     TreeNode: any;
     TreeNodeType: Manifesto.TreeNodeType;
     Utils: any;
@@ -868,26 +877,6 @@ declare namespace Manifesto {
         resource: IIIIFResource;
         navDate?: Date;
         pessimisticAccessControl: boolean;
-    }
-}
-
-declare namespace Manifesto {
-    interface IManifestResource extends IJSONLDResource {
-        externalResource: Manifesto.IExternalResource;
-        options: IManifestoOptions;
-        getLabel(): TranslationCollection;
-        getMetadata(): MetadataItem[];
-        getIIIFResourceType(): IIIFResourceType;
-        getRendering(format: RenderingFormat | string): IRendering | null;
-        getRenderings(): IRendering[];
-        getService(profile: ServiceProfile | string): IService | null;
-        getServices(): IService[];
-        getThumbnail(): Thumbnail | null;
-        isAnnotation(): boolean;
-        isCanvas(): boolean;
-        isManifest(): boolean;
-        isRange(): boolean;
-        isSequence(): boolean;
     }
 }
 

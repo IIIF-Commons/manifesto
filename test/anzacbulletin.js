@@ -15,9 +15,7 @@ describe('#loadsAnzacBulletin', function() {
             done();
         });
     });
-});
 
-describe('#hasThumbs', function() {
     it('sequence has thumbs', function () {
         var thumbs = sequence.getThumbs();
         expect(thumbs).to.exist;

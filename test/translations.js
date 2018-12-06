@@ -13,9 +13,7 @@ describe('#loadsTranslations', function() {
             done();
         });
     });
-});
 
-describe('#hasMetadata', function() {
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
         expect(metadata[4].value).to.be.instanceof(Array);

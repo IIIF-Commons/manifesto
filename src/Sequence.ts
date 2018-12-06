@@ -81,7 +81,7 @@ namespace Manifesto {
                 const canvas: ICanvas = this.getCanvasByIndex(i);
 
                 // check if there's a literal match
-                if (TranslationCollection.getValue(canvas.getLabel(), this.options.locale) === label) {
+                if (LanguageMap.getValue(canvas.getLabel(), this.options.locale) === label) {
                     return i;
                 }
 
@@ -110,7 +110,7 @@ namespace Manifesto {
         getLastCanvasLabel(alphanumeric?: boolean): string {
             for (let i = this.getTotalCanvases() - 1; i >= 0; i--) {
                 const canvas: ICanvas = this.getCanvasByIndex(i);
-                const label: string = <string>TranslationCollection.getValue(canvas.getLabel(), this.options.locale);
+                const label: string = <string>LanguageMap.getValue(canvas.getLabel(), this.options.locale);
 
                 if (alphanumeric) {
                     var regExp = /^[a-zA-Z0-9]*$/;

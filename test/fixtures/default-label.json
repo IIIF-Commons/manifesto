@@ -1,0 +1,546 @@
+
+{
+    "id": "https://edsilv.github.io/biiif-workshop/collection/index.json",
+    "type": "Manifest",
+    "items": [
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/0",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/0/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/0/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_abyssinian/abyssinian.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Abyssinian"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/0"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Abyssinian"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Abyssinian"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Abyssinian is a slender, fine-boned, medium-sized cat. The head is moderately wedge shaped, with a slight break at the muzzle, and nose and chin ideally forming a straight vertical line when viewed in profile. They have alert, relatively large pointed ears. The notably expressive eyes are almond shaped and are gold, green, hazel or copper depending on coat color. The legs should be long in proportion to a graceful body, with small oval paws; the tail is likewise long and tapering. https://en.wikipedia.org/wiki/Abyssinian_cat"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_abyssinian/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/1",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/1/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/1/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_balinese/balinese.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Balinese"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/1"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Balinese"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Balinese"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Balinese is a long-haired breed of domestic cat with Siamese-style point coloration and sapphire-blue eyes. The Balinese is also known as the purebred long-haired Siamese, since it originated as a natural mutation of that breed[1], and hence is essentially the same cat with a medium-length silky coat and a distinctively plumed tail. https://en.wikipedia.org/wiki/Balinese_cat"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_balinese/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/2",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/2/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/2/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_chartreux/chartreux.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Chartreux"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/2"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Chartreux"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Chartreaux"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Chartreux is a rare breed of domestic cat from France and is recognised by a number of registries around the world. The Chartreux is large and muscular (called cobby) with relatively short, fine-boned limbs, and very fast reflexes. They are known for their blue (grey) water-resistant short hair double coats which are often slightly nappy in texture (often showing \"breaks\" like a sheepskin) and orange- or copper-colored eyes. Chartreux cats are also known for their \"smile\" due to the structure of their heads and their tapered muzzles, they often appear to be smiling. Chartreux are exceptional hunters and are highly prized by farmers. https://en.wikipedia.org/wiki/Chartreux"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_chartreux/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/3",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/3/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/3/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_egyptian-mau/egyptian-mau.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Egyptian Mau"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/3"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Egyptian Mau"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Egyptian Mau"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Egyptian Maus are a small- to medium-sized short-haired cat breed. Along with the Bahraini Dilmun cat, they are one of the few naturally spotted breeds of domesticated cat. The spots of the Mau occur on only the tips of the hairs of its coat. https://en.wikipedia.org/wiki/Egyptian_Mau"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_egyptian-mau/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/4",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/4/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/4/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_himalayan/himalayan.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Himalayan"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/4"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Himalayan"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Himalayan"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Himalayan (a.k.a. Himalayan Persian, or Colourpoint Persian as it is commonly referred to in Europe), is a breed or sub-breed of long-haired cat identical in type to the Persian, with the exception of its blue eyes and its point colouration, which were derived from crossing the Persian with the Siamese. https://en.wikipedia.org/wiki/Himalayan_cat"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_himalayan/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/5",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/5/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/5/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_norwegian-forest-cat/norwegian-forest-cat.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Norwegian Forest Cat"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/5"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Norwegian Forest Cat"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Norwegian Forest Cat"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Norwegian Forest cat (Norwegian Norsk skogkatt or Norsk skaukatt) is a breed of domestic cat originating in Northern Europe[1]. This natural breed is adapted to a very cold climate, with a top coat of glossy, long, water-shedding hairs and a woolly undercoat for insulation. Although this is uncertain, the breed's ancestors may have been a landrace of short-haired cats brought to Norway by the Vikings around 1000 AD, who may also have brought with them long-haired cats, like those ancestral to the modern Siberian and Turkish Angora breeds. During World War II, the breed became nearly extinct until efforts by the Norwegian Forest Cat Club helped the breed by creating an official breeding program. It was registered as a breed with the European Fédération Internationale Féline in the 1970s, when a local cat fancier, Carl-Fredrik Nordane, took notice of the breed and made efforts to register it. Currently, the Norwegian Forest breed is very popular in Norway, Sweden, Iceland and France. https://en.wikipedia.org/wiki/Norwegian_Forest_cat"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_norwegian-forest-cat/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/6",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/6/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/6/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_persian/persian.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Persian"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/6"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Persian"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Persian"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Persian cat (Persian گربه ایرانی Gorbe Irâni) is a long-haired breed of cat characterized by its round face and short muzzle. It is also known as the Persian Longhair in the English-speaking countries. In the Middle East region they are widely known as Iranian cat and in Iran they are known as Shirazi cat. The first documented ancestors of the Persian were imported into Italy from Iran (historically known as Persia) around 1620.[1] The exact history of the Persian cat does seem to be a bit of a mystery but many of these long-haired cats were seen in hieroglyphics. The story has it that these long-haired cats were then imported into Europe as their popularity grew and breeding took place in Italy and France. https://en.wikipedia.org/wiki/Persian_cat"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_persian/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      },
+      {
+        "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/7",
+        "type": "Canvas",
+        "items": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/7/annotationpage/0",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/7/annotation/0",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://edsilv.github.io/biiif-workshop/collection/_somali/somali.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "label": {
+                    "@none": [
+                      "Somali"
+                    ]
+                  }
+                },
+                "target": "https://edsilv.github.io/biiif-workshop/collection/index.json/canvas/7"
+              }
+            ]
+          }
+        ],
+        "label": {
+          "@none": [
+            "Somali"
+          ]
+        },
+        "metadata": [
+          {
+            "label": {
+              "@none": [
+                "Breed"
+              ]
+            },
+            "value": {
+              "@none": [
+                "Somali"
+              ]
+            }
+          },
+          {
+            "label": {
+              "@none": [
+                "Description"
+              ]
+            },
+            "value": {
+              "@none": [
+                "The Persian cat (Persian گربه ایرانی Gorbe Irâni) is a long-haired breed of cat characterized by its round face and short muzzle. It is also known as the Persian Longhair in the English-speaking countries. In the Middle East region they are widely known as Iranian cat and in Iran they are known as Shirazi cat. The first documented ancestors of the Persian were imported into Italy from Iran (historically known as Persia) around 1620.[1] The exact history of the Persian cat does seem to be a bit of a mystery but many of these long-haired cats were seen in hieroglyphics. The story has it that these long-haired cats were then imported into Europe as their popularity grew and breeding took place in Italy and France. https://en.wikipedia.org/wiki/Persian_cat"
+              ]
+            }
+          }
+        ],
+        "thumbnail": [
+          {
+            "id": "https://edsilv.github.io/biiif-workshop/collection/_somali/thumb.jpeg",
+            "type": "Image"
+          }
+        ]
+      }
+    ],
+    "label": {
+      "@none": [
+        "Cats"
+      ]
+    },
+    "metadata": [
+      {
+        "label": {
+          "@none": [
+            "Description"
+          ]
+        },
+        "value": {
+          "@none": [
+            "Breeds of cats"
+          ]
+        }
+      }
+    ]
+  }

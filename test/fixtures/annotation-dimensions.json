@@ -1,0 +1,881 @@
+
+{
+  "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json",
+  "type": "Manifest",
+  "items": [
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/0",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/0/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/0/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-1/01.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-1"
+                  ]
+                },
+                "width": 916,
+                "height": 1366
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/0"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-1"
+        ]
+      },
+      "width": 916,
+      "height": 1366,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-1/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/1",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/1/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/1/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-2/02.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-2"
+                  ]
+                },
+                "width": 828,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/1"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-2"
+        ]
+      },
+      "width": 828,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-2/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/2",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/2/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/2/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-3/03.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-3"
+                  ]
+                },
+                "width": 769,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/2"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-3"
+        ]
+      },
+      "width": 769,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-3/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/3",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/3/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/3/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-4/04.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-4"
+                  ]
+                },
+                "width": 813,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/3"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-4"
+        ]
+      },
+      "width": 813,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-4/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/4",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/4/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/4/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-5/05.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-5"
+                  ]
+                },
+                "width": 784,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/4"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-5"
+        ]
+      },
+      "width": 784,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-5/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/5",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/5/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/5/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-6/06.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-6"
+                  ]
+                },
+                "width": 813,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/5"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-6"
+        ]
+      },
+      "width": 813,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-6/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/6",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/6/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/6/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-7/07.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-7"
+                  ]
+                },
+                "width": 781,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/6"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-7"
+        ]
+      },
+      "width": 781,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-7/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/7",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/7/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/7/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-8/08.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-8"
+                  ]
+                },
+                "width": 810,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/7"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-8"
+        ]
+      },
+      "width": 810,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-8/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/8",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/8/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/8/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-9/09.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-9"
+                  ]
+                },
+                "width": 784,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/8"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-9"
+        ]
+      },
+      "width": 784,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-9/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/9",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/9/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/9/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-10/10.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-10"
+                  ]
+                },
+                "width": 822,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/9"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-10"
+        ]
+      },
+      "width": 822,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-10/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/10",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/10/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/10/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-11/11.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-11"
+                  ]
+                },
+                "width": 781,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/10"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-11"
+        ]
+      },
+      "width": 781,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-11/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/11",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/11/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/11/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-12/12.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-12"
+                  ]
+                },
+                "width": 819,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/11"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-12"
+        ]
+      },
+      "width": 819,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-12/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/12",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/12/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/12/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-13/13.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-13"
+                  ]
+                },
+                "width": 769,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/12"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-13"
+        ]
+      },
+      "width": 769,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-13/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/13",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/13/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/13/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-14/14.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-14"
+                  ]
+                },
+                "width": 822,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/13"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-14"
+        ]
+      },
+      "width": 822,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-14/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/14",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/14/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/14/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-15/15.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-15"
+                  ]
+                },
+                "width": 772,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/14"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-15"
+        ]
+      },
+      "width": 772,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-15/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/15",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/15/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/15/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-16/16.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-16"
+                  ]
+                },
+                "width": 816,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/15"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-16"
+        ]
+      },
+      "width": 816,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-16/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/16",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/16/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/16/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-17/17.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-17"
+                  ]
+                },
+                "width": 778,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/16"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-17"
+        ]
+      },
+      "width": 778,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-17/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/17",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/17/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/17/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-18/18.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-18"
+                  ]
+                },
+                "width": 825,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/17"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-18"
+        ]
+      },
+      "width": 825,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-18/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/18",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/18/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/18/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-19/19.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-19"
+                  ]
+                },
+                "width": 775,
+                "height": 1268
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/18"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-19"
+        ]
+      },
+      "width": 775,
+      "height": 1268,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-19/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/19",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/19/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/19/annotation/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-20/20.jpeg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "label": {
+                  "@none": [
+                    "_page-20"
+                  ]
+                },
+                "width": 916,
+                "height": 1366
+              },
+              "target": "https://edsilv.github.io/code-of-ethics-zine/collection/index.json/canvas/19"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_page-20"
+        ]
+      },
+      "width": 916,
+      "height": 1366,
+      "thumbnail": [
+        {
+          "id": "https://edsilv.github.io/code-of-ethics-zine/collection/_page-20/thumb.jpeg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "label": {
+    "@none": [
+      "collection"
+    ]
+  },
+  "behavior": [
+    "paged"
+  ],
+  "thumbnail": [
+    {
+      "id": "https://edsilv.github.io/code-of-ethics-zine/collection/thumb.jpeg",
+      "type": "Image"
+    }
+  ]
+}

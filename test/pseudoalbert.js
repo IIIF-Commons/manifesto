@@ -15,9 +15,7 @@ describe('#loadsPseudoalbert', function() {
             done();
         });
     });
-});
 
-describe('#hasManifestType', function() {
     it('has a manifestType property of "manuscript"', function () {
         var type = manifest.getManifestType();
         type.toString().should.equal('manuscript');

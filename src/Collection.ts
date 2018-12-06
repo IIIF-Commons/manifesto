@@ -92,7 +92,7 @@ namespace Manifesto {
                 for (let i = 0; i < parentCollection.getManifests().length; i++) {
                     var manifest = parentCollection.getManifests()[i];
                     var tree: ITreeNode = manifest.getDefaultTree();
-                    tree.label = manifest.parentLabel || TranslationCollection.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
+                    tree.label = manifest.parentLabel || LanguageMap.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
                     tree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST.toString());
@@ -106,7 +106,7 @@ namespace Manifesto {
                 for (let i = 0; i < parentCollection.getCollections().length; i++) {
                     var collection = parentCollection.getCollections()[i];
                     var tree: ITreeNode = collection.getDefaultTree();
-                    tree.label = collection.parentLabel || TranslationCollection.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
+                    tree.label = collection.parentLabel || LanguageMap.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;
                     tree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION.toString());

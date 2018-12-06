@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IResource | manifesto.js</title>
+	<title>IResource | manifesto</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">manifesto.js</a>
+					<a href="../index.html" class="title">manifesto</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -80,6 +80,14 @@
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">IResource</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="_icanvas_.manifesto.icanvas.html" class="tsd-signature-type">ICanvas</a>
+									</li>
+									<li>
+										<a href="_ithumbnail_.manifesto.ithumbnail.html" class="tsd-signature-type">IThumbnail</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
@@ -88,20 +96,23 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
+					<li><a href="../classes/_canvas_.manifesto.canvas.html" class="tsd-signature-type">Canvas</a></li>
 					<li><a href="../classes/_resource_.manifesto.resource.html" class="tsd-signature-type">Resource</a></li>
+					<li><a href="../classes/_thumbnail_.manifesto.thumbnail.html" class="tsd-signature-type">Thumbnail</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#___jsonld" class="tsd-kind-icon">___jsonld</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#__jsonld" class="tsd-kind-icon">__jsonld</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#externalresource" class="tsd-kind-icon">external<wbr>Resource</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_iresource_.manifesto.iresource.html#index" class="tsd-kind-icon">index</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#options" class="tsd-kind-icon">options</a></li>
 							</ul>
 						</section>
@@ -116,8 +127,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#getproperty" class="tsd-kind-icon">get<wbr>Property</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#getrendering" class="tsd-kind-icon">get<wbr>Rendering</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#getrenderings" class="tsd-kind-icon">get<wbr>Renderings</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_iresource_.manifesto.iresource.html#getresources" class="tsd-kind-icon">get<wbr>Resources</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#getservice" class="tsd-kind-icon">get<wbr>Service</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#getservices" class="tsd-kind-icon">get<wbr>Services</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#getthumbnail" class="tsd-kind-icon">get<wbr>Thumbnail</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_iresource_.manifesto.iresource.html#gettype" class="tsd-kind-icon">get<wbr>Type</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_iresource_.manifesto.iresource.html#getwidth" class="tsd-kind-icon">get<wbr>Width</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_iresource_.manifesto.iresource.html#isannotation" class="tsd-kind-icon">is<wbr>Annotation</a></li>
@@ -130,16 +143,16 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="___jsonld" class="tsd-anchor"></a>
-					<h3>___jsonld</h3>
-					<div class="tsd-signature tsd-kind-icon">___jsonld<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="__jsonld" class="tsd-anchor"></a>
+					<h3>__jsonld</h3>
+					<div class="tsd-signature tsd-kind-icon">__jsonld<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="_ijsonldresource_.manifesto.ijsonldresource.html">IJSONLDResource</a>.<a href="_ijsonldresource_.manifesto.ijsonldresource.html#___jsonld">___jsonld</a></p>
+						<p>Inherited from <a href="_ijsonldresource_.manifesto.ijsonldresource.html">IJSONLDResource</a>.<a href="_ijsonldresource_.manifesto.ijsonldresource.html#__jsonld">__jsonld</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IJSONLDResource.ts#L5">IJSONLDResource.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IJSONLDResource.ts#L5">IJSONLDResource.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -150,7 +163,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_ijsonldresource_.manifesto.ijsonldresource.html">IJSONLDResource</a>.<a href="_ijsonldresource_.manifesto.ijsonldresource.html#context">context</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IJSONLDResource.ts#L3">IJSONLDResource.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IJSONLDResource.ts#L3">IJSONLDResource.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -161,7 +174,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#externalresource">externalResource</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L3">IManifestResource.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L3">IManifestResource.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +185,17 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_ijsonldresource_.manifesto.ijsonldresource.html">IJSONLDResource</a>.<a href="_ijsonldresource_.manifesto.ijsonldresource.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IJSONLDResource.ts#L4">IJSONLDResource.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IJSONLDResource.ts#L4">IJSONLDResource.ts:4</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="index" class="tsd-anchor"></a>
+					<h3>index</h3>
+					<div class="tsd-signature tsd-kind-icon">index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L9">IResource.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -183,7 +206,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#options">options</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L4">IManifestResource.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L4">IManifestResource.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -200,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IResource.ts#L3">IResource.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L3">IResource.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/_mediatype_.manifesto.mediatype.html" class="tsd-signature-type">MediaType</a>
@@ -220,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IResource.ts#L4">IResource.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L4">IResource.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -231,17 +254,17 @@
 					<a name="getlabel" class="tsd-anchor"></a>
 					<h3>get<wbr>Label</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Label<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_translationcollection_.manifesto.translationcollection.html" class="tsd-signature-type">TranslationCollection</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Label<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_languagemap_.manifesto.languagemap.html" class="tsd-signature-type">LanguageMap</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getlabel">getLabel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L5">IManifestResource.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L5">IManifestResource.ts:5</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/_translationcollection_.manifesto.translationcollection.html" class="tsd-signature-type">TranslationCollection</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/_languagemap_.manifesto.languagemap.html" class="tsd-signature-type">LanguageMap</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -255,7 +278,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IResource.ts#L5">IResource.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L5">IResource.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span>
@@ -269,17 +292,17 @@
 					<a name="getmetadata" class="tsd-anchor"></a>
 					<h3>get<wbr>Metadata</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Metadata<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_metadataitem_.manifesto.metadataitem.html" class="tsd-signature-type">MetadataItem</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Metadata<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_labelvaluepair_.manifesto.labelvaluepair.html" class="tsd-signature-type">LabelValuePair</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getmetadata">getMetadata</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L6">IManifestResource.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L6">IManifestResource.ts:6</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/_metadataitem_.manifesto.metadataitem.html" class="tsd-signature-type">MetadataItem</a><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/_labelvaluepair_.manifesto.labelvaluepair.html" class="tsd-signature-type">LabelValuePair</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -294,7 +317,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_ijsonldresource_.manifesto.ijsonldresource.html">IJSONLDResource</a>.<a href="_ijsonldresource_.manifesto.ijsonldresource.html#getproperty">getProperty</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IJSONLDResource.ts#L6">IJSONLDResource.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IJSONLDResource.ts#L6">IJSONLDResource.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -318,7 +341,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getrendering">getRendering</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L7">IManifestResource.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L7">IManifestResource.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -345,10 +368,27 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getrenderings">getRenderings</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L8">IManifestResource.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L8">IManifestResource.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_irendering_.manifesto.irendering.html" class="tsd-signature-type">IRendering</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getresources" class="tsd-anchor"></a>
+					<h3>get<wbr>Resources</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Resources<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_iannotation_.manifesto.iannotation.html" class="tsd-signature-type">IAnnotation</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L6">IResource.ts:6</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="_iannotation_.manifesto.iannotation.html" class="tsd-signature-type">IAnnotation</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -363,7 +403,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getservice">getService</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L9">IManifestResource.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L9">IManifestResource.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -390,10 +430,31 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getservices">getServices</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L10">IManifestResource.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L10">IManifestResource.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_iservice_.manifesto.iservice.html" class="tsd-signature-type">IService</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="getthumbnail" class="tsd-anchor"></a>
+					<h3>get<wbr>Thumbnail</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Thumbnail<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_thumbnail_.manifesto.thumbnail.html" class="tsd-signature-type">Thumbnail</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#getthumbnail">getThumbnail</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L11">IManifestResource.ts:11</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/_thumbnail_.manifesto.thumbnail.html" class="tsd-signature-type">Thumbnail</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">null</span>
+							</h4>
 						</li>
 					</ul>
 				</section>
@@ -407,7 +468,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IResource.ts#L6">IResource.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L7">IResource.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/_resourcetype_.manifesto.resourcetype.html" class="tsd-signature-type">ResourceType</a>
@@ -427,7 +488,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IResource.ts#L7">IResource.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IResource.ts#L8">IResource.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -445,7 +506,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#isannotation">isAnnotation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L11">IManifestResource.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L12">IManifestResource.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -463,7 +524,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#iscanvas">isCanvas</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L12">IManifestResource.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L13">IManifestResource.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -481,7 +542,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#ismanifest">isManifest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L13">IManifestResource.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L14">IManifestResource.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -499,7 +560,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#isrange">isRange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L14">IManifestResource.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L15">IManifestResource.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -517,7 +578,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_imanifestresource_.manifesto.imanifestresource.html">IManifestResource</a>.<a href="_imanifestresource_.manifesto.imanifestresource.html#issequence">isSequence</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/viewdir/manifesto/blob/98c2ea6/src/IManifestResource.ts#L15">IManifestResource.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/IIIF-Commons/manifesto/blob/c6c3a59/src/IManifestResource.ts#L16">IManifestResource.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -550,7 +611,7 @@
 						<a href="_iresource_.manifesto.iresource.html" class="tsd-kind-icon">IResource</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_iresource_.manifesto.iresource.html#___jsonld" class="tsd-kind-icon">___jsonld</a>
+								<a href="_iresource_.manifesto.iresource.html#__jsonld" class="tsd-kind-icon">__jsonld</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_iresource_.manifesto.iresource.html#context" class="tsd-kind-icon">context</a>
@@ -560,6 +621,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_iresource_.manifesto.iresource.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_iresource_.manifesto.iresource.html#index" class="tsd-kind-icon">index</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_iresource_.manifesto.iresource.html#options" class="tsd-kind-icon">options</a>
@@ -588,11 +652,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_iresource_.manifesto.iresource.html#getrenderings" class="tsd-kind-icon">get<wbr>Renderings</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_iresource_.manifesto.iresource.html#getresources" class="tsd-kind-icon">get<wbr>Resources</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_iresource_.manifesto.iresource.html#getservice" class="tsd-kind-icon">get<wbr>Service</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_iresource_.manifesto.iresource.html#getservices" class="tsd-kind-icon">get<wbr>Services</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_iresource_.manifesto.iresource.html#getthumbnail" class="tsd-kind-icon">get<wbr>Thumbnail</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_iresource_.manifesto.iresource.html#gettype" class="tsd-kind-icon">get<wbr>Type</a>

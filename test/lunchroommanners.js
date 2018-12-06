@@ -13,9 +13,7 @@ describe('#loadsItemsRanges', function() {
             done();
         });
     });
-});
 
-describe('#hasRanges', function() {
     it('has ranges', function () {
         topRange = manifest.getTopRanges()[0];
         topRange.items.length.should.equal(2);

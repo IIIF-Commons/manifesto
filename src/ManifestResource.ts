@@ -12,20 +12,30 @@ namespace Manifesto {
             return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
         }
 
-        getLabel(): TranslationCollection {
-            return TranslationCollection.parse(this.getProperty('label'), this.options.locale);
+        getLabel(): LanguageMap {
+            const label: any = this.getProperty('label');
+
+            if (label) {
+                return LanguageMap.parse(label, this.options.locale);
+            }
+            
+            return [];
         }
 
-        getMetadata(): MetadataItem[] {
+        getDefaultLabel(): string | null {
+            return Manifesto.LanguageMap.getValue(this.getLabel());
+        }
+
+        getMetadata(): LabelValuePair[] {
             const _metadata: any[] = this.getProperty('metadata');
 
-            const metadata: MetadataItem[] = [];
+            const metadata: LabelValuePair[] = [];
 
             if (!_metadata) return metadata;
 
             for (let i = 0; i < _metadata.length; i++) {
                 const item: any = _metadata[i];
-                const metadataItem: MetadataItem = new MetadataItem(this.options.locale);
+                const metadataItem: LabelValuePair = new LabelValuePair(this.options.locale);
                 metadataItem.parse(item);
                 metadata.push(metadataItem);
             }

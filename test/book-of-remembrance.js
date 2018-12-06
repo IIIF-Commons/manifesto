@@ -13,16 +13,12 @@ describe('#loadsRemembranceRanges', function() {
             done();
         });
     });
-});
 
-describe('#hasTree', function() {
     it('has a tree', function () {
         var tree = manifest.getDefaultTree();
         expect(tree).to.exist;
     });
-});
 
-describe('#hasTopRange', function() {
     it('has a top range', function () {
         topRanges = manifest.getTopRanges();
         topRanges.length.should.equal(1);

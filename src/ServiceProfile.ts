@@ -45,6 +45,7 @@ namespace Manifesto {
         public static AUTH1KIOSK = new ServiceProfile("http://iiif.io/api/auth/1/kiosk");
         public static AUTH1LOGIN = new ServiceProfile("http://iiif.io/api/auth/1/login");
         public static AUTH1LOGOUT = new ServiceProfile("http://iiif.io/api/auth/1/logout");
+        public static AUTH1PROBE = new ServiceProfile("http://iiif.io/api/auth/1/probe");
         public static AUTH1TOKEN = new ServiceProfile("http://iiif.io/api/auth/1/token");
 
         // search api
@@ -82,6 +83,10 @@ namespace Manifesto {
 
         auth1Logout(): ServiceProfile {
             return new ServiceProfile(ServiceProfile.AUTH1LOGOUT.toString());
+        }
+
+        auth1Probe(): ServiceProfile {
+            return new ServiceProfile(ServiceProfile.AUTH1PROBE.toString());
         }
 
         auth1Token(): ServiceProfile {

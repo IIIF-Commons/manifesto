@@ -11,6 +11,7 @@
         "strictNullChecks": true,
         "target": "es5",
         "lib": ["es6", "dom"],
+        "skipLibCheck": true,
         "types": ["node", "http-status-codes"]
     },
     "files": [
@@ -45,9 +46,9 @@
         "src/TreeNode.ts",
         "src/TreeNodeType.ts",
         "src/Utils.ts",
-        "src/MetadataItem.ts",
-        "src/Translation.ts",
-        "src/TranslationCollection.ts",
+        "src/Language.ts",
+        "src/LanguageMap.ts",
+        "src/LabelValuePair.ts",
         "src/Size.ts",
         "src/Manifesto.ts"
     ],
