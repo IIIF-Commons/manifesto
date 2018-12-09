@@ -3,34 +3,33 @@ interface IManifesto {
     Behavior: Manifesto.Behavior;
     create: (manifest: string, options?: Manifesto.IManifestoOptions) => Manifesto.IIIIFResource;
     IIIFResourceType: Manifesto.IIIFResourceType;
-    LabelValuePair: any;
-    Language: any;
-    LanguageMap: any;
+    LabelValuePair: typeof Manifesto.LabelValuePair;
+    Language: typeof Manifesto.Language;
+    LanguageMap: typeof Manifesto.LanguageMap;
     loadManifest: (uri: string) => Promise<string>;
     ManifestType: Manifesto.ManifestType;
     MediaType: Manifesto.MediaType;
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceType: Manifesto.ResourceType;
     ServiceProfile: Manifesto.ServiceProfile;
-    Size: any;
+    Size: typeof Manifesto.Size;
     StatusCodes: Manifesto.IStatusCodes;
-    TreeNode: any;
+    TreeNode: typeof Manifesto.TreeNode;
     TreeNodeType: Manifesto.TreeNodeType;
-    Utils: any;
+    Utils: typeof Manifesto.Utils;
     ViewingDirection: Manifesto.ViewingDirection;
     ViewingHint: Manifesto.ViewingHint;
-    // Extra exposure for internals.
-    Annotation: Manifesto.Annotation,
-    AnnotationBody: Manifesto.AnnotationBody,
-    AnnotationList: Manifesto.AnnotationList,
-    AnnotationPage: Manifesto.AnnotationPage,
-    Canvas: Manifesto.Canvas,
-    Collection: Manifesto.Collection,
-    Duration: Manifesto.Duration,
-    Manifest: Manifesto.Manifest,
-    Range: Manifesto.Range,
-    Sequence: Manifesto.Sequence,
-    Service: Manifesto.Service,
-    Thumbnail: Manifesto.Thumbnail,
-    Thumb: Manifesto.Thumb,
+    Annotation: typeof Manifesto.Annotation,
+    AnnotationBody: typeof Manifesto.AnnotationBody,
+    AnnotationList: typeof Manifesto.AnnotationList,
+    AnnotationPage: typeof Manifesto.AnnotationPage,
+    Canvas: typeof Manifesto.Canvas,
+    Collection: typeof Manifesto.Collection,
+    Duration: typeof Manifesto.Duration,
+    Manifest: typeof Manifesto.Manifest,
+    Range: typeof Manifesto.Range,
+    Sequence: typeof Manifesto.Sequence,
+    Service: typeof Manifesto.Service,
+    Thumbnail: typeof Manifesto.Thumbnail,
+    Thumb: typeof Manifesto.Thumb,
 }
