@@ -176,8 +176,8 @@ namespace Manifesto {
                 if (topRange.id){
                     this._allRanges.push(topRange); // it might be a placeholder root range
                 }
-                const subRanges: IRange[] = topRange.getRanges();        
-                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(range => range.getRanges()).toArray());
+                const subRanges: IRange[] = topRange.getRanges();
+                this._allRanges = this._allRanges.concat(subRanges);
             }
 
             return this._allRanges;

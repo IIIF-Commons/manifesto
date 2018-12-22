@@ -27,7 +27,8 @@ namespace Manifesto {
 
         public setLabel(value: string): void {
             if (this.label && this.label.length) {
-                var t: Manifesto.Language = this.label.en().where(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale)).first();
+                console.log(this.label);
+                var t: Manifesto.Language = this.label.filter(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale))[0];
                 if (t) t.value = value;
             }
         }
@@ -50,7 +51,8 @@ namespace Manifesto {
 
         public setValue(value: string): void {
             if (this.value && this.value.length) {
-                var t: Manifesto.Language = this.value.en().where(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale)).first();
+                console.log(this.value)
+                var t: Manifesto.Language = this.value.filter(x => x.locale === this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(this.defaultLocale))[0];
                 if (t) t.value = value;
             }
         }

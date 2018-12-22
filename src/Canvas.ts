@@ -100,7 +100,7 @@ namespace Manifesto {
                 profile = this.externalResource.data.profile;
 
                 if (Array.isArray(profile)) {
-                    profile = profile.en().where(p => p["maxWidth" || "maxwidth"]).first();
+                    profile = profile.filter(p => p["maxWidth" || "maxwidth"])[0];
 
                     if (profile) {
                         maxDimensions = new Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
