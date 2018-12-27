@@ -1031,7 +1031,7 @@ var Manifesto;
             if (this.externalResource.data && this.externalResource.data.profile) {
                 profile = this.externalResource.data.profile;
                 if (Array.isArray(profile)) {
-                    profile = profile.en().where(function (p) { return p["maxWidth" || "maxwidth"]; }).first();
+                    profile = profile.filter(function (p) { return p["maxWidth" || "maxwidth"]; })[0];
                     if (profile) {
                         maxDimensions = new Manifesto.Size(profile.maxWidth, profile.maxHeight ? profile.maxHeight : profile.maxWidth);
                     }
@@ -1426,7 +1426,7 @@ var Manifesto;
                     this._allRanges.push(topRange); // it might be a placeholder root range
                 }
                 var subRanges = topRange.getRanges();
-                this._allRanges = this._allRanges.concat(subRanges.en().traverseUnique(function (range) { return range.getRanges(); }).toArray());
+                this._allRanges = this._allRanges.concat(subRanges);
             }
             return this._allRanges;
         };
@@ -1550,13 +1550,13 @@ var Manifesto;
             if (this._collections) {
                 return this._collections;
             }
-            return this._collections = this.items.en().where(function (m) { return m.isCollection(); }).toArray();
+            return this._collections = this.items.filter(function (m) { return m.isCollection(); });
         };
         Collection.prototype.getManifests = function () {
             if (this._manifests) {
                 return this._manifests;
             }
-            return this._manifests = this.items.en().where(function (m) { return m.isManifest(); }).toArray();
+            return this._manifests = this.items.filter(function (m) { return m.isManifest(); });
         };
         Collection.prototype.getCollectionByIndex = function (collectionIndex) {
             var collections = this.getCollections();
@@ -1716,7 +1716,7 @@ var Manifesto;
             if (this._ranges) {
                 return this._ranges;
             }
-            return this._ranges = this.items.en().where(function (m) { return m.isRange(); }).toArray();
+            return this._ranges = this.items.filter(function (m) { return m.isRange(); });
         };
         Range.prototype.getBehavior = function () {
             var behavior = this.getProperty('behavior');
@@ -2151,7 +2151,7 @@ var Manifesto;
                 items = collection.__jsonld.collections;
             }
             else if (collection.__jsonld.items) {
-                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'collection'; }).toArray();
+                items = collection.__jsonld.items.filter(function (m) { return m.type.toLowerCase() === 'collection'; });
             }
             if (items) {
                 for (var i = 0; i < items.length; i++) {
@@ -2175,7 +2175,7 @@ var Manifesto;
                 items = collection.__jsonld.manifests;
             }
             else if (collection.__jsonld.items) {
-                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'manifest'; }).toArray();
+                items = collection.__jsonld.items.filter(function (m) { return m.type.toLowerCase() === 'manifest'; });
             }
             if (items) {
                 for (var i = 0; i < items.length; i++) {
@@ -2216,7 +2216,7 @@ var Manifesto;
                     if (!item)
                         return { value: void 0 };
                     // only add to items if not already parsed from backwards-compatible collections/manifests arrays
-                    if (collection.items.en().where(function (m) { return m.id === item.id; }).first()) {
+                    if (collection.items.filter(function (m) { return m.id === item.id; })[0]) {
                         return "continue";
                     }
                     item.index = i;
@@ -3084,20 +3084,25 @@ var Manifesto;
             return null;
         };
         Utils.getResourceById = function (parentResource, id) {
-            return [parentResource.__jsonld].en().traverseUnique(function (x) { return Utils.getAllArrays(x); })
-                .first(function (r) { return r['@id'] === id; });
+            return Utils.traverseAndFind(parentResource.__jsonld, '@id', id);
         };
-        Utils.getAllArrays = function (obj) {
-            var all = [].en();
-            if (!obj)
-                return all;
-            for (var key in obj) {
-                var val = obj[key];
-                if (Array.isArray(val)) {
-                    all = all.concat(val);
+        /**
+         * Does a depth first traversal of an Object, returning an Object that
+         * matches provided k and v arguments
+         * @example Utils.traverseAndFind({foo: 'bar'}, 'foo', 'bar')
+         */
+        Utils.traverseAndFind = function (object, k, v) {
+            if (object.hasOwnProperty(k) && object[k] === v) {
+                return object;
+            }
+            for (var i = 0; i < Object.keys(object).length; i++) {
+                if (typeof object[Object.keys(object)[i]] === "object") {
+                    var o = Utils.traverseAndFind(object[Object.keys(object)[i]], k, v);
+                    if (o != null) {
+                        return o;
+                    }
                 }
             }
-            return all;
         };
         Utils.getServices = function (resource) {
             var service;
@@ -3236,7 +3241,7 @@ var Manifesto;
         LanguageMap.getValue = function (languageCollection, locale) {
             if (languageCollection.length) {
                 if (locale) {
-                    var language = languageCollection.en().where(function (t) { return t.locale === locale || Manifesto.Utils.getInexactLocale(t.locale) === Manifesto.Utils.getInexactLocale(locale); }).first();
+                    var language = languageCollection.filter(function (t) { return t.locale === locale || Manifesto.Utils.getInexactLocale(t.locale) === Manifesto.Utils.getInexactLocale(locale); })[0];
                     if (language) {
                         return language.value;
                     }
@@ -3272,7 +3277,8 @@ var Manifesto;
         LabelValuePair.prototype.setLabel = function (value) {
             var _this = this;
             if (this.label && this.label.length) {
-                var t = this.label.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                console.log(this.label);
+                var t = this.label.filter(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); })[0];
                 if (t)
                     t.value = value;
             }
@@ -3291,7 +3297,8 @@ var Manifesto;
         LabelValuePair.prototype.setValue = function (value) {
             var _this = this;
             if (this.value && this.value.length) {
-                var t = this.value.en().where(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); }).first();
+                console.log(this.value);
+                var t = this.value.filter(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); })[0];
                 if (t)
                     t.value = value;
             }
