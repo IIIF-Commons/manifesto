@@ -579,7 +579,12 @@ declare namespace Manifesto {
         private static showAuthInteraction;
         static getService(resource: any, profile: ServiceProfile | string): IService | null;
         static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource;
-        static getAllArrays(obj: any): any[];
+        /**
+         * Does a depth first traversal of an Object, returning an Object that
+         * matches provided k and v arguments
+         * @example Utils.traverseAndFind({foo: 'bar'}, 'foo', 'bar')
+         */
+        static traverseAndFind(object: any, k: string, v: string): object & void;
         static getServices(resource: any): IService[];
         static getTemporalComponent(target: string): number[] | null;
     }
