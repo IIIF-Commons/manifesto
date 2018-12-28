@@ -1420,13 +1420,25 @@ var Manifesto;
                 return this._allRanges;
             this._allRanges = [];
             var topRanges = this.getTopRanges();
-            for (var i = 0; i < topRanges.length; i++) {
+            var _loop_1 = function (i) {
                 var topRange = topRanges[i];
                 if (topRange.id) {
-                    this._allRanges.push(topRange); // it might be a placeholder root range
+                    this_1._allRanges.push(topRange); // it might be a placeholder root range
                 }
-                var subRanges = topRange.getRanges();
-                this._allRanges = this._allRanges.concat(subRanges);
+                var reducer = function (acc, next) {
+                    acc.add(next);
+                    var nextRanges = next.getRanges();
+                    if (nextRanges.length) {
+                        return nextRanges.reduce(reducer, acc);
+                    }
+                    return acc;
+                };
+                var subRanges = Array.from(topRange.getRanges().reduce(reducer, new Set()));
+                this_1._allRanges = this_1._allRanges.concat(subRanges);
+            };
+            var this_1 = this;
+            for (var i = 0; i < topRanges.length; i++) {
+                _loop_1(i);
             }
             return this._allRanges;
         };
@@ -3277,7 +3289,6 @@ var Manifesto;
         LabelValuePair.prototype.setLabel = function (value) {
             var _this = this;
             if (this.label && this.label.length) {
-                console.log(this.label);
                 var t = this.label.filter(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); })[0];
                 if (t)
                     t.value = value;
@@ -3297,7 +3308,6 @@ var Manifesto;
         LabelValuePair.prototype.setValue = function (value) {
             var _this = this;
             if (this.value && this.value.length) {
-                console.log(this.value);
                 var t = this.value.filter(function (x) { return x.locale === _this.defaultLocale || x.locale === Manifesto.Utils.getInexactLocale(_this.defaultLocale); })[0];
                 if (t)
                     t.value = value;
