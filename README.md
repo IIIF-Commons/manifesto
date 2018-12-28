@@ -23,5 +23,5 @@ http://blog.edsilv.com/manifesto/
 
     git clone https://github.com/iiif-commons/manifesto.git
     npm install
-    gulp
-    gulp test
+    npm build
+    npm test
