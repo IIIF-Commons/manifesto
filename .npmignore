@@ -5,6 +5,7 @@ bower.json
 gulpfile.config.js
 gulpfile.js
 bower_components
+coverage
 docs
 src
 tasks
