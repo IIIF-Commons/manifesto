@@ -170,13 +170,22 @@ namespace Manifesto {
             this._allRanges = [];
 
             const topRanges: IRange[] = this.getTopRanges();
-
             for (let i = 0; i < topRanges.length; i++) {
                 const topRange: IRange = topRanges[i];
                 if (topRange.id){
                     this._allRanges.push(topRange); // it might be a placeholder root range
                 }
-                const subRanges: IRange[] = topRange.getRanges();
+                const reducer = (acc, next) => {
+                  acc.add(next);
+                  const nextRanges = next.getRanges();
+                  if (nextRanges.length) {
+                    return nextRanges.reduce(reducer, acc);
+                  }
+                  return acc;
+                }
+                const subRanges: IRange[] = Array.from(
+                  topRange.getRanges().reduce(reducer, new Set([topRange]))
+                );
                 this._allRanges = this._allRanges.concat(subRanges);
             }
 
