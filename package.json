@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gulp",
     "build-docs": "rimraf docs && typedoc --options typedoc.json src/ && touch docs/.nojekyll",
+    "prepare": "npm run build",
     "test": "gulp test"
   },
   "repository": {
