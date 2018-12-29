@@ -1,4 +1,4 @@
-namespace Manifesto{
+namespace Manifesto {
     export class JSONLDResource {
         context: string;
         id: string;

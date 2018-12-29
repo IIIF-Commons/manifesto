@@ -4,8 +4,6 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 
-declare var manifesto: Manifesto;
-
 namespace Manifesto {
     export class Utils {
 
@@ -75,7 +73,7 @@ namespace Manifesto {
             return null;
         }
 
-        static generateTreeNodeIds(treeNode: ITreeNode, index: number = 0): void {
+        static generateTreeNodeIds(treeNode: TreeNode, index: number = 0): void {
 
             let id: string;
 
@@ -88,7 +86,7 @@ namespace Manifesto {
             treeNode.id = id;
 
             for (let i = 0; i < treeNode.nodes.length; i++) {
-                var n: ITreeNode = treeNode.nodes[i];
+                var n: TreeNode = treeNode.nodes[i];
                 Utils.generateTreeNodeIds(n, i);
             }
         }
