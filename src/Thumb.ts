@@ -1,7 +1,7 @@
 namespace Manifesto {
     // todo: deprecate
     // this is used by Sequence.getThumbs
-    export class Thumb implements IThumb {
+    export class Thumb {
         public data: any;
         public index: number;
         public uri: string;
@@ -10,7 +10,7 @@ namespace Manifesto {
         public height: number;
         public visible: boolean;
 
-        constructor(width: number, canvas: ICanvas) {
+        constructor(width: number, canvas: Canvas) {
             this.data = canvas;
             this.index = canvas.index;
             this.width = width;

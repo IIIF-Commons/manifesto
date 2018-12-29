@@ -1,7 +1,7 @@
 import { ServiceProfile } from "@iiif/vocabulary";
 
 namespace Manifesto {
-    export class Service extends ManifestResource implements IService {
+    export class Service extends ManifestResource {
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
@@ -20,7 +20,6 @@ namespace Manifesto {
 
             return profile;
         }
-
         
         getConfirmLabel(): string | null {
             return Utils.getLocalisedValue(this.getProperty('confirmLabel'), this.options.locale);

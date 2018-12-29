@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export class Resource extends ManifestResource implements IResource{
+    export class Resource extends ManifestResource {
 
         public index: number;
 
@@ -17,9 +17,9 @@ namespace Manifesto {
             return null;
         }
 
-        getResources(): IAnnotation[] {
+        getResources(): Annotation[] {
             
-            const resources: IAnnotation[] = [];
+            const resources: Annotation[] = [];
 
             if (!this.__jsonld.resources) return resources;
 

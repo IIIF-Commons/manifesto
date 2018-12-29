@@ -2,24 +2,24 @@ namespace Manifesto {
     export interface IExternalResource {
         authAPIVersion: number;
         authHoldingPage: any;
-        clickThroughService: IService | null;
+        clickThroughService: Service | null;
         data: IExternalResourceData;
         dataUri: string | null;
         error: any;
-        externalService: IService | null;
+        externalService: Service | null;
         getData(accessToken?: IAccessToken): Promise<IExternalResource>;
         hasServiceDescriptor(): boolean;
         height: number;
         index: number;
         isAccessControlled(): boolean;
         isResponseHandled: boolean;
-        kioskService: IService | null;
-        loginService: IService | null;
-        logoutService: IService | null;
+        kioskService: Service | null;
+        loginService: Service | null;
+        logoutService: Service | null;
         options?: IManifestoOptions;
-        restrictedService: IService | null;
+        restrictedService: Service | null;
         status: number;
-        tokenService: IService | null;
+        tokenService: Service | null;
         width: number;
     }
 }

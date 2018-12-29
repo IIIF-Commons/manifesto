@@ -1,5 +1,5 @@
 namespace Manifesto{
-    export class JSONLDResource implements IJSONLDResource {
+    export class JSONLDResource {
         context: string;
         id: string;
         __jsonld: any;

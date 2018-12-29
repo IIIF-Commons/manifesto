@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export class AnnotationList extends JSONLDResource implements IAnnotationList {
+    export class AnnotationList extends JSONLDResource {
         options: IManifestoOptions;
         label: string;
         isLoaded: boolean;

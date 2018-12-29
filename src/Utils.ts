@@ -262,13 +262,13 @@ namespace Manifesto {
 
         static loadExternalResourcesAuth1(
             resources: IExternalResource[],
-            openContentProviderInteraction: (service: Manifesto.IService) => any,
-            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
+            openContentProviderInteraction: (service: Manifesto.Service) => any,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.Service) => Promise<any>,
             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
-            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
+            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.Service) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
-            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<IExternalResource[]> {
+            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.Service) => void): Promise<IExternalResource[]> {
 
             return new Promise<IExternalResource[]>((resolve, reject) => {
 
@@ -295,13 +295,13 @@ namespace Manifesto {
 
         static async loadExternalResourceAuth1(
             resource: IExternalResource, 
-            openContentProviderInteraction: (service: Manifesto.IService) => any,
-            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<void>,
+            openContentProviderInteraction: (service: Manifesto.Service) => any,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.Service) => Promise<void>,
             getStoredAccessToken: (resource: Manifesto.IExternalResource) => Promise<Manifesto.IAccessToken | null>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
-            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
+            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.Service) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
-            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<IExternalResource> {
+            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.Service) => void): Promise<IExternalResource> {
             
             const storedAccessToken: IAccessToken | null = await getStoredAccessToken(resource);
             
@@ -341,12 +341,12 @@ namespace Manifesto {
 
         static async doAuthChain(
             resource: IExternalResource, 
-            openContentProviderInteraction: (service: Manifesto.IService) => any,
-            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
+            openContentProviderInteraction: (service: Manifesto.Service) => any,
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.Service) => Promise<any>,
             userInteractedWithContentProvider: (contentProviderInteraction: any) => Promise<any>,
-            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.IService) => Promise<any>,
+            getContentProviderInteraction: (resource: IExternalResource, service: Manifesto.Service) => Promise<any>,
             handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
-            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.IService) => void): Promise<Manifesto.IExternalResource | void> {
+            showOutOfOptionsMessages: (resource: IExternalResource, service: Manifesto.Service) => void): Promise<Manifesto.IExternalResource | void> {
 
             // This function enters the flowchart at the < External? > junction
             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
@@ -355,25 +355,25 @@ namespace Manifesto {
             }
 
             // add options to all services.
-            const externalService: Manifesto.IService | null = resource.externalService;
+            const externalService: Manifesto.Service | null = resource.externalService;
 
             if (externalService) {
                 externalService.options = <IManifestoOptions>resource.options;
             }
 
-            const kioskService: Manifesto.IService | null = resource.kioskService;
+            const kioskService: Manifesto.Service | null = resource.kioskService;
 
             if (kioskService) {
                 kioskService.options = <IManifestoOptions>resource.options;
             }
 
-            const clickThroughService: Manifesto.IService | null = resource.clickThroughService;
+            const clickThroughService: Manifesto.Service | null = resource.clickThroughService;
 
             if (clickThroughService) {
                 clickThroughService.options = <IManifestoOptions>resource.options;
             }
 
-            const loginService: Manifesto.IService | null = resource.loginService;
+            const loginService: Manifesto.Service | null = resource.loginService;
 
             if (loginService) {
                 loginService.options = <IManifestoOptions>resource.options;
@@ -384,8 +384,8 @@ namespace Manifesto {
                 return resource;
             } 
 
-            let serviceToTry: Manifesto.IService | null = null;
-            let lastAttempted: Manifesto.IService | null = null;
+            let serviceToTry: Manifesto.Service | null = null;
+            let lastAttempted: Manifesto.Service | null = null;
 
             // repetition of logic is left in these steps for clarity:
             
@@ -456,11 +456,11 @@ namespace Manifesto {
 
         static async attemptResourceWithToken(
             resource: Manifesto.IExternalResource,
-            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.IService) => Promise<any>,
-            authService: Manifesto.IService): Promise<Manifesto.IExternalResource | void> {
+            openTokenService: (resource: Manifesto.IExternalResource, tokenService: Manifesto.Service) => Promise<any>,
+            authService: Manifesto.Service): Promise<Manifesto.IExternalResource | void> {
 
             // attempting token interaction for " + authService["@id"]
-            const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH_1_TOKEN);
+            const tokenService: Manifesto.Service | null = authService.getService(ServiceProfile.AUTH_1_TOKEN);
 
             if (tokenService) {
                 // found token service: " + tokenService["@id"]);
@@ -788,9 +788,9 @@ namespace Manifesto {
             }
         };
 
-        static getService(resource: any, profile: ServiceProfile | string): IService | null {
+        static getService(resource: any, profile: ServiceProfile): Service | null {
 
-            const services: IService[] = this.getServices(resource);
+            const services: Service[] = this.getServices(resource);
 
             // coerce profile to string
             if (typeof(profile) !== 'string'){
@@ -798,7 +798,7 @@ namespace Manifesto {
             }
 
             for (let i = 0; i < services.length; i++){
-                const service: IService = services[i];
+                const service: Service = services[i];
 
                 if (service.getProfile().toString() === profile) {
                     return service;
@@ -808,10 +808,9 @@ namespace Manifesto {
             return null;
         }
 
-        static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource {
-          return <IJSONLDResource>Utils.traverseAndFind(parentResource.__jsonld, '@id', id);
+        static getResourceById(parentResource: JSONLDResource, id: string): JSONLDResource {
+          return <JSONLDResource>Utils.traverseAndFind(parentResource.__jsonld, '@id', id);
         }
-
         
         /**        
          * Does a depth first traversal of an Object, returning an Object that
@@ -833,7 +832,7 @@ namespace Manifesto {
           }
         }
 
-        static getServices(resource: any): IService[] {
+        static getServices(resource: any): Service[] {
             let service: any;
 
             // if passing a manifesto-parsed object, use the __jsonld.service property,
@@ -844,7 +843,7 @@ namespace Manifesto {
                 service = (<any>resource).service;
             }
 
-            const services: IService[] = [];
+            const services: Service[] = [];
             if (!service) return services;
 
             // coerce to array
@@ -856,7 +855,7 @@ namespace Manifesto {
                 const s: any = service[i];
 
                 if (typeof(s) === 'string') {
-                    const r: IJSONLDResource = this.getResourceById(resource.options.resource, s);
+                    const r: JSONLDResource = this.getResourceById(resource.options.resource, s);
 
                     if (r) {
                         services.push(new Service(r.__jsonld || r, resource.options));

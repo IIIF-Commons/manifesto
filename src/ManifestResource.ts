@@ -1,5 +1,5 @@
 namespace Manifesto {
-    export class ManifestResource extends JSONLDResource implements IManifestResource {
+    export class ManifestResource extends JSONLDResource {
         externalResource: IExternalResource;
         options: IManifestoOptions;
 
@@ -43,8 +43,8 @@ namespace Manifesto {
             return metadata;
         }
 
-        getRendering(format: RenderingFormat | string): IRendering | null {
-            const renderings: IRendering[] = this.getRenderings();
+        getRendering(format: RenderingFormat | string): Rendering | null {
+            const renderings: Rendering[] = this.getRenderings();
 
             // normalise format to string
             if (typeof(format) !== 'string') {
@@ -52,7 +52,7 @@ namespace Manifesto {
             }
 
             for (let i = 0; i < renderings.length; i++) {
-                const rendering: IRendering = renderings[i];
+                const rendering: Rendering = renderings[i];
 
                 if (rendering.getFormat().toString() === format) {
                     return rendering;
@@ -62,7 +62,7 @@ namespace Manifesto {
             return null;
         }
 
-        getRenderings(): IRendering[] {
+        getRenderings(): Rendering[] {
             let rendering;
 
             // if passing a manifesto-parsed object, use the __jsonld.rendering property,
@@ -73,7 +73,7 @@ namespace Manifesto {
                 rendering = (<any>this).rendering;
             }
 
-            const renderings: IRendering[] = [];
+            const renderings: Rendering[] = [];
             if (!rendering) return renderings;
 
             // coerce to array
@@ -89,11 +89,11 @@ namespace Manifesto {
             return renderings;
         }
 
-        getService(profile: ServiceProfile | string): IService | null {
+        getService(profile: ServiceProfile): Service | null {
             return Utils.getService(this, profile);
         }
 
-        getServices(): IService[] {
+        getServices(): Service[] {
             return Utils.getServices(this);
         }
 

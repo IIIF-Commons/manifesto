@@ -1,9 +1,9 @@
 namespace Manifesto {
-    export class IIIFResource extends ManifestResource implements IIIIFResource {
-        public defaultTree: ITreeNode;
+    export class IIIFResource extends ManifestResource implements IIIFResource {
+        public defaultTree: TreeNode;
         public index: number = -1;
         public isLoaded: boolean = false;
-        public parentCollection: ICollection;
+        public parentCollection: Collection;
         public parentLabel: string;
 
         constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -12,7 +12,7 @@ namespace Manifesto {
             const defaultOptions: IManifestoOptions = {
                 defaultLabel: '-',
                 locale: 'en-GB',
-                resource: <IIIIFResource>this,
+                resource: <IIIFResource>this,
                 pessimisticAccessControl: false
             };
 
@@ -72,7 +72,7 @@ namespace Manifesto {
             return this.getProperty('seeAlso');
         }
 
-        getDefaultTree(): ITreeNode{
+        getDefaultTree(): TreeNode{
             this.defaultTree = new TreeNode('root');
             this.defaultTree.data = this;
             return this.defaultTree;
@@ -117,9 +117,9 @@ namespace Manifesto {
             return false;
         }
 
-        load(): Promise<IIIIFResource> {
+        load(): Promise<IIIFResource> {
             let that = this;
-            return new Promise<IIIIFResource>((resolve, reject) => {
+            return new Promise<IIIFResource>((resolve, reject) => {
                 if (that.isLoaded) {
                     resolve(that);
                 } else {

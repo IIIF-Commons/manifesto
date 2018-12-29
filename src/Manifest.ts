@@ -1,11 +1,11 @@
 import { ServiceProfile } from "@iiif/vocabulary";
 
 namespace Manifesto {
-    export class Manifest extends IIIFResource implements IManifest {
+    export class Manifest extends IIIFResource implements Manifest {
         public index: number = 0;
-        private _allRanges: IRange[] | null = null; 
-        public items: ISequence[] = [];
-        private _topRanges: IRange[] = [];
+        private _allRanges: Range[] | null = null; 
+        public items: Sequence[] = [];
+        private _topRanges: Range[] = [];
 
         constructor(jsonld?: any, options?: IManifestoOptions) {
             super(jsonld, options);
@@ -20,7 +20,7 @@ namespace Manifesto {
             }
         }
 
-        getPosterCanvas(): ICanvas | null {
+        getPosterCanvas(): Canvas | null {
             let posterCanvas: any = this.getProperty('posterCanvas');
 
             if (posterCanvas) {
@@ -44,7 +44,7 @@ namespace Manifesto {
             return null;
         }
 
-        public getDefaultTree(): ITreeNode {
+        public getDefaultTree(): TreeNode {
             
             super.getDefaultTree();
 
@@ -54,7 +54,7 @@ namespace Manifesto {
                 return this.defaultTree;
             }
 
-            const topRanges: IRange[] = this.getTopRanges();
+            const topRanges: Range[] = this.getTopRanges();
 
             // if there are any ranges in the manifest, default to the first 'top' range or generated placeholder
             if (topRanges.length) {
@@ -90,11 +90,11 @@ namespace Manifesto {
             return topRanges;
         }
 
-        public getTopRanges(): IRange[] {
+        public getTopRanges(): Range[] {
             return this._topRanges;
         }
 
-        private _getRangeById(id: string): IRange | null {
+        private _getRangeById(id: string): Range | null {
             if (this.__jsonld.structures && this.__jsonld.structures.length) {
                 for (let i = 0; i < this.__jsonld.structures.length; i++) {
                     const r = this.__jsonld.structures[i];
@@ -107,14 +107,14 @@ namespace Manifesto {
             return null;
         }
 
-        //private _parseRangeCanvas(json: any, range: IRange): void {
+        //private _parseRangeCanvas(json: any, range: Range): void {
             // todo: currently this isn't needed
             //var canvas: IJSONLDResource = new JSONLDResource(json);
             //range.items.push(<IManifestResource>canvas);
         //}
 
-        private _parseRanges(r: any, path: string, parentRange?: IRange): void{
-            let range: IRange;
+        private _parseRanges(r: any, path: string, parentRange?: Range): void{
+            let range: Range;
             let id: string | null = null;
 
             if (typeof(r) === 'string') {
@@ -164,16 +164,16 @@ namespace Manifesto {
             }       
         }
 
-        getAllRanges(): IRange[] {
+        getAllRanges(): Range[] {
 
             if (this._allRanges != null)
                 return this._allRanges;
 
             this._allRanges = [];
 
-            const topRanges: IRange[] = this.getTopRanges();
+            const topRanges: Range[] = this.getTopRanges();
             for (let i = 0; i < topRanges.length; i++) {
-                const topRange: IRange = topRanges[i];
+                const topRange: Range = topRanges[i];
                 if (topRange.id){
                     this._allRanges.push(topRange); // it might be a placeholder root range
                 }
@@ -185,7 +185,7 @@ namespace Manifesto {
                   }
                   return acc;
                 }
-                const subRanges: IRange[] = Array.from(
+                const subRanges: Range[] = Array.from(
                   topRange.getRanges().reduce(reducer, new Set())
                 );
                 this._allRanges = this._allRanges.concat(subRanges);
@@ -194,12 +194,12 @@ namespace Manifesto {
             return this._allRanges;
         }
 
-        getRangeById(id: string): IRange | null {
+        getRangeById(id: string): Range | null {
 
-            const ranges: IRange[] = this.getAllRanges();
+            const ranges: Range[] = this.getAllRanges();
 
             for (let i = 0; i < ranges.length; i++) {
-                const range: IRange = ranges[i];
+                const range: Range = ranges[i];
                 if (range.id === id){
                     return range;
                 }
@@ -208,12 +208,12 @@ namespace Manifesto {
             return null;
         }
 
-        getRangeByPath(path: string): IRange | null {
+        getRangeByPath(path: string): Range | null {
 
-            const ranges: IRange[] = this.getAllRanges();
+            const ranges: Range[] = this.getAllRanges();
 
             for (let i = 0; i < ranges.length; i++) {
-                const range: IRange = ranges[i];
+                const range: Range = ranges[i];
                 if (range.path === path) {
                     return range;
                 }
@@ -222,7 +222,7 @@ namespace Manifesto {
             return null;
         }
 
-        getSequences(): ISequence[]{
+        getSequences(): Sequence[]{
             
             if (this.items.length)  {
                 return this.items;
@@ -247,7 +247,7 @@ namespace Manifesto {
             return this.items;
         }
 
-        getSequenceByIndex(sequenceIndex: number): ISequence {
+        getSequenceByIndex(sequenceIndex: number): Sequence {
             return this.getSequences()[sequenceIndex];
         }
 
@@ -256,7 +256,7 @@ namespace Manifesto {
         }
 
         getManifestType(): ManifestType {
-            const service: IService = <IService>this.getService(ServiceProfile.UIEXTENSIONS);
+            const service: Service = <Service>this.getService(ServiceProfile.UI_EXTENSIONS);
             if (service){
                 return new ManifestType(service.getProperty('manifestType'));
             }
@@ -264,14 +264,14 @@ namespace Manifesto {
         }
 
         getTrackingLabel(): string {
-            const service: IService = <IService>this.getService(ServiceProfile.TRACKINGEXTENSIONS);
+            const service: Service = <Service>this.getService(ServiceProfile.TRACKING_EXTENSIONS);
             if (service){
                 return service.getProperty('trackingLabel');
             }
             return '';
         }
 
-        isMultiSequence(): boolean {
+        isMultSequence(): boolean {
             return this.getTotalSequences() > 1;
         }
 

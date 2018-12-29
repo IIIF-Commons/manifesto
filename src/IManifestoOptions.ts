@@ -3,7 +3,7 @@ namespace Manifesto {
         defaultLabel: string; // '-'
         locale: string; // 'en-GB'
         index?: number;
-        resource: IIIIFResource;
+        resource: IIIFResource;
         navDate?: Date;
         pessimisticAccessControl: boolean; // false
     }

@@ -1,11 +1,11 @@
 namespace Manifesto {
-    export class Annotation extends ManifestResource implements IAnnotation{
+    export class Annotation extends ManifestResource {
 
         constructor(jsonld: any, options: IManifestoOptions) {
             super(jsonld, options);
         }
 
-        getBody(): IAnnotationBody[] {
+        getBody(): AnnotationBody[] {
             
             const bodies: AnnotationBody[] = [];
             const body: any = this.getProperty('body');

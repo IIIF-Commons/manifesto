@@ -1,7 +1,7 @@
 namespace Manifesto {
-    export class Canvas extends Resource implements ICanvas{
+    export class Canvas extends Resource {
 
-        public ranges: IRange[];
+        public ranges: Range[];
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
@@ -35,19 +35,19 @@ namespace Manifesto {
 
             } else {
                 // info.json hasn't been loaded yet
-                const images: IAnnotation[] = this.getImages();
+                const images: Annotation[] = this.getImages();
 
                 if (images && images.length) {
-                    const firstImage: IAnnotation = images[0];
-                    const resource: IResource = firstImage.getResource();
-                    const services: IService[] = resource.getServices();
+                    const firstImage: Annotation = images[0];
+                    const resource: Resource = firstImage.getResource();
+                    const services: Service[] = resource.getServices();
 
                     if (!width) {
                         width = resource.getWidth();
                     }
 
                     if (services.length) {
-                        const service: IService = services[0];
+                        const service: Service = services[0];
                         id = service.id;
                         quality = Utils.getImageQuality(service.getProfile());
                     } else if (width === resource.getWidth()) {
@@ -112,9 +112,9 @@ namespace Manifesto {
         }
 
         // Presentation API 3.0
-        getContent(): IAnnotation[] {
+        getContent(): Annotation[] {
 
-            const content: IAnnotation[] = [];
+            const content: Annotation[] = [];
 
             const items = this.__jsonld.items || this.__jsonld.content;
 
@@ -131,7 +131,7 @@ namespace Manifesto {
                 return content;
             }
 
-            const annotations: IAnnotation[] = annotationPage.getItems();
+            const annotations: Annotation[] = annotationPage.getItems();
 
             for (let i = 0; i < annotations.length; i++) {
                 const a = annotations[i];
@@ -146,9 +146,9 @@ namespace Manifesto {
             return this.getProperty('duration');
         }
 
-        getImages(): IAnnotation[] {
+        getImages(): Annotation[] {
 
-            const images: IAnnotation[] = [];
+            const images: Annotation[] = [];
 
             if (!this.__jsonld.images) return images;
 

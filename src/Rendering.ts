@@ -1,6 +1,6 @@
 
 namespace Manifesto {
-    export class Rendering extends ManifestResource implements IRendering {
+    export class Rendering extends ManifestResource {
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);

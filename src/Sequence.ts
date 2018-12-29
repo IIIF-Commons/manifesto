@@ -1,13 +1,13 @@
 namespace Manifesto {
-    export class Sequence extends ManifestResource implements ISequence {
-        public items: ICanvas[] = [];
-        private _thumbnails: IThumbnail[] | null = null;
+    export class Sequence extends ManifestResource implements Sequence {
+        public items: Canvas[] = [];
+        private _thumbnails: Thumbnail[] | null = null;
 
-        constructor(jsonld?: any, options?: IManifestoOptions){
+        constructor(jsonld?: any, options?: ManifestoOptions){
             super(jsonld, options);
         }
 
-        getCanvases(): ICanvas[] {
+        getCanvases(): Canvas[] {
             if (this.items.length) {
                 return this.items;
             }
@@ -17,14 +17,14 @@ namespace Manifesto {
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     const c = items[i];
-                    const canvas: ICanvas = new Canvas(c, this.options);
+                    const canvas: Canvas = new Canvas(c, this.options);
                     canvas.index = i;
                     this.items.push(canvas);
                 }
             } else if (this.__jsonld) {
                 for (let i = 0; i < this.__jsonld.length; i++) {
                     const c = this.__jsonld[i];
-                    const canvas: ICanvas = new Canvas(c, this.options);
+                    const canvas: Canvas = new Canvas(c, this.options);
                     canvas.index = i;
                     this.items.push(canvas);
                 }
@@ -33,7 +33,7 @@ namespace Manifesto {
             return this.items;
         }
 
-        getCanvasById(id: string): ICanvas | null {
+        getCanvasById(id: string): Canvas | null {
 
             for (let i = 0; i < this.getTotalCanvases(); i++) {
                 const canvas = this.getCanvasByIndex(i);
@@ -78,7 +78,7 @@ namespace Manifesto {
             var match, regExp, regStr, labelPart1, labelPart2;
 
             for (let i = 0; i < this.getTotalCanvases(); i++) {
-                const canvas: ICanvas = this.getCanvasByIndex(i);
+                const canvas: Canvas = this.getCanvasByIndex(i);
 
                 // check if there's a literal match
                 if (LanguageMap.getValue(canvas.getLabel(), this.options.locale) === label) {
@@ -109,7 +109,7 @@ namespace Manifesto {
 
         getLastCanvasLabel(alphanumeric?: boolean): string {
             for (let i = this.getTotalCanvases() - 1; i >= 0; i--) {
-                const canvas: ICanvas = this.getCanvasByIndex(i);
+                const canvas: Canvas = this.getCanvasByIndex(i);
                 const label: string = <string>LanguageMap.getValue(canvas.getLabel(), this.options.locale);
 
                 if (alphanumeric) {
@@ -220,28 +220,28 @@ namespace Manifesto {
         }
 
         // todo: deprecate
-        getThumbs(width: number, height?: number): Manifesto.IThumb[] {
+        getThumbs(width: number, height?: number): Manifesto.Thumb[] {
             console.warn('getThumbs will be deprecated, use getThumbnails instead');
-            const thumbs: Manifesto.IThumb[] = [];
+            const thumbs: Manifesto.Thumb[] = [];
             const totalCanvases: number = this.getTotalCanvases();
 
             for (let i = 0; i < totalCanvases; i++) {
-                const canvas: ICanvas = this.getCanvasByIndex(i);
-                const thumb: Manifesto.IThumb = new Manifesto.Thumb(width, canvas);
+                const canvas: Canvas = this.getCanvasByIndex(i);
+                const thumb: Manifesto.Thumb = new Manifesto.Thumb(width, canvas);
                 thumbs.push(thumb);
             }
 
             return thumbs;
         }
 
-        getThumbnails(): Manifesto.IThumbnail[] {
+        getThumbnails(): Manifesto.Thumbnail[] {
             if (this._thumbnails != null) return this._thumbnails;            
             this._thumbnails = [];
 
-            const canvases: Manifesto.ICanvas[] = this.getCanvases();
+            const canvases: Manifesto.Canvas[] = this.getCanvases();
 
             for (let i = 0; i < canvases.length; i++) {
-                const thumbnail: Manifesto.IThumbnail | null = canvases[i].getThumbnail();
+                const thumbnail: Manifesto.Thumbnail | null = canvases[i].getThumbnail();
                 if (thumbnail) {
                     this._thumbnails.push(thumbnail);
                 }                
@@ -261,8 +261,8 @@ namespace Manifesto {
         getViewingDirection(): ViewingDirection | null {
             if (this.getProperty('viewingDirection')) {
                 return new ViewingDirection(this.getProperty('viewingDirection'));
-            } else if ((<IManifest>this.options.resource).getViewingDirection) {
-                return (<IManifest>this.options.resource).getViewingDirection();
+            } else if ((<Manifest>this.options.resource).getViewingDirection) {
+                return (<Manifest>this.options.resource).getViewingDirection();
             }
 
             return null;
@@ -288,7 +288,7 @@ namespace Manifesto {
             return canvasIndex === this.getTotalCanvases() - 1;
         }
 
-        isMultiCanvas(): boolean {
+        isMultCanvas(): boolean {
             return this.getTotalCanvases() > 1;
         }
 

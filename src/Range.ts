@@ -1,12 +1,12 @@
 
 namespace Manifesto {
-    export class Range extends ManifestResource implements IRange{
-        private _ranges: IRange[] | null = null;
+    export class Range extends ManifestResource {
+        private _ranges: Range[] | null = null;
         public canvases: string[] | null = null;
-        public items: IManifestResource[] = [];
+        public items: ManifestResource[] = [];
         public parentRange: Range;
         public path: string;
-        public treeNode: ITreeNode;
+        public treeNode: TreeNode;
 
         constructor(jsonld?: any, options?: IManifestoOptions){
             super(jsonld, options);
@@ -45,10 +45,10 @@ namespace Manifesto {
             } else {
 
                 // get child ranges and calculate the start and end based on them
-                const childRanges: Manifesto.IRange[] = this.getRanges();
+                const childRanges: Manifesto.Range[] = this.getRanges();
 
                 for (let i = 0; i < childRanges.length; i++) {
-                    const childRange: Manifesto.IRange = childRanges[i];
+                    const childRange: Manifesto.Range = childRanges[i];
 
                     const duration: Duration | undefined = childRange.getDuration();
 
@@ -81,13 +81,13 @@ namespace Manifesto {
         //     return this._canvases = <ICanvas[]>this.items.en().where(m => m.isCanvas()).toArray();
         // }
 
-        getRanges(): IRange[] {
+        getRanges(): Range[] {
 
             if (this._ranges) {
                 return this._ranges;
             }
             
-            return this._ranges = <IRange[]>this.items.filter(m => m.isRange());
+            return this._ranges = <Range[]>this.items.filter(m => m.isRange());
         }
 
         getBehavior(): Behavior | null {
@@ -121,17 +121,17 @@ namespace Manifesto {
             return null;
         }
 
-        getTree(treeRoot: ITreeNode): ITreeNode{
+        getTree(treeRoot: TreeNode): TreeNode{
 
             treeRoot.data = this;
             this.treeNode = treeRoot;
 
-            const ranges: IRange[] = this.getRanges();
+            const ranges: Range[] = this.getRanges();
 
             if (ranges && ranges.length) {
                 for (let i = 0; i < ranges.length; i++) {
-                    const range: IRange = ranges[i];
-                    const node: ITreeNode = new TreeNode();
+                    const range: Range = ranges[i];
+                    const node: TreeNode = new TreeNode();
                     treeRoot.addNode(node);
                     this._parseTreeNode(node, range);
                 }
@@ -155,13 +155,13 @@ namespace Manifesto {
             return false;            
         }
 
-        private _parseTreeNode(node: ITreeNode, range: IRange): void {
+        private _parseTreeNode(node: TreeNode, range: Range): void {
             node.label = <string>LanguageMap.getValue(range.getLabel(), this.options.locale);
             node.data = range;
             node.data.type = Utils.normaliseType(TreeNodeType.RANGE.toString());
             range.treeNode = node;
 
-            const ranges: IRange[] = range.getRanges();
+            const ranges: Range[] = range.getRanges();
 
             if (ranges && ranges.length) {
 
@@ -172,7 +172,7 @@ namespace Manifesto {
                     if (behavior && behavior.toString() === Behavior.NONAV.toString()) {
                         continue;
                     } else {
-                        const childNode: ITreeNode = new TreeNode();
+                        const childNode: TreeNode = new TreeNode();
                         node.addNode(childNode);
                         this._parseTreeNode(childNode, childRange);
                     }                    

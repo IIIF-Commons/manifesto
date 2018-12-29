@@ -1,14 +1,14 @@
 
 namespace Manifesto {
-    export class TreeNode implements ITreeNode {
+    export class TreeNode {
         public data: any;
-        public nodes: ITreeNode[];
+        public nodes: TreeNode[];
         public selected: boolean;
         public expanded: boolean;
         public id: string;
         public label: string;
         public navDate: Date;
-        public parentNode: ITreeNode;
+        public parentNode: TreeNode;
 
         constructor(label?: string, data?: any) {
             this.label = <string>label;
@@ -16,7 +16,7 @@ namespace Manifesto {
             this.nodes = [];
         }
 
-        public addNode(node: ITreeNode): void {
+        public addNode(node: TreeNode): void {
             this.nodes.push(node);
             node.parentNode = this;
         }

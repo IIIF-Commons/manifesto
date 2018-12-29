@@ -1,6 +1,6 @@
 import { ServiceProfile } from "@iiif/vocabulary";
 
-(<any>global).manifesto = (<any>global).Manifesto = module.exports = <IManifesto>{
+(<any>global).manifesto = (<any>global).Manifesto = module.exports = {
 
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     Behavior: new Manifesto.Behavior(),
@@ -40,7 +40,7 @@ import { ServiceProfile } from "@iiif/vocabulary";
         RESTRICTED: 4
     },
 
-    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIIFResource | null {
+    create: function(manifest: string, options?: Manifesto.IManifestoOptions): Manifesto.IIIFResource | null {
         return Manifesto.Deserialiser.parse(manifest, options);
     },
 

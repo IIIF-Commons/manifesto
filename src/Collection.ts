@@ -1,51 +1,51 @@
 namespace Manifesto {
-    export class Collection extends IIIFResource implements ICollection {
-        public items: IIIIFResource[] = [];
-        private _collections: ICollection[] | null = null;
-        private _manifests: IManifest[] | null = null;
+    export class Collection extends IIIFResource {
+        public items: IIIFResource[] = [];
+        private _collections: Collection[] | null = null;
+        private _manifests: Manifest[] | null = null;
 
         constructor(jsonld: any, options: IManifestoOptions) {
             super(jsonld, options);
             jsonld.__collection = this;
         }
 
-        getCollections(): ICollection[] {
+        getCollections(): Collection[] {
             if (this._collections) {
                 return this._collections;
             }
-            return this._collections = <ICollection[]>this.items.filter(m => m.isCollection());
+            return this._collections = <Collection[]>this.items.filter(m => m.isCollection());
         }
 
-        getManifests(): IManifest[] {
+        getManifests(): Manifest[] {
             if (this._manifests) {
                 return this._manifests;
             }
-            return this._manifests = <IManifest[]>this.items.filter(m => m.isManifest());
+            return this._manifests = <Manifest[]>this.items.filter(m => m.isManifest());
         }
 
-        getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
-            const collections: ICollection[] = this.getCollections();
+        getCollectionByIndex(collectionIndex: number): Promise<Collection> {
+            const collections: Collection[] = this.getCollections();
 
             if (!collections[collectionIndex]) {
                 throw new Error("Collection index is outside range of array");
             }
             
-            const collection: ICollection = collections[collectionIndex];
+            const collection: Collection = collections[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
-            return <Promise<ICollection>>collection.load();
+            return <Promise<Collection>>collection.load();
         }
 
-        getManifestByIndex(manifestIndex: number): Promise<IManifest> {
-            const manifests: IManifest[] = this.getManifests();
+        getManifestByIndex(manifestIndex: number): Promise<Manifest> {
+            const manifests: Manifest[] = this.getManifests();
 
             if (!manifests[manifestIndex]) {
                 throw new Error("Manifest index is outside range of array");
             }
 
-            const manifest: IManifest = manifests[manifestIndex];
+            const manifest: Manifest = manifests[manifestIndex];
             manifest.options.index = manifestIndex;
-            return <Promise<IManifest>>manifest.load();
+            return <Promise<Manifest>>manifest.load();
         }
 
         getTotalCollections(): number {
@@ -71,7 +71,7 @@ namespace Manifesto {
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
          */
-        getDefaultTree(): ITreeNode {
+        getDefaultTree(): TreeNode {
 
             super.getDefaultTree();
             
@@ -85,11 +85,11 @@ namespace Manifesto {
             return this.defaultTree;
         }
 
-        private _parseManifests(parentCollection: ICollection) {
+        private _parseManifests(parentCollection: Collection) {
             if (parentCollection.getManifests() && parentCollection.getManifests().length) {
                 for (let i = 0; i < parentCollection.getManifests().length; i++) {
                     var manifest = parentCollection.getManifests()[i];
-                    var tree: ITreeNode = manifest.getDefaultTree();
+                    var tree: TreeNode = manifest.getDefaultTree();
                     tree.label = manifest.parentLabel || LanguageMap.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
                     tree.navDate = manifest.getNavDate();
                     tree.data.id = manifest.id;
@@ -99,11 +99,11 @@ namespace Manifesto {
             }
         }
 
-        private _parseCollections(parentCollection: ICollection) {
+        private _parseCollections(parentCollection: Collection) {
             if (parentCollection.getCollections() && parentCollection.getCollections().length) {
                 for (let i = 0; i < parentCollection.getCollections().length; i++) {
                     var collection = parentCollection.getCollections()[i];
-                    var tree: ITreeNode = collection.getDefaultTree();
+                    var tree: TreeNode = collection.getDefaultTree();
                     tree.label = collection.parentLabel || LanguageMap.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
                     tree.navDate = collection.getNavDate();
                     tree.data.id = collection.id;

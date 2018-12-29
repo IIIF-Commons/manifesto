@@ -1,6 +1,6 @@
 namespace Manifesto {
     export class Deserialiser {
-        static parse(manifest: any, options?: IManifestoOptions): IIIIFResource | null {
+        static parse(manifest: any, options?: IManifestoOptions): IIIFResource | null {
             if (typeof manifest === 'string') {
                 manifest = JSON.parse(manifest);
             }
@@ -8,8 +8,8 @@ namespace Manifesto {
             return this.parseJson(manifest, options);
         }
 
-        static parseJson(json: any, options?: IManifestoOptions): IIIIFResource | null {
-            let resource: IIIIFResource;
+        static parseJson(json: any, options?: IManifestoOptions): IIIFResource | null {
+            let resource: IIIFResource;
 
             // have options been passed for the manifest to inherit?
             if (options){
@@ -49,7 +49,7 @@ namespace Manifesto {
             return resource;
         }
 
-        static parseCollection(json: any, options?: IManifestoOptions): ICollection {
+        static parseCollection(json: any, options?: IManifestoOptions): Collection {
             const collection: Collection = new Collection(json, <IManifestoOptions>options);
 
             if (options) {
@@ -65,7 +65,7 @@ namespace Manifesto {
             return collection;
         }
 
-        static parseCollections(collection: ICollection, options?: IManifestoOptions): void {
+        static parseCollections(collection: Collection, options?: IManifestoOptions): void {
             
             let items;
             
@@ -80,7 +80,7 @@ namespace Manifesto {
                     if (options) {
                         options.index = i;
                     }
-                    const item: ICollection = this.parseCollection(items[i], options);
+                    const item: Collection = this.parseCollection(items[i], options);
                     item.index = i;
                     item.parentCollection = collection;
                     collection.items.push(item);
@@ -88,12 +88,12 @@ namespace Manifesto {
             }
         }
 
-        static parseManifest(json: any, options?: IManifestoOptions): IManifest {
-            const manifest: IManifest = new Manifest(json, options);
+        static parseManifest(json: any, options?: IManifestoOptions): Manifest {
+            const manifest: Manifest = new Manifest(json, options);
             return manifest;
         }
 
-        static parseManifests(collection: ICollection, options?: IManifestoOptions): void {
+        static parseManifests(collection: Collection, options?: IManifestoOptions): void {
 
             let items;
             
@@ -105,7 +105,7 @@ namespace Manifesto {
 
             if (items) {
                 for (let i = 0; i < items.length; i++) {
-                    const item: IManifest = this.parseManifest(items[i], options);
+                    const item: Manifest = this.parseManifest(items[i], options);
                     item.index = i;
                     item.parentCollection = collection;
                     collection.items.push(item);
@@ -113,32 +113,32 @@ namespace Manifesto {
             }
         }
 
-        static parseItem(json: any, options?: IManifestoOptions): IIIIFResource | null {
+        static parseItem(json: any, options?: IManifestoOptions): IIIFResource | null {
             if (json['@type']) {
                 if (json['@type'].toLowerCase() === 'sc:manifest') {
-                    return <IIIIFResource>this.parseManifest(json, options);
+                    return <IIIFResource>this.parseManifest(json, options);
                 } else if (json['@type'].toLowerCase() === 'sc:collection') {
-                    return <IIIIFResource>this.parseCollection(json, options);
+                    return <IIIFResource>this.parseCollection(json, options);
                 }
             } else if (json.type) {
                 if (json.type.toLowerCase() === 'manifest') {
-                    return <IIIIFResource>this.parseManifest(json, options);
+                    return <IIIFResource>this.parseManifest(json, options);
                 } else if (json.type.toLowerCase() === 'collection') {
-                    return <IIIIFResource>this.parseCollection(json, options);
+                    return <IIIFResource>this.parseCollection(json, options);
                 }
             }
             
             return null;
         }
 
-        static parseItems(collection: ICollection, options?: IManifestoOptions): void {
+        static parseItems(collection: Collection, options?: IManifestoOptions): void {
             const items = collection.__jsonld.members || collection.__jsonld.items;
             if (items) {
                 for (let i = 0; i < items.length; i++) {
                     if (options) {
                         options.index = i;
                     }
-                    const item: IIIIFResource | null = this.parseItem(items[i], options);
+                    const item: IIIFResource | null = this.parseItem(items[i], options);
                     if (!item) return;
                     // only add to items if not already parsed from backwards-compatible collections/manifests arrays
                     if (collection.items.filter(m => m.id === (<IIIFResource>item).id)[0]) {
@@ -149,13 +149,6 @@ namespace Manifesto {
                     collection.items.push(item);
                 }
             }
-        }
-    }
-
-    export class Serialiser {
-        static serialise(manifest: IManifest): string {
-            // todo
-            return "";
         }
     }
 }
