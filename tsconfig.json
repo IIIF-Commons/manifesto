@@ -46,7 +46,6 @@
         "src/TreeNode.ts",
         "src/TreeNodeType.ts",
         "src/Utils.ts",
-        "src/MetadataItem.ts",
         "src/Language.ts",
         "src/LanguageMap.ts",
         "src/LabelValuePair.ts",
