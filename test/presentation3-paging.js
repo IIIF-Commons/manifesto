@@ -18,7 +18,7 @@ describe('#presentation3Paging', function() {
     describe('#isPaged', function() {
         it('is paged', function () {
             var behavior = manifest.getBehavior();
-            behavior.toString().should.equal('paged');
+            behavior.should.equal('paged');
         });
     });
     

@@ -1,3 +1,5 @@
+import { IIIFResourceType } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class AnnotationList extends JSONLDResource {
         options: IManifestoOptions;
@@ -11,7 +13,7 @@ namespace Manifesto {
         }
 
         getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
+            return Utils.normaliseType(this.getProperty('type'));
         }
 
         getLabel(): string {

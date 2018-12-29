@@ -1,4 +1,3 @@
-
 namespace Manifesto {
     export class TreeNode {
         public data: any;
@@ -22,15 +21,15 @@ namespace Manifesto {
         }
 
         public isCollection(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION.toString());
+            return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION);
         }
 
         public isManifest(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST.toString());
+            return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST);
         }
 
         public isRange(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.RANGE.toString());
+            return this.data.type === Utils.normaliseType(TreeNodeType.RANGE);
         }
     }
 }

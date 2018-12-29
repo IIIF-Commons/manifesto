@@ -16,12 +16,12 @@ describe('#loadsPres3Collection', function() {
 
     it('has a viewingdirection of right-to-left', function () {
         var viewingDirection = collection.getViewingDirection();
-        expect(viewingDirection.toString()).to.equal("right-to-left");
+        expect(viewingDirection).to.equal("right-to-left");
     });
 
     it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();
-        type.toString().should.equal('collection');
+        type.should.equal('collection');
         expect(collection.isManifest()).to.equal(false);  
         // expect(collection.isCollection()).to.equal(true); todo
     });

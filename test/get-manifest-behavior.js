@@ -18,6 +18,6 @@ describe('audio manifest', function() {
     it('has a behavior of auto-advance', function () {
         var behavior = manifest.getBehavior();
         expect(behavior).to.exist;
-        expect(behavior.toString() === 'auto-advance');
+        expect(behavior === 'auto-advance');
     });
 });

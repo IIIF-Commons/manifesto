@@ -1,3 +1,4 @@
+import { RenderingFormat } from "@iiif/vocabulary";
 
 namespace Manifesto {
     export class Rendering extends ManifestResource {
@@ -7,7 +8,7 @@ namespace Manifesto {
         }
 
         getFormat(): RenderingFormat{
-            return new RenderingFormat(this.getProperty('format'));
+            return this.getProperty('format');
         }
     }
 }

@@ -1,4 +1,4 @@
-import { ServiceProfile } from "@iiif/vocabulary";
+import { ServiceProfile, ViewingHint, Behavior } from "@iiif/vocabulary";
 
 namespace Manifesto {
     export class Manifest extends IIIFResource implements Manifest {
@@ -38,7 +38,7 @@ namespace Manifesto {
             }
 
             if (behavior) {
-                return new Behavior(behavior);
+                return behavior;
             }
 
             return null;
@@ -74,7 +74,7 @@ namespace Manifesto {
 
                 for (let i = 0; i < this.__jsonld.structures.length; i++) {
                     const json: any = this.__jsonld.structures[i];
-                    if (json.viewingHint === ViewingHint.TOP.toString()){
+                    if (json.viewingHint === ViewingHint.TOP){
                         topRanges.push(json);
                     }
                 }
@@ -222,7 +222,7 @@ namespace Manifesto {
             return null;
         }
 
-        getSequences(): Sequence[]{
+        getSequences(): Sequence[] {
             
             if (this.items.length)  {
                 return this.items;
@@ -231,7 +231,6 @@ namespace Manifesto {
             // IxIF mediaSequences overrode sequences, so need to be checked first.
             // deprecate this when presentation 3 ships
             let items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
-
 
             if (items) {
                 for (let i = 0; i < items.length; i++) {
@@ -280,32 +279,24 @@ namespace Manifesto {
             const viewingHint: ViewingHint | null = this.getViewingHint();
 
             if (viewingHint) {
-                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+                return viewingHint === ViewingHint.PAGED;
             }
 
             const behavior: Behavior | null = this.getBehavior();
 
             if (behavior) {
-                return behavior.toString() === Manifesto.Behavior.PAGED.toString();
+                return behavior === Behavior.PAGED;
             }
 
             return false;
         }
 
         getViewingDirection(): ViewingDirection | null {
-            if (this.getProperty('viewingDirection')) {
-                return new ViewingDirection(this.getProperty('viewingDirection'));
-            }
-
-            return null;
+            return this.getProperty('viewingDirection');
         }
 
         getViewingHint(): ViewingHint | null {
-            if (this.getProperty('viewingHint')){
-                return new ViewingHint(this.getProperty('viewingHint'));
-            }
-
-            return null;
+            return this.getProperty('viewingHint');
         }
     }
 }

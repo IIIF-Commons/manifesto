@@ -1,18 +1,18 @@
-import { ServiceProfile } from "@iiif/vocabulary";
+import { ServiceProfile, MediaType } from "@iiif/vocabulary";
 
 const http = require('http');
 const https = require('https');
 const url = require('url');
 
-declare var manifesto: IManifesto;
+declare var manifesto: Manifesto;
 
 namespace Manifesto {
     export class Utils {
 
-        static getMediaType(type: string): string {
+        static getMediaType(type: string): MediaType {
             type = type.toLowerCase();
             type = type.split(';')[0];
-            return type.trim();
+            return <MediaType>type.trim();
         }
 
         static getImageQuality(profile: ServiceProfile): string {

@@ -1,3 +1,5 @@
+import { IIIFResourceType } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class IIIFResource extends ManifestResource implements IIIFResource {
         public defaultTree: TreeNode;
@@ -43,7 +45,7 @@ namespace Manifesto {
         }
 
         getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
+            return Utils.normaliseType(this.getProperty('type'));
         }
 
         getLogo(): string | null {
@@ -104,14 +106,14 @@ namespace Manifesto {
         }
 
         isCollection(): boolean {
-            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
+            if (this.getIIIFResourceType() === IIIFResourceType.COLLECTION) {
                 return true;
             }
             return false;
         }
 
         isManifest(): boolean {
-            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
+            if (this.getIIIFResourceType() === IIIFResourceType.MANIFEST) {
                 return true;
             }
             return false;

@@ -1,3 +1,5 @@
+import { ExternalResourceType, MediaType } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class AnnotationBody extends ManifestResource {
 
@@ -9,17 +11,17 @@ namespace Manifesto {
             const format: string = this.getProperty('format');
 
             if (format) {
-                return new MediaType(Utils.getMediaType(format));
+                return Utils.getMediaType(format);
             }
 
             return null;
         }
 
-        getType(): ResourceType | null {
+        getType(): ExternalResourceType | null {
             const type: string = this.getProperty('type');
 
             if (type) {
-                return new ResourceType(Utils.normaliseType(this.getProperty('type')));
+                return Utils.normaliseType(this.getProperty('type'));
             }
 
             return null;

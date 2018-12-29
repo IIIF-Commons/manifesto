@@ -18,7 +18,7 @@ describe('#loadsTopNestedManifest', function() {
 
     it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();
-        type.toString().should.equal('collection');
+        type.should.equal('collection');
     });
 
     it('has a collection count of 1', function () {

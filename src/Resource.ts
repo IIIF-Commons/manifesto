@@ -1,3 +1,5 @@
+import { ExternalResourceType, MediaType } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class Resource extends ManifestResource {
 
@@ -11,7 +13,7 @@ namespace Manifesto {
             const format: string = this.getProperty('format');
 
             if (format) {
-                return new MediaType(format.toLowerCase());
+                return <MediaType>format.toLowerCase();
             }
 
             return null;
@@ -32,11 +34,11 @@ namespace Manifesto {
             return resources;
         }
 
-        getType(): ResourceType | null {
+        getType(): ExternalResourceType | null {
             const type: string = this.getProperty('type');
 
             if (type) {
-                return new ResourceType(Utils.normaliseType(type));
+                return Utils.normaliseType(type);
             }
 
             return null;

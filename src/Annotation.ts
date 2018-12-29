@@ -1,3 +1,5 @@
+import { AnnotationMotivation } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class Annotation extends ManifestResource {
 
@@ -41,7 +43,7 @@ namespace Manifesto {
             const motivation: string = this.getProperty('motivation');
 
             if (motivation) {
-                return new AnnotationMotivation(motivation.toLowerCase());
+                return <AnnotationMotivation>motivation.toLowerCase();
             }
 
             return null;

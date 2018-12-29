@@ -22,6 +22,6 @@ describe('#loadsQatarRightToLeft', function() {
 
     it('has a viewingdirection of right-to-left', function () {
         var viewingDirection = sequence.getViewingDirection();
-        expect(viewingDirection.toString()).to.equal("right-to-left");
+        expect(viewingDirection).to.equal("right-to-left");
     });
 });

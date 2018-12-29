@@ -18,7 +18,7 @@ describe('#presentation2Paging', function() {
     describe('#isPaged', function() {
         it('is paged', function () {
             var viewingHint = manifest.getViewingHint();
-            viewingHint.toString().should.equal('paged');
+            viewingHint.should.equal('paged');
         });
     });
     

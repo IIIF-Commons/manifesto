@@ -52,12 +52,12 @@ describe('#loadsBiocrats', function() {
 
     it('sequence has a viewingHint', function () {
         var viewingHint = sequence.getViewingHint();
-        viewingHint.toString().should.equal('paged');
+        viewingHint.should.equal('paged');
     });
 
     it('sequence has a rendering', function () {
-        var rendering = sequence.getRendering(manifesto.RenderingFormat.pdf());
-        rendering.getFormat().toString().should.equal('application/pdf');
+        var rendering = sequence.getRendering(manifesto.RenderingFormat.PDF);
+        rendering.getFormat().should.equal('application/pdf');
     });
 
     it('does not have a navDate', function() {

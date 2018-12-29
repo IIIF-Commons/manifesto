@@ -1,3 +1,5 @@
+import { ViewingDirection } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class Collection extends IIIFResource {
         public items: IIIFResource[] = [];
@@ -62,10 +64,10 @@ namespace Manifesto {
 
         getViewingDirection(): ViewingDirection {
             if (this.getProperty('viewingDirection')) {
-                return new ViewingDirection(this.getProperty('viewingDirection'));
+                return this.getProperty('viewingDirection');
             }
 
-            return ViewingDirection.LEFTTORIGHT;
+            return ViewingDirection.LEFT_TO_RIGHT;
         }
 
         /**

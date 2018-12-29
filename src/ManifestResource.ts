@@ -1,3 +1,5 @@
+import { RenderingFormat, ServiceProfile, IIIFResourceType } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class ManifestResource extends JSONLDResource {
         externalResource: IExternalResource;
@@ -9,7 +11,7 @@ namespace Manifesto {
         }
 
         getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
+            return Utils.normaliseType(this.getProperty('type'));
         }
 
         getLabel(): LanguageMap {
@@ -43,18 +45,13 @@ namespace Manifesto {
             return metadata;
         }
 
-        getRendering(format: RenderingFormat | string): Rendering | null {
+        getRendering(format: RenderingFormat): Rendering | null {
             const renderings: Rendering[] = this.getRenderings();
-
-            // normalise format to string
-            if (typeof(format) !== 'string') {
-                format = (<RenderingFormat>format).toString();
-            }
 
             for (let i = 0; i < renderings.length; i++) {
                 const rendering: Rendering = renderings[i];
 
-                if (rendering.getFormat().toString() === format) {
+                if (rendering.getFormat() === format) {
                     return rendering;
                 }
             }
@@ -112,27 +109,27 @@ namespace Manifesto {
         }
 
         isAnnotation(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
+            return this.getIIIFResourceType() === IIIFResourceType.ANNOTATION;
         }
 
         isCanvas(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
+            return this.getIIIFResourceType() === IIIFResourceType.CANVAS;
         }
 
         isCollection(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
+            return this.getIIIFResourceType() === IIIFResourceType.COLLECTION;
         }
 
         isManifest(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
+            return this.getIIIFResourceType() === IIIFResourceType.MANIFEST;
         }
 
         isRange(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
+            return this.getIIIFResourceType() === IIIFResourceType.RANGE;
         }
 
         isSequence(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.SEQUENCE.toString();
+            return this.getIIIFResourceType() === IIIFResourceType.SEQUENCE;
         }
     }
 }

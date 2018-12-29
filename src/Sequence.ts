@@ -1,3 +1,5 @@
+import { ViewingDirection } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class Sequence extends ManifestResource implements Sequence {
         public items: Canvas[] = [];
@@ -140,7 +142,7 @@ namespace Manifesto {
 
                 const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
+                if (viewingDirection && viewingDirection === ViewingDirection.RIGHT_TO_LEFT) {
                     index = indices[0] + 1;
                 } else {
                     index = indices[indices.length - 1] + 1;
@@ -173,7 +175,7 @@ namespace Manifesto {
 
                 const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
+                if (viewingDirection && viewingDirection === ViewingDirection.RIGHT_TO_LEFT) {
                     indices = indices.reverse();
                 }
             }
@@ -190,7 +192,7 @@ namespace Manifesto {
 
                 const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
+                if (viewingDirection && viewingDirection === ViewingDirection.RIGHT_TO_LEFT) {
                     index = indices[indices.length - 1] - 1;
                 } else {
                     index = indices[0] - 1;
@@ -296,7 +298,7 @@ namespace Manifesto {
             const viewingHint: ViewingHint | null = this.getViewingHint();
 
             if (viewingHint) {
-                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
+                return viewingHint.toString() === ViewingHint.PAGED;
             }
             
             return false;
