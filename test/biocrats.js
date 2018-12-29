@@ -72,7 +72,9 @@ describe('#loadsBiocrats', function() {
     });
 
     it('range has a canvas', function() {
-        var range = manifest.getAllRanges()[0];
+        var ranges = manifest.getAllRanges();
+        ranges.length.should.equal(4);
+        var range = ranges[0];
         range.id.should.equal("http://wellcomelibrary.org/iiif/b18035978/range/r-0");
         var canvasId = range.getCanvasIds()[0];
         canvasId.should.equal("http://wellcomelibrary.org/iiif/b18035978/canvas/c0");
