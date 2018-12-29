@@ -1,10 +1,10 @@
-namespace Manifesto {
-    export interface IManifestoOptions {
-        defaultLabel: string; // '-'
-        locale: string; // 'en-GB'
-        index?: number;
-        resource: IIIFResource;
-        navDate?: Date;
-        pessimisticAccessControl: boolean; // false
-    }
+import { IIIFResource } from "./IIIFResource";
+
+export interface IManifestoOptions {
+    defaultLabel: string; // '-'
+    locale: string; // 'en-GB'
+    index?: number;
+    resource: IIIFResource;
+    navDate?: Date;
+    pessimisticAccessControl: boolean; // false
 }

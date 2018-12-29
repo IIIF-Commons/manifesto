@@ -1,35 +1,36 @@
-namespace Manifesto {
-    export class TreeNode {
-        public data: any;
-        public nodes: TreeNode[];
-        public selected: boolean;
-        public expanded: boolean;
-        public id: string;
-        public label: string;
-        public navDate: Date;
-        public parentNode: TreeNode;
+import { Utils } from "./Utils";
+import { TreeNodeType } from "./TreeNodeType";
 
-        constructor(label?: string, data?: any) {
-            this.label = <string>label;
-            this.data = data || {};
-            this.nodes = [];
-        }
+export class TreeNode {
+    public data: any;
+    public nodes: TreeNode[];
+    public selected: boolean;
+    public expanded: boolean;
+    public id: string;
+    public label: string;
+    public navDate: Date;
+    public parentNode: TreeNode;
 
-        public addNode(node: TreeNode): void {
-            this.nodes.push(node);
-            node.parentNode = this;
-        }
+    constructor(label?: string, data?: any) {
+        this.label = <string>label;
+        this.data = data || {};
+        this.nodes = [];
+    }
 
-        public isCollection(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION);
-        }
+    public addNode(node: TreeNode): void {
+        this.nodes.push(node);
+        node.parentNode = this;
+    }
 
-        public isManifest(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST);
-        }
+    public isCollection(): boolean {
+        return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION);
+    }
 
-        public isRange(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.RANGE);
-        }
+    public isManifest(): boolean {
+        return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST);
+    }
+
+    public isRange(): boolean {
+        return this.data.type === Utils.normaliseType(TreeNodeType.RANGE);
     }
 }

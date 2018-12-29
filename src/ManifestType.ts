@@ -1,8 +1,5 @@
-namespace Manifesto {
-
-    export enum ManifestType {
-        EMPTY =         "",
-        MANUSCRIPT =    "manuscript",
-        MONOGRAPH =     "monograph"
-    }
+export enum ManifestType {
+    EMPTY =         "",
+    MANUSCRIPT =    "manuscript",
+    MONOGRAPH =     "monograph"
 }

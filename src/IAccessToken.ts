@@ -1,9 +1,7 @@
-namespace Manifesto {
-    export interface IAccessToken {
-        accessToken: string;
-        error: string;
-        errorDescription: string;
-        expiresIn: number;
-        tokenType: string;
-    }
+export interface IAccessToken {
+    accessToken: string;
+    error: string;
+    errorDescription: string;
+    expiresIn: number;
+    tokenType: string;
 }

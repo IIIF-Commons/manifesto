@@ -1,38 +1,39 @@
 import { ExternalResourceType, MediaType } from "@iiif/vocabulary";
+import { ManifestResource } from "./ManifestResource";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Utils } from "./Utils";
 
-namespace Manifesto {
-    export class AnnotationBody extends ManifestResource {
+export class AnnotationBody extends ManifestResource {
 
-        constructor(jsonld?: any, options?: IManifestoOptions){
-            super(jsonld, options);
+    constructor(jsonld?: any, options?: IManifestoOptions){
+        super(jsonld, options);
+    }
+
+    getFormat(): MediaType | null {
+        const format: string = this.getProperty('format');
+
+        if (format) {
+            return Utils.getMediaType(format);
         }
 
-        getFormat(): MediaType | null {
-            const format: string = this.getProperty('format');
+        return null;
+    }
 
-            if (format) {
-                return Utils.getMediaType(format);
-            }
+    getType(): ExternalResourceType | null {
+        const type: string = this.getProperty('type');
 
-            return null;
+        if (type) {
+            return <ExternalResourceType>Utils.normaliseType(this.getProperty('type'));
         }
 
-        getType(): ExternalResourceType | null {
-            const type: string = this.getProperty('type');
+        return null;
+    }
 
-            if (type) {
-                return Utils.normaliseType(this.getProperty('type'));
-            }
+    getWidth(): number {
+        return this.getProperty('width');
+    }
 
-            return null;
-        }
-
-        getWidth(): number {
-            return this.getProperty('width');
-        }
-
-        getHeight(): number {
-            return this.getProperty('height');
-        }
+    getHeight(): number {
+        return this.getProperty('height');
     }
 }
