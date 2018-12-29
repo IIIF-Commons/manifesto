@@ -14,7 +14,8 @@
         "skipLibCheck": true,
         "types": [
             "node", 
-            "@edsilv/http-status-codes"
+            "@edsilv/http-status-codes",
+            "@iiif/vocabulary"
         ]
     },
     "files": [
@@ -27,7 +28,6 @@
         "src/RenderingFormat.ts",
         "src/MediaType.ts",
         "src/ResourceType.ts",
-        "src/ServiceProfile.ts",
         "src/ViewingDirection.ts",
         "src/ViewingHint.ts",
         "src/JSONLDResource.ts",

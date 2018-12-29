@@ -16,7 +16,7 @@ describe('#loadsWitnessToPeter', function() {
     });
 
     it('has no autocomplete service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.autoComplete());
+        var service = manifest.getService(manifesto.ServiceProfile.SEARCH_0_AUTO_COMPLETE);
         expect(service).to.not.exist;
     });
 });

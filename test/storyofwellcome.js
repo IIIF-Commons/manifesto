@@ -33,7 +33,7 @@ describe('#loadsStoryOfWellcome', function() {
     });
 
     it('element has an IxIF service (used for auth)', function () {
-        var profile = manifesto.ServiceProfile.ixif();
+        var profile = manifesto.ServiceProfile.IXIF;
         var service = element.getService(profile);
         expect(service).to.exist;
     });

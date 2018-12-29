@@ -1,3 +1,5 @@
+import { ServiceProfile } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class Manifest extends IIIFResource implements IManifest {
         public index: number = 0;
@@ -254,7 +256,7 @@ namespace Manifesto {
         }
 
         getManifestType(): ManifestType {
-            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.UIEXTENSIONS);
+            const service: IService = <IService>this.getService(ServiceProfile.UIEXTENSIONS);
             if (service){
                 return new ManifestType(service.getProperty('manifestType'));
             }
@@ -262,7 +264,7 @@ namespace Manifesto {
         }
 
         getTrackingLabel(): string {
-            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
+            const service: IService = <IService>this.getService(ServiceProfile.TRACKINGEXTENSIONS);
             if (service){
                 return service.getProperty('trackingLabel');
             }

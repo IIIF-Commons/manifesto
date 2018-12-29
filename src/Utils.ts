@@ -1,3 +1,5 @@
+import { ServiceProfile } from "@iiif/vocabulary";
+
 const http = require('http');
 const https = require('https');
 const url = require('url');
@@ -13,22 +15,20 @@ namespace Manifesto {
             return type.trim();
         }
 
-        static getImageQuality(profile: Manifesto.ServiceProfile): string {
+        static getImageQuality(profile: ServiceProfile): string {
 
-            const p: string = profile.toString();
-
-            if (p === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString() ||
-                p === ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString() ||
-                p === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString() ||
-                p === ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString() ||
-                p === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString() ||
-                p === ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString() ||
-                p === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString() ||
-                p === ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString() ||
-                p === ServiceProfile.IIIF1IMAGELEVEL1.toString() ||
-                p === ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString() ||
-                p === ServiceProfile.IIIF1IMAGELEVEL2.toString() ||
-                p === ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()){
+            if (profile === ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1 ||
+                profile === ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2 ||
+                profile === ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_1 ||
+                profile === ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2 ||
+                profile === ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1 ||
+                profile === ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2 ||
+                profile === ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1 ||
+                profile === ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2 ||
+                profile === ServiceProfile.IMAGE_1_LEVEL_1 ||
+                profile === ServiceProfile.IMAGE_1_PROFILE_LEVEL_1 ||
+                profile === ServiceProfile.IMAGE_1_LEVEL_2 ||
+                profile === ServiceProfile.IMAGE_1_PROFILE_LEVEL_2) {
                 return 'native';
             }
 
@@ -118,96 +118,78 @@ namespace Manifesto {
             return Utils.normaliseUrl(url1) === Utils.normaliseUrl(url2);
         }
 
-        static isImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+        static isImageProfile(profile: ServiceProfile): boolean {
 
-            if (typeof(profile) === 'string') {
-                profile = new Manifesto.ServiceProfile(profile);
-            }
-
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString())){
+            if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_2)){
                 return true;
             }
 
             return false;
         }
 
-        static isLevel0ImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+        static isLevel0ImageProfile(profile: ServiceProfile): boolean {
 
-            if (typeof(profile) === 'string') {
-                profile = new Manifesto.ServiceProfile(profile);
-            }
-
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL0PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL0PROFILE.toString())){
+            if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_0) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_0)){
                 return true;
             }
 
             return false;
         }
 
-        static isLevel1ImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
+        static isLevel1ImageProfile(profile: ServiceProfile): boolean {
 
-            if (typeof(profile) === 'string') {
-                profile = new Manifesto.ServiceProfile(profile);
-            }
-
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL1PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL1PROFILE.toString())){
+            if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_1) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_1)){
                 return true;
             }
 
             return false;
         }
 
-        static isLevel2ImageProfile(profile: string | Manifesto.ServiceProfile): boolean {
-
-            if (typeof(profile) === 'string') {
-                profile = new Manifesto.ServiceProfile(profile);
-            }
+        static isLevel2ImageProfile(profile: ServiceProfile): boolean {
             
-            if (Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECOMPLIANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIFIMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.STANFORDIIIF1IMAGECONFORMANCE2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF1IMAGELEVEL2PROFILE.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2.toString()) ||
-                Utils.normalisedUrlsMatch(profile.toString(), Manifesto.ServiceProfile.IIIF2IMAGELEVEL2PROFILE.toString())){
+            if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_2) ||
+                Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_2)){
                 return true;
             }
 
@@ -478,7 +460,7 @@ namespace Manifesto {
             authService: Manifesto.IService): Promise<Manifesto.IExternalResource | void> {
 
             // attempting token interaction for " + authService["@id"]
-            const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH1TOKEN.toString());
+            const tokenService: Manifesto.IService | null = authService.getService(ServiceProfile.AUTH_1_TOKEN);
 
             if (tokenService) {
                 // found token service: " + tokenService["@id"]);

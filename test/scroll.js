@@ -22,7 +22,7 @@ describe('#loadsScroll', function() {
         expect(annotation).to.exist;
         var resource = annotation.getResource();
         expect(resource).to.exist;
-        var profile = manifesto.ServiceProfile.stanfordIIIF1ImageConformance1();
+        var profile = manifesto.ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1;
         imageService = resource.getService(profile);
         expect(imageService).to.exist;
     });

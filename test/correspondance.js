@@ -24,13 +24,13 @@ describe('#loadsCorrespondance', function() {
         expect(annotation).to.exist;
         var resource = annotation.getResource();
         expect(resource).to.exist;
-        var profile = manifesto.ServiceProfile.iiif2ImageLevel1();
+        var profile = manifesto.ServiceProfile.IMAGE_2_LEVEL_1;
         imageService = resource.getService(profile);
         expect(imageService).to.exist;
     });
 
     it('imageService has login service', function () {
-        var profile = manifesto.ServiceProfile.login();
+        var profile = manifesto.ServiceProfile.AUTH_0_LOGIN;
         var loginService = imageService.getService(profile);
         expect(loginService).to.exist;
     });

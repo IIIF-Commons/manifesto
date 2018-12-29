@@ -41,7 +41,7 @@ describe('#loadsBiocrats', function() {
     });
 
     it('has a search service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.search());
+        var service = manifest.getService(manifesto.ServiceProfile.SEARCH);
         expect(service).to.exist;
     });
 

@@ -1,3 +1,5 @@
+import { ServiceProfile } from "@iiif/vocabulary";
+
 interface IManifesto {
     AnnotationMotivation: Manifesto.AnnotationMotivation;
     Behavior: Manifesto.Behavior;
@@ -11,7 +13,7 @@ interface IManifesto {
     MediaType: Manifesto.MediaType;
     RenderingFormat: Manifesto.RenderingFormat;
     ResourceType: Manifesto.ResourceType;
-    ServiceProfile: Manifesto.ServiceProfile;
+    ServiceProfile: ServiceProfile;
     Size: typeof Manifesto.Size;
     StatusCodes: Manifesto.IStatusCodes;
     TreeNode: typeof Manifesto.TreeNode;

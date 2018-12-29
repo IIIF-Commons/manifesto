@@ -1,3 +1,5 @@
+import { ServiceProfile } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export class Service extends ManifestResource implements IService {
 
@@ -5,7 +7,7 @@ namespace Manifesto {
             super(jsonld, options);
         }
 
-        getProfile(): ServiceProfile{
+        getProfile(): ServiceProfile {
             let profile: any = this.getProperty('profile');
 
             if (!profile) {
@@ -13,10 +15,10 @@ namespace Manifesto {
             }
 
             if (Array.isArray(profile)){
-                return new ServiceProfile(profile[0]);
+                return profile[0];
             }
 
-            return new ServiceProfile(profile);
+            return profile;
         }
 
         

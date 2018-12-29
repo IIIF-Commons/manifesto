@@ -17,7 +17,7 @@ describe('#loadsAarau', function() {
     });
 
     it('has no search service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.search());
+        var service = manifest.getService(manifesto.ServiceProfile.SEARCH);
         expect(service).to.not.exist;
     });
 });

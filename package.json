@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@edsilv/http-status-codes": "0.0.12",
-    "@iiif/vocabulary": "^1.0.1",
+    "@iiif/vocabulary": "1.0.3",
     "request": "^2.83.0"
   },
   "directories": {

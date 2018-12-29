@@ -1,3 +1,5 @@
+import { ServiceProfile } from "@iiif/vocabulary";
+
 (<any>global).manifesto = (<any>global).Manifesto = module.exports = <IManifesto>{
 
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
@@ -10,7 +12,7 @@
     MediaType: new Manifesto.MediaType(),
     RenderingFormat: new Manifesto.RenderingFormat(),
     ResourceType: new Manifesto.ResourceType(),
-    ServiceProfile: new Manifesto.ServiceProfile(),
+    ServiceProfile: ServiceProfile,
     Size: Manifesto.Size,
     TreeNode: Manifesto.TreeNode,
     TreeNodeType: new Manifesto.TreeNodeType(),

@@ -1,3 +1,5 @@
+import { ServiceProfile } from "@iiif/vocabulary";
+
 namespace Manifesto {
     export interface IService extends IManifestResource {
         getConfirmLabel(): string | null;
