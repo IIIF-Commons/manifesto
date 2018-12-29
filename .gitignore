@@ -1,8 +1,8 @@
-.idea
-dist
+_bundles
 coverage
+docs
+lib
+lib-esm
 npm-debug.log
 node_modules
-bower_components
-typings
 debug.log

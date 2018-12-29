@@ -1,17 +1,23 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
         "declaration": true,
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "react",
+        "lib": [ "es2015", "dom" ],
+        "module": "commonjs",
+        "moduleResolution": "node",
         "noImplicitAny": false,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "module": "commonjs",
-        "moduleResolution": "node",
         "noUnusedLocals": true,
         "noUnusedParameters": false,
-        "strictNullChecks": true,
-        "target": "es5",
-        "lib": ["es6", "dom"],
+        "outDir": "lib",
         "skipLibCheck": true,
+        "sourceMap": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es5",
         "types": [
             "node", 
             "@edsilv/http-status-codes",
@@ -41,7 +47,7 @@
         "src/LanguageMap.ts",
         "src/LabelValuePair.ts",
         "src/Size.ts",
-        "src/Manifesto.ts"
+        "src/index.ts"
     ],
     "include": [
         "src/**/*"
