@@ -12,10 +12,12 @@
         "target": "es5",
         "lib": ["es6", "dom"],
         "skipLibCheck": true,
-        "types": ["node", "http-status-codes"]
+        "types": [
+            "node", 
+            "@edsilv/http-status-codes"
+        ]
     },
     "files": [
-        "src/Definitions.ts",
         "src/StringValue.ts",
         "src/Duration.ts",
         "src/AnnotationMotivation.ts",
