@@ -10,7 +10,7 @@ import { ManifestType } from "./ManifestType";
 import { Range } from "./Range";
 import { Service } from "./Service";
 
-export class Manifest extends IIIFResource implements Manifest {
+export class Manifest extends IIIFResource {
     public index: number = 0;
     private _allRanges: Range[] | null = null; 
     public items: Sequence[] = [];

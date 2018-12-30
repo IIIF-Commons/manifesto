@@ -1,8 +1,7 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 var manifest, sequence;
 
@@ -15,7 +14,7 @@ describe('#loadsBiocrats', function() {
     });
 
     it('has a label', function () {
-        var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
+        var label = manifesto.LanguageMap.getValue(manifest.getLabel());
         label.should.be.a('string');
         label.should.equal('The biocrats');
     });
@@ -41,7 +40,7 @@ describe('#loadsBiocrats', function() {
     });
 
     it('has a search service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.SEARCH);
+        var service = manifest.getService(manifesto.ServiceProfile.SEARCH_0);
         expect(service).to.exist;
     });
 

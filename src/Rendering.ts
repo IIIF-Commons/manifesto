@@ -1,6 +1,6 @@
 import { RenderingFormat } from "@iiif/vocabulary";
-import { ManifestResource } from "./ManifestResource";
 import { IManifestoOptions } from "./IManifestoOptions";
+import { ManifestResource } from "./ManifestResource";
 
 export class Rendering extends ManifestResource {
 

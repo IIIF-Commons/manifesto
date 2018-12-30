@@ -1,8 +1,7 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 var manifest, sequence, canvas, content, annotation, body;
 
@@ -60,7 +59,7 @@ describe('presentation 3 3d', function() {
     });
 
     it('canvas has label', function() {
-        var label = Manifesto.LanguageMap.getValue(body.getLabel());
+        var label = manifesto.LanguageMap.getValue(body.getLabel());
         expect(label).to.equal('Animal Skull');
     });
 });

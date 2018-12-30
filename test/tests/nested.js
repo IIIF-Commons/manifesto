@@ -1,10 +1,9 @@
 // nested collections
 
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 var collection, manifest, firstCollection, secondCollection;
 
@@ -26,13 +25,13 @@ describe('#loadsTopNestedManifest', function() {
     });
 
     it('has a label', function() {
-        Manifesto.LanguageMap.getValue(collection.getLabel()).should.equal('Villanova Digital Library');
+        manifesto.LanguageMap.getValue(collection.getLabel()).should.equal('Villanova Digital Library');
     });
 
     it('has a first collection with a label', function(done) {
         collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
-            Manifesto.LanguageMap.getValue(firstCollection.getLabel()).should.equal('Dime Novel and Popular Literature');
+            manifesto.LanguageMap.getValue(firstCollection.getLabel()).should.equal('Dime Novel and Popular Literature');
             done();
         });
     });
@@ -49,7 +48,7 @@ describe('#loadsTopNestedManifest', function() {
     it('has a second-level collection with a label', function (done) {
         firstCollection.getCollectionByIndex(0).then(function(data) {
             secondCollection = data;
-            Manifesto.LanguageMap.getValue(secondCollection.getLabel()).should.equal('Covers and Illustrations');
+            manifesto.LanguageMap.getValue(secondCollection.getLabel()).should.equal('Covers and Illustrations');
             done();
         });
     });
@@ -61,7 +60,7 @@ describe('#loadsTopNestedManifest', function() {
     it('can access a deeply-nested manifest', function (done) {
         secondCollection.getManifestByIndex(0).then(function(data) {
             manifest = data;
-            Manifesto.LanguageMap.getValue(manifest.getLabel()).should.equal('Wunder der Vererbung');
+            manifesto.LanguageMap.getValue(manifest.getLabel()).should.equal('Wunder der Vererbung');
             done();
         });
     });

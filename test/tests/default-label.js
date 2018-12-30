@@ -1,8 +1,7 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 var manifest, sequence, canvas, content, annotation, body, label;
 
@@ -27,7 +26,7 @@ describe('#getDefaultLabel', function() {
 
     it('has a canvas label', function() {
         label = canvas.getLabel();
-        var labelValue = Manifesto.LanguageMap.getValue(label);
+        var labelValue = manifesto.LanguageMap.getValue(label);
         expect(labelValue).to.equal('Abyssinian');
     });
 
@@ -46,7 +45,7 @@ describe('#getDefaultLabel', function() {
 
     it('has an annotation label', function() {
         label = body.getLabel();
-        var labelValue = Manifesto.LanguageMap.getValue(label);
+        var labelValue = manifesto.LanguageMap.getValue(label);
         expect(labelValue).to.equal('Abyssinian');
     });
 

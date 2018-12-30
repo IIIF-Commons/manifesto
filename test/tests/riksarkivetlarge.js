@@ -1,10 +1,9 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
-var manifest, sequence;
+var manifest;
 
 describe('#loadsRiksarkivetLarge', function() {
     this.timeout(60000);
@@ -16,7 +15,7 @@ describe('#loadsRiksarkivetLarge', function() {
     });
 
     it('has a label', function () {
-        var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
+        var label = manifesto.LanguageMap.getValue(manifest.getLabel());
         label.should.be.a('string');
     });
 

@@ -8,7 +8,7 @@ import { Utils } from "./Utils";
 import { LabelValuePair } from "./LabelValuePair";
 import { Deserialiser } from "./Serialisation";
 
-export class IIIFResource extends ManifestResource implements IIIFResource {
+export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;
     public index: number = -1;
     public isLoaded: boolean = false;
@@ -81,7 +81,7 @@ export class IIIFResource extends ManifestResource implements IIIFResource {
         return this.getProperty('seeAlso');
     }
 
-    getDefaultTree(): TreeNode{
+    getDefaultTree(): TreeNode {
         this.defaultTree = new TreeNode('root');
         this.defaultTree.data = this;
         return this.defaultTree;

@@ -1,10 +1,9 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
-var manifest, sequence, canvas, content, annotation, body, label;
+var manifest, sequence, canvas, content, annotation, body;
 
 describe('#annotationDimensions', function() {
 

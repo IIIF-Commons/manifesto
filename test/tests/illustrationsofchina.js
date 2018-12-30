@@ -1,12 +1,9 @@
 // multi-sequence
 
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
-
-var manifest, sequence;
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 describe('#loadsIllustrationsOfChina', function() {
     it('loads successfully', function (done) {

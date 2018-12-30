@@ -1,13 +1,4 @@
-import { RenderingFormat, ServiceProfile, IIIFResourceType } from "@iiif/vocabulary";
 import { JSONLDResource } from "./JSONLDResource";
-import { IExternalResource } from "./IExternalResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Utils } from "./Utils";
-import { LanguageMap } from "./LanguageMap";
-import { LabelValuePair } from "./LabelValuePair";
-import { Rendering } from "./Rendering";
-import { Service } from "./Service";
-import { Thumbnail } from "./Thumbnail";
 
 export class ManifestResource extends JSONLDResource {
     externalResource: IExternalResource;
@@ -140,3 +131,14 @@ export class ManifestResource extends JSONLDResource {
         return this.getIIIFResourceType() === IIIFResourceType.SEQUENCE;
     }
 }
+
+// https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
+import { RenderingFormat, ServiceProfile, IIIFResourceType } from "@iiif/vocabulary";
+import { IExternalResource } from "./IExternalResource";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Utils } from "./Utils";
+import { LanguageMap } from "./LanguageMap";
+import { LabelValuePair } from "./LabelValuePair";
+import { Thumbnail } from "./Thumbnail";
+import { Service } from "./Service";
+import { Rendering } from "./Rendering";

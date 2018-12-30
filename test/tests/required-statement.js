@@ -1,8 +1,7 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 var manifest;
 
@@ -18,8 +17,8 @@ describe('required statement', function() {
     it('has correct required statement', function () {
         var requiredStatement = manifest.getRequiredStatement();
         expect(requiredStatement).to.exist;
-        expect(Manifesto.LanguageMap.getValue(requiredStatement.label) === 'Important information');
-        expect(Manifesto.LanguageMap.getValue(requiredStatement.value) === '<p>Please read the <a href=\'https://bl.uk\'>full information</a> about this object.</p>');
+        expect(manifesto.LanguageMap.getValue(requiredStatement.label) === 'Important information');
+        expect(manifesto.LanguageMap.getValue(requiredStatement.value) === '<p>Please read the <a href=\'https://bl.uk\'>full information</a> about this object.</p>');
     });
 });
 
@@ -36,6 +35,6 @@ describe('attribution', function() {
         var requiredStatement = manifest.getRequiredStatement();
         expect(requiredStatement).to.exist;
         expect(requiredStatement.label === undefined);
-        expect(Manifesto.LanguageMap.getValue(requiredStatement.value) === 'Anzac bulletin. Number 24(1917:Jun.) Usage Terms: Free from known copyright restrictions.');
+        expect(manifesto.LanguageMap.getValue(requiredStatement.value) === 'Anzac bulletin. Number 24(1917:Jun.) Usage Terms: Free from known copyright restrictions.');
     });
 });

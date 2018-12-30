@@ -1,8 +1,8 @@
 // root service is string (only references to root services may be strings)
 
 var expect = require('chai').expect;
-var manifesto = require('../../dist-commonjs/');
 var should = require('chai').should();
+var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
 
 var manifest;
@@ -16,7 +16,7 @@ describe('#loadsAarau', function() {
     });
 
     it('has no search service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.SEARCH);
+        var service = manifest.getService(manifesto.ServiceProfile.SEARCH_0);
         expect(service).to.not.exist;
     });
 });

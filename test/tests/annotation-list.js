@@ -1,7 +1,7 @@
-var manifesto = require('../dist/server/manifesto');
+var expect = require('chai').expect;
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 describe('#loadsAnnotationList', function() {
   var manifest, canvas, annotationList;

@@ -8,7 +8,7 @@ import { LanguageMap } from "./LanguageMap";
 import { Thumb } from "./Thumb";
 import { Manifest } from "./Manifest";
 
-export class Sequence extends ManifestResource implements Sequence {
+export class Sequence extends ManifestResource {
     public items: Canvas[] = [];
     private _thumbnails: Thumbnail[] | null = null;
 

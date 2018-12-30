@@ -1,8 +1,7 @@
 var expect = require('chai').expect;
-var manifesto = require('../dist/server/manifesto');
 var should = require('chai').should();
-var manifests = require('./fixtures/manifests');
-require('./shared');
+var manifesto = require('../../dist-commonjs/');
+var manifests = require('../fixtures/manifests');
 
 var manifest, sequence, canvas;
 
@@ -26,7 +25,7 @@ describe('presentation 3 items instead of sequence', function() {
     });
 
     it('canvas has label', function() {
-        var label = Manifesto.LanguageMap.getValue(canvas.getLabel());
+        var label = manifesto.LanguageMap.getValue(canvas.getLabel());
         expect(label).to.equal('Tape 1 Side 1');
     });
 });
