@@ -1,18 +1,15 @@
 export * from "@iiif/vocabulary";
-
-//export * from "./ManifestResource";
-//export * from "./IIIFResource";
-// export * from "./Collection";
-//export * from "./Manifest";
 export * from "./Annotation";
 export * from "./AnnotationBody";
 export * from "./AnnotationList";
 export * from "./AnnotationPage";
 export * from "./Canvas";
+export * from "./Collection";
 export * from "./Duration";
 export * from "./LabelValuePair";
 export * from "./Language";
 export * from "./LanguageMap";
+export * from "./Manifest";
 export * from "./ManifestType";
 export * from "./Range";
 export * from "./Rendering";

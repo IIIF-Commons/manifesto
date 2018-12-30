@@ -1,12 +1,4 @@
-import { IIIFResourceType } from "@iiif/vocabulary";
 import { ManifestResource } from "./ManifestResource";
-import { TreeNode } from "./TreeNode";
-import { Collection } from "./Collection";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { LanguageMap } from "./LanguageMap";
-import { Utils } from "./Utils";
-import { LabelValuePair } from "./LabelValuePair";
-import { Deserialiser } from "./Serialisation";
 
 export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;
@@ -153,3 +145,13 @@ export class IIIFResource extends ManifestResource {
         });
     }
 }
+
+// https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
+import { IIIFResourceType } from "@iiif/vocabulary";
+import { TreeNode } from "./TreeNode";
+import { Collection } from "./Collection";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { LanguageMap } from "./LanguageMap";
+import { Utils } from "./Utils";
+import { LabelValuePair } from "./LabelValuePair";
+import { Deserialiser } from "./Serialisation";
