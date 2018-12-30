@@ -9,7 +9,7 @@
     "build": "npm run clean && tsc && tsc -m es6 --outDir dist-esmodule && webpack",
     "build-docs": "rimraf docs && typedoc --options typedoc.json src/ && touch docs/.nojekyll",
     "prepare": "npm run build",
-    "test": "gulp test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@edsilv/http-status-codes": "0.0.12",
-    "@iiif/vocabulary": "1.0.3",
+    "@iiif/vocabulary": "1.0.5",
     "request": "^2.83.0"
   },
   "directories": {
