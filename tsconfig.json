@@ -24,31 +24,6 @@
             "@iiif/vocabulary"
         ]
     },
-    // "files": [
-    //     "src/Duration.ts",
-    //     "src/ManifestType.ts",
-    //     "src/JSONLDResource.ts",
-    //     "src/ManifestResource.ts",
-    //     "src/Resource.ts",
-    //     "src/Canvas.ts",
-    //     "src/IIIFResource.ts",
-    //     "src/Manifest.ts",
-    //     "src/Collection.ts",
-    //     "src/Range.ts",
-    //     "src/Rendering.ts",
-    //     "src/Sequence.ts",
-    //     "src/Serialisation.ts",
-    //     "src/Service.ts",
-    //     "src/Thumb.ts",
-    //     "src/TreeNode.ts",
-    //     "src/TreeNodeType.ts",
-    //     "src/Utils.ts",
-    //     "src/Language.ts",
-    //     "src/LanguageMap.ts",
-    //     "src/LabelValuePair.ts",
-    //     "src/Size.ts",
-    //     "src/index.ts"
-    // ],
     "include": [
         "src/**/*"
     ]
