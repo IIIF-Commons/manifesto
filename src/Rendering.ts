@@ -4,11 +4,11 @@ import { IManifestoOptions } from "./IManifestoOptions";
 
 export class Rendering extends ManifestResource {
 
-    constructor(jsonld?: any, options?: IManifestoOptions){
+    constructor(jsonld?: any, options?: IManifestoOptions) {
         super(jsonld, options);
     }
 
-    getFormat(): RenderingFormat{
+    getFormat(): RenderingFormat {
         return this.getProperty('format');
     }
 }
