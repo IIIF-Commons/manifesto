@@ -11,6 +11,10 @@
     "prepare": "npm run build",
     "test": "mocha"
   },
+  "engines": {
+    "node": ">=8.9.1",
+    "npm": ">=3.10.8"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iiif-commons/manifesto.git"
