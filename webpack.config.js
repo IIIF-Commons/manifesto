@@ -4,8 +4,7 @@ module.exports = {
     // These are the entry point of our library. We tell webpack to use the name we assign later, when creating the bundle.
     // We also use the name to filter the second entry point for applying code minification via UglifyJS
     entry: {
-        'manifesto': ['./src/index.ts'],
-        'manifesto.min': ['./src/index.ts']
+        'manifesto': ['./src/index.ts']
     },
     // The output defines how and where we want the bundles. The special value `[name]` in `filename` tells Webpack to use the name we defined above.
     // We target a UMD and name it manifesto. When including the bundle in the browser it will be accessible at `window.manifesto`
@@ -26,8 +25,6 @@ module.exports = {
     devtool: 'source-map',
     optimization: {
         minimize: true
-        //   sourceMap: true,
-        //   include: /\.min\.js$/
     },
     // Webpack doesn't understand TypeScript files and a loader is needed.
     module: {
