@@ -2,11 +2,11 @@
   "name": "manifesto.js",
   "version": "3.0.9-pr-42",
   "description": "IIIF Presentation API utility library for client and server",
-  "main": "./dist/server/manifesto.js",
-  "types": "./dist/manifesto.d.ts",
+  "main": "./dist-esmodule/index.js",
+  "types": "./dist-esmodule/index.d.ts",
   "scripts": {
-    "clean": "npx rimraf _bundles lib lib-esm",
-    "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack",
+    "clean": "npx rimraf dist-umd dist-commonjs dist-esmodule",
+    "build": "npm run clean && tsc && tsc -m es6 --outDir dist-esmodule && webpack",
     "build-docs": "rimraf docs && typedoc --options typedoc.json src/ && touch docs/.nojekyll",
     "prepare": "npm run build",
     "test": "gulp test"

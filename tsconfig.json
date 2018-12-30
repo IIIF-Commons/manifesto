@@ -12,7 +12,7 @@
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": false,
-        "outDir": "lib",
+        "outDir": "dist-commonjs",
         "skipLibCheck": true,
         "sourceMap": true,
         "strictNullChecks": true,

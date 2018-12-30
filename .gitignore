@@ -1,8 +1,8 @@
-_bundles
+dist-commonjs
+dist-esmodule
+dist-umd
 coverage
 docs
-lib
-lib-esm
 npm-debug.log
 node_modules
 debug.log
