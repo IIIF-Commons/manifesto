@@ -25,7 +25,6 @@ export class AnnotationList extends JSONLDResource {
 
     getResources(): Annotation[] {
         const resources = this.getProperty('resources');
-
         return resources.map(resource => new Annotation(resource, this.options));
     }
 

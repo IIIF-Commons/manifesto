@@ -61,7 +61,7 @@ export class LanguageMap extends Array<Language> {
                 }
             }
 
-            // return the first valuel
+            // return the first value
             return languageCollection[0].value;
         }
 

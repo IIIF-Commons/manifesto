@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "3.0.9-webpack5",
+  "version": "3.0.9-webpack6",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-esmodule/index.js",
   "types": "./dist-esmodule/index.d.ts",
