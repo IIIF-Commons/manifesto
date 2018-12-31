@@ -35,3 +35,8 @@ export const loadManifest = (uri: string) => {
 export const create = (manifest: string, options?: IManifestoOptions) => {
     return Deserialiser.parse(manifest, options);
 }
+
+export declare namespace manifesto {
+    function loadManifest(uri: string): Promise<string>;
+    function create(manifest: string, options?: IManifestoOptions | undefined): import("./IIIFResource").IIIFResource | null;
+}
