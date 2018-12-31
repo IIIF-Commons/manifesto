@@ -9,7 +9,7 @@ describe('#loadsRiksarkivetLarge', function() {
     this.timeout(60000);
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.riksarkivetscblarge).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

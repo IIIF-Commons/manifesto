@@ -8,7 +8,7 @@ var manifest, sequence;
 describe('#loadsAnzacBulletin', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.anzacbulletin).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             sequence = manifest.getSequenceByIndex(0);
             canvas = sequence.getCanvasByIndex(0);
             done();

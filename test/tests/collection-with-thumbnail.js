@@ -9,7 +9,7 @@ describe('collection thumbnail', function() {
 
     it('loads manifest successfully', function (done) {
         manifesto.loadManifest(manifests.collectionwiththumbnail).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

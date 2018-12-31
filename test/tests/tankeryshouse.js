@@ -10,7 +10,7 @@ var manifest;
 describe('#loadsTankerysHouse', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.tankeryshouse).then(function(data) {
-            manifest = manifesto.create(data, {locale: "cy-GB"});
+            manifest = manifesto.parseManifest(data, {locale: "cy-GB"});
             done();
         });
     });

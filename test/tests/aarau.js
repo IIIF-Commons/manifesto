@@ -10,7 +10,7 @@ var manifest;
 describe('#loadsAarau', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.aarau).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

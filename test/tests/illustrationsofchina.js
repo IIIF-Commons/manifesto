@@ -8,7 +8,7 @@ var manifests = require('../fixtures/manifests');
 describe('#loadsIllustrationsOfChina', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.illustrationsofchina).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

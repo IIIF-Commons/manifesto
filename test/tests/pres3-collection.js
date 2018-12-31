@@ -8,7 +8,7 @@ var collection;
 describe('#loadsPres3Collection', function() {
     it('loads successfully', function(done) {
         manifesto.loadManifest(manifests.pres3collection).then(function(data) {
-            collection = manifesto.create(data);
+            collection = manifesto.parseManifest(data);
             done();
         });
     });

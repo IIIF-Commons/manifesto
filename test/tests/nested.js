@@ -10,7 +10,7 @@ var collection, manifest, firstCollection, secondCollection;
 describe('#loadsTopNestedManifest', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests['nested-top']).then(function(data) {
-            collection = manifesto.create(data);
+            collection = manifesto.parseManifest(data);
             done();
         });
     });

@@ -10,7 +10,7 @@ var manifest;
 describe('#loadsPseudoalbert', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.pseudoalbert).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

@@ -40,7 +40,7 @@ export class AnnotationList extends JSONLDResource {
                     id = this.__jsonld['@id']
                 }
 
-                Utils.loadResource(id).then(data => {
+                Utils.loadManifest(id).then(data => {
                     this.__jsonld = JSON.parse(data);
                     this.context = this.getProperty('context');
                     this.id = this.getProperty('id');

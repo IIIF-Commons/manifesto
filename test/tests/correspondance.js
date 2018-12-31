@@ -10,7 +10,7 @@ var manifest, sequence, canvas, imageService;
 describe('#loadsCorrespondance', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.correspondance).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             sequence = manifest.getSequenceByIndex(0);
             canvas = sequence.getCanvasByIndex(0);
             done();

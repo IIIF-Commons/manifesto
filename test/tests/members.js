@@ -7,7 +7,7 @@ var manifest;
 describe('#loadsMembers', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.members).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

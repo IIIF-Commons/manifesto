@@ -9,7 +9,7 @@ describe('ranges with no-nav are not included in tree', function() {
 
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.looseends).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

@@ -9,7 +9,7 @@ var manifest, sequence;
 //     this.timeout(20000);
 //     it('loads successfully', function (done) {
 //         manifesto.loadManifest(manifests.https).then(function(data) {
-//             manifest = manifesto.create(data);
+//             manifest = manifesto.parseManifest(data);
 //             done();
 //         });
 //     });

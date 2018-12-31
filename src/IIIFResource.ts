@@ -133,7 +133,7 @@ export class IIIFResource extends ManifestResource {
                     id = that.__jsonld['@id']
                 }
 
-                Utils.loadResource(id).then(function(data) {
+                Utils.loadManifest(id).then(function(data) {
                     that.parentLabel = <string>LanguageMap.getValue(that.getLabel(), options.locale);
                     const parsed = Deserialiser.parse(data, options);
                     that = Object.assign(that, parsed);

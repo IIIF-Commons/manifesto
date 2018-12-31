@@ -9,7 +9,7 @@ describe('#presentation3Paging', function() {
 
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.presentation3Paging).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

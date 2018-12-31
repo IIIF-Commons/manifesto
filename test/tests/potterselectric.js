@@ -9,7 +9,7 @@ var manifest, firstCollection, firstManifest;
 describe('#loadsPottersElectric', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.potterselectric).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

@@ -31,19 +31,21 @@ export * from "./Utils";
 export * from "@iiif/vocabulary";
 
 import { IManifestoOptions } from "./IManifestoOptions";
-import { Deserialiser } from "./Serialisation";
 import { Utils } from "./Utils";
 import { IIIFResource } from "./IIIFResource";
 
 export const loadManifest = (uri: string) => {
-    return Utils.loadResource(uri);
+    return Utils.loadManifest(uri);
 }
 
-export const create = (manifest: string, options?: IManifestoOptions) => {
-    return Deserialiser.parse(manifest, options);
+export const parseManifest = (manifest: string, options?: IManifestoOptions) => {
+    return Utils.parseManifest(manifest, options);
 }
 
-export declare namespace manifesto {
-    function loadManifest(uri: string): Promise<string>;
-    function create(manifest: string, options?: IManifestoOptions | undefined): IIIFResource | null;
+// global types
+declare global {
+    namespace manifesto {
+        function loadManifest(uri: string): Promise<string>;
+        function parseManifest(manifest: string, options?: IManifestoOptions | undefined): IIIFResource | null;
+    }
 }

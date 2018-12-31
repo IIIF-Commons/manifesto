@@ -9,7 +9,7 @@ var manifest;
 // describe('#loadsGams', function() {
 //     it('loads successfully', function (done) {
 //         manifesto.loadManifest(manifests['query-gams']).then(function(data) {
-//             manifest = manifesto.create(data);
+//             manifest = manifesto.parseManifest(data);
 //             done();
 //         });
 //     });
@@ -18,7 +18,7 @@ var manifest;
 //describe('#loadsBodleian', function() {
 //    it('loads successfully', function (done) {
 //        manifesto.loadManifest(manifests['query-bodleian']).then(function(data) {
-//            manifest = manifesto.create(data);
+//            manifest = manifesto.parseManifest(data);
 //            done();
 //        });
 //    });

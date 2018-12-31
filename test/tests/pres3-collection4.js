@@ -9,7 +9,7 @@ describe('presentation 3 collection', function() {
 
     it('loads successfully', function(done) {
         manifesto.loadManifest(manifests.pres3collection4).then(function(data) {
-            collection = manifesto.create(data);
+            collection = manifesto.parseManifest(data);
             done();
         });
     });

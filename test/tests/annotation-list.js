@@ -7,7 +7,7 @@ describe('#loadsAnnotationList', function() {
   var manifest, canvas, annotationList;
   it('loads successfully and maps objects', function (done) {
     manifesto.loadManifest(manifests.wunder).then(function(data) {
-      manifest = manifesto.create(data);
+      manifest = manifesto.parseManifest(data);
       canvas = manifest.getSequenceByIndex(0).getCanvasById('http://wellcomelibrary.org/iiif/b18035723/canvas/c2');
       annotationList = canvas.getOtherContent();
       annotationList.then(function(annotationList) {

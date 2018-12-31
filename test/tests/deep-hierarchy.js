@@ -8,7 +8,7 @@ var manifest, ceili;
 describe('#loadsTop', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.deephierarchytop).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

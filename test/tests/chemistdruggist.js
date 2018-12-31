@@ -10,7 +10,7 @@ var collection, manifest, firstCollection, secondCollection, secondManifest, thi
 describe('#loadsChemistDruggist', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.chemistdruggist).then(function(data) {
-            collection = manifesto.create(data);
+            collection = manifesto.parseManifest(data);
             done();
         });
     });

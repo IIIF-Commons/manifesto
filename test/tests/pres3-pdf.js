@@ -8,7 +8,7 @@ var manifest, sequence, canvas;
 describe('#loadsPres3PDF', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.pres3pdf).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

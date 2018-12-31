@@ -9,7 +9,7 @@ describe('#getDefaultLabel', function() {
 
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.defaultlabel).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

@@ -10,7 +10,7 @@ var manifest;
 describe('#loadsCardiganshire', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.cardiganshire).then(function(data) {
-            manifest = manifesto.create(data, {locale: "cy-GB"});
+            manifest = manifesto.parseManifest(data, {locale: "cy-GB"});
             done();
         });
     });

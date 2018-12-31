@@ -6,6 +6,8 @@ import { JSONLDResource } from "./JSONLDResource";
 import { Service } from "./Service";
 import { StatusCode } from "./StatusCode";
 import { TreeNode } from "./TreeNode";
+import { IIIFResource } from ".";
+import { Deserialiser } from "./Serialisation";
 
 const http = require('http');
 const https = require('https');
@@ -200,7 +202,11 @@ export class Utils {
         return false;
     }
 
-    static loadResource (uri: string): Promise<string> {
+    static parseManifest(manifest: string, options?: IManifestoOptions | undefined): IIIFResource | null {
+        return Deserialiser.parse(manifest, options);
+    }
+
+    static loadManifest(uri: string): Promise<string> {
 
         return new Promise<any>((resolve, reject) => {
             const u: any = url.parse(uri);

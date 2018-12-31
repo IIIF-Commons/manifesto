@@ -8,7 +8,7 @@ var manifest, sequence;
 describe('#loadsPlato', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.plato).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

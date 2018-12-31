@@ -9,7 +9,7 @@ describe('#hasrangewithmultivalues', function() {
 
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.multivaluerangemetadata).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

@@ -10,7 +10,7 @@ var manifest;
 describe('#loadsAudio', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.audio).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });

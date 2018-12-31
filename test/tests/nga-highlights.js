@@ -8,7 +8,7 @@ var manifest, sequence, canvas;
 describe('#loadsNGAHighlights', function() {
     it('loads successfully', function(done) {
         manifesto.loadManifest(manifests.ngaHighlights).then(function(data) {
-            manifest = manifesto.create(data);
+            manifest = manifesto.parseManifest(data);
             done();
         });
     });
