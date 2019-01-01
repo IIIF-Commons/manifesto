@@ -824,16 +824,16 @@ export class Utils {
      */         
     static traverseAndFind(object: any, k: string, v: string): object & void {
         if (object.hasOwnProperty(k) && object[k] === v) {
-        return object;
+            return object;
         }
 
         for (var i = 0; i < Object.keys(object).length; i++) {
-        if (typeof object[Object.keys(object)[i]] === "object") {
-            var o = Utils.traverseAndFind(object[Object.keys(object)[i]], k, v);
-            if (o != null) {
-            return o;
+            if (typeof object[Object.keys(object)[i]] === "object") {
+                var o = Utils.traverseAndFind(object[Object.keys(object)[i]], k, v);
+                if (o != null) {
+                    return o;
+                }
             }
-        }
         }
     }
 

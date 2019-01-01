@@ -181,6 +181,7 @@ export class Manifest extends IIIFResource {
         this._allRanges = [];
 
         const topRanges: Range[] = this.getTopRanges();
+
         for (let i = 0; i < topRanges.length; i++) {
             const topRange: Range = topRanges[i];
             if (topRange.id){
@@ -190,7 +191,7 @@ export class Manifest extends IIIFResource {
                 acc.add(next);
                 const nextRanges = next.getRanges();
                 if (nextRanges.length) {
-                return nextRanges.reduce(reducer, acc);
+                    return nextRanges.reduce(reducer, acc);
                 }
                 return acc;
             }
@@ -279,7 +280,7 @@ export class Manifest extends IIIFResource {
         return '';
     }
 
-    isMultSequence(): boolean {
+    isMultiSequence(): boolean {
         return this.getTotalSequences() > 1;
     }
 

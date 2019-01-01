@@ -293,7 +293,7 @@ export class Sequence extends ManifestResource {
         return canvasIndex === this.getTotalCanvases() - 1;
     }
 
-    isMultCanvas(): boolean {
+    isMultiCanvas(): boolean {
         return this.getTotalCanvases() > 1;
     }
 
