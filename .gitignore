@@ -1,6 +1,7 @@
 dist-commonjs
 dist-esmodule
 dist-umd
+dist-var
 coverage
 docs
 npm-debug.log

@@ -1,13 +1,13 @@
 {
   "name": "manifesto.js",
-  "version": "3.0.9-webpack7",
+  "version": "3.0.9-pre.1",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-esmodule/index.js",
   "types": "./dist-esmodule/index.d.ts",
   "scripts": {
-    "clean": "npx rimraf dist-umd dist-commonjs dist-esmodule",
+    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var",
     "build": "npm run clean && tsc && tsc -m es6 --outDir dist-esmodule && webpack",
-    "build-docs": "rimraf docs && typedoc --options typedoc.json src/ && touch docs/.nojekyll",
+    "build-docs": "rimraf -rf docs && typedoc --options typedoc.json src/ && touch docs/.nojekyll",
     "prepare": "npm run build",
     "test": "mocha"
   },
