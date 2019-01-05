@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var",
     "build": "npm run clean && tsc && tsc -m es6 --outDir dist-esmodule && webpack",
-    "build-docs": "rimraf -rf docs && typedoc --options typedoc.json src/ && touch docs/.nojekyll",
+    "build-docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
     "prepare": "npm run build",
     "test": "mocha"
   },
@@ -37,7 +37,7 @@
     "mocha": "2.2.4",
     "rimraf": "^2.6.2",
     "serve-static": "1.10.0",
-    "typedoc": "^0.12.0",
+    "typedoc": "0.14.0",
     "typescript": "3.0.1",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
