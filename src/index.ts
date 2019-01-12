@@ -71,37 +71,37 @@ export const parseManifest = (manifest: string, options?: IManifestoOptions) => 
 // global types
 declare global {
     namespace manifesto {
-        function loadManifest(uri: string): Promise<string>;
-        function parseManifest(manifest: string, options?: IManifestoOptions | undefined): IIIFResource | null;
-        const Annotation: Annotation;
-        const AnnotationBody: AnnotationBody;
-        const AnnotationList: AnnotationList;
-        const AnnotationPage: AnnotationPage;
-        const Canvas: Canvas;
-        const Collection: Collection;
-        const Duration: Duration;
-        const IAccessToken: IAccessToken
-        const IExternalResource: IExternalResource;
-        const IExternalResourceOptions: IExternalResourceOptions;
-        const IIIFResource: IIIFResource;
-        const IManifestoOptions: IManifestoOptions;
-        const LabelValuePair: LabelValuePair;
-        const Language: Language;
-        const LanguageMap: LanguageMap;
-        const Manifest: Manifest;
-        const ManifestResource: ManifestResource;
-        const ManifestType: ManifestType;
-        const Range: Range;
-        const Rendering: Rendering;
-        const Resource: Resource;
-        const Sequence: Sequence;
-        const Service: Service;
-        const Size: Size;
-        const StatusCode: StatusCode;
-        const Thumb: Thumb;
-        const Thumbnail: Thumbnail;
-        const TreeNode: TreeNode;
-        const TreeNodeType: TreeNodeType;
-        const Utils: Utils;
+        export function loadManifest(uri: string): Promise<string>;
+        export function parseManifest(manifest: string, options?: IManifestoOptions | undefined): IIIFResource | null;
+        export const Annotation: Annotation;
+        export const AnnotationBody: AnnotationBody;
+        export const AnnotationList: AnnotationList;
+        export const AnnotationPage: AnnotationPage;
+        export const Canvas: Canvas;
+        export const Collection: Collection;
+        export const Duration: Duration;
+        export const IAccessToken: IAccessToken
+        export const IExternalResource: IExternalResource;
+        export const IExternalResourceOptions: IExternalResourceOptions;
+        export const IIIFResource: IIIFResource;
+        export const IManifestoOptions: IManifestoOptions;
+        export const LabelValuePair: LabelValuePair;
+        export const Language: Language;
+        export const LanguageMap: LanguageMap;
+        export const Manifest: Manifest;
+        export const ManifestResource: ManifestResource;
+        export const ManifestType: ManifestType;
+        export const Range: Range;
+        export const Rendering: Rendering;
+        export const Resource: Resource;
+        export const Sequence: Sequence;
+        export const Service: Service;
+        export const Size: Size;
+        export const StatusCode: StatusCode;
+        export const Thumb: Thumb;
+        export const Thumbnail: Thumbnail;
+        export const TreeNode: TreeNode;
+        export const TreeNodeType: TreeNodeType;
+        export const Utils: Utils;
     }
 }
