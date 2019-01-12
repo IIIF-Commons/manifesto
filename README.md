@@ -14,11 +14,6 @@ Getting Started
 https://iiif-commons.github.io/manifesto/
 
 
-### Tutorial
-
-http://blog.edsilv.com/manifesto/
-
-
 ### Developer Setup
 
     git clone https://github.com/iiif-commons/manifesto.git
