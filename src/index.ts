@@ -30,78 +30,79 @@ export * from "./TreeNodeType";
 export * from "./Utils";
 export * from "@iiif/vocabulary";
 
-import { Annotation } from "./Annotation";
-import { AnnotationBody } from "./AnnotationBody";
-import { AnnotationList } from "./AnnotationList";
-import { AnnotationPage } from "./AnnotationPage";
-import { Canvas } from "./Canvas";
-import { Collection } from "./Collection";
-import { Duration } from "./Duration";
-import { IAccessToken } from "./IAccessToken";
-import { IExternalResource } from "./IExternalResource";
-import { IExternalResourceOptions } from "./IExternalResourceOptions";
-import { IIIFResource } from "./IIIFResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { LabelValuePair } from "./LabelValuePair";
-import { Language } from "./Language";
-import { LanguageMap } from "./LanguageMap";
-import { Manifest } from "./Manifest";
-import { ManifestResource } from "./ManifestResource";
-import { ManifestType } from "./ManifestType";
-import { Rendering } from "./Rendering";
-import { Resource } from "./Resource";
-import { Sequence } from "./Sequence";
-import { Service } from "./Service";
-import { Size } from "./Size";
-import { StatusCode } from "./StatusCode";
-import { Thumb } from "./Thumb";
-import { Thumbnail } from "./Thumbnail";
-import { TreeNode } from "./TreeNode";
-import { TreeNodeType } from "./TreeNodeType";
-import { Utils } from "./Utils";
+import { Annotation as TAnnotation } from "./Annotation";
+import { AnnotationBody as TAnnotationBody } from "./AnnotationBody";
+import { AnnotationList as TAnnotationList } from "./AnnotationList";
+import { AnnotationPage as TAnnotationPage } from "./AnnotationPage";
+import { Canvas as TCanvas } from "./Canvas";
+import { Collection as TCollection } from "./Collection";
+import { Duration as TDuration } from "./Duration";
+import { IAccessToken as TIAccessToken } from "./IAccessToken";
+import { IExternalResource as TIExternalResource } from "./IExternalResource";
+import { IExternalResourceOptions as TIExternalResourceOptions } from "./IExternalResourceOptions";
+import { IIIFResource as TIIIFResource } from "./IIIFResource";
+import { IManifestoOptions as TIManifestoOptions } from "./IManifestoOptions";
+import { LabelValuePair as TLabelValuePair } from "./LabelValuePair";
+import { Language as TLanguage } from "./Language";
+import { LanguageMap as TLanguageMap } from "./LanguageMap";
+import { Manifest as TManifest } from "./Manifest";
+import { ManifestResource as TManifestResource } from "./ManifestResource";
+import { ManifestType as TManifestType } from "./ManifestType";
+import { Rendering as TRendering } from "./Rendering";
+import { Range as TRange } from "./Range";
+import { Resource as TResource } from "./Resource";
+import { Sequence as TSequence } from "./Sequence";
+import { Service as TService } from "./Service";
+import { Size as TSize } from "./Size";
+import { StatusCode as TStatusCode } from "./StatusCode";
+import { Thumb as TThumb } from "./Thumb";
+import { Thumbnail as TThumbnail } from "./Thumbnail";
+import { TreeNode as TTreeNode } from "./TreeNode";
+import { TreeNodeType as TTreeNodeType } from "./TreeNodeType";
+import { Utils as TUtils } from "./Utils";
 
-export const loadManifest = (uri: string) => {
-    return Utils.loadManifest(uri);
+export const loadManifest: (uri: string) => Promise<string> = (uri: string) => {
+    return TUtils.loadManifest(uri);
 }
 
-export const parseManifest = (manifest: string, options?: IManifestoOptions) => {
-    return Utils.parseManifest(manifest, options);
+export const parseManifest: (manifest: string, options?: TIManifestoOptions | undefined) => TIIIFResource | null = (manifest: string, options?: TIManifestoOptions) => {
+    return TUtils.parseManifest(manifest, options);
 }
 
 // global types
 declare global {
     namespace manifesto {
-        export function loadManifest(uri: string): Promise<string>;
-        export function parseManifest(manifest: string, options?: IManifestoOptions | undefined): IIIFResource | null;
-        export const Annotation: Annotation;
-        export const AnnotationBody: AnnotationBody;
-        export const AnnotationList: AnnotationList;
-        export const AnnotationPage: AnnotationPage;
-        export const Canvas: Canvas;
-        export const Collection: Collection;
-        export const Duration: Duration;
-        export const IAccessToken: IAccessToken
-        export const IExternalResource: IExternalResource;
-        export const IExternalResourceOptions: IExternalResourceOptions;
-        export const IIIFResource: IIIFResource;
-        export const IManifestoOptions: IManifestoOptions;
-        export const LabelValuePair: LabelValuePair;
-        export const Language: Language;
-        export const LanguageMap: LanguageMap;
-        export const Manifest: Manifest;
-        export const ManifestResource: ManifestResource;
-        export const ManifestType: ManifestType;
-        export const Range: Range;
-        export const Rendering: Rendering;
-        export const Resource: Resource;
-        export const Sequence: Sequence;
-        export const Service: Service;
-        export const Size: Size;
-        export const StatusCode: StatusCode;
-        export const Thumb: Thumb;
-        export const Thumbnail: Thumbnail;
-        export const TreeNode: TreeNode;
-        export const TreeNodeType: TreeNodeType;
-        export const Utils: Utils;
+        function loadManifest(uri: string): Promise<string>;
+        function parseManifest(manifest: string, options?: TIManifestoOptions | undefined): TIIIFResource | null;
+        type Annotation = TAnnotation;
+        type AnnotationBody = TAnnotationBody;
+        type AnnotationList = TAnnotationList;
+        type AnnotationPage = TAnnotationPage;
+        type Canvas = TCanvas;
+        type Collection = TCollection;
+        type Duration = TDuration;
+        type IAccessToken = TIAccessToken;
+        type IExternalResource = TIExternalResource;
+        type IExternalResourceOptions = TIExternalResourceOptions;
+        type IIIFResource = TIIIFResource;
+        type IManifestoOptions = TIManifestoOptions;
+        type LabelValuePair = TLabelValuePair;
+        type Language = TLanguage;
+        type LanguageMap = TLanguageMap;
+        type Manifest = TManifest;
+        type ManifestResource = TManifestResource;
+        type ManifestType = TManifestType;
+        type Range = TRange;
+        type Rendering = TRendering;
+        type Resource = TResource;
+        type Sequence = TSequence;
+        type Service = TService;
+        type Size = TSize;
+        type StatusCode = TStatusCode;
+        type Thumb = TThumb;
+        type Thumbnail = TThumbnail;
+        type TreeNode = TTreeNode;
+        type TreeNodeType = TTreeNodeType;
+        type Utils = TUtils;
     }
 }
