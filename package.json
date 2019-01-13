@@ -1,12 +1,12 @@
 {
   "name": "manifesto.js",
-  "version": "4.0.0-pre.3",
+  "version": "4.0.0-pre.4",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-esmodule/index.js",
-  "types": "./dist-esmodule/index.d.ts",
+  "types": "./types/index.d.ts",
   "scripts": {
-    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var",
-    "build": "npm run clean && tsc && tsc -m es6 --outDir dist-esmodule && webpack",
+    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
+    "build": "npm run clean && tsc && tsc -m es6 --outDir dist-esmodule && webpack && npx dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build-docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
     "prepare": "npm run build",
     "test": "mocha"
@@ -32,13 +32,14 @@
     "@types/node": "10.7.1",
     "awesome-typescript-loader": "^5.2.1",
     "chai": "2.3.0",
+    "dts-bundle-generator": "^2.0.0",
     "finalhandler": "0.4.0",
     "http": "0.0.0",
     "mocha": "2.2.4",
     "rimraf": "^2.6.2",
     "serve-static": "1.10.0",
     "typedoc": "0.14.0",
-    "typescript": "3.0.1",
+    "typescript": "3.2.2",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
     "yargs": "3.10.0"

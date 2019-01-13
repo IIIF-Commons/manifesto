@@ -46,7 +46,7 @@ export class Annotation extends ManifestResource {
         const motivation: string = this.getProperty('motivation');
 
         if (motivation) {
-            return <AnnotationMotivation>motivation.toLowerCase();
+            return AnnotationMotivation[motivation.toLowerCase()];
         }
 
         return null;
