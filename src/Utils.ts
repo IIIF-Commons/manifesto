@@ -93,8 +93,8 @@ namespace Manifesto {
             }
         }
 
-        static normaliseType(type: string): string {
-            type = type.toLowerCase();
+        static normaliseType(type?: string): string {
+            type = (type || '').toLowerCase();
             
             if (type.indexOf(':') !== -1) {
                 const split: string[] = type.split(':');
