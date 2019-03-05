@@ -28,7 +28,6 @@ export * from "./Thumbnail";
 export * from "./TreeNode";
 export * from "./TreeNodeType";
 export * from "./Utils";
-export * from "@iiif/vocabulary";
 
 import { IIIFResource } from "./IIIFResource";
 import { IManifestoOptions } from "./IManifestoOptions";
