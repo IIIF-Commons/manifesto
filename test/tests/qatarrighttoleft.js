@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var ViewingDirection = require('@iiif/vocabulary').ViewingDirection;
 
 var manifest, sequence;
 
@@ -21,6 +22,6 @@ describe('#loadsQatarRightToLeft', function() {
 
     it('has a viewingdirection of right-to-left', function () {
         var viewingDirection = sequence.getViewingDirection();
-        expect(viewingDirection).to.equal("right-to-left");
+        expect(viewingDirection).to.equal(ViewingDirection.RIGHT_TO_LEFT);
     });
 });

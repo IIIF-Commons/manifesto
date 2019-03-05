@@ -3,6 +3,7 @@ import { ManifestResource } from "./ManifestResource";
 import { IManifestoOptions } from "./IManifestoOptions";
 import { AnnotationBody } from "./AnnotationBody";
 import { Resource } from "./Resource";
+//const AnnotationMotivationEnum = require('@iiif/vocabulary').AnnotationMotivation;
 
 export class Annotation extends ManifestResource {
 
@@ -46,7 +47,8 @@ export class Annotation extends ManifestResource {
         const motivation: string = this.getProperty('motivation');
 
         if (motivation) {
-            return AnnotationMotivation[motivation.toLowerCase()];
+            //const key: string | undefined = Object.keys(AnnotationMotivationEnum).find(k => AnnotationMotivationEnum[k] === motivation);
+            return motivation as AnnotationMotivation;
         }
 
         return null;

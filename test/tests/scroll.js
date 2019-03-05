@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
 
 var manifest, sequence;
 
@@ -21,7 +22,7 @@ describe('#loadsScroll', function() {
         expect(annotation).to.exist;
         var resource = annotation.getResource();
         expect(resource).to.exist;
-        var profile = manifesto.ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1;
+        var profile = ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1;
         imageService = resource.getService(profile);
         expect(imageService).to.exist;
     });

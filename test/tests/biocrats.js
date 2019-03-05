@@ -2,6 +2,9 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var RenderingFormat = require('@iiif/vocabulary').RenderingFormat;
+var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
+var ViewingHint = require('@iiif/vocabulary').ViewingHint;
 
 var manifest, sequence;
 
@@ -40,7 +43,7 @@ describe('#loadsBiocrats', function() {
     });
 
     it('has a search service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.SEARCH_0);
+        var service = manifest.getService(ServiceProfile.SEARCH_0);
         expect(service).to.exist;
     });
 
@@ -51,11 +54,11 @@ describe('#loadsBiocrats', function() {
 
     it('sequence has a viewingHint', function () {
         var viewingHint = sequence.getViewingHint();
-        viewingHint.should.equal('paged');
+        viewingHint.should.equal(ViewingHint.PAGED);
     });
 
     it('sequence has a rendering', function () {
-        var rendering = sequence.getRendering(manifesto.RenderingFormat.PDF);
+        var rendering = sequence.getRendering(RenderingFormat.PDF);
         rendering.getFormat().should.equal('application/pdf');
     });
 

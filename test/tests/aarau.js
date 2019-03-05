@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
 
 var manifest;
 
@@ -16,7 +17,7 @@ describe('#loadsAarau', function() {
     });
 
     it('has no search service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.SEARCH_0);
+        var service = manifest.getService(ServiceProfile.SEARCH_0);
         expect(service).to.not.exist;
     });
 });

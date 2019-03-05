@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var IIIFResourceType = require('@iiif/vocabulary').IIIFResourceType;
 
 var collection, manifest, firstCollection, secondCollection;
 
@@ -17,7 +18,7 @@ describe('#loadsTopNestedManifest', function() {
 
     it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();
-        type.should.equal('collection');
+        type.should.equal(IIIFResourceType.COLLECTION);
     });
 
     it('has a collection count of 1', function () {

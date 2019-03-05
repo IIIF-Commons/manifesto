@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
 
 var manifest, sequence, element;
 
@@ -31,7 +32,7 @@ describe('#loadsStoryOfWellcome', function() {
     });
 
     it('element has an IxIF service (used for auth)', function () {
-        var profile = manifesto.ServiceProfile.IXIF;
+        var profile = ServiceProfile.IXIF;
         var service = element.getService(profile);
         expect(service).to.exist;
     });

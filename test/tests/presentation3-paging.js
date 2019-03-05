@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var Behavior = require('@iiif/vocabulary').Behavior;
 
 var manifest;
 
@@ -17,7 +18,7 @@ describe('#presentation3Paging', function() {
     describe('#isPaged', function() {
         it('is paged', function () {
             var behavior = manifest.getBehavior();
-            behavior.should.equal('paged');
+            behavior.should.equal(Behavior.PAGED);
         });
     });
     

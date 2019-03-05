@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var Behavior = require('@iiif/vocabulary').Behavior;
 
 var manifest;
 
@@ -17,6 +18,6 @@ describe('audio manifest', function() {
     it('has a behavior of auto-advance', function () {
         var behavior = manifest.getBehavior();
         expect(behavior).to.exist;
-        expect(behavior === 'auto-advance');
+        expect(behavior === Behavior.AUTO_ADVANCE);
     });
 });

@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
 
 var manifest;
 
@@ -15,7 +16,7 @@ describe('#loadsWitnessToPeter', function() {
     });
 
     it('has no autocomplete service', function () {
-        var service = manifest.getService(manifesto.ServiceProfile.SEARCH_0_AUTO_COMPLETE);
+        var service = manifest.getService(ServiceProfile.SEARCH_0_AUTO_COMPLETE);
         expect(service).to.not.exist;
     });
 });

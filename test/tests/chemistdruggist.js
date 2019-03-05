@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var IIIFResourceType = require('@iiif/vocabulary').IIIFResourceType;
 
 var collection, manifest, firstCollection, secondCollection, secondManifest, thirdManifest;
 
@@ -17,7 +18,7 @@ describe('#loadsChemistDruggist', function() {
 
     it('has a IIIFResourceType property of "collection"', function () {
         var type = collection.getIIIFResourceType();
-        type.should.equal('collection');
+        type.should.equal(IIIFResourceType.COLLECTION);
         expect(collection.isManifest()).to.equal(false);  
         expect(collection.isCollection()).to.equal(true);        
     });

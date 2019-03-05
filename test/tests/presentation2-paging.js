@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var ViewingHint = require('@iiif/vocabulary').ViewingHint;
 
 var manifest;
 
@@ -17,7 +18,7 @@ describe('#presentation2Paging', function() {
     describe('#isPaged', function() {
         it('is paged', function () {
             var viewingHint = manifest.getViewingHint();
-            viewingHint.should.equal('paged');
+            viewingHint.should.equal(ViewingHint.PAGED);
         });
     });
     

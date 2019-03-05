@@ -41,7 +41,7 @@ export class Resource extends ManifestResource {
         const type: string = this.getProperty('type');
 
         if (type) {
-            return <ExternalResourceType>Utils.normaliseType(type);
+            return Utils.normaliseType(type) as ExternalResourceType;
         }
 
         return null;

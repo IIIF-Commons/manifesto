@@ -2,6 +2,8 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
+var AnnotationMotivation = require('@iiif/vocabulary').AnnotationMotivation;
+var ExternalResourceType = require('@iiif/vocabulary').ExternalResourceType;
 
 describe('#loadsAnnotationList', function() {
   var manifest, canvas, annotationList;
@@ -21,9 +23,9 @@ describe('#loadsAnnotationList', function() {
 
         var annotation = arrayOfList[0];
         should.equal(annotation.getBody().length, 0);
-        should.equal(annotation.getMotivation().toString(), 'sc:painting');
+        should.equal(annotation.getMotivation(), AnnotationMotivation.PAINTING);
         should.equal(annotation.getOn(), 'https://wellcomelibrary.org/iiif/b18035723/canvas/c2#xywh=928,317,609,56');
-        should.equal(annotation.getResource().getType().toString(), 'contentastext');
+        should.equal(annotation.getResource().getType(), ExternalResourceType.CONTENT_AS_TEXT);
         done();
       });
     });
