@@ -1,4 +1,5 @@
 import { ManifestResource } from "./ManifestResource";
+const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').IIIFResourceType;
 
 export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;
@@ -105,14 +106,14 @@ export class IIIFResource extends ManifestResource {
     }
 
     isCollection(): boolean {
-        if (this.getIIIFResourceType() === IIIFResourceType.COLLECTION) {
+        if (this.getIIIFResourceType() === IIIFResourceTypeEnum.COLLECTION) {
             return true;
         }
         return false;
     }
 
     isManifest(): boolean {
-        if (this.getIIIFResourceType() === IIIFResourceType.MANIFEST) {
+        if (this.getIIIFResourceType() === IIIFResourceTypeEnum.MANIFEST) {
             return true;
         }
         return false;

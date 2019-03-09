@@ -6,7 +6,7 @@ import { TreeNode } from "./TreeNode";
 import { Utils } from "./Utils";
 import { TreeNodeType } from "./TreeNodeType";
 import { LanguageMap } from "./LanguageMap";
-
+const ViewingDirectionEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingDirection;
 export class Collection extends IIIFResource {
     public items: IIIFResource[] = [];
     private _collections: Collection[] | null = null;
@@ -73,7 +73,7 @@ export class Collection extends IIIFResource {
             return this.getProperty('viewingDirection');
         }
 
-        return ViewingDirection.LEFT_TO_RIGHT;
+        return ViewingDirectionEnum.LEFT_TO_RIGHT;
     }
 
     /**
@@ -101,7 +101,7 @@ export class Collection extends IIIFResource {
                 tree.label = manifest.parentLabel || LanguageMap.getValue(manifest.getLabel(), this.options.locale) || 'manifest ' + (i + 1);
                 tree.navDate = manifest.getNavDate();
                 tree.data.id = manifest.id;
-                tree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST.toString());
+                tree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST);
                 parentCollection.defaultTree.addNode(tree);
             }
         }
@@ -115,7 +115,7 @@ export class Collection extends IIIFResource {
                 tree.label = collection.parentLabel || LanguageMap.getValue(collection.getLabel(), this.options.locale) || 'collection ' + (i + 1);
                 tree.navDate = collection.getNavDate();
                 tree.data.id = collection.id;
-                tree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION.toString());
+                tree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION);
                 parentCollection.defaultTree.addNode(tree);
 
                 this._parseCollections(collection);

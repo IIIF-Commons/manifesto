@@ -6,6 +6,7 @@ import { Utils } from "./Utils";
 import { Behavior, ViewingDirection, ViewingHint } from "@iiif/vocabulary";
 import { LanguageMap } from "./LanguageMap";
 import { TreeNodeType } from "./TreeNodeType";
+const BehaviorEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').Behavior;
 
 export class Range extends ManifestResource {
     private _ranges: Range[] | null = null;
@@ -157,7 +158,7 @@ export class Range extends ManifestResource {
     private _parseTreeNode(node: TreeNode, range: Range): void {
         node.label = <string>LanguageMap.getValue(range.getLabel(), this.options.locale);
         node.data = range;
-        node.data.type = Utils.normaliseType(TreeNodeType.RANGE.toString());
+        node.data.type = Utils.normaliseType(TreeNodeType.RANGE);
         range.treeNode = node;
 
         const ranges: Range[] = range.getRanges();
@@ -168,7 +169,7 @@ export class Range extends ManifestResource {
                 const childRange = ranges[i];
                 const behavior: Behavior | null = childRange.getBehavior();
 
-                if (behavior && behavior.toString() === Behavior.NO_NAV.toString()) {
+                if (behavior === BehaviorEnum.NO_NAV) {
                     continue;
                 } else {
                     const childNode: TreeNode = new TreeNode();

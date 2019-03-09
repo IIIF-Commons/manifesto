@@ -1,4 +1,5 @@
 import { JSONLDResource } from "./JSONLDResource";
+const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').IIIFResourceType;
 
 export class ManifestResource extends JSONLDResource {
     externalResource: IExternalResource;
@@ -108,27 +109,27 @@ export class ManifestResource extends JSONLDResource {
     }
 
     isAnnotation(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceType.ANNOTATION;
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.ANNOTATION;
     }
 
     isCanvas(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceType.CANVAS;
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.CANVAS;
     }
 
     isCollection(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceType.COLLECTION;
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.COLLECTION;
     }
 
     isManifest(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceType.MANIFEST;
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.MANIFEST;
     }
 
     isRange(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceType.RANGE;
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.RANGE;
     }
 
     isSequence(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceType.SEQUENCE;
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.SEQUENCE;
     }
 }
 

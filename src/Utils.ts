@@ -9,6 +9,7 @@ import { TreeNode } from "./TreeNode";
 import { Deserialiser } from "./Serialisation";
 import { MediaType, ServiceProfile } from "@iiif/vocabulary";
 import { IIIFResource } from "./IIIFResource";
+const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 
 const http = require('http');
 const https = require('https');
@@ -24,18 +25,18 @@ export class Utils {
 
     static getImageQuality(profile: ServiceProfile): string {
 
-        if (profile === ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1 ||
-            profile === ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2 ||
-            profile === ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_1 ||
-            profile === ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2 ||
-            profile === ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1 ||
-            profile === ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2 ||
-            profile === ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1 ||
-            profile === ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2 ||
-            profile === ServiceProfile.IMAGE_1_LEVEL_1 ||
-            profile === ServiceProfile.IMAGE_1_PROFILE_LEVEL_1 ||
-            profile === ServiceProfile.IMAGE_1_LEVEL_2 ||
-            profile === ServiceProfile.IMAGE_1_PROFILE_LEVEL_2) {
+        if (profile === ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_1 ||
+            profile === ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_2 ||
+            profile === ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_1 ||
+            profile === ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_2 ||
+            profile === ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_1 ||
+            profile === ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_2 ||
+            profile === ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_1 ||
+            profile === ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_2 ||
+            profile === ServiceProfileEnum.IMAGE_1_LEVEL_1 ||
+            profile === ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_1 ||
+            profile === ServiceProfileEnum.IMAGE_1_LEVEL_2 ||
+            profile === ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_2) {
             return 'native';
         }
 
@@ -127,28 +128,28 @@ export class Utils {
 
     static isImageProfile(profile: ServiceProfile): boolean {
 
-        if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_2)){
+        if (Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_PROFILE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_PROFILE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_PROFILE_LEVEL_2)){
             return true;
         }
 
@@ -157,14 +158,14 @@ export class Utils {
 
     static isLevel0ImageProfile(profile: ServiceProfile): boolean {
 
-        if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_0) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_0)){
+        if (Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_LEVEL_0) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_PROFILE_LEVEL_0)){
             return true;
         }
 
@@ -173,14 +174,14 @@ export class Utils {
 
     static isLevel1ImageProfile(profile: ServiceProfile): boolean {
 
-        if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_1) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_1)){
+        if (Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_LEVEL_1) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_PROFILE_LEVEL_1)){
             return true;
         }
 
@@ -189,14 +190,14 @@ export class Utils {
 
     static isLevel2ImageProfile(profile: ServiceProfile): boolean {
         
-        if (Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_1_PROFILE_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_LEVEL_2) ||
-            Utils.normalisedUrlsMatch(profile.toString(), ServiceProfile.IMAGE_2_PROFILE_LEVEL_2)){
+        if (Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_COMPLIANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_COMPLIANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_0_CONFORMANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_CONFORMANCE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_1_PROFILE_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_LEVEL_2) ||
+            Utils.normalisedUrlsMatch(profile, ServiceProfileEnum.IMAGE_2_PROFILE_LEVEL_2)){
             return true;
         }
 
@@ -471,7 +472,7 @@ export class Utils {
         authService: Service): Promise<IExternalResource | void> {
 
         // attempting token interaction for " + authService["@id"]
-        const tokenService: Service | null = authService.getService(ServiceProfile.AUTH_1_TOKEN);
+        const tokenService: Service | null = authService.getService(ServiceProfileEnum.AUTH_1_TOKEN);
 
         if (tokenService) {
             // found token service: " + tokenService["@id"]);

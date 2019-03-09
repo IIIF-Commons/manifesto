@@ -1,4 +1,4 @@
-import { ServiceProfile, ViewingHint, Behavior, ViewingDirection } from "@iiif/vocabulary";
+import { ViewingHint, Behavior, ViewingDirection } from "@iiif/vocabulary";
 import { IIIFResource } from "./IIIFResource";
 import { Sequence } from "./Sequence";
 import { IManifestoOptions } from "./IManifestoOptions";
@@ -9,6 +9,9 @@ import { TreeNodeType } from "./TreeNodeType";
 import { ManifestType } from "./ManifestType";
 import { Range } from "./Range";
 import { Service } from "./Service";
+const BehaviorEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').Behavior;
+const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ServiceProfile;
+const ViewingHintEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingHint;
 
 export class Manifest extends IIIFResource {
     public index: number = 0;
@@ -57,7 +60,7 @@ export class Manifest extends IIIFResource {
         
         super.getDefaultTree();
 
-        this.defaultTree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST.toString());
+        this.defaultTree.data.type = Utils.normaliseType(TreeNodeType.MANIFEST);
 
         if (!this.isLoaded) {
             return this.defaultTree;
@@ -83,7 +86,7 @@ export class Manifest extends IIIFResource {
 
             for (let i = 0; i < this.__jsonld.structures.length; i++) {
                 const json: any = this.__jsonld.structures[i];
-                if (json.viewingHint === ViewingHint.TOP){
+                if (json.viewingHint === ViewingHintEnum.TOP){
                     topRanges.push(json);
                 }
             }
@@ -265,7 +268,7 @@ export class Manifest extends IIIFResource {
     }
 
     getManifestType(): ManifestType {
-        const service: Service = <Service>this.getService(ServiceProfile.UI_EXTENSIONS);
+        const service: Service = <Service>this.getService(ServiceProfileEnum.UI_EXTENSIONS);
         if (service) {
             return service.getProperty('manifestType');
         }
@@ -273,7 +276,7 @@ export class Manifest extends IIIFResource {
     }
 
     getTrackingLabel(): string {
-        const service: Service = <Service>this.getService(ServiceProfile.TRACKING_EXTENSIONS);
+        const service: Service = <Service>this.getService(ServiceProfileEnum.TRACKING_EXTENSIONS);
         if (service){
             return service.getProperty('trackingLabel');
         }
@@ -289,13 +292,13 @@ export class Manifest extends IIIFResource {
         const viewingHint: ViewingHint | null = this.getViewingHint();
 
         if (viewingHint) {
-            return viewingHint === ViewingHint.PAGED;
+            return viewingHint === ViewingHintEnum.PAGED;
         }
 
         const behavior: Behavior | null = this.getBehavior();
 
         if (behavior) {
-            return behavior === Behavior.PAGED;
+            return behavior === BehaviorEnum.PAGED;
         }
 
         return false;
