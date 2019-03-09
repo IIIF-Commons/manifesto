@@ -7,8 +7,8 @@ import { Utils } from "./Utils";
 import { LanguageMap } from "./LanguageMap";
 import { Thumb } from "./Thumb";
 import { Manifest } from "./Manifest";
-const ViewingDirectionEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingDirection;
-const ViewingHintEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingHint;
+const ViewingDirectionEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingDirection;
+const ViewingHintEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingHint;
 export class Sequence extends ManifestResource {
     public items: Canvas[] = [];
     private _thumbnails: Thumbnail[] | null = null;

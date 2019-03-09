@@ -9,9 +9,9 @@ import { TreeNodeType } from "./TreeNodeType";
 import { ManifestType } from "./ManifestType";
 import { Range } from "./Range";
 import { Service } from "./Service";
-const BehaviorEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').Behavior;
-const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ServiceProfile;
-const ViewingHintEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingHint;
+const BehaviorEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').Behavior;
+const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+const ViewingHintEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingHint;
 
 export class Manifest extends IIIFResource {
     public index: number = 0;

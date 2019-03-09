@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var ViewingHint = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingHint;
+var ViewingHint = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingHint;
 
 var manifest;
 

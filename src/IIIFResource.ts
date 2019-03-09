@@ -1,5 +1,5 @@
 import { ManifestResource } from "./ManifestResource";
-const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/index.js').IIIFResourceType;
+const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
 
 export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;

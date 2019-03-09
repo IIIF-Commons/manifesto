@@ -2,8 +2,8 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var AnnotationMotivation = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').AnnotationMotivation;
-var ExternalResourceType = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ExternalResourceType;
+var AnnotationMotivation = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').AnnotationMotivation;
+var ExternalResourceType = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').ExternalResourceType;
 
 describe('#loadsAnnotationList', function() {
   var manifest, canvas, annotationList;
