@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
+var ServiceProfile = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ServiceProfile;
 
 var manifest;
 

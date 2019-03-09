@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var ViewingDirection = require('@iiif/vocabulary').ViewingDirection;
+var ViewingDirection = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingDirection;
 
 var manifest, sequence;
 

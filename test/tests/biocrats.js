@@ -2,9 +2,10 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var RenderingFormat = require('@iiif/vocabulary').RenderingFormat;
-var ServiceProfile = require('@iiif/vocabulary').ServiceProfile;
-var ViewingHint = require('@iiif/vocabulary').ViewingHint;
+
+var RenderingFormat = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').RenderingFormat;
+var ServiceProfile = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ServiceProfile;
+var ViewingHint = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').ViewingHint;
 
 var manifest, sequence;
 

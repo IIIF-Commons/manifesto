@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var Behavior = require('@iiif/vocabulary').Behavior;
+var Behavior = require('../../node_modules/@iiif/vocabulary/dist-commonjs/index.js').Behavior;
 
 var manifest;
 
