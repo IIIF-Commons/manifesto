@@ -16,9 +16,9 @@ describe('#loadsSctaGracilis', function() {
         });
     });
 
-    it('has no search service', function () {
-        var image = manifest.getSequences()[0].getCanvases()[0].getCanonicalImageUri()
-        expect(image).to.equal("https://loris2.scta.info/lon/L11v.jpg/full/2212,/0/default.jpg")
+    it('has image', function () {
+        var image = manifest.getSequences()[0].getCanvases()[0].getCanonicalImageUri();
+        expect(image).to.equal("https://loris2.scta.info/lon/L11v.jpg/full/2212,/0/native.jpg")
     });
 });
  
