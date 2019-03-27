@@ -72,7 +72,7 @@ namespace Manifesto {
             if (collection.__jsonld.collections) {
                 items = collection.__jsonld.collections;
             } else if (collection.__jsonld.items) {
-                items = collection.__jsonld.items.en().where(m => m.type.toLowerCase() === 'collection').toArray();
+                items = collection.__jsonld.items.filter(m => m.type.toLowerCase() === 'collection');
             }
 
             if (items) {
@@ -100,7 +100,7 @@ namespace Manifesto {
             if (collection.__jsonld.manifests) {
                 items = collection.__jsonld.manifests;
             } else if (collection.__jsonld.items) {
-                items = collection.__jsonld.items.en().where(m => m.type.toLowerCase() === 'manifest').toArray();
+                items = collection.__jsonld.items.filter(m => m.type.toLowerCase() === 'manifest');
             }
 
             if (items) {
@@ -141,7 +141,7 @@ namespace Manifesto {
                     const item: IIIIFResource | null = this.parseItem(items[i], options);
                     if (!item) return;
                     // only add to items if not already parsed from backwards-compatible collections/manifests arrays
-                    if (collection.items.en().where(m => m.id === (<IIIFResource>item).id).first()) {
+                    if (collection.items.filter(m => m.id === (<IIIFResource>item).id)[0]) {
                         continue;
                     }
                     item.index = i;

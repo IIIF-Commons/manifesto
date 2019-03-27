@@ -54,8 +54,7 @@ namespace Manifesto {
             if (languageCollection.length) {
 
                 if (locale) {
-                    const language: Language = languageCollection.en().where(t => t.locale === locale || Utils.getInexactLocale(t.locale) === Utils.getInexactLocale(locale)).first()
-                
+                    const language: Language = languageCollection.filter(t => t.locale === locale || Utils.getInexactLocale(t.locale) === Utils.getInexactLocale(locale))[0]
                     if (language) {
                         return language.value;
                     }

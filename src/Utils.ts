@@ -827,23 +827,28 @@ namespace Manifesto {
         }
 
         static getResourceById(parentResource: IJSONLDResource, id: string): IJSONLDResource {
-            return [<IJSONLDResource>parentResource.__jsonld].en().traverseUnique(x => Utils.getAllArrays(x))
-                .first(r => r['@id'] === id);
+          return <IJSONLDResource>Utils.traverseAndFind(parentResource.__jsonld, '@id', id);
         }
 
-        static getAllArrays(obj: any): any[] {
-            let all: any[] = <any>[].en();
+        
+        /**        
+         * Does a depth first traversal of an Object, returning an Object that
+         * matches provided k and v arguments
+         * @example Utils.traverseAndFind({foo: 'bar'}, 'foo', 'bar')       
+         */         
+        static traverseAndFind(object: any, k: string, v: string): object & void {
+          if (object.hasOwnProperty(k) && object[k] === v) {
+            return object;
+          }
 
-            if (!obj) return all;
-
-            for (let key in obj) {
-                var val = obj[key];
-                if (Array.isArray(val)) {
-                    all = all.concat(<never[]>val)
-                }
+          for (var i = 0; i < Object.keys(object).length; i++) {
+            if (typeof object[Object.keys(object)[i]] === "object") {
+              var o = Utils.traverseAndFind(object[Object.keys(object)[i]], k, v);
+              if (o != null) {
+                return o;
+              }
             }
-
-            return all;
+          }
         }
 
         static getServices(resource: any): IService[] {

@@ -87,7 +87,7 @@ namespace Manifesto {
                 return this._ranges;
             }
             
-            return this._ranges = <IRange[]>this.items.en().where(m => m.isRange()).toArray();
+            return this._ranges = <IRange[]>this.items.filter(m => m.isRange());
         }
 
         getBehavior(): Behavior | null {

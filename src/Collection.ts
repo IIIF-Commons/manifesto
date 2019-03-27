@@ -13,16 +13,14 @@ namespace Manifesto {
             if (this._collections) {
                 return this._collections;
             }
-            
-            return this._collections = <ICollection[]>this.items.en().where(m => m.isCollection()).toArray();
+            return this._collections = <ICollection[]>this.items.filter(m => m.isCollection());
         }
 
         getManifests(): IManifest[] {
             if (this._manifests) {
                 return this._manifests;
             }
-            
-            return this._manifests = <IManifest[]>this.items.en().where(m => m.isManifest()).toArray();
+            return this._manifests = <IManifest[]>this.items.filter(m => m.isManifest());
         }
 
         getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
