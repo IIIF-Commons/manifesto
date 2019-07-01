@@ -106,7 +106,7 @@ export class Canvas extends Resource {
         let maxDimensions: Size | null = null;
         let profile: any;
 
-        if (this.externalResource.data && this.externalResource.data.profile) {
+        if (this.externalResource && this.externalResource.data && this.externalResource.data.profile) {
             profile = this.externalResource.data.profile;
 
             if (Array.isArray(profile)) {
