@@ -65,54 +65,6 @@ namespace Manifesto {
             }
         }
 
-        // getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
-        //     const collections: ICollection[] = this.getCollections();
-
-        //     if (!collections[collectionIndex]) {
-        //         throw new Error("Collection index is outside range of array");
-        //     }
-            
-        //     const collection: ICollection = collections[collectionIndex];
-        //     collection.options.index = collectionIndex;
-        //     // id for collection MUST be dereferenceable
-        //     return <Promise<ICollection>>collection.load();
-        // }
-
-        // getManifestByIndex(manifestIndex: number): Promise<IManifest> {
-        //     const manifests: IManifest[] = this.getManifests();
-
-        //     if (!manifests[manifestIndex]) {
-        //         throw new Error("Manifest index is outside range of array");
-        //     }
-
-        //     const manifest: IManifest = manifests[manifestIndex];
-        //     manifest.options.index = manifestIndex;
-        //     return <Promise<IManifest>>manifest.load();
-        // }
-
-        // getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
-
-        //     if (!this.items[collectionIndex]) {
-        //         throw new Error("Collection index is outside range of array");
-        //     }
-            
-        //     const collection: ICollection = this.items[collectionIndex] as ICollection;
-        //     collection.options.index = collectionIndex;
-        //     // id for collection MUST be dereferenceable
-        //     return <Promise<ICollection>>collection.load();
-        // }
-
-        // getManifestByIndex(manifestIndex: number): Promise<IManifest> {
-
-        //     if (!this.items[manifestIndex]) {
-        //         throw new Error("Manifest index is outside range of array");
-        //     }
-
-        //     const manifest: IManifest = this.items[manifestIndex] as IManifest;
-        //     manifest.options.index = manifestIndex;
-        //     return <Promise<IManifest>>manifest.load();
-        // }
-
         getTotalCollections(): number {
             return this.getCollections().length;
         }
