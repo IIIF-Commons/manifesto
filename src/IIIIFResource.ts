@@ -11,6 +11,7 @@ namespace Manifesto {
         getRelated(): any;
         getRequiredStatement(): Manifesto.LabelValuePair | null;
         getSeeAlso(): any;
+        getTrackingLabel(): string;
         index: number;
         isCollection(): boolean;
         isLoaded: boolean;

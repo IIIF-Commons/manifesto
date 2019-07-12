@@ -26,27 +26,92 @@ namespace Manifesto {
         getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
             const collections: ICollection[] = this.getCollections();
 
-            if (!collections[collectionIndex]) {
-                throw new Error("Collection index is outside range of array");
+            let collection: ICollection | undefined;
+
+            for (let i = 0; i < collections.length; i++) {
+                let c: ICollection = collections[i];
+                if (c.index === collectionIndex) {
+                    collection = c;
+                }
+            }
+
+            if (collection) {
+                collection.options.index = collectionIndex;
+                // id for collection MUST be dereferenceable
+                return <Promise<ICollection>>collection.load();
+            } else {
+                throw new Error("Collection index not found");
             }
             
-            const collection: ICollection = collections[collectionIndex];
-            collection.options.index = collectionIndex;
-            // id for collection MUST be dereferenceable
-            return <Promise<ICollection>>collection.load();
         }
 
         getManifestByIndex(manifestIndex: number): Promise<IManifest> {
             const manifests: IManifest[] = this.getManifests();
 
-            if (!manifests[manifestIndex]) {
-                throw new Error("Manifest index is outside range of array");
+            let manifest: IManifest | undefined;
+
+            for (let i = 0; i < manifests.length; i++) {
+                let m: IManifest = manifests[i];
+                if (m.index === manifestIndex) {
+                    manifest = m;
+                }
             }
 
-            const manifest: IManifest = manifests[manifestIndex];
-            manifest.options.index = manifestIndex;
-            return <Promise<IManifest>>manifest.load();
+            if (manifest) {
+                manifest.options.index = manifestIndex;
+                return <Promise<IManifest>>manifest.load();
+            } else {
+                throw new Error("Manifest index not found");
+            }
         }
+
+        // getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
+        //     const collections: ICollection[] = this.getCollections();
+
+        //     if (!collections[collectionIndex]) {
+        //         throw new Error("Collection index is outside range of array");
+        //     }
+            
+        //     const collection: ICollection = collections[collectionIndex];
+        //     collection.options.index = collectionIndex;
+        //     // id for collection MUST be dereferenceable
+        //     return <Promise<ICollection>>collection.load();
+        // }
+
+        // getManifestByIndex(manifestIndex: number): Promise<IManifest> {
+        //     const manifests: IManifest[] = this.getManifests();
+
+        //     if (!manifests[manifestIndex]) {
+        //         throw new Error("Manifest index is outside range of array");
+        //     }
+
+        //     const manifest: IManifest = manifests[manifestIndex];
+        //     manifest.options.index = manifestIndex;
+        //     return <Promise<IManifest>>manifest.load();
+        // }
+
+        // getCollectionByIndex(collectionIndex: number): Promise<ICollection> {
+
+        //     if (!this.items[collectionIndex]) {
+        //         throw new Error("Collection index is outside range of array");
+        //     }
+            
+        //     const collection: ICollection = this.items[collectionIndex] as ICollection;
+        //     collection.options.index = collectionIndex;
+        //     // id for collection MUST be dereferenceable
+        //     return <Promise<ICollection>>collection.load();
+        // }
+
+        // getManifestByIndex(manifestIndex: number): Promise<IManifest> {
+
+        //     if (!this.items[manifestIndex]) {
+        //         throw new Error("Manifest index is outside range of array");
+        //     }
+
+        //     const manifest: IManifest = this.items[manifestIndex] as IManifest;
+        //     manifest.options.index = manifestIndex;
+        //     return <Promise<IManifest>>manifest.load();
+        // }
 
         getTotalCollections(): number {
             return this.getCollections().length;
@@ -74,6 +139,8 @@ namespace Manifesto {
         getDefaultTree(): ITreeNode {
 
             super.getDefaultTree();
+
+            //console.log("get default tree for ", this.id);
             
             this.defaultTree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION.toString());
 
@@ -86,6 +153,7 @@ namespace Manifesto {
         }
 
         private _parseManifests(parentCollection: ICollection) {
+            //console.log("parse manifests for ", parentCollection.id);
             if (parentCollection.getManifests() && parentCollection.getManifests().length) {
                 for (let i = 0; i < parentCollection.getManifests().length; i++) {
                     var manifest = parentCollection.getManifests()[i];
@@ -100,6 +168,7 @@ namespace Manifesto {
         }
 
         private _parseCollections(parentCollection: ICollection) {
+            //console.log("parse collections for ", parentCollection.id);
             if (parentCollection.getCollections() && parentCollection.getCollections().length) {
                 for (let i = 0; i < parentCollection.getCollections().length; i++) {
                     var collection = parentCollection.getCollections()[i];
@@ -109,8 +178,6 @@ namespace Manifesto {
                     tree.data.id = collection.id;
                     tree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION.toString());
                     parentCollection.defaultTree.addNode(tree);
-
-                    this._parseCollections(collection);
                 }
             }
         }

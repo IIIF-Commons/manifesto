@@ -10,7 +10,6 @@ namespace Manifesto {
         getSequences(): ISequence[];
         getTopRanges(): IRange[];
         getTotalSequences(): number;
-        getTrackingLabel(): string;
         getViewingDirection(): Manifesto.ViewingDirection | null;
         getViewingHint(): ViewingHint | null;
         isMultiSequence(): boolean;

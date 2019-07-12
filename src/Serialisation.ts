@@ -54,6 +54,9 @@ namespace Manifesto {
 
             if (options) {
                 collection.index = options.index || 0;
+                if (options.resource) {
+                    collection.parentCollection = options.resource.parentCollection;
+                }
             } else {
                 collection.index = 0;
             }

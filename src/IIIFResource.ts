@@ -72,6 +72,14 @@ namespace Manifesto {
             return this.getProperty('seeAlso');
         }
 
+        getTrackingLabel(): string {
+            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
+            if (service){
+                return service.getProperty('trackingLabel');
+            }
+            return '';
+        }
+
         getDefaultTree(): ITreeNode{
             this.defaultTree = new TreeNode('root');
             this.defaultTree.data = this;
@@ -136,6 +144,7 @@ namespace Manifesto {
                         that.parentLabel = <string>LanguageMap.getValue(that.getLabel(), options.locale);
                         const parsed = Deserialiser.parse(data, options);
                         that = Object.assign(that, parsed);
+                        //that.parentCollection = options.resource.parentCollection;
                         that.index = <number>options.index;
 
                         resolve(that);

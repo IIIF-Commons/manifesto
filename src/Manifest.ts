@@ -261,14 +261,6 @@ namespace Manifesto {
             return new ManifestType('');
         }
 
-        getTrackingLabel(): string {
-            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
-            if (service){
-                return service.getProperty('trackingLabel');
-            }
-            return '';
-        }
-
         isMultiSequence(): boolean {
             return this.getTotalSequences() > 1;
         }
