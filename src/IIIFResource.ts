@@ -1,5 +1,4 @@
 import { ManifestResource } from "./ManifestResource";
-const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
 
 export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;
@@ -74,6 +73,14 @@ export class IIIFResource extends ManifestResource {
         return this.getProperty('seeAlso');
     }
 
+    getTrackingLabel(): string {
+        const service: Service = <Service>this.getService(ServiceProfileEnum.TRACKING_EXTENSIONS);
+        if (service){
+            return service.getProperty('trackingLabel');
+        }
+        return '';
+    }
+
     getDefaultTree(): TreeNode {
         this.defaultTree = new TreeNode('root');
         this.defaultTree.data = this;
@@ -121,7 +128,7 @@ export class IIIFResource extends ManifestResource {
 
     load(): Promise<IIIFResource> {
         let that = this;
-        return new Promise<IIIFResource>((resolve, reject) => {
+        return new Promise<IIIFResource>((resolve) => {
             if (that.isLoaded) {
                 resolve(that);
             } else {
@@ -138,6 +145,7 @@ export class IIIFResource extends ManifestResource {
                     that.parentLabel = <string>LanguageMap.getValue(that.getLabel(), options.locale);
                     const parsed = Deserialiser.parse(data, options);
                     that = Object.assign(that, parsed);
+                    //that.parentCollection = options.resource.parentCollection;
                     that.index = <number>options.index;
 
                     resolve(that);
@@ -148,7 +156,8 @@ export class IIIFResource extends ManifestResource {
 }
 
 // https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
-import { IIIFResourceType } from "@iiif/vocabulary";
+const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 import { TreeNode } from "./TreeNode";
 import { Collection } from "./Collection";
 import { IManifestoOptions } from "./IManifestoOptions";
@@ -156,3 +165,5 @@ import { LanguageMap } from "./LanguageMap";
 import { Utils } from "./Utils";
 import { LabelValuePair } from "./LabelValuePair";
 import { Deserialiser } from "./Serialisation";
+import { Service } from ".";import { IIIFResourceType } from "@iiif/vocabulary";
+

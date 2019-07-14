@@ -34,26 +34,43 @@ export class Collection extends IIIFResource {
     getCollectionByIndex(collectionIndex: number): Promise<Collection> {
         const collections: Collection[] = this.getCollections();
 
-        if (!collections[collectionIndex]) {
-            throw new Error("Collection index is outside range of array");
+        let collection: Collection | undefined;
+
+        for (let i = 0; i < collections.length; i++) {
+            let c: Collection = collections[i];
+            if (c.index === collectionIndex) {
+                collection = c;
+            }
         }
-        
-        const collection: Collection = collections[collectionIndex];
-        collection.options.index = collectionIndex;
-        // id for collection MUST be dereferenceable
-        return <Promise<Collection>>collection.load();
+
+        if (collection) {
+            collection.options.index = collectionIndex;
+            // id for collection MUST be dereferenceable
+            return <Promise<Collection>>collection.load();
+        } else {
+            throw new Error("Collection index not found");
+        }
+            
     }
 
     getManifestByIndex(manifestIndex: number): Promise<Manifest> {
         const manifests: Manifest[] = this.getManifests();
 
-        if (!manifests[manifestIndex]) {
-            throw new Error("Manifest index is outside range of array");
+        let manifest: Manifest | undefined;
+
+        for (let i = 0; i < manifests.length; i++) {
+            let m: Manifest = manifests[i];
+            if (m.index === manifestIndex) {
+                manifest = m;
+            }
         }
 
-        const manifest: Manifest = manifests[manifestIndex];
-        manifest.options.index = manifestIndex;
-        return <Promise<Manifest>>manifest.load();
+        if (manifest) {
+            manifest.options.index = manifestIndex;
+            return <Promise<Manifest>>manifest.load();
+        } else {
+            throw new Error("Manifest index not found");
+        }
     }
 
     getTotalCollections(): number {
@@ -82,6 +99,8 @@ export class Collection extends IIIFResource {
     getDefaultTree(): TreeNode {
 
         super.getDefaultTree();
+
+        //console.log("get default tree for ", this.id);
         
         this.defaultTree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION);
 
@@ -108,6 +127,7 @@ export class Collection extends IIIFResource {
     }
 
     private _parseCollections(parentCollection: Collection) {
+        //console.log("parse collections for ", parentCollection.id);
         if (parentCollection.getCollections() && parentCollection.getCollections().length) {
             for (let i = 0; i < parentCollection.getCollections().length; i++) {
                 var collection = parentCollection.getCollections()[i];
@@ -117,8 +137,6 @@ export class Collection extends IIIFResource {
                 tree.data.id = collection.id;
                 tree.data.type = Utils.normaliseType(TreeNodeType.COLLECTION);
                 parentCollection.defaultTree.addNode(tree);
-
-                this._parseCollections(collection);
             }
         }
     }

@@ -6,9 +6,8 @@ import { Canvas } from "./Canvas";
 import { TreeNode } from "./TreeNode";
 import { Utils } from "./Utils";
 import { TreeNodeType } from "./TreeNodeType";
-import { ManifestType } from "./ManifestType";
 import { Range } from "./Range";
-import { Service } from "./Service";
+import { ManifestType, Service } from ".";
 const BehaviorEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').Behavior;
 const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 const ViewingHintEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingHint;
@@ -273,14 +272,6 @@ export class Manifest extends IIIFResource {
             return service.getProperty('manifestType');
         }
         return ManifestType.EMPTY;
-    }
-
-    getTrackingLabel(): string {
-        const service: Service = <Service>this.getService(ServiceProfileEnum.TRACKING_EXTENSIONS);
-        if (service){
-            return service.getProperty('trackingLabel');
-        }
-        return '';
     }
 
     isMultiSequence(): boolean {
