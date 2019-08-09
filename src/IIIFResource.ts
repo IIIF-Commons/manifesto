@@ -156,8 +156,8 @@ export class IIIFResource extends ManifestResource {
 }
 
 // https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
-const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
-const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 import { TreeNode } from "./TreeNode";
 import { Collection } from "./Collection";
 import { IManifestoOptions } from "./IManifestoOptions";

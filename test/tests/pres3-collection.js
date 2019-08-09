@@ -2,8 +2,8 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var IIIFResourceType = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
-var ViewingDirection = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingDirection;
+var IIIFResourceType = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+var ViewingDirection = require('@iiif/vocabulary/dist-commonjs/').ViewingDirection;
 
 var collection;
 

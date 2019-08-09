@@ -6,7 +6,7 @@ import { Utils } from "./Utils";
 import { Behavior, ViewingDirection, ViewingHint } from "@iiif/vocabulary";
 import { LanguageMap } from "./LanguageMap";
 import { TreeNodeType } from "./TreeNodeType";
-const BehaviorEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').Behavior;
+const BehaviorEnum = require('@iiif/vocabulary/dist-commonjs/').Behavior;
 
 export class Range extends ManifestResource {
     private _ranges: Range[] | null = null;
