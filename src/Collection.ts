@@ -6,7 +6,7 @@ import { TreeNode } from "./TreeNode";
 import { Utils } from "./Utils";
 import { TreeNodeType } from "./TreeNodeType";
 import { LanguageMap } from "./LanguageMap";
-const ViewingDirectionEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingDirection;
+const ViewingDirectionEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingDirection;
 export class Collection extends IIIFResource {
     public items: IIIFResource[] = [];
     private _collections: Collection[] | null = null;

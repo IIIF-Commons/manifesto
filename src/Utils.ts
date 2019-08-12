@@ -9,7 +9,7 @@ import { TreeNode } from "./TreeNode";
 import { Deserialiser } from "./Serialisation";
 import { MediaType, ServiceProfile } from "@iiif/vocabulary";
 import { IIIFResource } from "./IIIFResource";
-const ServiceProfileEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 
 const http = require('http');
 const https = require('https');

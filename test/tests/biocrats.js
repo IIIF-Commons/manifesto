@@ -3,9 +3,9 @@ var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
 
-var RenderingFormat = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').RenderingFormat;
-var ServiceProfile = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').ServiceProfile;
-var ViewingHint = require('../../node_modules/@iiif/vocabulary/dist-commonjs/').ViewingHint;
+var RenderingFormat = require('@iiif/vocabulary/dist-commonjs/').RenderingFormat;
+var ServiceProfile = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+var ViewingHint = require('@iiif/vocabulary/dist-commonjs/').ViewingHint;
 
 var manifest, sequence;
 

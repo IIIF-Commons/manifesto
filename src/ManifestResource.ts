@@ -1,5 +1,5 @@
 import { JSONLDResource } from "./JSONLDResource";
-const IIIFResourceTypeEnum = require('../node_modules/@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
 
 export class ManifestResource extends JSONLDResource {
     externalResource: IExternalResource;
