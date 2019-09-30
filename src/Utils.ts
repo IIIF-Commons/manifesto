@@ -824,7 +824,7 @@ export class Utils {
      * matches provided k and v arguments
      * @example Utils.traverseAndFind({foo: 'bar'}, 'foo', 'bar')       
      */         
-    static traverseAndFind(object: any, k: string, v: string): object & void {
+    static traverseAndFind(object: any, k: string, v: string): object | undefined {
         if (object.hasOwnProperty(k) && object[k] === v) {
             return object;
         }
@@ -837,6 +837,8 @@ export class Utils {
                 }
             }
         }
+
+        return undefined;
     }
 
     static getServices(resource: any): Service[] {

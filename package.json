@@ -13,7 +13,7 @@
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
     "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "mocha"
   },
   "engines": {
@@ -34,18 +34,18 @@
   },
   "homepage": "https://github.com/iiif-commons/manifesto",
   "devDependencies": {
-    "@types/node": "10.7.1",
+    "@types/node": "8.10.52",
     "awesome-typescript-loader": "^5.2.1",
     "chai": "2.3.0",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "dts-bundle-generator": "^2.0.0",
     "finalhandler": "0.4.0",
     "http": "0.0.0",
     "mocha": "2.2.4",
-    "rimraf": "^2.6.2",
+    "rimraf": "^3.0.0",
     "serve-static": "1.10.0",
     "typedoc": "0.14.0",
-    "typescript": "3.2.2",
+    "typescript": "3.6.3",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
     "yargs": "3.10.0"
