@@ -1,156 +1,169 @@
-namespace Manifesto {
-    export class IIIFResource extends ManifestResource implements IIIIFResource {
-        public defaultTree: ITreeNode;
-        public index: number = -1;
-        public isLoaded: boolean = false;
-        public parentCollection: ICollection;
-        public parentLabel: string;
+import { ManifestResource } from "./ManifestResource";
 
-        constructor(jsonld?: any, options?: IManifestoOptions) {
-            super(jsonld, options);
+export class IIIFResource extends ManifestResource {
+    public defaultTree: TreeNode;
+    public index: number = -1;
+    public isLoaded: boolean = false;
+    public parentCollection: Collection;
+    public parentLabel: string;
 
-            const defaultOptions: IManifestoOptions = {
-                defaultLabel: '-',
-                locale: 'en-GB',
-                resource: <IIIIFResource>this,
-                pessimisticAccessControl: false
-            };
+    constructor(jsonld?: any, options?: IManifestoOptions) {
+        super(jsonld, options);
 
-            this.options = Object.assign(defaultOptions, options);
+        const defaultOptions: IManifestoOptions = {
+            defaultLabel: '-',
+            locale: 'en-GB',
+            resource: <IIIFResource>this,
+            pessimisticAccessControl: false
+        };
+
+        this.options = Object.assign(defaultOptions, options);
+    }
+
+    getAttribution(): LanguageMap {
+
+        console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
+
+        const attribution: any = this.getProperty('attribution');
+
+        if (attribution) {
+            return LanguageMap.parse(attribution, this.options.locale);
+        }
+        
+        return [];
+    }
+
+    getDescription(): LanguageMap {
+        const description: any = this.getProperty('description');
+
+        if (description) {
+            return LanguageMap.parse(description, this.options.locale);
         }
 
-        getAttribution(): LanguageMap {
+        return [];
+    }
 
-            console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
+    getIIIFResourceType(): IIIFResourceType {
+        return <IIIFResourceType>Utils.normaliseType(this.getProperty('type'));
+    }
 
-            const attribution: any = this.getProperty('attribution');
+    getLogo(): string | null {
+        let logo: any = this.getProperty('logo');
+        if (!logo) return null;
+        if (typeof(logo) === 'string') return logo;
+        if (Array.isArray(logo) && logo.length) {
+            logo = logo[0];
+        }
+        return logo['@id'] || logo.id;
+    }
+
+    getLicense(): string | null {
+        return Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
+    }
+
+    getNavDate(): Date {
+        return new Date(this.getProperty('navDate'));
+    }
+
+    getRelated(): any {
+        return this.getProperty('related');
+    }
+
+    getSeeAlso(): any {
+        return this.getProperty('seeAlso');
+    }
+
+    getTrackingLabel(): string {
+        const service: Service = <Service>this.getService(ServiceProfileEnum.TRACKING_EXTENSIONS);
+        if (service){
+            return service.getProperty('trackingLabel');
+        }
+        return '';
+    }
+
+    getDefaultTree(): TreeNode {
+        this.defaultTree = new TreeNode('root');
+        this.defaultTree.data = this;
+        return this.defaultTree;
+    }
+
+    getRequiredStatement(): LabelValuePair | null {
+
+        let requiredStatement: LabelValuePair | null = null;
+        
+        const _requiredStatement: any = this.getProperty('requiredStatement');
+
+        if (_requiredStatement) {
+
+            requiredStatement = new LabelValuePair(this.options.locale);
+            requiredStatement.parse(_requiredStatement);
+
+        } else {
+
+            // fall back to attribution (if it exists)
+            const attribution: LanguageMap = this.getAttribution();
 
             if (attribution) {
-                return LanguageMap.parse(attribution, this.options.locale);
-            }
-            
-            return [];
-        }
-
-        getDescription(): LanguageMap {
-            const description: any = this.getProperty('description');
-
-            if (description) {
-                return LanguageMap.parse(description, this.options.locale);
-            }
-
-            return [];
-        }
-
-        getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
-        }
-
-        getLogo(): string | null {
-            let logo: any = this.getProperty('logo');
-            if (!logo) return null;
-            if (typeof(logo) === 'string') return logo;
-            if (Array.isArray(logo) && logo.length) {
-                logo = logo[0];
-            }
-            return logo['@id'] || logo.id;
-        }
-
-        getLicense(): string | null {
-            return Utils.getLocalisedValue(this.getProperty('license'), this.options.locale);
-        }
-
-        getNavDate(): Date {
-            return new Date(this.getProperty('navDate'));
-        }
-
-        getRelated(): any {
-            return this.getProperty('related');
-        }
-
-        getSeeAlso(): any {
-            return this.getProperty('seeAlso');
-        }
-
-        getTrackingLabel(): string {
-            const service: IService = <IService>this.getService(Manifesto.ServiceProfile.TRACKINGEXTENSIONS);
-            if (service){
-                return service.getProperty('trackingLabel');
-            }
-            return '';
-        }
-
-        getDefaultTree(): ITreeNode{
-            this.defaultTree = new TreeNode('root');
-            this.defaultTree.data = this;
-            return this.defaultTree;
-        }
-
-        getRequiredStatement(): LabelValuePair | null {
-
-            let requiredStatement: LabelValuePair | null = null;
-            
-            const _requiredStatement: any = this.getProperty('requiredStatement');
-
-            if (_requiredStatement) {
-
                 requiredStatement = new LabelValuePair(this.options.locale);
-                requiredStatement.parse(_requiredStatement);
+                requiredStatement.value = attribution;
+            }
+        }
 
+        return requiredStatement;
+    }
+
+    isCollection(): boolean {
+        if (this.getIIIFResourceType() === IIIFResourceTypeEnum.COLLECTION) {
+            return true;
+        }
+        return false;
+    }
+
+    isManifest(): boolean {
+        if (this.getIIIFResourceType() === IIIFResourceTypeEnum.MANIFEST) {
+            return true;
+        }
+        return false;
+    }
+
+    load(): Promise<IIIFResource> {
+        let that = this;
+        return new Promise<IIIFResource>((resolve) => {
+            if (that.isLoaded) {
+                resolve(that);
             } else {
+                const options = that.options;
+                options.navDate = that.getNavDate();
 
-                // fall back to attribution (if it exists)
-                const attribution: LanguageMap = this.getAttribution();
+                let id: string = that.__jsonld.id;
 
-                if (attribution) {
-                    requiredStatement = new LabelValuePair(this.options.locale);
-                    requiredStatement.value = attribution;
+                if (!id) {
+                    id = that.__jsonld['@id']
                 }
-            }
 
-            return requiredStatement;
-        }
+                Utils.loadManifest(id).then(function(data) {
+                    that.parentLabel = <string>LanguageMap.getValue(that.getLabel(), options.locale);
+                    const parsed = Deserialiser.parse(data, options);
+                    that = Object.assign(that, parsed);
+                    //that.parentCollection = options.resource.parentCollection;
+                    that.index = <number>options.index;
 
-        isCollection(): boolean {
-            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString()) {
-                return true;
-            }
-            return false;
-        }
-
-        isManifest(): boolean {
-            if (this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString()) {
-                return true;
-            }
-            return false;
-        }
-
-        load(): Promise<IIIIFResource> {
-            let that = this;
-            return new Promise<IIIIFResource>((resolve, reject) => {
-                if (that.isLoaded) {
                     resolve(that);
-                } else {
-                    const options = that.options;
-                    options.navDate = that.getNavDate();
-
-                    let id: string = that.__jsonld.id;
-
-                    if (!id) {
-                        id = that.__jsonld['@id']
-                    }
-
-                    Utils.loadResource(id).then(function(data) {
-                        that.parentLabel = <string>LanguageMap.getValue(that.getLabel(), options.locale);
-                        const parsed = Deserialiser.parse(data, options);
-                        that = Object.assign(that, parsed);
-                        //that.parentCollection = options.resource.parentCollection;
-                        that.index = <number>options.index;
-
-                        resolve(that);
-                    });
-                }
-            });
-        }
+                });
+            }
+        });
     }
 }
+
+// https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
+const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+import { TreeNode } from "./TreeNode";
+import { Collection } from "./Collection";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { LanguageMap } from "./LanguageMap";
+import { Utils } from "./Utils";
+import { LabelValuePair } from "./LabelValuePair";
+import { Deserialiser } from "./Serialisation";
+import { Service } from ".";import { IIIFResourceType } from "@iiif/vocabulary";
+

@@ -1,36 +1,36 @@
+import { Utils } from "./Utils";
+import { TreeNodeType } from "./TreeNodeType";
 
-namespace Manifesto {
-    export class TreeNode implements ITreeNode {
-        public data: any;
-        public nodes: ITreeNode[];
-        public selected: boolean;
-        public expanded: boolean;
-        public id: string;
-        public label: string;
-        public navDate: Date;
-        public parentNode: ITreeNode;
+export class TreeNode {
+    public data: any;
+    public nodes: TreeNode[];
+    public selected: boolean;
+    public expanded: boolean;
+    public id: string;
+    public label: string;
+    public navDate: Date;
+    public parentNode: TreeNode;
 
-        constructor(label?: string, data?: any) {
-            this.label = <string>label;
-            this.data = data || {};
-            this.nodes = [];
-        }
+    constructor(label?: string, data?: any) {
+        this.label = <string>label;
+        this.data = data || {};
+        this.nodes = [];
+    }
 
-        public addNode(node: ITreeNode): void {
-            this.nodes.push(node);
-            node.parentNode = this;
-        }
+    public addNode(node: TreeNode): void {
+        this.nodes.push(node);
+        node.parentNode = this;
+    }
 
-        public isCollection(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION.toString());
-        }
+    public isCollection(): boolean {
+        return this.data.type === Utils.normaliseType(TreeNodeType.COLLECTION);
+    }
 
-        public isManifest(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST.toString());
-        }
+    public isManifest(): boolean {
+        return this.data.type === Utils.normaliseType(TreeNodeType.MANIFEST);
+    }
 
-        public isRange(): boolean {
-            return this.data.type === Utils.normaliseType(TreeNodeType.RANGE.toString());
-        }
+    public isRange(): boolean {
+        return this.data.type === Utils.normaliseType(TreeNodeType.RANGE);
     }
 }

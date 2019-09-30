@@ -1,310 +1,315 @@
-namespace Manifesto {
-    export class Sequence extends ManifestResource implements ISequence {
-        public items: ICanvas[] = [];
-        private _thumbnails: IThumbnail[] | null = null;
+import { ViewingDirection, ViewingHint } from "@iiif/vocabulary";
+import { ManifestResource } from "./ManifestResource";
+import { Canvas } from "./Canvas";
+import { Thumbnail } from "./Thumbnail";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Utils } from "./Utils";
+import { LanguageMap } from "./LanguageMap";
+import { Thumb } from "./Thumb";
+import { Manifest } from "./Manifest";
+const ViewingDirectionEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingDirection;
+const ViewingHintEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingHint;
+export class Sequence extends ManifestResource {
+    public items: Canvas[] = [];
+    private _thumbnails: Thumbnail[] | null = null;
 
-        constructor(jsonld?: any, options?: IManifestoOptions){
-            super(jsonld, options);
-        }
+    constructor(jsonld?: any, options?: IManifestoOptions){
+        super(jsonld, options);
+    }
 
-        getCanvases(): ICanvas[] {
-            if (this.items.length) {
-                return this.items;
-            }
-
-            let items = this.__jsonld.canvases || this.__jsonld.elements;
-
-            if (items) {
-                for (let i = 0; i < items.length; i++) {
-                    const c = items[i];
-                    const canvas: ICanvas = new Canvas(c, this.options);
-                    canvas.index = i;
-                    this.items.push(canvas);
-                }
-            } else if (this.__jsonld) {
-                for (let i = 0; i < this.__jsonld.length; i++) {
-                    const c = this.__jsonld[i];
-                    const canvas: ICanvas = new Canvas(c, this.options);
-                    canvas.index = i;
-                    this.items.push(canvas);
-                }
-            }
-
+    getCanvases(): Canvas[] {
+        if (this.items.length) {
             return this.items;
         }
 
-        getCanvasById(id: string): ICanvas | null {
+        let items = this.__jsonld.canvases || this.__jsonld.elements;
 
-            for (let i = 0; i < this.getTotalCanvases(); i++) {
-                const canvas = this.getCanvasByIndex(i);
-
-                // normalise canvas id
-                const canvasId: string = Utils.normaliseUrl(canvas.id);
-
-                if (Utils.normaliseUrl(id) === canvasId){
-                    return canvas;
-                }
+        if (items) {
+            for (let i = 0; i < items.length; i++) {
+                const c = items[i];
+                const canvas: Canvas = new Canvas(c, this.options);
+                canvas.index = i;
+                this.items.push(canvas);
             }
-
-            return null;
+        } else if (this.__jsonld) {
+            for (let i = 0; i < this.__jsonld.length; i++) {
+                const c = this.__jsonld[i];
+                const canvas: Canvas = new Canvas(c, this.options);
+                canvas.index = i;
+                this.items.push(canvas);
+            }
         }
 
-        getCanvasByIndex(canvasIndex: number): any {
-            return this.getCanvases()[canvasIndex];
+        return this.items;
+    }
+
+    getCanvasById(id: string): Canvas | null {
+
+        for (let i = 0; i < this.getTotalCanvases(); i++) {
+            const canvas = this.getCanvasByIndex(i);
+
+            // normalise canvas id
+            const canvasId: string = Utils.normaliseUrl(canvas.id);
+
+            if (Utils.normaliseUrl(id) === canvasId){
+                return canvas;
+            }
         }
 
-        getCanvasIndexById(id: string): number | null {
+        return null;
+    }
 
-            for (let i = 0; i < this.getTotalCanvases(); i++) {
-                const canvas = this.getCanvasByIndex(i);
+    getCanvasByIndex(canvasIndex: number): any {
+        return this.getCanvases()[canvasIndex];
+    }
 
-                if (canvas.id === id){
-                    return i;
-                }
+    getCanvasIndexById(id: string): number | null {
+
+        for (let i = 0; i < this.getTotalCanvases(); i++) {
+            const canvas = this.getCanvasByIndex(i);
+
+            if (canvas.id === id){
+                return i;
             }
-
-            return null;
         }
 
-        getCanvasIndexByLabel(label: string, foliated?: boolean): number {
-            label = label.trim();
+        return null;
+    }
 
-            if (!isNaN(<any>label)) { // if the label is numeric
-                label = parseInt(label, 10).toString(); // trim any preceding zeros.
-                if (foliated) label += 'r'; // default to recto
+    getCanvasIndexByLabel(label: string, foliated?: boolean): number {
+        label = label.trim();
+
+        if (!isNaN(<any>label)) { // if the label is numeric
+            label = parseInt(label, 10).toString(); // trim any preceding zeros.
+            if (foliated) label += 'r'; // default to recto
+        }
+
+        var doublePageRegExp = /(\d*)\D+(\d*)/;
+        var match, regExp, regStr, labelPart1, labelPart2;
+
+        for (let i = 0; i < this.getTotalCanvases(); i++) {
+            const canvas: Canvas = this.getCanvasByIndex(i);
+
+            // check if there's a literal match
+            if (LanguageMap.getValue(canvas.getLabel(), this.options.locale) === label) {
+                return i;
             }
 
-            var doublePageRegExp = /(\d*)\D+(\d*)/;
-            var match, regExp, regStr, labelPart1, labelPart2;
+            // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
+            match = doublePageRegExp.exec(label);
 
-            for (let i = 0; i < this.getTotalCanvases(); i++) {
-                const canvas: ICanvas = this.getCanvasByIndex(i);
+            if (!match) continue;
 
-                // check if there's a literal match
-                if (LanguageMap.getValue(canvas.getLabel(), this.options.locale) === label) {
-                    return i;
-                }
+            labelPart1 = match[1];
+            labelPart2 = match[2];
 
-                // check if there's a match for double-page spreads e.g. 100-101, 100_101, 100 101
-                match = doublePageRegExp.exec(label);
+            if (!labelPart2) continue;
 
-                if (!match) continue;
+            regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
 
-                labelPart1 = match[1];
-                labelPart2 = match[2];
+            regExp = new RegExp(regStr);
 
-                if (!labelPart2) continue;
-
-                regStr = "^" + labelPart1 + "\\D+" + labelPart2 + "$";
-
-                regExp = new RegExp(regStr);
-
-                if (regExp.test(canvas.getLabel().toString())) {
-                    return i;
-                }
+            if (regExp.test(canvas.getLabel().toString())) {
+                return i;
             }
+        }
 
+        return -1;
+    }
+
+    getLastCanvasLabel(alphanumeric?: boolean): string {
+        for (let i = this.getTotalCanvases() - 1; i >= 0; i--) {
+            const canvas: Canvas = this.getCanvasByIndex(i);
+            const label: string = <string>LanguageMap.getValue(canvas.getLabel(), this.options.locale);
+
+            if (alphanumeric) {
+                var regExp = /^[a-zA-Z0-9]*$/;
+
+                if (regExp.test(label)) {
+                    return label;
+                }
+
+            } else if (label){
+                return label;
+            }
+        }
+
+        return this.options.defaultLabel;
+    }
+
+    getLastPageIndex(): number {
+        return this.getTotalCanvases() - 1;
+    }
+
+    getNextPageIndex(canvasIndex: number, pagingEnabled?: boolean): number {
+
+        let index: number;
+
+        if (pagingEnabled) {
+            const indices: number[] = this.getPagedIndices(canvasIndex);
+
+            const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+
+            if (viewingDirection && viewingDirection === ViewingDirectionEnum.RIGHT_TO_LEFT) {
+                index = indices[0] + 1;
+            } else {
+                index = indices[indices.length - 1] + 1;
+            }
+        } else {
+            index = canvasIndex + 1;
+        }
+
+        if (index > this.getLastPageIndex()) {
             return -1;
         }
 
-        getLastCanvasLabel(alphanumeric?: boolean): string {
-            for (let i = this.getTotalCanvases() - 1; i >= 0; i--) {
-                const canvas: ICanvas = this.getCanvasByIndex(i);
-                const label: string = <string>LanguageMap.getValue(canvas.getLabel(), this.options.locale);
+        return index;
+    }
 
-                if (alphanumeric) {
-                    var regExp = /^[a-zA-Z0-9]*$/;
+    getPagedIndices(canvasIndex: number, pagingEnabled?: boolean): number[]{
 
-                    if (regExp.test(label)) {
-                        return label;
-                    }
+        let indices: number[] = [];
 
-                } else if (label){
-                    return label;
-                }
-            }
-
-            return this.options.defaultLabel;
-        }
-
-        getLastPageIndex(): number {
-            return this.getTotalCanvases() - 1;
-        }
-
-        getNextPageIndex(canvasIndex: number, pagingEnabled?: boolean): number {
-
-            let index: number;
-
-            if (pagingEnabled) {
-                const indices: number[] = this.getPagedIndices(canvasIndex);
-
-                const viewingDirection: ViewingDirection | null = this.getViewingDirection();
-
-                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
-                    index = indices[0] + 1;
-                } else {
-                    index = indices[indices.length - 1] + 1;
-                }
+        if (!pagingEnabled) {
+            indices.push(canvasIndex);
+        } else {
+            if (this.isFirstCanvas(canvasIndex) || this.isLastCanvas(canvasIndex)){
+                indices = [canvasIndex];
+            } else if (canvasIndex % 2){
+                indices = [canvasIndex, canvasIndex + 1];
             } else {
-                index = canvasIndex + 1;
+                indices = [canvasIndex - 1, canvasIndex];
             }
 
-            if (index > this.getLastPageIndex()) {
-                return -1;
-            }
+            const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-            return index;
+            if (viewingDirection && viewingDirection === ViewingDirectionEnum.RIGHT_TO_LEFT) {
+                indices = indices.reverse();
+            }
         }
 
-        getPagedIndices(canvasIndex: number, pagingEnabled?: boolean): number[]{
+        return indices;
+    }
 
-            let indices: number[] = [];
+    getPrevPageIndex(canvasIndex: number, pagingEnabled?: boolean): number {
 
-            if (!pagingEnabled) {
-                indices.push(canvasIndex);
+        let index: number;
+
+        if (pagingEnabled) {
+            const indices = this.getPagedIndices(canvasIndex);
+
+            const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+
+            if (viewingDirection && viewingDirection === ViewingDirectionEnum.RIGHT_TO_LEFT) {
+                index = indices[indices.length - 1] - 1;
             } else {
-                if (this.isFirstCanvas(canvasIndex) || this.isLastCanvas(canvasIndex)){
-                    indices = [canvasIndex];
-                } else if (canvasIndex % 2){
-                    indices = [canvasIndex, canvasIndex + 1];
-                } else {
-                    indices = [canvasIndex - 1, canvasIndex];
-                }
-
-                const viewingDirection: ViewingDirection | null = this.getViewingDirection();
-
-                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
-                    indices = indices.reverse();
-                }
+                index = indices[0] - 1;
             }
 
-            return indices;
+        } else {
+            index = canvasIndex - 1;
         }
 
-        getPrevPageIndex(canvasIndex: number, pagingEnabled?: boolean): number {
+        return index;
+    }
 
-            let index: number;
+    getStartCanvasIndex(): number {
+        const startCanvas: string = this.getStartCanvas();
 
-            if (pagingEnabled) {
-                const indices = this.getPagedIndices(canvasIndex);
+        if (startCanvas) {
+            // if there's a startCanvas attribute, loop through the canvases and return the matching index.
+            for (let i = 0; i < this.getTotalCanvases(); i++) {
+                const canvas = this.getCanvasByIndex(i);
 
-                const viewingDirection: ViewingDirection | null = this.getViewingDirection();
-
-                if (viewingDirection && viewingDirection.toString() === ViewingDirection.RIGHTTOLEFT.toString()) {
-                    index = indices[indices.length - 1] - 1;
-                } else {
-                    index = indices[0] - 1;
-                }
-
-            } else {
-                index = canvasIndex - 1;
+                if (canvas.id === startCanvas) return i;
             }
-
-            return index;
         }
 
-        getStartCanvasIndex(): number {
-            const startCanvas: string = this.getStartCanvas();
+        // default to first canvas.
+        return 0;
+    }
 
-            if (startCanvas) {
-                // if there's a startCanvas attribute, loop through the canvases and return the matching index.
-                for (let i = 0; i < this.getTotalCanvases(); i++) {
-                    const canvas = this.getCanvasByIndex(i);
+    // todo: deprecate
+    getThumbs(width: number, height?: number): Thumb[] {
+        console.warn('getThumbs will be deprecated, use getThumbnails instead');
+        const thumbs: Thumb[] = [];
+        const totalCanvases: number = this.getTotalCanvases();
 
-                    if (canvas.id === startCanvas) return i;
-                }
-            }
-
-            // default to first canvas.
-            return 0;
+        for (let i = 0; i < totalCanvases; i++) {
+            const canvas: Canvas = this.getCanvasByIndex(i);
+            const thumb: Thumb = new Thumb(width, canvas);
+            thumbs.push(thumb);
         }
 
-        // todo: deprecate
-        getThumbs(width: number, height?: number): Manifesto.IThumb[] {
-            console.warn('getThumbs will be deprecated, use getThumbnails instead');
-            const thumbs: Manifesto.IThumb[] = [];
-            const totalCanvases: number = this.getTotalCanvases();
+        return thumbs;
+    }
 
-            for (let i = 0; i < totalCanvases; i++) {
-                const canvas: ICanvas = this.getCanvasByIndex(i);
-                const thumb: Manifesto.IThumb = new Manifesto.Thumb(width, canvas);
-                thumbs.push(thumb);
-            }
+    getThumbnails(): Thumbnail[] {
+        if (this._thumbnails != null) return this._thumbnails;            
+        this._thumbnails = [];
 
-            return thumbs;
+        const canvases: Canvas[] = this.getCanvases();
+
+        for (let i = 0; i < canvases.length; i++) {
+            const thumbnail: Thumbnail | null = canvases[i].getThumbnail();
+            if (thumbnail) {
+                this._thumbnails.push(thumbnail);
+            }                
         }
 
-        getThumbnails(): Manifesto.IThumbnail[] {
-            if (this._thumbnails != null) return this._thumbnails;            
-            this._thumbnails = [];
+        return this._thumbnails;
+    }
 
-            const canvases: Manifesto.ICanvas[] = this.getCanvases();
+    getStartCanvas(): string {
+        return this.getProperty('startCanvas');
+    }
 
-            for (let i = 0; i < canvases.length; i++) {
-                const thumbnail: Manifesto.IThumbnail | null = canvases[i].getThumbnail();
-                if (thumbnail) {
-                    this._thumbnails.push(thumbnail);
-                }                
-            }
+    getTotalCanvases(): number {
+        return this.getCanvases().length;
+    }
 
-            return this._thumbnails;
+    getViewingDirection(): ViewingDirection | null {
+        if (this.getProperty('viewingDirection')) {
+            return this.getProperty('viewingDirection');
+        } else if ((<Manifest>this.options.resource).getViewingDirection) {
+            return (<Manifest>this.options.resource).getViewingDirection();
         }
 
-        getStartCanvas(): string {
-            return this.getProperty('startCanvas');
+        return null;
+    }
+
+    getViewingHint(): ViewingHint | null {
+        return this.getProperty('viewingHint');
+    }
+
+    isCanvasIndexOutOfRange(canvasIndex: number): boolean {
+        return canvasIndex > this.getTotalCanvases() - 1;
+    }
+
+    isFirstCanvas(canvasIndex: number): boolean {
+        return canvasIndex === 0;
+    }
+
+    isLastCanvas(canvasIndex: number): boolean {
+        return canvasIndex === this.getTotalCanvases() - 1;
+    }
+
+    isMultiCanvas(): boolean {
+        return this.getTotalCanvases() > 1;
+    }
+
+    isPagingEnabled(): boolean {
+        const viewingHint: ViewingHint | null = this.getViewingHint();
+
+        if (viewingHint) {
+            return viewingHint === ViewingHintEnum.PAGED;
         }
+        
+        return false;
+    }
 
-        getTotalCanvases(): number {
-            return this.getCanvases().length;
-        }
-
-        getViewingDirection(): ViewingDirection | null {
-            if (this.getProperty('viewingDirection')) {
-                return new ViewingDirection(this.getProperty('viewingDirection'));
-            } else if ((<IManifest>this.options.resource).getViewingDirection) {
-                return (<IManifest>this.options.resource).getViewingDirection();
-            }
-
-            return null;
-        }
-
-        getViewingHint(): ViewingHint | null {
-            if (this.getProperty('viewingHint')) {
-                return new ViewingHint(this.getProperty('viewingHint'));
-            }
-
-            return null;
-        }
-
-        isCanvasIndexOutOfRange(canvasIndex: number): boolean {
-            return canvasIndex > this.getTotalCanvases() - 1;
-        }
-
-        isFirstCanvas(canvasIndex: number): boolean {
-            return canvasIndex === 0;
-        }
-
-        isLastCanvas(canvasIndex: number): boolean {
-            return canvasIndex === this.getTotalCanvases() - 1;
-        }
-
-        isMultiCanvas(): boolean {
-            return this.getTotalCanvases() > 1;
-        }
-
-        isPagingEnabled(): boolean {
-            const viewingHint: ViewingHint | null = this.getViewingHint();
-
-            if (viewingHint) {
-                return viewingHint.toString() === Manifesto.ViewingHint.PAGED.toString();
-            }
-            
-            return false;
-        }
-
-        // checks if the number of canvases is even - therefore has a front and back cover
-        isTotalCanvasesEven(): boolean {
-            return this.getTotalCanvases() % 2 === 0;
-        }
+    // checks if the number of canvases is even - therefore has a front and back cover
+    isTotalCanvasesEven(): boolean {
+        return this.getTotalCanvases() % 2 === 0;
     }
 }

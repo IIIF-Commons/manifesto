@@ -1,13 +1,14 @@
+import { RenderingFormat } from "@iiif/vocabulary";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { ManifestResource } from "./ManifestResource";
 
-namespace Manifesto {
-    export class Rendering extends ManifestResource implements IRendering {
+export class Rendering extends ManifestResource {
 
-        constructor(jsonld?: any, options?: IManifestoOptions){
-            super(jsonld, options);
-        }
+    constructor(jsonld?: any, options?: IManifestoOptions) {
+        super(jsonld, options);
+    }
 
-        getFormat(): RenderingFormat{
-            return new RenderingFormat(this.getProperty('format'));
-        }
+    getFormat(): RenderingFormat {
+        return this.getProperty('format');
     }
 }

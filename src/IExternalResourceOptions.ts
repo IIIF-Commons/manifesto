@@ -1,5 +1,3 @@
-namespace Manifesto {
-    export interface IExternalResourceOptions {
-        authApiVersion: number;
-    }
+export interface IExternalResourceOptions {
+    authApiVersion: number;
 }

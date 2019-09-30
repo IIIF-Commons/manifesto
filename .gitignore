@@ -1,9 +1,9 @@
-.idea
-.vscode
-dist
+dist-commonjs
+dist-esmodule
+dist-umd
+dist-var
 coverage
 npm-debug.log
 node_modules
-bower_components
-typings
 debug.log
+types

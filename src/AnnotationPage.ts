@@ -1,12 +1,14 @@
-namespace Manifesto {
-    export class AnnotationPage extends ManifestResource implements IAnnotationPage{
+import { ManifestResource } from "./ManifestResource";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Annotation } from "./Annotation";
 
-        constructor(jsonld: any, options: IManifestoOptions) {
-            super(jsonld, options);
-        }
+export class AnnotationPage extends ManifestResource {
 
-        getItems(): IAnnotation[] {
-            return this.getProperty('items');
-        }
+    constructor(jsonld: any, options: IManifestoOptions) {
+        super(jsonld, options);
+    }
+
+    getItems(): Annotation[] {
+        return this.getProperty('items');
     }
 }

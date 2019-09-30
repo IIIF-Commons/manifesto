@@ -1,49 +1,52 @@
-namespace Manifesto {
-    export class AnnotationList extends JSONLDResource implements IAnnotationList {
-        options: IManifestoOptions;
-        label: string;
-        isLoaded: boolean;
+import { IIIFResourceType } from "@iiif/vocabulary";
+import { JSONLDResource } from "./JSONLDResource";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Utils } from "./Utils";
+import { Annotation } from "./Annotation";
 
-        constructor(label, jsonld?: any, options?: IManifestoOptions) {
-            super(jsonld);
-            this.label = label;
-            this.options = <IManifestoOptions>options;
-        }
+export class AnnotationList extends JSONLDResource {
+    options: IManifestoOptions;
+    label: string;
+    isLoaded: boolean;
 
-        getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
-        }
+    constructor(label, jsonld?: any, options?: IManifestoOptions) {
+        super(jsonld);
+        this.label = label;
+        this.options = <IManifestoOptions>options;
+    }
 
-        getLabel(): string {
-            return this.label
-        }
+    getIIIFResourceType(): IIIFResourceType {
+        return <IIIFResourceType>Utils.normaliseType(this.getProperty('type'));
+    }
 
-        getResources(): Annotation[] {
-            const resources = this.getProperty('resources');
+    getLabel(): string {
+        return this.label
+    }
 
-            return resources.map(resource => new Annotation(resource, this.options));
-        }
+    getResources(): Annotation[] {
+        const resources = this.getProperty('resources');
+        return resources.map(resource => new Annotation(resource, this.options));
+    }
 
-        load(): Promise<AnnotationList> {
-            return new Promise<AnnotationList>((resolve, reject) => {
-                if (this.isLoaded) {
-                    resolve(this);
-                } else {
-                    let id: string = this.__jsonld.id;
+    load(): Promise<AnnotationList> {
+        return new Promise<AnnotationList>((resolve, reject) => {
+            if (this.isLoaded) {
+                resolve(this);
+            } else {
+                let id: string = this.__jsonld.id;
 
-                    if (!id) {
-                        id = this.__jsonld['@id']
-                    }
-
-                    Utils.loadResource(id).then(data => {
-                        this.__jsonld = JSON.parse(data);
-                        this.context = this.getProperty('context');
-                        this.id = this.getProperty('id');
-                        this.isLoaded = true;
-                        resolve(this);
-                    }).catch(reject);
+                if (!id) {
+                    id = this.__jsonld['@id']
                 }
-            });
-        }
+
+                Utils.loadManifest(id).then(data => {
+                    this.__jsonld = JSON.parse(data);
+                    this.context = this.getProperty('context');
+                    this.id = this.getProperty('id');
+                    this.isLoaded = true;
+                    resolve(this);
+                }).catch(reject);
+            }
+        });
     }
 }

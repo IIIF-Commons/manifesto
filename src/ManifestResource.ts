@@ -1,138 +1,145 @@
-namespace Manifesto {
-    export class ManifestResource extends JSONLDResource implements IManifestResource {
-        externalResource: IExternalResource;
-        options: IManifestoOptions;
+import { JSONLDResource } from "./JSONLDResource";
+const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
 
-        constructor(jsonld: any, options?: IManifestoOptions) {
-            super(jsonld);
-            this.options = <IManifestoOptions>options;
+export class ManifestResource extends JSONLDResource {
+    externalResource: IExternalResource;
+    options: IManifestoOptions;
+
+    constructor(jsonld: any, options?: IManifestoOptions) {
+        super(jsonld);
+        this.options = <IManifestoOptions>options;
+    }
+
+    getIIIFResourceType(): IIIFResourceType {
+        return <IIIFResourceType>Utils.normaliseType(this.getProperty('type'));
+    }
+
+    getLabel(): LanguageMap {
+        const label: any = this.getProperty('label');
+
+        if (label) {
+            return LanguageMap.parse(label, this.options.locale);
+        }
+        
+        return [];
+    }
+
+    getDefaultLabel(): string | null {
+        return LanguageMap.getValue(this.getLabel());
+    }
+
+    getMetadata(): LabelValuePair[] {
+        const _metadata: any[] = this.getProperty('metadata');
+
+        const metadata: LabelValuePair[] = [];
+
+        if (!_metadata) return metadata;
+
+        for (let i = 0; i < _metadata.length; i++) {
+            const item: any = _metadata[i];
+            const metadataItem: LabelValuePair = new LabelValuePair(this.options.locale);
+            metadataItem.parse(item);
+            metadata.push(metadataItem);
         }
 
-        getIIIFResourceType(): IIIFResourceType {
-            return new IIIFResourceType(Utils.normaliseType(this.getProperty('type')));
-        }
+        return metadata;
+    }
 
-        getLabel(): LanguageMap {
-            const label: any = this.getProperty('label');
+    getRendering(format: RenderingFormat): Rendering | null {
+        const renderings: Rendering[] = this.getRenderings();
 
-            if (label) {
-                return LanguageMap.parse(label, this.options.locale);
+        for (let i = 0; i < renderings.length; i++) {
+            const rendering: Rendering = renderings[i];
+
+            if (rendering.getFormat() === format) {
+                return rendering;
             }
-            
-            return [];
         }
 
-        getDefaultLabel(): string | null {
-            return Manifesto.LanguageMap.getValue(this.getLabel());
+        return null;
+    }
+
+    getRenderings(): Rendering[] {
+        let rendering;
+
+        // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+        // otherwise look for a rendering property
+        if (this.__jsonld) {
+            rendering = this.__jsonld.rendering;
+        } else {
+            rendering = (<any>this).rendering;
         }
 
-        getMetadata(): LabelValuePair[] {
-            const _metadata: any[] = this.getProperty('metadata');
+        const renderings: Rendering[] = [];
+        if (!rendering) return renderings;
 
-            const metadata: LabelValuePair[] = [];
-
-            if (!_metadata) return metadata;
-
-            for (let i = 0; i < _metadata.length; i++) {
-                const item: any = _metadata[i];
-                const metadataItem: LabelValuePair = new LabelValuePair(this.options.locale);
-                metadataItem.parse(item);
-                metadata.push(metadataItem);
-            }
-
-            return metadata;
+        // coerce to array
+        if (!Array.isArray(rendering)) {
+            rendering = [rendering];
         }
 
-        getRendering(format: RenderingFormat | string): IRendering | null {
-            const renderings: IRendering[] = this.getRenderings();
-
-            // normalise format to string
-            if (typeof(format) !== 'string') {
-                format = (<RenderingFormat>format).toString();
-            }
-
-            for (let i = 0; i < renderings.length; i++) {
-                const rendering: IRendering = renderings[i];
-
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-
-            return null;
+        for (let i = 0; i < rendering.length; i++) {
+            const r: any = rendering[i];
+            renderings.push(new Rendering(r, this.options));
         }
 
-        getRenderings(): IRendering[] {
-            let rendering;
+        return renderings;
+    }
 
-            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (this.__jsonld) {
-                rendering = this.__jsonld.rendering;
-            } else {
-                rendering = (<any>this).rendering;
-            }
+    getService(profile: ServiceProfile): Service | null {
+        return Utils.getService(this, profile);
+    }
 
-            const renderings: IRendering[] = [];
-            if (!rendering) return renderings;
+    getServices(): Service[] {
+        return Utils.getServices(this);
+    }
 
-            // coerce to array
-            if (!Array.isArray(rendering)) {
-                rendering = [rendering];
-            }
+    getThumbnail(): Thumbnail | null {
+        let thumbnail: any = this.getProperty('thumbnail');
 
-            for (let i = 0; i < rendering.length; i++) {
-                const r: any = rendering[i];
-                renderings.push(new Rendering(r, this.options));
-            }
-
-            return renderings;
+        if (Array.isArray(thumbnail)) {
+            thumbnail = thumbnail[0];
         }
 
-        getService(profile: ServiceProfile | string): IService | null {
-            return Utils.getService(this, profile);
+        if (thumbnail) {
+            return new Thumbnail(thumbnail, this.options);
         }
 
-        getServices(): IService[] {
-            return Utils.getServices(this);
-        }
+        return null;
+    }
 
-        getThumbnail(): Thumbnail | null {
-            let thumbnail: any = this.getProperty('thumbnail');
+    isAnnotation(): boolean {
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.ANNOTATION;
+    }
 
-            if (Array.isArray(thumbnail)) {
-                thumbnail = thumbnail[0];
-            }
+    isCanvas(): boolean {
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.CANVAS;
+    }
 
-            if (thumbnail) {
-                return new Thumbnail(thumbnail, this.options);
-            }
+    isCollection(): boolean {
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.COLLECTION;
+    }
 
-            return null;
-        }
+    isManifest(): boolean {
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.MANIFEST;
+    }
 
-        isAnnotation(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
-        }
+    isRange(): boolean {
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.RANGE;
+    }
 
-        isCanvas(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.CANVAS.toString();
-        }
-
-        isCollection(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.COLLECTION.toString();
-        }
-
-        isManifest(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.MANIFEST.toString();
-        }
-
-        isRange(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.RANGE.toString();
-        }
-
-        isSequence(): boolean {
-            return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.SEQUENCE.toString();
-        }
+    isSequence(): boolean {
+        return this.getIIIFResourceType() === IIIFResourceTypeEnum.SEQUENCE;
     }
 }
+
+// https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
+import { RenderingFormat, ServiceProfile, IIIFResourceType } from "@iiif/vocabulary";
+import { IExternalResource } from "./IExternalResource";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Utils } from "./Utils";
+import { LanguageMap } from "./LanguageMap";
+import { LabelValuePair } from "./LabelValuePair";
+import { Thumbnail } from "./Thumbnail";
+import { Service } from "./Service";
+import { Rendering } from "./Rendering";

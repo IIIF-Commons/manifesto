@@ -1,8 +1,9 @@
-namespace Manifesto {
-    export class Thumbnail extends Resource implements IThumbnail {
+import { Resource } from "./Resource";
+import { IManifestoOptions } from "./IManifestoOptions";
 
-        constructor(jsonld: any, options: IManifestoOptions) {
-            super(jsonld, options);
-        }
+export class Thumbnail extends Resource {
+
+    constructor(jsonld: any, options: IManifestoOptions) {
+        super(jsonld, options);
     }
 }
