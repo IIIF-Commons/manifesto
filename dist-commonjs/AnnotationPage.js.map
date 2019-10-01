@@ -1,0 +1,1 @@
+{"version":3,"file":"AnnotationPage.js","sourceRoot":"","sources":["../src/AnnotationPage.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AAAA,uDAAsD;AAItD;IAAoC,kCAAgB;IAEhD,wBAAY,MAAW,EAAE,OAA0B;eAC/C,kBAAM,MAAM,EAAE,OAAO,CAAC;IAC1B,CAAC;IAED,iCAAQ,GAAR;QACI,OAAO,IAAI,CAAC,WAAW,CAAC,OAAO,CAAC,CAAC;IACrC,CAAC;IACL,qBAAC;AAAD,CAAC,AATD,CAAoC,mCAAgB,GASnD;AATY,wCAAc"}

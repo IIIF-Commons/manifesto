@@ -1,0 +1,33 @@
+import { ViewingHint, Behavior, ViewingDirection } from "@iiif/vocabulary";
+import { IIIFResource } from "./IIIFResource";
+import { Sequence } from "./Sequence";
+import { IManifestoOptions } from "./IManifestoOptions";
+import { Canvas } from "./Canvas";
+import { TreeNode } from "./TreeNode";
+import { Range } from "./Range";
+import { ManifestType } from ".";
+export declare class Manifest extends IIIFResource {
+    index: number;
+    private _allRanges;
+    items: Sequence[];
+    private _topRanges;
+    constructor(jsonld?: any, options?: IManifestoOptions);
+    getPosterCanvas(): Canvas | null;
+    getBehavior(): Behavior | null;
+    getDefaultTree(): TreeNode;
+    private _getTopRanges;
+    getTopRanges(): Range[];
+    private _getRangeById;
+    private _parseRanges;
+    getAllRanges(): Range[];
+    getRangeById(id: string): Range | null;
+    getRangeByPath(path: string): Range | null;
+    getSequences(): Sequence[];
+    getSequenceByIndex(sequenceIndex: number): Sequence;
+    getTotalSequences(): number;
+    getManifestType(): ManifestType;
+    isMultiSequence(): boolean;
+    isPagingEnabled(): boolean;
+    getViewingDirection(): ViewingDirection | null;
+    getViewingHint(): ViewingHint | null;
+}
