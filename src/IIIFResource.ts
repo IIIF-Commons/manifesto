@@ -165,5 +165,6 @@ import { LanguageMap } from "./LanguageMap";
 import { Utils } from "./Utils";
 import { LabelValuePair } from "./LabelValuePair";
 import { Deserialiser } from "./Serialisation";
-import { Service } from ".";import { IIIFResourceType } from "@iiif/vocabulary";
+import { Service } from ".";
+import { IIIFResourceType } from "@iiif/vocabulary";
 
