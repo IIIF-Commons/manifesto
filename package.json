@@ -1,9 +1,9 @@
 {
   "name": "manifesto.js",
-  "version": "4.0.0-pre.10",
+  "version": "4.0.0-pre.11",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-esmodule/index.js",
-  "types": "./types/index.d.ts",
+  "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
     "build:commonjs": "tsc",
@@ -13,7 +13,7 @@
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
     "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
-    "prepublishOnly": "npm run test && npm run build",
+    "prepublishOnly": "npm run build && npm run test",
     "test": "mocha"
   },
   "engines": {
