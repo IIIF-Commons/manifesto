@@ -1,9 +1,10 @@
 {
   "name": "manifesto.js",
-  "version": "4.0.0-pre.11",
+  "version": "4.0.0-pre.13",
   "description": "IIIF Presentation API utility library for client and server",
-  "main": "./dist-esmodule/index.js",
-  "types": "./dist-esmodule/index.d.ts",
+  "main": "./dist-umd/manifesto.js",
+  "module": "./dist-esmodule/index.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
     "build:commonjs": "tsc",
@@ -51,8 +52,8 @@
     "yargs": "3.10.0"
   },
   "dependencies": {
-    "@edsilv/http-status-codes": "0.0.12",
-    "@iiif/vocabulary": "1.0.8",
+    "@edsilv/http-status-codes": "1.0.1",
+    "@iiif/vocabulary": "1.0.10",
     "request": "^2.83.0"
   },
   "directories": {
