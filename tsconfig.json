@@ -19,9 +19,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "target": "es5",
         "types": [
-            "node", 
-            "@edsilv/http-status-codes",
-            "@iiif/vocabulary"
+            "node"
         ]
     },
     "include": [
