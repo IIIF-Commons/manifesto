@@ -1,5 +1,4 @@
-import { Utils } from "./Utils";
-import { TreeNodeType } from "./TreeNodeType";
+import { TreeNodeType, Utils } from "./internal";
 
 export class TreeNode {
     public data: any;

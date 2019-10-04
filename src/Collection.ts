@@ -1,11 +1,5 @@
 import { ViewingDirection } from "@iiif/vocabulary";
-import { IIIFResource } from "./IIIFResource";
-import { Manifest } from "./Manifest";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { TreeNode } from "./TreeNode";
-import { Utils } from "./Utils";
-import { TreeNodeType } from "./TreeNodeType";
-import { LanguageMap } from "./LanguageMap";
+import { IIIFResource, IManifestoOptions, LanguageMap, Manifest, TreeNode, TreeNodeType, Utils } from "./internal";
 const ViewingDirectionEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingDirection;
 
 export class Collection extends IIIFResource {

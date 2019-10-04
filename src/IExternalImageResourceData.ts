@@ -1,4 +1,4 @@
-import { IExternalResourceData } from "./IExternalResourceData";
+import { IExternalResourceData } from "./internal";
 
 export interface IExternalImageResourceData extends IExternalResourceData {
     width: number;

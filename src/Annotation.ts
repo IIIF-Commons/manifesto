@@ -1,8 +1,5 @@
 import { AnnotationMotivation } from "@iiif/vocabulary";
-import { ManifestResource } from "./ManifestResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { AnnotationBody } from "./AnnotationBody";
-import { Resource } from "./Resource";
+import { AnnotationBody, IManifestoOptions, ManifestResource, Resource } from "./internal";
 
 export class Annotation extends ManifestResource {
 

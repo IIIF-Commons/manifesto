@@ -1,13 +1,4 @@
-import { Annotation } from "./Annotation";
-import { AnnotationList } from "./AnnotationList";
-import { AnnotationPage } from "./AnnotationPage";
-import { IExternalImageResourceData } from "./IExternalImageResourceData";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Range } from "./Range";
-import { Resource } from "./Resource";
-import { Service } from "./Service";
-import { Size } from "./Size";
-import { Utils } from "./Utils";
+import { Annotation, AnnotationList, AnnotationPage, IExternalImageResourceData, IManifestoOptions, Range, Resource, Service, Size, Utils } from "./internal";
 
 export class Canvas extends Resource {
 

@@ -1,7 +1,4 @@
-import { Service } from "./Service";
-import { IExternalResourceData } from "./IExternalResourceData";
-import { IAccessToken } from "./IAccessToken";
-import { IManifestoOptions } from "./IManifestoOptions";
+import { IAccessToken, IExternalResourceData, IManifestoOptions, Service } from "./internal";
 
 export interface IExternalResource {
     authAPIVersion: number;

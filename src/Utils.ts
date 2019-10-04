@@ -1,14 +1,6 @@
 //import { ServiceProfile, MediaType } from "@iiif/vocabulary";
-import { IAccessToken } from "./IAccessToken";
-import { IExternalResource } from "./IExternalResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { JSONLDResource } from "./JSONLDResource";
-import { Service } from "./Service";
-import { StatusCode } from "./StatusCode";
-import { TreeNode } from "./TreeNode";
-import { Deserialiser } from "./Serialisation";
+import { Deserialiser, IAccessToken, IExternalResource, IIIFResource, IManifestoOptions, JSONLDResource, Service, StatusCode, TreeNode } from "./internal";
 import { MediaType, ServiceProfile } from "@iiif/vocabulary";
-import { IIIFResource } from "./IIIFResource";
 const HTTPStatusCodeEnum = require("@edsilv/http-status-codes/dist-commonjs/").HTTPStatusCode;
 const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 

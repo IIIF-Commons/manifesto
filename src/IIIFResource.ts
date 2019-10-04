@@ -1,4 +1,7 @@
-import { ManifestResource } from "./ManifestResource";
+import { ManifestResource, Utils, LanguageMap, Deserialiser, LabelValuePair, TreeNode, Service, IManifestoOptions, Collection } from "./internal";
+import { IIIFResourceType } from "@iiif/vocabulary";
+const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 
 export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;
@@ -154,17 +157,3 @@ export class IIIFResource extends ManifestResource {
         });
     }
 }
-
-// https://github.com/ionic-team/ionic-app-scripts/issues/1219#issuecomment-386114424
-const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
-const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
-import { TreeNode } from "./TreeNode";
-import { Collection } from "./Collection";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { LanguageMap } from "./LanguageMap";
-import { Utils } from "./Utils";
-import { LabelValuePair } from "./LabelValuePair";
-import { Deserialiser } from "./Serialisation";
-import { Service } from ".";
-import { IIIFResourceType } from "@iiif/vocabulary";
-

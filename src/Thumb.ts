@@ -1,5 +1,4 @@
-import { Canvas } from "./Canvas";
-import { LanguageMap } from "./LanguageMap";
+import { Canvas, LanguageMap } from "./internal";
 
 // todo: deprecate
 // this is used by Sequence.getThumbs

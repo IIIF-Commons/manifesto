@@ -1,7 +1,4 @@
-import { IManifestoOptions } from "./IManifestoOptions";
-import { IIIFResource } from "./IIIFResource";
-import { Collection } from "./Collection";
-import { Manifest } from "./Manifest";
+import { Collection, IIIFResource, IManifestoOptions, Manifest } from "./internal";
 
 export class Deserialiser {
     static parse(manifest: any, options?: IManifestoOptions): IIIFResource | null {

@@ -1,8 +1,5 @@
 import { IIIFResourceType } from "@iiif/vocabulary";
-import { JSONLDResource } from "./JSONLDResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Utils } from "./Utils";
-import { Annotation } from "./Annotation";
+import { Annotation, IManifestoOptions, JSONLDResource, Utils } from "./internal";
 
 export class AnnotationList extends JSONLDResource {
     options: IManifestoOptions;

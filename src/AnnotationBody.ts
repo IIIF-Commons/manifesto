@@ -1,7 +1,5 @@
 import { ExternalResourceType, MediaType } from "@iiif/vocabulary";
-import { ManifestResource } from "./ManifestResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Utils } from "./Utils";
+import { IManifestoOptions, ManifestResource, Utils } from "./internal";
 
 export class AnnotationBody extends ManifestResource {
 

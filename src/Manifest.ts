@@ -1,13 +1,5 @@
 import { ViewingHint, Behavior, ViewingDirection } from "@iiif/vocabulary";
-import { IIIFResource } from "./IIIFResource";
-import { Sequence } from "./Sequence";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Canvas } from "./Canvas";
-import { TreeNode } from "./TreeNode";
-import { Utils } from "./Utils";
-import { TreeNodeType } from "./TreeNodeType";
-import { Range } from "./Range";
-import { ManifestType, Service } from ".";
+import { Canvas, IManifestoOptions, IIIFResource, ManifestType, Range, Sequence, Service, TreeNode, TreeNodeType, Utils } from "./internal";
 const BehaviorEnum = require('@iiif/vocabulary/dist-commonjs/').Behavior;
 const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 const ViewingHintEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingHint;

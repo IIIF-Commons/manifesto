@@ -1,5 +1,4 @@
-import { Language } from "./Language";
-import { Utils } from "./Utils";
+import { Language, Utils } from "./internal";
 
 export class LanguageMap extends Array<Language> {
 

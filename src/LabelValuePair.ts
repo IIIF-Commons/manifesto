@@ -1,6 +1,4 @@
-import { LanguageMap } from "./LanguageMap";
-import { Language } from "./Language";
-import { Utils } from "./Utils";
+import { Language, LanguageMap, Utils } from "./internal";
 
 export class LabelValuePair {
     public label: LanguageMap;

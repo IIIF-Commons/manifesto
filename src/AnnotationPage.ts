@@ -1,6 +1,4 @@
-import { ManifestResource } from "./ManifestResource";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Annotation } from "./Annotation";
+import { Annotation, IManifestoOptions, ManifestResource } from "./internal";
 
 export class AnnotationPage extends ManifestResource {
 

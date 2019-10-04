@@ -1,11 +1,5 @@
-import { ManifestResource } from "./ManifestResource";
-import { TreeNode } from "./TreeNode";
-import { IManifestoOptions } from "./IManifestoOptions";
-import { Duration } from "./Duration";
-import { Utils } from "./Utils";
+import { Duration, IManifestoOptions, LanguageMap, ManifestResource, TreeNode, TreeNodeType, Utils } from "./internal";
 import { Behavior, ViewingDirection, ViewingHint } from "@iiif/vocabulary";
-import { LanguageMap } from "./LanguageMap";
-import { TreeNodeType } from "./TreeNodeType";
 const BehaviorEnum = require('@iiif/vocabulary/dist-commonjs/').Behavior;
 
 export class Range extends ManifestResource {

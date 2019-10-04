@@ -1,5 +1,4 @@
-import { Resource } from "./Resource";
-import { IManifestoOptions } from "./IManifestoOptions";
+import { IManifestoOptions, Resource } from "./internal";
 
 export class Thumbnail extends Resource {
 
