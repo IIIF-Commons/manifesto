@@ -16,7 +16,7 @@ export class Service extends ManifestResource {
             profile = this.getProperty('dcterms:conformsTo');
         }
 
-        if (Array.isArray(profile)){
+        if (Array.isArray(profile)) {
             return profile[0];
         }
 
