@@ -6,3 +6,7 @@ before_script:
 script:
   - npm run build
   - npm test
+before_install:
+  - npm install node-fetch
+  - npm install fetch-cookie
+  - npm install form-data
