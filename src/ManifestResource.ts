@@ -1,6 +1,5 @@
 import { JSONLDResource, Thumbnail, Service, Utils, Rendering, LabelValuePair, LanguageMap, IManifestoOptions, IExternalResource } from "./internal";
-import { ServiceProfile, RenderingFormat, IIIFResourceType } from "@iiif/vocabulary";
-const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
+import { ServiceProfile, RenderingFormat, IIIFResourceType } from "@iiif/vocabulary/dist-commonjs";
 
 export class ManifestResource extends JSONLDResource {
     externalResource: IExternalResource;
@@ -110,26 +109,26 @@ export class ManifestResource extends JSONLDResource {
     }
 
     isAnnotation(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceTypeEnum.ANNOTATION;
+        return this.getIIIFResourceType() === IIIFResourceType.ANNOTATION;
     }
 
     isCanvas(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceTypeEnum.CANVAS;
+        return this.getIIIFResourceType() === IIIFResourceType.CANVAS;
     }
 
     isCollection(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceTypeEnum.COLLECTION;
+        return this.getIIIFResourceType() === IIIFResourceType.COLLECTION;
     }
 
     isManifest(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceTypeEnum.MANIFEST;
+        return this.getIIIFResourceType() === IIIFResourceType.MANIFEST;
     }
 
     isRange(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceTypeEnum.RANGE;
+        return this.getIIIFResourceType() === IIIFResourceType.RANGE;
     }
 
     isSequence(): boolean {
-        return this.getIIIFResourceType() === IIIFResourceTypeEnum.SEQUENCE;
+        return this.getIIIFResourceType() === IIIFResourceType.SEQUENCE;
     }
 }

@@ -1,7 +1,5 @@
-import { ViewingDirection, ViewingHint } from "@iiif/vocabulary";
+import { ViewingDirection, ViewingHint } from "@iiif/vocabulary/dist-commonjs";
 import { Canvas, IManifestoOptions, LanguageMap, Manifest, ManifestResource, Thumb, Thumbnail, Utils } from "./internal";
-const ViewingDirectionEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingDirection;
-const ViewingHintEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingHint;
 
 export class Sequence extends ManifestResource {
     public items: Canvas[] = [];
@@ -144,7 +142,7 @@ export class Sequence extends ManifestResource {
 
             const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-            if (viewingDirection && viewingDirection === ViewingDirectionEnum.RIGHT_TO_LEFT) {
+            if (viewingDirection && viewingDirection === ViewingDirection.RIGHT_TO_LEFT) {
                 index = indices[0] + 1;
             } else {
                 index = indices[indices.length - 1] + 1;
@@ -177,7 +175,7 @@ export class Sequence extends ManifestResource {
 
             const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-            if (viewingDirection && viewingDirection === ViewingDirectionEnum.RIGHT_TO_LEFT) {
+            if (viewingDirection && viewingDirection === ViewingDirection.RIGHT_TO_LEFT) {
                 indices = indices.reverse();
             }
         }
@@ -194,7 +192,7 @@ export class Sequence extends ManifestResource {
 
             const viewingDirection: ViewingDirection | null = this.getViewingDirection();
 
-            if (viewingDirection && viewingDirection === ViewingDirectionEnum.RIGHT_TO_LEFT) {
+            if (viewingDirection && viewingDirection === ViewingDirection.RIGHT_TO_LEFT) {
                 index = indices[indices.length - 1] - 1;
             } else {
                 index = indices[0] - 1;
@@ -296,7 +294,7 @@ export class Sequence extends ManifestResource {
         const viewingHint: ViewingHint | null = this.getViewingHint();
 
         if (viewingHint) {
-            return viewingHint === ViewingHintEnum.PAGED;
+            return viewingHint === ViewingHint.PAGED;
         }
         
         return false;

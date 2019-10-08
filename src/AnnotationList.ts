@@ -1,4 +1,4 @@
-import { IIIFResourceType } from "@iiif/vocabulary";
+import { IIIFResourceType } from "@iiif/vocabulary/dist-commonjs";
 import { Annotation, IManifestoOptions, JSONLDResource, Utils } from "./internal";
 
 export class AnnotationList extends JSONLDResource {
@@ -37,7 +37,7 @@ export class AnnotationList extends JSONLDResource {
                 }
 
                 Utils.loadManifest(id).then(data => {
-                    this.__jsonld = JSON.parse(data);
+                    this.__jsonld = data;
                     this.context = this.getProperty('context');
                     this.id = this.getProperty('id');
                     this.isLoaded = true;

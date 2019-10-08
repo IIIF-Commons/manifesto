@@ -8,6 +8,7 @@ var ExternalResourceType = require('@iiif/vocabulary/dist-commonjs/').ExternalRe
 describe('#loadsAnnotationList', function() {
   var manifest, canvas, annotationList;
   it('loads successfully and maps objects', function (done) {
+    this.timeout(100000);
     manifesto.loadManifest(manifests.wunder).then(function(data) {
       manifest = manifesto.parseManifest(data);
       canvas = manifest.getSequenceByIndex(0).getCanvasById('http://wellcomelibrary.org/iiif/b18035723/canvas/c2');

@@ -7,6 +7,7 @@ var manifest, ceili;
 
 describe('#loadsTop', function() {
     it('loads successfully', function (done) {
+        console.log(manifests.deephierarchytop);
         manifesto.loadManifest(manifests.deephierarchytop).then(function(data) {
             manifest = manifesto.parseManifest(data);
             done();
@@ -27,6 +28,7 @@ describe('#loadsTop', function() {
     it('loads successfully', function (done) {
         ceili.getCollectionByIndex(0).then(function(data){
             data.should.be.a("object");
+            // console.log(data);
             var label = manifesto.LanguageMap.getValue(data.getLabel());
             label.should.be.a('string');
             label.should.equal('Events');

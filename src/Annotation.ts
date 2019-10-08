@@ -1,4 +1,4 @@
-import { AnnotationMotivation } from "@iiif/vocabulary";
+import { AnnotationMotivation } from "@iiif/vocabulary/dist-commonjs";
 import { AnnotationBody, IManifestoOptions, ManifestResource, Resource } from "./internal";
 
 export class Annotation extends ManifestResource {

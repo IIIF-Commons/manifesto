@@ -1,8 +1,5 @@
-import { ViewingHint, Behavior, ViewingDirection } from "@iiif/vocabulary";
+import { ViewingHint, Behavior, ViewingDirection, ServiceProfile } from "@iiif/vocabulary/dist-commonjs";
 import { Canvas, IManifestoOptions, IIIFResource, ManifestType, Range, Sequence, Service, TreeNode, TreeNodeType, Utils } from "./internal";
-const BehaviorEnum = require('@iiif/vocabulary/dist-commonjs/').Behavior;
-const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
-const ViewingHintEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingHint;
 
 export class Manifest extends IIIFResource {
     public index: number = 0;
@@ -77,7 +74,7 @@ export class Manifest extends IIIFResource {
 
             for (let i = 0; i < this.__jsonld.structures.length; i++) {
                 const json: any = this.__jsonld.structures[i];
-                if (json.viewingHint === ViewingHintEnum.TOP){
+                if (json.viewingHint === ViewingHint.TOP){
                     topRanges.push(json);
                 }
             }
@@ -259,7 +256,7 @@ export class Manifest extends IIIFResource {
     }
 
     getManifestType(): ManifestType {
-        const service: Service = <Service>this.getService(ServiceProfileEnum.UI_EXTENSIONS);
+        const service: Service = <Service>this.getService(ServiceProfile.UI_EXTENSIONS);
         if (service) {
             return service.getProperty('manifestType');
         }
@@ -275,13 +272,13 @@ export class Manifest extends IIIFResource {
         const viewingHint: ViewingHint | null = this.getViewingHint();
 
         if (viewingHint) {
-            return viewingHint === ViewingHintEnum.PAGED;
+            return viewingHint === ViewingHint.PAGED;
         }
 
         const behavior: Behavior | null = this.getBehavior();
 
         if (behavior) {
-            return behavior === BehaviorEnum.PAGED;
+            return behavior === Behavior.PAGED;
         }
 
         return false;

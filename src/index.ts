@@ -8,6 +8,6 @@ export const loadManifest: (uri: string) => Promise<string> = (uri: string) => {
     return Utils.loadManifest(uri);
 }
 
-export const parseManifest: (manifest: string, options?: IManifestoOptions | undefined) => IIIFResource | null = (manifest: string, options?: IManifestoOptions) => {
+export const parseManifest: (manifest: any, options?: IManifestoOptions | undefined) => IIIFResource | null = (manifest: string, options?: IManifestoOptions) => {
     return Utils.parseManifest(manifest, options);
 }
