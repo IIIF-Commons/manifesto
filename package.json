@@ -59,7 +59,7 @@
   "dependencies": {
     "@edsilv/http-status-codes": "1.0.1",
     "@iiif/vocabulary": "1.0.10",
-    "vedavaapi-web": "0.0.6"
+    "vedavaapi-web": "0.0.7"
   },
   "directories": {
     "test": "test"
