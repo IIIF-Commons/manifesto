@@ -54,11 +54,15 @@
     "typescript": "3.6.3",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
-    "yargs": "3.10.0"
+    "yargs": "3.10.0",
+    "node-fetch": "*",
+    "fetch-cookie": "*",
+    "form-data": "*"
   },
   "dependencies": {
     "@edsilv/http-status-codes": "1.0.1",
     "@iiif/vocabulary": "1.0.10",
+    "fetch-cookie": "^0.7.3",
     "vedavaapi-web": "0.0.7"
   },
   "directories": {

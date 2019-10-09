@@ -7,7 +7,6 @@ var manifest, ceili;
 
 describe('#loadsTop', function() {
     it('loads successfully', function (done) {
-        console.log(manifests.deephierarchytop);
         manifesto.loadManifest(manifests.deephierarchytop).then(function(data) {
             manifest = manifesto.parseManifest(data);
             done();

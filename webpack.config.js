@@ -12,10 +12,10 @@ const config = {
     },
 
     externals: {
-        'node-fetch': 'nodeFetch',
-        'fetch-cookie/node-fetch': 'fetchCookieWrapper',
-        'form-data': 'formData',
-        'url': 'nodeUrl',
+        'node-fetch': 'node-fetch',
+        'fetch-cookie/node-fetch': 'fetch-cookie/node-fetch',
+        'form-data': 'form-data',
+        'url': 'url',
     },
     // The output defines how and where we want the bundles. The special value `[name]` in `filename` tells Webpack to use the name we defined above.
     // We target a UMD and name it manifesto. When including the bundle in the browser it will be accessible at `window.manifesto`
@@ -24,7 +24,9 @@ const config = {
         filename: '[name].js',
         libraryTarget: 'umd',
         library: 'manifesto',
-        umdNamedDefine: true
+        umdNamedDefine: true,
+        // https://github.com/webpack/webpack/issues/6784#issuecomment-375941431
+        globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
     // Add resolve for `tsx` and `ts` files, otherwise Webpack would
     // only look for common JavaScript file extension (.js)
