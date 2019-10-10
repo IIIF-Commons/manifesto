@@ -1,4 +1,4 @@
-import { ExternalResourceType, MediaType } from "@iiif/vocabulary";
+import { ExternalResourceType, MediaType } from "@iiif/vocabulary/dist-commonjs";
 import { IManifestoOptions, ManifestResource, Utils } from "./internal";
 
 export class AnnotationBody extends ManifestResource {

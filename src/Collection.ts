@@ -1,6 +1,5 @@
-import { ViewingDirection } from "@iiif/vocabulary";
+import { ViewingDirection } from "@iiif/vocabulary/dist-commonjs";
 import { IIIFResource, IManifestoOptions, LanguageMap, Manifest, TreeNode, TreeNodeType, Utils } from "./internal";
-const ViewingDirectionEnum = require('@iiif/vocabulary/dist-commonjs/').ViewingDirection;
 
 export class Collection extends IIIFResource {
     public items: IIIFResource[] = [];
@@ -85,7 +84,7 @@ export class Collection extends IIIFResource {
             return this.getProperty('viewingDirection');
         }
 
-        return ViewingDirectionEnum.LEFT_TO_RIGHT;
+        return ViewingDirection.LEFT_TO_RIGHT;
     }
 
     /**

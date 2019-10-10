@@ -2,8 +2,9 @@
   "name": "manifesto.js",
   "version": "4.0.0-pre.17",
   "description": "IIIF Presentation API utility library for client and server",
-  "main": "./dist-umd/manifesto.js",
+  "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
+  "browser": "./dist-umd/manifesto.js",
   "types": "./types/index.d.ts",
   "scripts": {
     "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
@@ -44,17 +45,21 @@
     "http": "0.0.0",
     "mocha": "^2.2.4",
     "rimraf": "^3.0.0",
-    "serve-static": "1.10.0",
-    "typedoc": "0.14.0",
+    "serve-static": "^1.14.1",
+    "typedoc": "^0.15.0",
     "typescript": "3.6.3",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
-    "yargs": "3.10.0"
+    "yargs": "3.10.0",
+    "node-fetch": "*",
+    "fetch-cookie": "*",
+    "form-data": "*"
   },
   "dependencies": {
     "@edsilv/http-status-codes": "1.0.1",
     "@iiif/vocabulary": "1.0.10",
-    "request": "^2.83.0"
+    "fetch-cookie": "^0.7.3",
+    "vedavaapi-web": "0.0.7"
   },
   "directories": {
     "test": "test"

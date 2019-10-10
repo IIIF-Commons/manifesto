@@ -1,7 +1,5 @@
 import { ManifestResource, Utils, LanguageMap, Deserialiser, LabelValuePair, TreeNode, Service, IManifestoOptions, Collection } from "./internal";
-import { IIIFResourceType } from "@iiif/vocabulary";
-const IIIFResourceTypeEnum = require('@iiif/vocabulary/dist-commonjs/').IIIFResourceType;
-const ServiceProfileEnum = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+import { IIIFResourceType, ServiceProfile } from "@iiif/vocabulary/dist-commonjs";
 
 export class IIIFResource extends ManifestResource {
     public defaultTree: TreeNode;
@@ -77,7 +75,7 @@ export class IIIFResource extends ManifestResource {
     }
 
     getTrackingLabel(): string {
-        const service: Service = <Service>this.getService(ServiceProfileEnum.TRACKING_EXTENSIONS);
+        const service: Service = <Service>this.getService(ServiceProfile.TRACKING_EXTENSIONS);
         if (service){
             return service.getProperty('trackingLabel');
         }
@@ -116,14 +114,14 @@ export class IIIFResource extends ManifestResource {
     }
 
     isCollection(): boolean {
-        if (this.getIIIFResourceType() === IIIFResourceTypeEnum.COLLECTION) {
+        if (this.getIIIFResourceType() === IIIFResourceType.COLLECTION) {
             return true;
         }
         return false;
     }
 
     isManifest(): boolean {
-        if (this.getIIIFResourceType() === IIIFResourceTypeEnum.MANIFEST) {
+        if (this.getIIIFResourceType() === IIIFResourceType.MANIFEST) {
             return true;
         }
         return false;

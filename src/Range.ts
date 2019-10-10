@@ -1,6 +1,5 @@
 import { Duration, IManifestoOptions, LanguageMap, ManifestResource, TreeNode, TreeNodeType, Utils } from "./internal";
-import { Behavior, ViewingDirection, ViewingHint } from "@iiif/vocabulary";
-const BehaviorEnum = require('@iiif/vocabulary/dist-commonjs/').Behavior;
+import { Behavior, ViewingDirection, ViewingHint } from "@iiif/vocabulary/dist-commonjs";
 
 export class Range extends ManifestResource {
     private _ranges: Range[] | null = null;
@@ -163,7 +162,7 @@ export class Range extends ManifestResource {
                 const childRange = ranges[i];
                 const behavior: Behavior | null = childRange.getBehavior();
 
-                if (behavior === BehaviorEnum.NO_NAV) {
+                if (behavior === Behavior.NO_NAV) {
                     continue;
                 } else {
                     const childNode: TreeNode = new TreeNode();
