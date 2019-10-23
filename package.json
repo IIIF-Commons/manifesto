@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "4.0.0-pre.18",
+  "version": "4.0.0-pre.19",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@edsilv/http-status-codes": "1.0.1",
-    "@iiif/vocabulary": "1.0.10",
+    "@iiif/vocabulary": "^1.0.11",
     "fetch-cookie": "^0.7.3",
     "vedavaapi-web": "0.0.7"
   },
