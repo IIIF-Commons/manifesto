@@ -1,7 +1,7 @@
 import { Deserialiser, IAccessToken, IExternalResource, IIIFResource, IManifestoOptions, JSONLDResource, Service, StatusCode, TreeNode } from "./internal";
 import { MediaType, ServiceProfile } from "@iiif/vocabulary/dist-commonjs";
-import HTTPStatusCodeEnum from '@edsilv/http-status-codes/dist-commonjs/';
 import { request } from 'vedavaapi-web';
+import { OK, MOVED_TEMPORARILY, UNAUTHORIZED } from "@edsilv/http-status-codes";
 
 export class Utils {
 
@@ -251,14 +251,14 @@ export class Utils {
 
             await resource.getData(storedAccessToken);
 
-            if (resource.status === HTTPStatusCodeEnum.OK) {
+            if (resource.status === OK) {
                 return resource;
             } else {
                 // the stored token is no good for this resource
                 await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
             }
 
-            if (resource.status === HTTPStatusCodeEnum.OK || resource.status === HTTPStatusCodeEnum.MOVED_TEMPORARILY) {
+            if (resource.status === OK || resource.status === MOVED_TEMPORARILY) {
                 return resource;
             }
             
@@ -268,11 +268,11 @@ export class Utils {
 
             await resource.getData();
 
-            if (resource.status === HTTPStatusCodeEnum.MOVED_TEMPORARILY || resource.status === HTTPStatusCodeEnum.UNAUTHORIZED) {
+            if (resource.status === MOVED_TEMPORARILY || resource.status === UNAUTHORIZED) {
                 await Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
             }
             
-            if (resource.status === HTTPStatusCodeEnum.OK || resource.status === HTTPStatusCodeEnum.MOVED_TEMPORARILY) {
+            if (resource.status === OK || resource.status === MOVED_TEMPORARILY) {
                 return resource;
             }
             
@@ -321,7 +321,7 @@ export class Utils {
             loginService.options = <IManifestoOptions>resource.options;
         }
 
-        if (!resource.isResponseHandled && resource.status === HTTPStatusCodeEnum.MOVED_TEMPORARILY) {
+        if (!resource.isResponseHandled && resource.status === MOVED_TEMPORARILY) {
             await handleMovedTemporarily(resource);
             return resource;
         } 
@@ -516,7 +516,7 @@ export class Utils {
                         // try using the stored access token
                         resource.getData(storedAccessToken).then(() => {
                             // if the info.json loaded using the stored access token
-                            if (resource.status === HTTPStatusCodeEnum.OK) {
+                            if (resource.status === OK) {
                                 resolve(handleResourceResponse(resource));
                             } else {
                                 // otherwise, load the resource data to determine the correct access control services.
@@ -601,7 +601,7 @@ export class Utils {
                         if(storedAccessToken) {
                             // try using the stored access token
                             resource.getData(storedAccessToken).then(() => {
-                                if (resource.status === HTTPStatusCodeEnum.OK){
+                                if (resource.status === OK){
                                     resolve(resource); // happy path ended
                                 } else {
                                     // the stored token is no good for this resource
@@ -626,7 +626,7 @@ export class Utils {
                                     storeAccessToken(resource, accessToken, tokenStorageStrategy).then(() => {
                                         // try using the fresh access token
                                         resource.getData(accessToken).then(() => {
-                                            if (resource.status === HTTPStatusCodeEnum.OK){
+                                            if (resource.status === OK){
                                                 resolve(resource);
                                             } else {
                                                 // User has a token, but it's not good enough
@@ -684,7 +684,7 @@ export class Utils {
         storeAccessToken: any,
         resolve: any,
         reject: any) {
-        if (resource.status === HTTPStatusCodeEnum.MOVED_TEMPORARILY && !resource.isResponseHandled) {
+        if (resource.status === MOVED_TEMPORARILY && !resource.isResponseHandled) {
             // if the resource was redirected to a degraded version
             // and the response hasn't been handled yet.
             // if the client wishes to trigger a login, set resource.isResponseHandled to true
