@@ -223,7 +223,7 @@ export class Sequence extends ManifestResource {
 
     // todo: deprecate
     getThumbs(width: number, height?: number): Thumb[] {
-        console.warn('getThumbs will be deprecated, use getThumbnails instead');
+        //console.warn('getThumbs will be deprecated, use getThumbnails instead');
         const thumbs: Thumb[] = [];
         const totalCanvases: number = this.getTotalCanvases();
 
