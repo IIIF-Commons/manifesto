@@ -84,3 +84,4 @@ importTest('string', './tests/string');
 importTest('tankeryshouse', './tests/tankeryshouse');
 importTest('translations', './tests/translations');
 importTest('witnesstopeter', './tests/witnesstopeter');
+importTest('Utils', './tests/Utils.test');
