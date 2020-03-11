@@ -1,7 +1,7 @@
 import { Deserialiser, IAccessToken, IExternalResource, IIIFResource, IManifestoOptions, JSONLDResource, Service, StatusCode, TreeNode } from "./internal";
 import { MediaType, ServiceProfile } from "@iiif/vocabulary/dist-commonjs";
-import { request } from 'vedavaapi-web';
 import { OK, MOVED_TEMPORARILY, UNAUTHORIZED } from "@edsilv/http-status-codes";
+import "isomorphic-unfetch";
 
 export class Utils {
 
@@ -196,9 +196,26 @@ export class Utils {
         return Deserialiser.parse(manifest, options);
     }
 
+    static checkStatus(response) {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error(response.statusText);
+            (error as any).response = response;
+            return Promise.reject(error);
+        }
+    }
+
     static loadManifest(uri: string): Promise<any> {
-        return request(uri, {
-            credentials: "same-origin"
+        return new Promise<any>((resolve) => {
+            fetch(uri, {
+                credentials: "include"
+              })
+            .then(Utils.checkStatus)
+            .then(r => r.json())
+            .then(data => {
+                resolve(data);
+            });
         });
     }
 
