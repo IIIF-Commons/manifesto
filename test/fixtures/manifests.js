@@ -3,6 +3,7 @@ module.exports = {
     "annotationdimensions": "http://localhost:3001/annotation-dimensions.json",
     "anzacbulletin": "http://localhost:3001/anzacbulletin.json",
     "audio": "http://localhost:3001/audio.json",
+    "auth-clinical": "http://localhost:3001/auth-clinical.json",
     "bookofremembrance": "http://localhost:3001/book-of-remembrance.json",
     "biocrats": "http://localhost:3001/biocrats.json",
     "canvasMetadata": "http://localhost:3001/canvas-metadata.json",
