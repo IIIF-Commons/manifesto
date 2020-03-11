@@ -208,9 +208,7 @@ export class Utils {
 
     static loadManifest(uri: string): Promise<any> {
         return new Promise<any>((resolve) => {
-            fetch(uri, {
-                credentials: "include"
-              })
+            fetch(uri)
             .then(Utils.checkStatus)
             .then(r => r.json())
             .then(data => {
