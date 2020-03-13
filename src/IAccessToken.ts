@@ -1,7 +1,7 @@
 export interface IAccessToken {
-    accessToken: string;
-    error: string;
-    errorDescription: string;
-    expiresIn: number;
-    tokenType: string;
+  accessToken: string;
+  error: string;
+  errorDescription: string;
+  expiresIn: number;
+  tokenType: string;
 }

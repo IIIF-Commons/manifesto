@@ -1,5 +1,5 @@
 export enum ManifestType {
-    EMPTY =         "",
-    MANUSCRIPT =    "manuscript",
-    MONOGRAPH =     "monograph"
+  EMPTY = "",
+  MANUSCRIPT = "manuscript",
+  MONOGRAPH = "monograph"
 }
