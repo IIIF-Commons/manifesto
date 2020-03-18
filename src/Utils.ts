@@ -10,7 +10,11 @@ import {
   TreeNode
 } from "./internal";
 import { MediaType, ServiceProfile } from "@iiif/vocabulary/dist-commonjs";
-import { OK, MOVED_TEMPORARILY, UNAUTHORIZED } from "@edsilv/http-status-codes";
+import {
+  OK,
+  MOVED_TEMPORARILY,
+  UNAUTHORIZED
+} from "@edsilv/http-status-codes/dist-commonjs";
 import "isomorphic-unfetch";
 
 export class Utils {
