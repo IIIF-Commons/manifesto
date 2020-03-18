@@ -4,7 +4,8 @@
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
-  "browser": "./dist-umd/manifesto.js",
+  "browser": "./dist-esmodule/index.js",
+  "unpkg": "./dist-umd/manifesto.js",
   "types": "./types/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
