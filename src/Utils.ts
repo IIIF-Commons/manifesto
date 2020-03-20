@@ -315,9 +315,9 @@ export class Utils {
     }
   }
 
-  static loadManifest(uri: string): Promise<any> {
+  static loadManifest(url: string): Promise<any> {
     return new Promise<any>(resolve => {
-      fetch(uri)
+      fetch(url)
         .then(Utils.checkStatus)
         .then(r => r.json())
         .then(data => {

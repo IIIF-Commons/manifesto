@@ -27,8 +27,10 @@ export class IIIFResource extends ManifestResource {
     const defaultOptions: IManifestoOptions = {
       defaultLabel: "-",
       locale: "en-GB",
-      resource: <IIIFResource>this,
-      pessimisticAccessControl: false
+      pagingLimitKey: "_limit",
+      pagingStartKey: "_start",
+      pessimisticAccessControl: false,
+      resource: <IIIFResource>this
     };
 
     this.options = Object.assign(defaultOptions, options);
@@ -140,7 +142,7 @@ export class IIIFResource extends ManifestResource {
     return false;
   }
 
-  load(): Promise<IIIFResource> {
+  load(start?: number, limit?: number): Promise<IIIFResource> {
     let that = this;
     return new Promise<IIIFResource>(resolve => {
       if (that.isLoaded) {
@@ -149,13 +151,22 @@ export class IIIFResource extends ManifestResource {
         const options = that.options;
         options.navDate = that.getNavDate();
 
-        let id: string = that.__jsonld.id;
+        let url: string = that.__jsonld.id;
 
-        if (!id) {
-          id = that.__jsonld["@id"];
+        if (!url) {
+          url = that.__jsonld["@id"];
         }
 
-        Utils.loadManifest(id).then(function(data) {
+        // add paging options to qs
+        if (start !== undefined && limit !== undefined) {
+          const u: URL = new URL(url);
+          let params: URLSearchParams = new URLSearchParams(u.search.slice(1));
+          // todo: make _start and _limit names configurable.
+          params.append(options.pagingStartKey, String(start));
+          params.append(options.pagingLimitKey, String(limit));
+        }
+
+        Utils.loadManifest(url).then(function(data) {
           that.parentLabel = <string>(
             LanguageMap.getValue(that.getLabel(), options.locale)
           );
