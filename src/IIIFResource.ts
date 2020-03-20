@@ -140,8 +140,7 @@ export class IIIFResource extends ManifestResource {
     return false;
   }
 
-  // pass an override url if you need paging/custom qs params etc
-  load(url?: string): Promise<IIIFResource> {
+  load(): Promise<IIIFResource> {
     let that = this;
     return new Promise<IIIFResource>(resolve => {
       if (that.isLoaded) {
@@ -150,17 +149,13 @@ export class IIIFResource extends ManifestResource {
         const options = that.options;
         options.navDate = that.getNavDate();
 
-        let id: string | undefined = url;
+        let id: string = that.__jsonld.id;
 
         if (!id) {
-          id = that.__jsonld.id;
-
-          if (!id) {
-            id = that.__jsonld["@id"];
-          }
+          id = that.__jsonld["@id"];
         }
 
-        Utils.loadManifest(id!).then(function(data) {
+        Utils.loadManifest(id).then(function(data) {
           that.parentLabel = <string>(
             LanguageMap.getValue(that.getLabel(), options.locale)
           );
