@@ -4,8 +4,8 @@ import { IIIFResource } from "./IIIFResource";
 import { IManifestoOptions } from "./IManifestoOptions";
 import { Utils } from "./Utils";
 
-export const loadManifest: (uri: string) => Promise<string> = (uri: string) => {
-  return Utils.loadManifest(uri);
+export const loadManifest: (url: string) => Promise<string> = (url: string) => {
+  return Utils.loadManifest(url);
 };
 
 export const parseManifest: (
