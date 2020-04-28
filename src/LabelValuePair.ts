@@ -52,6 +52,21 @@ export class LabelValuePair {
     return null;
   }
 
+  public getValues(): Array<string | null> {
+    if (this.value) {
+      var locale: string = this.defaultLocale;
+
+      // if the label has a locale, prefer that to the default locale
+      if (this.label && this.label.length && this.label[0].locale) {
+        locale = this.label[0].locale;
+      }
+
+      return LanguageMap.getValues(this.value, locale);
+    }
+
+    return [];
+  }
+
   public setValue(value: string): void {
     if (this.value && this.value.length) {
       var t: Language = this.value.filter(

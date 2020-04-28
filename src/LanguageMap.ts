@@ -75,4 +75,27 @@ export class LanguageMap extends Array<Language> {
 
     return null;
   }
+
+  static getValues(
+    languageCollection: LanguageMap,
+    locale?: string
+  ): Array<string | null> {
+    if (languageCollection.length) {
+      if (locale) {
+        return languageCollection
+          .filter(
+            t =>
+              t.locale === locale ||
+              Utils.getInexactLocale(t.locale) ===
+                Utils.getInexactLocale(locale)
+          )
+          .map(language => language.value);
+      }
+
+      // returns all of the values
+      return languageCollection.map(language => language.value);
+    }
+
+    return [];
+  }
 }
