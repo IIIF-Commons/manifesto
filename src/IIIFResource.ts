@@ -21,7 +21,7 @@ namespace Manifesto {
 
         getAttribution(): LanguageMap {
 
-            console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
+            // console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
 
             const attribution: any = this.getProperty('attribution');
 

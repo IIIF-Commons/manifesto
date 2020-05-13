@@ -10,6 +10,7 @@
     "prepare": "npm run build",
     "test": "gulp test"
   },
+  "typings": "./dist/manifesto.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iiif-commons/manifesto.git"
