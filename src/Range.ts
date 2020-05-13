@@ -25,10 +25,56 @@ namespace Manifesto {
 
         getDuration(): Duration | undefined {
 
+            if (this.canvases && this.canvases.length) {
+
+                const startTimes: number[] = [];
+                const endTimes: number[] = [];
+
+                for (const canvas of this.canvases) {
+                    if (!canvas) continue;
+                    const [, canvasId, start, end] = (canvas.match(
+                      /(.*)#t=([0-9.]+),?([0-9.]+)?/
+                    ) || [undefined, canvas]) as string[];
+
+                    if (canvasId) {
+                        startTimes.push(parseFloat(start));
+                        endTimes.push(parseFloat(end));
+                    }
+                }
+
+                if (startTimes.length && endTimes.length) {
+                    return new Duration(
+                      Math.min(...startTimes),
+                      Math.max(...endTimes)
+                    );
+                }
+            } else {
+                // get child ranges and calculate the start and end based on them
+                const childRanges: Manifesto.IRange[] = this.getRanges();
+                const startTimes: number[] = [];
+                const endTimes: number[] = [];
+
+                for (const childRange of childRanges) {
+                    const duration = childRange.getDuration();
+                    if (duration) {
+                        startTimes.push(duration.start);
+                        endTimes.push(duration.end);
+                    }
+                }
+
+                if (startTimes.length && endTimes.length) {
+                    return new Duration(
+                      Math.min(...startTimes),
+                      Math.max(...endTimes)
+                    );
+                }
+            }
+
             let start: number | undefined;
             let end: number | undefined;
 
             if (this.canvases && this.canvases.length) {
+
                 for (let i = 0; i < this.canvases.length; i++) {
                     const canvas: string = this.canvases[i];
                     let temporal: number[] | null = Utils.getTemporalComponent(canvas);
@@ -62,7 +108,6 @@ namespace Manifesto {
                         }
                     }
                 }
-
             }
 
             if (start !== undefined && end !== undefined) {
