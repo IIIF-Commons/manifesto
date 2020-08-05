@@ -36,4 +36,8 @@ describe('collection thumbnail', function() {
         var height = thumbnail.getHeight();
         expect(height).to.equal(100);
     });
+
+    it('has a viewingHint', function () {
+      expect(manifest.getViewingHint()).to.equal('individuals');
+    });
 });

@@ -26,4 +26,9 @@ describe('#loadsPres3Collection', function() {
         expect(collection.isManifest()).to.equal(false);  
         // expect(collection.isCollection()).to.equal(true); todo
     });
+
+    it('has a behavior', function () {
+      var behavior = collection.getBehavior();
+      expect(behavior).to.equal('individuals');
+    });
 });

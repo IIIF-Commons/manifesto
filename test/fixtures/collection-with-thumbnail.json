@@ -2,6 +2,7 @@
     "@context": "http://iiif.io/api/presentation/2/context.json",
     "@id": "http://example.org/iiif/book1/manifest",
     "@type": "sc:Collection",
+    "viewingHint": "individuals",
     "thumbnail": {
       "@id": "http://example.org/images/book1-page1/full/80,100/0/default.jpg",
       "@type": "dctypes:Image",
