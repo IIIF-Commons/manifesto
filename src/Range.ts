@@ -1,7 +1,6 @@
 import {
   Duration,
   IManifestoOptions,
-  LanguageMap,
   ManifestResource,
   TreeNode,
   TreeNodeType,
@@ -152,9 +151,7 @@ export class Range extends ManifestResource {
   }
 
   private _parseTreeNode(node: TreeNode, range: Range): void {
-    node.label = <string>(
-      LanguageMap.getValue(range.getLabel(), this.options.locale)
-    );
+    node.label = <string>range.getLabel().getValue(this.options.locale);
     node.data = range;
     node.data.type = Utils.normaliseType(TreeNodeType.RANGE);
     range.treeNode = node;

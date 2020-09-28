@@ -1,8 +1,8 @@
-import { Language, LanguageMap, Utils } from "./internal";
+import { PropertyValue } from "./internal";
 
 export class LabelValuePair {
-  public label: LanguageMap;
-  public value: LanguageMap;
+  public label: PropertyValue | null;
+  public value: PropertyValue | null;
   public defaultLocale: string;
   public resource: any;
 
@@ -12,69 +12,53 @@ export class LabelValuePair {
 
   public parse(resource: any): void {
     this.resource = resource;
-    this.label = LanguageMap.parse(this.resource.label, this.defaultLocale);
-    this.value = LanguageMap.parse(this.resource.value, this.defaultLocale);
+    this.label = PropertyValue.parse(this.resource.label);
+    this.value = PropertyValue.parse(this.resource.value);
   }
 
-  // shortcuts to get/set values based on default locale
+  // shortcuts to get/set values based on user or default locale
 
-  public getLabel(): string | null {
-    if (this.label) {
-      return LanguageMap.getValue(this.label, this.defaultLocale);
+  public getLabel(locale?: string | string[]): string | null {
+    if (this.label === null) {
+      return null;
     }
-
-    return null;
+    if (Array.isArray(locale) && !locale.length) {
+      locale = undefined;
+    }
+    return this.label.getValue(locale || this.defaultLocale);
   }
 
   public setLabel(value: string): void {
-    if (this.label && this.label.length) {
-      var t: Language = this.label.filter(
-        x =>
-          x.locale === this.defaultLocale ||
-          x.locale === Utils.getInexactLocale(this.defaultLocale)
-      )[0];
-      if (t) t.value = value;
+    if (this.label === null) {
+      this.label = new PropertyValue([]);
     }
+    this.label.setValue(value, this.defaultLocale);
   }
 
-  public getValue(): string | null {
-    if (this.value) {
-      var locale: string = this.defaultLocale;
-
-      // if the label has a locale, prefer that to the default locale
-      if (this.label && this.label.length && this.label[0].locale) {
-        locale = this.label[0].locale;
-      }
-
-      return LanguageMap.getValue(this.value, locale);
+  public getValue(locale?: string | string[]): string | null {
+    if (this.value === null) {
+      return null;
     }
-
-    return null;
+    if (Array.isArray(locale) && !locale.length) {
+      locale = undefined;
+    }
+    return this.value.getValue(locale || this.defaultLocale);
   }
 
-  public getValues(): Array<string | null> {
-    if (this.value) {
-      var locale: string = this.defaultLocale;
-
-      // if the label has a locale, prefer that to the default locale
-      if (this.label && this.label.length && this.label[0].locale) {
-        locale = this.label[0].locale;
-      }
-
-      return LanguageMap.getValues(this.value, locale);
+  public getValues(locale?: string | string[]): Array<string | null> {
+    if (this.value === null) {
+      return [];
     }
-
-    return [];
+    if (Array.isArray(locale) && !locale.length) {
+      locale = undefined;
+    }
+    return this.value.getValues(locale || this.defaultLocale);
   }
 
   public setValue(value: string): void {
-    if (this.value && this.value.length) {
-      var t: Language = this.value.filter(
-        x =>
-          x.locale === this.defaultLocale ||
-          x.locale === Utils.getInexactLocale(this.defaultLocale)
-      )[0];
-      if (t) t.value = value;
+    if (this.value === null) {
+      this.value = new PropertyValue([]);
     }
+    this.value.setValue(value, this.defaultLocale);
   }
 }

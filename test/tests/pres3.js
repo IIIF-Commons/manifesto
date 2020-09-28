@@ -40,7 +40,7 @@ describe('presentation 3', function() {
 
     it('has a label', function() {
         var label = body.getLabel();
-        var labelValue = manifesto.LanguageMap.getValue(label);
+        var labelValue = label.getValue();
         expect(labelValue).to.equal('Page 1');
     });
 });

@@ -59,7 +59,7 @@ describe('presentation 3 3d', function() {
     });
 
     it('canvas has label', function() {
-        var label = manifesto.LanguageMap.getValue(body.getLabel());
+        var label = body.getLabel().getValue();
         expect(label).to.equal('Animal Skull');
     });
 });
