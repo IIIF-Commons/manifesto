@@ -1,22 +1,29 @@
 var expect = require('chai').expect;
-var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
-var manifests = require('../fixtures/manifests');
-var ServiceProfile = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
+var manifestSources = require('../fixtures/manifests');
 
-var manifest;
+var manifests = {};
 
 describe('LabelValuePair', function() {
-    beforeEach(function(done) {
-        manifesto.loadManifest(manifests['4']).then(function(data) {
-            manifest = manifesto.parseManifest(data);
-            done();
-        });
+    before(function(done) {
+        // Load manifest fixtures
+        Promise.all(
+            ['4', 'cardiganshire']
+                .map(manifestId => manifesto.loadManifest(manifestSources[manifestId]).then(
+                    data => new Promise((resolve) => {
+                        manifests[manifestId] = manifesto.parseManifest(data);
+                        resolve();
+                    }))))
+            .then(() => done());
     })
     describe('#getValues', function() {
         it('returns an array of language values', function() {
-            var metadata = manifest.getMetadata().map(m => m.getValues());
+            var metadata = manifests['4'].getMetadata().map(m => m.getValues());
             expect(metadata[0]).to.eql(['some date', 'some other date']);
+        });
+        it('returns the sole value when the labels carry a locale and the first locale does not match the default locale', function() {
+            var metadata = manifests['cardiganshire'].getMetadata().map(m => m.getValues());
+            expect(metadata[0]).to.eql(['Cardiganshire Constabulary register of criminals']);
         });
     });
 });

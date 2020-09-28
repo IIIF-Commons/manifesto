@@ -7,12 +7,12 @@
     {
       "label":[
         {
-          "@value":"Title",
-          "@language": "en"
-        },
-        {
           "@value":"Teitl",
           "@language": "cy-GB"
+        },
+        {
+          "@value":"Title",
+          "@language": "en"
         }
       ],
       "value":"Cardiganshire Constabulary register of criminals"

@@ -39,14 +39,7 @@ export class LabelValuePair {
 
   public getValue(): string | null {
     if (this.value) {
-      var locale: string = this.defaultLocale;
-
-      // if the label has a locale, prefer that to the default locale
-      if (this.label && this.label.length && this.label[0].locale) {
-        locale = this.label[0].locale;
-      }
-
-      return LanguageMap.getValue(this.value, locale);
+      return LanguageMap.getValue(this.value, this.defaultLocale);
     }
 
     return null;
@@ -54,14 +47,7 @@ export class LabelValuePair {
 
   public getValues(): Array<string | null> {
     if (this.value) {
-      var locale: string = this.defaultLocale;
-
-      // if the label has a locale, prefer that to the default locale
-      if (this.label && this.label.length && this.label[0].locale) {
-        locale = this.label[0].locale;
-      }
-
-      return LanguageMap.getValues(this.value, locale);
+      return LanguageMap.getValues(this.value, this.defaultLocale);
     }
 
     return [];
