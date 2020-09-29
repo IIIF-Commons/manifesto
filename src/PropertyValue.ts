@@ -104,20 +104,24 @@ export class PropertyValue {
     const allLocales = this.values
       .map(lv => lv.locale)
       .filter(l => l !== undefined) as string[];
-    let matchingLocale;
     // First, look for a precise match
     for (const userLocale of locales) {
-      matchingLocale = allLocales.find(l => l === userLocale);
-    }
-    if (!matchingLocale) {
-      // Look for an inexact match
-      for (const userLocale of locales) {
-        matchingLocale = allLocales.find(
-          l => Utils.getInexactLocale(l) === Utils.getInexactLocale(userLocale)
-        );
+      const matchingLocale = allLocales.find(l => l === userLocale);
+      if (matchingLocale) {
+        return matchingLocale;
       }
     }
-    return matchingLocale;
+    // Look for an inexact match
+    for (const userLocale of locales) {
+      const matchingLocale = allLocales.find(
+        l => Utils.getInexactLocale(l) === Utils.getInexactLocale(userLocale)
+      );
+      if (matchingLocale) {
+        return matchingLocale;
+      }
+    }
+
+    return undefined;
   }
 
   /**
