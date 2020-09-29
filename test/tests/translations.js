@@ -15,7 +15,7 @@ describe('#loadsTranslations', function() {
 
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
-        expect(metadata[4].value).to.be.instanceof(Array);
+        expect(metadata[4].getValues()).to.be.instanceof(Array);
 
         for (let i = 0; i < metadata.length; i++) {
             var label = metadata[i].getLabel();

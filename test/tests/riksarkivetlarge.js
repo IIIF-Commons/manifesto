@@ -15,7 +15,7 @@ describe('#loadsRiksarkivetLarge', function() {
     });
 
     it('has a label', function () {
-        var label = manifesto.LanguageMap.getValue(manifest.getLabel());
+        var label = manifest.getLabel().getValue();
         label.should.be.a('string');
     });
 

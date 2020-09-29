@@ -16,8 +16,8 @@ describe('presentation 3', function() {
 
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
-        expect(metadata[0].label[0].value).to.equal('Author');
-        expect(metadata[0].label[0].locale).to.equal('en');
+        expect(metadata[0].label.getValue()).to.equal('Author');
+        expect(metadata[0].label.values[0].locale).to.equal('en');
     });
 
     it('has a sequence', function() {
