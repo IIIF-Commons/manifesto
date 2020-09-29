@@ -121,15 +121,23 @@ export class PropertyValue {
   }
 
   /**
-   * Get the first of the values available in the most suitable locale.
+   * Get a value in the most suitable locale.
    *
-   * @param {string | string[]} locales Desired locale, can be a list of
+   * @param {string | string[] | undefined} locales Desired locale, can be a list of
    * locales sorted by descending priority.
+   * @param {string | undefined} joinWith String to join multiple available values by,
+   * if undefined only the first available value will be returned
    * @returns the first value in the most suitable locale or null if none could be found
    */
-  getValue(locales?: string | string[]): string | null {
+  getValue(locales?: string | string[], joinWith?: string): string | null {
     const vals = this.getValues(locales);
-    return vals.length > 0 ? vals[0] : null;
+    if (vals.length === 0) {
+      return null;
+    }
+    if (joinWith) {
+      return vals.join(joinWith);
+    }
+    return vals[0];
   }
 
   /**

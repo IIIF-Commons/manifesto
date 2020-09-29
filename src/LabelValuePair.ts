@@ -35,14 +35,14 @@ export class LabelValuePair {
     this.label.setValue(value, this.defaultLocale);
   }
 
-  public getValue(locale?: string | string[]): string | null {
+  public getValue(locale?: string | string[], joinWith: string = "<br/>"): string | null {
     if (this.value === null) {
       return null;
     }
     if (Array.isArray(locale) && !locale.length) {
       locale = undefined;
     }
-    return this.value.getValue(locale || this.defaultLocale);
+    return this.value.getValue(locale || this.defaultLocale, joinWith);
   }
 
   public getValues(locale?: string | string[]): Array<string | null> {
