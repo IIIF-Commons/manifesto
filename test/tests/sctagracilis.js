@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var manifesto = require('../../dist-commonjs/');
 var should = require('chai').should();
 var manifests = require('../fixtures/manifests');
-//require('./shared');
+require('./shared');
 
 var manifest;
 

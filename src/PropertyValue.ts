@@ -10,20 +10,31 @@ class LocalizedValue implements Language {
   _defaultLocale: string;
 
   /** Parse a localized value from a IIIF v2 property value
-   * 
+   *
    * @param {string | string[] | object | object[]} rawVal value from IIIF resource
    * @param {string | undefined} defaultLocale deprecated: defaultLocale the default locale to use for this value
-  */
-  static parseV2Value(rawVal: any, defaultLocale?: string): LocalizedValue | null {
+   */
+  static parseV2Value(
+    rawVal: any,
+    defaultLocale?: string
+  ): LocalizedValue | null {
     if (typeof rawVal === "string") {
       return new LocalizedValue(rawVal, undefined, defaultLocale);
     } else if (rawVal["@value"]) {
-      return new LocalizedValue(rawVal["@value"], rawVal["@language"], defaultLocale);
+      return new LocalizedValue(
+        rawVal["@value"],
+        rawVal["@language"],
+        defaultLocale
+      );
     }
     return null;
   }
 
-  constructor(value: string | string[], locale?: string, defaultLocale: string = 'none') {
+  constructor(
+    value: string | string[],
+    locale?: string,
+    defaultLocale: string = "none"
+  ) {
     if (Array.isArray(value) && value.length === 1) {
       this._value = value[0];
     } else {
@@ -39,9 +50,9 @@ class LocalizedValue implements Language {
   /*** @deprecated Use PropertyValue#getValue instead */
   get value(): string {
     if (Array.isArray(this._value)) {
-      return this._value.join('<br/>');
+      return this._value.join("<br/>");
     }
-    return this._value
+    return this._value;
   }
 
   /*** @deprecated Don't use, only used for backwards compatibility reasons */
@@ -72,7 +83,7 @@ class LocalizedValue implements Language {
 export class PropertyValue extends Array<LocalizedValue> {
   // FIXME: This is only needed for backwards compatibility reasons,
   //        if you use the non-deprecated API this will never be used.
-  _defaultLocale?: string
+  _defaultLocale?: string;
 
   static parse(rawVal: any, defaultLocale?: string): PropertyValue {
     if (!rawVal) {
@@ -81,13 +92,13 @@ export class PropertyValue extends Array<LocalizedValue> {
     if (Array.isArray(rawVal)) {
       // Collection of IIIF v2 property values
       const parsed = rawVal
-          .map(v => LocalizedValue.parseV2Value(v, defaultLocale))
-          .filter(v => v !== null) as LocalizedValue[];
+        .map(v => LocalizedValue.parseV2Value(v, defaultLocale))
+        .filter(v => v !== null) as LocalizedValue[];
       const byLocale = parsed.reduce((acc, lv) => {
         let loc = lv._locale;
         if (!loc) {
           // Cannot use undefined as an object key
-          loc = 'none';
+          loc = "none";
         }
         if (acc[loc]) {
           acc[loc].addValue(lv._value);
@@ -95,11 +106,14 @@ export class PropertyValue extends Array<LocalizedValue> {
           acc[loc] = lv;
         }
         return acc;
-      }, {} as {[locale: string]: LocalizedValue})
+      }, {} as { [locale: string]: LocalizedValue });
       return new PropertyValue(Object.values(byLocale), defaultLocale);
     } else if (typeof rawVal === "string") {
-      return new PropertyValue([new LocalizedValue(rawVal, undefined, defaultLocale)], defaultLocale);
-    } else if (rawVal['@language']) {
+      return new PropertyValue(
+        [new LocalizedValue(rawVal, undefined, defaultLocale)],
+        defaultLocale
+      );
+    } else if (rawVal["@language"]) {
       // Single IIIF v2 property value
       const parsed = LocalizedValue.parseV2Value(rawVal);
       return new PropertyValue(parsed !== null ? [parsed] : [], defaultLocale);

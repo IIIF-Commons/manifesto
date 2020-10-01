@@ -1,5 +1,5 @@
 /** @deprecated Use LocalizedValue instead */
 export default interface Language {
-    value: string
-    locale: string
+  value: string;
+  locale: string;
 }

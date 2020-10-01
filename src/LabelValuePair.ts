@@ -35,7 +35,10 @@ export class LabelValuePair {
     this.label.setValue(value, this.defaultLocale);
   }
 
-  public getValue(locale?: string | string[], joinWith: string = "<br/>"): string | null {
+  public getValue(
+    locale?: string | string[],
+    joinWith: string = "<br/>"
+  ): string | null {
     if (this.value === null) {
       return null;
     }
