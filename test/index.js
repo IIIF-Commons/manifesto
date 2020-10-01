@@ -74,6 +74,7 @@ importTest('pres3-pdf', './tests/pres3-pdf');
 importTest('pres3', './tests/pres3');
 importTest('presentation2-paging', './tests/presentation2-paging');
 importTest('presentation3-paging', './tests/presentation3-paging');
+importTest('PropertyValue', './tests/PropertyValue.test')
 importTest('pseudoalbert', './tests/pseudoalbert');
 importTest('qatarrighttoleft', './tests/qatarrighttoleft');
 importTest('querystring', './tests/querystring');
