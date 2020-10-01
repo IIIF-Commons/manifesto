@@ -17,7 +17,10 @@ describe('presentation 3', function() {
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
         expect(metadata[0].label.getValue()).to.equal('Author');
-        expect(metadata[0].label.values[0].locale).to.equal('en');
+        expect(metadata[0].label[0].locale).to.equal('en');
+
+        // Legacy API
+        expect(metadata[0].label[0].value).to.equal('Author');
     });
 
     it('has a sequence', function() {

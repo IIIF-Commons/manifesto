@@ -1,40 +1,65 @@
+import Language from "./Language";
 import { Utils } from "./Utils";
 
 /** Utility class to hold one or more values with their associated (optional) locale */
-class LocalizedValue {
-  value: string | string[];
-  locale?: string;
+class LocalizedValue implements Language {
+  _value: string | string[];
+  _locale?: string;
 
-  /** Parse a localized value from a IIIF v2 property value */
-  static parseV2Value(rawVal: any): LocalizedValue | null {
+  /// @deprecated, only for backwards compatibility with old Language interface
+  _defaultLocale: string;
+
+  /** Parse a localized value from a IIIF v2 property value
+   * 
+   * @param {string | string[] | object | object[]} rawVal value from IIIF resource
+   * @param {string | undefined} defaultLocale deprecated: defaultLocale the default locale to use for this value
+  */
+  static parseV2Value(rawVal: any, defaultLocale?: string): LocalizedValue | null {
     if (typeof rawVal === "string") {
-      return new LocalizedValue(rawVal, undefined);
+      return new LocalizedValue(rawVal, undefined, defaultLocale);
     } else if (rawVal["@value"]) {
-      return new LocalizedValue(rawVal["@value"], rawVal["@language"]);
+      return new LocalizedValue(rawVal["@value"], rawVal["@language"], defaultLocale);
     }
     return null;
   }
 
-  constructor(value: string | string[], locale?: string) {
+  constructor(value: string | string[], locale?: string, defaultLocale: string = 'none') {
     if (Array.isArray(value) && value.length === 1) {
-      this.value = value[0];
+      this._value = value[0];
     } else {
-      this.value = value;
+      this._value = value;
     }
     if (locale === "none" || locale === "@none") {
       locale = undefined;
     }
-    this.locale = locale;
+    this._locale = locale;
+    this._defaultLocale = defaultLocale;
+  }
+
+  /*** @deprecated Use PropertyValue#getValue instead */
+  get value(): string {
+    if (Array.isArray(this._value)) {
+      return this._value.join('<br/>');
+    }
+    return this._value
+  }
+
+  /*** @deprecated Don't use, only used for backwards compatibility reasons */
+  get locale(): string {
+    if (this._locale === undefined) {
+      return this._defaultLocale;
+    }
+    return this._locale;
   }
 
   addValue(value: string | string[]): void {
-    if (!Array.isArray(this.value)) {
-      this.value = [this.value];
+    if (!Array.isArray(this._value)) {
+      this._value = [this._value];
     }
     if (Array.isArray(value)) {
-      this.value = this.value.concat(this.value, value)
+      this._value = this._value.concat(value);
     } else {
-      this.value.push(value);
+      this._value.push(value);
     }
   }
 }
@@ -44,38 +69,40 @@ class LocalizedValue {
  * language-based value retrieval as per the algorithm described in
  * https://iiif.io/api/presentation/2.1/#language-of-property-values
  */
-export class PropertyValue {
-  values: LocalizedValue[];
+export class PropertyValue extends Array<LocalizedValue> {
+  // FIXME: This is only needed for backwards compatibility reasons,
+  //        if you use the non-deprecated API this will never be used.
+  _defaultLocale?: string
 
-  static parse(rawVal: any): PropertyValue {
+  static parse(rawVal: any, defaultLocale?: string): PropertyValue {
     if (!rawVal) {
-      return new PropertyValue();
+      return new PropertyValue([], defaultLocale);
     }
     if (Array.isArray(rawVal)) {
       // Collection of IIIF v2 property values
       const parsed = rawVal
-          .map(LocalizedValue.parseV2Value)
+          .map(v => LocalizedValue.parseV2Value(v, defaultLocale))
           .filter(v => v !== null) as LocalizedValue[];
       const byLocale = parsed.reduce((acc, lv) => {
-        let loc = lv.locale;
+        let loc = lv._locale;
         if (!loc) {
           // Cannot use undefined as an object key
           loc = 'none';
         }
         if (acc[loc]) {
-          acc[loc].addValue(lv.value);
+          acc[loc].addValue(lv._value);
         } else {
           acc[loc] = lv;
         }
         return acc;
       }, {} as {[locale: string]: LocalizedValue})
-      return new PropertyValue(Object.values(byLocale));
+      return new PropertyValue(Object.values(byLocale), defaultLocale);
     } else if (typeof rawVal === "string") {
-      return new PropertyValue([new LocalizedValue(rawVal)]);
+      return new PropertyValue([new LocalizedValue(rawVal, undefined, defaultLocale)], defaultLocale);
     } else if (rawVal['@language']) {
       // Single IIIF v2 property value
       const parsed = LocalizedValue.parseV2Value(rawVal);
-      return new PropertyValue(parsed !== null ? [parsed] : []);
+      return new PropertyValue(parsed !== null ? [parsed] : [], defaultLocale);
     } else {
       // IIIF v3 property value
       return new PropertyValue(
@@ -86,14 +113,18 @@ export class PropertyValue {
               "A IIIF v3 localized property value must have an array as the value for a given language."
             );
           }
-          return new LocalizedValue(val, locale);
-        })
+          return new LocalizedValue(val, locale, defaultLocale);
+        }),
+        defaultLocale
       );
     }
   }
 
-  constructor(values?: LocalizedValue[]) {
-    this.values = values || [];
+  constructor(values: LocalizedValue[] = [], defaultLocale?: string) {
+    super(...values);
+    // Needed for ES5 compatibility, see https://stackoverflow.com/a/40967939
+    (this as any).__proto__ = PropertyValue.prototype;
+    this._defaultLocale = defaultLocale;
   }
 
   /*** Try to find the available locale that best fit's the user's preferences. */
@@ -101,8 +132,10 @@ export class PropertyValue {
     // If any of the values have a language associated with them, the client
     // must display all of the values associated with the language that best
     // matches the language preference.
-    const allLocales = this.values
-      .map(lv => lv.locale)
+    // FIXME: This is nasty, we have to spread ourselves in order to be able
+    //        to call `.map`. This will no longer be needed once we target >ES5.
+    const allLocales = [...this]
+      .map(lv => lv._locale)
       .filter(l => l !== undefined) as string[];
     // First, look for a precise match
     for (const userLocale of locales) {
@@ -135,19 +168,19 @@ export class PropertyValue {
   setValue(value: string | string[], locale?: string) {
     let existing: LocalizedValue | undefined = undefined;
     if (!locale) {
-      existing = this.values.find(lv => lv.locale === undefined);
+      existing = this.find(lv => lv._locale === undefined);
     } else {
       const bestLocale = this.getSuitableLocale([locale]);
       if (bestLocale) {
-        existing = this.values.find(lv => lv.locale === bestLocale);
+        existing = this.find(lv => lv._locale === bestLocale);
       }
     }
     if (existing) {
       // Mutate existing localized value
-      existing.value = value;
+      existing._value = value;
     } else {
       // Create a new localized value
-      this.values.push(new LocalizedValue(value, locale));
+      this.push(new LocalizedValue(value, locale, this._defaultLocale));
     }
   }
 
@@ -179,7 +212,7 @@ export class PropertyValue {
    * @returns the values for the most suitable locale, empty if none could be found
    */
   getValues(userLocales?: string | string[]): string[] {
-    if (!this.values.length) {
+    if (!this.length) {
       return [];
     }
 
@@ -194,33 +227,33 @@ export class PropertyValue {
 
     // If none of the values have a language associated with them, the client
     // must display all of the values.
-    if (this.values.length === 1 && this.values[0].locale === undefined) {
-      const val = this.values[0].value;
+    if (this.length === 1 && this[0]._locale === undefined) {
+      const val = this[0]._value;
       return Array.isArray(val) ? val : [val];
     }
 
     // Try to determine the available locale that best fits the user's preferences
     const matchingLocale = this.getSuitableLocale(locales);
     if (matchingLocale) {
-      const val = this.values.find(lv => lv.locale === matchingLocale)!.value;
+      const val = this.find(lv => lv._locale === matchingLocale)!._value;
       return Array.isArray(val) ? val : [val];
     }
 
     // If all of the values have a language associated with them, and none match
     // the language preference, the client must select a language and display
     // all of the values associated with that language.
-    const allHaveLang = !this.values.find(lv => lv.locale === undefined);
+    const allHaveLang = !this.find(lv => lv._locale === undefined);
     if (allHaveLang) {
-      const val = this.values[0].value;
+      const val = this[0]._value;
       return Array.isArray(val) ? val : [val];
     }
 
     // If some of the values have a language associated with them, but none
     // match the language preference, the client must display all of the values
     // that do not have a language associated with them.
-    const lv = this.values.find(lv => lv.locale === undefined);
+    const lv = this.find(lv => lv._locale === undefined);
     if (lv) {
-      return Array.isArray(lv.value) ? lv.value : [lv.value];
+      return Array.isArray(lv._value) ? lv._value : [lv._value];
     }
 
     return [];

@@ -12,8 +12,8 @@ export class LabelValuePair {
 
   public parse(resource: any): void {
     this.resource = resource;
-    this.label = PropertyValue.parse(this.resource.label);
-    this.value = PropertyValue.parse(this.resource.value);
+    this.label = PropertyValue.parse(this.resource.label, this.defaultLocale);
+    this.value = PropertyValue.parse(this.resource.value, this.defaultLocale);
   }
 
   // shortcuts to get/set values based on user or default locale

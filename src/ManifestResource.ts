@@ -32,10 +32,10 @@ export class ManifestResource extends JSONLDResource {
     const label: any = this.getProperty("label");
 
     if (label) {
-      return PropertyValue.parse(label);
+      return PropertyValue.parse(label, this.options.locale);
     }
 
-    return new PropertyValue();
+    return new PropertyValue([], this.options.locale);
   }
 
   getDefaultLabel(): string | null {

@@ -50,6 +50,7 @@ importTest('https', './tests/https');
 importTest('illustrationsofchina', './tests/illustrationsofchina');
 importTest('items-not-sequence', './tests/items-not-sequence');
 importTest('LabelValuePair', './tests/LabelValuePair.test');
+importTest('LanguageMap', './tests/LanguageMap.test');
 importTest('logo', './tests/logo');
 importTest('lunchroommanners', './tests/lunchroommanners');
 importTest('manifest-with-thumbnail', './tests/manifest-with-thumbnail');

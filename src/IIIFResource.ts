@@ -40,20 +40,20 @@ export class IIIFResource extends ManifestResource {
     const attribution: any = this.getProperty("attribution");
 
     if (attribution) {
-      return PropertyValue.parse(attribution);
+      return PropertyValue.parse(attribution, this.options.locale);
     }
 
-    return new PropertyValue();
+    return new PropertyValue([], this.options.locale);
   }
 
   getDescription(): PropertyValue {
     const description: any = this.getProperty("description");
 
     if (description) {
-      return PropertyValue.parse(description);
+      return PropertyValue.parse(description, this.options.locale);
     }
 
-    return new PropertyValue();
+    return new PropertyValue([], this.options.locale);
   }
 
   getIIIFResourceType(): IIIFResourceType {
