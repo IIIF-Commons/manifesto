@@ -1,4 +1,8 @@
-import { ViewingDirection } from "@iiif/vocabulary/dist-commonjs";
+import {
+  Behavior,
+  ViewingDirection,
+  ViewingHint
+} from "@iiif/vocabulary/dist-commonjs";
 import {
   IIIFResource,
   IManifestoOptions,
@@ -95,6 +99,28 @@ export class Collection extends IIIFResource {
     }
 
     return ViewingDirection.LEFT_TO_RIGHT;
+  }
+
+  /**
+   * Note: this only will return the first behavior as per the manifesto convention
+   * IIIF v3 supports multiple behaviors
+   */
+  getBehavior(): Behavior | null {
+    let behavior: any = this.getProperty("behavior");
+
+    if (Array.isArray(behavior)) {
+      behavior = behavior[0];
+    }
+
+    if (behavior) {
+      return behavior;
+    }
+
+    return null;
+  }
+
+  getViewingHint(): ViewingHint | null {
+    return this.getProperty("viewingHint");
   }
 
   /**
