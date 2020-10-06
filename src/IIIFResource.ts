@@ -1,7 +1,7 @@
 import {
   ManifestResource,
   Utils,
-  LanguageMap,
+  PropertyValue,
   Deserialiser,
   LabelValuePair,
   TreeNode,
@@ -34,26 +34,26 @@ export class IIIFResource extends ManifestResource {
     this.options = Object.assign(defaultOptions, options);
   }
 
-  getAttribution(): LanguageMap {
+  getAttribution(): PropertyValue {
     //console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
 
     const attribution: any = this.getProperty("attribution");
 
     if (attribution) {
-      return LanguageMap.parse(attribution, this.options.locale);
+      return PropertyValue.parse(attribution, this.options.locale);
     }
 
-    return [];
+    return new PropertyValue([], this.options.locale);
   }
 
-  getDescription(): LanguageMap {
+  getDescription(): PropertyValue {
     const description: any = this.getProperty("description");
 
     if (description) {
-      return LanguageMap.parse(description, this.options.locale);
+      return PropertyValue.parse(description, this.options.locale);
     }
 
-    return [];
+    return new PropertyValue([], this.options.locale);
   }
 
   getIIIFResourceType(): IIIFResourceType {
@@ -115,7 +115,7 @@ export class IIIFResource extends ManifestResource {
       requiredStatement.parse(_requiredStatement);
     } else {
       // fall back to attribution (if it exists)
-      const attribution: LanguageMap = this.getAttribution();
+      const attribution: PropertyValue = this.getAttribution();
 
       if (attribution) {
         requiredStatement = new LabelValuePair(this.options.locale);
@@ -156,9 +156,7 @@ export class IIIFResource extends ManifestResource {
         }
 
         Utils.loadManifest(id).then(function(data) {
-          that.parentLabel = <string>(
-            LanguageMap.getValue(that.getLabel(), options.locale)
-          );
+          that.parentLabel = <string>that.getLabel().getValue(options.locale);
           const parsed = Deserialiser.parse(data, options);
           that = Object.assign(that, parsed);
           //that.parentCollection = options.resource.parentCollection;

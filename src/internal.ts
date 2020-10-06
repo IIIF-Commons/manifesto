@@ -18,6 +18,7 @@ export * from "./IManifestoOptions";
 export * from "./LabelValuePair";
 export * from "./Language";
 export * from "./LanguageMap";
+export * from "./PropertyValue";
 export * from "./Manifest";
 export * from "./ManifestType";
 export * from "./Range";

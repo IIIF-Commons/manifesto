@@ -2,7 +2,6 @@ import { ViewingDirection, ViewingHint } from "@iiif/vocabulary/dist-commonjs";
 import {
   Canvas,
   IManifestoOptions,
-  LanguageMap,
   Manifest,
   ManifestResource,
   Thumb,
@@ -91,9 +90,7 @@ export class Sequence extends ManifestResource {
       const canvas: Canvas = this.getCanvasByIndex(i);
 
       // check if there's a literal match
-      if (
-        LanguageMap.getValue(canvas.getLabel(), this.options.locale) === label
-      ) {
+      if (canvas.getLabel().getValue(this.options.locale) === label) {
         return i;
       }
 
@@ -123,7 +120,7 @@ export class Sequence extends ManifestResource {
     for (let i = this.getTotalCanvases() - 1; i >= 0; i--) {
       const canvas: Canvas = this.getCanvasByIndex(i);
       const label: string = <string>(
-        LanguageMap.getValue(canvas.getLabel(), this.options.locale)
+        canvas.getLabel().getValue(this.options.locale)
       );
 
       if (alphanumeric) {

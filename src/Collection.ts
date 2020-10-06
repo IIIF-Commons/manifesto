@@ -2,7 +2,6 @@ import { ViewingDirection } from "@iiif/vocabulary/dist-commonjs";
 import {
   IIIFResource,
   IManifestoOptions,
-  LanguageMap,
   Manifest,
   TreeNode,
   TreeNodeType,
@@ -126,7 +125,7 @@ export class Collection extends IIIFResource {
         var tree: TreeNode = manifest.getDefaultTree();
         tree.label =
           manifest.parentLabel ||
-          LanguageMap.getValue(manifest.getLabel(), this.options.locale) ||
+          manifest.getLabel().getValue(this.options.locale) ||
           "manifest " + (i + 1);
         tree.navDate = manifest.getNavDate();
         tree.data.id = manifest.id;
@@ -147,7 +146,7 @@ export class Collection extends IIIFResource {
         var tree: TreeNode = collection.getDefaultTree();
         tree.label =
           collection.parentLabel ||
-          LanguageMap.getValue(collection.getLabel(), this.options.locale) ||
+          collection.getLabel().getValue(this.options.locale) ||
           "collection " + (i + 1);
         tree.navDate = collection.getNavDate();
         tree.data.id = collection.id;

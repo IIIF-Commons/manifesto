@@ -20,7 +20,7 @@ describe('#hasrangewithmultivalues', function() {
         var multivaluerange = topRange.items[0].items[0];
         expect(multivaluerange);
         var metadata = multivaluerange.getMetadata();
-        expect(metadata[5].value[0].value.length === 16662);
+        expect(metadata[5].getValue()).to.have.length(16743)
     });
 
 });

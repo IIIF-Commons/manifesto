@@ -28,14 +28,14 @@ describe('#loadsChemistDruggist', function() {
     });
 
     it('has a label', function() {
-        Manifesto.LanguageMap.getValue(collection.getLabel()).should.equal('The chemist and druggist.');
+        collection.getLabel().getValue().should.equal('The chemist and druggist.');
         collection.getDefaultLabel().should.equal('The chemist and druggist.');
     });
 
     it('has a first collection with a label', function(done) {
         collection.getCollectionByIndex(0).then(function(data) {
            firstCollection = data;
-           Manifesto.LanguageMap.getValue(firstCollection.getLabel()).should.equal('Volume 1, 1859');
+           firstCollection.getLabel().getValue().should.equal('Volume 1, 1859');
            done();
        });
    });
@@ -53,17 +53,17 @@ describe('#loadsChemistDruggist', function() {
     it('has a first manifest with metadata', function (done) {
         firstCollection.getManifestByIndex(0).then(function(data) {
             manifest = data;
-            var label = Manifesto.LanguageMap.getValue(manifest.getLabel());
+            var label = manifest.getLabel().getValue();
             label.should.equal('The chemist and druggist.');
             var metadata = manifest.getMetadata();
-            Manifesto.LanguageMap.getValue(metadata[0].label).should.equal('Title');
-            Manifesto.LanguageMap.getValue(metadata[0].value).should.equal('The chemist and druggist.');
+            metadata[0].label.getValue().should.equal('Title');
+            metadata[0].value.getValue().should.equal('The chemist and druggist.');
             done();
         });
     });
 
     it('has a first manifest with a label', function() {
-        Manifesto.LanguageMap.getValue(manifest.getLabel()).should.equal('The chemist and druggist.');
+        manifest.getLabel().getValue().should.equal('The chemist and druggist.');
     });
 
     it('has a tree containing manifests', function () {

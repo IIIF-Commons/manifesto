@@ -26,13 +26,13 @@ describe('#loadsTopNestedManifest', function() {
     });
 
     it('has a label', function() {
-        manifesto.LanguageMap.getValue(collection.getLabel()).should.equal('Villanova Digital Library');
+        collection.getLabel().getValue().should.equal('Villanova Digital Library');
     });
 
     it('has a first collection with a label', function(done) {
         collection.getCollectionByIndex(0).then(function(data) {
             firstCollection = data;
-            manifesto.LanguageMap.getValue(firstCollection.getLabel()).should.equal('Dime Novel and Popular Literature');
+            firstCollection.getLabel().getValue().should.equal('Dime Novel and Popular Literature');
             done();
         });
     });
@@ -49,7 +49,7 @@ describe('#loadsTopNestedManifest', function() {
     it('has a second-level collection with a label', function (done) {
         firstCollection.getCollectionByIndex(0).then(function(data) {
             secondCollection = data;
-            manifesto.LanguageMap.getValue(secondCollection.getLabel()).should.equal('Covers and Illustrations');
+            secondCollection.getLabel().getValue().should.equal('Covers and Illustrations');
             done();
         });
     });
@@ -61,7 +61,7 @@ describe('#loadsTopNestedManifest', function() {
     it('can access a deeply-nested manifest', function (done) {
         secondCollection.getManifestByIndex(0).then(function(data) {
             manifest = data;
-            manifesto.LanguageMap.getValue(manifest.getLabel()).should.equal('Wunder der Vererbung');
+            manifest.getLabel().getValue().should.equal('Wunder der Vererbung');
             done();
         });
     });

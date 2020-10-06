@@ -26,7 +26,7 @@ describe('#getDefaultLabel', function() {
 
     it('has a canvas label', function() {
         label = canvas.getLabel();
-        var labelValue = manifesto.LanguageMap.getValue(label);
+        var labelValue = label.getValue();
         expect(labelValue).to.equal('Abyssinian');
     });
 
@@ -45,7 +45,7 @@ describe('#getDefaultLabel', function() {
 
     it('has an annotation label', function() {
         label = body.getLabel();
-        var labelValue = manifesto.LanguageMap.getValue(label);
+        var labelValue = label.getValue();
         expect(labelValue).to.equal('Abyssinian');
     });
 

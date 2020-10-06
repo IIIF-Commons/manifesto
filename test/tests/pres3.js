@@ -16,8 +16,11 @@ describe('presentation 3', function() {
 
     it('has metadata', function () {
         var metadata = manifest.getMetadata();
-        expect(metadata[0].label[0].value).to.equal('Author');
+        expect(metadata[0].label.getValue()).to.equal('Author');
         expect(metadata[0].label[0].locale).to.equal('en');
+
+        // Legacy API
+        expect(metadata[0].label[0].value).to.equal('Author');
     });
 
     it('has a sequence', function() {
@@ -40,7 +43,7 @@ describe('presentation 3', function() {
 
     it('has a label', function() {
         var label = body.getLabel();
-        var labelValue = manifesto.LanguageMap.getValue(label);
+        var labelValue = label.getValue();
         expect(labelValue).to.equal('Page 1');
     });
 });

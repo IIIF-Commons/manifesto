@@ -17,8 +17,8 @@ describe('required statement', function() {
     it('has correct required statement', function () {
         var requiredStatement = manifest.getRequiredStatement();
         expect(requiredStatement).to.exist;
-        expect(manifesto.LanguageMap.getValue(requiredStatement.label) === 'Important information');
-        expect(manifesto.LanguageMap.getValue(requiredStatement.value) === '<p>Please read the <a href=\'https://bl.uk\'>full information</a> about this object.</p>');
+        expect(requiredStatement.label.getValue() === 'Important information');
+        expect(requiredStatement.value.getValue() === '<p>Please read the <a href=\'https://bl.uk\'>full information</a> about this object.</p>');
     });
 });
 
@@ -35,6 +35,6 @@ describe('attribution', function() {
         var requiredStatement = manifest.getRequiredStatement();
         expect(requiredStatement).to.exist;
         expect(requiredStatement.label === undefined);
-        expect(manifesto.LanguageMap.getValue(requiredStatement.value) === 'Anzac bulletin. Number 24(1917:Jun.) Usage Terms: Free from known copyright restrictions.');
+        expect(requiredStatement.value.getValue() === 'Anzac bulletin. Number 24(1917:Jun.) Usage Terms: Free from known copyright restrictions.');
     });
 });

@@ -5,7 +5,7 @@ import {
   Utils,
   Rendering,
   LabelValuePair,
-  LanguageMap,
+  PropertyValue,
   IManifestoOptions,
   IExternalResource
 } from "./internal";
@@ -28,18 +28,18 @@ export class ManifestResource extends JSONLDResource {
     return <IIIFResourceType>Utils.normaliseType(this.getProperty("type"));
   }
 
-  getLabel(): LanguageMap {
+  getLabel(): PropertyValue {
     const label: any = this.getProperty("label");
 
     if (label) {
-      return LanguageMap.parse(label, this.options.locale);
+      return PropertyValue.parse(label, this.options.locale);
     }
 
-    return [];
+    return new PropertyValue([], this.options.locale);
   }
 
   getDefaultLabel(): string | null {
-    return LanguageMap.getValue(this.getLabel());
+    return this.getLabel().getValue(this.options.locale);
   }
 
   getMetadata(): LabelValuePair[] {

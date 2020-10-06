@@ -1,4 +1,4 @@
-import { Canvas, LanguageMap } from "./internal";
+import { Canvas } from "./internal";
 
 // todo: deprecate
 // this is used by Sequence.getThumbs
@@ -25,6 +25,6 @@ export class Thumb {
     }
 
     this.uri = canvas.getCanonicalImageUri(width);
-    this.label = <string>LanguageMap.getValue(canvas.getLabel()); // todo: pass locale?
+    this.label = <string>canvas.getLabel().getValue(); // todo: pass locale?
   }
 }

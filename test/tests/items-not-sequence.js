@@ -25,7 +25,7 @@ describe('presentation 3 items instead of sequence', function() {
     });
 
     it('canvas has label', function() {
-        var label = manifesto.LanguageMap.getValue(canvas.getLabel());
+        var label = canvas.getLabel().getValue();
         expect(label).to.equal('Tape 1 Side 1');
     });
 });
