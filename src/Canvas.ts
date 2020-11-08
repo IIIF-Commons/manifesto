@@ -1,3 +1,4 @@
+import { ViewingHint } from "@iiif/vocabulary/dist-commonjs";
 import {
   Annotation,
   AnnotationList,
@@ -257,5 +258,8 @@ export class Canvas extends Resource {
 
   getHeight(): number {
     return this.getProperty("height");
+  }
+  getViewingHint(): ViewingHint | null {
+    return this.getProperty("viewingHint");
   }
 }
