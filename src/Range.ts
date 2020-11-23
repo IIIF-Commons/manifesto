@@ -74,6 +74,19 @@ export class Range extends ManifestResource {
     return this.getCanvases()[canvasIndex];
   }
 
+  getCanvasById(id: string): Canvas | null {
+    for (let i = 0; i < this.getTotalCanvases(); i++) {
+      const canvas = this.getCanvasByIndex(i);
+
+      const canvasId: string = Utils.normaliseUrl(canvas.id);
+
+      if (Utils.normaliseUrl(id) === canvasId) {
+        return canvas;
+      }
+    }
+    return null;
+  }
+
   // Alternative solution can be this
   /*   getTopLevelCanvases(): Canvas[] {
     if(this._canvases){
