@@ -143,5 +143,23 @@
                 }
             ]
         }
+    ],
+    "structures": [
+      {
+        "id": "http://foo.test/1/range/root",
+        "type": "Range",
+        "behavior": "sequence",
+        "items": [
+          {
+            "id": "http://example.org/iiif/book1/canvas/0",
+            "type": "Canvas",
+            "label": {
+                "@none": [
+                    "p. 1"
+                ]
+            }
+          }
+        ]
+      }
     ]
 }

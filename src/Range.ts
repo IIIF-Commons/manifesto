@@ -1,4 +1,5 @@
 import {
+  Canvas,
   Duration,
   IManifestoOptions,
   ManifestResource,
@@ -13,6 +14,7 @@ import {
 } from "@iiif/vocabulary/dist-commonjs";
 
 export class Range extends ManifestResource {
+  private _canvases: Canvas[] | null = null;
   private _ranges: Range[] | null = null;
   public canvases: string[] | null = null;
   public items: ManifestResource[] = [];
@@ -33,6 +35,86 @@ export class Range extends ManifestResource {
 
     return [];
   }
+
+  getTopRange(range) {
+    let parentRange = range.parentRange;
+    if (parentRange) {
+      this.getTopRange(parentRange);
+    }
+    return parentRange;
+  }
+
+  getTotalCanvases(): number {
+    return this.getCanvases().length;
+  }
+
+  getCanvases(): Canvas[] {
+    if (this._canvases) {
+      return this._canvases;
+    }
+
+    let manifestCanvases = this.getTopRange(this)
+      .options.resource.getSequences()[0]
+      .getCanvases();
+
+    if (this.canvases) {
+      let canvasItems: Canvas[] = [];
+
+      for (let i = 0; i < this.canvases.length; i++) {
+        let cId = this.canvases[i];
+        const fullCanvas = manifestCanvases.find(c => c.id === cId);
+        canvasItems.push(fullCanvas);
+      }
+      return (this._canvases = canvasItems);
+    }
+    return [];
+  }
+
+  getCanvasByIndex(canvasIndex: number): any {
+    return this.getCanvases()[canvasIndex];
+  }
+
+  // Alternative solution can be this
+  /*   getTopLevelCanvases(): Canvas[] {
+    if(this._canvases){
+      return this._canvases;
+    }
+
+    if (this.items.length) {
+      let canvasItems: Canvas[] = [];
+      for (let i = 0; i < this.items.length; i++) {
+        if (this.items[i].isCanvas()) {
+          canvasItems.push(<Canvas>this.items[i]);
+        }
+      }
+      return this._canvases = canvasItems;
+    }
+
+    let items = this.__jsonld.items || this.__jsonld.elements;
+
+    if (items) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.includes("Canvas")) {
+          const c = items[i];
+          const canvas: Canvas = new Canvas(c, this.options);
+          canvas.index = i;
+          this.items.push(canvas);
+        }
+      }
+    } else if (this.__jsonld) {
+      for (let i = 0; i < this.__jsonld.length; i++) {
+        if (items[i].type.includes("Canvas")) {
+          const c = this.__jsonld[i];
+          const canvas: Canvas = new Canvas(c, this.options);
+          canvas.index = i;
+          this.items.push(canvas);
+        }
+      }
+    }
+
+    return this._canvases = <Canvas[]>this.items;
+  }
+ */
 
   getDuration(): Duration | undefined {
     // For this implementation, we want to catch SOME of the temporal cases - i.e. when there is a t=1,100
