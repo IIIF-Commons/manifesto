@@ -56,6 +56,16 @@ export class IIIFResource extends ManifestResource {
     return new PropertyValue([], this.options.locale);
   }
 
+  getHomepage(): string | null {
+    let homepage: any = this.getProperty("homepage");
+    if (!homepage) return null;
+    if (typeof homepage == "string") return homepage;
+    if (Array.isArray(homepage) && homepage.length) {
+      homepage = homepage[0];
+    }
+    return homepage["@id"] || homepage.id;
+  }
+
   getIIIFResourceType(): IIIFResourceType {
     return <IIIFResourceType>Utils.normaliseType(this.getProperty("type"));
   }
