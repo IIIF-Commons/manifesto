@@ -45,10 +45,7 @@ describe('presentation 3', function() {
     it('range has a canvas', function() {
         canvas = range.getCanvases()[0];
         expect(canvas).to.exist;
-        var canvasByIndex = range.getCanvasByIndex(0);
-        expect(canvasByIndex).to.exist;
-        var canvasById = range.getCanvasById('http://example.org/iiif/book1/canvas/0');
-        expect(canvasById).to.exist;
+/* B */
     });
 
     it('has an annotation body', function() {

@@ -53,22 +53,68 @@ export class Range extends ManifestResource {
       return this._canvases;
     }
 
-    let manifestCanvases = this.getTopRange(this)
-      .options.resource.getSequences()[0]
-      .getCanvases();
+    let manifestSequence = this.getTopRange(
+      this
+    ).options.resource.getSequences()[0];
+    let manifestCanvases =
+      manifestSequence.__jsonld.canvases || manifestSequence.__jsonld.elements;
+    const canvasLength = this.canvases ? this.canvases.length : 0;
+    let canvasItems: (Canvas | null)[] = new Array(canvasLength).fill(null);
 
-    if (this.canvases) {
-      let canvasItems: Canvas[] = [];
+    if (manifestCanvases && this.canvases) {
+      for (let i = 0; i < manifestCanvases.length; i++) {
+        const c = manifestCanvases[i];
 
-      for (let i = 0; i < this.canvases.length; i++) {
-        let cId = this.canvases[i];
-        const fullCanvas = manifestCanvases.find(c => c.id === cId);
-        canvasItems.push(fullCanvas);
+        if (c.id in this.canvases) {
+          const canvas: Canvas = new Canvas(c, this.options);
+          canvas.index = this.canvases.indexOf(c.id);
+          canvasItems.splice(canvas.index, 1, canvas);
+        }
       }
-      return (this._canvases = canvasItems);
+    } else if (manifestSequence.__jsonld && this.canvases) {
+      for (let i = 0; i < manifestSequence.__jsonld.length; i++) {
+        const c = manifestSequence.__jsonld[i];
+
+        if (this.canvases.includes(c.id)) {
+          const canvas: Canvas = new Canvas(c, this.options);
+
+          canvas.index = this.canvases.indexOf(c.id);
+          canvasItems.splice(canvas.index, 1, canvas);
+        }
+      }
     }
-    return [];
+
+    this._canvases =
+      canvasItems.length > 0
+        ? !canvasItems.includes(null)
+          ? <Canvas[]>canvasItems
+          : null
+        : null;
+
+    return this._canvases !== null ? this._canvases : [];
   }
+
+  // update __jsonld canvas id's because that is used by other functions in
+  // the library when working with canvases
+  /*   _updateCanvasIds(canvasJson: any, newCanvasId: string): any {
+      // update ids in annotations
+      const items = canvasJson.items || canvasJson.content;
+      const annotations = items.length && items[0].items ? items[0].items : [];
+      if (annotations && canvasJson.items) {
+        for (let i = 0; i < annotations.length; i++) {
+          canvasJson["id"] = newCanvasId;
+          // update target canvas Id in all canvas annotations
+          canvasJson.items[0].items[i]["target"] = newCanvasId;
+        }
+      } else if (annotations) {
+        for (let i = 0; i < annotations.length; i++) {
+          canvasJson["id"] = newCanvasId;
+          // update target canvas Id in all canvas annotations
+          canvasJson.content[0].items[i]["target"] = newCanvasId;
+        }
+      }
+      return canvasJson;
+    } */
 
   getCanvasByIndex(canvasIndex: number): any {
     return this.getCanvases()[canvasIndex];
