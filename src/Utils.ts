@@ -102,7 +102,7 @@ export class Utils {
   }
 
   static normaliseType(type: string): string {
-    type = type.toLowerCase();
+    type = (type || "").toLowerCase();
 
     if (type.indexOf(":") !== -1) {
       const split: string[] = type.split(":");

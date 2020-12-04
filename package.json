@@ -6,7 +6,7 @@
   "module": "./dist-esmodule/index.js",
   "browser": "./dist-esmodule/index.js",
   "unpkg": "./dist-umd/manifesto.js",
-  "types": "./types/index.d.ts",
+  "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
     "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
