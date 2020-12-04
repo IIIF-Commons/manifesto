@@ -34,6 +34,9 @@ export class IIIFResource extends ManifestResource {
     this.options = Object.assign(defaultOptions, options);
   }
 
+  /**
+   * @deprecated
+   */
   getAttribution(): PropertyValue {
     //console.warn('getAttribution will be deprecated, use getRequiredStatement instead.');
 
