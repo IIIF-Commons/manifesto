@@ -35,25 +35,77 @@ export class Range extends ManifestResource {
   }
 
   getDuration(): Duration | undefined {
+    // For this implementation, we want to catch SOME of the temporal cases - i.e. when there is a t=1,100
+    if (this.canvases && this.canvases.length) {
+      const startTimes: number[] = [];
+      const endTimes: number[] = [];
+
+      // When we loop through all of the canvases we store the recorded start and end times.
+      // Then we choose the maximum and minimum values from this. This will give us a more accurate duration for the
+      // Chosen range. However this is still not perfect and does not cover more complex ranges. These cases are out of
+      // scope for this change.
+      for (const canvas of this.canvases) {
+        if (!canvas) continue;
+        const [, canvasId, start, end] = (canvas.match(
+          /(.*)#t=([0-9.]+),?([0-9.]+)?/
+        ) || [undefined, canvas]) as string[];
+
+        if (canvasId) {
+          startTimes.push(parseFloat(start));
+          endTimes.push(parseFloat(end));
+        }
+      }
+
+      if (startTimes.length && endTimes.length) {
+        return new Duration(Math.min(...startTimes), Math.max(...endTimes));
+      }
+    } else {
+      // get child ranges and calculate the start and end based on them
+      const childRanges = this.getRanges();
+      const startTimes: number[] = [];
+      const endTimes: number[] = [];
+
+      // Once again, we use a max/min to get the ranges.
+      for (const childRange of childRanges) {
+        const duration = childRange.getDuration();
+        if (duration) {
+          startTimes.push(duration.start);
+          endTimes.push(duration.end);
+        }
+      }
+
+      // And return the minimum as the start, and the maximum as the end.
+      if (startTimes.length && endTimes.length) {
+        return new Duration(Math.min(...startTimes), Math.max(...endTimes));
+      }
+    }
+
     let start: number | undefined;
     let end: number | undefined;
 
+    // There are 2 paths for this implementation. Either we have a list of canvases, or a list of ranges
+    // which may have a list of ranges.
+    // This is one of the limitations of this implementation.
     if (this.canvases && this.canvases.length) {
+      // When we loop through each of the canvases we are expecting to see a fragment or a link to the whole canvas.
+      // For example - if we have http://example.org/canvas#t=1,100 it will extract 1 and 100 as the start and end.
       for (let i = 0; i < this.canvases.length; i++) {
         const canvas: string = this.canvases[i];
         let temporal: number[] | null = Utils.getTemporalComponent(canvas);
         if (temporal && temporal.length > 1) {
           if (i === 0) {
+            // Note: Cannot guarantee ranges are sequential (fixed above)
             start = Number(temporal[0]);
           }
 
           if (i === this.canvases.length - 1) {
-            end = Number(temporal[1]);
+            end = Number(temporal[1]); // Note: The end of this duration may be targeting a different canvas.
           }
         }
       }
     } else {
-      // get child ranges and calculate the start and end based on them
+      // In this second case, where there are nested ranges, we recursively get the duration
+      // from each of the child ranges (a start and end) and then choose the first and last for the bounds of this range.
       const childRanges: Range[] = this.getRanges();
 
       for (let i = 0; i < childRanges.length; i++) {
