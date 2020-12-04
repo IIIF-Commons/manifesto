@@ -2,7 +2,7 @@ import Language from "./Language";
 import { Utils } from "./Utils";
 
 /** Utility class to hold one or more values with their associated (optional) locale */
-class LocalizedValue implements Language {
+export class LocalizedValue implements Language {
   _value: string | string[];
   _locale?: string;
 
