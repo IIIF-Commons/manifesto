@@ -2,11 +2,19 @@ import { ViewingDirection } from "@iiif/vocabulary/dist-commonjs";
 import normalizeUrl from "normalize-url";
 import { Canvas } from ".";
 
+type CanvasDimensions = {
+  canvas: Canvas;
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+};
+
 export default class CanvasWorld {
   public canvases: Canvas[];
   public viewingDirection: ViewingDirection;
   public layers: any[]; // todo: type
-  private _canvasDimensions: any; // todo: type
+  private _canvasDimensions: CanvasDimensions[];
 
   /**
    * @param {Array} canvases - Array of Manifesto:Canvas objects to create a
@@ -20,19 +28,16 @@ export default class CanvasWorld {
     this.canvases = canvases.map(c => new Canvas(c));
     this.layers = layers;
     this.viewingDirection = viewingDirection;
-    this._canvasDimensions = null;
+    this._canvasDimensions = [];
   }
 
-  /** */
   get canvasIds() {
     return this.canvases.map(canvas => canvas.id);
   }
 
-  /** */
   get canvasDimensions() {
     if (this._canvasDimensions) {
-      // eslint-disable-line no-underscore-dangle
-      return this._canvasDimensions; // eslint-disable-line no-underscore-dangle
+      return this._canvasDimensions;
     }
 
     const [dirX, dirY] = this.canvasDirection;
@@ -70,23 +75,22 @@ export default class CanvasWorld {
       incX += dirX * canvasWidth;
       incY += dirY * canvasHeight;
       return acc;
-    }, []);
+    }, [] as CanvasDimensions[]);
 
     const worldHeight = dirY === 0 ? scale : Math.abs(incY);
     const worldWidth = dirX === 0 ? scale : Math.abs(incX);
 
-    this._canvasDimensions = canvasDims // eslint-disable-line no-underscore-dangle
-      .reduce((acc, dims) => {
-        acc.push({
-          ...dims,
-          x: dirX === -1 ? dims.x + worldWidth - dims.width : dims.x,
-          y: dirY === -1 ? dims.y + worldHeight - dims.height : dims.y
-        });
+    this._canvasDimensions = canvasDims.reduce((acc, dims) => {
+      acc.push({
+        ...dims,
+        x: dirX === -1 ? dims.x + worldWidth - dims.width : dims.x,
+        y: dirY === -1 ? dims.y + worldHeight - dims.height : dims.y
+      });
 
-        return acc;
-      }, []);
+      return acc;
+    }, [] as CanvasDimensions[]);
 
-    return this._canvasDimensions; // eslint-disable-line no-underscore-dangle
+    return this._canvasDimensions;
   }
 
   /**
@@ -94,10 +98,10 @@ export default class CanvasWorld {
    * respective to the world.
    */
   contentResourceToWorldCoordinates(contentResource) {
-    const miradorCanvasIndex = this.canvases.findIndex(c =>
-      c.getImageResources().find(r => r.id === contentResource.id)
+    const canvasIndex = this.canvases.findIndex(c =>
+      c.imageResources.find(r => r.id === contentResource.id)
     );
-    const canvas = this.canvases[miradorCanvasIndex];
+    const canvas = this.canvases[canvasIndex];
     if (!canvas) return [];
 
     const [x, y, w, h] = this.canvasToWorldCoordinates(canvas.id);
@@ -121,10 +125,10 @@ export default class CanvasWorld {
     );
 
     return [
-      canvasDimensions.x,
-      canvasDimensions.y,
-      canvasDimensions.width,
-      canvasDimensions.height
+      canvasDimensions!.x,
+      canvasDimensions!.y,
+      canvasDimensions!.width,
+      canvasDimensions!.height
     ];
   }
 
@@ -154,7 +158,7 @@ export default class CanvasWorld {
       )
     );
     if (!canvas) return undefined;
-    return canvas.getImageResources().find(
+    return canvas.imageResources.find(
       r =>
         normalizeUrl(r.getServices()[0].id, { stripAuthentication: false }) ===
         normalizeUrl(infoResponseId, { stripAuthentication: false })
@@ -165,22 +169,22 @@ export default class CanvasWorld {
   getLayerMetadata(contentResource) {
     if (!this.layers) return undefined;
     const canvas = this.canvases.find(c =>
-      c.getImageResources().find(r => r.id === contentResource.id)
+      c.imageResources.find(r => r.id === contentResource.id)
     );
 
     if (!canvas) return undefined;
 
-    const resourceIndex = canvas.getImageResources().findIndex(
+    const resourceIndex = canvas.imageResources.findIndex(
       r => r.id === contentResource.id
     );
 
-    const layer = this.layers[canvas.canvas.id];
+    const layer = this.layers[canvas.id];
     const imageResourceLayer = layer && layer[contentResource.id];
 
     return {
       index: resourceIndex,
       opacity: 1,
-      total: canvas.getImageResources().length,
+      total: canvas.imageResources.length,
       visibility: true,
       ...imageResourceLayer
     };

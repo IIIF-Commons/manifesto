@@ -257,7 +257,19 @@ export class Canvas extends Resource {
   //    return new CanvasType(this.getProperty('@type').toLowerCase());
   //}
 
-  getImageResources() {
+  getWidth(): number {
+    return this.getProperty("width");
+  }
+
+  getHeight(): number {
+    return this.getProperty("height");
+  }
+
+  getViewingHint(): ViewingHint | null {
+    return this.getProperty("viewingHint");
+  }
+
+  get imageResources() {
     const resources = flattenDeep([
       this.getImages().map(i => i.getResource()),
       this.getContent().map(i => i.getBody())
@@ -286,23 +298,8 @@ export class Canvas extends Resource {
     );
   }
 
-  getWidth(): number {
-    return this.getProperty("width");
-  }
-
-  getHeight(): number {
-    return this.getProperty("height");
-  }
-
-  getViewingHint(): ViewingHint | null {
-    return this.getProperty("viewingHint");
-  }
-
   get resourceAnnotations() {
-    return flattenDeep([
-      this.getImages(),
-      this.getContent(),
-    ]);
+    return flattenDeep([this.getImages(), this.getContent()]);
   }
 
   /**
@@ -311,9 +308,9 @@ export class Canvas extends Resource {
    */
   resourceAnnotation(id) {
     return this.resourceAnnotations.find(
-      anno => anno.getResource().id === id || flatten(
-        new Array(anno.getBody()),
-      ).some(body => body.id === id),
+      anno =>
+        anno.getResource().id === id ||
+        flatten(new Array(anno.getBody())).some(body => body.id === id)
     );
   }
 
@@ -325,12 +322,22 @@ export class Canvas extends Resource {
     const resourceAnnotation = this.resourceAnnotation(id);
     if (!resourceAnnotation) return undefined;
     // IIIF v2
-    const on = resourceAnnotation.getProperty('on');
+    const on = resourceAnnotation.getProperty("on");
     // IIIF v3
-    const target = resourceAnnotation.getProperty('target');
+    const target = resourceAnnotation.getProperty("target");
     const fragmentMatch = (on || target).match(/xywh=(.*)$/);
     if (!fragmentMatch) return undefined;
-    return fragmentMatch[1].split(',').map(str => parseInt(str, 10));
+    return fragmentMatch[1].split(",").map(str => parseInt(str, 10));
+  }
+
+  get iiifImageResources() {
+    return this.imageResources.filter(
+      r => r && r.getServices()[0] && r.getServices()[0].id
+    );
+  }
+
+  get imageServiceIds() {
+    return this.iiifImageResources.map(r => r.getServices()[0].id);
   }
 
   get aspectRatio() {

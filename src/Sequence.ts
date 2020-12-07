@@ -58,7 +58,7 @@ export class Sequence extends ManifestResource {
     return null;
   }
 
-  getCanvasByIndex(canvasIndex: number): any {
+  getCanvasByIndex(canvasIndex: number): Canvas {
     return this.getCanvases()[canvasIndex];
   }
 
@@ -276,7 +276,7 @@ export class Sequence extends ManifestResource {
   getViewingDirection(): ViewingDirection | null {
     if (this.getProperty("viewingDirection")) {
       return this.getProperty("viewingDirection");
-    } else if ((<Manifest>this.options.resource).getViewingDirection) {
+    } else if ((<Manifest>this.options.resource).getViewingDirection()) {
       return (<Manifest>this.options.resource).getViewingDirection();
     }
 
