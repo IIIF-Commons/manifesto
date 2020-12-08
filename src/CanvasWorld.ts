@@ -14,7 +14,7 @@ export class CanvasWorld {
   public canvases: Canvas[];
   public viewingDirection: ViewingDirection;
   public layers: any[]; // todo: type
-  private _canvasDimensions: CanvasDimensions[];
+  private _canvasDimensions: CanvasDimensions[] | undefined;
 
   /**
    * @param {Array} canvases - Array of Manifesto:Canvas objects to create a
@@ -28,7 +28,6 @@ export class CanvasWorld {
     this.canvases = canvases; //.map(c => new Canvas(c)); UV has already parsed the canvases by this point
     this.layers = layers;
     this.viewingDirection = viewingDirection;
-    this._canvasDimensions = [];
   }
 
   get canvasIds() {
