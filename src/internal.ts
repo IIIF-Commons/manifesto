@@ -7,6 +7,7 @@ export * from "./AnnotationBody";
 export * from "./AnnotationList";
 export * from "./AnnotationPage";
 export * from "./Canvas";
+export * from "./CanvasWorld";
 export * from "./Collection";
 export * from "./Duration";
 export * from "./IAccessToken";
