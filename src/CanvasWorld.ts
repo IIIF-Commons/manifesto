@@ -10,7 +10,7 @@ type CanvasDimensions = {
   y: number;
 };
 
-export default class CanvasWorld {
+export class CanvasWorld {
   public canvases: Canvas[];
   public viewingDirection: ViewingDirection;
   public layers: any[]; // todo: type
