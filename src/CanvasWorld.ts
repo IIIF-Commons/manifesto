@@ -25,7 +25,7 @@ export class CanvasWorld {
     layers,
     viewingDirection = ViewingDirection.LEFT_TO_RIGHT
   ) {
-    this.canvases = canvases.map(c => new Canvas(c));
+    this.canvases = canvases; //.map(c => new Canvas(c)); UV has already parsed the canvases by this point
     this.layers = layers;
     this.viewingDirection = viewingDirection;
     this._canvasDimensions = [];
