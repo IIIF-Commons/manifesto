@@ -48,6 +48,13 @@ describe('presentation 3', function() {
 /* B */
     });
 
+    it('updates canvas Id if canvas is listed as a fragment in range', function() {
+        canvas = range.getCanvases()[1];
+        const hasFragment = canvas.id.includes('#xywh=')
+        expect(hasFragment).to.exist;
+/* B */
+    });
+
     it('has an annotation body', function() {
         content = canvas.getContent();
         annotation = content[0];
