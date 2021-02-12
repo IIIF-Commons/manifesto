@@ -22,7 +22,7 @@ export class Range extends ManifestResource {
   public path: string;
   public treeNode: TreeNode;
 
-  constructor(jsonld?: any, options?: IManifestoOptions) {
+  constructor(jsonld ? : any, options ? : IManifestoOptions) {
     super(jsonld, options);
   }
 
@@ -58,14 +58,27 @@ export class Range extends ManifestResource {
     ).options.resource.getSequences()[0];
     let manifestCanvases =
       manifestSequence.__jsonld.canvases || manifestSequence.__jsonld.elements;
+
     const canvasLength = this.canvases ? this.canvases.length : 0;
     let canvasItems: (Canvas | null)[] = new Array(canvasLength).fill(null);
 
+    const rangeItems = this.__jsonld.items;
+
     if (manifestCanvases && this.canvases) {
       for (let i = 0; i < manifestCanvases.length; i++) {
-        const c = manifestCanvases[i];
+        let c = manifestCanvases[i];
+
+        const fragmentCanvas = rangeItems.filter(item => {
+          return item.source === c.id;
+        });
 
         if (c.id in this.canvases) {
+          if (fragmentCanvas) {
+            const fragment = fragmentCanvas[0].selector.value;
+            const fragmentCanvasId = `${c.id}#${fragment}`;
+            c = this._updateFragmentIds(c, fragmentCanvasId);
+          }
+
           const canvas: Canvas = new Canvas(c, this.options);
           canvas.index = this.canvases.indexOf(c.id);
           canvasItems.splice(canvas.index, 1, canvas);
@@ -73,48 +86,62 @@ export class Range extends ManifestResource {
       }
     } else if (manifestSequence.__jsonld && this.canvases) {
       for (let i = 0; i < manifestSequence.__jsonld.length; i++) {
-        const c = manifestSequence.__jsonld[i];
+        let c = manifestSequence.__jsonld[i];
+
+        const fragmentCanvas = rangeItems.filter(item => {
+          return item.source === c.id;
+        });
 
         if (this.canvases.includes(c.id)) {
-          const canvas: Canvas = new Canvas(c, this.options);
+          const cIndex = this.canvases.indexOf(c.id);
+          if (fragmentCanvas) {
+            const fragment = fragmentCanvas[0].selector.value;
+            const fragmentCanvasId = `${c.id}#${fragment}`;
+            c = this._updateFragmentIds(c, fragmentCanvasId);
+          }
 
-          canvas.index = this.canvases.indexOf(c.id);
+          const canvas: Canvas = new Canvas(c, this.options);
+          canvas.index = cIndex;
+
           canvasItems.splice(canvas.index, 1, canvas);
         }
       }
     }
 
     this._canvases =
-      canvasItems.length > 0
-        ? !canvasItems.includes(null)
-          ? <Canvas[]>canvasItems
-          : null
-        : null;
+      canvasItems.length > 0 ?
+      !canvasItems.includes(null) ?
+      < Canvas[] > canvasItems :
+      null :
+      null;
 
     return this._canvases !== null ? this._canvases : [];
   }
 
   // update __jsonld canvas id's because that is used by other functions in
   // the library when working with canvases
-  /*   _updateCanvasIds(canvasJson: any, newCanvasId: string): any {
-      // update ids in annotations
-      const items = canvasJson.items || canvasJson.content;
-      const annotations = items.length && items[0].items ? items[0].items : [];
-      if (annotations && canvasJson.items) {
-        for (let i = 0; i < annotations.length; i++) {
-          canvasJson["id"] = newCanvasId;
-          // update target canvas Id in all canvas annotations
-          canvasJson.items[0].items[i]["target"] = newCanvasId;
-        }
-      } else if (annotations) {
-        for (let i = 0; i < annotations.length; i++) {
-          canvasJson["id"] = newCanvasId;
-          // update target canvas Id in all canvas annotations
-          canvasJson.content[0].items[i]["target"] = newCanvasId;
-        }
+  _updateFragmentIds(canvasJson: any, newCanvasId: string): any {
+    // update ids in annotations
+    const items = canvasJson.items || canvasJson.content;
+    const annotations = items.length && items[0].items ? items[0].items : [];
+
+    if (annotations && canvasJson.items) {
+      for (let i = 0; i < annotations.length; i++) {
+        canvasJson["id"] = newCanvasId;
+        // update target canvas Id in all canvas annotations
+        canvasJson.items[0].items[i]["target"] = newCanvasId;
       }
-      return canvasJson;
-    } */
+    } else if (annotations) {
+      for (let i = 0; i < annotations.length; i++) {
+        canvasJson["id"] = newCanvasId;
+        // update target canvas Id in all canvas annotations
+        // replace this with (something that looks at other contents)
+        canvasJson.content[0].items[i]["target"] = newCanvasId;
+      }
+    }
+
+    return canvasJson;
+  }
 
   getCanvasByIndex(canvasIndex: number): any {
     return this.getCanvases()[canvasIndex];
@@ -286,7 +313,7 @@ export class Range extends ManifestResource {
       return this._ranges;
     }
 
-    return (this._ranges = <Range[]>this.items.filter(m => m.isRange()));
+    return (this._ranges = < Range[] > this.items.filter(m => m.isRange()));
   }
 
   getBehavior(): Behavior | null {
@@ -344,7 +371,7 @@ export class Range extends ManifestResource {
   }
 
   private _parseTreeNode(node: TreeNode, range: Range): void {
-    node.label = <string>range.getLabel().getValue(this.options.locale);
+    node.label = < string > range.getLabel().getValue(this.options.locale);
     node.data = range;
     node.data.type = Utils.normaliseType(TreeNodeType.RANGE);
     range.treeNode = node;

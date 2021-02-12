@@ -186,15 +186,22 @@
         "type": "Range",
         "behavior": "sequence",
         "items": [
-          {
-            "id": "http://example.org/iiif/book1/canvas/0",
-            "type": "Canvas",
-            "label": {
-                "@none": [
-                    "p. 1"
-                ]
+            {
+              "type": "SpecificResource",
+              "source": "http://example.org/iiif/book1/canvas/0",
+              "selector": {
+                "type": "FragmentSelector",
+                "value": "xywh=0,0,750,300"
+              }
+            },
+            {
+                "type": "SpecificResource",
+                "source": "http://example.org/iiif/book1/canvas/1",
+                "selector": {
+                  "type": "FragmentSelector",
+                  "value": "xywh=0,0,750,300"
+                }
             }
-          }
         ]
       }
     ]
