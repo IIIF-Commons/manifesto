@@ -1028,8 +1028,6 @@ export class Utils {
     for (let i = 0; i < services.length; i++) {
       const service: Service = services[i];
 
-      console.log(service.getProfile(), '==', profile);
-
       if (service.getProfile() === profile) {
         return service;
       }
