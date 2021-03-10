@@ -1028,6 +1028,8 @@ export class Utils {
     for (let i = 0; i < services.length; i++) {
       const service: Service = services[i];
 
+      console.log(service.getProfile(), '==', profile);
+
       if (service.getProfile() === profile) {
         return service;
       }
@@ -1084,6 +1086,7 @@ export class Utils {
   }
 
   static getServices(resource: any): Service[] {
+
     let service: any;
 
     // if passing a manifesto-parsed object, use the __jsonld.service property,

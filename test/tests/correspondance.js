@@ -8,7 +8,7 @@ var ServiceProfile = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 
 var manifest, sequence, canvas, imageService;
 
-describe('#loadsCorrespondance', function() {
+describe.only('#loadsCorrespondance', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.correspondance).then(function(data) {
             manifest = manifesto.parseManifest(data);
@@ -24,7 +24,7 @@ describe('#loadsCorrespondance', function() {
         expect(annotation).to.exist;
         var resource = annotation.getResource();
         expect(resource).to.exist;
-        var profile = ServiceProfile.IMAGE_2_LEVEL_1;
+        var profile = ServiceProfile.IMAGE_2_LEVEL_0; // Was previously LEVEL_1 but this does not exist.
         imageService = resource.getService(profile);
         expect(imageService).to.exist;
     });
