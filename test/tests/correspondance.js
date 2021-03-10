@@ -8,7 +8,7 @@ var ServiceProfile = require('@iiif/vocabulary/dist-commonjs/').ServiceProfile;
 
 var manifest, sequence, canvas, imageService;
 
-describe.only('#loadsCorrespondance', function() {
+describe('#loadsCorrespondance', function() {
     it('loads successfully', function (done) {
         manifesto.loadManifest(manifests.correspondance).then(function(data) {
             manifest = manifesto.parseManifest(data);
