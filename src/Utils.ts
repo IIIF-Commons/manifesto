@@ -316,12 +316,15 @@ export class Utils {
   }
 
   static loadManifest(url: string): Promise<any> {
-    return new Promise<any>(resolve => {
+    return new Promise<any>((resolve, reject) => {
       fetch(url)
         .then(Utils.checkStatus)
         .then(r => r.json())
         .then(data => {
           resolve(data);
+        })
+        .catch(err => {
+          reject();
         });
     });
   }

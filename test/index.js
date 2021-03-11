@@ -33,6 +33,7 @@ importTest('annotation-dimensions', './tests/annotation-dimensions');
 importTest('annotation-list', './tests/annotation-list');
 importTest('anzacbulletin', './tests/anzacbulletin');
 importTest('audio', './tests/audio');
+importTest('bad-manifest-url', './tests/bad-manifest-url');
 importTest('biocrats', './tests/biocrats');
 importTest('book-of-remembrance', './tests/book-of-remembrance');
 importTest('canvas-metadata', './tests/canvas-metadata');
