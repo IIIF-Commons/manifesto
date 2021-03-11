@@ -1,4 +1,7 @@
-import { ViewingHint } from "@iiif/vocabulary/dist-commonjs";
+import {
+  ExternalResourceType,
+  ViewingHint
+} from "@iiif/vocabulary/dist-commonjs";
 import {
   Annotation,
   AnnotationList,
@@ -11,6 +14,8 @@ import {
   Size,
   Utils
 } from "./internal";
+import flatten from "lodash/flatten";
+import flattenDeep from "lodash/flattenDeep";
 
 export class Canvas extends Resource {
   public ranges: Range[];
@@ -259,7 +264,83 @@ export class Canvas extends Resource {
   getHeight(): number {
     return this.getProperty("height");
   }
+
   getViewingHint(): ViewingHint | null {
     return this.getProperty("viewingHint");
+  }
+
+  get imageResources() {
+    const resources = flattenDeep([
+      this.getImages().map(i => i.getResource()),
+      this.getContent().map(i => i.getBody())
+    ]);
+
+    return flatten(
+      resources.map(resource => {
+        switch (resource.getProperty("type").toLowerCase()) {
+          case ExternalResourceType.CHOICE:
+          case ExternalResourceType.OA_CHOICE:
+            return new Canvas(
+              {
+                images: flatten([
+                  resource.getProperty("default"),
+                  resource.getProperty("item")
+                ]).map(r => ({ resource: r }))
+              },
+              this.options
+            )
+              .getImages()
+              .map(i => i.getResource());
+          default:
+            return resource;
+        }
+      })
+    );
+  }
+
+  get resourceAnnotations() {
+    return flattenDeep([this.getImages(), this.getContent()]);
+  }
+
+  /**
+   * Returns a given resource Annotation, based on a contained resource or body
+   * id
+   */
+  resourceAnnotation(id) {
+    return this.resourceAnnotations.find(
+      anno =>
+        anno.getResource().id === id ||
+        flatten(new Array(anno.getBody())).some(body => body.id === id)
+    );
+  }
+
+  /**
+   * Returns the fragment placement values if a resourceAnnotation is placed on
+   * a canvas somewhere besides the full extent
+   */
+  onFragment(id) {
+    const resourceAnnotation = this.resourceAnnotation(id);
+    if (!resourceAnnotation) return undefined;
+    // IIIF v2
+    const on = resourceAnnotation.getProperty("on");
+    // IIIF v3
+    const target = resourceAnnotation.getProperty("target");
+    const fragmentMatch = (on || target).match(/xywh=(.*)$/);
+    if (!fragmentMatch) return undefined;
+    return fragmentMatch[1].split(",").map(str => parseInt(str, 10));
+  }
+
+  get iiifImageResources() {
+    return this.imageResources.filter(
+      r => r && r.getServices()[0] && r.getServices()[0].id
+    );
+  }
+
+  get imageServiceIds() {
+    return this.iiifImageResources.map(r => r.getServices()[0].id);
+  }
+
+  get aspectRatio() {
+    return this.getWidth() / this.getHeight();
   }
 }
