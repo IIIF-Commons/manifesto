@@ -36,6 +36,7 @@ export class Manifest extends IIIFResource {
     }
   }
 
+  /** @deprecated Use getAccompanyingCanvas instead */
   getPosterCanvas(): Canvas | null {
     let posterCanvas: any = this.getProperty("posterCanvas");
 
@@ -44,6 +45,16 @@ export class Manifest extends IIIFResource {
     }
 
     return posterCanvas;
+  }
+
+  getAccompanyingCanvas(): Canvas | null {
+    let accompanyingCanvas: any = this.getProperty("accompanyingCanvas");
+
+    if (accompanyingCanvas) {
+      accompanyingCanvas = new Canvas(accompanyingCanvas, this.options);
+    }
+
+    return accompanyingCanvas;
   }
 
   getBehavior(): Behavior | null {
