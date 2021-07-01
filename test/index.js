@@ -44,6 +44,7 @@ importTest('deep-hierarchy', './tests/deep-hierarchy');
 importTest('default-label', './tests/default-label');
 importTest('get-manifest-behavior', './tests/get-manifest-behavior');
 importTest('get-range-by-path', './tests/get-range-by-path');
+importTest('get-range-by-id', './tests/get-range-by-id');
 importTest('get-resource', './tests/get-resource');
 importTest('herbal', './tests/herbal');
 importTest('horriblemurders', './tests/horriblemurders');
