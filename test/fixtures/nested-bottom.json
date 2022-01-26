@@ -1,0 +1,53 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@id": "http://digital.library.villanova.edu/Collection/vudl:24693/IIIF",
+    "@type": "sc:Collection",
+    "label": "Covers and Illustrations",
+    "manifests": [
+        {
+            "label": "Wunder der Vererbung",
+            "@id": "http://localhost:3001/wunder.json",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "The boy allies on the North sea patrol; or, Striking the first blow at the German fleet / by Ensign Robert L. Drake. [Front cover and frontispiece]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:345350/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "The Cloak of Guilt / by Nicholas Carter.  [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:345384/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "The Great Enigma / by Nicholas Carter.  [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:345378/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "The Haunted House / by Sir E. Bulwer Lytton.  [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:24694/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "Hounded to Death / by Nicholas Carter.  [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:345375/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "Kathleen's diamonds : or, She loved a handsome actor / by Mrs. Alex. McVeigh Miller. [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:355821/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "Nick Carter's Masterpiece / by Nicholas Carter.  [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:345387/Manifest",
+            "@type": "sc:Manifest"
+        },
+        {
+            "label": "Un Combat dans le Sacramento. [Front cover]",
+            "@id": "http://digital.library.villanova.edu/Item/vudl:396752/Manifest",
+            "@type": "sc:Manifest"
+        }
+    ]
+}

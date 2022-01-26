@@ -1,0 +1,50 @@
+
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "https://hydra-dev.princeton.edu/collections/hd76s0235/manifest",
+  "@type": "sc:Collection",
+  "label": "Example Collection",
+  "viewingHint": "individuals",
+  "manifests": [
+    {
+      "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest",
+      "@type": "sc:Manifest",
+      "label": "SR2",
+      "viewingHint": "individuals",
+      "viewingDirection": "left-to-right"
+    }
+  ],
+  "collections": [
+    {
+      "@id": "https://hydra-dev.princeton.edu/concern/multi_volume_works/xg94hp755/manifest",
+      "@type": "sc:Collection",
+      "label": "Example MVW",
+      "viewingHint": "individuals",
+      "viewingDirection": "left-to-right"
+    }
+  ],
+  "members": [
+    {
+      "@id": "https://hydra-dev.princeton.edu/concern/scanned_resources/jw827b826/manifest",
+      "@type": "sc:Manifest",
+      "label": "SR2",
+      "viewingHint": "individuals",
+      "viewingDirection": "left-to-right"
+    },
+    {
+      "@id": "https://hydra-dev.princeton.edu/concern/multi_volume_works/xg94hp755/manifest",
+      "@type": "sc:Collection",
+      "label": "Example MVW",
+      "viewingHint": "individuals",
+      "viewingDirection": "left-to-right"
+    }
+  ],
+  "metadata": [
+    {
+      "label": "Exhibit",
+      "value": [
+        "example-collection"
+      ]
+    }
+  ]
+}

@@ -1,8 +1,9 @@
-.idea
-.ntvs_analysis.dat
+dist-commonjs
+dist-esmodule
+dist-umd
+dist-var
 coverage
 npm-debug.log
 node_modules
-bower_components
-docs
-obj
+debug.log
+types

@@ -1,32 +1,30 @@
 # manifesto
 
-[![Build Status](https://travis-ci.org/UniversalViewer/manifesto.svg?branch=master)](https://travis-ci.org/UniversalViewer/manifesto) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/UniversalViewer/manifesto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/IIIF-Commons/manifesto.svg?branch=master)](https://travis-ci.org/IIIF-Commons/manifesto)
 
 IIIF Presentation API client and server utility library.
 
     npm install manifesto.js --save
 
-Alternatively, use bower:
-
-    bower install manifesto
-
 Getting Started
 --
 
-###Documentation
+### Documentation
 
-http://universalviewer.io/manifesto-docs/
-
-
-###Tutorial
-
-http://blog.edsilv.com/manifesto/
+https://iiif-commons.github.io/manifesto/
 
 
-###Developer Setup
+### Developer Setup
 
-    git clone https://github.com/UniversalViewer/manifesto.git
+    git clone https://github.com/iiif-commons/manifesto.git
     npm install
-    bower install
-    gulp
-    gulp test
+    npm build
+    npm test
+
+### Publishing Package
+
+1. Bump the version locally using `npm version` on a branch other than `master`. Example: `npm version patch -m 'bump to v3.0.42'`
+1. Push the bump version branch to GitHub and create a pull request to `master`.
+1. After the pull request is merged, checkout `master` and pull the latest changes. `git checkout master && git pull`
+1. Run `npm publish`
+1. Push the git tags created `git push --tags`

@@ -1,16 +1,30 @@
-module Manifesto {
-    export interface IExternalResource {
-        clickThroughService: IService;
-        data: any;
-        dataUri: string;
-        error: any;
-        isResponseHandled: boolean;
-        loginService: IService;
-        logoutService: IService;
-        status: number;
-        tokenService: IService;
+import {
+  IAccessToken,
+  IExternalResourceData,
+  IManifestoOptions,
+  Service
+} from "./internal";
 
-        getData(accessToken?: IAccessToken): Promise<IExternalResource>;
-        isAccessControlled(): boolean;
-    }
+export interface IExternalResource {
+  authAPIVersion: number;
+  authHoldingPage: any;
+  clickThroughService: Service | null;
+  data: IExternalResourceData;
+  dataUri: string | null;
+  error: any;
+  externalService: Service | null;
+  getData(accessToken?: IAccessToken): Promise<IExternalResource>;
+  hasServiceDescriptor(): boolean;
+  height: number;
+  index: number;
+  isAccessControlled(): boolean;
+  isResponseHandled: boolean;
+  kioskService: Service | null;
+  loginService: Service | null;
+  logoutService: Service | null;
+  options?: IManifestoOptions;
+  restrictedService: Service | null;
+  status: number;
+  tokenService: Service | null;
+  width: number;
 }

@@ -1,85 +1,150 @@
-module Manifesto {
-    export class ManifestResource extends JSONLDResource implements IManifestResource {
-        options: IManifestoOptions;
+import {
+  JSONLDResource,
+  Thumbnail,
+  Service,
+  Utils,
+  Rendering,
+  LabelValuePair,
+  PropertyValue,
+  IManifestoOptions,
+  IExternalResource
+} from "./internal";
+import {
+  ServiceProfile,
+  RenderingFormat,
+  IIIFResourceType
+} from "@iiif/vocabulary/dist-commonjs";
 
-        constructor(jsonld: any, options: IManifestoOptions) {
-            super(jsonld);
-            this.options = options;
-        }
+export class ManifestResource extends JSONLDResource {
+  externalResource: IExternalResource;
+  options: IManifestoOptions;
 
-        getLabel(): string {
-            return Utils.getLocalisedValue(this.getProperty('label'), this.options.locale);
-        }
+  constructor(jsonld: any, options?: IManifestoOptions) {
+    super(jsonld);
+    this.options = <IManifestoOptions>options;
+  }
 
-        getMetadata(): any{
-            var metadata: Object[] = this.getProperty('metadata');
+  getIIIFResourceType(): IIIFResourceType {
+    return <IIIFResourceType>Utils.normaliseType(this.getProperty("type"));
+  }
 
-            if (!metadata)
-                return [];
+  getLabel(): PropertyValue {
+    const label: any = this.getProperty("label");
 
-            // get localised value for each metadata item.
-            for (var i = 0; i < metadata.length; i++) {
-                var item: any = metadata[i];
-
-                item.label = Utils.getLocalisedValue(item.label, this.options.locale);
-                item.value = Utils.getLocalisedValue(item.value, this.options.locale);
-            }
-
-            return metadata;
-        }
-
-        getRendering(format: RenderingFormat | string): IRendering {
-            var renderings: IRendering[] = this.getRenderings();
-
-            // normalise format to string
-            if (typeof format !== 'string'){
-                format = (<RenderingFormat>format).toString();
-            }
-
-            for (var i = 0; i < renderings.length; i++){
-                var rendering: IRendering = renderings[i];
-
-                if (rendering.getFormat().toString() === format) {
-                    return rendering;
-                }
-            }
-
-            return null;
-        }
-
-        getRenderings(): IRendering[] {
-            var rendering;
-
-            // if passing a manifesto-parsed object, use the __jsonld.rendering property,
-            // otherwise look for a rendering property
-            if (this.__jsonld){
-                rendering = this.__jsonld.rendering;
-            } else {
-                rendering = (<any>this).rendering;
-            }
-
-            var renderings: IRendering[] = [];
-            if (!rendering) return renderings;
-
-            // coerce to array
-            if (!_isArray(rendering)){
-                rendering = [rendering];
-            }
-
-            for (var i = 0; i < rendering.length; i++){
-                var r: any = rendering[i];
-                renderings.push(new Rendering(r, this.options));
-            }
-
-            return renderings;
-        }
-
-        getService(profile: ServiceProfile | string): IService {
-            return Utils.getService(this, profile);
-        }
-
-        getServices(): IService[] {
-            return Utils.getServices(this);
-        }
+    if (label) {
+      return PropertyValue.parse(label, this.options.locale);
     }
+
+    return new PropertyValue([], this.options.locale);
+  }
+
+  getDefaultLabel(): string | null {
+    return this.getLabel().getValue(this.options.locale);
+  }
+
+  getMetadata(): LabelValuePair[] {
+    const _metadata: any[] = this.getProperty("metadata");
+
+    const metadata: LabelValuePair[] = [];
+
+    if (!_metadata) return metadata;
+
+    for (let i = 0; i < _metadata.length; i++) {
+      const item: any = _metadata[i];
+      const metadataItem: LabelValuePair = new LabelValuePair(
+        this.options.locale
+      );
+      metadataItem.parse(item);
+      metadata.push(metadataItem);
+    }
+
+    return metadata;
+  }
+
+  getRendering(format: RenderingFormat): Rendering | null {
+    const renderings: Rendering[] = this.getRenderings();
+
+    for (let i = 0; i < renderings.length; i++) {
+      const rendering: Rendering = renderings[i];
+
+      if (rendering.getFormat() === format) {
+        return rendering;
+      }
+    }
+
+    return null;
+  }
+
+  getRenderings(): Rendering[] {
+    let rendering;
+
+    // if passing a manifesto-parsed object, use the __jsonld.rendering property,
+    // otherwise look for a rendering property
+    if (this.__jsonld) {
+      rendering = this.__jsonld.rendering;
+    } else {
+      rendering = (<any>this).rendering;
+    }
+
+    const renderings: Rendering[] = [];
+    if (!rendering) return renderings;
+
+    // coerce to array
+    if (!Array.isArray(rendering)) {
+      rendering = [rendering];
+    }
+
+    for (let i = 0; i < rendering.length; i++) {
+      const r: any = rendering[i];
+      renderings.push(new Rendering(r, this.options));
+    }
+
+    return renderings;
+  }
+
+  getService(profile: ServiceProfile): Service | null {
+    return Utils.getService(this, profile);
+  }
+
+  getServices(): Service[] {
+    return Utils.getServices(this);
+  }
+
+  getThumbnail(): Thumbnail | null {
+    let thumbnail: any = this.getProperty("thumbnail");
+
+    if (Array.isArray(thumbnail)) {
+      thumbnail = thumbnail[0];
+    }
+
+    if (thumbnail) {
+      return new Thumbnail(thumbnail, this.options);
+    }
+
+    return null;
+  }
+
+  isAnnotation(): boolean {
+    return this.getIIIFResourceType() === IIIFResourceType.ANNOTATION;
+  }
+
+  isCanvas(): boolean {
+    return this.getIIIFResourceType() === IIIFResourceType.CANVAS;
+  }
+
+  isCollection(): boolean {
+    return this.getIIIFResourceType() === IIIFResourceType.COLLECTION;
+  }
+
+  isManifest(): boolean {
+    return this.getIIIFResourceType() === IIIFResourceType.MANIFEST;
+  }
+
+  isRange(): boolean {
+    return this.getIIIFResourceType() === IIIFResourceType.RANGE;
+  }
+
+  isSequence(): boolean {
+    return this.getIIIFResourceType() === IIIFResourceType.SEQUENCE;
+  }
 }

@@ -1,11 +1,5 @@
-.idea
-.travis.yml
-bower.json
-gulpfile.config.js
-gulpfile.js
-bower_components
-docs
+.*
+**/tsconfig.json
+**/webpack.config.js
+node_modules
 src
-tasks
-test
-typings

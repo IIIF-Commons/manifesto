@@ -1,0 +1,49 @@
+{
+   "id": "http://tomcrane.github.io/scratch/manifests/3/pdf.json",
+   "type":"Manifest",
+   "label":"Annotating a pdf on a canvas with a static image of the PDF cover as placeholder.",
+   "sequences":[
+      {
+         "type":"Sequence",
+         "canvases":[
+            {
+               "id":"http://tomcrane.github.io/scratch/manifests/3/canvas/99",
+               "type":"Canvas",
+               "width": 1000,
+               "height": 700,
+               "label":"A stage for a PDF",
+               "content":[
+                  {
+                     "id":"...",
+                     "type":"AnnotationPage",
+                     "items":[
+                        {
+                           "id":"http://tomcrane.github.io/scratch/manifests/3/pdf/anno1",
+                           "type":"Annotation",
+                           "motivation":"painting",
+                           "body":{
+                              "id":"https://dlcs.io/file/wellcome/1/caf18956-8f79-4fe6-8988-af329b036416",
+                              "type":"Document",
+                              "format":"application/pdf"
+                           },
+                           "target":"http://tomcrane.github.io/scratch/manifests/3/canvas/99"
+                        },                        
+                        {
+                           "id":"http://tomcrane.github.io/scratch/manifests/3/pdf/anno2",
+                           "type":"Annotation",
+                           "motivation":"painting",
+                           "body":{
+                              "id":"http://example.org/iiif/cover-image.jpg",
+                              "type":"Image",
+                              "format":"image/jpg"
+                           },
+                           "target":"http://tomcrane.github.io/scratch/manifests/3/canvas/99"
+                        }
+                     ]
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

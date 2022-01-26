@@ -1,0 +1,18 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@id": "https://digital.library.villanova.edu/Collection/vudl:99258/IIIF",
+    "@type": "sc:Collection",
+    "label": "Philadelphia Ceili Group",
+    "collections": [
+        {
+            "label": "Events",
+            "@id": "https://digital.library.villanova.edu/Collection/vudl:347702/IIIF",
+            "@type": "sc:Collection"
+        },
+        {
+            "label": "Festivals",
+            "@id": "https://digital.library.villanova.edu/Collection/vudl:99259/IIIF",
+            "@type": "sc:Collection"
+        }
+    ]
+}

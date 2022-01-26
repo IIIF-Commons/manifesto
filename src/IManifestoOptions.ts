@@ -1,9 +1,10 @@
-module Manifesto {
-    export interface IManifestoOptions {
-        defaultLabel: string; // '-'
-        locale: string; // 'en-GB'
-        resource: IIIIFResource;
-        navDate?: Date;
-        pessimisticAccessControl: boolean; // false
-    }
+import { IIIFResource } from "./internal";
+
+export interface IManifestoOptions {
+  defaultLabel: string; // '-'
+  index?: number;
+  locale: string; // 'en-GB'
+  navDate?: Date;
+  pessimisticAccessControl: boolean; // false
+  resource: IIIFResource;
 }

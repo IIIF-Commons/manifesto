@@ -1,12 +1,8 @@
 language: node_js
 node_js:
-- '0.12.7'
-before_install:
-- npm install -g gulp-cli
-- npm install -g bower
-install:
-- npm install
-- bower install
+  - "8"
+before_script:
+  - npm install
 script:
-- gulp
-- gulp test
+  - npm run build
+  - npm test

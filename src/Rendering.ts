@@ -1,13 +1,12 @@
+import { RenderingFormat } from "@iiif/vocabulary/dist-commonjs";
+import { IManifestoOptions, ManifestResource } from "./internal";
 
-module Manifesto {
-    export class Rendering extends ManifestResource implements IRendering {
+export class Rendering extends ManifestResource {
+  constructor(jsonld?: any, options?: IManifestoOptions) {
+    super(jsonld, options);
+  }
 
-        constructor(jsonld: any, options: IManifestoOptions){
-            super(jsonld, options);
-        }
-
-        getFormat(): RenderingFormat{
-            return new RenderingFormat(this.getProperty('format'));
-        }
-    }
+  getFormat(): RenderingFormat {
+    return this.getProperty("format");
+  }
 }

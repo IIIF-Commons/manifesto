@@ -1,0 +1,71 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://wellcomelibrary.org/iiif/collection/b18031511",
+  "@type": "sc:Collection",
+  "label": "The biological basis of medicine",
+  "metadata": [
+    {
+      "label": "Title",
+      "value": "The biological basis of medicine"
+    },
+    {
+      "label": "Author(s)",
+      "value": "Bittar, E. Edward; Bittar, Neville"
+    },
+    {
+      "label": "Publication date",
+      "value": "1968-"
+    },
+    {
+      "label": "Attribution",
+      "value": "Wellcome Library<br/>License: CC-BY-NC"
+    },
+    {
+      "label": "",
+      "value": "<a href='http://search.wellcomelibrary.org/iii/encore/record/C__Rb1803151'>View full catalogue record</a>"
+    },
+    {
+      "label": "Full conditions of use",
+      "value": "You have permission to make copies of this work under a <a target=\"_top\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\">Creative Commons, Attribution, Non-commercial license</a>.<br/><br/>Non-commercial use includes private study, academic research, teaching, and other activities that are not primarily intended for, or directed towards, commercial advantage or private monetary compensation. See the <a target=\"_top\" href=\"http://creativecommons.org/licenses/by-nc/4.0/legalcode\">Legal Code</a> for further information.<br/><br/>Image source should be attributed as specified in the full catalogue record. If no source is given the image should be attributed to Wellcome Library."
+    }
+  ],
+  "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "logo": "http://wellcomelibrary.org/assets/img/squarelogo64.png",
+  "related": {
+    "@id": "http://wellcomelibrary.org/item/b18031511",
+    "format": "text/html"
+  },
+  "seeAlso": {
+    "@id": "http://wellcomelibrary.org/resource/b18031511",
+    "format": "text/turtle"
+  },
+  "service": {
+    "@context": "http://universalviewer.io/context.json",
+    "@id": "http://wellcomelibrary.org/service/trackingLabels/b18031511",
+    "profile": "http://universalviewer.io/tracking-extensions-profile",
+    "trackingLabel": "Format: monograph, Institution: n/a, Identifier: b18031511, Digicode: diggenetics, Collection code: n/a"
+  },
+  "viewingHint": "multi-part",
+  "members": [
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b18031511-0/manifest",
+      "@type": "sc:Manifest",
+      "label": "Volume 1"
+    },
+    {
+      "@id": "http://wellcomelibrary.org/iiif/b18031511-1/manifest",
+      "@type": "sc:Manifest",
+      "label": "Volume 2"
+    },
+    {
+      "label": "Americana",
+      "@id": "https://digital.library.villanova.edu/Collection/vudl:14572/IIIF",
+      "@type": "sc:Collection"
+    },
+    {
+      "label": "Autographed Books Collection",
+      "@id": "https://digital.library.villanova.edu/Collection/vudl:2426/IIIF",
+      "@type": "sc:Collection"
+    }
+  ]
+}

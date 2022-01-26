@@ -1,0 +1,7 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@id": "https://digital.library.villanova.edu/Collection/vudl:189093/IIIF",
+    "@type": "sc:Collection",
+    "label": "Media and Supplements",
+    "within": "https://digital.library.villanova.edu/Collection/vudl:171664/IIIF"
+}

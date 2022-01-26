@@ -1,0 +1,37 @@
+{
+  "@id": "http://manifests.ydc2.yale.edu/manifest/Scroll",
+  "@type": "sc:Manifest",
+  "label": "Scroll",
+  "sequences": [{
+    "@id": "http://manifests.ydc2.yale.edu/sequence/Scroll",
+    "@type": "sc:Sequence",
+    "canvases": [{
+      "@id": "http://manifests.ydc2.yale.edu/canvas/630f3bf4-13dc-43dc-907f-4d4906bc6e5f",
+      "@type": "sc:Canvas",
+      "height": "1976",
+      "images": [{
+        "@id": "http://manifests.ydc2.yale.edu/annotation/630f3bf4-13dc-43dc-907f-4d4906bc6e5f",
+        "@type": "oa:Annotation",
+        "motivation": "sc:painting",
+        "on": "http://manifests.ydc2.yale.edu/canvas/630f3bf4-13dc-43dc-907f-4d4906bc6e5f",
+        "resource": {
+          "@id": "http://scale.ydc2.yale.edu/iiif/630f3bf4-13dc-43dc-907f-4d4906bc6e5f/full/full/0/native.jpg",
+          "@type": "dctypes:Image",
+          "format": "image/jpeg",
+          "height": "1976",
+          "label": "Scroll",
+          "service": {
+            "@id": "http://scale.ydc2.yale.edu/iiif/630f3bf4-13dc-43dc-907f-4d4906bc6e5f/",
+            "dcterms:conformsTo": "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
+          },
+          "width": "62651"
+        }
+      }],
+      "label": "Scroll",
+      "width": "62651"
+    }],
+    "label": "Scroll",
+    "viewingDirection": "left-to-right"
+  }],
+  "@context": "http://www.shared-canvas.org/ns/context.json"
+}
