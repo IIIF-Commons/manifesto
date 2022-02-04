@@ -44,6 +44,7 @@ module.exports = {
     "qatarRightToLeft": "http://localhost:3001/qatar-right-to-left.json",
     "getResource": "http://localhost:3001/get-resource.json",
     "requiredstatement": "http://localhost:3001/required-statement.json",
+    "rhul": "http://localhost:3001/rhul.json",
     "riksarkivetscblarge": "http://localhost:3001/riksarkivetscblarge.json",
     "https": "https://iiif.riksarkivet.se/arkis!C0000263/manifest",
     "scroll": "http://localhost:3001/scroll.json",

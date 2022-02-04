@@ -1,0 +1,433 @@
+{
+  "@context" : ["http://iiif.io/api/auth/1/context.json", "http://iiif.io/api/presentation/3/context.json"],
+  "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000002/manifest.json",
+  "type" : "Manifest",
+  "label" : {
+    "en" : ["RHUL 25/11/93"]
+  },
+  "metadata" : [{
+      "label" : {
+        "en" : ["Full title"]
+      },
+      "value" : {
+        "en" : ["RHUL 25/11/93"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Collection"]
+      },
+      "value" : {
+        "en" : ["Robert Hampson tapes"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Format"]
+      },
+      "value" : {
+        "en" : ["1 compact cassette"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Usage"]
+      },
+      "value" : {
+        "en" : ["<span>Rights unassigned  staff access only</span>"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Held by"]
+      },
+      "value" : {
+        "en" : ["The British Library"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Digitised by"]
+      },
+      "value" : {
+        "en" : ["The British Library 2018"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Digitisation funded by"]
+      },
+      "value" : {
+        "en" : ["<span>National Lottery Heritage Fund<br><br><img src='https://www.heritagefund.org.uk/sites/default/files/media/attachments/TNLHLF_Colour_Logo_English_RGB_0_0.jpg'/></span>"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Identifier"]
+      },
+      "value" : {
+        "en" : ["C1700/18"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Shelfmark"]
+      },
+      "value" : {
+        "en" : ["C1700/18"]
+      }
+    }, {
+      "label" : {
+        "en" : ["Link to catalogue"]
+      },
+      "value" : {
+        "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8107642'>View the catalogue record</a>"]
+      }
+    }],
+  "requiredStatement" : {
+    "label" : {
+      "en" : ["Copyright and Usage"]
+    },
+    "value" : {
+      "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8107642\">Please read the full information about this object</a><br>Rights unassigned - staff access only</span>"]
+    }
+  },
+  "provider" : [{
+      "id" : "https://www.bl.uk/about-us",
+      "type" : "Agent",
+      "label" : {
+        "en" : ["The British Library"]
+      },
+      "homepage" : [{
+          "id" : "https://www.bl.uk/",
+          "type" : "Text",
+          "format" : "text/html",
+          "label" : {
+            "en" : ["The British Library"]
+          }
+        }],
+      "logo" : [{
+          "id" : "https://www.bl.uk/images/bl_logo_100.gif",
+          "type" : "Image",
+          "format" : "image/gif"
+        }]
+    }],
+  "services" : [{
+      "id" : "http://apiirc.ad.bl.uk/auth/iiif/login",
+      "type" : "AuthCookieService1",
+      "profile" : "http://iiif.io/api/auth/1/login",
+      "description" : {
+        "en" : ["Some portions of this recording may be unavailable due to rights restrictions."]
+      },
+      "header" : {
+        "en" : ["Please Log-In"]
+      },
+      "label" : {
+        "en" : ["Login to The British Library"]
+      },
+      "service" : [{
+          "id" : "http://apiirc.ad.bl.uk/auth/iiif/token",
+          "type" : "AuthTokenService1",
+          "profile" : "http://iiif.io/api/auth/1/token"
+        }]
+    }, {
+      "id" : "http://access.bl.uk/item/share/ark:/81055/vdc_100063184415.0x000002",
+      "type" : "Service",
+      "profile" : "http://universalviewer.io/share-extensions-profile"
+    }],
+  "homepage" : [{
+      "id" : "http://access.bl.uk/item/viewer/ark:/81055/vdc_100063184415.0x000002",
+      "type" : "Text",
+      "format" : "text/html",
+      "label" : {
+        "en" : ["View at the British Library"]
+      }
+    }],
+  "behavior" : ["auto-advance"],
+  "items" : [{
+      "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000004",
+      "type" : "Canvas",
+      "label" : {
+        "en" : ["Tape 1 Side 1"]
+      },
+      "duration" : 1873.5999999999999,
+      "items" : [{
+          "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000004/anno1",
+          "type" : "AnnotationPage",
+          "items" : [{
+              "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000004/anno1/1",
+              "type" : "Annotation",
+              "motivation" : "painting",
+              "target" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000004#t=00.00,1873.60",
+              "body" : {
+                "type" : "Choice",
+                "items" : [{
+                    "id" : "http://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100063184415.0x000009/manifest.mpd",
+                    "format" : "application/dash+xml",
+                    "type" : "Sound",
+                    "service" : [{
+                        "id" : "http://apiirc.ad.bl.uk/auth/iiif/login",
+                        "type" : "AuthCookieService1"
+                      }, {
+                        "id" : "http://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100063184415.0x000009/probe.json",
+                        "type" : "AuthProbeService1",
+                        "profile" : "http://iiif.io/api/auth/1/probe"
+                      }]
+                  }, {
+                    "id" : "http://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100063184415.0x000009/index.m3u8",
+                    "format" : "application/vnd.apple.mpegURL",
+                    "type" : "Sound",
+                    "service" : [{
+                        "id" : "http://apiirc.ad.bl.uk/auth/iiif/login",
+                        "type" : "AuthCookieService1"
+                      }, {
+                        "id" : "http://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100063184415.0x000009/probe.json",
+                        "type" : "AuthProbeService1",
+                        "profile" : "http://iiif.io/api/auth/1/probe"
+                      }]
+                  }]
+              },
+              "seeAlso" : [{
+                  "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100063184415.0x000008.dat",
+                  "type" : "Dataset",
+                  "format" : "application/octet-stream",
+                  "profile" : "http://waveform.prototyping.bbc.co.uk"
+                }]
+            }]
+        }]
+    }],
+  "structures" : [{
+      "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000002/top",
+      "type" : "Range",
+      "label" : {
+        "en" : ["RHUL 25/11/93"]
+      },
+      "metadata" : [{
+          "label" : {
+            "en" : ["Full title"]
+          },
+          "value" : {
+            "en" : ["RHUL 25/11/93"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Collection"]
+          },
+          "value" : {
+            "en" : ["Robert Hampson tapes"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Format"]
+          },
+          "value" : {
+            "en" : ["1 compact cassette"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Usage"]
+          },
+          "value" : {
+            "en" : ["<span>Rights unassigned  staff access only</span>"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Held by"]
+          },
+          "value" : {
+            "en" : ["The British Library"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Digitised by"]
+          },
+          "value" : {
+            "en" : ["The British Library 2018"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Digitisation funded by"]
+          },
+          "value" : {
+            "en" : ["<span>National Lottery Heritage Fund<br><br><img src='https://www.heritagefund.org.uk/sites/default/files/media/attachments/TNLHLF_Colour_Logo_English_RGB_0_0.jpg'/></span>"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Identifier"]
+          },
+          "value" : {
+            "en" : ["C1700/18"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Shelfmark"]
+          },
+          "value" : {
+            "en" : ["C1700/18"]
+          }
+        }, {
+          "label" : {
+            "en" : ["Link to catalogue"]
+          },
+          "value" : {
+            "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8107642'>View the catalogue record</a>"]
+          }
+        }],
+      "requiredStatement" : {
+        "label" : {
+          "en" : ["Copyright and Usage"]
+        },
+        "value" : {
+          "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8107642\">Please read the full information about this object</a><br>Rights unassigned - staff access only</span>"]
+        }
+      },
+      "rendering" : [{
+          "id" : "http://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100063184415.0x000002/ark:/81055/vdc_100063184415.0x000002/top",
+          "type" : "Audio",
+          "label" : {
+            "en" : ["Download this recording"]
+          },
+          "format" : "audio/mp4"
+        }],
+      "items" : [{
+          "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000005",
+          "type" : "Range",
+          "label" : {
+            "en" : ["[Robert Hampson poetry reading] (31:14)"]
+          },
+          "metadata" : [{
+              "label" : {
+                "en" : ["Full title"]
+              },
+              "value" : {
+                "en" : ["[Robert Hampson poetry reading]"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Creator"]
+              },
+              "value" : {
+                "en" : ["Hampson, Robert, 1948- (speaker, male)"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Date"]
+              },
+              "value" : {
+                "en" : ["1993-11-25 (recorded)"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Place of creation"]
+              },
+              "value" : {
+                "en" : ["Royal Holloway, University of London, Egham, Surrey, England, UK (recorded)"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Duration"]
+              },
+              "value" : {
+                "en" : ["31 min. 14 sec."]
+              }
+            }, {
+              "label" : {
+                "en" : ["Language"]
+              },
+              "value" : {
+                "en" : ["English"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Collection"]
+              },
+              "value" : {
+                "en" : ["Robert Hampson tapes"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Category"]
+              },
+              "value" : {
+                "en" : ["Art and literature: Literature"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Genre"]
+              },
+              "value" : {
+                "en" : ["Poetry", "Live performance"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Usage"]
+              },
+              "value" : {
+                "en" : ["<span>Creative Commons Attribution Non Commercial licence<br/><br/><img src=&quot;https://i.creativecommons.org/l/by-nc/4.0/88x31.png&quot;/></span>"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Held by"]
+              },
+              "value" : {
+                "en" : ["The British Library"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Digitised by"]
+              },
+              "value" : {
+                "en" : ["The British Library 2018"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Digitisation funded by"]
+              },
+              "value" : {
+                "en" : ["<span>National Lottery Heritage Fund<br><br><img src='https://www.heritagefund.org.uk/sites/default/files/media/attachments/TNLHLF_Colour_Logo_English_RGB_0_0.jpg'/></span>"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Identifier"]
+              },
+              "value" : {
+                "en" : ["C1700/18 S1"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Shelfmark"]
+              },
+              "value" : {
+                "en" : ["C1700/18"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Link to catalogue"]
+              },
+              "value" : {
+                "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8151289'>View the catalogue record</a>"]
+              }
+            }, {
+              "label" : {
+                "en" : ["Description"]
+              },
+              "value" : {
+                "en" : ["Professor Robert Hampson gives a poetry reading at Royal Holloway, University of London (RHUL) on the evening of 1993-11-25. Hampson also talks briefly about his life and career in the 1960s and 1970s. Titles of individual poems performed include: On the trail 1846.- A broken shelter in the wind.- How I found Dr. Livingstone.- Family circle.- Fieldwork.- Servants of a system.- Breathless.- The little soldier.- Two or three things that I know about her.- The soldiers.- Arriving at the reading she was slightly surprised.- A small calendar for 1431.- The life and work of Arthur Rimbaud.- Changed hands (dedicated to Jean Rees). [Individual poems are not catalogued separately].", "Titles of individual poems performed have been transcribed by ear. Difficult to establish the titles of all the poems", "Begins and ends abruptly"]
+              }
+            }],
+          "rights" : "https://creativecommons.org/licenses/by-nc/4.0",
+          "requiredStatement" : {
+            "label" : {
+              "en" : ["Copyright and Usage"]
+            },
+            "value" : {
+              "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8151289\">Please read the full information about this object</a><br>Creative Commons Attribution Non Commercial licence<br/><br/><a href=\"https://creativecommons.org/licenses/by-nc/4.0\"><img src=\"https://i.creativecommons.org/l/by-nc/4.0/88x31.png\"/></a></span>"]
+            }
+          },
+          "rendering" : [{
+              "id" : "http://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100063184415.0x000002/ark:/81055/vdc_100063184415.0x000005",
+              "type" : "Audio",
+              "label" : {
+                "en" : ["Download this recording"]
+              },
+              "format" : "audio/mp4"
+            }],
+          "items" : [{
+              "id" : "http://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100063184415.0x000004#t=0.00,1873.60",
+              "type" : "Canvas"
+            }]
+        }]
+    }]
+}
