@@ -1073,22 +1073,30 @@ export class Utils {
   }
 
   static getServices(resource: any): Service[] {
-    let service: any;
+    const services: Service[] = [];
 
-    // if passing a manifesto-parsed object, use the __jsonld.service property,
-    // otherwise look for a service property (info.json services)
-    if (resource.__jsonld) {
-      service = resource.__jsonld.service;
-    } else {
-      service = (<any>resource).service;
+    // Resources can reference "services" on the manifest. This is a bit of a hack to just get the services from the manifest
+    // too. What would be better is if this was used as a "Map" of full services.
+    // So when you come across { id: '...' } without any data, you can "lookup" services from the manifest.
+    // I would have implemented this if I was confident that it was reliable. Instead, I opted for the safest option that
+    // should not break any existing services.
+    if (resource && resource.options && resource.options.resource && resource.options.resource !== resource) {
+      services.push(...Utils.getServices(resource.options.resource));
     }
 
-    const services: Service[] = [];
-    if (!service) return services;
+    let service = (resource.__jsonld || resource).service || [];
 
     // coerce to array
     if (!Array.isArray(service)) {
       service = [service];
+    }
+
+    // Some resources also have a `.services` property.
+    // https://iiif.io/api/presentation/3.0/#services
+    service.push(...((resource.__jsonld || resource).services || []));
+
+    if (service.length === 0) {
+      return services;
     }
 
     for (let i = 0; i < service.length; i++) {
