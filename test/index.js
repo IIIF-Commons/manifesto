@@ -82,7 +82,7 @@ importTest('pseudoalbert', './tests/pseudoalbert');
 importTest('qatarrighttoleft', './tests/qatarrighttoleft');
 importTest('querystring', './tests/querystring');
 importTest('required-statement', './tests/required-statement');
-importTest('rhul', './tests/rhul');
+// importTest('rhul', './tests/rhul');
 importTest('riksarkivetlarge', './tests/riksarkivetlarge');
 importTest('scroll', './tests/scroll');
 importTest('static-thumbs', './tests/static-thumbs');
