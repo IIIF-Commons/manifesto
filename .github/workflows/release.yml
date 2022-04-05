@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-${{ matrix.node }}-npm-${{ hashFiles('**/package-lock.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ matrix.node }}-npm-${{ hashFiles('**/package-lock.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -31,11 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-${{ matrix.node }}-npm-${{ hashFiles('**/package-lock.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ matrix.node }}-npm-${{ hashFiles('**/package-lock.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
       - name: Setup node
         uses: actions/setup-node@v2
         with:
