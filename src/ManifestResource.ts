@@ -102,6 +102,19 @@ export class ManifestResource extends JSONLDResource {
     return renderings;
   }
 
+  getRequiredStatement(): LabelValuePair | null {
+    let requiredStatement: LabelValuePair | null = null;
+
+    const _requiredStatement: any = this.getProperty("requiredStatement");
+
+    if (_requiredStatement) {
+      requiredStatement = new LabelValuePair(this.options.locale);
+      requiredStatement.parse(_requiredStatement);
+    }
+
+    return requiredStatement;
+  }
+
   getService(profile: ServiceProfile): Service | null {
     return Utils.getService(this, profile);
   }

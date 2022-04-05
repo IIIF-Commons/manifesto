@@ -6,6 +6,7 @@ let server;
 
 function importTest(name, path) {
     describe(name, function () {
+        this.timeout(5000);
         require(path);
     });
 }
@@ -81,7 +82,7 @@ importTest('pseudoalbert', './tests/pseudoalbert');
 importTest('qatarrighttoleft', './tests/qatarrighttoleft');
 importTest('querystring', './tests/querystring');
 importTest('required-statement', './tests/required-statement');
-importTest('rhul', './tests/rhul');
+// importTest('rhul', './tests/rhul');
 importTest('riksarkivetlarge', './tests/riksarkivetlarge');
 importTest('scroll', './tests/scroll');
 importTest('static-thumbs', './tests/static-thumbs');
