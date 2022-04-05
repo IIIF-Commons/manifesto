@@ -6,6 +6,7 @@ let server;
 
 function importTest(name, path) {
     describe(name, function () {
+        this.timeout(5000);
         require(path);
     });
 }

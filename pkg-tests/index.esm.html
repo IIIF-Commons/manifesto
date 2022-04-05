@@ -1,0 +1,29 @@
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport'
+        content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+
+<script type="importmap">
+{
+  "imports": {
+    "manifesto.js": "../dist-esmodule/index.js"
+  }
+}
+</script>
+
+<script type="module">
+  // @todo this errors at the moment. It's not possible to resolve the relative paths. We could use rollup or ESBuild
+  // to produce builds that could be loaded and used in the browser.
+
+  import Manifesto from 'manifesto.js';
+
+  Manifesto.loadManifest('https://iiif.wellcomecollection.org/presentation/v2/b18035723').then(e => console.log(e));
+
+</script>
+</body>
+</html>
