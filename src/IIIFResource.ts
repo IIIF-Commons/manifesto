@@ -75,6 +75,21 @@ export class IIIFResource extends ManifestResource {
 
   getLogo(): string | null {
     let logo: any = this.getProperty("logo");
+
+    // Presentation 3.
+    // The logo is exclusive to the "provider" property, which is of type "Agent".
+    // In order to fulfil `manifest.getLogo()` we should check
+    // When P3 is fully supported, the following should work.
+    // return this.getProvider()?.getLogo();
+    if (!logo) {
+      const provider = this.getProperty('provider');
+      if (!provider) {
+        return null;
+      }
+
+      logo = provider.logo;
+    }
+
     if (!logo) return null;
     if (typeof logo === "string") return logo;
     if (Array.isArray(logo) && logo.length) {
