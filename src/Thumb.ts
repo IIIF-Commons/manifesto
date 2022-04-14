@@ -1,3 +1,4 @@
+import { ViewingHint } from "@iiif/vocabulary/dist-commonjs";
 import { Canvas } from "./internal";
 
 // todo: deprecate
@@ -10,6 +11,7 @@ export class Thumb {
   public width: number;
   public height: number;
   public visible: boolean;
+  public viewingHint: ViewingHint | null;
 
   constructor(width: number, canvas: Canvas) {
     this.data = canvas;
@@ -26,5 +28,6 @@ export class Thumb {
 
     this.uri = canvas.getCanonicalImageUri(width);
     this.label = <string>canvas.getLabel().getValue(); // todo: pass locale?
+    this.viewingHint = canvas.getViewingHint();
   }
 }
