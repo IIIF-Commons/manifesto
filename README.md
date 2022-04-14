@@ -21,14 +21,9 @@ https://iiif-commons.github.io/manifesto/
 
 ### Publishing Package
 
-`git checkout master`
-
-`npm version patch`
-
-`git add .`
-
-`git commit -m "Release v1.2.3"`
-
-`git tag v1.2.3`
-
-`git push origin master v1.2.3`
+    git checkout master
+    npm version patch
+    git add .
+    git commit -m "Release v1.2.3"
+    git tag v1.2.3
+    git push origin master v1.2.3
