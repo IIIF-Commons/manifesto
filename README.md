@@ -25,6 +25,8 @@ https://iiif-commons.github.io/manifesto/
 
 `npm version patch`
 
+`git add .`
+
 If the new version is e.g. v1.2.3
 
 `git push origin master v1.2.3`
