@@ -68,7 +68,9 @@ export class Canvas extends Resource {
         if (!width) {
           width = resource.getWidth();
         }
-        const service = services ? services.find(service => Utils.isImageProfile(service.getProfile())) : null;
+        const service = services
+          ? services.find(service => Utils.isImageProfile(service.getProfile()))
+          : null;
 
         if (service) {
           id = service.id;

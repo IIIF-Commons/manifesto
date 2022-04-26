@@ -117,6 +117,10 @@ export class PropertyValue extends Array<LocalizedValue> {
       // Single IIIF v2 property value
       const parsed = LocalizedValue.parseV2Value(rawVal);
       return new PropertyValue(parsed !== null ? [parsed] : [], defaultLocale);
+    } else if (rawVal["@value"]) {
+      // Single IIIF v2 property value without language
+      const parsed = LocalizedValue.parseV2Value(rawVal);
+      return new PropertyValue(parsed !== null ? [parsed] : [], defaultLocale);
     } else {
       // IIIF v3 property value
       return new PropertyValue(

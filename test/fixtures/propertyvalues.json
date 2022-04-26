@@ -1,20 +1,53 @@
 {
     "v2": {
         "singleString": "A single string",
-        "multipleStrings": ["One string", "another string"],
-        "singleLocalized": {"@language": "de", "@value": "Ich bin ein Berliner."},
+        "multipleStrings": [
+            "One string",
+            "another string"
+        ],
+        "singleLocalized": {
+            "@language": "de",
+            "@value": "Ich bin ein Berliner."
+        },
+        "singleLocalizedWithoutLanguage": {
+            "@value": "Ich bin ein Berliner."
+        },
         "multipleLocalized": [
-            {"@language": "es", "@value": "Yo La Tengo"},
-            {"@language": "fr", "@value": "Sous les pavés, la plage"}
+            {
+                "@language": "es",
+                "@value": "Yo La Tengo"
+            },
+            {
+                "@language": "fr",
+                "@value": "Sous les pavés, la plage"
+            }
         ],
         "multipleMixed": [
-            {"@language": "en", "@value": "Hello!"},
+            {
+                "@language": "en",
+                "@value": "Hello!"
+            },
             "Saluton!",
-            {"@language": "zh-Latn", "@value": "Nǐ hǎo!"},
-            {"@language": "zh", "@value": "你好!"},
-            {"@language": "jp-Hira", "@value": "こんにちは"},
-            {"@language": "jp-Han", "@value": "今日は"},
-            {"@language": "jp-Latn", "@value": "Konnichi wa"},
+            {
+                "@language": "zh-Latn",
+                "@value": "Nǐ hǎo!"
+            },
+            {
+                "@language": "zh",
+                "@value": "你好!"
+            },
+            {
+                "@language": "jp-Hira",
+                "@value": "こんにちは"
+            },
+            {
+                "@language": "jp-Han",
+                "@value": "今日は"
+            },
+            {
+                "@language": "jp-Latn",
+                "@value": "Konnichi wa"
+            },
             "\ud83d\udc4b"
         ]
     },
@@ -28,6 +61,8 @@
             "Portrait de la mère de l'artiste",
             "La Mère de Whistler"
         ],
-        "none": [ "Whistler (1871)" ]
+        "none": [
+            "Whistler (1871)"
+        ]
     }
 }

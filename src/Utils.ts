@@ -1080,7 +1080,12 @@ export class Utils {
     // So when you come across { id: '...' } without any data, you can "lookup" services from the manifest.
     // I would have implemented this if I was confident that it was reliable. Instead, I opted for the safest option that
     // should not break any existing services.
-    if (resource && resource.options && resource.options.resource && resource.options.resource !== resource) {
+    if (
+      resource &&
+      resource.options &&
+      resource.options.resource &&
+      resource.options.resource !== resource
+    ) {
       services.push(...Utils.getServices(resource.options.resource));
     }
 

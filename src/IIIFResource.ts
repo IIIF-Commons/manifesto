@@ -82,7 +82,7 @@ export class IIIFResource extends ManifestResource {
     // When P3 is fully supported, the following should work.
     // return this.getProvider()?.getLogo();
     if (!logo) {
-      const provider = this.getProperty('provider');
+      const provider = this.getProperty("provider");
       if (!provider) {
         return null;
       }
