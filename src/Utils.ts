@@ -1072,7 +1072,11 @@ export class Utils {
     return undefined;
   }
 
-  static getServices(resource: any): Service[] {
+  static getServices(resource: any, {
+    onlyService = false,
+    onlyServices = false,
+    skipParentResources = false
+  }: { onlyServices?: boolean; skipParentResources?: boolean; onlyService?: boolean } = {}): Service[] {
     const services: Service[] = [];
 
     // Resources can reference "services" on the manifest. This is a bit of a hack to just get the services from the manifest
@@ -1080,20 +1084,22 @@ export class Utils {
     // So when you come across { id: '...' } without any data, you can "lookup" services from the manifest.
     // I would have implemented this if I was confident that it was reliable. Instead, I opted for the safest option that
     // should not break any existing services.
-    if (resource && resource.options && resource.options.resource && resource.options.resource !== resource) {
-      services.push(...Utils.getServices(resource.options.resource));
+    if (!skipParentResources && resource && resource.options && resource.options.resource && resource.options.resource !== resource) {
+      services.push(...Utils.getServices(resource.options.resource, { onlyServices: true }));
     }
 
-    let service = (resource.__jsonld || resource).service || [];
+    let service = !onlyServices ? (resource.__jsonld || resource).service || [] : [];
 
     // coerce to array
     if (!Array.isArray(service)) {
       service = [service];
     }
 
-    // Some resources also have a `.services` property.
-    // https://iiif.io/api/presentation/3.0/#services
-    service.push(...((resource.__jsonld || resource).services || []));
+    if (!onlyService) {
+      // Some resources also have a `.services` property.
+      // https://iiif.io/api/presentation/3.0/#services
+      service.push(...((resource.__jsonld || resource).services || []));
+    }
 
     if (service.length === 0) {
       return services;
