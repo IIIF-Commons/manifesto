@@ -1072,11 +1072,18 @@ export class Utils {
     return undefined;
   }
 
-  static getServices(resource: any, {
-    onlyService = false,
-    onlyServices = false,
-    skipParentResources = false
-  }: { onlyServices?: boolean; skipParentResources?: boolean; onlyService?: boolean } = {}): Service[] {
+  static getServices(
+    resource: any,
+    {
+      onlyService = false,
+      onlyServices = false,
+      skipParentResources = false
+    }: {
+      onlyServices?: boolean;
+      skipParentResources?: boolean;
+      onlyService?: boolean;
+    } = {}
+  ): Service[] {
     const services: Service[] = [];
 
     // Resources can reference "services" on the manifest. This is a bit of a hack to just get the services from the manifest
@@ -1084,21 +1091,21 @@ export class Utils {
     // So when you come across { id: '...' } without any data, you can "lookup" services from the manifest.
     // I would have implemented this if I was confident that it was reliable. Instead, I opted for the safest option that
     // should not break any existing services.
-<<<<<<< HEAD
     if (
+      !skipParentResources &&
       resource &&
       resource.options &&
       resource.options.resource &&
       resource.options.resource !== resource
     ) {
-      services.push(...Utils.getServices(resource.options.resource));
-=======
-    if (!skipParentResources && resource && resource.options && resource.options.resource && resource.options.resource !== resource) {
-      services.push(...Utils.getServices(resource.options.resource, { onlyServices: true }));
->>>>>>> 1ae42997039e90e8d9bac878b9ae3e72e0e4e7d0
+      services.push(
+        ...Utils.getServices(resource.options.resource, { onlyServices: true })
+      );
     }
 
-    let service = !onlyServices ? (resource.__jsonld || resource).service || [] : [];
+    let service = !onlyServices
+      ? (resource.__jsonld || resource).service || []
+      : [];
 
     // coerce to array
     if (!Array.isArray(service)) {
