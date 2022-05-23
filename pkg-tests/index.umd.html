@@ -10,7 +10,15 @@
 <script src='../dist-umd/manifesto.js' type="application/javascript"></script>
 
 <script>
-  manifesto.loadManifest('https://iiif.wellcomecollection.org/presentation/v2/b18035723').then(e => console.log(e));
+  manifesto.loadManifest('https://iiif.wellcomecollection.org/presentation/v2/b18035723').then(e => {
+    const manifest = manifesto.parseManifest(e);
+    console.log(manifest);
+
+    const seq1 = manifest.getSequenceByIndex(0);
+    const first = seq1.getCanvasByIndex(0);
+    const resource = first.imageResources;
+    console.log(first, resource);
+  });
 </script>
 </body>
 </html>

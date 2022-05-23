@@ -15,6 +15,7 @@
         "outDir": "dist-commonjs",
         "skipLibCheck": true,
         "sourceMap": true,
+        "esModuleInterop": true,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "target": "es5"
