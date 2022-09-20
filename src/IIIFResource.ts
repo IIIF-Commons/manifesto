@@ -86,8 +86,9 @@ export class IIIFResource extends ManifestResource {
       if (!provider) {
         return null;
       }
-
-      logo = provider.logo;
+      if (Array.isArray(provider) && provider.length) {
+        logo = provider[0].logo;
+      }
     }
 
     if (!logo) return null;
