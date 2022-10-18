@@ -370,9 +370,9 @@ export class Utils {
         .then(() => {
           resolve(resources);
         })
-        ["catch"](error => {
-          reject(error);
-        });
+      ["catch"](error => {
+        reject(error);
+      });
     });
   }
 
@@ -666,9 +666,9 @@ export class Utils {
         .then(() => {
           resolve(resources);
         })
-        ["catch"](error => {
-          reject(error);
-        });
+      ["catch"](error => {
+        reject(error);
+      });
     });
   }
 
@@ -721,26 +721,26 @@ export class Utils {
                           .then(() => {
                             resolve(handleResourceResponse(resource));
                           })
-                          ["catch"](message => {
-                            reject(Utils.createInternalServerError(message));
-                          });
+                        ["catch"](message => {
+                          reject(Utils.createInternalServerError(message));
+                        });
                       })
-                      ["catch"](message => {
-                        reject(Utils.createInternalServerError(message));
-                      });
+                    ["catch"](message => {
+                      reject(Utils.createInternalServerError(message));
+                    });
                   })
-                  ["catch"](message => {
-                    reject(Utils.createInternalServerError(message));
-                  });
+                ["catch"](message => {
+                  reject(Utils.createInternalServerError(message));
+                });
               }
             } else {
               // this info.json isn't access controlled, therefore no need to request an access token.
               resolve(resource);
             }
           })
-          ["catch"](message => {
-            reject(Utils.createInternalServerError(message));
-          });
+        ["catch"](message => {
+          reject(Utils.createInternalServerError(message));
+        });
       } else {
         // optimistic: access control cookies may not have been deleted.
         // store access tokens to avoid login window flashes.
@@ -774,18 +774,18 @@ export class Utils {
                       .then(() => {
                         resolve(handleResourceResponse(resource));
                       })
-                      ["catch"](error => {
-                        // if (resource.restrictedService){
-                        //     reject(Utils.createRestrictedError());
-                        // } else {
-                        reject(Utils.createAuthorizationFailedError());
-                        //}
-                      });
+                    ["catch"](error => {
+                      // if (resource.restrictedService){
+                      //     reject(Utils.createRestrictedError());
+                      // } else {
+                      reject(Utils.createAuthorizationFailedError());
+                      //}
+                    });
                   }
                 })
-                ["catch"](error => {
-                  reject(Utils.createAuthorizationFailedError());
-                });
+              ["catch"](error => {
+                reject(Utils.createAuthorizationFailedError());
+              });
             } else {
               Utils.authorize(
                 resource,
@@ -800,14 +800,14 @@ export class Utils {
                 .then(() => {
                   resolve(handleResourceResponse(resource));
                 })
-                ["catch"](error => {
-                  reject(Utils.createAuthorizationFailedError());
-                });
+              ["catch"](error => {
+                reject(Utils.createAuthorizationFailedError());
+              });
             }
           })
-          ["catch"](error => {
-            reject(Utils.createAuthorizationFailedError());
-          });
+        ["catch"](error => {
+          reject(Utils.createAuthorizationFailedError());
+        });
       }
     });
   }
@@ -881,9 +881,9 @@ export class Utils {
                       );
                     }
                   })
-                  ["catch"](message => {
-                    reject(Utils.createInternalServerError(message));
-                  });
+                ["catch"](message => {
+                  reject(Utils.createInternalServerError(message));
+                });
               } else {
                 // There was no stored token, but the user might have a cookie that will grant a token
                 getAccessToken(resource, false).then(accessToken => {
@@ -915,14 +915,14 @@ export class Utils {
                               );
                             }
                           })
-                          ["catch"](message => {
-                            reject(Utils.createInternalServerError(message));
-                          });
+                        ["catch"](message => {
+                          reject(Utils.createInternalServerError(message));
+                        });
                       })
-                      ["catch"](message => {
-                        // not able to store access token
-                        reject(Utils.createInternalServerError(message));
-                      });
+                    ["catch"](message => {
+                      // not able to store access token
+                      reject(Utils.createInternalServerError(message));
+                    });
                   } else {
                     // The user did not have a cookie that granted a token
                     Utils.showAuthInteraction(
@@ -940,9 +940,9 @@ export class Utils {
                 });
               }
             })
-            ["catch"](message => {
-              reject(Utils.createInternalServerError(message));
-            });
+          ["catch"](message => {
+            reject(Utils.createInternalServerError(message));
+          });
         } else {
           // this info.json isn't access controlled, therefore there's no need to request an access token
           resolve(resource);
@@ -983,17 +983,17 @@ export class Utils {
                   .then(() => {
                     resolve(resource);
                   })
-                  ["catch"](message => {
-                    reject(Utils.createInternalServerError(message));
-                  });
+                ["catch"](message => {
+                  reject(Utils.createInternalServerError(message));
+                });
               })
-              ["catch"]((message: string) => {
-                reject(Utils.createInternalServerError(message));
-              });
+            ["catch"]((message: string) => {
+              reject(Utils.createInternalServerError(message));
+            });
           })
-          ["catch"]((message: string) => {
-            reject(Utils.createInternalServerError(message));
-          });
+        ["catch"]((message: string) => {
+          reject(Utils.createInternalServerError(message));
+        });
       });
     } else {
       // get an access token
@@ -1007,17 +1007,17 @@ export class Utils {
                   .then(() => {
                     resolve(resource);
                   })
-                  ["catch"](message => {
-                    reject(Utils.createInternalServerError(message));
-                  });
+                ["catch"](message => {
+                  reject(Utils.createInternalServerError(message));
+                });
               })
-              ["catch"]((message: string) => {
-                reject(Utils.createInternalServerError(message));
-              });
+            ["catch"]((message: string) => {
+              reject(Utils.createInternalServerError(message));
+            });
           })
-          ["catch"]((message: string) => {
-            reject(Utils.createInternalServerError(message));
-          });
+        ["catch"]((message: string) => {
+          reject(Utils.createInternalServerError(message));
+        });
       });
     }
   }
