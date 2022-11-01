@@ -15,7 +15,6 @@ import {
   MOVED_TEMPORARILY,
   UNAUTHORIZED
 } from "@edsilv/http-status-codes/dist-commonjs";
-import "isomorphic-unfetch";
 
 export class Utils {
   static getMediaType(type: string): MediaType {
@@ -315,9 +314,9 @@ export class Utils {
     }
   }
 
-  static loadManifest(url: string): Promise<any> {
+  static loadManifest(url: string, fetcher?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      fetch(url)
+      (fetcher || fetch)(url)
         .then(Utils.checkStatus)
         .then(r => r.json())
         .then(data => {
