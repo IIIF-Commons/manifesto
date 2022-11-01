@@ -11,6 +11,7 @@ import {
   TreeNodeType,
   Utils
 } from "./internal";
+import { upgrade } from "@iiif/parser/upgrader";
 
 export class Collection extends IIIFResource {
   public items: IIIFResource[] = [];
@@ -18,7 +19,7 @@ export class Collection extends IIIFResource {
   private _manifests: Manifest[] | null = null;
 
   constructor(jsonld: any, options: IManifestoOptions) {
-    super(jsonld, options);
+    super(upgrade(jsonld), options);
     jsonld.__collection = this;
   }
 

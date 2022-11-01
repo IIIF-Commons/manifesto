@@ -14,13 +14,14 @@ import {
   RenderingFormat,
   IIIFResourceType
 } from "@iiif/vocabulary/dist-commonjs";
+import { upgrade } from '@iiif/parser/upgrader';
 
 export class ManifestResource extends JSONLDResource {
   externalResource: IExternalResource;
   options: IManifestoOptions;
 
   constructor(jsonld: any, options?: IManifestoOptions) {
-    super(jsonld);
+    super(upgrade(jsonld));
     this.options = <IManifestoOptions>options;
   }
 
