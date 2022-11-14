@@ -29,7 +29,6 @@ export class Canvas extends Resource {
 
   // http://iiif.io/api/image/2.1/#canonical-uri-syntax
   getCanonicalImageUri(w?: number): string {
-
     let id: string | null = null;
     const region: string = "full";
     const rotation: number = 0;
@@ -52,9 +51,9 @@ export class Canvas extends Resource {
       if (this.externalResource.data["@context"]) {
         if (
           this.externalResource.data["@context"].indexOf("/1.0/context.json") >
-          -1 ||
+            -1 ||
           this.externalResource.data["@context"].indexOf("/1.1/context.json") >
-          -1 ||
+            -1 ||
           this.externalResource.data["@context"].indexOf("/1/context.json") > -1
         ) {
           quality = "native";
@@ -78,11 +77,11 @@ export class Canvas extends Resource {
         }
         const service = services
           ? services.find(service => {
-            return (
-              Utils.isImageProfile(service.getProfile()) ||
-              Utils.isImageServiceType(service.getIIIFResourceType())
-            );
-          })
+              return (
+                Utils.isImageProfile(service.getProfile()) ||
+                Utils.isImageServiceType(service.getIIIFResourceType())
+              );
+            })
           : null;
 
         if (service) {
@@ -111,8 +110,8 @@ export class Canvas extends Resource {
         }
         const service = services
           ? services.find(service => {
-            return Utils.isImageServiceType(service.getIIIFResourceType());
-          })
+              return Utils.isImageServiceType(service.getIIIFResourceType());
+            })
           : null;
 
         if (service) {
