@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
-    "@iiif/vocabulary": "^1.0.23",
+    "@iiif/vocabulary": "^1.0.26",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.21"
   },

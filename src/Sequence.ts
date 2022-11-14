@@ -246,6 +246,8 @@ export class Sequence extends ManifestResource {
       thumbs.push(thumb);
     }
 
+    console.log("manifesto thumbs", thumbs);
+
     return thumbs;
   }
 

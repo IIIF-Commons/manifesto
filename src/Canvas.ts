@@ -4,6 +4,7 @@ import {
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   Annotation,
+  AnnotationBody,
   AnnotationList,
   AnnotationPage,
   IExternalImageResourceData,
@@ -14,7 +15,9 @@ import {
   Size,
   Utils
 } from "./internal";
+// @ts-ignore
 import flatten from "lodash/flatten";
+// @ts-ignore
 import flattenDeep from "lodash/flattenDeep";
 
 export class Canvas extends Resource {
@@ -26,6 +29,7 @@ export class Canvas extends Resource {
 
   // http://iiif.io/api/image/2.1/#canonical-uri-syntax
   getCanonicalImageUri(w?: number): string {
+
     let id: string | null = null;
     const region: string = "full";
     const rotation: number = 0;
@@ -48,9 +52,9 @@ export class Canvas extends Resource {
       if (this.externalResource.data["@context"]) {
         if (
           this.externalResource.data["@context"].indexOf("/1.0/context.json") >
-            -1 ||
+          -1 ||
           this.externalResource.data["@context"].indexOf("/1.1/context.json") >
-            -1 ||
+          -1 ||
           this.externalResource.data["@context"].indexOf("/1/context.json") > -1
         ) {
           quality = "native";
@@ -58,7 +62,11 @@ export class Canvas extends Resource {
       }
     } else {
       // info.json hasn't been loaded yet
-      const images: Annotation[] = this.getImages();
+
+      let images: Annotation[];
+
+      // presentation 2.0
+      images = this.getImages();
 
       if (images && images.length) {
         const firstImage: Annotation = images[0];
@@ -69,7 +77,12 @@ export class Canvas extends Resource {
           width = resource.getWidth();
         }
         const service = services
-          ? services.find(service => Utils.isImageProfile(service.getProfile()))
+          ? services.find(service => {
+            return (
+              Utils.isImageProfile(service.getProfile()) ||
+              Utils.isImageServiceType(service.getIIIFResourceType())
+            );
+          })
           : null;
 
         if (service) {
@@ -81,6 +94,36 @@ export class Canvas extends Resource {
           // return the full size image.
           // used for download options when loading static images.
           return resource.id;
+        }
+      }
+
+      // presentation 3.0
+      images = this.getContent();
+
+      if (images && images.length) {
+        const firstImage: Annotation = images[0];
+        const body: AnnotationBody[] = firstImage.getBody();
+        const anno: AnnotationBody = body[0];
+        const services: Service[] = anno.getServices();
+
+        if (!width) {
+          width = anno.getWidth();
+        }
+        const service = services
+          ? services.find(service => {
+            return Utils.isImageServiceType(service.getIIIFResourceType());
+          })
+          : null;
+
+        if (service) {
+          id = service.id;
+          quality = Utils.getImageQuality(service.getProfile());
+        } else if (width === anno.getWidth()) {
+          // if the passed width is the same as the resource width
+          // i.e. not looking for a thumbnail
+          // return the full size image.
+          // used for download options when loading static images.
+          return anno.id;
         }
       }
 
@@ -176,6 +219,7 @@ export class Canvas extends Resource {
     return this.getProperty("duration");
   }
 
+  // presentation 2.0
   getImages(): Annotation[] {
     const images: Annotation[] = [];
 
