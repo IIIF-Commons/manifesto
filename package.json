@@ -1,6 +1,6 @@
 {
   "name": "manifesto.js",
-  "version": "4.2.14",
+  "version": "4.2.16",
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
@@ -18,7 +18,8 @@
     "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
-    "test": "mocha"
+    "test": "mocha",
+    "watch": "npm run build:esmodule -- --watch"
   },
   "engines": {
     "node": ">=8.9.1",
@@ -60,7 +61,7 @@
   },
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
-    "@iiif/vocabulary": "^1.0.20",
+    "@iiif/vocabulary": "^1.0.26",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.21"
   },

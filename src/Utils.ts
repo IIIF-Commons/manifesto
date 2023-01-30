@@ -9,7 +9,11 @@ import {
   StatusCode,
   TreeNode
 } from "./internal";
-import { MediaType, ServiceProfile } from "@iiif/vocabulary/dist-commonjs";
+import {
+  MediaType,
+  ServiceProfile,
+  ServiceType
+} from "@iiif/vocabulary/dist-commonjs";
 import {
   OK,
   MOVED_TEMPORARILY,
@@ -200,6 +204,14 @@ export class Utils {
     }
 
     return false;
+  }
+
+  static isImageServiceType(type: string | null): boolean {
+    return (
+      (type !== null &&
+        type.toLowerCase() === ServiceType.IMAGE_SERVICE_2.toLowerCase()) ||
+      type === ServiceType.IMAGE_SERVICE_3.toLowerCase()
+    );
   }
 
   static isLevel0ImageProfile(profile: ServiceProfile): boolean {
