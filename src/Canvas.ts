@@ -370,6 +370,7 @@ export class Canvas extends Resource {
     const on = resourceAnnotation.getProperty("on");
     // IIIF v3
     const target = resourceAnnotation.getProperty("target");
+    if (!on || !target) { return undefined; }
     const fragmentMatch = (on || target).match(/xywh=(.*)$/);
     if (!fragmentMatch) return undefined;
     return fragmentMatch[1].split(",").map(str => parseInt(str, 10));
