@@ -56,6 +56,11 @@ export class IIIFResource extends ManifestResource {
       return PropertyValue.parse(description, this.options.locale);
     }
 
+    const summary: any = this.getProperty("summary");
+    if (summary) {
+      return PropertyValue.parse(summary, this.options.locale);
+    }
+
     return new PropertyValue([], this.options.locale);
   }
 
@@ -86,8 +91,9 @@ export class IIIFResource extends ManifestResource {
       if (!provider) {
         return null;
       }
-
-      logo = provider.logo;
+      if (Array.isArray(provider) && provider.length) {
+        logo = provider[0].logo;
+      }
     }
 
     if (!logo) return null;
