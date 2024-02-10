@@ -49,7 +49,8 @@ const config = {
                 ]
             }
         ]
-    }
+    },
+    mode: 'development',
 }
 
 if (process.env.NODE_WEBPACK_LIBRARY_PATH) {
