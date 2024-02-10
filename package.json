@@ -38,7 +38,6 @@
     "url": "https://github.com/iiif-commons/manifesto/issues"
   },
   "homepage": "https://github.com/iiif-commons/manifesto",
-
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
     "@iiif/vocabulary": "^1.0.26",
@@ -55,6 +54,7 @@
     "rimraf": "^5.0.5",
     "serve-static": "^1.14.1",
     "ts-loader": "^9.5.1",
+    "typedoc": "^0.25.8",
     "typescript": "^5.3.3",
     "unfetch": "^4.2.0",
     "webpack": "^5.89.0"
