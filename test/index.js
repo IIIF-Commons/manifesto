@@ -29,7 +29,8 @@ after(function () {
     server.close();
 });
 
-describe("api-v3.0", function() {
+function run_v3_tests(){
+
     importTest('rijksmuseum-image-api-v3-thumbnails', './tests/rijksmuseum-image-api-v3-thumbnails');
     importTest('aarau', './tests/aarau');
     importTest('annotation-dimensions', './tests/annotation-dimensions');
@@ -94,4 +95,20 @@ describe("api-v3.0", function() {
     importTest('translations', './tests/translations');
     importTest('witnesstopeter', './tests/witnesstopeter');
     importTest('Utils', './tests/Utils.test');
-});
+}
+
+
+// uncomment this, or in some other javascripty way assign a true value to variable skip_v3_tests, for purposes
+// of only running 3d-relevant tests. One way to do this in mocha is to use a mocha .js configuration file,
+// see https://www.testim.io/blog/mocharc-configuration/ ; https://github.com/mochajs/mocha/tree/master/example/config
+// let skip_v3_tests=true;
+
+if ( (typeof(skip_v3_tests) !== "undefined") && skip_v3_tests){
+    console.log("Skipping V3 tests");
+}
+else{
+    describe("api-v3-tests", run_v3_tests ); 
+}
+
+
+
