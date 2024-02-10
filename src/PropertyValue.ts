@@ -150,11 +150,14 @@ export class PropertyValue extends Array<LocalizedValue> {
     // If any of the values have a language associated with them, the client
     // must display all of the values associated with the language that best
     // matches the language preference.
-    // FIXME: This is nasty, we have to spread ourselves in order to be able
-    //        to call `.map`. This will no longer be needed once we target >ES5.
-    const allLocales = [...this]
-      .map(lv => lv._locale)
-      .filter(l => l !== undefined) as string[];
+
+    // create an array of the language codes for all different LocalizedValue instances in this PropertyValue
+    const allLocales  = new Array<string>();
+    for (var lv of this)
+    {
+        if (lv._locale != undefined) allLocales.push(lv._locale);
+    }
+    
     // First, look for a precise match
     for (const userLocale of locales) {
       const matchingLocale = allLocales.find(l => l === userLocale);
@@ -252,6 +255,7 @@ export class PropertyValue extends Array<LocalizedValue> {
 
     // Try to determine the available locale that best fits the user's preferences
     const matchingLocale = this.getSuitableLocale(locales);
+    
     if (matchingLocale) {
       const val = this.find(lv => lv._locale === matchingLocale)!._value;
       return Array.isArray(val) ? val : [val];
