@@ -14,7 +14,7 @@
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:umd": "webpack",
     "build:var": "cross-env NODE_WEBPACK_LIBRARY_PATH=dist-var NODE_WEBPACK_LIBRARY_TARGET=var webpack",
-    "build": "npm run lint:all && npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
+    "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
     "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
