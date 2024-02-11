@@ -103,6 +103,9 @@ function run_v3_tests(){
 // see https://www.testim.io/blog/mocharc-configuration/ ; https://github.com/mochajs/mocha/tree/master/example/config
 // let skip_v3_tests=true;
 
+let skip_v3_tests = Boolean(process.env.skip_v3_tests);
+
+
 if ( (typeof(skip_v3_tests) !== "undefined") && skip_v3_tests){
     console.log("Skipping V3 tests");
 }
