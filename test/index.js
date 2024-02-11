@@ -113,5 +113,10 @@ else{
     describe("api-v3-tests", run_v3_tests ); 
 }
 
+function run_iiif3d_tests(){
+    importTest('model_origin', './tests/model_origin');
+}
+
+describe("iiif-3d tests", run_iiif3d_tests );
 
 
