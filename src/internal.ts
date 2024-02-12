@@ -23,6 +23,7 @@ export * from "./Manifest";
 export * from "./ManifestType";
 export * from "./Range";
 export * from "./Rendering";
+export * from "./Scene";
 export * from "./Sequence";
 export * from "./Serialisation";
 export * from "./Service";
