@@ -23,6 +23,10 @@ describe('model_origin', function() {
         scene = sequence.getScenes()[0];
         expect(scene).to.exist;
     });
+    
+    it('is a scene', function(){
+        expect(scene.isScene());
+    });
 
 
 });
