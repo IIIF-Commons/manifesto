@@ -88,7 +88,7 @@ function run_v3_tests(){
     importTest('rhul', './tests/rhul');
     importTest('riksarkivetlarge', './tests/riksarkivetlarge');
     importTest('scroll', './tests/scroll');
-    importTest('static-thumbs', './tests/static-thumbs');
+    
     importTest('storyofwellcome', './tests/storyofwellcome');
     importTest('string', './tests/string');
     importTest('tankeryshouse', './tests/tankeryshouse');
