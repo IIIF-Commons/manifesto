@@ -1,6 +1,5 @@
 {
   "name": "manifesto.js",
-
   "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
@@ -19,7 +18,7 @@
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
     "test": "mocha",
-    "test-3d" : "mocha --config=mocha_3d_tests.js",
+    "test-3d": "mocha --config=mocha_3d_tests.js",
     "watch": "npm run build:esmodule -- --watch"
   },
   "engines": {
@@ -63,6 +62,7 @@
     "test": "test"
   },
   "devDependencies": {
+    "cpy-cli": "^5.0.0",
     "typedoc": "^0.25.8",
     "webpack-cli": "^5.1.4"
   }
