@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IIIF 3D Manifest Loader</title>
+        <script type='text/javascript' charset="UTF-8" src='https://x3dom.org/release/x3dom-full.js'> </script>         
+        <link rel='stylesheet' type='text/css' href='https://x3dom.org/release/x3dom.css'></link> 
+        <script type='text/javascript' charset="UTF-8" src='manifest_3d_tools.js'> </script>  
+        <style>
+            body {font-size:12pt; margin-left:2em; margin-right:2em;margin-top:1em;}
+            
+            .canvas-width {width:960px;}
+            .canvas-height {height:512px; }
+            x3d
+            {
+                border:2px solid black;
+            }
+            div {margin-top:1em;}
+            #manifest_label_container { margin-top:1em ; font-size:18pt; text-align:center; }
+            
+            
+        </style>
+<script src="manifesto.js"                  type="application/javascript"></script>
+<script src="x3dom_helper.js"               type="application/javascript"></script>
+<script src="three_d_manifest_loader.js"    type="application/javascript"></script>
+<script>
+/// window onload handler to set up the interactive functions
+/// on loading, extracts a manifest url encoded as a query 'url' parameter in the
+/// document url passed to browser from server
+/// this manifest_url is stored as the value in a HTML element assumed to be an input element, type 'url'
+/// Adds an event handler to the "Load Manifest" button that calls LoadManifest
+window.addEventListener("load" , (event) => 
+{
+    const  schparams = new URLSearchParams(window.location.search);
+    manifest_url_textbox = document.getElementById("manifest_url_textbox");
+    manifest_url_textbox.value = schparams.get('url');
+    
+    load_manifest_button = document.getElementById("load_manifest_button");
+    load_manifest_button.addEventListener("click", (event) =>
+    {
+        var manifest_url = manifest_url_textbox.value;
+        var annotation_container = document.getElementById("annotation_container");
+        var manifest_label_container = document.getElementById("manifest_label_container");
+        LoadManifest(manifest_url, annotation_container, manifest_label_container);
+    });
+});
+</script>
+</head>
+<body>
+<div class="canvas-width" style="text-align:center; font-size:16pt">Load 3D Manifest</div>
+
+<div class="canvas-width" style="font-size:12pt; line-height:1.5em">
+<p>
+Overview: Fetches a 3D manifest, constructs an X3D scenegraph that includes
+the annotations in the manifest,
+then renders that scenegraph using  the Javascript/WebGL <a href="https://x3dom.org" target="_blank">X3DOM</a> viewer.
+</p>
+
+<p>
+Directions: Once url input field contains a url to a 3D-ish manifest, click the
+Load Manifest button to initiate fetching the manifest, then fetching annotation
+body content.
+</p>
+
+</div>
+<div class="canvas-width" style="margin-top:1.5em">
+<div style="font-size:10pt">
+Manifest url
+</div>
+
+<div style="width:100%; margin-top:0.3em;">
+<input   style="width:100%; font-size:12pt"
+         type="url" 
+         id="manifest_url_textbox"/>
+</div>
+
+<div style="width:100%; margin-top:0.3em">
+<button id="load_manifest_button" 
+        style="font-size:12pt; border:black" 
+        type="button">Load Manifest</button> </td>
+</div>
+</div>
+
+<div class="canvas-width canvas-height" style="margin-top:1em;">
+<x3d id="x3delem" class="canvas-width canvas-height"> 
+<scene>
+<navigationinfo headlight='true'></navigationinfo>
+<background skyColor="0.8 0.8 0.8"></background>
+<viewpoint position="0 0 10" orientation="0 0 1 0" 
+ centerOfRotation="0 0 0" ></viewpoint>
+ <transform id="annotation_container" scale="1 1 1">
+
+</transform>
+</scene>
+</x3d> 
+</div>
+
+<div class="canvas-width" id="manifest_label_container"> </div>
+
+</body>
+</html>
