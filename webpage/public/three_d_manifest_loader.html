@@ -5,12 +5,30 @@
         <script type='text/javascript' charset="UTF-8" src='https://x3dom.org/release/x3dom-full.js'> </script>         
         <link rel='stylesheet' type='text/css' href='https://x3dom.org/release/x3dom.css'></link> 
         <script>
-            x3dom.ready = function(){
-                const manifest_url = manifest_url_from_location();
-                var annotation_container = document.getElementById("annotation_container");
-                var manifest_label_container = document.getElementById("manifest_label_container");
-                LoadManifest(manifest_url, annotation_container, manifest_label_container);
+            let ready_state={ x3dom:false, document:false };
+            
+            function set_x3dom_ready(){
+                ready_state.x3dom = true;
+                check_if_ready();
             }
+            
+            function set_document_ready(){
+                ready_state.document = true;
+                check_if_ready();
+            }
+            
+            function check_if_ready(){
+                console.log("check_if_ready: x3dom " + ready_state.x3dom + " " + ready_state.document);
+                if (ready_state.x3dom && ready_state.document){
+                    console.log("initial load of manifest");
+                    load_manifest_from_ui(undefined);
+                }
+            }
+            x3dom.runtime.ready = function(element) {
+                console.log("x3dom.ready fire");
+                set_x3dom_ready();
+            };
+
         </script>
         <style>
             body {font-size:12pt; margin-left:2em; margin-right:2em;margin-top:1em;}
@@ -63,7 +81,7 @@ window.addEventListener("load" , (event) =>
         load_manifest_from_ui(event);
     });
     
-    
+    set_document_ready();
 });
 
 
