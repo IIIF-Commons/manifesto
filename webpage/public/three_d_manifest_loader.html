@@ -4,7 +4,14 @@
     <title>IIIF 3D Manifest Loader</title>
         <script type='text/javascript' charset="UTF-8" src='https://x3dom.org/release/x3dom-full.js'> </script>         
         <link rel='stylesheet' type='text/css' href='https://x3dom.org/release/x3dom.css'></link> 
-          
+        <script>
+            x3dom.ready = function(){
+                const manifest_url = manifest_url_from_location();
+                var annotation_container = document.getElementById("annotation_container");
+                var manifest_label_container = document.getElementById("manifest_label_container");
+                LoadManifest(manifest_url, annotation_container, manifest_label_container);
+            }
+        </script>
         <style>
             body {font-size:12pt; margin-left:2em; margin-right:2em;margin-top:1em;}
             
@@ -16,8 +23,6 @@
             }
             div {margin-top:1em;}
             #manifest_label_container { margin-top:1em ; font-size:18pt; text-align:center; }
-            
-            
         </style>
 <script src="dist-umd/manifesto.js"         type="application/javascript"></script>
 <script src="x3dom_helper.js"               type="application/javascript"></script>
@@ -28,21 +33,40 @@
 /// document url passed to browser from server
 /// this manifest_url is stored as the value in a HTML element assumed to be an input element, type 'url'
 /// Adds an event handler to the "Load Manifest" button that calls LoadManifest
+function manifest_url_from_location(){
+    const  schparams = new URLSearchParams(window.location.search);
+    return schparams.get('url');
+};
+
+function load_manifest_from_ui(event){
+        
+    var manifest_url = manifest_url_textbox.value;
+    var annotation_container = document.getElementById("annotation_container");
+    var manifest_label_container = document.getElementById("manifest_label_container");
+    LoadManifest(manifest_url, annotation_container, manifest_label_container);
+};
+
+
 window.addEventListener("load" , (event) => 
 {
-    const  schparams = new URLSearchParams(window.location.search);
-    manifest_url_textbox = document.getElementById("manifest_url_textbox");
-    manifest_url_textbox.value = schparams.get('url');
+    const manifest_url = manifest_url_from_location();
+    if (manifest_url){
+        manifest_url_textbox = document.getElementById("manifest_url_textbox");
+        manifest_url_textbox.value = manifest_url;
+    }
+    
+    
     
     load_manifest_button = document.getElementById("load_manifest_button");
     load_manifest_button.addEventListener("click", (event) =>
     {
-        var manifest_url = manifest_url_textbox.value;
-        var annotation_container = document.getElementById("annotation_container");
-        var manifest_label_container = document.getElementById("manifest_label_container");
-        LoadManifest(manifest_url, annotation_container, manifest_label_container);
+        load_manifest_from_ui(event);
     });
+    
+    
 });
+
+
 </script>
 </head>
 <body>
