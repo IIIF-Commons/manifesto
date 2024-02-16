@@ -14,7 +14,7 @@
     "build:umd": "webpack && cpy dist-umd/manifesto.js webpage/public/manifesto.js",
     "build:var": "cross-env NODE_WEBPACK_LIBRARY_PATH=dist-var NODE_WEBPACK_LIBRARY_TARGET=var webpack",
     "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
-    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
+    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types webpage/public/manifesto.js",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
     "test": "mocha",
