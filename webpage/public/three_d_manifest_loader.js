@@ -8,8 +8,8 @@ function* AnnotationsFromManifest( manifest )
 {
 	for (const seq of manifest.getSequences())
 	{
-		const scene = seq.Scenes[0];
-		for (const anno of scene.Content ) yield anno;
+		const scene = seq.getScenes()[0];
+		for (const anno of scene.getContent() ) yield anno;
 	}
 }
 
@@ -24,6 +24,7 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 	var inlineElement = document.createElement('inline');
 	var target = anno.getTarget();
 	var body = anno.getBody()[0];
+	if (Array.isArray(body)) body=body[0];
 	
 	var outerElement = undefined;
 	if (target.IsSpecificResource && target.getSelector().IsPointSelector )
@@ -61,7 +62,7 @@ function LoadManifest(manifest_url, annotation_container, label_container)
     	{
     		AddAnnotationToScenegraph(anno, annotation_container);
     	}
-    	FitView();
+    	//FitView();
     	
     	console.debug(annotation_container.innerHTML);
     	

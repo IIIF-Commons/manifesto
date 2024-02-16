@@ -19,7 +19,7 @@
             
             
         </style>
-<script src="manifesto.js"                  type="application/javascript"></script>
+<script src="dist-umd/manifesto.js"        type="application/javascript"></script>
 <script src="x3dom_helper.js"               type="application/javascript"></script>
 <script src="three_d_manifest_loader.js"    type="application/javascript"></script>
 <script>
@@ -90,6 +90,46 @@ Manifest url
  <transform id="annotation_container" scale="1 1 1">
 
 </transform>
+<switch whichChoice="0">
+<group DEF="triad">
+            <shape>
+                <lineSet vertexCount='2'>
+                    <coordinate point='0 0 0 1 0 0'/>                   
+                </lineSet>
+                <appearance>			
+                    <material emissiveColor='1 0 0'/>
+                    <lineProperties linewidthScaleFactor='2'>
+                        <!--linetype='1'  solid-->
+                    </lineProperties>
+                </appearance>
+                    
+            </shape>
+            <Shape>
+                <LineSet vertexCount='2'>
+                    <Coordinate point='0 0 0 0 1 0'/>                   
+                </LineSet>
+                <Appearance>			
+                    <Material emissiveColor='0 1 0'/>
+                    <LineProperties linewidthScaleFactor='2'>
+                        <!--linetype='1'  solid-->
+                    </LineProperties>
+                </Appearance>
+                    
+            </Shape>
+            <Shape>
+                <LineSet vertexCount='2'>
+                    <Coordinate point='0 0 0 0 0 1'/>                   
+                </LineSet>
+                <Appearance>			
+                    <Material emissiveColor='0 0 1'/>
+                    <LineProperties linewidthScaleFactor='2'>
+                        <!--linetype='1'  solid-->
+                    </LineProperties>
+                </Appearance>
+                    
+            </Shape>
+        </group>
+    </switch>
 </scene>
 </x3d> 
 </div>
