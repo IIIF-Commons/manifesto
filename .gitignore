@@ -8,4 +8,4 @@ node_modules
 debug.log
 types
 
-webpage/public/manifesto.js
+webpage/public/dist-*
