@@ -69,3 +69,13 @@ function LoadManifest(manifest_url, annotation_container, label_container)
     	label_container.innerText=label;
 	}).catch( (error) => { console.warn("manifesto error: " + error)});
 }
+
+function SetAxesVisibility( isVisible )
+{   
+    var choice = (isVisible)?0:-1;
+    var axes_switch_node = document.getElementById("triad-switch-node");
+    if (axes_switch_node){
+        console.log("setting switch choice to " + choice);
+        axes_switch_node.setAttribute('whichChoice', choice);
+    }    
+}
