@@ -24,10 +24,10 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 	var inlineElement = document.createElement('inline');
 	var target = anno.getTarget();
 	var body = anno.getBody()[0];
-	if (Array.isArray(body)) body=body[0];
 	
 	var outerElement = undefined;
-	if (target.IsSpecificResource && target.getSelector().IsPointSelector )
+	console.log("isSpecificResource " + target.isSpecificResource);
+	if (target.isSpecificResource && target.getSelector().isPointSelector )
 	{
 		
 		var sel = target.getSelector();

@@ -3,7 +3,7 @@ import {
   Annotation,
   AnnotationPage,
   IManifestoOptions,
-  ManifestResource,
+  ManifestResource
 } from "./internal";
 
 export class Scene extends ManifestResource {
