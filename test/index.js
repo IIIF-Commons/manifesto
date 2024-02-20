@@ -114,8 +114,12 @@ else{
 }
 
 function run_iiif3d_tests(){
-    importTest('model_origin', './tests/model_origin');
+    describe("1_basic_model_in_scene" , function(){
+        importTest('model_origin', './tests_3d/1_basic_model_in_scene/model_origin.js');
+    })
 }
+
+
 
 describe("iiif-3d tests", run_iiif3d_tests );
 

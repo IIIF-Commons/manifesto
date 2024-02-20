@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
-var manifesto = require('../../dist-commonjs/');
-var manifests_3d = require('../fixtures/manifests_3d');
+var manifesto = require('../../../dist-commonjs/');
+//var manifests_3d = require('../fixtures/manifests_3d');
 
 
 var ExternalResourceType = require('@iiif/vocabulary/dist-commonjs/').ExternalResourceType;
@@ -10,11 +10,15 @@ var MediaType = require('@iiif/vocabulary/dist-commonjs/').MediaType;
 
 let manifest,  sequence, scene , annotation, body;
 
+let manifest_url = {
+        local: "http://localhost:3001/model_origin.json",
+        remote : "https://raw.githubusercontent.com/IIIF/3d/eds/manifests/1_basic_model_in_scene/model_origin.json"
+    }.remote;
 
 describe('model_origin', function() {
 
     it('loads successfully', function(done) {
-        manifesto.loadManifest(manifests_3d.model_origin.local).then(function(data) {
+        manifesto.loadManifest(manifest_url).then(function(data) {
             manifest = manifesto.parseManifest(data);
             done();
         });
@@ -62,8 +66,4 @@ describe('model_origin', function() {
             ['MediaType.GLB, MediaType.GLTF'].should.include(mediaType);
     });
         
-
-
-
-
 });
