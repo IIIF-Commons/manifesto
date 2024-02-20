@@ -20,9 +20,9 @@
     "test": "mocha",
     "test:3d": "mocha --config=mocha_3d_tests.js",
     "watch": "npm run build:esmodule -- --watch",
-    "build:webpage" : "npm run build && cpy dist-umd  dist-esmodule webpage/public",
+    "build:webpage": "npm run build && cpy dist-umd  dist-esmodule webpage/public",
     "webpage": "http-server ./webpage/public  -o",
-    "start" : "npm run webpage"
+    "start": "npm run webpage"
   },
   "engines": {
     "node": ">=8.9.1",
@@ -48,14 +48,14 @@
     "cross-env": "^7.0.3",
     "dts-bundle-generator": "^9.1.0",
     "finalhandler": "^1.2.0",
-    "http-server": "^14.1.1",
+    "http-server": "^14",
     "isomorphic-unfetch": "^4.0.2",
     "lodash": "^4.17.21",
     "mocha": "^10.2.0",
     "node-fetch": "2",
     "prettier": "^3.1.1",
     "rimraf": "^5.0.5",
-    "http-server": "^14",
+    "serve-static": "^1.15.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "unfetch": "^4.2.0",
