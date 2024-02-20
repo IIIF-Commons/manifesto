@@ -45,9 +45,10 @@ describe('model_origin', function() {
     });
     
     it('and body is an AnnotationBody', function(){        
-        body = annotation.getBody();
-        if (Array.isArray(body)) body = body[0];
-
+        var bodies = annotation.getBody();
+        expect(Array.isArray(bodies));
+        bodies.should.have.lengthOf(1);
+        body = bodies[0];
         body.getType().should.equal(ExternalResourceType.MODEL);
     });
     
