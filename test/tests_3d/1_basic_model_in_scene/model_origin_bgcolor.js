@@ -12,7 +12,7 @@ let manifest,  sequence, scene ;
 
 let manifest_url = {
         local: "http://localhost:3001/model_origin_bgcolor.json",
-        remote : "https://raw.githubusercontent.com/IIIF/3d/eds/manifests/1_basic_model_in_scene/model_origin_bgcolor.json"
+        remote : "https://raw.githubusercontent.com/vincentmarchetti/iiif3dtsg/fix-bgcolor-in-scene/manifests/1_basic_model_in_scene/model_origin_bgcolor.json"
     }.remote;
 
 describe('model_origin', function() {
@@ -38,8 +38,8 @@ describe('model_origin', function() {
     it('with a defined background color', function(){
         var backgroundColor = scene.getBackgroundColor();
         expect(backgroundColor).to.exist;
-        backgroundColor.red.should.be(255);
-        backgroundColor.green.should.be(0);
-        backgroundColor.blue.should.be(255);
+        backgroundColor.red.should.equal(255);
+        backgroundColor.green.should.equal(0);
+        backgroundColor.blue.should.equal(254);
     });
 });
