@@ -58,6 +58,20 @@ function LoadManifest(manifest_url, annotation_container, label_container)
     	var label = manifest.getLabel().getValue("en");
     	console.log("loaded manifest " + label);
     	
+    	
+    	var scene = manifest.getSequences()[0].getScenes()[0];
+    	var bgColor = scene.getBackgroundColor();
+    	if (bgColor){
+    	    var rgb = [
+    	        Math.max(0.0,Math.min(1.0, bgColor.red/255)),
+    	        Math.max(0.0,Math.min(1.0, bgColor.green/255)),
+    	        Math.max(0.0,Math.min(1.0, bgColor.blue/255)),
+    	    ].join(" ");
+    	    console.log("rgb color value " + rgb);
+    	    var x3d_background = document.getElementById("x3d-background");
+    	    if (x3d_background)
+    	        x3d_background.setAttribute("skyColor",rgb);
+    	}
     	for (var anno of AnnotationsFromManifest(manifest))
     	{
     		AddAnnotationToScenegraph(anno, annotation_container);
