@@ -1,6 +1,7 @@
 
 import {
-    Transform
+    Transform,
+    TransformType
 } from "./internal";
 
 export class TranslateTransform extends Transform {
@@ -8,4 +9,7 @@ export class TranslateTransform extends Transform {
         super(jsonld );
     }
 
+    getTransformType() : TransformType{
+        return TransformType.TRANSLATE_TRANSFORM;
+    }
 };
