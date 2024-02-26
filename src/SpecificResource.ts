@@ -1,7 +1,8 @@
 import {
   IManifestoOptions,
   JSONLDResource,
-  PointSelector
+  PointSelector,
+    Transform
 } from "./internal";
 
 
@@ -35,7 +36,7 @@ export class SpecificResource extends JSONLDResource  {
   	throw new Error("cannot resolve Source " + JSON.stringify(raw));
   }
   
-  getSelector() : PointSelector 
+  getSelector() : PointSelector | undefined
   {
   	const raw =  this.getProperty("selector");  
   	if (raw){
@@ -49,9 +50,18 @@ export class SpecificResource extends JSONLDResource  {
                 throw new Error("unable to resolve SpecificResource selector " + JSON.stringify(item));
             }
         }
+        return undefined;
   	}
-  	throw new Error("unable to resolve SpecificResource raw selector " + JSON.stringify(raw));
+  	else{
+  	    return undefined;  	
+  	}
   	
+  }
+  
+  getTransform() : Transform[]{
+    var retVal: Transform[] = [];
+    
+    return retVal;
   }
   
 }

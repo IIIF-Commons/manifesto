@@ -33,6 +33,8 @@ export * from "./SpecificResource";
 export * from "./StatusCode";
 export * from "./Thumb";
 export * from "./Thumbnail";
+export * from "./Transform";
+export * from "./TranslateTransform";
 export * from "./TreeNode";
 export * from "./TreeNodeType";
 export * from "./Utils";
