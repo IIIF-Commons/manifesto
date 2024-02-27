@@ -1,23 +1,24 @@
-
 import {
     Transform,
     TransformType
 } from "./internal";
 
-export class TranslateTransform extends Transform {
+export class ScaleTransform extends Transform {
     constructor(jsonld?: any ) {
         super(jsonld );
     }
 
     getTransformType() : TransformType{
-        return TransformType.TRANSLATE_TRANSFORM;
+        return TransformType.SCALE_TRANSFORM;
     }
     
-    getTranslation() : object {
+    getScale() : object {
         var retVal = {};
         for (const attrib of ["x","y","z"]){
             var raw = this.__jsonld[attrib];
-            retVal[attrib] = (raw !== undefined)?Number(raw):0.0;
+            
+            // note that default scaling is 1.0
+            retVal[attrib] = (raw !== undefined)?Number(raw):1.0;
         }
         return retVal;
     }

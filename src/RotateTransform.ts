@@ -1,19 +1,18 @@
-
 import {
     Transform,
     TransformType
 } from "./internal";
 
-export class TranslateTransform extends Transform {
+export class RotateTransform extends Transform {
     constructor(jsonld?: any ) {
-        super(jsonld );
+        super( jsonld );
     }
 
-    getTransformType() : TransformType{
-        return TransformType.TRANSLATE_TRANSFORM;
+    getTransformType() : TransformType {
+        return TransformType.ROTATE_TRANSFORM;
     }
     
-    getTranslation() : object {
+    getRotation() : object {
         var retVal = {};
         for (const attrib of ["x","y","z"]){
             var raw = this.__jsonld[attrib];
