@@ -32,7 +32,7 @@ describe('model_position', function() {
     it('has a scene', function() {
         scene = sequence.getScenes()[0];
         expect(scene).to.exist;
-        expect(scene.isScene());
+        expect(scene.isScene()).to.be.ok;
     });
     
     
@@ -42,16 +42,24 @@ describe('model_position', function() {
         annotation = annotations[0];
     });
     
+    it('with 1 SpecificResource body', function(){
+        var bodies = annotation.getBody();
+        expect(bodies.length).to.equal(1);
+        body = bodies[0];
+        expect( body.isSpecificResource ).to.be.ok ;
+    
+    })
+    
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();
-        expect( target.isSpecificResource );
+        expect( target.isSpecificResource ).to.be.ok;
         
         var selector = target.getSelector();
-        expect( selector.isPointSelector );
+        expect( selector.isPointSelector ).to.be.ok;
         var location = selector.getLocation();
-        location.x.should.equal(-1.0);
+        location.x.should.equal( 0.0);
         location.y.should.equal( 0.0);
-        location.z.should.equal( 1.0);
+        location.z.should.equal( 0.0);
     });
         
     
