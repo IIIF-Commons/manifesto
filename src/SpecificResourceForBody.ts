@@ -2,7 +2,7 @@ import {
   SpecificResource,
   AnnotationBody,
   Transform,
-  TranslateTransform
+  TransformParser
 } from "./internal";
 
 
@@ -36,7 +36,14 @@ export class SpecificResourceForBody extends SpecificResource  {
   
   getTransform() : Transform[]
   {
-    return [ new TranslateTransform() ];
+    var retVal: Transform[] = [];
+    var transformItems = this.getProperty("transform");
+    for (var i = 0; i < transformItems.length; ++i)
+    {
+        var transformItem = transformItems[i];
+        retVal.push( TransformParser.BuildFromJson(transformItem));
+    }
+    return retVal;
   }
 
   getSelector() : undefined

@@ -39,8 +39,9 @@ export * from "./StatusCode";
 export * from "./Thumb";
 export * from "./Thumbnail";
 export * from "./Transform";
-export * from "./TransformParser";
+
 export * from "./TranslateTransform";
+export * from "./TransformParser";
 export * from "./TreeNode";
 export * from "./TreeNodeType";
 export * from "./Utils";

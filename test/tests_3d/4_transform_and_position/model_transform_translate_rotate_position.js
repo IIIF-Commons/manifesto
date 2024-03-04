@@ -45,8 +45,28 @@ describe('model_position', function() {
     it('with 1 SpecificResource body', function(){
         var body = annotation.getBody3D();        
         expect( body.isSpecificResource ).to.be.ok ;
+        var transform = body.getTransform();
+        expect(Array.isArray(transform)).to.be.ok;
+        expect(transform.length).to.equal(2);
+        
+        var tt = transform[0];
+        expect(tt.isTranslateTransform()).to.equal(true);
+        expect(tt.isRotateTransform()).to.equal(false);
+        
+        var tdata = tt.getTranslation();
+        expect(tdata.x).to.equal(1.0);
+        expect(tdata.y).to.equal(0.0);
+        expect(tdata.z).to.equal(0.0);
+        
+        var rt = transform[1];
+        expect(rt.isTranslateTransform()).to.equal(false);
+        expect(rt.isRotateTransform()).to.equal(true);
+        var rdata = rt.getRotation();
+        expect(rdata.x).to.equal(0.0);
+        expect(rdata.y).to.equal(180.0);
+        expect(rdata.z).to.equal(0.0);
     
-    })
+    });
     
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();

@@ -2,7 +2,7 @@ import {
     JSONLDResource
 } from "./internal";
 
-export declare enum TransformType {
+export enum TransformType {
 	TRANSLATE_TRANSFORM = "translation",
 	ROTATE_TRANSFORM = "rotation",
 	SCALE_TRANSFORM= "scale"
