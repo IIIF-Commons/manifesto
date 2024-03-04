@@ -6,12 +6,14 @@ import {
   Resource,
   SpecificResource,
   SpecificResourceForTarget,
+  SpecificResourceForBody
 } from "./internal";
 
 export class Annotation extends ManifestResource {
   constructor(jsonld: any, options: IManifestoOptions) {
     super(jsonld, options);
   }
+
 
   getBody(): AnnotationBody[] {
     const bodies: AnnotationBody[] = [];
@@ -43,6 +45,17 @@ export class Annotation extends ManifestResource {
     }
 
     return bodies;
+  }
+
+  getBody3D(): AnnotationBody | SpecificResource {
+    const bodies = [].concat( this.getProperty("body") );
+    if (bodies.length != 1) throw new Error("0 or multiple body items not supported");
+    const raw_body : any = bodies[0];
+
+    if (raw_body.type && raw_body.type === "SpecificResource")
+        return new SpecificResourceForBody(raw_body);
+    else
+        return new AnnotationBody(raw_body);
   }
 
   getMotivation(): AnnotationMotivation | null {

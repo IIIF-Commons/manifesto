@@ -32,7 +32,7 @@ describe('model_origin', function() {
     it('has a scene', function() {
         scene = sequence.getScenes()[0];
         expect(scene).to.exist;
-        expect(scene.isScene());
+        expect(scene.isScene()).to.be.ok;
     });
     
     
@@ -49,10 +49,9 @@ describe('model_origin', function() {
     });
     
     it('and body is an AnnotationBody', function(){        
-        var bodies = annotation.getBody();
-        expect(Array.isArray(bodies));
-        bodies.should.have.lengthOf(1);
-        body = bodies[0];
+        body = annotation.getBody3D();
+        expect(Array.isArray(body)).to.equal(false);
+        expect(body.isSpecificResource).to.not.be.ok;
         body.getType().should.equal(ExternalResourceType.MODEL);
     });
     

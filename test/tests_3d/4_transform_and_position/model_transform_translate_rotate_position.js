@@ -43,9 +43,7 @@ describe('model_position', function() {
     });
     
     it('with 1 SpecificResource body', function(){
-        var bodies = annotation.getBody();
-        expect(bodies.length).to.equal(1);
-        body = bodies[0];
+        var body = annotation.getBody3D();        
         expect( body.isSpecificResource ).to.be.ok ;
     
     })

@@ -5,8 +5,10 @@ export * from "./Resource";
 export * from "./IIIFResource";
 export * from "./SpecificResource";
 export * from "./SpecificResourceForTarget";
-export * from "./Annotation";
+export * from "./SpecificResourceForBody";
 export * from "./AnnotationBody";
+export * from "./Annotation";
+
 export * from "./AnnotationList";
 export * from "./AnnotationPage";
 export * from "./Canvas";
