@@ -3,6 +3,8 @@ export * from "./Transform";
 export * from "./ManifestResource";
 export * from "./Resource";
 export * from "./IIIFResource";
+export * from "./SpecificResource";
+export * from "./SpecificResourceForTarget";
 export * from "./Annotation";
 export * from "./AnnotationBody";
 export * from "./AnnotationList";
@@ -30,7 +32,7 @@ export * from "./Sequence";
 export * from "./Serialisation";
 export * from "./Service";
 export * from "./Size";
-export * from "./SpecificResource";
+
 export * from "./StatusCode";
 export * from "./Thumb";
 export * from "./Thumbnail";

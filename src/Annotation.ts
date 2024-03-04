@@ -4,7 +4,8 @@ import {
   IManifestoOptions,
   ManifestResource,
   Resource,
-  SpecificResource
+  SpecificResource,
+  SpecificResourceForTarget,
 } from "./internal";
 
 export class Annotation extends ManifestResource {
@@ -65,7 +66,7 @@ export class Annotation extends ManifestResource {
     if ( rawTarget.type && rawTarget.type == "SpecificResource" )
     {
     	//console.log("constructing SpecificResource "+ rawTarget);
-    	return new SpecificResource(rawTarget);
+    	return new SpecificResourceForTarget(rawTarget);
     }
     else if (typeof(rawTarget) === 'string')
     {
