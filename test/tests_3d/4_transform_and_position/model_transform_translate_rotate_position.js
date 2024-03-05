@@ -43,7 +43,7 @@ describe('model_position', function() {
     });
     
     it('with 1 SpecificResource body', function(){
-        var body = annotation.getBody3D();        
+        body = annotation.getBody3D();        
         expect( body.isSpecificResource ).to.be.ok ;
         var transform = body.getTransform();
         expect(Array.isArray(transform)).to.be.ok;
@@ -67,6 +67,11 @@ describe('model_position', function() {
         expect(rdata.z).to.equal(0.0);
     
     });
+    
+    it('with source pointing to manifest', function(){
+        var source = body.getSource();
+        source.id.should.include('astronaut.glb');
+    })
     
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();
