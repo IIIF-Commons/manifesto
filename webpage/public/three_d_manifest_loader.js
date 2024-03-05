@@ -41,6 +41,11 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 	            var translationString = `${tdata.x} ${tdata.y} ${tdata.z}`;
 	            transformNode.setAttribute("translation", translationString);
 	        }
+	        else if (transform.isScaleTransform()){
+	            var sdata = transform.getScale();
+	            var scaleString = `${sdata.x} ${sdata.y} ${sdata.z}`;
+	            transformNode.setAttribute("scale", scaleString);
+	        }
 	        else if (transform.isRotateTransform()){
 	            // this procedure for determining the rotationAxis
 	            // is intended to only work when only component is non-zero
