@@ -23,12 +23,7 @@ export class SpecificResourceForBody extends SpecificResource  {
   	    var item = ([].concat(raw))[0];
   	    if (item)
   	    {
-  	        if (typeof(item) === "string")  return item;
-  	        else
-  	        {
-  	            const id = item["id"];
-  	            if (typeof(id) === "string") return id;
-  	        } 
+  	        return new AnnotationBody(item);
   	    }
   	}
   	throw new Error("cannot resolve Source " + JSON.stringify(raw));
