@@ -12,10 +12,10 @@ let manifest,  sequence, scene , annotation, body;
 
 let manifest_url = {
         local: "http://localhost:3001/model_origin.json",
-        remote : "https://raw.githubusercontent.com/IIIF/3d/main/manifests/4_transform_and_position/model_transform_translate_rotate_position.json"
+        remote : "https://raw.githubusercontent.com/IIIF/3d/main/manifests/4_transform_and_position/model_transform_scale_position.json"
     }.remote;
 
-describe('model_transform_translate_rotate_position', function() {
+describe('model_transform_scale_position', function() {
 
     it('loads successfully', function(done) {
         manifesto.loadManifest(manifest_url).then(function(data) {
@@ -36,13 +36,13 @@ describe('model_transform_translate_rotate_position', function() {
     });
     
     
-    it('with one annotation', function(){
+    it('with two annotations', function(){
         var annotations = scene.getContent();
-        expect(annotations.length).to.equal(1);
-        annotation = annotations[0];
+        expect(annotations.length).to.equal(2);
+        annotation = annotations[1];
     });
     
-    it('with 1 SpecificResource body', function(){
+    it('annotations[1] with 1 SpecificResource body', function(){
         body = annotation.getBody3D();        
         expect( body.isSpecificResource ).to.be.ok ;
         var transform = body.getTransform();
@@ -54,17 +54,18 @@ describe('model_transform_translate_rotate_position', function() {
         expect(tt.isRotateTransform()).to.equal(false);
         
         var tdata = tt.getTranslation();
-        expect(tdata.x).to.equal(1.0);
-        expect(tdata.y).to.equal(0.0);
-        expect(tdata.z).to.equal(0.0);
+        expect(tdata.x).to.equal(2.0);
+        expect(tdata.y).to.equal(2.0);
+        expect(tdata.z).to.equal(2.0);
         
-        var rt = transform[1];
-        expect(rt.isTranslateTransform()).to.equal(false);
-        expect(rt.isRotateTransform()).to.equal(true);
-        var rdata = rt.getRotation();
-        expect(rdata.x).to.equal(0.0);
-        expect(rdata.y).to.equal(180.0);
-        expect(rdata.z).to.equal(0.0);
+        var st = transform[1];
+        expect(st.isTranslateTransform()).to.equal(false);
+        expect(st.isScaleTransform()).to.equal(true);
+
+        var sdata = st.getScale();
+        expect(sdata.x).to.equal(2.0);
+        expect(sdata.y).to.equal(2.0);
+        expect(sdata.z).to.equal(2.0);
     
     });
     
@@ -80,7 +81,7 @@ describe('model_transform_translate_rotate_position', function() {
         var selector = target.getSelector();
         expect( selector.isPointSelector ).to.be.ok;
         var location = selector.getLocation();
-        location.x.should.equal( 0.0);
+        location.x.should.equal( 1.0);
         location.y.should.equal( 0.0);
         location.z.should.equal( 0.0);
     });
