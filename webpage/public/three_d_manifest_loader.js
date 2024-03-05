@@ -23,10 +23,56 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 {
 	var inlineElement = document.createElement('inline');
 	var target = anno.getTarget();
-	var body = anno.getBody()[0];
+	var body = anno.getBody3D();
 	
-	var outerElement = undefined;
-	console.log("isSpecificResource " + target.isSpecificResource);
+	var wrappedElement = inlineElement;
+	
+	if (body.isSpecificResource)
+	{
+	    var source = body.getSource();
+	    inlineElement.setAttribute('url', source.id);
+	    
+	    var transforms = body.getTransform();
+	    for (var i = 0; i < transforms.length;++i){
+	        var transform = transforms[i];
+	        var transformNode=document.createElement('transform');
+	        if (transform.isTranslateTransform()){
+	            var tdata = transform.getTranslation();
+	            var translationString = `${tdata.x} ${tdata.y} ${tdata.z}`;
+	            transformNode.setAttribute("translation", translationString);
+	        }
+	        else if (transform.isRotateTransform()){
+	            // this procedure for determining the rotationAxis
+	            // is intended to only work when only component is non-zero
+	            var attributes=["x","y","z"];
+	            var nonZeroFound = false;
+	            var rotationComponents = [0.0,0.0,0.0,0.0];
+	            var rotData = transform.getRotation();
+	            
+	            for (var k = 0; k < 3; ++k){
+	                var c = rotData[attributes[k]];
+	                if (c != 0.0){
+	                    if (nonZeroFound){
+	                        throw new Error("rotation is non zero along multiple axes");
+	                    }
+	                    else{
+	                        nonZeroFound = true;
+	                    }
+	                    rotationComponents[i] = 1.0;
+	                    rotationComponents[3] = c * 1.745329e-2; // convert to radians for X3D
+	                }	                
+	            }
+	            rotationString = rotationComponents.join(' ');
+	            transformNode.setAttribute("rotation", rotationString);
+	        }
+	        transformNode.appendChild(wrappedElement);
+	        wrappedElement = transformNode;
+	    }
+	}
+	else{
+	    inlineElement.setAttribute('url', body.id);
+	}
+	
 	if (target.isSpecificResource && target.getSelector().isPointSelector )
 	{
 		
@@ -34,19 +80,19 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 		
 		var loc = target.getSelector().getLocation();
 		
-		outerElement = document.createElement('transform');
+		var outerElement = document.createElement('transform');
 		// dev note : following expression uses javascript template literal
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Text_formatting
 		var positionString = `${loc.x} ${loc.y} ${loc.z}`
 		
 		outerElement.setAttribute("translation", positionString)
-		outerElement.appendChild(inlineElement);
+		outerElement.appendChild(wrappedElement);
+		wrappedElement = outerElement
 	}
-	else
-		outerElement = inlineElement;
+	
 
-    annotation_container.appendChild(outerElement);
-    inlineElement.setAttribute('url', body.id);
+    annotation_container.appendChild(wrappedElement);
+    
 }
 
 function LoadManifest(manifest_url, annotation_container, label_container)
