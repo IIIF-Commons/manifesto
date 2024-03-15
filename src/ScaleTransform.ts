@@ -1,17 +1,13 @@
 import {
-    Transform,
-    TransformType
+    Transform
 } from "./internal";
 
 export class ScaleTransform extends Transform {
     constructor(jsonld?: any ) {
         super(jsonld );
+        this.isScaleTransform = true;              
     }
 
-    getTransformType() : TransformType{
-        return TransformType.SCALE_TRANSFORM;
-    }
-    
     getScale() : object {
         var retVal = {};
         for (const attrib of ["x","y","z"]){

@@ -50,8 +50,8 @@ describe('model_transform_scale_position', function() {
         expect(transform.length).to.equal(2);
         
         var tt = transform[0];
-        expect(tt.isTranslateTransform()).to.equal(true);
-        expect(tt.isRotateTransform()).to.equal(false);
+        expect(tt.isTranslateTransform ).to.equal(true);
+        expect(tt.isRotateTransform ).to.not.be.ok;
         
         var tdata = tt.getTranslation();
         expect(tdata.x).to.equal(2.0);
@@ -59,8 +59,8 @@ describe('model_transform_scale_position', function() {
         expect(tdata.z).to.equal(2.0);
         
         var st = transform[1];
-        expect(st.isTranslateTransform()).to.equal(false);
-        expect(st.isScaleTransform()).to.equal(true);
+        expect(st.isTranslateTransform ).to.not.be.ok;
+        expect(st.isScaleTransform ).to.equal(true);
 
         var sdata = st.getScale();
         expect(sdata.x).to.equal(2.0);

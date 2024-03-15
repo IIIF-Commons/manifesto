@@ -50,17 +50,16 @@ describe('model_transform_translate_rotate_position', function() {
         expect(transform.length).to.equal(2);
         
         var tt = transform[0];
-        expect(tt.isTranslateTransform()).to.equal(true);
-        expect(tt.isRotateTransform()).to.equal(false);
-        
+        expect(tt.isTranslateTransform ).to.equal(true);
+        expect(tt.isRotateTransform).to.not.be.ok;
         var tdata = tt.getTranslation();
         expect(tdata.x).to.equal(1.0);
         expect(tdata.y).to.equal(0.0);
         expect(tdata.z).to.equal(0.0);
         
         var rt = transform[1];
-        expect(rt.isTranslateTransform()).to.equal(false);
-        expect(rt.isRotateTransform()).to.equal(true);
+        expect(rt.isTranslateTransform).to.not.be.ok;
+        expect(rt.isRotateTransform).to.equal(true);
         var rdata = rt.getRotation();
         expect(rdata.x).to.equal(0.0);
         expect(rdata.y).to.equal(180.0);

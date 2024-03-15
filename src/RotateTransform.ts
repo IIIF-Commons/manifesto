@@ -1,16 +1,14 @@
 import {
-    Transform,
-    TransformType
+    Transform
 } from "./internal";
 
 export class RotateTransform extends Transform {
     constructor(jsonld?: any ) {
         super( jsonld );
+        this.isRotateTransform = true;
+        
     }
 
-    getTransformType() : TransformType {
-        return TransformType.ROTATE_TRANSFORM;
-    }
     
     getRotation() : object {
         var retVal = {};
