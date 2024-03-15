@@ -30,7 +30,10 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 	if (body.isSpecificResource)
 	{
 	    var source = body.getSource();
-	    inlineElement.setAttribute('url', source.id);
+	    if (source.isModel)
+	        inlineElement.setAttribute('url', source.id);
+	    else
+	        throw new Error("trying to inline a non-model " + source);
 	    
 	    var transforms = body.getTransform();
 	    for (var i = 0; i < transforms.length;++i){
@@ -75,6 +78,8 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 	    }
 	}
 	else{
+	    if (! body.isModel )
+	        throw new Error("trying to inline a non-model " + body);
 	    inlineElement.setAttribute('url', body.id);
 	}
 	
