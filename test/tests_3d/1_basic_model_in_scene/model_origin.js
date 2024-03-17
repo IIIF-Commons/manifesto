@@ -50,6 +50,7 @@ describe('model_origin', function() {
     
     it('and body is an AnnotationBody', function(){        
         body = annotation.getBody3D();
+        expect( body.isModel ).to.equal(true);
         expect(Array.isArray(body)).to.equal(false);
         expect(body.isSpecificResource).to.not.be.ok;
         body.getType().should.equal(ExternalResourceType.MODEL);

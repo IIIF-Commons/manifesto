@@ -45,6 +45,7 @@ describe('model_transform_scale_position', function() {
     it('annotations[1] with 1 SpecificResource body', function(){
         body = annotation.getBody3D();        
         expect( body.isSpecificResource ).to.be.ok ;
+        expect( body.isModel ).to.not.be.ok;
         var transform = body.getTransform();
         expect(Array.isArray(transform)).to.be.ok;
         expect(transform.length).to.equal(2);
@@ -71,6 +72,7 @@ describe('model_transform_scale_position', function() {
     
     it('with source pointing to manifest', function(){
         var source = body.getSource();
+        expect( source.isModel ).to.equal(true);
         source.id.should.include('astronaut.glb');
     })
     
