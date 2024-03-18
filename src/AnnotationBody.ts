@@ -7,8 +7,18 @@ import { IManifestoOptions, ManifestResource, Utils } from "./internal";
 export class AnnotationBody extends ManifestResource {
   constructor(jsonld?: any, options?: IManifestoOptions) {
     super(jsonld, options);
-    this.isModel = ( this.getProperty('type') == ExternalResourceType.MODEL );
   }
+
+  get isModel():boolean  {
+    var normalized_type = Utils.normaliseType(this.getProperty("type"));
+    return ( normalized_type == ExternalResourceType.MODEL );
+  }
+  
+   get isLight():boolean  {
+    var normalized_type = Utils.normaliseType(this.getProperty("type"));
+    return ( normalized_type == "light" );
+  }
+
 
   getFormat(): MediaType | null {
     const format: string = this.getProperty("format");
@@ -40,6 +50,4 @@ export class AnnotationBody extends ManifestResource {
     return this.getProperty("height");
   }
   
-  isModel : boolean | undefined;
-  isLight : boolean | undefined;
 }
