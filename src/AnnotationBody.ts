@@ -22,7 +22,7 @@ export class AnnotationBody extends ManifestResource {
 
   getFormat(): MediaType | null {
     const format: string = this.getProperty("format");
-    console.log("getFormat() : format is "+format);
+    //console.log("getFormat() : format is "+format);
     if (format) {
       return Utils.getMediaType(format);
     }
