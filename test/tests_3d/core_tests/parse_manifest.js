@@ -18,9 +18,18 @@ describe('parse-manifest', function() {
     it('parse obj', function(done) {
          
             var manifest_obj = JSON.parse(manifest_text);
-            manifest = manifesto.parseManifest(manifest_obj);
+            
+            var manifest=manifesto.parseManifest(manifest_obj);
             expect(manifest.getIIIFResourceType()).to.equal('manifest');
             done();
         });
-    });
+        
+    it('invalid json text', function(done) {
+         
+            var invalid_text = "[not valid json"
+            var badCall = function(){manifesto.parseManifest(invalid_text);};
+            expect(badCall).to.throw(SyntaxError);
+            done();
+        });
+});
 
