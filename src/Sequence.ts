@@ -219,6 +219,9 @@ export class Sequence extends ManifestResource {
     return index;
   }
 
+  /** 
+  * @returns Array of Scene instances in the Sequence
+  **/
   getScenes(): Scene[]{
     let returnVal: Scene[] = [];
     let low_items = this.__jsonld.elements || this.__jsonld;
