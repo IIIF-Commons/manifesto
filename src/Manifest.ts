@@ -17,6 +17,19 @@ import {
   Utils
 } from "./internal";
 
+/**
+* @remarks Scenes are conveniently retrieved from a Manifest by iterating through
+* Sequence in the Manifest, inner loop the Scenes in each sequence
+* @see {@link Sequence }
+*
+* @example
+* var manifest: Manifest;
+* function doSomethingWithScene(scene:Scene)...
+* ...
+* foreach(var seq:Sequence of manifest.getSequences()
+*   foreach(var scene : Scene of seq.getScenes() 
+*     doSomethingWithScene(scene);
+**/
 export class Manifest extends IIIFResource {
   public index: number = 0;
   private _allRanges: Range[] | null = null;
@@ -249,6 +262,9 @@ export class Manifest extends IIIFResource {
     return null;
   }
 
+/**
+* @returns Array of Sequence instances
+**/
   getSequences(): Sequence[] {
     if (this.items.length) {
       return this.items;
