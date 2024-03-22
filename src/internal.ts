@@ -48,3 +48,4 @@ export * from "./Utils";
 export * from "./TranslateTransform";
 export * from "./RotateTransform";
 export * from "./ScaleTransform";
+export * from "./Color";
