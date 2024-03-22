@@ -48,6 +48,9 @@ export class Scene extends ManifestResource {
     // "#FF00FF" -- interpreted as three hexadecimal values
     // in range 0-255 . Not that the \w escape matches digits,
     // upper and lower case latin characters, and underscore
+    // currently only supports the form for CSS
+    // https://www.w3.org/wiki/CSS/Properties/color/RGB
+    // with 6 hexadecimal digits
     var regexPattern:string = "\#(\\w{2})(\\w{2})(\\w{2})";
     
     var hexColorFormat = new RegExp(regexPattern);
