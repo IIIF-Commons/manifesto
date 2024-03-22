@@ -59,7 +59,8 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "unfetch": "^4.2.0",
-    "webpack": "^5.89.0"
+    "webpack": "^5.89.0",
+    "color-string" : "1.9"
   },
   "directories": {
     "test": "test"
