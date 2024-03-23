@@ -6,7 +6,10 @@ export * from "./IIIFResource";
 export * from "./SpecificResource";
 export * from "./SpecificResourceForTarget";
 export * from "./SpecificResourceForBody";
+
 export * from "./AnnotationBody";
+export * from "./Light";
+export * from "./AnnotationBodyParser";
 export * from "./Annotation";
 
 export * from "./AnnotationList";

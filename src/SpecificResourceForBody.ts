@@ -1,6 +1,7 @@
 import {
   SpecificResource,
   AnnotationBody,
+  AnnotationBodyParser,
   Transform,
   TransformParser
 } from "./internal";
@@ -23,7 +24,7 @@ export class SpecificResourceForBody extends SpecificResource  {
   	    var item = ([].concat(raw))[0];
   	    if (item)
   	    {
-  	        return new AnnotationBody(item);
+  	        return AnnotationBodyParser.BuildFromJson(item);
   	    }
   	}
   	throw new Error("cannot resolve Source " + JSON.stringify(raw));
