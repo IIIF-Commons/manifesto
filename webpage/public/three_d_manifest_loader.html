@@ -145,7 +145,17 @@ Manifest url
 <x3d id="x3delem" class="canvas-width canvas-height"> 
 <scene>
 <navigationinfo id="navigationinfo-node" headlight='true'></navigationinfo>
-<background id="x3d-background" skyColor="0.8 0.8 0.8"></background>
+
+<background id="x3d-background" skyColor="0.8 0.8 0.8"> </background>
+
+<!-- 
+Adding a zero-intensity light. Otherwise X3DOM tries to be helpful
+and puts in a default ambient light. The intention here is to only
+have a headlight or lights added in a IIIF manifest
+ -->
+<pointlight ambientIntensity="0.0" intensity="0"  global='true'> </pointlight>
+
+
 <viewpoint position="0 0 10" orientation="0 0 1 0" 
  centerOfRotation="0 0 0" ></viewpoint>
  <transform id="annotation_container" scale="1 1 1">
@@ -190,7 +200,23 @@ Manifest url
                     
             </Shape>
         </group>
+</switch>
+
+<!-- 
+The following white ball could be added to the scene to check
+lighting effects
+ -->
+    <switch id="white-sphere" whichChoice="-1">
+        <transform translation = "0 -0.7 0">
+        <shape>
+        <sphere radius="0.25""></sphere>
+        <appearance>
+            <material emissiveColor="0 0 0" diffuseColor="1 1 1"></material>
+        </appearance>
+        </shape>
+        </transform>
     </switch>
+    
 </scene>
 </x3d> 
 </div>
