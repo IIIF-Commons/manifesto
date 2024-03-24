@@ -47,7 +47,11 @@ describe('model_origin', function() {
         expect(ambient_light.isLight).to.equal(true);
         expect(ambient_light.isAmbientLight).to.equal(true);
         
-        //expect(ambient_light.getColor().value).to.equal([0,255,0]);
+        var color = ambient_light.getColor();
+        expect(color.red).to.equal(0);
+        expect(color.green).to.equal(255);
+        expect(color.blue).to.equal(0);
+        
         expect(ambient_light.getIntensity()).to.equal(0.5);
               
         
