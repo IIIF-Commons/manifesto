@@ -90,6 +90,17 @@ window.addEventListener("load" , (event) =>
         axes_description.style.visibility= newVis ;
     });
     
+    let headlight_on_checkbox = document.getElementById("headlight-on-checkbox");
+    headlight_on_checkbox.checked = true;
+    let headlight_description = document.getElementById("headlight-description");
+    headlight_on_checkbox.addEventListener("click", (event) => 
+    {
+        console.log("headlight checkbox clicked: event " + headlight_on_checkbox.checked);
+        SetHeadlightOn( headlight_on_checkbox.checked );
+        
+    });
+
+    
     set_document_ready();
 });
 
@@ -133,7 +144,7 @@ Manifest url
 <div class="canvas-width canvas-height" style="margin-top:1em;">
 <x3d id="x3delem" class="canvas-width canvas-height"> 
 <scene>
-<navigationinfo headlight='true'></navigationinfo>
+<navigationinfo id="navigationinfo-node" headlight='true'></navigationinfo>
 <background id="x3d-background" skyColor="0.8 0.8 0.8"></background>
 <viewpoint position="0 0 10" orientation="0 0 1 0" 
  centerOfRotation="0 0 0" ></viewpoint>
@@ -208,6 +219,17 @@ Manifest url
 	    Green Y axis<br>
 	    Blue  Z axis<br>
 	</div>
+	
+	<div style="margin-top:2em">
+	<div>
+	<input  type="checkbox"  id="headlight-on-checkbox" />
+	<span style="margin-left:0em">Headlight</span>
+	</div>
+	
+	<div id="headlight-description" style="line-height:1.2em; visibility:visible;">
+	    Headlight is  default lighting available in X3D viewer.
+	</div>
+	
 	</div>
 	</td> 
 </tr>

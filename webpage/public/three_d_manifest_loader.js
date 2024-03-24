@@ -149,3 +149,8 @@ function SetAxesVisibility( isVisible )
         axes_switch_node.setAttribute('whichChoice', choice);
     }    
 }
+
+function SetHeadlightOn( isOn ){
+    var navigationinfo_node = document.getElementById("navigationinfo-node");
+    navigationinfo_node.setAttribute("headlight", isOn);
+}
