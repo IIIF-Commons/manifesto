@@ -26,7 +26,7 @@ export class Light extends AnnotationBody {
     var hexColor = this.getProperty("color");
     if (hexColor) return Color.fromCSS(hexColor);
     
-    else return new Color([BigInt(255),BigInt(255),BigInt(255)]); // white light
+    else return new Color([255, 255, 255]); // white light
   }
   
   /**
