@@ -8,7 +8,7 @@ var ExternalResourceType = require('@iiif/vocabulary/dist-commonjs/').ExternalRe
 var MediaType = require('@iiif/vocabulary/dist-commonjs/').MediaType;
 
 
-let manifest,  sequence, scene , annotation, body;
+let manifest,  sequence, scene , model, body, ambient_light;
 
 let manifest_url = {
         local: "http://localhost:3001/model_origin.json",
@@ -29,23 +29,28 @@ describe('model_origin', function() {
         expect(sequence).to.exist;
     });
 
-    it('has a scene', function() {
+    
+    it('has a scene with two annotation', function(){
+        sequence = manifest.getSequenceByIndex(0);
+        expect(sequence).to.exist;
         scene = sequence.getScenes()[0];
         expect(scene).to.exist;
         expect(scene.isScene()).to.be.ok;
-    });
-    
-    
-    it('with one annotation', function(){
         var annotations = scene.getContent();
-        expect(annotations.length).to.equal(1);
-        annotation = annotations[0];
+        expect(annotations.length).to.equal(2);
+        ambient_light = annotations[1].getBody3D();
+        
     });
         
-    it('that target the scene', function(){        
-        var target = annotation.getTarget();
-        target.should.be.a('string');
-        target.should.equal( scene.id );
+    it('with an ambient light', function(){
+        expect(ambient_light.isModel).to.not.be.ok;
+        expect(ambient_light.isLight).to.equal(true);
+        expect(ambient_light.isAmbientLight).to.equal(true);
+        
+        //expect(ambient_light.getColor().value).to.equal([0,255,0]);
+        expect(ambient_light.getIntensity()).to.equal(0.5);
+              
+        
     });
     
 
