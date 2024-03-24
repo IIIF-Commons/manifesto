@@ -23,29 +23,29 @@ export class Color {
   /**
   * @param rgbValue - Array of three 0-255 integers for r,g,b value. Ex: [255.0,0] for red
   **/
-  constructor( rgbValue : bigint[]  ) {
+  constructor( rgbValue : number[]  ) {
     this.value = rgbValue  ; 
   }
   
   /**
   * @returns Array of 3 integers in range 0-255
   **/
-  public value : bigint[] ;
+  public value : number[] ;
   
   /**
   * @return 0 to 255 value of red color component
   **/
-  public get red():bigint   {return this.value[0];}
+  public get red():number  {return this.value[0];}
   
   /**
   * @return 0 to 255 value of green color component
   **/
-  public get green():bigint {return this.value[1];}
+  public get green():number {return this.value[1];}
   
   /**
   * @return 0 to 255 value of blue color component
   **/  
-  public get blue():bigint  {return this.value[2];}
+  public get blue():number  {return this.value[2];}
   
   /**
   * @returns  hex string (as for CSS ) representation of r,g,b components
