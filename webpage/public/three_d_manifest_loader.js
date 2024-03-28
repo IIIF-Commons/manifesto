@@ -34,22 +34,27 @@ function AddAnnotationToScenegraph(anno, annotation_container)
         if (source.isAmbientLight){
             wrappedElement = document.createElement('pointlight');
             wrappedElement.setAttribute("intensity", "0.0");
-            wrappedElement.setAttribute("global", "true");
-            
-            wrappedElement.setAttribute("ambientIntensity", source.getIntensity().toString() );
-            
-            var light_color = source.getColor();
-            var rgbAttr = [
-    	        Math.max(0.0,Math.min(1.0, light_color.red/255)),
-    	        Math.max(0.0,Math.min(1.0, light_color.green/255)),
-    	        Math.max(0.0,Math.min(1.0, light_color.blue/255)),
-    	    ].join(" ");
-            wrappedElement.setAttribute("color", rgbAttr);
-            
+            wrappedElement.setAttribute("ambientIntensity", source.getIntensity().toString() );                    
         }
         else{
-            console.log("unknown light " + source.getType());
+            if (source.isDirectionalLight){
+                wrappedElement = document.createElement('directionallight');
+                wrappedElement.setAttribute("direction", "0 -1 0");                
+            }  
+            else{
+                console.log("unknown light " + source.getType());
+            }   
+            wrappedElement.setAttribute("intensity", source.getIntensity().toString() );  
+            wrappedElement.setAttribute("ambientIntensity", "0.0" ); 
         }
+        var light_color = source.getColor();
+        var rgbAttr = [
+            Math.max(0.0,Math.min(1.0, light_color.red/255)),
+            Math.max(0.0,Math.min(1.0, light_color.green/255)),
+            Math.max(0.0,Math.min(1.0, light_color.blue/255)),
+        ].join(" ");
+        wrappedElement.setAttribute("color", rgbAttr);
+        wrappedElement.setAttribute("global", "true");       
     }
     
 	
@@ -57,9 +62,7 @@ function AddAnnotationToScenegraph(anno, annotation_container)
 	
 	
 	if (body.isSpecificResource)
-	{
-	    
-	    
+	{	    
 	    var transforms = body.getTransform();
 	    for (var i = 0; i < transforms.length;++i){
 	        var transform = transforms[i];
