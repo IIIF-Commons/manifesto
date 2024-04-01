@@ -60,7 +60,8 @@
     "typescript": "^5.3.3",
     "unfetch": "^4.2.0",
     "webpack": "^5.89.0",
-    "color-string" : "1.9"
+    "color-string" : "1.9",
+    "threejs-math" : "^0.147"
   },
   "directories": {
     "test": "test"
