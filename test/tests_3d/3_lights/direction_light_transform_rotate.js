@@ -68,7 +68,7 @@ describe('model_origin', function() {
         
         expect(directional_light.getIntensity()).to.equal(0.5);
         
-        console.log("transform " + JSON.stringify( directional_light_transform ));
+        
         var transforms = directional_light_transform.getTransform();
         expect( transforms ).to.exist;
              
