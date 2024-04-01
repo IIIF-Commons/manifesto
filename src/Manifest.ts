@@ -47,6 +47,11 @@ export class Manifest extends IIIFResource {
         this._parseRanges(range, String(i));
       }
     }
+    
+    // initialization the cached _annotationIdMap to null
+    // it will be populated if and only if client calls make a request
+    // to the getter annotationIdMap
+    this._annotationIdMap = null;
   }
 
   /** @deprecated Use getAccompanyingCanvas instead */
@@ -332,5 +337,32 @@ export class Manifest extends IIIFResource {
 
   getViewingHint(): ViewingHint | null {
     return this.getProperty("viewingHint");
+  }
+  
+  _annotationIdMap : any;
+  
+  /**
+  * Developer Note: The concept of the "id map" appear in the 
+  * JSON-LD specification https://www.w3.org/TR/json-ld11/#dfn-id-map
+  * This functionality may be available as well in the 'nodeMap' code of the
+  * digitalbazaar/jsonld library
+  *
+  * this very simplified version just returns a mao of id -> Annotation nodes
+  * in manifest
+  *
+  * THe annotationIdMap is a Javascript object whose property names are
+  * IRI (id values) and property values are instances of the Annotation class
+  **/
+  get annotationIdMap(): Object {
+    if (this._annotationIdMap == null){
+        
+        this._annotationIdMap = {};
+        for ( var seq of this.getSequences() )
+            for (var scene of seq.getScenes() )
+                for (var anno of scene.getContent() )
+                    this._annotationIdMap[anno.id] = anno;
+          
+    }
+    return this._annotationIdMap;  
   }
 }
