@@ -52,3 +52,5 @@ export * from "./TranslateTransform";
 export * from "./RotateTransform";
 export * from "./ScaleTransform";
 export * from "./Color";
+
+export * from "./Geometry3d";
