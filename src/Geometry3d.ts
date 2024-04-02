@@ -18,7 +18,7 @@ import { Vector3, MathUtils  } from "threejs-math";
 * be returned
 * @returns two angle values, in degrees
 **/
-export function RelativeRotation(direction : Vector3 ): number[] {
+export function relativeRotation(direction : Vector3 ): number[] {
     if (direction.length() == 0.0)
         return [0.0,0.0];
         
