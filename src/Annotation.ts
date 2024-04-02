@@ -10,6 +10,8 @@ import {
   SpecificResourceForBody
 } from "./internal";
 
+import { Vector3 } from "threejs-math";
+
 export class Annotation extends ManifestResource {
   constructor(jsonld: any, options: IManifestoOptions) {
     super(jsonld, options);
@@ -95,5 +97,24 @@ export class Annotation extends ManifestResource {
 
   getResource(): Resource {
     return new Resource(this.getProperty("resource"), this.options);
+  }
+  
+  /**
+  *    A 3D point coordinate object for the location of a Resource
+  *    to satisfy the requirements of the lookAt property of camera and
+  *    spotlight resources, according to the draft v4 API as of April 1 2024
+  *   
+  *    Is the position of the point for a target which is a SpecificResource with
+  *    a PointSelector
+  *    Otherwise, for example when the annotation target is an entire Scene, the
+  *    location for lookAt is the origin (0,0,0)
+  **/
+  get lookAtLocation():Vector3 {
+    var target = this.getTarget() as any;
+    
+    if (target.isPointSelector )
+        return target.getLocation();
+    else
+        return new Vector3(0.0,0.0,0.0);
   }
 }
