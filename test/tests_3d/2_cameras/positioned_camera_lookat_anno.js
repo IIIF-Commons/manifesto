@@ -36,4 +36,9 @@ describe('positioned_camera_lookat_anno', function() {
         
         
     });
+    
+    if('has 0th annotation a Model', function(){
+        var model_anno = annotations[0];
+        expect(model_anno.)
+    })
 });
