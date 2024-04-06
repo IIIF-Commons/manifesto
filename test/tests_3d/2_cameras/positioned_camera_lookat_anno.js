@@ -39,8 +39,5 @@ describe('positioned_camera_lookat_anno', function() {
     
     if('has 1th annotation a Camera', function(){
         var model_anno = annotations[1];
-        
-        
-        
-    })
+    });
 });
