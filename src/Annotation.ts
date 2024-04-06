@@ -1,6 +1,7 @@
 import { AnnotationMotivation } from "@iiif/vocabulary/dist-commonjs";
 import {
   AnnotationBody,
+  AnnotationBodyParser,
   IManifestoOptions,
   ManifestResource,
   Resource,
@@ -47,9 +48,9 @@ export class Annotation extends ManifestResource {
   
   parseSingletonBody( rawbody: any ) : ( AnnotationBody | SpecificResource ){
     if (rawbody.type === "SpecificResource")
-        return new SpecificResource( rawbody, this. options);
+        return new SpecificResource( rawbody, this.options);
     else
-        return new AnnotationBody(rawbody, this.options );
+        return AnnotationBodyParser.BuildFromJson(rawbody, this.options );
   }
   
   getBody3D(): (AnnotationBody | SpecificResource)[] {

@@ -2,6 +2,7 @@ import {
   IManifestoOptions,
   ManifestResource,
   AnnotationBody,
+  AnnotationBodyParser,
   Transform,
   TransformParser,
   PointSelector
@@ -36,7 +37,7 @@ export class SpecificResource extends ManifestResource  {
   	    var item = ([].concat(raw))[0];
   	    if (item)
   	    {
-  	        return new AnnotationBody(item, this.options);
+  	        return AnnotationBodyParser.BuildFromJson(item, this.options );
   	    }
   	}
   	throw new Error("cannot resolve Source " + JSON.stringify(raw));
