@@ -44,8 +44,8 @@ describe('model_origin', function() {
         
     it('that target the scene', function(){        
         var target = annotation.getTarget();
-        target.should.be.a('string');
-        target.should.equal( scene.id );
+        target.id.should.exist;
+        target.id.should.equal( scene.id );
     });
     
     it('and body is an AnnotationBody', function(){        
