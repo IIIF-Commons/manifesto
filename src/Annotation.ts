@@ -77,23 +77,21 @@ export class Annotation extends ManifestResource {
     return this.getProperty("on");
   }
 
-  getTarget(): string | SpecificResource  {
-    const rawTarget = this.getProperty("target");
+  getTarget(): any  {
+    const rawTarget = this.getPropertyAsObject("target");
+    if (rawTarget.isIRI) return rawTarget;
+    
     if ( rawTarget.type && rawTarget.type == "SpecificResource" )
     {
-    	//console.log("constructing SpecificResource "+ rawTarget);
     	return new SpecificResourceForTarget(rawTarget);
-    }
-    else if (typeof(rawTarget) === 'string')
-    {
-    	//console.log("returning string target");
-    	return rawTarget;
     }
     else
     {
         throw new Error("unknown target specified");
     }
   }
+  
+  get Target(): any {return this.getTarget();}
 
   getResource(): Resource {
     return new Resource(this.getProperty("resource"), this.options);
