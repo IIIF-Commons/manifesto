@@ -10,9 +10,9 @@ export class Light extends AnnotationBody {
     super(jsonld, options);
   }
 
-  get isModel():boolean  { return false; }
+  isModel:boolean = false;
   
-  get isLight():boolean  { return true; }
+  isLight:boolean = true;
 
   get isAmbientLight():boolean {
     return (Utils.normaliseType(this.getProperty("type")) === "ambientlight");

@@ -8,11 +8,7 @@ export class Camera extends AnnotationBody {
     super(jsonld, options);
   }
 
-  get isModel():boolean  { return false; }
-  
-  get isLight():boolean  { return false; }
-  
-  get isCamera():boolean {return true; }
+
 
   get isPerspectiveCamera():boolean {
     return (Utils.normaliseType(this.getProperty("type")) === "perpectivecamera");

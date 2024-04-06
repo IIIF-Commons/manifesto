@@ -4,8 +4,8 @@ export * from "./ManifestResource";
 export * from "./Resource";
 export * from "./IIIFResource";
 export * from "./SpecificResource";
-export * from "./SpecificResourceForTarget";
-export * from "./SpecificResourceForBody";
+//export * from "./SpecificResourceForTarget";
+//export * from "./SpecificResourceForBody";
 
 export * from "./AnnotationBody";
 export * from "./Light";
