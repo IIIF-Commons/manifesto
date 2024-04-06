@@ -122,7 +122,7 @@ function run_iiif3d_tests(){
     require('./tests_3d/core_tests/threejs_math.js');
     require('./tests_3d/core_tests/Geometry3d.js');
     
-    /*
+    
     describe("1_basic_model_in_scene" , function(){
         importTest('model_origin', './tests_3d/1_basic_model_in_scene/model_origin.js');
         importTest('model_origin_bgcolor', './tests_3d/1_basic_model_in_scene/model_origin_bgcolor.js');
@@ -142,7 +142,7 @@ function run_iiif3d_tests(){
     describe("2_cameras" , function(){
         importTest('position_camera_lookat_anno', './tests_3d/2_cameras/positioned_camera_lookat_anno.js');       
     }); 
-    */   
+      
 }
 
 
