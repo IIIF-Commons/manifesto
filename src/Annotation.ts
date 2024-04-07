@@ -17,7 +17,7 @@ export class Annotation extends ManifestResource {
 
 
   getBody(): ( AnnotationBody | SpecificResource) [] {
-    const bodies: ( AnnotationBody | SpecificResource)[] = [];
+    let bodies: ( AnnotationBody | SpecificResource)[] = [];
     const body: any = this.getProperty("body");
     
     // the following is intended to handle the following cases for
@@ -28,8 +28,8 @@ export class Annotation extends ManifestResource {
     if (body) {
       for (var bd  of [].concat(body)){
             var items = (bd as any).items;        
-            if (items)
-                bodies.concat( this.parseBodiesFromItemsList(items) );
+            if (items)           
+                bodies = bodies.concat( this.parseBodiesFromItemsList(items) );
             else
                 bodies.push( this.parseSingletonBody(bd));
       }
@@ -39,7 +39,7 @@ export class Annotation extends ManifestResource {
   }
 
   parseBodiesFromItemsList( rawbodies:any ) : ( AnnotationBody | SpecificResource )[] {
-    var retVal : ( AnnotationBody | SpecificResource )[] = [];
+    let retVal : ( AnnotationBody | SpecificResource )[] = [];
     for (var bd of [].concat(rawbodies)){
         retVal.push( this.parseSingletonBody(bd));
     }
@@ -47,7 +47,7 @@ export class Annotation extends ManifestResource {
   }
   
   parseSingletonBody( rawbody: any ) : ( AnnotationBody | SpecificResource ){
-    
+
     if (rawbody.type === "SpecificResource"){
         
         return new SpecificResource( rawbody, this.options);
