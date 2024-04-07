@@ -43,7 +43,7 @@ describe('model_transform_scale_position', function() {
     });
     
     it('annotations[1] with 1 SpecificResource body', function(){
-        body = annotation.getBody3D();        
+        body = annotation.getBody()[0]        
         expect( body.isSpecificResource ).to.be.ok ;
         expect( body.isModel ).to.not.be.ok;
         var transform = body.getTransform();
