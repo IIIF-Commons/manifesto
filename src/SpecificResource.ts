@@ -21,17 +21,17 @@ import {
 export class SpecificResource extends ManifestResource  {
 
   
-  isSpecificResource : boolean = true;
+  isSpecificResource : boolean;
 
   constructor(jsonld: any, options?: IManifestoOptions) {
     super(jsonld, options);
-  }
+    this.isSpecificResource = true;    
+  };
   
   getSource() : AnnotationBody 
   {
-  	const raw =  this.getPropertyAsObject("source");
+  	var raw =  this.getPropertyAsObject("source");
   	if (raw.isIRI) return raw;
-  	
   	if (raw)
   	{
   	    var item = ([].concat(raw))[0];

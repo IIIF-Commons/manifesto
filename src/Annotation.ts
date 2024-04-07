@@ -29,7 +29,7 @@ export class Annotation extends ManifestResource {
       for (var bd  of [].concat(body)){
             var items = (bd as any).items;        
             if (items)
-                bodies.concat( this.parseBodiesFromItemsList(items) )
+                bodies.concat( this.parseBodiesFromItemsList(items) );
             else
                 bodies.push( this.parseSingletonBody(bd));
       }
@@ -47,10 +47,15 @@ export class Annotation extends ManifestResource {
   }
   
   parseSingletonBody( rawbody: any ) : ( AnnotationBody | SpecificResource ){
-    if (rawbody.type === "SpecificResource")
+    
+    if (rawbody.type === "SpecificResource"){
+        
         return new SpecificResource( rawbody, this.options);
-    else
+    }
+    else{
+        
         return AnnotationBodyParser.BuildFromJson(rawbody, this.options );
+    }
   }
   
   getBody3D(): (AnnotationBody | SpecificResource)[] {
