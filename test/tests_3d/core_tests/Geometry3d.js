@@ -78,3 +78,19 @@ describe('Geometry3d: cameraRelativeRotation', function() {
     
     
 });
+
+describe('Geometry3d: lightRelativeRotation', function() {
+
+    it('relativeRotation (2.0,-1.0,4.0)', function (){
+        var direction = new threejs_math.Vector3(2.0, -1.0, 4.0);
+        var unit_direction = direction.divideScalar(direction.length())
+        var euler = manifesto.lightRelativeRotation(direction);
+        expect(euler.isEuler).to.equal(true);
+        
+        var ny_axis = new threejs_math.Vector3(0.0,-1.0,0.0);
+        
+        var light_direction = ny_axis.clone().applyEuler(euler);
+        // directions nearly equal
+        expect( new threejs_math.Vector3().subVectors(light_direction , unit_direction ).length() ).to.be.lessThan(1.0e-4, "light direction not correct"); 
+    });
+});

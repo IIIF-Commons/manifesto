@@ -1,4 +1,4 @@
-import { Vector3, MathUtils , Euler } from "threejs-math";
+import { Vector3, MathUtils , Euler, Quaternion } from "threejs-math";
 // https://ros2jsguy.github.io/threejs-math/index.html
 
 
@@ -42,3 +42,20 @@ export function cameraRelativeRotation(direction : Vector3 ): Euler {
     var xAngleRad = Math.atan2(direction.y, projLength );
     return new Euler(xAngleRad, yAngleRad, 0.0, "YXZ");
 };
+
+export function lightRelativeRotation(direction : Vector3 ): Euler {
+    if (direction.length() == 0.0)
+        throw new Error("degenerate geometry: cameraRelativeRotation");
+
+    var unit_direction = direction.clone().divideScalar( direction.length() )
+    
+    // negative y axis is initial direction of DirectionalLight, SpotLight
+    // in draft 3D API
+    var ny_axis = new Vector3(0.0,-1.0,0.0);
+    
+    var quat = new Quaternion().setFromUnitVectors(ny_axis, unit_direction);
+    var tmp  = new Euler().setFromQuaternion(quat, "ZXY");
+    // standard be setting the final intrinsic Y rotation, which is
+    // along desired direction, to 0
+    return new Euler( tmp.x, 0.0, tmp.z, "ZXY" );
+}
