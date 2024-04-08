@@ -44,17 +44,12 @@ describe('model_origin', function() {
         
     
     it('with a directional light', function(){
-        directional_light_body = annotations[1].getBody3D();
-        var directional_light;
-        var directional_light_transform;
+        var directional_light_body = annotations[1].getBody()[0];
+        //console.log("directional_light_body.isSpecificResource " + directional_light_body.isSpecificResource);
         
-        if (directional_light_body.isSpecificResource){
-            directional_light_transform = directional_light_body;
-            directional_light = directional_light_body.getSource();
-        }
-        else{
-            directional_light = directional_light_body;
-        }
+        expect(directional_light_body.isSpecificResource).to.equal(true);
+        directional_light_transform = directional_light_body;
+        directional_light = directional_light_body.getSource();
         
         expect(directional_light.isModel).to.not.be.ok;
         expect(directional_light.isLight).to.equal(true);

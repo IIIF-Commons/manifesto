@@ -44,12 +44,12 @@ describe('model_origin', function() {
         
     it('that target the scene', function(){        
         var target = annotation.getTarget();
-        target.should.be.a('string');
-        target.should.equal( scene.id );
+        target.id.should.exist;
+        target.id.should.equal( scene.id );
     });
     
     it('and body is an AnnotationBody', function(){        
-        body = annotation.getBody3D();
+        body = annotation.getBody()[0];
         expect( body.isModel ).to.equal(true);
         expect(Array.isArray(body)).to.equal(false);
         expect(body.isSpecificResource).to.not.be.ok;

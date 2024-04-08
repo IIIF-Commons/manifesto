@@ -42,9 +42,18 @@ export class Scene extends ManifestResource {
 
     return content;
   };
+  
+  // 3D extension
+  get Content() : Annotation[] { return this.getContent(); }
+  
+  getAnnotationById( searchId: string ) : Annotation | null {
+    for (var anno of this.Content )
+        if (anno.id === searchId ) return anno;
+    return null;
+  }
 
  
-  getBackgroundColor() : Color | undefined {
+  getBackgroundColor() : Color | null {
     // regular expression intended to match strings like
     // "#FF00FF" -- interpreted as three hexadecimal values
     // in range 0-255 . Not that the \w escape matches digits,
@@ -57,7 +66,7 @@ export class Scene extends ManifestResource {
     if (bgc)
         return Color.fromCSS( bgc as string );
     else
-        return undefined;
+        return null;
   };
 
 }

@@ -101,7 +101,9 @@ export class Canvas extends Resource {
 
       if (images && images.length) {
         const firstImage: Annotation = images[0];
-        const body: AnnotationBody[] = firstImage.getBody();
+        // Developer note: Since Canvas in Presentation 3 doesn't use
+        // SpecificResource resources in the body, force a cast
+        const body: AnnotationBody[] = firstImage.getBody() as AnnotationBody[];
         const anno: AnnotationBody = body[0];
         const services: Service[] = anno.getServices();
 

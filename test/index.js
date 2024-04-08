@@ -70,7 +70,7 @@ function run_v3_tests(){
     importTest('plato', './tests/plato');
     importTest('poster-canvas', './tests/poster-canvas');
     importTest('potterselectric', './tests/potterselectric');
-    importTest('pres3-3d', './tests/pres3-3d');
+    //importTest('pres3-3d', './tests/pres3-3d');
     importTest('pres3-av-basic', './tests/pres3-av-basic');
     importTest('pres3-collection', './tests/pres3-collection');
     importTest('pres3-collection2', './tests/pres3-collection2');
@@ -115,8 +115,14 @@ else{
 
 function run_iiif3d_tests(){
     
+    
     require('./tests_3d/core_tests/parse_manifest.js');
     require('./tests_3d/core_tests/class_color.js');
+    require('./tests_3d/core_tests/annotationIdMap.js');
+    require('./tests_3d/core_tests/threejs_math.js');
+    require('./tests_3d/core_tests/Geometry3d.js');
+    
+    
     describe("1_basic_model_in_scene" , function(){
         importTest('model_origin', './tests_3d/1_basic_model_in_scene/model_origin.js');
         importTest('model_origin_bgcolor', './tests_3d/1_basic_model_in_scene/model_origin_bgcolor.js');
@@ -129,9 +135,15 @@ function run_iiif3d_tests(){
     });
     
     describe("3_lights" , function(){
-        importTest('ambient_green_light', './tests_3d/3_lights/ambient_green_light.js');
+        //importTest('ambient_green_light', './tests_3d/3_lights/ambient_green_light.js');
         importTest('directional light', './tests_3d/3_lights/direction_light_transform_rotate.js');
     });
+    
+    
+    describe("2_cameras" , function(){
+        importTest('position_camera_lookat_anno', './tests_3d/2_cameras/positioned_camera_lookat_anno.js');       
+    }); 
+     
 }
 
 

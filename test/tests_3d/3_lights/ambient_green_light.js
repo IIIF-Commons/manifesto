@@ -38,7 +38,7 @@ describe('model_origin', function() {
         expect(scene.isScene()).to.be.ok;
         var annotations = scene.getContent();
         expect(annotations.length).to.equal(2);
-        ambient_light = annotations[1].getBody3D();
+        ambient_light = annotations[1].getBody()[0];
         
     });
         

@@ -8,11 +8,10 @@ import {
 export class Light extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
     super(jsonld, options);
+    this.isLight = true;
+    this.isModel = false;
   }
 
-  get isModel():boolean  { return false; }
-  
-  get isLight():boolean  { return true; }
 
   get isAmbientLight():boolean {
     return (Utils.normaliseType(this.getProperty("type")) === "ambientlight");

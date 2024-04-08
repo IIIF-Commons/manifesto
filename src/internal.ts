@@ -4,11 +4,12 @@ export * from "./ManifestResource";
 export * from "./Resource";
 export * from "./IIIFResource";
 export * from "./SpecificResource";
-export * from "./SpecificResourceForTarget";
-export * from "./SpecificResourceForBody";
+//export * from "./SpecificResourceForTarget";
+//export * from "./SpecificResourceForBody";
 
 export * from "./AnnotationBody";
 export * from "./Light";
+export * from "./Camera";
 export * from "./AnnotationBodyParser";
 export * from "./Annotation";
 
@@ -52,3 +53,5 @@ export * from "./TranslateTransform";
 export * from "./RotateTransform";
 export * from "./ScaleTransform";
 export * from "./Color";
+
+export * from "./Geometry3d";

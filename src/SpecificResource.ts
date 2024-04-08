@@ -1,6 +1,11 @@
 import {
   IManifestoOptions,
-  JSONLDResource
+  ManifestResource,
+  AnnotationBody,
+  AnnotationBodyParser,
+  Transform,
+  TransformParser,
+  PointSelector
 } from "./internal";
 
 
@@ -13,42 +18,32 @@ import {
     In particular, this class is abstract and the 3D subclasses 
     will have distinct function signatures
 */
-export abstract class SpecificResource extends JSONLDResource  {
+export class SpecificResource extends ManifestResource  {
 
-  options: IManifestoOptions;
   
-  isSpecificResource : boolean = true;
+  isSpecificResource : boolean;
 
   constructor(jsonld: any, options?: IManifestoOptions) {
-    super(jsonld);
-    this.options = <IManifestoOptions>options;
-  }
+    super(jsonld, options);
+    this.isSpecificResource = true;    
+  };
   
-  
-  
-  /*
-  getSource() : string 
+  getSource() : AnnotationBody 
   {
-  	const raw =  this.getProperty("source");
+  	var raw =  this.getPropertyAsObject("source");
+  	if (raw.isIRI) return raw;
   	if (raw)
   	{
   	    var item = ([].concat(raw))[0];
   	    if (item)
   	    {
-  	        if (typeof(item) === "string")  return item;
-  	        else
-  	        {
-  	            const id = item["id"];
-  	            if (typeof(id) === "string") return id;
-  	        } 
+  	        return AnnotationBodyParser.BuildFromJson(item, this.options );
   	    }
   	}
   	throw new Error("cannot resolve Source " + JSON.stringify(raw));
   }
-  */
   
-  /*
-  getSelector() : PointSelector | undefined
+  getSelector() : PointSelector | null
   {
   	const raw =  this.getProperty("selector");  
   	if (raw){
@@ -57,26 +52,26 @@ export abstract class SpecificResource extends JSONLDResource  {
         if (item)
         {
             if (item["type"] === "PointSelector") return new PointSelector(item);
-            else
-            {
-                throw new Error("unable to resolve SpecificResource selector " + JSON.stringify(item));
-            }
         }
-        return undefined;
-  	}
-  	else{
-  	    return undefined;  	
-  	}
-  	
-  }
-  */
-  
-  /*
-  getTransform() : Transform[]{
+        throw new Error("unable to resolve SpecificResource selector " + JSON.stringify(this.__jsonld));   
+  	}  	
+    return null; 	
+  };
+  get Selector() : PointSelector | null {return this.getSelector();}
+
+  getTransform() : Transform[]
+  {
     var retVal: Transform[] = [];
-    
+    var transformItems = this.getProperty("transform");
+    for (var i = 0; i < transformItems.length; ++i)
+    {
+        var transformItem = transformItems[i];
+        retVal.push( TransformParser.BuildFromJson(transformItem));
+    }
     return retVal;
-  }
-  */
+  };
   
+  get Transform() : Transform[] { return this.getTransform();}
+
 }
+
