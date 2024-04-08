@@ -22,7 +22,7 @@ function* AnnotationsFromManifest( manifest )
 function AddAnnotationToScenegraph(anno, annotation_container)
 {
     var wrappedElement;
-    var body = anno.getBody3D();
+    var body = anno.getBody()[0];
     
     var source = (body.isSpecificResource)?body.getSource():body;
     
