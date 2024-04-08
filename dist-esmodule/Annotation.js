@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,10 +13,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Annotation = void 0;
-var internal_1 = require("./internal");
-var threejs_math_1 = require("threejs-math");
+import { AnnotationBodyParser, ManifestResource, Resource, SpecificResource } from "./internal";
+import { Vector3 } from "threejs-math";
 var Annotation = /** @class */ (function (_super) {
     __extends(Annotation, _super);
     function Annotation(jsonld, options) {
@@ -73,10 +70,10 @@ var Annotation = /** @class */ (function (_super) {
     **/
     Annotation.prototype.parseSingletonBody = function (rawbody) {
         if (rawbody.type === "SpecificResource") {
-            return new internal_1.SpecificResource(rawbody, this.options);
+            return new SpecificResource(rawbody, this.options);
         }
         else {
-            return internal_1.AnnotationBodyParser.BuildFromJson(rawbody, this.options);
+            return AnnotationBodyParser.BuildFromJson(rawbody, this.options);
         }
     };
     /**
@@ -114,7 +111,7 @@ var Annotation = /** @class */ (function (_super) {
         if (rawTarget.isIRI)
             return rawTarget;
         if (rawTarget.type && rawTarget.type == "SpecificResource") {
-            return new internal_1.SpecificResource(rawTarget, this.options);
+            return new SpecificResource(rawTarget, this.options);
         }
         else {
             throw new Error("unknown target specified");
@@ -126,7 +123,7 @@ var Annotation = /** @class */ (function (_super) {
         configurable: true
     });
     Annotation.prototype.getResource = function () {
-        return new internal_1.Resource(this.getProperty("resource"), this.options);
+        return new Resource(this.getProperty("resource"), this.options);
     };
     Object.defineProperty(Annotation.prototype, "lookAtLocation", {
         /**
@@ -144,12 +141,12 @@ var Annotation = /** @class */ (function (_super) {
             if (target.isPointSelector)
                 return target.getLocation();
             else
-                return new threejs_math_1.Vector3(0.0, 0.0, 0.0);
+                return new Vector3(0.0, 0.0, 0.0);
         },
         enumerable: false,
         configurable: true
     });
     return Annotation;
-}(internal_1.ManifestResource));
-exports.Annotation = Annotation;
+}(ManifestResource));
+export { Annotation };
 //# sourceMappingURL=Annotation.js.map
