@@ -7,7 +7,7 @@ let manifest, annotations;
 
 let manifest_url = {
         local: "",
-        remote : "https://raw.githubusercontent.com/vincentmarchetti/iiif3dtsg/main/manifests/2_cameras/positioned_camera_lookat_anno.json"
+        remote : "https://raw.githubusercontent.com/IIIF/3d/main/manifests/2_cameras/positioned_camera_lookat_anno.json"
     }.remote;
 
 describe('positioned_camera_lookat_anno', function() {
