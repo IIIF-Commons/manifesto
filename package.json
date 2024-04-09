@@ -1,11 +1,9 @@
 {
   "name": "manifesto.js",
-  "description": "IIIF Presentation API utility library for client and server",
+  "version" : "4.3.0-alpha3d.0.1.0",
+  "description": "IIIF Presentation API utility library for client and server with 3D extension",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
-  "browser": "./dist-umd/manifesto.js",
-  "unpkg": "./dist-umd/manifesto.js",
-  "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
     "build:docs": "typedoc",
@@ -14,7 +12,7 @@
     "build:umd": "webpack",
     "build:var": "cross-env NODE_WEBPACK_LIBRARY_PATH=dist-var NODE_WEBPACK_LIBRARY_TARGET=var webpack",
     "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
-    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types webpage/public/dist-*",
+    "clean": "rimraf -rf dist-umd  dist-var types",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
     "test": "mocha",
@@ -27,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iiif-commons/manifesto.git"
+    "url": "git+https://github.com/vincentmarchetti/manifesto.git"
   },
   "keywords": [
     "IIIF"
@@ -35,9 +33,9 @@
   "author": "@edsilv",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iiif-commons/manifesto/issues"
+    "url": "https://github.com/vincentmarchetti/manifesto/issues"
   },
-  "homepage": "https://github.com/iiif-commons/manifesto",
+  "homepage": "https://github.com/vincentmarchetti/manifesto",
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
     "@iiif/vocabulary": "^1.0.26",
