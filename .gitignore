@@ -1,9 +1,5 @@
-dist-commonjs
-dist-esmodule
-dist-umd
-dist-var
 coverage
 npm-debug.log
 node_modules
+dist
 debug.log
-types

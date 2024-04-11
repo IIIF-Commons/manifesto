@@ -1,29 +1,19 @@
 # manifesto
 
-[![Build Status](https://travis-ci.org/IIIF-Commons/manifesto.svg?branch=master)](https://travis-ci.org/IIIF-Commons/manifesto)
+Client and server utility library to support
+draft 3D extensions to to the IIIF Presentation API client and server utility library.
 
-IIIF Presentation API client and server utility library.
+Forked from [IIIF-Commons/manifesto](https://github.com/IIIF-Commons/manifesto).
 
-    npm install manifesto.js --save
+Goal of implementing the [Draft API](https://github.com/IIIF/3d/blob/main/temp-draft-4.md)
+under development by the [IIIF 3D Technical Study Group](https://github.com/IIIF/3d/).
 
-## Getting Started
 
 ### Documentation
 
-https://iiif-commons.github.io/manifesto/
+[Manifesto.js](https://vincentmarchetti.github.io/manifesto/)
 
-### Developer Setup
 
-    git clone https://github.com/iiif-commons/manifesto.git
-    npm install
-    npm build
-    npm test
 
-### Publishing Package
 
-    git checkout master
-    npm version patch
-    git add .
-    git commit -m "Release v1.2.3"
-    git tag v1.2.3
-    git push origin master v1.2.3
+
