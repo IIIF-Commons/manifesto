@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-      # - run: npm run build
+      - run: npm run build
       # - run: npm run test
       # @todo these are not working currently.
       # - run: node pkg-tests/node-load.js
