@@ -34,7 +34,7 @@ export class LocalizedValue implements Language {
     value: string | string[],
     locale?: string,
     defaultLocale: string = "none"
-  ) {
+  ) {    
     if (Array.isArray(value) && value.length === 1) {
       this._value = value[0];
     } else {
@@ -85,7 +85,7 @@ export class PropertyValue extends Array<LocalizedValue> {
   //        if you use the non-deprecated API this will never be used.
   _defaultLocale?: string;
 
-  static parse(rawVal: any, defaultLocale?: string): PropertyValue {
+  static parse(rawVal: any, defaultLocale?: string): PropertyValue {    
     if (!rawVal) {
       return new PropertyValue([], defaultLocale);
     }
@@ -150,6 +150,9 @@ export class PropertyValue extends Array<LocalizedValue> {
     // If any of the values have a language associated with them, the client
     // must display all of the values associated with the language that best
     // matches the language preference.
+
+    if (  locales.length == 0  && this._defaultLocale)
+        locales.push( this._defaultLocale as string );
 
     // create an array of the language codes for all different LocalizedValue instances in this PropertyValue
     const allLocales  = new Array<string>();
@@ -236,7 +239,7 @@ export class PropertyValue extends Array<LocalizedValue> {
     if (!this.length) {
       return [];
     }
-
+    
     let locales: string[];
     if (!userLocales) {
       locales = [];
