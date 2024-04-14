@@ -121,6 +121,7 @@ function run_iiif3d_tests(){
     require('./tests_3d/core_tests/annotationIdMap.js');
     require('./tests_3d/core_tests/threejs_math.js');
     require('./tests_3d/core_tests/Geometry3d.js');
+    require('./tests_3d/core_tests/iiif_label.js');
     
     
     describe("1_basic_model_in_scene" , function(){
