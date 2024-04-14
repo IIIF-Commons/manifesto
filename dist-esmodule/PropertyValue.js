@@ -149,6 +149,8 @@ var PropertyValue = /** @class */ (function (_super) {
         // If any of the values have a language associated with them, the client
         // must display all of the values associated with the language that best
         // matches the language preference.
+        if (locales.length == 0 && this._defaultLocale)
+            locales.push(this._defaultLocale);
         // create an array of the language codes for all different LocalizedValue instances in this PropertyValue
         var allLocales = new Array();
         for (var _i = 0, _a = this; _i < _a.length; _i++) {
