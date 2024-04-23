@@ -28,10 +28,24 @@ export class SpecificResource extends ManifestResource  {
     this.isSpecificResource = true;    
   };
   
-  getSource() : AnnotationBody 
+  getSource() : object | AnnotationBody 
   {
   	var raw =  this.getPropertyAsObject("source");
   	if (raw.isIRI) return raw;
+  	
+  	/*
+  	    this logic gets a little convoluted, because we have to preserve
+  	    the cases where the raw json is an array for the sources of a
+  	    SpecificResource applied to an annotation body, while for a target
+  	    of an Annotation we just want a single object
+  	*/
+  	// case of a source of a SpecificResource which is an Annotation target
+  	if (raw){
+  	    var containerTypes = ["Scene", "Canvas"];
+  	    let singleItem = ([].concat(raw))[0];
+  	    if (containerTypes.includes(singleItem["type"]))
+  	        return singleItem;
+  	}
   	if (raw)
   	{
   	    var item = ([].concat(raw))[0];
