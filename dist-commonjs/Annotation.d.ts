@@ -10,7 +10,7 @@ export declare class Annotation extends ManifestResource {
     @see{ https://iiif.io/api/cookbook/recipe/0033-choice/ }
     **/
     getBody(): (AnnotationBody | SpecificResource)[];
-    get Body(): (AnnotationBody | SpecificResource)[];
+    get Body(): (SpecificResource | AnnotationBody)[];
     /**
     auxiliary function to getBody; intended to hande an object that has an element items
     which is a array of annotation- body-like objects. This : https://iiif.io/api/cookbook/recipe/0033-choice/

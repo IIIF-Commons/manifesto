@@ -101,7 +101,7 @@ export declare class IIIFResource extends ManifestResource {
 export declare class SpecificResource extends ManifestResource {
 	isSpecificResource: boolean;
 	constructor(jsonld: any, options?: IManifestoOptions);
-	getSource(): AnnotationBody;
+	getSource(): object | AnnotationBody;
 	getSelector(): PointSelector | null;
 	get Selector(): PointSelector | null;
 	getTransform(): Transform[];
