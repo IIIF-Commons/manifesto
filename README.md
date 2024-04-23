@@ -25,7 +25,8 @@ will install manifesto modules into node_modules.
 
 From start point of the version distributed  from  [JulieWinchester/manifesto](https://github.com/JulieWinchester/manifesto/tree/3dtsg-dev-dist)
 
-To package.json version 4.3.0-draft3dapi.0.1.0  distributed from [vincentmarchetti/manifesto#3dtsg-main]() there were these changes:
+#### To package.json version 4.3.0-draft3dapi.0.1.0  
+distributed from [vincentmarchetti/manifesto#3dtsg-main]() there were these changes:
 
 1. This test is no longer useful for the Target of an Annotation:
 
@@ -49,5 +50,7 @@ To package.json version 4.3.0-draft3dapi.0.1.0  distributed from [vincentmarchet
 
     The `Annotation.getBody()` from the Presentation 3 code has been extended to support the resources that can be included in a 3d Annotation body property. An important difference is that the `getBody()` function  returns an array of objects, while the `getBody3D()` returns a single object. The deprecated function `getBody3D()` should be replaced with `getBody()[0]`
 
+#### To package.json version 4.3.0-draft3dapi.0.2.0
 
+1. Fixed a bug that occurred in determining the 'source' property of a SpecificResource resource that is the "target" property of an Annotation. This bug escaped detection previously because in the 3D case this 'source' property has always been a Scene resource, and the value is not needed for visualization. 
 

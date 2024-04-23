@@ -75,6 +75,10 @@ describe('model_transform_translate_rotate_position', function() {
     
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();
+        
+        if (target.isSpecificResource)
+            target.getSource().should.exist;
+            
         expect( target.isSpecificResource ).to.be.ok;
         
         var selector = target.getSelector();
