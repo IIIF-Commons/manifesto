@@ -44,7 +44,9 @@ describe('model_position', function() {
     
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();
+
         expect( target.isSpecificResource );
+        expect( target.getSource()).to.exist;
         
         var selector = target.getSelector();
         expect( selector.isPointSelector );

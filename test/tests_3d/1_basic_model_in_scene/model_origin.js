@@ -46,6 +46,10 @@ describe('model_origin', function() {
         var target = annotation.getTarget();
         target.id.should.exist;
         target.id.should.equal( scene.id );
+        
+        if (target.isSpecificResource)
+            target.getSource().should.exist;
+
     });
     
     it('and body is an AnnotationBody', function(){        
