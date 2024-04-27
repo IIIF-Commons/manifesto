@@ -48,6 +48,7 @@ describe('model_origin', function() {
         //console.log("directional_light_body.isSpecificResource " + directional_light_body.isSpecificResource);
         
         expect(directional_light_body.isSpecificResource).to.equal(true);
+        expect(directional_light_body.isAnnotationBody).to.equal(false);
         directional_light_transform = directional_light_body;
         directional_light = directional_light_body.getSource();
         
