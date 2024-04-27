@@ -2,5 +2,5 @@
   "sandboxes": [
     "vanilla-ts"
   ],
-  "node": "14"
+  "node": "16"
 }
