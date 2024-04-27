@@ -11,6 +11,8 @@ or model.
 **/
 export declare class AnnotationBody extends ManifestResource {
     constructor(jsonld?: any, options?: IManifestoOptions);
+    isAnnotationBody: boolean;
+    isSpecificResource: boolean;
     getFormat(): MediaType | null;
     getType(): ExternalResourceType | null;
     getWidth(): number;

@@ -23,13 +23,25 @@ var internal_1 = require("./internal");
     document https://www.w3.org/TR/annotation-model/
     section 4 : https://www.w3.org/TR/annotation-model/#specific-resources
     
-    In particular, this class is abstract and the 3D subclasses
-    will have distinct function signatures
+    The getTransform() method returning an Array of 3D Transfom resources, is
+    an extension of SpecificResource beyond the web annotation model.
 */
 var SpecificResource = /** @class */ (function (_super) {
     __extends(SpecificResource, _super);
     function SpecificResource(jsonld, options) {
         var _this = _super.call(this, jsonld, options) || this;
+        /*
+        property distinguishing instances of SpecificResource from instances of AnnotionBody.
+        The return type of the Annotation.getBody() method is an array of instances of the
+        union type ( AnnotationBody | SpecificResource )
+        */
+        _this.isAnnotationBody = false;
+        /*
+        property distinguishing instances of SpecificResource from instances of AnnotionBody.
+        The return type of the Annotation.getBody() method is an array of instances of the
+        union type ( AnnotationBody | SpecificResource )
+        */
+        _this.isSpecificResource = true;
         _this.isSpecificResource = true;
         return _this;
     }
