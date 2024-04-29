@@ -6,6 +6,9 @@ import {
 export class Camera extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
     super(jsonld, options);
+    this.isModel  = false;
+    this.isLight  = false;
+    this.isCamera  = true;
   }
 
 
@@ -24,5 +27,10 @@ export class Camera extends AnnotationBody {
     else return undefined;
   }
   
+  getLookAt() : object | null {
+    return this.getPropertyAsObject("lookAt" )
+  }  
+  get LookAt() : object | null {return this.getLookAt();}
+
   // TODO implement near and far properties
 };
