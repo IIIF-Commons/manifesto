@@ -52,5 +52,5 @@ export declare class Annotation extends ManifestResource {
     *    Otherwise, for example when the annotation target is an entire Scene, the
     *    location for lookAt is the origin (0,0,0)
     **/
-    get lookAtLocation(): Vector3;
+    get LookAtLocation(): Vector3;
 }

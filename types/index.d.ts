@@ -153,6 +153,8 @@ export declare class Camera extends AnnotationBody {
 	constructor(jsonld?: any, options?: IManifestoOptions);
 	get isPerspectiveCamera(): boolean;
 	getFieldOfView(): number | undefined;
+	getLookAt(): object | null;
+	get LookAt(): object | null;
 }
 export declare class AnnotationBodyParser {
 	static BuildFromJson(jsonld: any, options?: IManifestoOptions): AnnotationBody;
@@ -208,7 +210,7 @@ export declare class Annotation extends ManifestResource {
 	*    Otherwise, for example when the annotation target is an entire Scene, the
 	*    location for lookAt is the origin (0,0,0)
 	**/
-	get lookAtLocation(): Vector3;
+	get LookAtLocation(): Vector3;
 }
 export declare class AnnotationList extends JSONLDResource {
 	options: IManifestoOptions;
@@ -713,16 +715,20 @@ export declare class Color {
 * property of a camera resource. Determines the
 * required angles of two rotations, the first about
 * the x axis and the second about the y axis, which will
-* rotate the default camerat direction (0,0,-1) into the
+* rotate the default camera direction (0,0,-1) into the
 * direction of the input arguments
-* required angles, in degrees, are returned in a array of
-* length 2. element 0 is the (first) rotation about the x
-* axis, element 1 is (second) rotation about the y axis
 *
-* @param direction A vector interpreted as a direction, in the
-* edge case of a zero-length vector a rotation of [0.0,0.0] will
-* be returned
-* @returns two angle values, in degrees
+* Result of calculation is returned as a instance of EulerAngle from the
+* threejs-math library. The "axes order" of the EulerAngle is "YXZ": The
+* three-js library uses body-fixed axes to represent EulerAngles, which reverse
+* the ordering of the "relative rotation" algorithm described in the
+* draft 3d api.
+
+* @param direction A vector interpreted as a direction. Client code
+*        responsible for not passing a 0-length vector, else a
+
+*
+* @returns threejs-math.EulerAngle instance
 **/
 export declare function cameraRelativeRotation(direction: Vector3): Euler;
 export declare function lightRelativeRotation(direction: Vector3): Euler;

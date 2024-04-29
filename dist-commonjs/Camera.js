@@ -20,7 +20,11 @@ var internal_1 = require("./internal");
 var Camera = /** @class */ (function (_super) {
     __extends(Camera, _super);
     function Camera(jsonld, options) {
-        return _super.call(this, jsonld, options) || this;
+        var _this = _super.call(this, jsonld, options) || this;
+        _this.isModel = false;
+        _this.isLight = false;
+        _this.isCamera = true;
+        return _this;
     }
     Object.defineProperty(Camera.prototype, "isPerspectiveCamera", {
         get: function () {
@@ -40,6 +44,14 @@ var Camera = /** @class */ (function (_super) {
         else
             return undefined;
     };
+    Camera.prototype.getLookAt = function () {
+        return this.getPropertyAsObject("lookAt");
+    };
+    Object.defineProperty(Camera.prototype, "LookAt", {
+        get: function () { return this.getLookAt(); },
+        enumerable: false,
+        configurable: true
+    });
     return Camera;
 }(internal_1.AnnotationBody));
 exports.Camera = Camera;
