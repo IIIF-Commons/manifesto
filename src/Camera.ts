@@ -14,9 +14,12 @@ export class Camera extends AnnotationBody {
 
 
   get isPerspectiveCamera():boolean {
-    return (Utils.normaliseType(this.getProperty("type")) === "perpectivecamera");
+    return (Utils.normaliseType(this.getProperty("type")) === "perspectivecamera");
   }
   
+  /*
+  Returns full angular size (in degrees) in vertical direction
+  */
   getFieldOfView(): number | undefined 
   {
     if (this.isPerspectiveCamera){
@@ -26,6 +29,7 @@ export class Camera extends AnnotationBody {
     }
     else return undefined;
   }
+  get FieldOfView(): number | undefined { return this.getFieldOfView();}  
   
   getLookAt() : object | null {
     return this.getPropertyAsObject("lookAt" )

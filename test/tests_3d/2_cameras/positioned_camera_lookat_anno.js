@@ -46,6 +46,8 @@ describe('positioned_camera_lookat_anno', function() {
                         null;
                         
         expect(camera.isCamera).to.equal(true);
+        expect(camera.isPerspectiveCamera).to.equal(true);
+        expect(camera.FieldOfView).to.equal(45.0);
         
         let lookedAt = camera.LookAt;
         expect( lookedAt , "find the lookAt annotation.id?").to.exist;
