@@ -25,11 +25,14 @@ var Camera = /** @class */ (function (_super) {
     }
     Object.defineProperty(Camera.prototype, "isPerspectiveCamera", {
         get: function () {
-            return (Utils.normaliseType(this.getProperty("type")) === "perpectivecamera");
+            return (Utils.normaliseType(this.getProperty("type")) === "perspectivecamera");
         },
         enumerable: false,
         configurable: true
     });
+    /*
+    Returns full angular size (in degrees) in vertical direction
+    */
     Camera.prototype.getFieldOfView = function () {
         if (this.isPerspectiveCamera) {
             var value = this.getProperty("fieldOfView");
@@ -41,6 +44,11 @@ var Camera = /** @class */ (function (_super) {
         else
             return undefined;
     };
+    Object.defineProperty(Camera.prototype, "FieldOfView", {
+        get: function () { return this.getFieldOfView(); },
+        enumerable: false,
+        configurable: true
+    });
     Camera.prototype.getLookAt = function () {
         return this.getPropertyAsObject("lookAt");
     };
