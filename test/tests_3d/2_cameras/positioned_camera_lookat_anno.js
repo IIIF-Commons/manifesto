@@ -47,6 +47,7 @@ describe('positioned_camera_lookat_anno', function() {
                         
         expect(camera.isCamera).to.equal(true);
         expect(camera.isPerspectiveCamera).to.equal(true);
+        expect(camera.isModel).to.equal(false,"checking isModel=false");
         expect(camera.FieldOfView).to.equal(45.0);
         
         let lookedAt = camera.LookAt;
