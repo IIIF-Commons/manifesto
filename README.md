@@ -57,3 +57,7 @@ distributed from [vincentmarchetti/manifesto#3dtsg-main]() there were these chan
 #### To package.json version 4.3.0-draft3dapi.0.3.0
 
 1. Added isSpecificResource and isAnnotationBody properties to the SpecificResource and AnnotationBody classes, in response to developer suggestion. (Slack, Apr 24 2024)
+
+#### To package.json version 4.3.0-draft3dapi.0.4.0
+
+1. Implemented Perspective Camera properties in the Camera class.
