@@ -30,9 +30,10 @@ var Camera = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
-    /*
-    Returns full angular size (in degrees) in vertical direction
-    */
+    /**
+    @returns full angular size of perspective viewport in vertical direction.
+    Angular unit is degrees
+    **/
     Camera.prototype.getFieldOfView = function () {
         if (this.isPerspectiveCamera) {
             var value = this.getProperty("fieldOfView");
@@ -45,6 +46,10 @@ var Camera = /** @class */ (function (_super) {
             return undefined;
     };
     Object.defineProperty(Camera.prototype, "FieldOfView", {
+        /**
+        Full angular size of perspective viewport in vertical direction.
+        Angular unit is degrees
+        **/
         get: function () { return this.getFieldOfView(); },
         enumerable: false,
         configurable: true

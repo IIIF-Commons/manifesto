@@ -17,9 +17,10 @@ export class Camera extends AnnotationBody {
     return (Utils.normaliseType(this.getProperty("type")) === "perspectivecamera");
   }
   
-  /*
-  Returns full angular size (in degrees) in vertical direction
-  */
+  /**
+  @returns full angular size of perspective viewport in vertical direction.
+  Angular unit is degrees
+  **/
   getFieldOfView(): number | undefined 
   {
     if (this.isPerspectiveCamera){
@@ -29,6 +30,10 @@ export class Camera extends AnnotationBody {
     }
     else return undefined;
   }
+  /**
+  Full angular size of perspective viewport in vertical direction.
+  Angular unit is degrees
+  **/
   get FieldOfView(): number | undefined { return this.getFieldOfView();}  
   
   getLookAt() : object | null {
