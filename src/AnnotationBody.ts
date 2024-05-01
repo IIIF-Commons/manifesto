@@ -19,6 +19,22 @@ export class AnnotationBody extends ManifestResource {
     super(jsonld, options);
   }
 
+  
+  /*
+  property distinguishing instances of SpecificResource from instances of AnnotionBody.
+  The return type of the Annotation.getBody() method is an array of instances of the 
+  union type ( AnnotationBody | SpecificResource )
+  */
+  isAnnotationBody : boolean = true;
+
+  /*
+  property distinguishing instances of SpecificResource from instances of AnnotionBody.
+  The return type of the Annotation.getBody() method is an array of instances of the 
+  union type ( AnnotationBody | SpecificResource )
+  */  
+  isSpecificResource : boolean = false;
+
+
   // Format, Type, Width, and Height are the body properties supported
   // in the code that supports Presentation 3
   getFormat(): MediaType | null {

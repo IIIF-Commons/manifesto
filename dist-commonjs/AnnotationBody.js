@@ -30,6 +30,18 @@ var AnnotationBody = /** @class */ (function (_super) {
     __extends(AnnotationBody, _super);
     function AnnotationBody(jsonld, options) {
         var _this = _super.call(this, jsonld, options) || this;
+        /*
+        property distinguishing instances of SpecificResource from instances of AnnotionBody.
+        The return type of the Annotation.getBody() method is an array of instances of the
+        union type ( AnnotationBody | SpecificResource )
+        */
+        _this.isAnnotationBody = true;
+        /*
+        property distinguishing instances of SpecificResource from instances of AnnotionBody.
+        The return type of the Annotation.getBody() method is an array of instances of the
+        union type ( AnnotationBody | SpecificResource )
+        */
+        _this.isSpecificResource = false;
         // following class members were added to support 3D and mixed 2D/3D content
         // these boolean switches will be appropriately set when the manifest json is parsed
         _this.isModel = true;

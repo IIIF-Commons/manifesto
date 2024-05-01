@@ -17,15 +17,23 @@ import { Utils, AnnotationBody } from "./internal";
 var Camera = /** @class */ (function (_super) {
     __extends(Camera, _super);
     function Camera(jsonld, options) {
-        return _super.call(this, jsonld, options) || this;
+        var _this = _super.call(this, jsonld, options) || this;
+        _this.isModel = false;
+        _this.isLight = false;
+        _this.isCamera = true;
+        return _this;
     }
     Object.defineProperty(Camera.prototype, "isPerspectiveCamera", {
         get: function () {
-            return (Utils.normaliseType(this.getProperty("type")) === "perpectivecamera");
+            return (Utils.normaliseType(this.getProperty("type")) === "perspectivecamera");
         },
         enumerable: false,
         configurable: true
     });
+    /**
+    @returns full angular size of perspective viewport in vertical direction.
+    Angular unit is degrees
+    **/
     Camera.prototype.getFieldOfView = function () {
         if (this.isPerspectiveCamera) {
             var value = this.getProperty("fieldOfView");
@@ -37,6 +45,23 @@ var Camera = /** @class */ (function (_super) {
         else
             return undefined;
     };
+    Object.defineProperty(Camera.prototype, "FieldOfView", {
+        /**
+        Full angular size of perspective viewport in vertical direction.
+        Angular unit is degrees
+        **/
+        get: function () { return this.getFieldOfView(); },
+        enumerable: false,
+        configurable: true
+    });
+    Camera.prototype.getLookAt = function () {
+        return this.getPropertyAsObject("lookAt");
+    };
+    Object.defineProperty(Camera.prototype, "LookAt", {
+        get: function () { return this.getLookAt(); },
+        enumerable: false,
+        configurable: true
+    });
     return Camera;
 }(AnnotationBody));
 export { Camera };

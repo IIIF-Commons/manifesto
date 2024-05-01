@@ -15,13 +15,24 @@ import {
     document https://www.w3.org/TR/annotation-model/
     section 4 : https://www.w3.org/TR/annotation-model/#specific-resources
     
-    In particular, this class is abstract and the 3D subclasses 
-    will have distinct function signatures
+    The getTransform() method returning an Array of 3D Transfom resources, is
+    an extension of SpecificResource beyond the web annotation model.
 */
 export class SpecificResource extends ManifestResource  {
 
-  
-  isSpecificResource : boolean;
+  /*
+  property distinguishing instances of SpecificResource from instances of AnnotionBody.
+  The return type of the Annotation.getBody() method is an array of instances of the 
+  union type ( AnnotationBody | SpecificResource )
+  */
+  isAnnotationBody : boolean = false;
+
+  /*
+  property distinguishing instances of SpecificResource from instances of AnnotionBody.
+  The return type of the Annotation.getBody() method is an array of instances of the 
+  union type ( AnnotationBody | SpecificResource )
+  */  
+  isSpecificResource : boolean = true;
 
   constructor(jsonld: any, options?: IManifestoOptions) {
     super(jsonld, options);

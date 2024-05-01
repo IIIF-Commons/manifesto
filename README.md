@@ -54,3 +54,10 @@ distributed from [vincentmarchetti/manifesto#3dtsg-main]() there were these chan
 
 1. Fixed a bug that occurred in determining the 'source' property of a SpecificResource resource that is the "target" property of an Annotation. This bug escaped detection previously because in the 3D case this 'source' property has always been a Scene resource, and the value is not needed for visualization. 
 
+#### To package.json version 4.3.0-draft3dapi.0.3.0
+
+1. Added isSpecificResource and isAnnotationBody properties to the SpecificResource and AnnotationBody classes, in response to developer suggestion. (Slack, Apr 24 2024)
+
+#### To package.json version 4.3.0-draft3dapi.0.4.0
+
+1. Implemented Perspective Camera properties in the Camera class.

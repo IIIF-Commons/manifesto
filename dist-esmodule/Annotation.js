@@ -125,7 +125,7 @@ var Annotation = /** @class */ (function (_super) {
     Annotation.prototype.getResource = function () {
         return new Resource(this.getProperty("resource"), this.options);
     };
-    Object.defineProperty(Annotation.prototype, "lookAtLocation", {
+    Object.defineProperty(Annotation.prototype, "LookAtLocation", {
         /**
         *    A 3D point coordinate object for the location of an Annotation
         *    to satisfy the requirements of the lookAt property of camera and
@@ -137,9 +137,10 @@ var Annotation = /** @class */ (function (_super) {
         *    location for lookAt is the origin (0,0,0)
         **/
         get: function () {
+            var _a;
             var target = this.getTarget();
-            if (target.isPointSelector)
-                return target.getLocation();
+            if (target.isSpecificResource && ((_a = target.getSelector()) === null || _a === void 0 ? void 0 : _a.isPointSelector))
+                return target.getSelector().getLocation();
             else
                 return new Vector3(0.0, 0.0, 0.0);
         },

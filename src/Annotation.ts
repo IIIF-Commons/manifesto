@@ -140,11 +140,11 @@ export class Annotation extends ManifestResource {
   *    Otherwise, for example when the annotation target is an entire Scene, the
   *    location for lookAt is the origin (0,0,0)
   **/
-  get lookAtLocation():Vector3 {
+  get LookAtLocation():Vector3 {
     var target = this.getTarget() as any;
     
-    if (target.isPointSelector )
-        return target.getLocation();
+    if (target.isSpecificResource && target.getSelector()?.isPointSelector )
+        return target.getSelector().getLocation();
     else
         return new Vector3(0.0,0.0,0.0);
   }
