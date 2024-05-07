@@ -162,7 +162,11 @@ export declare class Camera extends AnnotationBody {
 	Angular unit is degrees
 	**/
 	get FieldOfView(): number | undefined;
-	getLookAt(): object | null;
+	/**
+	* @return : if not null, is either a PointSelector, or an object
+	* with an id matching the id of an Annotation instance.
+	**/
+	getLookAt(): object | PointSelector | null;
 	get LookAt(): object | null;
 }
 export declare class AnnotationBodyParser {

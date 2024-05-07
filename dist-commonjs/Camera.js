@@ -57,8 +57,20 @@ var Camera = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
+    /**
+    * @return : if not null, is either a PointSelector, or an object
+    * with an id matching the id of an Annotation instance.
+    **/
     Camera.prototype.getLookAt = function () {
-        return this.getPropertyAsObject("lookAt");
+        var rawObj = this.getPropertyAsObject("lookAt");
+        var rawType = (rawObj["type"] || rawObj["@type"]);
+        if (rawType == "Annotation") {
+            return rawObj;
+        }
+        if (rawType == "PointSelector") {
+            return new internal_1.PointSelector(rawObj);
+        }
+        throw new Error('unidentified value of lookAt ${rawType}');
     };
     Object.defineProperty(Camera.prototype, "LookAt", {
         get: function () { return this.getLookAt(); },
