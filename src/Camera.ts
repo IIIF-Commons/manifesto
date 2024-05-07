@@ -1,7 +1,8 @@
 import { 
     IManifestoOptions, 
     Utils,
-    AnnotationBody } from "./internal";
+    AnnotationBody,
+    PointSelector } from "./internal";
 
 export class Camera extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -37,7 +38,15 @@ export class Camera extends AnnotationBody {
   get FieldOfView(): number | undefined { return this.getFieldOfView();}  
   
   getLookAt() : object | null {
-    return this.getPropertyAsObject("lookAt" )
+    let rawObj = this.getPropertyAsObject("lookAt" )
+    let rawType = (rawObj["type"] || rawObj["@type"])
+    if (rawType == "Annotation"){
+        return rawObj;
+    }
+    if (rawType == "PointSelector"){
+        return new PointSelector(rawObj);
+    }
+    throw new Error('unidentified value of lookAt ${rawType}');
   }  
   get LookAt() : object | null {return this.getLookAt();}
 
