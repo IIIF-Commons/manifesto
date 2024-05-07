@@ -37,7 +37,11 @@ export class Camera extends AnnotationBody {
   **/
   get FieldOfView(): number | undefined { return this.getFieldOfView();}  
   
-  getLookAt() : object | null {
+  /**
+  * @return : if not null, is either a PointSelector, or an object
+  * with an id matching the id of an Annotation instance.
+  **/
+  getLookAt() : object | PointSelector | null {
     let rawObj = this.getPropertyAsObject("lookAt" )
     let rawType = (rawObj["type"] || rawObj["@type"])
     if (rawType == "Annotation"){
