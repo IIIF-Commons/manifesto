@@ -53,23 +53,26 @@ describe('positioned_camera_lookat_point', function() {
         let lookedAt = camera.LookAt;
         expect( lookedAt , "find the lookAt annotation.id?").to.exist;
         
-        let lookedAtAnnotation = scene.getAnnotationById( lookedAt.id );
-        expect( lookedAtAnnotation, "find the lookAt annotation in scene?").to.exist;
-        
-        /*
-        let lookedAtLocation = lookedAtAnnotation.LookAtLocation;
+        let lookedAtLocation = null;
+        if ( lookedAt.isPointSelector ){
+            lookedAtLocation = lookedAt.getLocation();            
+        }
+        else{
+            let lookedAtAnnotation = scene.getAnnotationById( lookedAt.id );
+            expect( lookedAtAnnotation, "find the lookAt annotation in scene?").to.exist;
+            lookedAtLocation = lookedAtAnnotation.LookAtLocation;
+        }
         expect( lookedAtLocation ).to.exist;
-        
-        let testLocation = [lookedAtLocation.x,lookedAtLocation.y,lookedAtLocation.z];
-        expect(testLocation).to.deep.equal( [0.0,0.0,0.0]);
-        
         
         let lookedFromLocation = camera_anno.LookAtLocation ;
         let direction = lookedAtLocation.clone().sub( lookedFromLocation );
         let exact_unit_direction = direction.clone().divideScalar( direction.length() );
         
-        expect( [direction.x, direction.y,direction.z]).to.deep.equal([0.0,-3.0,10.0]);
         
+        expect( [direction.x, direction.y,direction.z]).to.deep.equal([2.0,-2.0,10.0]);
+        
+        let exact_coords = [exact_unit_direction.x, exact_unit_direction.y,exact_unit_direction.z].join(", ");
+        //console.log(`exact direction ( ${exact_coords} )`)
         let euler = manifesto.cameraRelativeRotation( direction );
         
         // next want to evaluate the result:
@@ -82,14 +85,21 @@ describe('positioned_camera_lookat_point', function() {
         let quat = new threejs_math.Quaternion().setFromEuler( euler );
         
         let camera_direction = new threejs_math.Vector3( 0.0, 0.0, -1.0 ).applyQuaternion( quat );
-        let direction_error = camera_direction.clone().sub(exact_unit_direction).length();
-        expect( direction_error ).to.be.below( 1.0e-8 );
+        
+        let camera_direction_coords = [camera_direction.x, camera_direction.y, camera_direction.z ];
+        //console.log(`camera direction ( ${camera_direction_coords} )`)
+        
+        let direction_error = camera_direction.clone().sub(exact_unit_direction);
+        let direction_error_coords = [ direction_error.x, direction_error.y, direction_error.z ];
+        //console.log(`direction error ( ${direction_error_coords} )`)
+        
+        expect( direction_error.length() ).to.be.below( 1.0e-8 );
         
         let camera_x_axis = new threejs_math.Vector3( 1.0, 0.0, 0.0 ).applyQuaternion( quat );
-        expect( Math.abs( camera_x_axis.z )).to.be.below(1.0e-8);
+        expect( Math.abs( camera_x_axis.y )).to.be.below(1.0e-8);
         
         let camera_y_axis = new threejs_math.Vector3( 0.0, 1.0, 0.0 ).applyQuaternion( quat );
         expect( camera_y_axis.z ).to.be.above(0.0);
-        */
+        
     });
 });
