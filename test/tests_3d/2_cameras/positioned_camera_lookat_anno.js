@@ -86,7 +86,7 @@ describe('positioned_camera_lookat_anno', function() {
         expect( direction_error ).to.be.below( 1.0e-8 );
         
         let camera_x_axis = new threejs_math.Vector3( 1.0, 0.0, 0.0 ).applyQuaternion( quat );
-        expect( Math.abs( camera_x_axis.z )).to.be.below(1.0e-8);
+        expect( Math.abs( camera_x_axis.y )).to.be.below(1.0e-8);
         
         let camera_y_axis = new threejs_math.Vector3( 0.0, 1.0, 0.0 ).applyQuaternion( quat );
         expect( camera_y_axis.z ).to.be.above(0.0);
