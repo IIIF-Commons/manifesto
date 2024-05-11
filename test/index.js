@@ -138,6 +138,7 @@ function run_iiif3d_tests(){
     describe("3_lights" , function(){
         //importTest('ambient_green_light', './tests_3d/3_lights/ambient_green_light.js');
         importTest('directional light', './tests_3d/3_lights/direction_light_transform_rotate.js');
+        importTest('spot light', './tests_3d/3_lights/spotlight_lookat_point.js');
     });
     
     
