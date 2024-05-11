@@ -63,6 +63,16 @@ describe('model_origin', function() {
         body.getType().should.equal(ExternalResourceType.MODEL);
     });
     
+    it('and body has IIIFResourceType', function(){        
+        body = annotation.getBody()[0];
+        expect(body.getIIIFResourceType()).to.exist;
+        
+        let test = ( body.getIIIFResourceType() == ExternalResourceType.MODEL );
+        expect(test).to.equal(true);
+        
+    });
+
+    
     it('body id looks like a model url', function(){        
         body.id.should.include('astronaut.glb');
     });
