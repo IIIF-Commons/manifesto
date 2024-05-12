@@ -6,7 +6,7 @@ import {
 } from "./internal";
 
 
-let LightTypes:string[] = ["AmbientLight" , "DirectionalLight"];
+let LightTypes:string[] = ["AmbientLight" , "DirectionalLight", "SpotLight"];
 let CameraTypes:string[] = ["PerspectiveCamera", "OrthographicCamera"];
 let DisplayedTypes:string[] = ["Image", "Document","Audio","Model","Video"];
 export  class AnnotationBodyParser {
