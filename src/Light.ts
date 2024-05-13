@@ -3,7 +3,8 @@ import {
     IManifestoOptions, 
     Utils,
     AnnotationBody,
-    Color } from "./internal";
+    Color,
+    PointSelector } from "./internal";
 
 export class Light extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -90,4 +91,22 @@ export class Light extends AnnotationBody {
   }
   
   get Angle(): number|undefined { return this.getAngle();}
+  
+  /**
+  * @return : if not null, is either a PointSelector, or an object
+  * with an id matching the id of an Annotation instance.
+  **/
+  getLookAt() : object | PointSelector | null {
+    let rawObj = this.getPropertyAsObject("lookAt" )
+    let rawType = (rawObj["type"] || rawObj["@type"])
+    if (rawType == "Annotation"){
+        return rawObj;
+    }
+    if (rawType == "PointSelector"){
+        return new PointSelector(rawObj);
+    }
+    throw new Error('unidentified value of lookAt ${rawType}');
+  }  
+  get LookAt() : object | null {return this.getLookAt();}
+
 }

@@ -50,6 +50,10 @@ describe('spotlight', function() {
         expect( light.Intensity).to.equal( 0.6 );
         expect( light.Color ).to.exist;
         expect( light.Angle ).to.equal(10.0);
+        
+        let lookAt = light.LookAt;
+        expect(lookAt).to.exist;
+        expect(lookAt.isPointSelector).to.equal(true);
     });
     
     
