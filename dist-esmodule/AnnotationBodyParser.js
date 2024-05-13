@@ -1,5 +1,5 @@
 import { AnnotationBody, Light, Camera } from "./internal";
-var LightTypes = ["AmbientLight", "DirectionalLight"];
+var LightTypes = ["AmbientLight", "DirectionalLight", "SpotLight"];
 var CameraTypes = ["PerspectiveCamera", "OrthographicCamera"];
 var DisplayedTypes = ["Image", "Document", "Audio", "Model", "Video"];
 var AnnotationBodyParser = /** @class */ (function () {

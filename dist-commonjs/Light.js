@@ -39,6 +39,13 @@ var Light = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Light.prototype, "isSpotLight", {
+        get: function () {
+            return (internal_1.Utils.normaliseType(this.getProperty("type")) === "spotlight");
+        },
+        enumerable: false,
+        configurable: true
+    });
     Light.prototype.getColor = function () {
         var hexColor = this.getProperty("color");
         if (hexColor)
@@ -46,6 +53,11 @@ var Light = /** @class */ (function (_super) {
         else
             return new internal_1.Color([255, 255, 255]); // white light
     };
+    Object.defineProperty(Light.prototype, "Color", {
+        get: function () { return this.getColor(); },
+        enumerable: false,
+        configurable: true
+    });
     /**
     * The implementation of the intensity is based on
     * {@link https://github.com/IIIF/3d/blob/main/temp-draft-4.md | temp-draft-4.md }
@@ -74,6 +86,60 @@ var Light = /** @class */ (function (_super) {
         else
             return 1.0;
     };
+    Object.defineProperty(Light.prototype, "Intensity", {
+        get: function () { return this.getIntensity(); },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+    * As defined in the temp-draft-4.md (
+    * https://github.com/IIIF/3d/blob/main/temp-draft-4.md#lights ; 12 May 2024)
+    * this quantity is the half-angle of the cone of the spotlight.
+    *
+    * The inconsistency between this definition of the angle and the definition of
+    * fieldOfView for PerspectiveCamera (where the property value defines the full angle) has
+    * already been noted: https://github.com/IIIF/api/issues/2284
+    *
+    * provisional decision is to return undefined in case that this property
+    * is accessed in a light that is not a spotlight
+    *
+    *
+    * @returns number
+    
+    **/
+    Light.prototype.getAngle = function () {
+        if (this.isSpotLight) {
+            return Number(this.getProperty("angle"));
+        }
+        else {
+            return undefined;
+        }
+    };
+    Object.defineProperty(Light.prototype, "Angle", {
+        get: function () { return this.getAngle(); },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+    * @return : if not null, is either a PointSelector, or an object
+    * with an id matching the id of an Annotation instance.
+    **/
+    Light.prototype.getLookAt = function () {
+        var rawObj = this.getPropertyAsObject("lookAt");
+        var rawType = (rawObj["type"] || rawObj["@type"]);
+        if (rawType == "Annotation") {
+            return rawObj;
+        }
+        if (rawType == "PointSelector") {
+            return new internal_1.PointSelector(rawObj);
+        }
+        throw new Error('unidentified value of lookAt ${rawType}');
+    };
+    Object.defineProperty(Light.prototype, "LookAt", {
+        get: function () { return this.getLookAt(); },
+        enumerable: false,
+        configurable: true
+    });
     return Light;
 }(internal_1.AnnotationBody));
 exports.Light = Light;
