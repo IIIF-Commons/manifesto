@@ -68,6 +68,11 @@ var SpecificResource = /** @class */ (function (_super) {
         }
         throw new Error("cannot resolve Source " + JSON.stringify(raw));
     };
+    Object.defineProperty(SpecificResource.prototype, "Source", {
+        get: function () { return this.getSource(); },
+        enumerable: false,
+        configurable: true
+    });
     SpecificResource.prototype.getSelector = function () {
         var raw = this.getProperty("selector");
         if (raw) {

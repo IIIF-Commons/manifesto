@@ -103,6 +103,7 @@ export declare class SpecificResource extends ManifestResource {
 	isSpecificResource: boolean;
 	constructor(jsonld: any, options?: IManifestoOptions);
 	getSource(): object | AnnotationBody;
+	get Source(): object | AnnotationBody;
 	getSelector(): PointSelector | null;
 	get Selector(): PointSelector | null;
 	getTransform(): Transform[];
@@ -526,7 +527,14 @@ export declare enum ManifestType {
 export declare class PointSelector extends JSONLDResource {
 	isPointSelector: boolean;
 	constructor(jsonld: any);
+	/**
+	@returns the 3D coordinates of the point as a Vector3 instance.
+	**/
 	getLocation(): Vector3;
+	/**
+	@returns the 3D coordinates of the point as a Vector3 instance.
+	**/
+	get Location(): Vector3;
 }
 declare class Range$1 extends ManifestResource {
 	private _ranges;
