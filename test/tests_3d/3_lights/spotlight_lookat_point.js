@@ -49,7 +49,7 @@ describe('spotlight', function() {
         
         expect( light.Intensity).to.equal( 0.6 );
         expect( light.Color ).to.exist;
-        expect( light.Angle ).to.equal(10.0);
+        expect( light.Angle ).to.equal(3.5);
         
         let lookAt = light.LookAt;
         expect(lookAt).to.exist;
