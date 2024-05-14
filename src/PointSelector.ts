@@ -15,13 +15,15 @@ export class PointSelector extends JSONLDResource  {
     super(jsonld);
   }
   
+  /**
+  @returns the 3D coordinates of the point as a Vector3 instance.
+  **/
   getLocation() : Vector3 {
     return new Vector3(this.__jsonld.x, this.__jsonld.y, this.__jsonld.z );
-    /*
-  	return { x:Number(this.__jsonld.x),
-  	         y:Number(this.__jsonld.y),
-  	         z:Number(this.__jsonld.z)
-  	       }
-  	*/
   }
+
+  /**
+  @returns the 3D coordinates of the point as a Vector3 instance.
+  **/  
+  get Location() : Vector3 { return this.getLocation(); }
 }
