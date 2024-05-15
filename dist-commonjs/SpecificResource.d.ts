@@ -13,6 +13,7 @@ export declare class SpecificResource extends ManifestResource {
     isSpecificResource: boolean;
     constructor(jsonld: any, options?: IManifestoOptions);
     getSource(): object | AnnotationBody;
+    get Source(): object | AnnotationBody;
     getSelector(): PointSelector | null;
     get Selector(): PointSelector | null;
     getTransform(): Transform[];

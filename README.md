@@ -21,6 +21,14 @@ This included in package.json
     
 will install manifesto modules into node_modules.
 
+### Demonstration Projects
+[Example manifests](https://github.com/IIIF/3d/tree/main/manifests) conforming to the [Draft API](https://github.com/IIIF/3d/blob/main/temp-draft-4.md) .
+
+[Prototype Viewers](https://github.com/IIIF/3d/issues/28) rendering the example manifests.
+- [Three-JS based viewer](https://codesandbox.io/p/github/JulieWinchester/iiif-threejs-demo)
+- [X3D/X3DOM based viewer](https://codesandbox.io/p/github/vincentmarchetti/iiif-x3dom-demo/main)
+- [Smithsonian Voyager](https://codesandbox.io/p/sandbox/voyager-annotations-demo-forked-l83l6w)
+
 ### ChangeLog
 
 From start point of the version distributed  from  [JulieWinchester/manifesto](https://github.com/JulieWinchester/manifesto/tree/3dtsg-dev-dist)
@@ -61,3 +69,7 @@ distributed from [vincentmarchetti/manifesto#3dtsg-main]() there were these chan
 #### To package.json version 4.3.0-draft3dapi.0.4.0
 
 1. Implemented Perspective Camera properties in the Camera class.
+
+#### To package.json version 4.3.0-draft3dapi.0.5.0
+
+1. Implement lookAt property of Camera class and of Light class.

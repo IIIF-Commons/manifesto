@@ -68,6 +68,8 @@ export class SpecificResource extends ManifestResource  {
   	throw new Error("cannot resolve Source " + JSON.stringify(raw));
   }
   
+  get Source() : object | AnnotationBody {return this.getSource(); }
+  
   getSelector() : PointSelector | null
   {
   	const raw =  this.getProperty("selector");  

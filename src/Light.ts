@@ -3,7 +3,8 @@ import {
     IManifestoOptions, 
     Utils,
     AnnotationBody,
-    Color } from "./internal";
+    Color,
+    PointSelector } from "./internal";
 
 export class Light extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -21,12 +22,18 @@ export class Light extends AnnotationBody {
     return (Utils.normaliseType(this.getProperty("type")) === "directionallight");
   }
   
+  get isSpotLight():boolean {
+    return (Utils.normaliseType(this.getProperty("type")) === "spotlight");
+  }
+  
   getColor():Color {
     var hexColor = this.getProperty("color");
     if (hexColor) return Color.fromCSS(hexColor);
     
     else return new Color([255, 255, 255]); // white light
   }
+  
+  get Color() : Color { return this.getColor(); }
   
   /**
   * The implementation of the intensity is based on 
@@ -55,4 +62,51 @@ export class Light extends AnnotationBody {
     else
         return 1.0;
   }
+  
+  get Intensity() : number { return this.getIntensity(); }
+  
+  /**
+  * As defined in the temp-draft-4.md ( 
+  * https://github.com/IIIF/3d/blob/main/temp-draft-4.md#lights ; 12 May 2024)
+  * this quantity is the half-angle of the cone of the spotlight. 
+  *
+  * The inconsistency between this definition of the angle and the definition of
+  * fieldOfView for PerspectiveCamera (where the property value defines the full angle) has
+  * already been noted: https://github.com/IIIF/api/issues/2284
+  *
+  * provisional decision is to return undefined in case that this property 
+  * is accessed in a light that is not a spotlight
+  *
+  *
+  * @returns number
+  
+  **/
+  getAngle(): number|undefined {
+    if (this.isSpotLight){
+        return Number(this.getProperty("angle") );
+    }
+    else{
+        return undefined;
+    }  
+  }
+  
+  get Angle(): number|undefined { return this.getAngle();}
+  
+  /**
+  * @return : if not null, is either a PointSelector, or an object
+  * with an id matching the id of an Annotation instance.
+  **/
+  getLookAt() : object | PointSelector | null {
+    let rawObj = this.getPropertyAsObject("lookAt" )
+    let rawType = (rawObj["type"] || rawObj["@type"])
+    if (rawType == "Annotation"){
+        return rawObj;
+    }
+    if (rawType == "PointSelector"){
+        return new PointSelector(rawObj);
+    }
+    throw new Error('unidentified value of lookAt ${rawType}');
+  }  
+  get LookAt() : object | null {return this.getLookAt();}
+
 }

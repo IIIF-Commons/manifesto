@@ -22,15 +22,20 @@ var PointSelector = /** @class */ (function (_super) {
         _this.isPointSelector = true;
         return _this;
     }
+    /**
+    @returns the 3D coordinates of the point as a Vector3 instance.
+    **/
     PointSelector.prototype.getLocation = function () {
         return new Vector3(this.__jsonld.x, this.__jsonld.y, this.__jsonld.z);
-        /*
-        return { x:Number(this.__jsonld.x),
-                 y:Number(this.__jsonld.y),
-                 z:Number(this.__jsonld.z)
-               }
-        */
     };
+    Object.defineProperty(PointSelector.prototype, "Location", {
+        /**
+        @returns the 3D coordinates of the point as a Vector3 instance.
+        **/
+        get: function () { return this.getLocation(); },
+        enumerable: false,
+        configurable: true
+    });
     return PointSelector;
 }(JSONLDResource));
 export { PointSelector };

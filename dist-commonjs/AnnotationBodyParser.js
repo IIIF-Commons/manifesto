@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnnotationBodyParser = void 0;
 var internal_1 = require("./internal");
-var LightTypes = ["AmbientLight", "DirectionalLight"];
+var LightTypes = ["AmbientLight", "DirectionalLight", "SpotLight"];
 var CameraTypes = ["PerspectiveCamera", "OrthographicCamera"];
 var DisplayedTypes = ["Image", "Document", "Audio", "Model", "Video"];
 var AnnotationBodyParser = /** @class */ (function () {
