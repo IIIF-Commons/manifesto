@@ -157,6 +157,12 @@ export class ManifestResource extends JSONLDResource {
     return this.getIIIFResourceType() === IIIFResourceType.RANGE;
   }
 
+  // this different implementation is necessary until such time as the 
+  // SCENE is added to the @iiif/vocabulary package.
+  isScene(): boolean {
+    return this.getIIIFResourceType() === <IIIFResourceType>Utils.normaliseType('Scene');
+  }
+  
   isSequence(): boolean {
     return this.getIIIFResourceType() === IIIFResourceType.SEQUENCE;
   }

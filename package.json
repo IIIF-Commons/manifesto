@@ -1,24 +1,22 @@
 {
   "name": "manifesto.js",
-  "version": "4.2.17",
-  "description": "IIIF Presentation API utility library for client and server",
+  "version" : "4.3.0-draft3dapi.0.5.0",
+  "description": "IIIF Presentation API utility library for client and server with 3D extension",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
-  "browser": "./dist-umd/manifesto.js",
-  "unpkg": "./dist-umd/manifesto.js",
-  "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
-    "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
+    "build:docs": "typedoc",
     "build:esmodule": "tsc -m es6 --outDir dist-esmodule",
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:umd": "webpack",
     "build:var": "cross-env NODE_WEBPACK_LIBRARY_PATH=dist-var NODE_WEBPACK_LIBRARY_TARGET=var webpack",
-    "build": "npm run lint:all && npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
-    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
+    "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
+    "clean": "rimraf -rf dist-umd  dist-var types",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
     "test": "mocha",
+    "test:3d": "mocha --config=mocha_3d_tests.js",
     "watch": "npm run build:esmodule -- --watch"
   },
   "engines": {
@@ -27,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iiif-commons/manifesto.git"
+    "url": "git+https://github.com/IIIF-Commons/manifesto.git"
   },
   "keywords": [
     "IIIF"
@@ -35,37 +33,36 @@
   "author": "@edsilv",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iiif-commons/manifesto/issues"
+    "url": "https://github.com/IIIF-Commons/manifesto/issues"
   },
-  "homepage": "https://github.com/iiif-commons/manifesto",
-  "devDependencies": {
-    "@types/node": "8.10.52",
-    "awesome-typescript-loader": "^5.2.1",
-    "chai": "2.3.0",
-    "cross-env": "^5.2.1",
-    "dts-bundle-generator": "^2.1.0",
-    "finalhandler": "0.4.0",
-    "http": "0.0.0",
-    "mocha": "^2.2.4",
-    "prettier": "^1.19.1",
-    "prettier-check": "^2.0.0",
-    "rimraf": "^3.0.0",
-    "serve-static": "^1.14.1",
-    "tslint-config-prettier": "^1.18.0",
-    "typedoc": "^0.15.0",
-    "typescript": "3.6.3",
-    "typescript-tslint-plugin": "^0.5.5",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2",
-    "yargs": "3.10.0"
-  },
+  "homepage": "https://github.com/vincentmarchetti/manifesto",
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
     "@iiif/vocabulary": "^1.0.26",
-    "isomorphic-unfetch": "^3.0.0",
-    "lodash": "^4.17.21"
+    "chai": "^2.3.0",
+    "cross-env": "^7.0.3",
+    "dts-bundle-generator": "^9.1.0",
+    "finalhandler": "^1.2.0",
+    "isomorphic-unfetch": "^4.0.2",
+    "lodash": "^4.17.21",
+    "mocha": "^10.2.0",
+    "node-fetch": "2",
+    "prettier": "^3.1.1",
+    "rimraf": "^5.0.5",
+    "serve-static": "^1.15.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "unfetch": "^4.2.0",
+    "webpack": "^5.89.0",
+    "color-string" : "1.9",
+    "threejs-math" : "^0.147"
   },
   "directories": {
     "test": "test"
+  },
+  "devDependencies": {
+    "cpy-cli": "^5.0.0",
+    "typedoc": "^0.25.8",
+    "webpack-cli": "^5.1.4"
   }
 }
