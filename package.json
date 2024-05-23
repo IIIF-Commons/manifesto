@@ -1,5 +1,5 @@
 {
-  "name": "manifesto.js",
+  "name": "manifesto3d.js",
   "version" : "4.3.0-draft3dapi.0.5.0",
   "description": "IIIF Presentation API utility library for client and server with 3D extension",
   "main": "./dist-commonjs/index.js",
