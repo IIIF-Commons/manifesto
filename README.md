@@ -1,4 +1,4 @@
-# manifesto
+# manifesto-3D
 
 Client and server utility library to support draft 3D extensions to to the IIIF Presentation API client and server utility library.
 
@@ -9,17 +9,11 @@ Goal of implementing the [Draft API](https://github.com/IIIF/3d/blob/main/temp-d
 
 ### Documentation
 
-[Manifesto.js](https://vincentmarchetti.github.io/manifesto/)
+[Manifesto-3D.js](https://iiif-commons.github.io/manifesto-3d/)
 
 ### Loading through package manager
 
-This included in package.json
-
-    "dependencies": {
-    "manifesto.js": "IIIF-Commons/manifesto#draft3dapi",
-    },
-    
-will install manifesto modules into node_modules.
+    npm install manifesto-3d.js --save
 
 ### Demonstration Projects
 [Example manifests](https://github.com/IIIF/3d/tree/main/manifests) conforming to the [Draft API](https://github.com/IIIF/3d/blob/main/temp-draft-4.md) .
