@@ -12,7 +12,7 @@ let manifest,  sequence, scene , model, body, annotations;
 
 let manifest_url = {
         local: "http://localhost:3001/model_origin.json",
-        remote : "https://raw.githubusercontent.com/vincentmarchetti/iiif3dtsg/main/manifests/3_lights/direction_light_transform_rotate.json"
+        remote : "https://raw.githubusercontent.com/vincentmarchetti/iiif3dtsg/main-advanced/manifests/3_lights/direction_light_transform_rotate.json"
     }.remote;
 
 describe('model_origin', function() {
