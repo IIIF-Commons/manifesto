@@ -105,6 +105,10 @@ export class IIIFResource extends ManifestResource {
     );
   }
 
+  getRights(): string | null {
+    return this.getProperty("rights");
+  }
+
   getNavDate(): Date {
     return new Date(this.getProperty("navDate"));
   }
