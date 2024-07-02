@@ -87,7 +87,7 @@ export class IIIFResource extends ManifestResource {
         return null;
       }
 
-      logo = provider.logo;
+      logo = provider[0].logo;
     }
 
     if (!logo) return null;
