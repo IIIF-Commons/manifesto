@@ -87,7 +87,7 @@ export class IIIFResource extends ManifestResource {
         return null;
       }
 
-      logo = provider.logo;
+      logo = provider[0].logo;
     }
 
     if (!logo) return null;
@@ -103,6 +103,10 @@ export class IIIFResource extends ManifestResource {
       this.getProperty("license"),
       this.options.locale
     );
+  }
+
+  getRights(): string | null {
+    return this.getProperty("rights");
   }
 
   getNavDate(): Date {
