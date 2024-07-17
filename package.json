@@ -64,5 +64,8 @@
     "cpy-cli": "^5.0.0",
     "typedoc": "^0.25.8",
     "webpack-cli": "^5.1.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
