@@ -15,7 +15,7 @@
     "clean": "rimraf -rf dist-umd  dist-var types",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
-    "test": "mocha",
+    "test": "mocha --config=mocha_3d_tests.js",
     "test:3d": "mocha --config=mocha_3d_tests.js",
     "watch": "npm run build:esmodule -- --watch"
   },
