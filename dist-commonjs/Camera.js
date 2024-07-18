@@ -33,6 +33,13 @@ var Camera = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Camera.prototype, "isOrthographicCamera", {
+        get: function () {
+            return (internal_1.Utils.normaliseType(this.getProperty("type")) === "orthographiccamera");
+        },
+        enumerable: false,
+        configurable: true
+    });
     /**
     @returns full angular size of perspective viewport in vertical direction.
     Angular unit is degrees
@@ -54,6 +61,32 @@ var Camera = /** @class */ (function (_super) {
         Angular unit is degrees
         **/
         get: function () { return this.getFieldOfView(); },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+    @returns full linear size of orthographic viewport in vertical direction.
+    linear unit is Scene global unit of measure
+    
+    Name of this property was originally Height, has been changed
+    at this revision to ViewHeight:
+    See issues at https://github.com/IIIF/api/issues/2289
+    **/
+    Camera.prototype.getViewHeight = function () {
+        if (this.isOrthographicCamera) {
+            // the term viewHeight for the resource Type was suggested
+            // in https://github.com/IIIF/api/issues/2289#issuecomment-2161608587
+            var value = this.getProperty("viewHeight");
+            if (value)
+                return value;
+            else
+                return undefined;
+        }
+        else
+            return undefined;
+    };
+    Object.defineProperty(Camera.prototype, "ViewHeight", {
+        get: function () { return this.getViewHeight(); },
         enumerable: false,
         configurable: true
     });

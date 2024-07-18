@@ -28,10 +28,27 @@ var ManifestResource = /** @class */ (function (_super) {
     ManifestResource.prototype.getIIIFResourceType = function () {
         return internal_1.Utils.normaliseType(this.getProperty("type"));
     };
+    /**
+    * returns the PropertyValue which in turn allows a language-specific string
+    * encoded in the json as the "label" property
+    * @example
+    * var label = manifest.getLabel().getValue(); // returns the string for default locale
+    *
+    * @example
+    * var label = manifest.getLabel().getValue(locale); // locale a string , examples
+    *                                                   // would be "fr", "en-US",
+    **/
     ManifestResource.prototype.getLabel = function () {
         var label = this.getProperty("label");
         if (label) {
             return internal_1.PropertyValue.parse(label, this.options.locale);
+        }
+        return new internal_1.PropertyValue([], this.options.locale);
+    };
+    ManifestResource.prototype.getSummary = function () {
+        var summary = this.getProperty("summary");
+        if (summary) {
+            return internal_1.PropertyValue.parse(summary, this.options.locale);
         }
         return new internal_1.PropertyValue([], this.options.locale);
     };

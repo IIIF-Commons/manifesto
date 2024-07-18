@@ -116,6 +116,9 @@ var Annotation = /** @class */ (function (_super) {
         if (rawTarget.type && rawTarget.type == "SpecificResource") {
             return new internal_1.SpecificResource(rawTarget, this.options);
         }
+        else if (["Scene", "Canvas"].includes(rawTarget.type)) {
+            return rawTarget;
+        }
         else {
             throw new Error("unknown target specified");
         }
