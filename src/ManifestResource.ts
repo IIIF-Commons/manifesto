@@ -28,11 +28,31 @@ export class ManifestResource extends JSONLDResource {
     return <IIIFResourceType>Utils.normaliseType(this.getProperty("type"));
   }
 
+  /**
+  * returns the PropertyValue which in turn allows a language-specific string
+  * encoded in the json as the "label" property
+  * @example
+  * var label = manifest.getLabel().getValue(); // returns the string for default locale
+  * 
+  * @example
+  * var label = manifest.getLabel().getValue(locale); // locale a string , examples
+  *                                                   // would be "fr", "en-US",
+  **/
   getLabel(): PropertyValue {
     const label: any = this.getProperty("label");
 
     if (label) {
       return PropertyValue.parse(label, this.options.locale);
+    }
+
+    return new PropertyValue([], this.options.locale);
+  }
+  
+  getSummary(): PropertyValue {
+    const summary: any = this.getProperty("summary");
+
+    if (summary) {
+      return PropertyValue.parse(summary, this.options.locale);
     }
 
     return new PropertyValue([], this.options.locale);
