@@ -12,7 +12,7 @@ let manifest,  sequence, scene , model, body, annotations;
 
 let manifest_url = {
         local: "http://localhost:3001/model_origin.json",
-        remote : "https://raw.githubusercontent.com/vincentmarchetti/iiif3dtsg/main-advanced/manifests/3_lights/direction_light_transform_rotate.json"
+        remote : "https://raw.githubusercontent.com/IIIF/3d/main/manifests/3_lights/direction_light_transform_rotate.json"
     }.remote;
 
 describe('model_origin', function() {
@@ -38,12 +38,14 @@ describe('model_origin', function() {
         expect(scene.isScene()).to.be.ok;
         annotations = scene.getContent();
         expect(annotations.length).to.equal(2);
-        
-        
     });
         
     
     it('with a directional light', function(){
+        var directional_light_target = annotations[1].getTarget();
+        expect(directional_light_target).to.exist;
+        
+        
         var directional_light_body = annotations[1].getBody()[0];
         //console.log("directional_light_body.isSpecificResource " + directional_light_body.isSpecificResource);
         
@@ -58,11 +60,13 @@ describe('model_origin', function() {
         expect(directional_light.isDirectionalLight).to.equal(true);
         
         var color = directional_light.getColor();
-        expect(color.red).to.equal(0);
+        // test for default color
+        expect(color.red).to.equal(255);
         expect(color.green).to.equal(255);
-        expect(color.blue).to.equal(0);
+        expect(color.blue).to.equal(255);
         
-        expect(directional_light.getIntensity()).to.equal(0.5);
+        // test for default intensity
+        expect(directional_light.getIntensity()).to.equal(1.0);
         
         
         var transforms = directional_light_transform.getTransform();

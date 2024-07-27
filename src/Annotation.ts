@@ -118,6 +118,10 @@ export class Annotation extends ManifestResource {
     {
     	return new SpecificResource(rawTarget, this.options);
     }
+    else if ( ["Scene", "Canvas"].includes( rawTarget.type ))
+    {
+        return rawTarget;
+    }
     else
     {
         throw new Error("unknown target specified");
