@@ -3,3 +3,8 @@ npm-debug.log
 node_modules
 dist
 debug.log
+dist-commonjs
+dist-esmodule
+dist-umd
+dist-var
+types
