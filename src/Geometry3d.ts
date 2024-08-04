@@ -1,4 +1,5 @@
-import { Vector3, MathUtils , Euler, Quaternion } from "threejs-math";
+import { Vector3, MathUtils , Euler, Quaternion , IOrder} from "threejs-math";
+import { RotateTransform } from "./internal";
 // https://ros2jsguy.github.io/threejs-math/index.html
 
 
@@ -62,4 +63,24 @@ export function lightRelativeRotation(direction : Vector3 ): Euler {
     // standard be setting the final intrinsic Y rotation, which is
     // along desired direction, to 0
     return new Euler( tmp.x, 0.0, tmp.z, "ZXY" );
+}
+
+/**
+* Implements the convention that the 3 component values for the RotateTranform
+* cass (properties  x,y,z) are to be interpreted as Euler angles in the intrinsic XYZ
+* order
+* @param transform : A object with a Rotation member object, properties x,y,z
+
+* 
+* @returns threejs-math.EulerAngle instance. From this  threejs-math functionsa
+* allow conversion to other rotation representations.
+**/
+export function eulerFromRotateTransform( transform : RotateTransform ) : Euler {
+    var eulerOrder : IOrder = "XYZ";
+    var rdata : any = transform.Rotation;
+    
+    return new Euler(   MathUtils.degToRad( rdata.x) ,
+                        MathUtils.degToRad( rdata.y),
+                        MathUtils.degToRad( rdata.z),
+                        eulerOrder);
 }
