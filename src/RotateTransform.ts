@@ -18,5 +18,7 @@ export class RotateTransform extends Transform {
         }
         return retVal;
     }
+    
+    get Rotation() : object { return this.getRotation(); }
   
 };
