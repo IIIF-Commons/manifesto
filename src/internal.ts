@@ -10,6 +10,7 @@ export * from "./SpecificResource";
 export * from "./AnnotationBody";
 export * from "./Light";
 export * from "./Camera";
+export * from "./TextualBody";
 export * from "./AnnotationBodyParser";
 export * from "./Annotation";
 
