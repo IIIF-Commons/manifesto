@@ -5,7 +5,8 @@ import {
   IManifestoOptions,
   ManifestResource,
   Resource,
-  SpecificResource
+  SpecificResource,
+  TextualBody
 } from "./internal";
 
 import { Vector3 } from "threejs-math";
@@ -23,6 +24,28 @@ export class Annotation extends ManifestResource {
   **/
   getBody(): ( AnnotationBody | SpecificResource) [] {
     let bodies: ( AnnotationBody | SpecificResource)[] = [];
+    
+    /*
+    A bodyValue property in the annotation json will short circuit
+    the parsing process and be interpreted as a shorthand version of
+    a TextualBody resource defining as the body
+    
+    This procedure is allowed, see Web Annotation Data Model section 3.2.5
+    https://www.w3.org/TR/annotation-model/#string-body
+    */
+    
+    var stringBody : string | undefined = this.getProperty("bodyValue");
+    //console.log("retrieved stringBody " + stringBody);
+    if (stringBody){
+        return [new TextualBody(
+            { "id" : "https://example.com/TextualBody/1",
+              "value" : stringBody,
+              "type"  : "TextualBody"
+            },
+            this.options
+        )];
+    }
+    
     const body: any = this.getProperty("body");
     
     // the following is intended to handle the following cases for

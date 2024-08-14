@@ -148,6 +148,10 @@ function run_iiif3d_tests(){
         importTest('orthographic_camera_lookat_point', './tests_3d/2_cameras/orthographic_camera_lookat_point.js');     
     }); 
      
+    describe("xx_whale_comments" , function(){
+        importTest('c_comments_with_camera', './tests_3d/xx_whale_comments/c_comment_annotation_camera.js');   
+            
+    }); 
 }
 
 
