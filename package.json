@@ -1,6 +1,6 @@
 {
   "name": "@iiif/3d-manifesto-dev",
-  "version" : "0.5.0",
+  "version" : "0.5.2.4",
   "description": "IIIF Presentation API utility library for client and server with 3D extension",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
