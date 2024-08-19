@@ -41,16 +41,15 @@ export class JSONLDResource {
   {
     let prop = this.getProperty(name);
     
-    if ( prop === null)
-        return prop;
-    else if ( typeof(prop) === 'string')
+    
+    if ( typeof(prop) === 'string')
         return { "id" : prop ,
                  "isIRI" : true
                };
     else if ( prop === Object(prop))
         return prop;
     else{
-        throw new Error("cannot resolve prop as object: " + prop );
+        return null;
     }
   }
 }

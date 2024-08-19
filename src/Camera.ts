@@ -70,6 +70,8 @@ export class Camera extends AnnotationBody {
   **/
   getLookAt() : object | PointSelector | null {
     let rawObj = this.getPropertyAsObject("lookAt" )
+    if ( ! rawObj) return null;
+    
     let rawType = (rawObj["type"] || rawObj["@type"])
     if (rawType == "Annotation"){
         return rawObj;
