@@ -69,17 +69,20 @@ export class Camera extends AnnotationBody {
   * with an id matching the id of an Annotation instance.
   **/
   getLookAt() : object | PointSelector | null {
-    let rawObj = this.getPropertyAsObject("lookAt" )
-    if ( ! rawObj) return null;
+    let rawObj = this.getPropertyAsObject("lookAt" ) ??  null;
+    if ( rawObj == null ) return null;
     
-    let rawType = (rawObj["type"] || rawObj["@type"])
-    if (rawType == "Annotation"){
+    let rawType = (rawObj["type"] || rawObj["@type"]) ??  null;
+    if (rawType == null ) return null;
+        
+    if (rawType == "Annotation")
         return rawObj;
-    }
-    if (rawType == "PointSelector"){
+    else if (rawType == "PointSelector")
         return new PointSelector(rawObj);
+    else{
+        console.error('unidentified value of lookAt ${rawType}');
+        return null;
     }
-    throw new Error('unidentified value of lookAt ${rawType}');
   }  
   get LookAt() : object | null {return this.getLookAt();}
 
