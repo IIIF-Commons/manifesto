@@ -87,8 +87,9 @@ export class IIIFResource extends ManifestResource {
         return null;
       }
 
-      // get the first object in the provider array with a logo
-      logo = provider.find(item => item.logo !== undefined);
+      // get the first agent in the provider array with a logo
+      const agent = provider.find(item => item.logo !== undefined);
+      logo = agent.logo
     }
 
     if (!logo) return null;
