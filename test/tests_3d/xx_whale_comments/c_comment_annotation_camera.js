@@ -59,6 +59,15 @@ describe('c_comment_annotation_camera', function() {
         expect(camera.isPerspectiveCamera).to.equal(true);        
     });
     
+    it('camera has null LookAt property', function(){
+        var annotations = scene.getContent();
+        var body = annotations[3].getBody()[0];
+        var camera = body.isSpecificResource?body.Source:body;
+                      
+
+        expect(camera.LookAt).to.equal(null);       
+    });
+    
     it('all annotation have a body', function(){
         var annotations = scene.getContent();
         for (var i = 0; i < annotations.length; ++i){
