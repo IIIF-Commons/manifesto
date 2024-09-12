@@ -48,6 +48,23 @@ export function cameraRelativeRotation(direction : Vector3 ): Euler {
     return new Euler(xAngleRad, yAngleRad, 0.0, "YXZ");
 };
 
+/**
+* Evaluates the rotation required to transform a directional light
+* or spot ling, which in iiif 3D spec
+* have an initial direction in the -Y direction, to a direction 
+* along the input argument
+*
+* TODO : expand on this documentation taking into account the
+*        implied specification that RotateTransform instances
+*        are to be interpreted as an Euler angle definition of
+*        the rotation
+*
+* @param direction A vector interpreted as a direction. Client code
+*        responsible for not passing a 0-length vector, else a
+* 
+* @returns threejs-math.EulerAngle instance
+**/
+
 export function lightRelativeRotation(direction : Vector3 ): Euler {
     if (direction.length() == 0.0)
         throw new Error("degenerate geometry: cameraRelativeRotation");
