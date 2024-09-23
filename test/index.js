@@ -55,7 +55,7 @@ importTest('rijksmuseum-image-api-v3-thumbnails', './tests/rijksmuseum-image-api
 // importTest('items-not-sequence', './tests/items-not-sequence');
 // importTest('LabelValuePair', './tests/LabelValuePair.test');
 // importTest('LanguageMap', './tests/LanguageMap.test');
-// importTest('logo', './tests/logo');
+importTest('logo', './tests/logo');
 // importTest('lunchroommanners', './tests/lunchroommanners');
 // importTest('manifest-with-thumbnail', './tests/manifest-with-thumbnail');
 // importTest('members-collection', './tests/members-collection');
@@ -75,7 +75,7 @@ importTest('rijksmuseum-image-api-v3-thumbnails', './tests/rijksmuseum-image-api
 // importTest('pres3-collection3', './tests/pres3-collection3');
 // importTest('pres3-collection4', './tests/pres3-collection4');
 // importTest('pres3-pdf', './tests/pres3-pdf');
-// importTest('pres3', './tests/pres3');
+importTest('pres3', './tests/pres3');
 // importTest('presentation2-paging', './tests/presentation2-paging');
 // importTest('presentation3-paging', './tests/presentation3-paging');
 // importTest('PropertyValue', './tests/PropertyValue.test')
