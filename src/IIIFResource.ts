@@ -87,7 +87,9 @@ export class IIIFResource extends ManifestResource {
         return null;
       }
 
-      logo = provider[0].logo;
+      // get the first agent in the provider array with a logo
+      const agent = provider.find(item => item.logo !== undefined);
+      logo = typeof agent.logo === "undefined" ? null : agent.logo;
     }
 
     if (!logo) return null;
@@ -106,7 +108,13 @@ export class IIIFResource extends ManifestResource {
   }
 
   getRights(): string | null {
-    return this.getProperty("rights");
+    var rights = this.getProperty("rights");
+    if (!rights) return null;
+    if (typeof rights === "string") return rights;
+    if (Array.isArray(rights) && rights.length) {
+      rights = rights[0];
+    }
+    return rights["@id"] || rights.id;
   }
 
   getNavDate(): Date {
