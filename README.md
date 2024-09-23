@@ -6,6 +6,11 @@ IIIF Presentation API client and server utility library.
 
     npm install manifesto.js --save
 
+> [!NOTE]
+> 3D extensions to the manifesto.js library are under development in a fork [IIIF-Commons/manifesto-3d](https://github.com/IIIF-Commons/manifesto-3d).
+> This development is being performed in parallel with development of 3D extensions to the IIIF APIs documented in [IIIF/3d](https://github.com/IIIF/3d).
+
+
 ## Getting Started
 
 ### Documentation
