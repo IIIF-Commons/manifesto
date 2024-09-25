@@ -9,7 +9,13 @@ export class RotateTransform extends Transform {
         
     }
 
-    
+/**
+* Returns an object with x,y,z attributes whose values are
+* a counter-clockwise rotation in degrees about the fixed coordinate
+* system axes.
+*
+* @returns object
+**/    
     getRotation() : object {
         var retVal = {};
         for (const attrib of ["x","y","z"]){
@@ -18,7 +24,12 @@ export class RotateTransform extends Transform {
         }
         return retVal;
     }
-    
+
+/**
+* accessor Rotation is an object with x,y,z attributes whose values are
+* a counter-clockwise rotation in degrees about the fixed coordinate
+* system axes.
+**/     
     get Rotation() : object { return this.getRotation(); }
   
 };
