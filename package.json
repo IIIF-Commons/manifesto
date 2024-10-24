@@ -9,7 +9,7 @@
   "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
-    "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --suppressImplicitAnyIndexErrors --module commonjs src/ && touch docs/.nojekyll",
+    "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --module commonjs src/ && touch docs/.nojekyll",
     "build:esmodule": "tsc -m es6 --outDir dist-esmodule",
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:umd": "webpack",
@@ -43,7 +43,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "chai": "2.3.0",
     "cross-env": "^5.2.1",
-    "dts-bundle-generator": "^2.1.0",
+    "dts-bundle-generator": "^9.5.1",
     "finalhandler": "1.3.1",
     "http": "0.0.0",
     "mocha": "^10.7.3",
