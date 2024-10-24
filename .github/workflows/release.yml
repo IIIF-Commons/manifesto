@@ -19,7 +19,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '18'
       - run: npm ci
       - run: npm run build
       - run: npm run test
@@ -39,13 +39,14 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '18'
 
       - name: Set tag
         id: tagName
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - run: npm ci
+      - run: npm run build
 
       - uses: JS-DevTools/npm-publish@v3
         with:
