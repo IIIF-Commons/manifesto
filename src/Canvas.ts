@@ -170,7 +170,7 @@ export class Canvas extends Resource {
       profile = this.externalResource.data.profile;
 
       if (Array.isArray(profile)) {
-        profile = profile.filter(p => p["maxWidth" || "maxwidth"])[0];
+        profile = profile.filter(p => p["maxWidth"] ?? p["maxwidth"])[0];
 
         if (profile) {
           maxDimensions = new Size(
