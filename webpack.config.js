@@ -44,9 +44,7 @@ const config = {
         rules: [
             {
                 test: /\.ts$/,
-                use: [
-                    { loader: 'awesome-typescript-loader' }
-                ]
+                loader: 'ts-loader'
             }
         ]
     }
