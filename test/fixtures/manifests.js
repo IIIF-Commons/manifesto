@@ -60,7 +60,8 @@ module.exports = {
     "sctagracilis": "http://localhost:3001/sctagracilis.json",
     "riksmuseumimageapiv3thumbnails": "http://localhost:3001/riksmuseum-image-api-v3-thumbnails.json",
     //"query-bodleian": "http://iiif.bodleian.ox.ac.uk/iiif/manifest/f22e9dae-c070-48eb-be0b-aa6c5bc195a6.json",
-    //"query-gams": "http://gams.uni-graz.at/cocoon/mets2json?source=http%3A%2F%2Fgams.uni-graz.at%2Farchive%2Fget%2Fo%3Asrbas.1535%2FMETS_SOURCE"
+    //"query-gams": "http://gams.uni-graz.at/cocoon/mets2json?source=http%3A%2F%2Fgams.uni-graz.at%2Farchive%2Fget%2Fo%3Asrbas.1535%2FMETS_SOURCE",
+    "v3ProviderNoLogo": "http://localhost:3001/YaleCanterburyTalesV3ProviderNoLogo.json"
 };
 
 //BBoM: http://wellcomelibrary.org/iiif/b18031511/manifest
