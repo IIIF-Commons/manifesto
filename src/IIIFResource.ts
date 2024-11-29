@@ -161,7 +161,7 @@ export class IIIFResource extends ManifestResource {
       // fall back to attribution (if it exists)
       const attribution: PropertyValue = this.getAttribution();
 
-      if (attribution) {
+      if (attribution && attribution.length) {
         requiredStatement = new LabelValuePair(this.options.locale);
         requiredStatement.value = attribution;
       }
