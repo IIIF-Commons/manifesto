@@ -101,7 +101,7 @@ export class IIIFResource extends ManifestResource {
     if (Array.isArray(logo) && logo.length) {
       logo = logo[0];
     }
-    return logo["@id"] || logo.id;
+    return logo["@id"] || logo?.id;
   }
 
   getLicense(): string | null {
