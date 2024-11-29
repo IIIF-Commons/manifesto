@@ -1,6 +1,6 @@
 # manifesto
 
-[![Build Status](https://travis-ci.org/IIIF-Commons/manifesto.svg?branch=master)](https://travis-ci.org/IIIF-Commons/manifesto)
+[![Build Status](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml/badge.svg?branch=master)](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml)
 
 IIIF Presentation API client and server utility library.
 
