@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
-var manifesto = require('../../../dist-commonjs/');
+var manifesto = require('../../../dist-commonjs');
 //var manifests_3d = require('../fixtures/manifests_3d');
 
 
@@ -12,7 +12,7 @@ let manifest,   scene , annotations, body;
 
 let manifest_url = {
         local: "",
-        remote : "https://raw.githubusercontent.com/IIIF/3d/whale_anno/manifests/xx_whale_comments/c_comment_annotation_camera.json"
+        remote : "https://raw.githubusercontent.com/IIIF/3d/whale_anno/manifests/9_commenting_annotations/whale_comment_camera.json"
     }.remote;
 
 describe('c_comment_annotation_camera', function() {
