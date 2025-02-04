@@ -34,20 +34,16 @@ describe('positioned_camera_lookat_anno', function() {
         expect(scene.isScene()).to.be.ok;
         annotations = scene.getContent();
         expect(annotations.length).to.equal(2);
-        
-        
     });
     
-    it('has 1th annotation a Camera', function(){
+    it('has 1st annotation a Camera', function(){
         var camera_anno = annotations[1];
-        let body = camera_anno.getBody()[0];
-        let camera  =   (body.isSpecifResource)?body.getTarget():
-                        (body.isAnnotationBody)?body:
-                        null;
+        let camera  = camera_anno.getBody()[0];
                         
-        expect(camera.isCamera).to.equal(true);
-        expect(camera.isPerspectiveCamera).to.equal(true);
-        expect(camera.isModel).to.equal(false,"checking isModel=false");
+        expect(camera.isSpecificResource()).to.equal(false);
+        expect(camera instanceof manifesto.Camera).to.equal(true);
+        expect(camera.isPerspectiveCamera()).to.equal(true);
+        expect(camera.isModel()).to.equal(false,"checking isModel()=false");
         expect(camera.FieldOfView).to.equal(45.0);
         
         let lookedAt = camera.LookAt;
@@ -56,13 +52,11 @@ describe('positioned_camera_lookat_anno', function() {
         let lookedAtAnnotation = scene.getAnnotationById( lookedAt.id );
         expect( lookedAtAnnotation, "find the lookAt annotation in scene?").to.exist;
         
-        
         let lookedAtLocation = lookedAtAnnotation.LookAtLocation;
         expect( lookedAtLocation ).to.exist;
         
         let testLocation = [lookedAtLocation.x,lookedAtLocation.y,lookedAtLocation.z];
         expect(testLocation).to.deep.equal( [0.0,0.0,0.0]);
-        
         
         let lookedFromLocation = camera_anno.LookAtLocation ;
         let direction = lookedAtLocation.clone().sub( lookedFromLocation );

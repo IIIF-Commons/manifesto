@@ -54,12 +54,9 @@ describe('model_origin', function() {
     
     it('and body is an AnnotationBody', function(){        
         body = annotation.getBody()[0];
-        expect( body.isModel ).to.equal(true);
+        expect( body.isModel() ).to.equal(true);
         expect(Array.isArray(body)).to.equal(false);
-        
-        expect(body.isSpecificResource).to.equal(false);
-        expect(body.isAnnotationBody).to.equal(true);
-        
+        expect(body.isSpecificResource()).to.equal(false);
         body.getType().should.equal(ExternalResourceType.MODEL);
     });
     

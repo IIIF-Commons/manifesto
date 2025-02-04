@@ -9,21 +9,6 @@ import {
 export class Light extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
     super(jsonld, options);
-    this.isLight = true;
-    this.isModel = false;
-  }
-
-
-  get isAmbientLight():boolean {
-    return (Utils.normaliseType(this.getProperty("type")) === "ambientlight");
-  }
-  
-  get isDirectionalLight():boolean {
-    return (Utils.normaliseType(this.getProperty("type")) === "directionallight");
-  }
-  
-  get isSpotLight():boolean {
-    return (Utils.normaliseType(this.getProperty("type")) === "spotlight");
   }
   
   getColor():Color {
@@ -82,7 +67,7 @@ export class Light extends AnnotationBody {
   
   **/
   getAngle(): number|undefined {
-    if (this.isSpotLight){
+    if (this.isSpotLight()){
         return Number(this.getProperty("angle") );
     }
     else{
@@ -109,4 +94,19 @@ export class Light extends AnnotationBody {
   }  
   get LookAt() : object | null {return this.getLookAt();}
 
+  isAmbientLight(): boolean {
+    return (Utils.normaliseType(this.getType() || "") === "ambientlight");
+  }
+  
+  isDirectionalLight(): boolean {
+    return (Utils.normaliseType(this.getType() || "") === "directionallight");
+  }
+
+  isPointLight(): boolean {
+    return (Utils.normaliseType(this.getType() || "") === "pointlight");
+  }
+  
+  isSpotLight(): boolean {
+    return (Utils.normaliseType(this.getType() || "") === "spotlight");
+  }
 }

@@ -38,16 +38,14 @@ describe('positioned_camera_lookat_point', function() {
         
     });
     
-    it('has 1th annotation a Camera', function(){
+    it('has 1st annotation a Camera', function(){
         var camera_anno = annotations[1];
-        let body = camera_anno.getBody()[0];
-        let camera  =   (body.isSpecifResource)?body.getTarget():
-                        (body.isAnnotationBody)?body:
-                        null;
+        let camera = camera_anno.getBody()[0];
                         
-        expect(camera.isCamera).to.equal(true);
-        expect(camera.isPerspectiveCamera).to.equal(true);
-        expect(camera.isModel).to.equal(false,"checking isModel=false");
+        expect(camera.isSpecificResource()).to.equal(false);
+        expect(camera instanceof manifesto.Camera).to.equal(true);
+        expect(camera.isPerspectiveCamera()).to.equal(true);
+        expect(camera.isModel()).to.equal(false,"checking isModel()=false");
         expect(camera.FieldOfView).to.equal(45.0);
         
         let lookedAt = camera.LookAt;

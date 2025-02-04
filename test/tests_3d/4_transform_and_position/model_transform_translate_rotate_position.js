@@ -44,7 +44,7 @@ describe('model_transform_translate_rotate_position', function() {
     
     it('with 1 SpecificResource body', function(){
         body = annotation.getBody()[0];        
-        expect( body.isSpecificResource ).to.be.ok ;
+        expect( body.isSpecificResource() ).to.be.ok ;
         var transform = body.getTransform();
         expect(Array.isArray(transform)).to.be.ok;
         expect(transform.length).to.equal(2);
@@ -68,7 +68,7 @@ describe('model_transform_translate_rotate_position', function() {
     });
     
     it('with source pointing to manifest', function(){
-        expect( body.isSpecificResource ).to.be.ok ;
+        expect( body.isSpecificResource() ).to.be.ok ;
         var source = body.getSource();
         source.id.should.include('astronaut.glb');
     })

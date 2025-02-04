@@ -47,17 +47,16 @@ describe('model_origin', function() {
         
         
         var directional_light_body = annotations[1].getBody()[0];
-        //console.log("directional_light_body.isSpecificResource " + directional_light_body.isSpecificResource);
+        //console.log("directional_light_body.isSpecificResource() " + directional_light_body.isSpecificResource());
         
-        expect(directional_light_body.isSpecificResource).to.equal(true);
-        expect(directional_light_body.isAnnotationBody).to.equal(false);
+        expect(directional_light_body.isSpecificResource()).to.equal(true);
         directional_light_transform = directional_light_body;
         directional_light = directional_light_body.getSource();
         
-        expect(directional_light.isModel).to.not.be.ok;
-        expect(directional_light.isLight).to.equal(true);
-        expect(directional_light.isAmbientLight).to.not.be.ok;
-        expect(directional_light.isDirectionalLight).to.equal(true);
+        expect(directional_light.isModel()).to.not.be.ok;
+        expect(directional_light instanceof manifesto.Light).to.equal(true);
+        expect(directional_light.isAmbientLight()).to.not.be.ok;
+        expect(directional_light.isDirectionalLight()).to.equal(true);
         
         var color = directional_light.getColor();
         // test for default color

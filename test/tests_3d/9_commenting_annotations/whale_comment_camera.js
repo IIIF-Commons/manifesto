@@ -43,27 +43,23 @@ describe('c_comment_annotation_camera', function() {
         var annotations = scene.getContent();
         expect(annotations.length).to.equal(4);
         var textBody = annotations[2].getBody()[0];
-        expect(textBody.isTextualBody).to.equal(true);
+        expect(textBody instanceof manifesto.TextualBody).to.equal(true);
         expect(textBody.Value).to.exist;
     });
     
     it('annotation 4 is a camera', function(){
         var annotations = scene.getContent();
         expect(annotations.length).to.equal(4);
-        var body = annotations[3].getBody()[0];
-        expect(body).to.exist;
-        var camera = body.isSpecificResource?body.Source:body;
+        var camera = annotations[3].getBody()[0];
+        expect(camera).to.exist;
                       
-
-        expect(camera.isCamera).to.equal(true);
-        expect(camera.isPerspectiveCamera).to.equal(true);        
+        expect(camera instanceof manifesto.Camera).to.equal(true);
+        expect(camera.isPerspectiveCamera()).to.equal(true);        
     });
     
     it('camera has null LookAt property', function(){
         var annotations = scene.getContent();
-        var body = annotations[3].getBody()[0];
-        var camera = body.isSpecificResource?body.Source:body;
-                      
+        var camera = annotations[3].getBody()[0];
 
         expect(camera.LookAt).to.equal(null);       
     });
@@ -75,7 +71,5 @@ describe('c_comment_annotation_camera', function() {
             var body = annotations[i].getBody()[0];
             expect(body, custom_message).to.exist;
         }
-    });
-
-        
+    });   
 });
