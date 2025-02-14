@@ -19,11 +19,24 @@ export class AnnotationBody extends ManifestResource {
     super(jsonld, options);
   }
 
+  // Get resource URI ID from either body (for content resource) or source (for specific resource)
+  getResourceID(): string | null {
+    if (this.isSpecificResource()) {
+      const source = this.getSource();
+      if (source instanceof AnnotationBody) {
+        return source.id;
+      } else {
+        return source || this.id;
+      }
+    } else {
+      return this.id;
+    }
+  }
 
   // Format, Type, Width, and Height are the body properties supported
   // in the code that supports Presentation 3
   getFormat(): MediaType | null {
-    const format: string = this.getProperty("format");
+    const format: string = this.getPropertyFromSelfOrSource("format");
  
     if (format) {
       return Utils.getMediaType(format);
@@ -60,15 +73,23 @@ export class AnnotationBody extends ManifestResource {
 
   // Some properties may be on this object or (for SpecificResource) in source object
   getPropertyFromSelfOrSource(prop): any {
-    return this.isSpecificResource() ? this.getSource()?.getProperty(prop) : this.getProperty(prop);
+    if (this.isSpecificResource() && this.getSource() instanceof AnnotationBody) {
+      return (this.getSource() as AnnotationBody).getProperty(prop);
+    } else {
+      return this.getProperty(prop);
+    }
   }
 
   // Get the first source available on the annotation body, if any
-  getSource(): AnnotationBody | null {
+  getSource(): AnnotationBody | string | null {
     const source: object = ([].concat(this.getPropertyAsObject("source")))[0];
 
     if (source) {
-      return AnnotationBodyParser.BuildFromJson(source, this.options);
+      if (source["isIRI"] === true) {
+        return source["id"];
+      } else {
+        return AnnotationBodyParser.BuildFromJson(source, this.options);
+      }   
     }
 
     return null;

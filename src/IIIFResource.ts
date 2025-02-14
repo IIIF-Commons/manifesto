@@ -105,6 +105,16 @@ export class IIIFResource extends ManifestResource {
     );
   }
 
+  getRights(): string | null {
+    var rights = this.getProperty("rights");
+    if (!rights) return null;
+    if (typeof rights === "string") return rights;
+    if (Array.isArray(rights) && rights.length) {
+      rights = rights[0];
+    }
+    return rights["@id"] || rights.id;
+  }
+
   getNavDate(): Date {
     return new Date(this.getProperty("navDate"));
   }

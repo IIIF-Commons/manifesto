@@ -69,9 +69,12 @@ describe('model_origin', function() {
         
     });
 
-    
     it('body id looks like a model url', function(){        
         body.id.should.include('astronaut.glb');
+    });
+
+    it('body resource URI id looks like a model url', function(){        
+        body.getResourceID().should.include('astronaut.glb');
     });
     
     it('body Format (if defined) is glb or glTF', function(){
