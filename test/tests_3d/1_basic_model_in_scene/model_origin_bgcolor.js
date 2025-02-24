@@ -8,7 +8,7 @@ var ExternalResourceType = require('@iiif/vocabulary/dist-commonjs/').ExternalRe
 var MediaType = require('@iiif/vocabulary/dist-commonjs/').MediaType;
 
 
-let manifest,  sequence, scene ;
+let manifest, sequence, scene;
 
 let manifest_url = {
         local: "http://localhost:3001/model_origin_bgcolor.json",

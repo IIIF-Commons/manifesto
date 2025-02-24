@@ -7,28 +7,15 @@ import {
 export class Camera extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
     super(jsonld, options);
-    this.isModel  = false;
-    this.isLight  = false;
-    this.isCamera  = true;
   }
-
-
-
-  get isPerspectiveCamera():boolean {
-    return (Utils.normaliseType(this.getProperty("type")) === "perspectivecamera");
-  }
-  
-  get isOrthographicCamera():boolean{
-    return (Utils.normaliseType(this.getProperty("type")) === "orthographiccamera");
-  }
-  
+ 
   /**
   @returns full angular size of perspective viewport in vertical direction.
   Angular unit is degrees
   **/
   getFieldOfView(): number | undefined 
   {
-    if (this.isPerspectiveCamera){
+    if (this.isPerspectiveCamera()){
         var value = this.getProperty("fieldOfView");
         if (value) return value;
         else return 45.0;
@@ -51,7 +38,7 @@ export class Camera extends AnnotationBody {
   **/
   getViewHeight(): number | undefined 
   {
-    if (this.isOrthographicCamera){
+    if (this.isOrthographicCamera()){
         // the term viewHeight for the resource Type was suggested
         // in https://github.com/IIIF/api/issues/2289#issuecomment-2161608587
         var value = this.getProperty("viewHeight");
@@ -87,4 +74,12 @@ export class Camera extends AnnotationBody {
   get LookAt() : object | null {return this.getLookAt();}
 
   // TODO implement near and far properties
+
+  isPerspectiveCamera(): boolean {
+    return (Utils.normaliseType(this.getType() || "") === "perspectivecamera");
+  }
+  
+  isOrthographicCamera(): boolean{
+    return (Utils.normaliseType(this.getType() || "") === "orthographiccamera");
+  }
 };

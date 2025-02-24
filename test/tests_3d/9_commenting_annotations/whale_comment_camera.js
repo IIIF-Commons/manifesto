@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
-var manifesto = require('../../../dist-commonjs/');
+var manifesto = require('../../../dist-commonjs');
 //var manifests_3d = require('../fixtures/manifests_3d');
 
 
@@ -12,7 +12,7 @@ let manifest,   scene , annotations, body;
 
 let manifest_url = {
         local: "",
-        remote : "https://raw.githubusercontent.com/IIIF/3d/whale_anno/manifests/xx_whale_comments/c_comment_annotation_camera.json"
+        remote : "https://raw.githubusercontent.com/IIIF/3d/whale_anno/manifests/9_commenting_annotations/whale_comment_camera.json"
     }.remote;
 
 describe('c_comment_annotation_camera', function() {
@@ -43,27 +43,23 @@ describe('c_comment_annotation_camera', function() {
         var annotations = scene.getContent();
         expect(annotations.length).to.equal(4);
         var textBody = annotations[2].getBody()[0];
-        expect(textBody.isTextualBody).to.equal(true);
+        expect(textBody instanceof manifesto.TextualBody).to.equal(true);
         expect(textBody.Value).to.exist;
     });
     
     it('annotation 4 is a camera', function(){
         var annotations = scene.getContent();
         expect(annotations.length).to.equal(4);
-        var body = annotations[3].getBody()[0];
-        expect(body).to.exist;
-        var camera = body.isSpecificResource?body.Source:body;
+        var camera = annotations[3].getBody()[0];
+        expect(camera).to.exist;
                       
-
-        expect(camera.isCamera).to.equal(true);
-        expect(camera.isPerspectiveCamera).to.equal(true);        
+        expect(camera instanceof manifesto.Camera).to.equal(true);
+        expect(camera.isPerspectiveCamera()).to.equal(true);        
     });
     
     it('camera has null LookAt property', function(){
         var annotations = scene.getContent();
-        var body = annotations[3].getBody()[0];
-        var camera = body.isSpecificResource?body.Source:body;
-                      
+        var camera = annotations[3].getBody()[0];
 
         expect(camera.LookAt).to.equal(null);       
     });
@@ -75,7 +71,5 @@ describe('c_comment_annotation_camera', function() {
             var body = annotations[i].getBody()[0];
             expect(body, custom_message).to.exist;
         }
-    });
-
-        
+    });   
 });

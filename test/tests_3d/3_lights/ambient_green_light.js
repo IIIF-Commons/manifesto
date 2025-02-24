@@ -43,20 +43,15 @@ describe('model_origin', function() {
     });
         
     it('with an ambient light', function(){
-        expect(ambient_light.isModel).to.not.be.ok;
-        expect(ambient_light.isLight).to.equal(true);
-        expect(ambient_light.isAmbientLight).to.equal(true);
+        expect(ambient_light.isModel()).to.not.be.ok;
+        expect(ambient_light instanceof manifesto.Light).to.equal(true);
+        expect(ambient_light.isAmbientLight()).to.equal(true);
         
         var color = ambient_light.getColor();
         expect(color.red).to.equal(0);
         expect(color.green).to.equal(255);
         expect(color.blue).to.equal(0);
         
-        expect(ambient_light.getIntensity()).to.equal(0.5);
-              
-        
-    });
-    
-
-        
+        expect(ambient_light.getIntensity()).to.equal(0.5); 
+    });     
 });

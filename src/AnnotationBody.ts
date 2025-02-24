@@ -2,7 +2,7 @@ import {
   ExternalResourceType,
   MediaType
 } from "@iiif/vocabulary/dist-commonjs";
-import { IManifestoOptions, ManifestResource, Utils } from "./internal";
+import { AnnotationBodyParser, IManifestoOptions, ManifestResource, Transform, TransformParser, Utils } from "./internal";
 
  
 /**
@@ -19,26 +19,24 @@ export class AnnotationBody extends ManifestResource {
     super(jsonld, options);
   }
 
-  
-  /*
-  property distinguishing instances of SpecificResource from instances of AnnotionBody.
-  The return type of the Annotation.getBody() method is an array of instances of the 
-  union type ( AnnotationBody | SpecificResource )
-  */
-  isAnnotationBody : boolean = true;
-
-  /*
-  property distinguishing instances of SpecificResource from instances of AnnotionBody.
-  The return type of the Annotation.getBody() method is an array of instances of the 
-  union type ( AnnotationBody | SpecificResource )
-  */  
-  isSpecificResource : boolean = false;
-
+  // Get resource URI ID from either body (for content resource) or source (for specific resource)
+  getResourceID(): string | null {
+    if (this.isSpecificResource()) {
+      const source = this.getSource();
+      if (source instanceof AnnotationBody) {
+        return source.id;
+      } else {
+        return source || this.id;
+      }
+    } else {
+      return this.id;
+    }
+  }
 
   // Format, Type, Width, and Height are the body properties supported
   // in the code that supports Presentation 3
   getFormat(): MediaType | null {
-    const format: string = this.getProperty("format");
+    const format: string = this.getPropertyFromSelfOrSource("format");
  
     if (format) {
       return Utils.getMediaType(format);
@@ -48,11 +46,11 @@ export class AnnotationBody extends ManifestResource {
   }
 
   getType(): ExternalResourceType | null {
-    const type: string = this.getProperty("type");
+    const type: string = this.getPropertyFromSelfOrSource("type");
 
     if (type) {
       return <ExternalResourceType>(
-        Utils.normaliseType(this.getProperty("type"))
+        Utils.normaliseType(type)
       );
     }
 
@@ -66,17 +64,43 @@ export class AnnotationBody extends ManifestResource {
   getHeight(): number {
     return this.getProperty("height");
   }
+
+  getTransform(): Transform[] {
+    return this.getProperty("transform").map((transform) => {
+      return TransformParser.BuildFromJson(transform);
+    });
+  }
+
+  // Some properties may be on this object or (for SpecificResource) in source object
+  getPropertyFromSelfOrSource(prop): any {
+    if (this.isSpecificResource() && this.getSource() instanceof AnnotationBody) {
+      return (this.getSource() as AnnotationBody).getProperty(prop);
+    } else {
+      return this.getProperty(prop);
+    }
+  }
+
+  // Get the first source available on the annotation body, if any
+  getSource(): AnnotationBody | string | null {
+    const source: object = ([].concat(this.getPropertyAsObject("source")))[0];
+
+    if (source) {
+      if (source["isIRI"] === true) {
+        return source["id"];
+      } else {
+        return AnnotationBodyParser.BuildFromJson(source, this.options);
+      }   
+    }
+
+    return null;
+  }
+
+  isModel(): boolean {
+    return this.getType() === ExternalResourceType.MODEL;
+  }
   
-  
-  
-  
-  // following class members were added to support 3D and mixed 2D/3D content
-  // these boolean switches will be appropriately set when the manifest json is parsed
-  
-  isModel : boolean = true;
-  
-  isLight : boolean = false;
-  
-  isCamera : boolean = false;
+  isSpecificResource(): boolean {
+    return this.getProperty("type") === "SpecificResource";
+  }
 
 }

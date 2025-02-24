@@ -54,12 +54,9 @@ describe('model_origin', function() {
     
     it('and body is an AnnotationBody', function(){        
         body = annotation.getBody()[0];
-        expect( body.isModel ).to.equal(true);
+        expect( body.isModel() ).to.equal(true);
         expect(Array.isArray(body)).to.equal(false);
-        
-        expect(body.isSpecificResource).to.equal(false);
-        expect(body.isAnnotationBody).to.equal(true);
-        
+        expect(body.isSpecificResource()).to.equal(false);
         body.getType().should.equal(ExternalResourceType.MODEL);
     });
     
@@ -72,9 +69,12 @@ describe('model_origin', function() {
         
     });
 
-    
     it('body id looks like a model url', function(){        
         body.id.should.include('astronaut.glb');
+    });
+
+    it('body resource URI id looks like a model url', function(){        
+        body.getResourceID().should.include('astronaut.glb');
     });
     
     it('body Format (if defined) is glb or glTF', function(){

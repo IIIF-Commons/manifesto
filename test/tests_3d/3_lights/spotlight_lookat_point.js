@@ -40,12 +40,12 @@ describe('spotlight', function() {
     it('with a spot light', function(){
         // not following find idiom doesn't work if spotlight is inside
         // a SpecificResource
-        let lightAnno = scene.Content.find( (anno) => anno.Body[0].isLight );
+        let lightAnno = scene.Content.find( (anno) => anno.Body[0] instanceof manifesto.Light );
         
         expect(lightAnno).to.exist;
         let body = lightAnno.Body[0];
-        let light = (body.isSpecificResource)? body.Source : body;
-        expect (light.isSpotLight).to.equal(true);
+        let light = (body.isSpecificResource())? body.Source : body;
+        expect (light.isSpotLight()).to.equal(true);
         
         expect( light.Intensity).to.equal( 0.6 );
         expect( light.Color ).to.exist;
