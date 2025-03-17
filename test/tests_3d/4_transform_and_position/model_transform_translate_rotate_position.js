@@ -46,7 +46,7 @@ describe('model_transform_translate_rotate_position', function() {
         body = annotation.getBody()[0];        
         expect( body.isSpecificResource() ).to.be.ok ;
         body.getResourceID().should.include('astronaut.glb');
-        body.getFormat().should.equal("application/glb"); // todo correct this when the manifest format is corrected
+        body.getFormat().should.equal("model/gltf-binary");
 
         var transform = body.getTransform();
         expect(Array.isArray(transform)).to.be.ok;
