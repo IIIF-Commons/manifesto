@@ -1,5 +1,5 @@
-import { Vector3, MathUtils , Euler, Quaternion , IOrder} from "threejs-math";
-import { RotateTransform } from "./internal";
+import { Vector3, MathUtils , Euler, Quaternion , IOrder, Matrix4} from "threejs-math";
+import { RotateTransform, ScaleTransform, Transform, TranslateTransform } from "./internal";
 // https://ros2jsguy.github.io/threejs-math/index.html
 
 
@@ -100,4 +100,44 @@ export function eulerFromRotateTransform( transform : RotateTransform ) : Euler 
                         MathUtils.degToRad( rdata.y),
                         MathUtils.degToRad( rdata.z),
                         eulerOrder);
+}
+
+/**
+ * Given an array of Transform instances, returns a single Matrix4
+ * instance that represents the cumulative effect of the transforms
+ * in the order they appear in the array.
+ * 
+ * @param transforms An array of Transform instances
+ * 
+ * @returns A Matrix4 instance representing the cumulative effect of the transforms
+ **/
+export function combineTransforms(transforms: Transform[]): Matrix4 {
+    const matrix = new Matrix4();
+
+    for (const transform of transforms) {
+        if (transform.isTranslateTransform) {
+            const translation: any = (transform as TranslateTransform).getTranslation();
+            matrix.multiply(new Matrix4().makeTranslation(translation.x, translation.y, translation.z));
+        } else if (transform.isRotateTransform) {
+            const euler = eulerFromRotateTransform(transform as RotateTransform);
+            matrix.multiply(new Matrix4().makeRotationFromEuler(euler));
+        } else if (transform.isScaleTransform) {
+            const scale: any = (transform as ScaleTransform).getScale();
+            matrix.multiply(new Matrix4().makeScale(scale.x, scale.y, scale.z));
+        }
+    }
+
+    return matrix;
+}
+
+export function decomposeMatrix(matrix: Matrix4): { translation: Vector3, rotation: Euler, scale: Vector3 } {
+    const translation = new Vector3();
+    const rotation = new Euler();
+    const rotationQuaternion = new Quaternion();
+    const scale = new Vector3();
+
+    matrix.decompose(translation, rotationQuaternion, scale);
+    rotation.setFromQuaternion(rotationQuaternion);
+
+    return { translation, rotation, scale };
 }

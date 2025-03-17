@@ -47,7 +47,9 @@ describe('model_transform_translate_rotate_position', function() {
         expect( body.isSpecificResource() ).to.be.ok ;
         body.getResourceID().should.include('astronaut.glb');
         body.getFormat().should.equal("application/glb"); // todo correct this when the manifest format is corrected
+    });
 
+    it('with transforms applied to the body', function(){
         var transform = body.getTransform();
         expect(Array.isArray(transform)).to.be.ok;
         expect(transform.length).to.equal(2);
@@ -67,7 +69,12 @@ describe('model_transform_translate_rotate_position', function() {
         expect(rdata.x).to.equal(0.0);
         expect(rdata.y).to.equal(180.0);
         expect(rdata.z).to.equal(0.0);
-    
+
+        const matrix = body.getTransformMatrix();
+        expect(matrix).to.exist;
+
+        const decomposed = manifesto.decomposeMatrix(matrix);
+        expect(decomposed).to.exist;
     });
     
     it('with source pointing to manifest', function(){

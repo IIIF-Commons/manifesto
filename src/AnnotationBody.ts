@@ -2,7 +2,16 @@ import {
   ExternalResourceType,
   MediaType
 } from "@iiif/vocabulary/dist-commonjs";
-import { AnnotationBodyParser, IManifestoOptions, ManifestResource, Transform, TransformParser, Utils } from "./internal";
+import { 
+  AnnotationBodyParser, 
+  IManifestoOptions, 
+  ManifestResource, 
+  Transform, 
+  TransformParser, 
+  Utils,
+  combineTransforms
+} from "./internal";
+import { Matrix4 } from "threejs-math";
 
  
 /**
@@ -65,10 +74,26 @@ export class AnnotationBody extends ManifestResource {
     return this.getProperty("height");
   }
 
-  getTransform(): Transform[] {
-    return this.getProperty("transform").map((transform) => {
-      return TransformParser.BuildFromJson(transform);
-    });
+  getTransform(): Transform[] | null {
+    const transform = this.getProperty("transform");
+
+    if (transform) {
+      return this.getProperty("transform").map((transform) => {
+        return TransformParser.BuildFromJson(transform);
+      });
+    }
+
+    return null;
+  }
+
+  getTransformMatrix(): Matrix4 | null {
+    const transform = this.getTransform();
+
+    if (transform && transform.length) {
+      return combineTransforms(transform);
+    }
+    
+    return null;
   }
 
   // Some properties may be on this object or (for SpecificResource) in source object
