@@ -1,6 +1,6 @@
 {
   "name": "@iiif/3d-manifesto-dev",
-  "version" : "0.5.3",
+  "version": "0.6.1",
   "description": "IIIF Presentation API utility library for client and server with 3D extension",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
@@ -17,7 +17,7 @@
     "prepublishOnly": "npm run build && npm run test",
     "test": "mocha --config=mocha_3d_tests.js",
     "test:3d": "mocha --config=mocha_3d_tests.js",
-    "test:all" : "mocha",
+    "test:all": "mocha",
     "watch": "npm run build:esmodule -- --watch"
   },
   "engines": {
@@ -55,8 +55,8 @@
     "typescript": "^5.3.3",
     "unfetch": "^4.2.0",
     "webpack": "^5.89.0",
-    "color-string" : "1.9",
-    "threejs-math" : "^0.147"
+    "color-string": "1.9",
+    "threejs-math": "^0.147"
   },
   "directories": {
     "test": "test"
