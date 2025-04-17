@@ -47,6 +47,7 @@ describe('model_transform_translate_rotate_position', function() {
         expect( body.isSpecificResource() ).to.be.ok ;
         body.getResourceID().should.include('astronaut.glb');
         body.getFormat().should.equal("model/gltf-binary");
+    });
 
     it('with transforms applied to the body', function(){
         var transform = body.getTransform();
@@ -80,7 +81,7 @@ describe('model_transform_translate_rotate_position', function() {
         expect( body.isSpecificResource() ).to.be.ok ;
         var source = body.getSource();
         source.id.should.include('astronaut.glb');
-    })
+    });
     
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();
@@ -98,6 +99,6 @@ describe('model_transform_translate_rotate_position', function() {
         location.z.should.equal( 0.0);
     });
         
-    
+   
         
 });

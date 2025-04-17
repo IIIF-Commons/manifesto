@@ -149,7 +149,12 @@ function run_iiif3d_tests(){
     }); 
      
     describe("9_commenting_annotations" , function(){
+        importTest('astronaut_comment', './tests_3d/9_commenting_annotations/astronaut_comment.js');
         importTest('whale_comment_camera', './tests_3d/9_commenting_annotations/whale_comment_camera.js');
+    }); 
+
+    describe("10_content_state" , function(){
+        importTest('astronaut_comment_scope', './tests_3d/10_content_state/astronaut_comment_scope.js');
     }); 
 }
 

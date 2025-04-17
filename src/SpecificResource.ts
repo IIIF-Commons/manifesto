@@ -1,6 +1,7 @@
 import {
   IManifestoOptions,
   ManifestResource,
+  Annotation,
   AnnotationBody,
   AnnotationBodyParser,
   Transform,
@@ -38,6 +39,19 @@ export class SpecificResource extends ManifestResource  {
     super(jsonld, options);
     this.isSpecificResource = true;    
   };
+
+  getScope() : object | Annotation | null
+  {
+    var raw =  this.getPropertyAsObject("scope");
+  	if (raw.isIRI) return raw;
+
+    if (raw) {
+      const scope = ([].concat(raw))[0];
+      if (scope && scope["type"] === "Annotation") return new Annotation(scope, this.options);
+    }
+
+    return null;
+  }
   
   getSource() : object | AnnotationBody 
   {
