@@ -90,7 +90,7 @@ export class Light extends AnnotationBody {
     if (rawType == "PointSelector"){
         return new PointSelector(rawObj);
     }
-    throw new Error('unidentified value of lookAt ${rawType}');
+    throw new Error(`unidentified value of lookAt ${rawType}`);
   }  
   get LookAt() : object | null {return this.getLookAt();}
 

@@ -146,6 +146,7 @@ function run_iiif3d_tests(){
         importTest('position_camera_lookat_anno', './tests_3d/2_cameras/positioned_camera_lookat_anno.js');   
         importTest('position_camera_lookat_point', './tests_3d/2_cameras/positioned_camera_lookat_point.js'); 
         importTest('orthographic_camera_lookat_point', './tests_3d/2_cameras/orthographic_camera_lookat_point.js');     
+        importTest('position_camera_lookat_specific_resource', './tests_3d/2_cameras/positioned_camera_lookat_specific_resource.js'); 
     }); 
      
     describe("9_commenting_annotations" , function(){
