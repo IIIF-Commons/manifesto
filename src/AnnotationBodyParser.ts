@@ -2,7 +2,8 @@ import {
   AnnotationBody,
   IManifestoOptions,
   Light,
-  Camera
+  Camera,
+  TextualBody
 } from "./internal";
 
 // Todo: Add these to @iiif/vocabulary
@@ -19,6 +20,7 @@ export class AnnotationBodyParser {
     if (DisplayedTypes.includes(type)) return new AnnotationBody(jsonld, options);
     else if (LightTypes.includes(type)) return new Light(jsonld, options);
     else if (CameraTypes.includes(type)) return new Camera(jsonld, options);
+    else if (type === "TextualBody") return new TextualBody(jsonld, options);
     else throw new Error("unimplemented type for AnnotationBody: " + type );      
   }
 }
