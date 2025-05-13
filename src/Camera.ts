@@ -16,9 +16,16 @@ export class Camera extends AnnotationBody {
   getFieldOfView(): number | undefined 
   {
     if (this.isPerspectiveCamera()){
-        var value = this.getProperty("fieldOfView");
-        if (value) return value;
-        else return 45.0;
+        var value = this.getPropertyFromSelfOrSource("fieldOfView");
+        if (value) {
+          if(value > 0 && value < 180)
+            return value;
+          else {
+            console.warn("Camera fieldOfView out of range and will be considered undefined.");
+            return undefined;
+          }
+        }
+        else return undefined;
     }
     else return undefined;
   }
@@ -73,7 +80,35 @@ export class Camera extends AnnotationBody {
   }  
   get LookAt() : object | null {return this.getLookAt();}
 
-  // TODO implement near and far properties
+  /**
+  @returns the near plane value, i.e. the minimum distance from the camera at 
+  which something in the space must exist in order to be viewed by the camera. 
+  **/
+  getNear(): number | undefined 
+  {
+      var value = this.getPropertyFromSelfOrSource("near");
+      if (value) return value;
+      else return undefined;
+  }
+  /**
+  Near plane value of the camera.
+  **/
+  get Near(): number | undefined { return this.getNear();}
+  
+  /**
+  @returns the far plane value, i.e. the maximum distance from the camera at 
+  which something in the space must exist in order to be viewed by the camera. 
+  **/
+  getFar(): number | undefined 
+  {
+      var value = this.getPropertyFromSelfOrSource("far");
+      if (value) return value;
+      else return undefined;
+  }
+  /**
+  Far plane value of the camera.
+  **/
+  get Far(): number | undefined { return this.getFar();} 
 
   isPerspectiveCamera(): boolean {
     return (Utils.normaliseType(this.getType() || "") === "perspectivecamera");
