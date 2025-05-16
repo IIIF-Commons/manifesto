@@ -42,8 +42,8 @@ export class SpecificResource extends ManifestResource  {
 
   getScope() : object | Annotation | null
   {
-    var raw =  this.getPropertyAsObject("scope");
-  	if (raw.isIRI) return raw;
+    var raw = this.getPropertyAsObject("scope");
+  	if (raw?.isIRI) return raw;
 
     if (raw) {
       const scope = ([].concat(raw))[0];
