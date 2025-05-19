@@ -111,23 +111,55 @@ export function eulerFromRotateTransform( transform : RotateTransform ) : Euler 
  * 
  * @returns A Matrix4 instance representing the cumulative effect of the transforms
  **/
-export function combineTransforms(transforms: Transform[]): Matrix4 {
+export function combineTransformsToMatrix(transforms: Transform[]): Matrix4 {
     const matrix = new Matrix4();
 
     for (const transform of transforms) {
+        const tmat = new Matrix4();
         if (transform.isTranslateTransform) {
             const translation: any = (transform as TranslateTransform).getTranslation();
-            matrix.multiply(new Matrix4().makeTranslation(translation.x, translation.y, translation.z));
+            tmat.makeTranslation(translation.x, translation.y, translation.z);
         } else if (transform.isRotateTransform) {
             const euler = eulerFromRotateTransform(transform as RotateTransform);
-            matrix.multiply(new Matrix4().makeRotationFromEuler(euler));
+            tmat.makeRotationFromEuler(euler);
         } else if (transform.isScaleTransform) {
             const scale: any = (transform as ScaleTransform).getScale();
-            matrix.multiply(new Matrix4().makeScale(scale.x, scale.y, scale.z));
+            tmat.makeScale(scale.x, scale.y, scale.z);
         }
+        matrix.multiply(tmat);
     }
 
     return matrix;
+}
+
+export type TransformSet = {
+    translation: Vector3;
+    rotation: Euler;
+    scale: Vector3;
+};
+
+export function combineTransformsToTRS(transforms: Transform[]): TransformSet {
+    const translation = new Vector3();
+    const rotation = new Euler();
+    const scale = new Vector3(1, 1, 1);
+
+    for (const transform of transforms) {
+        if (transform.isTranslateTransform) {
+            const translationTransform: any = (transform as TranslateTransform).getTranslation();
+            translation.add(new Vector3(translationTransform.x, translationTransform.y, translationTransform.z));
+        } else if (transform.isRotateTransform) {
+            const euler = eulerFromRotateTransform(transform as RotateTransform);
+            rotation.set(rotation.x + euler.x, rotation.y + euler.y, rotation.z + euler.z, "XYZ");
+            translation.applyEuler(euler);
+        } else if (transform.isScaleTransform) {
+            const scaleTransform: any = (transform as ScaleTransform).getScale();
+            const newScale = new Vector3(scaleTransform.x, scaleTransform.y, scaleTransform.z)
+            scale.multiply(newScale);
+            translation.multiply(newScale);
+        }
+    }
+
+    return { translation, rotation, scale };
 }
 
 export function decomposeMatrix(matrix: Matrix4): { translation: Vector3, rotation: Euler, scale: Vector3 } {

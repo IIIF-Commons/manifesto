@@ -8,8 +8,10 @@ import {
   ManifestResource, 
   Transform, 
   TransformParser, 
+  TransformSet, 
   Utils,
-  combineTransforms
+  combineTransformsToMatrix,
+  combineTransformsToTRS
 } from "./internal";
 import { Matrix4 } from "threejs-math";
 
@@ -90,7 +92,17 @@ export class AnnotationBody extends ManifestResource {
     const transform = this.getTransform();
 
     if (transform && transform.length) {
-      return combineTransforms(transform);
+      return combineTransformsToMatrix(transform);
+    }
+    
+    return null;
+  }
+
+  getTransformSet(): TransformSet | null {
+    const transform = this.getTransform();
+
+    if (transform && transform.length) {
+      return combineTransformsToTRS(transform);
     }
     
     return null;
