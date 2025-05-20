@@ -1,6 +1,7 @@
 import { 
     IManifestoOptions, 
-    AnnotationBody} from "./internal";
+    AnnotationBody,
+    SpecificResource} from "./internal";
 
 /**
 An implementation of the TextualBody class (class in JSON-LD sense)
@@ -17,4 +18,23 @@ The simple string that is the data content of this resource
 will return empty string as a default value
 **/
 get Value(): string {return this.getProperty("value") || "" ;}
+
+/**
+Returns a specific resource representing the TextualBody position if 
+present, otherwise null.
+**/
+getPosition(): SpecificResource | null  {
+  let rawPosition = this.getPropertyAsObject("position") ?? null;
+  if ( rawPosition == null ) return null;
+
+  if ( rawPosition.type && rawPosition.type == "SpecificResource" )
+  {
+    return new SpecificResource(rawPosition, this.options);
+  }
+  else
+  {
+    throw new Error("unknown position type specified");
+  }
+}
+get Position(): SpecificResource | null {return this.getPosition();}
 }
