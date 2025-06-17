@@ -126,7 +126,7 @@ export function combineTransformsToMatrix(transforms: Transform[]): Matrix4 {
             const scale: any = (transform as ScaleTransform).getScale();
             tmat.makeScale(scale.x, scale.y, scale.z);
         }
-        matrix.multiply(tmat);
+        matrix.premultiply(tmat);
     }
 
     return matrix;
@@ -149,7 +149,10 @@ export function combineTransformsToTRS(transforms: Transform[]): TransformSet {
             translation.add(new Vector3(translationTransform.x, translationTransform.y, translationTransform.z));
         } else if (transform.isRotateTransform) {
             const euler = eulerFromRotateTransform(transform as RotateTransform);
-            rotation.set(rotation.x + euler.x, rotation.y + euler.y, rotation.z + euler.z, "XYZ");
+            const q1 = new Quaternion().setFromEuler(rotation);
+            const q2 = new Quaternion().setFromEuler(euler);
+            q1.multiply(q2);
+            rotation.setFromQuaternion(q1, "XYZ");
             translation.applyEuler(euler);
         } else if (transform.isScaleTransform) {
             const scaleTransform: any = (transform as ScaleTransform).getScale();
