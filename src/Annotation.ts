@@ -2,6 +2,7 @@ import { AnnotationMotivation } from "@iiif/vocabulary/dist-commonjs";
 import {
   AnnotationBody,
   AnnotationBodyParser,
+  AnnotationPage,
   IManifestoOptions,
   ManifestResource,
   Resource,
@@ -151,6 +152,9 @@ export class Annotation extends ManifestResource {
     if (!items) return [];
 
     return items
+      .filter(item => item && item.type === 'AnnotationPage')
+      .map(item => new AnnotationPage(item, this.options).getItems())
+      .flat()
       .filter(item => item && item.type === 'Annotation')
       .map(annotation => new Annotation(annotation, this.options));
   }
