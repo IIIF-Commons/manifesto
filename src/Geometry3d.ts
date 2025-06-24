@@ -151,7 +151,7 @@ export function combineTransformsToTRS(transforms: Transform[]): TransformSet {
             const euler = eulerFromRotateTransform(transform as RotateTransform);
             const q1 = new Quaternion().setFromEuler(rotation);
             const q2 = new Quaternion().setFromEuler(euler);
-            q1.multiply(q2);
+            q1.premultiply(q2);
             rotation.setFromQuaternion(q1, "XYZ");
             translation.applyEuler(euler);
         } else if (transform.isScaleTransform) {
