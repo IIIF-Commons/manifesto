@@ -47,7 +47,9 @@ describe('model_transform_translate_rotate_position', function() {
         expect( body.isSpecificResource() ).to.be.ok ;
         body.getResourceID().should.include('astronaut.glb');
         body.getFormat().should.equal("model/gltf-binary");
+    });
 
+    it('with transforms applied to the body', function(){
         var transform = body.getTransform();
         expect(Array.isArray(transform)).to.be.ok;
         expect(transform.length).to.equal(2);
@@ -67,14 +69,19 @@ describe('model_transform_translate_rotate_position', function() {
         expect(rdata.x).to.equal(0.0);
         expect(rdata.y).to.equal(180.0);
         expect(rdata.z).to.equal(0.0);
-    
+
+        const matrix = body.getTransformMatrix();
+        expect(matrix).to.exist;
+
+        const decomposed = manifesto.decomposeMatrix(matrix);
+        expect(decomposed).to.exist;
     });
     
     it('with source pointing to manifest', function(){
         expect( body.isSpecificResource() ).to.be.ok ;
         var source = body.getSource();
         source.id.should.include('astronaut.glb');
-    })
+    });
     
     it('targeting a SpecificResource with PointSelector', function(){
         var target = annotation.getTarget();
@@ -92,6 +99,6 @@ describe('model_transform_translate_rotate_position', function() {
         location.z.should.equal( 0.0);
     });
         
-    
+   
         
 });

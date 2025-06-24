@@ -1,8 +1,9 @@
 import { 
-    IManifestoOptions, 
-    Utils,
-    AnnotationBody,
-    PointSelector } from "./internal";
+  IManifestoOptions, 
+  Utils,
+  AnnotationBody,
+  PointSelector, 
+  SpecificResource } from "./internal";
 
 export class Camera extends AnnotationBody {
   constructor(jsonld?: any, options?: IManifestoOptions) {
@@ -16,16 +17,16 @@ export class Camera extends AnnotationBody {
   getFieldOfView(): number | undefined 
   {
     if (this.isPerspectiveCamera()){
-        var value = this.getPropertyFromSelfOrSource("fieldOfView");
-        if (value) {
-          if(value > 0 && value < 180)
-            return value;
-          else {
-            console.warn("Camera fieldOfView out of range and will be considered undefined.");
-            return undefined;
-          }
+      var value = this.getPropertyFromSelfOrSource("fieldOfView");
+      if (value) {
+        if(value > 0 && value < 180)
+          return value;
+        else {
+          console.warn("Camera fieldOfView out of range and will be considered undefined.");
+          return undefined;
         }
-        else return undefined;
+      }
+      else return undefined;
     }
     else return undefined;
   }
@@ -46,11 +47,11 @@ export class Camera extends AnnotationBody {
   getViewHeight(): number | undefined 
   {
     if (this.isOrthographicCamera()){
-        // the term viewHeight for the resource Type was suggested
-        // in https://github.com/IIIF/api/issues/2289#issuecomment-2161608587
-        var value = this.getProperty("viewHeight");
-        if (value) return value;
-        else return undefined;
+      // the term viewHeight for the resource Type was suggested
+      // in https://github.com/IIIF/api/issues/2289#issuecomment-2161608587
+      var value = this.getProperty("viewHeight");
+      if (value) return value;
+      else return undefined;
     }
     else return undefined;
   }
@@ -59,10 +60,11 @@ export class Camera extends AnnotationBody {
   
   
   /**
-  * @return : if not null, is either a PointSelector, or an object
-  * with an id matching the id of an Annotation instance.
+  * @return : if not null, is either a PointSelector, an object
+  * with an id matching the id of an Annotation instance, or a
+  * SpecificResource with a PointSelector .
   **/
-  getLookAt() : object | PointSelector | null {
+  getLookAt() : object | PointSelector | SpecificResource | null {
     let rawObj = this.getPropertyAsObject("lookAt" ) ??  null;
     if ( rawObj == null ) return null;
     
@@ -70,12 +72,15 @@ export class Camera extends AnnotationBody {
     if (rawType == null ) return null;
         
     if (rawType == "Annotation")
-        return rawObj;
+      return rawObj;
     else if (rawType == "PointSelector")
-        return new PointSelector(rawObj);
+      return new PointSelector(rawObj);
+    else if (rawType == "SpecificResource") {
+      return new SpecificResource(rawObj, this.options);
+    }
     else{
-        console.error('unidentified value of lookAt ${rawType}');
-        return null;
+      console.error(`unidentified value of lookAt ${rawType}`);
+      return null;
     }
   }  
   get LookAt() : object | null {return this.getLookAt();}

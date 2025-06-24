@@ -69,6 +69,11 @@ describe('model_origin', function() {
         
     });
 
+    it('and body has no transforms', function(){        
+        body = annotation.getBody()[0];
+        expect(body.getTransform()).to.not.exist;
+    });
+
     it('body id looks like a model url', function(){        
         body.id.should.include('astronaut.glb');
     });

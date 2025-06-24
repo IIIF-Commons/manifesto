@@ -2,6 +2,7 @@ import { AnnotationMotivation } from "@iiif/vocabulary/dist-commonjs";
 import {
   AnnotationBody,
   AnnotationBodyParser,
+  AnnotationPage,
   IManifestoOptions,
   ManifestResource,
   Resource,
@@ -144,6 +145,21 @@ export class Annotation extends ManifestResource {
   }
   
   get Target(): any {return this. getTarget();}
+
+  // Retrieves target scope content state annotations
+  getScopeContent() : Annotation[] {
+    const items = this.getTarget()?.getScope()?.getTarget()?.items;
+    if (!items) return [];
+
+    return items
+      .filter(item => item && item.type === 'AnnotationPage')
+      .map(item => new AnnotationPage(item, this.options).getItems())
+      .flat()
+      .filter(item => item && item.type === 'Annotation')
+      .map(annotation => new Annotation(annotation, this.options));
+  }
+
+  get ScopeContent(){return this.getScopeContent();}
 
   getResource(): Resource {
     return new Resource(this.getProperty("resource"), this.options);

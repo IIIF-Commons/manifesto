@@ -239,6 +239,22 @@ export class Canvas extends Resource {
     return this.getProperty("index");
   }
 
+  // Annotations not rendered as part of the Canvas
+  // Have non-painting motivations and are listed in Canvas annotations property, not items property
+  getNonContentAnnotations(): Annotation[] {  
+    const annotationPages = ( this.__jsonld.annotations || [] )
+      .filter(annotationPage => annotationPage && annotationPage.type === 'AnnotationPage')
+      .map(annotationPage => new AnnotationPage(annotationPage, this.options)) as AnnotationPage[];  
+    if (!annotationPages.length) return [];
+
+    const annotations = annotationPages
+      .map(page => page.getItems())
+      .flat()
+      .map(annotation => new Annotation(annotation, this.options));
+
+    return annotations;
+  }
+
   getOtherContent(): Promise<AnnotationList[]> {
     const otherContent = Array.isArray(this.getProperty("otherContent"))
       ? this.getProperty("otherContent")

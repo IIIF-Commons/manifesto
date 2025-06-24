@@ -132,3 +132,502 @@ describe('Geometry3d: eulerFromRotateTransform', function() {
         
     });
 });
+
+describe('Geometry3d: combineTransformsToMatrix', function() {
+    it('combines transform scale -> translate', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const scaleT = new manifesto.ScaleTransform({
+            type: 'ScaleTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([translateT, scaleT]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.equal(4);
+        expect(translation.y).to.equal(4);
+        expect(translation.z).to.equal(4);
+
+        expect(scale.x).to.equal(2);
+        expect(scale.y).to.equal(2);
+        expect(scale.z).to.equal(2);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(0);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform translate -> scale', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const scaleT = new manifesto.ScaleTransform({
+            type: 'ScaleTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([scaleT, translateT]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.equal(2);
+        expect(translation.y).to.equal(2);
+        expect(translation.z).to.equal(2);
+
+        expect(scale.x).to.equal(2);
+        expect(scale.y).to.equal(2);
+        expect(scale.z).to.equal(2);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(0);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform translate -> rotate', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 0,
+            z: 0
+        })
+
+        const rotateT = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 90,
+            z: 0
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([translateT, rotateT]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(-2, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(Math.PI / 2);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform rotate -> translate', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 0,
+            z: 0
+        })
+
+        const rotateT = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 90,
+            z: 0
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([rotateT, translateT]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(2, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(0, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(Math.PI / 2);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform rotate -> rotate', function (){
+        const rotateTFirst = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 30,
+            y: 0,
+            z: 0
+        })
+
+        const rotateTSecond = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 15,
+            y: 0,
+            z: 0
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([rotateTFirst, rotateTSecond]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(0, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.be.closeTo(Math.PI / 4, 0.000001);
+        expect(rotation.y).to.be.closeTo(0, 0.000001);
+        expect(rotation.z).to.be.closeTo(0, 0.000001);
+    });
+
+    it('combines transform rotate -> rotate (2)', function (){
+        const rotateTFirst = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 45,
+            z: 0
+        })
+
+        const rotateTSecond = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 60,
+            y: 0,
+            z: 0
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([rotateTFirst, rotateTSecond]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(0, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.be.closeTo(Math.PI / 3, 0.000001);
+        expect(rotation.y).to.be.closeTo(Math.PI / 4, 0.000001);
+        expect(rotation.z).to.be.closeTo(0, 0.000001);
+    }); 
+    it('combines transform translate -> rotate -> scale', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 0,
+            z: 0
+        })
+
+        const rotateT = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 90,
+            z: 0
+        })
+
+        const scaleT = new manifesto.ScaleTransform({
+            type: 'ScaleTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const matrix = manifesto.combineTransformsToMatrix([translateT, rotateT, scaleT]);
+        const { translation, rotation, scale } = manifesto.decomposeMatrix(matrix);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(-4, 0.000001);
+
+        expect(scale.x).to.equal(2);
+        expect(scale.y).to.equal(2);
+        expect(scale.z).to.equal(2);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(Math.PI / 2);
+        expect(rotation.z).to.equal(0);
+    });
+});
+
+describe('Geometry3d: combineTransformsToTRS', function() {
+    it('combines transform scale -> translate', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const scaleT = new manifesto.ScaleTransform({
+            type: 'ScaleTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([translateT, scaleT]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.equal(4);
+        expect(translation.y).to.equal(4);
+        expect(translation.z).to.equal(4);
+
+        expect(scale.x).to.equal(2);
+        expect(scale.y).to.equal(2);
+        expect(scale.z).to.equal(2);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(0);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform translate -> scale', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const scaleT = new manifesto.ScaleTransform({
+            type: 'ScaleTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([scaleT, translateT]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.equal(2);
+        expect(translation.y).to.equal(2);
+        expect(translation.z).to.equal(2);
+
+        expect(scale.x).to.equal(2);
+        expect(scale.y).to.equal(2);
+        expect(scale.z).to.equal(2);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(0);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform translate -> rotate', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 0,
+            z: 0
+        })
+
+        const rotateT = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 90,
+            z: 0
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([translateT, rotateT]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(-2, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(Math.PI / 2);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform rotate -> translate', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 0,
+            z: 0
+        })
+
+        const rotateT = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 90,
+            z: 0
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([rotateT, translateT]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(2, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(0, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(Math.PI / 2);
+        expect(rotation.z).to.equal(0);
+    });
+
+    it('combines transform rotate -> rotate', function (){
+        const rotateTFirst = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 30,
+            y: 0,
+            z: 0
+        })
+
+        const rotateTSecond = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 15,
+            y: 0,
+            z: 0
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([rotateTFirst, rotateTSecond]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(0, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.be.closeTo(Math.PI / 4, 0.000001);
+        expect(rotation.y).to.be.closeTo(0, 0.000001);
+        expect(rotation.z).to.be.closeTo(0, 0.000001);
+    });
+
+    it('combines transform rotate -> rotate (2)', function (){
+        const rotateTFirst = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 45,
+            z: 0
+        })
+
+        const rotateTSecond = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 60,
+            y: 0,
+            z: 0
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([rotateTFirst, rotateTSecond]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(0, 0.000001);
+
+        expect(scale.x).to.equal(1);
+        expect(scale.y).to.equal(1);
+        expect(scale.z).to.equal(1);
+
+        expect(rotation.x).to.be.closeTo(Math.PI / 3, 0.000001);
+        expect(rotation.y).to.be.closeTo(Math.PI / 4, 0.000001);
+        expect(rotation.z).to.be.closeTo(0, 0.000001);
+    });
+    it('combines transform translate -> rotate -> scale', function (){
+        const translateT = new manifesto.TranslateTransform({
+            type: 'TranslateTransform',
+            x: 2,
+            y: 0,
+            z: 0
+        })
+
+        const rotateT = new manifesto.RotateTransform({
+            type: 'RotateTransform',
+            x: 0,
+            y: 90,
+            z: 0
+        })
+
+        const scaleT = new manifesto.ScaleTransform({
+            type: 'ScaleTransform',
+            x: 2,
+            y: 2,
+            z: 2
+        })
+
+        const { translation, rotation, scale } = manifesto.combineTransformsToTRS([translateT, rotateT, scaleT]);
+
+        expect(translation).to.exist;
+        expect(rotation).to.exist;
+        expect(scale).to.exist;
+
+        expect(translation.x).to.be.closeTo(0, 0.000001);
+        expect(translation.y).to.be.closeTo(0, 0.000001);
+        expect(translation.z).to.be.closeTo(-4, 0.000001);
+
+        expect(scale.x).to.equal(2);
+        expect(scale.y).to.equal(2);
+        expect(scale.z).to.equal(2);
+
+        expect(rotation.x).to.equal(0);
+        expect(rotation.y).to.equal(Math.PI / 2);
+        expect(rotation.z).to.equal(0);
+    });
+});
