@@ -247,12 +247,10 @@ export class Canvas extends Resource {
       .map(annotationPage => new AnnotationPage(annotationPage, this.options)) as AnnotationPage[];  
     if (!annotationPages.length) return [];
 
-    const annotations = annotationPages
-      .map(page => page.getItems())
-      .flat()
-      .map(annotation => new Annotation(annotation, this.options));
-
-    return annotations;
+    const annotationsNested = annotationPages.map(page => page.getItems()) as Annotation[][];
+    const annotationsFlat = flattenDeep(annotationsNested) as Annotation[];
+    
+    return annotationsFlat.map(annotation => new Annotation(annotation, this.options));
   }
 
   getOtherContent(): Promise<AnnotationList[]> {

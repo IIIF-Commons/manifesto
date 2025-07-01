@@ -58,17 +58,16 @@
     "webpack-cli": "^5.1.4",
     "yargs": "3.10.0"
   },
-  "homepage": "https://iiif-commons.github.io/manifesto-3d/",
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
     "@iiif/vocabulary": "^1.0.26",
+    "color-string": "1.9",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.21",
     "node-fetch": "2",
+    "threejs-math": "^0.147",
     "unfetch": "^4.2.0",
-    "webpack": "^5.89.0",
-    "color-string": "1.9",
-    "threejs-math": "^0.147"
+    "webpack": "^5.89.0"
   },
   "directories": {
     "test": "test"
