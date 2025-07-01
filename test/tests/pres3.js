@@ -46,4 +46,14 @@ describe('presentation 3', function() {
         var labelValue = label.getValue();
         expect(labelValue).to.equal('Page 1');
     });
+
+    it('has a logo', function () {
+        var logo = manifest.getLogo();
+        expect(logo).to.equal('https://example.org/logos/institution1.jpg');
+    });
+
+    it('has a rights', function () {
+        var rights = manifest.getRights();
+        expect(rights).to.equal('http://example.org/license.html');
+    });
 });

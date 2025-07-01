@@ -87,7 +87,13 @@ export class IIIFResource extends ManifestResource {
         return null;
       }
 
-      logo = provider.logo;
+      // get the first agent in the provider array with a logo
+      const agent = provider.find(item => item.logo !== undefined);
+      if (agent && agent.logo !== undefined) {
+        logo = agent.logo;
+      } else {
+        logo = null;
+      }
     }
 
     if (!logo) return null;
@@ -95,7 +101,7 @@ export class IIIFResource extends ManifestResource {
     if (Array.isArray(logo) && logo.length) {
       logo = logo[0];
     }
-    return logo["@id"] || logo.id;
+    return logo["@id"] || logo?.id;
   }
 
   getLicense(): string | null {
@@ -155,7 +161,7 @@ export class IIIFResource extends ManifestResource {
       // fall back to attribution (if it exists)
       const attribution: PropertyValue = this.getAttribution();
 
-      if (attribution) {
+      if (attribution && attribution.length) {
         requiredStatement = new LabelValuePair(this.options.locale);
         requiredStatement.value = attribution;
       }

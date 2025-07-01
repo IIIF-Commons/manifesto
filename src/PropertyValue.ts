@@ -154,13 +154,9 @@ export class PropertyValue extends Array<LocalizedValue> {
     if (  locales.length == 0  && this._defaultLocale)
         locales.push( this._defaultLocale as string );
 
-    // create an array of the language codes for all different LocalizedValue instances in this PropertyValue
-    const allLocales  = new Array<string>();
-    for (var lv of this)
-    {
-        if (lv._locale != undefined) allLocales.push(lv._locale);
-    }
-    
+    const allLocales = Array.from(this.values())
+      .map(lv => lv._locale)
+      .filter(l => l !== undefined) as string[];
     // First, look for a precise match
     for (const userLocale of locales) {
       const matchingLocale = allLocales.find(l => l === userLocale);

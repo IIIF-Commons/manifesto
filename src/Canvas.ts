@@ -172,7 +172,7 @@ export class Canvas extends Resource {
       profile = this.externalResource.data.profile;
 
       if (Array.isArray(profile)) {
-        profile = profile.filter(p => p["maxWidth" || "maxwidth"])[0];
+        profile = profile.filter(p => p["maxWidth"] ?? p["maxwidth"])[0];
 
         if (profile) {
           maxDimensions = new Size(
@@ -388,7 +388,9 @@ export class Canvas extends Resource {
     const on = resourceAnnotation.getProperty("on");
     // IIIF v3
     const target = resourceAnnotation.getProperty("target");
-    if (!on || !target) { return undefined; }
+    if (!on || !target) {
+      return undefined;
+    }
     const fragmentMatch = (on || target).match(/xywh=(.*)$/);
     if (!fragmentMatch) return undefined;
     return fragmentMatch[1].split(",").map(str => parseInt(str, 10));

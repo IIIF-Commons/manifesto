@@ -1,11 +1,19 @@
-# manifesto-3D
+README.md is a mess, need to start from manifesto's and re-do!
 
-Client and server utility library to support draft 3D extensions to to the IIIF Presentation API client and server utility library.
+# manifesto
+
+[![Build Status](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml/badge.svg?branch=master)](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml)
 
 Forked from [IIIF-Commons/manifesto](https://github.com/IIIF-Commons/manifesto).
 
 Goal of implementing the [Draft API](https://github.com/IIIF/3d/blob/main/temp-draft-4.md) under development by the [IIIF 3D Technical Study Group](https://github.com/IIIF/3d/).
 
+> [!NOTE]
+> 3D extensions to the manifesto.js library are under development in a fork [IIIF-Commons/manifesto-3d](https://github.com/IIIF-Commons/manifesto-3d).
+> This development is being performed in parallel with development of 3D extensions to the IIIF APIs documented in [IIIF/3d](https://github.com/IIIF/3d).
+
+
+## Getting Started
 
 ### Documentation
 
