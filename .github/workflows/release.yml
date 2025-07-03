@@ -9,17 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Node build
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-${{ matrix.node }}-npm-${{ hashFiles('**/package-lock.lock') }}
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '18'
       - run: npm ci
       - run: npm run build
       - run: npm run test:3d
@@ -29,24 +29,25 @@ jobs:
     runs-on: ubuntu-latest
     name: Release
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-${{ matrix.node }}-npm-${{ hashFiles('**/package-lock.lock') }}
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '18'
 
       - name: Set tag
         id: tagName
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - run: npm ci
+      - run: npm run build
 
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}

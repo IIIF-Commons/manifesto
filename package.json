@@ -1,12 +1,12 @@
 {
   "name": "@iiif/3d-manifesto-dev",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "IIIF Presentation API utility library for client and server with 3D extension",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
   "scripts": {
     "build:commonjs": "tsc",
-    "build:docs": "typedoc",
+    "build:docs": "rimraf -rf docs && typedoc --out docs --name manifesto --theme default --ignoreCompilerErrors --experimentalDecorators --emitDecoratorMetadata --target ES6 --moduleResolution node --preserveConstEnums --stripInternal --suppressExcessPropertyErrors --module commonjs src/ && touch docs/.nojekyll",
     "build:esmodule": "tsc -m es6 --outDir dist-esmodule",
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:umd": "webpack",
@@ -15,9 +15,8 @@
     "clean": "rimraf -rf dist-umd  dist-var types",
     "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
     "prepublishOnly": "npm run build && npm run test",
-    "test": "mocha --config=mocha_3d_tests.js",
+    "test": "mocha",
     "test:3d": "mocha --config=mocha_3d_tests.js",
-    "test:all": "mocha",
     "watch": "npm run build:esmodule -- --watch"
   },
   "engines": {
@@ -34,37 +33,43 @@
   "author": "@edsilv",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IIIF-Commons/manifesto-3d/issues"
+    "url": "https://github.com/iiif-commons/manifesto/issues"
   },
-  "homepage": "https://iiif-commons.github.io/manifesto-3d/",
-  "dependencies": {
-    "@edsilv/http-status-codes": "^1.0.3",
-    "@iiif/vocabulary": "^1.0.26",
-    "chai": "^2.3.0",
+  "homepage": "https://github.com/iiif-commons/manifesto",
+  "devDependencies": {
+    "@types/node": "8.10.52",
+    "chai": "2.3.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
-    "dts-bundle-generator": "^9.1.0",
-    "finalhandler": "^1.2.0",
-    "isomorphic-unfetch": "^3.0.0",
-    "lodash": "^4.17.21",
-    "mocha": "^10.2.0",
-    "node-fetch": "2",
+    "dts-bundle-generator": "^9.5.1",
+    "finalhandler": "1.3.1",
+    "http": "0.0.0",
+    "mocha": "^10.7.3",
     "prettier": "^3.1.1",
+    "prettier-check": "^2.0.0",
     "rimraf": "^5.0.5",
     "serve-static": "^1.15.0",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3",
-    "unfetch": "^4.2.0",
-    "webpack": "^5.89.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.26.10",
+    "typescript": "^5",
+    "typescript-tslint-plugin": "^0.5.5",
+    "webpack-cli": "^5.1.4",
+    "yargs": "3.10.0"
+  },
+  "dependencies": {
+    "@edsilv/http-status-codes": "^1.0.3",
+    "@iiif/vocabulary": "^1.0.26",
     "color-string": "1.9",
-    "threejs-math": "^0.147"
+    "isomorphic-unfetch": "^3.0.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "2",
+    "threejs-math": "^0.147",
+    "unfetch": "^4.2.0",
+    "webpack": "^5.89.0"
   },
   "directories": {
     "test": "test"
-  },
-  "devDependencies": {
-    "cpy-cli": "^5.0.0",
-    "typedoc": "^0.25.8",
-    "webpack-cli": "^5.1.4"
   },
   "publishConfig": {
     "access": "public"

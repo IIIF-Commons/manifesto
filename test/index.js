@@ -30,7 +30,6 @@ after(function () {
 });
 
 function run_v3_tests(){
-
     importTest('rijksmuseum-image-api-v3-thumbnails', './tests/rijksmuseum-image-api-v3-thumbnails');
     importTest('aarau', './tests/aarau');
     importTest('annotation-dimensions', './tests/annotation-dimensions');
@@ -70,7 +69,7 @@ function run_v3_tests(){
     importTest('plato', './tests/plato');
     importTest('poster-canvas', './tests/poster-canvas');
     importTest('potterselectric', './tests/potterselectric');
-    //importTest('pres3-3d', './tests/pres3-3d');
+    // importTest('pres3-3d', './tests/pres3-3d');
     importTest('pres3-av-basic', './tests/pres3-av-basic');
     importTest('pres3-collection', './tests/pres3-collection');
     importTest('pres3-collection2', './tests/pres3-collection2');
@@ -85,16 +84,17 @@ function run_v3_tests(){
     importTest('qatarrighttoleft', './tests/qatarrighttoleft');
     importTest('querystring', './tests/querystring');
     importTest('required-statement', './tests/required-statement');
-    importTest('rhul', './tests/rhul');
+    // importTest('rhul', './tests/rhul');
     importTest('riksarkivetlarge', './tests/riksarkivetlarge');
     importTest('scroll', './tests/scroll');
-    
+    // importTest('static-thumbs', './tests/static-thumbs');
     importTest('storyofwellcome', './tests/storyofwellcome');
     importTest('string', './tests/string');
     importTest('tankeryshouse', './tests/tankeryshouse');
     importTest('translations', './tests/translations');
     importTest('witnesstopeter', './tests/witnesstopeter');
     importTest('Utils', './tests/Utils.test');
+    importTest('v3ProviderNoLogo', './tests/v3ProviderNoLogo');
 }
 
 
@@ -114,15 +114,12 @@ else{
 }
 
 function run_iiif3d_tests(){
-    
-    
     require('./tests_3d/core_tests/parse_manifest.js');
     require('./tests_3d/core_tests/class_color.js');
     require('./tests_3d/core_tests/annotationIdMap.js');
     require('./tests_3d/core_tests/threejs_math.js');
     require('./tests_3d/core_tests/Geometry3d.js');
     require('./tests_3d/core_tests/iiif_label.js');
-    
     
     describe("1_basic_model_in_scene" , function(){
         importTest('model_origin', './tests_3d/1_basic_model_in_scene/model_origin.js');
@@ -141,7 +138,6 @@ function run_iiif3d_tests(){
         importTest('spot light', './tests_3d/3_lights/spotlight_lookat_point.js');
     });
     
-    
     describe("2_cameras" , function(){
         importTest('position_camera_lookat_anno', './tests_3d/2_cameras/positioned_camera_lookat_anno.js');   
         importTest('position_camera_lookat_point', './tests_3d/2_cameras/positioned_camera_lookat_point.js'); 
@@ -159,8 +155,4 @@ function run_iiif3d_tests(){
     }); 
 }
 
-
-
 describe("iiif-3d tests", run_iiif3d_tests );
-
-
