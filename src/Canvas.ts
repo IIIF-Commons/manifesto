@@ -34,7 +34,7 @@ export class Canvas extends Resource {
     const rotation: number = 0;
     let quality: string = "default";
     let width: number | undefined = w;
-    let size: string;
+    const size: string = width + ",";
 
     // if an info.json has been loaded
     if (
@@ -143,8 +143,6 @@ export class Canvas extends Resource {
         }
       }
     }
-
-    size = width + ",";
 
     // trim off trailing '/'
     if (id && id.endsWith("/")) {
