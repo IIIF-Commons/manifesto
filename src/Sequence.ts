@@ -22,7 +22,7 @@ export class Sequence extends ManifestResource {
       return this.items;
     }
 
-    let items = this.__jsonld.canvases || this.__jsonld.elements;
+    const items = this.__jsonld.canvases || this.__jsonld.elements;
 
     if (items) {
       for (let i = 0; i < items.length; i++) {

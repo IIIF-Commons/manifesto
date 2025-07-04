@@ -152,7 +152,7 @@ export class Canvas extends Resource {
     }
 
     const uri: string = [id, region, size, rotation, quality + ".jpg"].join(
-      "/",
+      "/"
     );
 
     return uri;
@@ -175,7 +175,7 @@ export class Canvas extends Resource {
         if (profile) {
           maxDimensions = new Size(
             profile.maxWidth,
-            profile.maxHeight ? profile.maxHeight : profile.maxWidth,
+            profile.maxHeight ? profile.maxHeight : profile.maxWidth
           );
         }
       }
@@ -253,15 +253,15 @@ export class Canvas extends Resource {
       .filter(
         (otherContent) =>
           otherContent &&
-          canonicalComparison(otherContent["@type"], "sc:AnnotationList"),
+          canonicalComparison(otherContent["@type"], "sc:AnnotationList")
       )
       .map(
         (annotationList, i) =>
           new AnnotationList(
             annotationList["label"] || `Annotation list ${i}`,
             annotationList,
-            this.options,
-          ),
+            this.options
+          )
       )
       .map((annotationList) => annotationList.load());
 
@@ -332,14 +332,14 @@ export class Canvas extends Resource {
                   resource.getProperty("item"),
                 ]).map((r) => ({ resource: r })),
               },
-              this.options,
+              this.options
             )
               .getImages()
               .map((i) => i.getResource());
           default:
             return resource;
         }
-      }),
+      })
     );
   }
 
@@ -355,7 +355,7 @@ export class Canvas extends Resource {
     return this.resourceAnnotations.find(
       (anno) =>
         anno.getResource().id === id ||
-        flatten(new Array(anno.getBody())).some((body) => body.id === id),
+        flatten(new Array(anno.getBody())).some((body) => body.id === id)
     );
   }
 
@@ -380,7 +380,7 @@ export class Canvas extends Resource {
 
   get iiifImageResources() {
     return this.imageResources.filter(
-      (r) => r && r.getServices()[0] && r.getServices()[0].id,
+      (r) => r && r.getServices()[0] && r.getServices()[0].id
     );
   }
 

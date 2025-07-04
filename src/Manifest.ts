@@ -215,7 +215,7 @@ export class Manifest extends IIIFResource {
         return acc;
       };
       const subRanges: Range[] = Array.from(
-        topRange.getRanges().reduce(reducer, new Set()),
+        topRange.getRanges().reduce(reducer, new Set())
       );
       this._allRanges = this._allRanges.concat(subRanges);
     }
@@ -256,7 +256,7 @@ export class Manifest extends IIIFResource {
 
     // IxIF mediaSequences overrode sequences, so need to be checked first.
     // deprecate this when presentation 3 ships
-    let items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+    const items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
 
     if (items) {
       for (let i = 0; i < items.length; i++) {

@@ -134,68 +134,68 @@ export class Utils {
     if (
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0,
+        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1,
+        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2,
+        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0,
+        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2,
+        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0,
+        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1,
+        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2,
+        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1,
+        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2,
+        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_1_LEVEL_0) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_PROFILE_LEVEL_0,
+        ServiceProfile.IMAGE_1_PROFILE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_1_LEVEL_1) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_PROFILE_LEVEL_1,
+        ServiceProfile.IMAGE_1_PROFILE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_1_LEVEL_2) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_PROFILE_LEVEL_2,
+        ServiceProfile.IMAGE_1_PROFILE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_LEVEL_0) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_2_PROFILE_LEVEL_0,
+        ServiceProfile.IMAGE_2_PROFILE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_LEVEL_1) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_2_PROFILE_LEVEL_1,
+        ServiceProfile.IMAGE_2_PROFILE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_LEVEL_2) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_PROFILE_LEVEL_2)
@@ -218,24 +218,24 @@ export class Utils {
     if (
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0,
+        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0,
+        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0,
+        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_0,
+        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_1_LEVEL_0) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_PROFILE_LEVEL_0,
+        ServiceProfile.IMAGE_1_PROFILE_LEVEL_0
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_LEVEL_0) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_PROFILE_LEVEL_0)
@@ -250,24 +250,24 @@ export class Utils {
     if (
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1,
+        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_1,
+        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1,
+        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1,
+        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_1_LEVEL_1) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_PROFILE_LEVEL_1,
+        ServiceProfile.IMAGE_1_PROFILE_LEVEL_1
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_LEVEL_1) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_PROFILE_LEVEL_1)
@@ -282,24 +282,24 @@ export class Utils {
     if (
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2,
+        ServiceProfile.IMAGE_0_COMPLIANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2,
+        ServiceProfile.IMAGE_1_COMPLIANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2,
+        ServiceProfile.IMAGE_0_CONFORMANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2,
+        ServiceProfile.IMAGE_1_CONFORMANCE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_1_LEVEL_2) ||
       Utils.normalisedUrlsMatch(
         profile,
-        ServiceProfile.IMAGE_1_PROFILE_LEVEL_2,
+        ServiceProfile.IMAGE_1_PROFILE_LEVEL_2
       ) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_LEVEL_2) ||
       Utils.normalisedUrlsMatch(profile, ServiceProfile.IMAGE_2_PROFILE_LEVEL_2)
@@ -312,7 +312,7 @@ export class Utils {
 
   static parseManifest(
     manifest: any,
-    options?: IManifestoOptions | undefined,
+    options?: IManifestoOptions | undefined
   ): IIIFResource | null {
     return Deserialiser.parse(manifest, options);
   }
@@ -346,23 +346,23 @@ export class Utils {
     openContentProviderInteraction: (service: Service) => any,
     openTokenService: (
       resource: IExternalResource,
-      tokenService: Service,
+      tokenService: Service
     ) => Promise<any>,
     getStoredAccessToken: (
-      resource: IExternalResource,
+      resource: IExternalResource
     ) => Promise<IAccessToken | null>,
     userInteractedWithContentProvider: (
-      contentProviderInteraction: any,
+      contentProviderInteraction: any
     ) => Promise<any>,
     getContentProviderInteraction: (
       resource: IExternalResource,
-      service: Service,
+      service: Service
     ) => Promise<any>,
     handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
     showOutOfOptionsMessages: (
       resource: IExternalResource,
-      service: Service,
-    ) => void,
+      service: Service
+    ) => void
   ): Promise<IExternalResource[]> {
     return new Promise<IExternalResource[]>((resolve, reject) => {
       const promises = resources.map((resource: IExternalResource) => {
@@ -374,7 +374,7 @@ export class Utils {
           userInteractedWithContentProvider,
           getContentProviderInteraction,
           handleMovedTemporarily,
-          showOutOfOptionsMessages,
+          showOutOfOptionsMessages
         );
       });
 
@@ -393,23 +393,23 @@ export class Utils {
     openContentProviderInteraction: (service: Service) => any,
     openTokenService: (
       resource: IExternalResource,
-      tokenService: Service,
+      tokenService: Service
     ) => Promise<void>,
     getStoredAccessToken: (
-      resource: IExternalResource,
+      resource: IExternalResource
     ) => Promise<IAccessToken | null>,
     userInteractedWithContentProvider: (
-      contentProviderInteraction: any,
+      contentProviderInteraction: any
     ) => Promise<any>,
     getContentProviderInteraction: (
       resource: IExternalResource,
-      service: Service,
+      service: Service
     ) => Promise<any>,
     handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
     showOutOfOptionsMessages: (
       resource: IExternalResource,
-      service: Service,
-    ) => void,
+      service: Service
+    ) => void
   ): Promise<IExternalResource> {
     const storedAccessToken: IAccessToken | null =
       await getStoredAccessToken(resource);
@@ -428,7 +428,7 @@ export class Utils {
           userInteractedWithContentProvider,
           getContentProviderInteraction,
           handleMovedTemporarily,
-          showOutOfOptionsMessages,
+          showOutOfOptionsMessages
         );
       }
 
@@ -451,7 +451,7 @@ export class Utils {
           userInteractedWithContentProvider,
           getContentProviderInteraction,
           handleMovedTemporarily,
-          showOutOfOptionsMessages,
+          showOutOfOptionsMessages
         );
       }
 
@@ -468,20 +468,20 @@ export class Utils {
     openContentProviderInteraction: (service: Service) => any,
     openTokenService: (
       resource: IExternalResource,
-      tokenService: Service,
+      tokenService: Service
     ) => Promise<any>,
     userInteractedWithContentProvider: (
-      contentProviderInteraction: any,
+      contentProviderInteraction: any
     ) => Promise<any>,
     getContentProviderInteraction: (
       resource: IExternalResource,
-      service: Service,
+      service: Service
     ) => Promise<any>,
     handleMovedTemporarily: (resource: IExternalResource) => Promise<any>,
     showOutOfOptionsMessages: (
       resource: IExternalResource,
-      service: Service,
-    ) => void,
+      service: Service
+    ) => void
   ): Promise<IExternalResource | void> {
     // This function enters the flowchart at the < External? > junction
     // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
@@ -532,7 +532,7 @@ export class Utils {
       await Utils.attemptResourceWithToken(
         resource,
         openTokenService,
-        serviceToTry,
+        serviceToTry
       );
       return resource;
     }
@@ -542,13 +542,13 @@ export class Utils {
 
     if (serviceToTry) {
       lastAttempted = serviceToTry;
-      let kioskInteraction = openContentProviderInteraction(serviceToTry);
+      const kioskInteraction = openContentProviderInteraction(serviceToTry);
       if (kioskInteraction) {
         await userInteractedWithContentProvider(kioskInteraction);
         await Utils.attemptResourceWithToken(
           resource,
           openTokenService,
-          serviceToTry,
+          serviceToTry
         );
         return resource;
       }
@@ -567,9 +567,9 @@ export class Utils {
 
     if (serviceToTry) {
       lastAttempted = serviceToTry;
-      let contentProviderInteraction = await getContentProviderInteraction(
+      const contentProviderInteraction = await getContentProviderInteraction(
         resource,
-        serviceToTry,
+        serviceToTry
       );
       if (contentProviderInteraction) {
         // should close immediately
@@ -577,7 +577,7 @@ export class Utils {
         await Utils.attemptResourceWithToken(
           resource,
           openTokenService,
-          serviceToTry,
+          serviceToTry
         );
         return resource;
       }
@@ -588,9 +588,9 @@ export class Utils {
 
     if (serviceToTry) {
       lastAttempted = serviceToTry;
-      let contentProviderInteraction = await getContentProviderInteraction(
+      const contentProviderInteraction = await getContentProviderInteraction(
         resource,
-        serviceToTry,
+        serviceToTry
       );
       if (contentProviderInteraction) {
         // we expect the user to spend some time interacting
@@ -598,7 +598,7 @@ export class Utils {
         await Utils.attemptResourceWithToken(
           resource,
           openTokenService,
-          serviceToTry,
+          serviceToTry
         );
         return resource;
       }
@@ -615,18 +615,18 @@ export class Utils {
     resource: IExternalResource,
     openTokenService: (
       resource: IExternalResource,
-      tokenService: Service,
+      tokenService: Service
     ) => Promise<any>,
-    authService: Service,
+    authService: Service
   ): Promise<IExternalResource | void> {
     // attempting token interaction for " + authService["@id"]
     const tokenService: Service | null = authService.getService(
-      ServiceProfile.AUTH_1_TOKEN,
+      ServiceProfile.AUTH_1_TOKEN
     );
 
     if (tokenService) {
       // found token service: " + tokenService["@id"]);
-      let tokenMessage: any = await openTokenService(resource, tokenService);
+      const tokenMessage: any = await openTokenService(resource, tokenService);
 
       if (tokenMessage && tokenMessage.accessToken) {
         await resource.getData(tokenMessage);
@@ -643,19 +643,19 @@ export class Utils {
     login: (resource: IExternalResource) => Promise<any>,
     getAccessToken: (
       resource: IExternalResource,
-      rejectOnError: boolean,
+      rejectOnError: boolean
     ) => Promise<IAccessToken>,
     storeAccessToken: (
       resource: IExternalResource,
       token: IAccessToken,
-      tokenStorageStrategy: string,
+      tokenStorageStrategy: string
     ) => Promise<any>,
     getStoredAccessToken: (
       resource: IExternalResource,
-      tokenStorageStrategy: string,
+      tokenStorageStrategy: string
     ) => Promise<IAccessToken>,
     handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): Promise<IExternalResource[]> {
     return new Promise<IExternalResource[]>((resolve, reject) => {
       const promises = resources.map((resource: IExternalResource) => {
@@ -669,7 +669,7 @@ export class Utils {
           storeAccessToken,
           getStoredAccessToken,
           handleResourceResponse,
-          options,
+          options
         );
       });
 
@@ -693,19 +693,19 @@ export class Utils {
     login: (resource: IExternalResource) => Promise<any>,
     getAccessToken: (
       resource: IExternalResource,
-      rejectOnError: boolean,
+      rejectOnError: boolean
     ) => Promise<IAccessToken>,
     storeAccessToken: (
       resource: IExternalResource,
       token: IAccessToken,
-      tokenStorageStrategy: string,
+      tokenStorageStrategy: string
     ) => Promise<any>,
     getStoredAccessToken: (
       resource: IExternalResource,
-      tokenStorageStrategy: string,
+      tokenStorageStrategy: string
     ) => Promise<IAccessToken>,
     handleResourceResponse: (resource: IExternalResource) => Promise<any>,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): Promise<IExternalResource> {
     return new Promise<any>((resolve, reject) => {
       if (options && options.pessimisticAccessControl) {
@@ -780,7 +780,7 @@ export class Utils {
                       login,
                       getAccessToken,
                       storeAccessToken,
-                      getStoredAccessToken,
+                      getStoredAccessToken
                     )
                       .then(() => {
                         resolve(handleResourceResponse(resource));
@@ -806,7 +806,7 @@ export class Utils {
                 login,
                 getAccessToken,
                 storeAccessToken,
-                getStoredAccessToken,
+                getStoredAccessToken
               )
                 .then(() => {
                   resolve(handleResourceResponse(resource));
@@ -833,7 +833,7 @@ export class Utils {
   static createAuthorizationFailedError(): Error {
     return Utils.createError(
       StatusCode.AUTHORIZATION_FAILED,
-      "Authorization failed",
+      "Authorization failed"
     );
   }
 
@@ -853,17 +853,17 @@ export class Utils {
     login: (resource: IExternalResource) => Promise<any>,
     getAccessToken: (
       resource: IExternalResource,
-      rejectOnError: boolean,
+      rejectOnError: boolean
     ) => Promise<IAccessToken>,
     storeAccessToken: (
       resource: IExternalResource,
       token: IAccessToken,
-      tokenStorageStrategy: string,
+      tokenStorageStrategy: string
     ) => Promise<any>,
     getStoredAccessToken: (
       resource: IExternalResource,
-      tokenStorageStrategy: string,
-    ) => Promise<IAccessToken>,
+      tokenStorageStrategy: string
+    ) => Promise<IAccessToken>
   ): Promise<IExternalResource> {
     return new Promise<IExternalResource>((resolve, reject) => {
       resource.getData().then(() => {
@@ -888,7 +888,7 @@ export class Utils {
                         getAccessToken,
                         storeAccessToken,
                         resolve,
-                        reject,
+                        reject
                       );
                     }
                   })
@@ -902,7 +902,7 @@ export class Utils {
                     storeAccessToken(
                       resource,
                       accessToken,
-                      tokenStorageStrategy,
+                      tokenStorageStrategy
                     )
                       .then(() => {
                         // try using the fresh access token
@@ -922,7 +922,7 @@ export class Utils {
                                 getAccessToken,
                                 storeAccessToken,
                                 resolve,
-                                reject,
+                                reject
                               );
                             }
                           })
@@ -945,7 +945,7 @@ export class Utils {
                       getAccessToken,
                       storeAccessToken,
                       resolve,
-                      reject,
+                      reject
                     );
                   }
                 });
@@ -971,7 +971,7 @@ export class Utils {
     getAccessToken: any,
     storeAccessToken: any,
     resolve: any,
-    reject: any,
+    reject: any
   ) {
     if (resource.status === MOVED_TEMPORARILY && !resource.isResponseHandled) {
       // if the resource was redirected to a degraded version
@@ -1049,7 +1049,7 @@ export class Utils {
 
   static getResourceById(
     parentResource: JSONLDResource,
-    id: string,
+    id: string
   ): JSONLDResource {
     return <JSONLDResource>(
       Utils.traverseAndFind(parentResource.__jsonld, "@id", id)
@@ -1065,7 +1065,7 @@ export class Utils {
   static traverseAndFind(
     object: any,
     k: string,
-    v: string,
+    v: string
   ): object | undefined {
     if (object.hasOwnProperty(k) && object[k] === v) {
       return object;
@@ -1093,7 +1093,7 @@ export class Utils {
       onlyServices?: boolean;
       skipParentResources?: boolean;
       onlyService?: boolean;
-    } = {},
+    } = {}
   ): Service[] {
     const services: Service[] = [];
 
@@ -1110,7 +1110,7 @@ export class Utils {
       resource.options.resource !== resource
     ) {
       services.push(
-        ...Utils.getServices(resource.options.resource, { onlyServices: true }),
+        ...Utils.getServices(resource.options.resource, { onlyServices: true })
       );
     }
 
@@ -1139,7 +1139,7 @@ export class Utils {
       if (typeof s === "string") {
         const r: JSONLDResource = this.getResourceById(
           resource.options.resource,
-          s,
+          s
         );
 
         if (r) {

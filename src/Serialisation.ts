@@ -8,7 +8,7 @@ import {
 export class Deserialiser {
   static parse(
     manifest: any,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): IIIFResource | null {
     if (typeof manifest === "string") {
       manifest = JSON.parse(manifest);
@@ -19,7 +19,7 @@ export class Deserialiser {
 
   static parseJson(
     json: any,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): IIIFResource | null {
     let resource: IIIFResource;
 
@@ -64,7 +64,7 @@ export class Deserialiser {
   static parseCollection(json: any, options?: IManifestoOptions): Collection {
     const collection: Collection = new Collection(
       json,
-      <IManifestoOptions>options,
+      <IManifestoOptions>options
     );
 
     if (options) {
@@ -85,7 +85,7 @@ export class Deserialiser {
 
   static parseCollections(
     collection: Collection,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): void {
     let items;
 
@@ -93,7 +93,7 @@ export class Deserialiser {
       items = collection.__jsonld.collections;
     } else if (collection.__jsonld.items) {
       items = collection.__jsonld.items.filter(
-        (m) => m.type.toLowerCase() === "collection",
+        (m) => m.type.toLowerCase() === "collection"
       );
     }
 
@@ -117,7 +117,7 @@ export class Deserialiser {
 
   static parseManifests(
     collection: Collection,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): void {
     let items;
 
@@ -125,7 +125,7 @@ export class Deserialiser {
       items = collection.__jsonld.manifests;
     } else if (collection.__jsonld.items) {
       items = collection.__jsonld.items.filter(
-        (m) => m.type.toLowerCase() === "manifest",
+        (m) => m.type.toLowerCase() === "manifest"
       );
     }
 
@@ -141,7 +141,7 @@ export class Deserialiser {
 
   static parseItem(
     json: any,
-    options?: IManifestoOptions,
+    options?: IManifestoOptions
   ): IIIFResource | null {
     if (json["@type"]) {
       if (json["@type"].toLowerCase() === "sc:manifest") {

@@ -107,7 +107,7 @@ export class IIIFResource extends ManifestResource {
   getLicense(): string | null {
     return Utils.getLocalisedValue(
       this.getProperty("license"),
-      this.options.locale,
+      this.options.locale
     );
   }
 

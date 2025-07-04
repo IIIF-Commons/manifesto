@@ -46,7 +46,7 @@ export class Collection extends IIIFResource {
     let collection: Collection | undefined;
 
     for (let i = 0; i < collections.length; i++) {
-      let c: Collection = collections[i];
+      const c: Collection = collections[i];
       if (c.index === collectionIndex) {
         collection = c;
       }
@@ -67,7 +67,7 @@ export class Collection extends IIIFResource {
     let manifest: Manifest | undefined;
 
     for (let i = 0; i < manifests.length; i++) {
-      let m: Manifest = manifests[i];
+      const m: Manifest = manifests[i];
       if (m.index === manifestIndex) {
         manifest = m;
       }

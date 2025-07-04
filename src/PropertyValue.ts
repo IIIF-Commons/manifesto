@@ -16,7 +16,7 @@ export class LocalizedValue implements Language {
    */
   static parseV2Value(
     rawVal: any,
-    defaultLocale?: string,
+    defaultLocale?: string
   ): LocalizedValue | null {
     if (typeof rawVal === "string") {
       return new LocalizedValue(rawVal, undefined, defaultLocale);
@@ -24,7 +24,7 @@ export class LocalizedValue implements Language {
       return new LocalizedValue(
         rawVal["@value"],
         rawVal["@language"],
-        defaultLocale,
+        defaultLocale
       );
     }
     return null;
@@ -33,7 +33,7 @@ export class LocalizedValue implements Language {
   constructor(
     value: string | string[],
     locale?: string,
-    defaultLocale: string = "none",
+    defaultLocale: string = "none"
   ) {
     if (Array.isArray(value) && value.length === 1) {
       this._value = value[0];
@@ -108,13 +108,13 @@ export class PropertyValue extends Array<LocalizedValue> {
           }
           return acc;
         },
-        {} as { [locale: string]: LocalizedValue },
+        {} as { [locale: string]: LocalizedValue }
       );
       return new PropertyValue(Object.values(byLocale), defaultLocale);
     } else if (typeof rawVal === "string") {
       return new PropertyValue(
         [new LocalizedValue(rawVal, undefined, defaultLocale)],
-        defaultLocale,
+        defaultLocale
       );
     } else if (rawVal["@language"]) {
       // Single IIIF v2 property value
@@ -131,12 +131,12 @@ export class PropertyValue extends Array<LocalizedValue> {
           const val = rawVal[locale];
           if (!Array.isArray(val)) {
             throw new Error(
-              "A IIIF v3 localized property value must have an array as the value for a given language.",
+              "A IIIF v3 localized property value must have an array as the value for a given language."
             );
           }
           return new LocalizedValue(val, locale, defaultLocale);
         }),
-        defaultLocale,
+        defaultLocale
       );
     }
   }
@@ -166,7 +166,7 @@ export class PropertyValue extends Array<LocalizedValue> {
     // Look for an inexact match
     for (const userLocale of locales) {
       const matchingLocale = allLocales.find(
-        (l) => Utils.getInexactLocale(l) === Utils.getInexactLocale(userLocale),
+        (l) => Utils.getInexactLocale(l) === Utils.getInexactLocale(userLocale)
       );
       if (matchingLocale) {
         return matchingLocale;

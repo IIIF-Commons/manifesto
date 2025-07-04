@@ -10,7 +10,7 @@ export const loadManifest: (url: string) => Promise<string> = (url: string) => {
 
 export const parseManifest: (
   manifest: any,
-  options?: IManifestoOptions | undefined,
+  options?: IManifestoOptions | undefined
 ) => IIIFResource | null = (manifest: string, options?: IManifestoOptions) => {
   return Utils.parseManifest(manifest, options);
 };

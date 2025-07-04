@@ -1,7 +1,7 @@
 export class Duration {
   constructor(
     public start: number,
-    public end: number,
+    public end: number
   ) {}
 
   public getLength(): number {
