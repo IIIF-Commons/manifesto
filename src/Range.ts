@@ -4,12 +4,12 @@ import {
   ManifestResource,
   TreeNode,
   TreeNodeType,
-  Utils
+  Utils,
 } from "./internal";
 import {
   Behavior,
   ViewingDirection,
-  ViewingHint
+  ViewingHint,
 } from "@iiif/vocabulary/dist-commonjs";
 
 export class Range extends ManifestResource {
@@ -47,7 +47,7 @@ export class Range extends ManifestResource {
       for (const canvas of this.canvases) {
         if (!canvas) continue;
         const [, canvasId, start, end] = (canvas.match(
-          /(.*)#t=([0-9.]+),?([0-9.]+)?/
+          /(.*)#t=([0-9.]+),?([0-9.]+)?/,
         ) || [undefined, canvas]) as string[];
 
         if (canvasId) {
@@ -145,7 +145,7 @@ export class Range extends ManifestResource {
       return this._ranges;
     }
 
-    return (this._ranges = <Range[]>this.items.filter(m => m.isRange()));
+    return (this._ranges = <Range[]>this.items.filter((m) => m.isRange()));
   }
 
   getBehavior(): Behavior | null {

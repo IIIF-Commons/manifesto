@@ -7,12 +7,12 @@ import {
   LabelValuePair,
   PropertyValue,
   IManifestoOptions,
-  IExternalResource
+  IExternalResource,
 } from "./internal";
 import {
   ServiceProfile,
   RenderingFormat,
-  IIIFResourceType
+  IIIFResourceType,
 } from "@iiif/vocabulary/dist-commonjs";
 
 export class ManifestResource extends JSONLDResource {
@@ -52,7 +52,7 @@ export class ManifestResource extends JSONLDResource {
     for (let i = 0; i < _metadata.length; i++) {
       const item: any = _metadata[i];
       const metadataItem: LabelValuePair = new LabelValuePair(
-        this.options.locale
+        this.options.locale,
       );
       metadataItem.parse(item);
       metadata.push(metadataItem);

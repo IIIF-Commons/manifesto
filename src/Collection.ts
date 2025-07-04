@@ -1,7 +1,7 @@
 import {
   Behavior,
   ViewingDirection,
-  ViewingHint
+  ViewingHint,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   IIIFResource,
@@ -9,7 +9,7 @@ import {
   Manifest,
   TreeNode,
   TreeNodeType,
-  Utils
+  Utils,
 } from "./internal";
 
 export class Collection extends IIIFResource {
@@ -27,7 +27,7 @@ export class Collection extends IIIFResource {
       return this._collections;
     }
     return (this._collections = <Collection[]>(
-      this.items.filter(m => m.isCollection())
+      this.items.filter((m) => m.isCollection())
     ));
   }
 
@@ -36,7 +36,7 @@ export class Collection extends IIIFResource {
       return this._manifests;
     }
     return (this._manifests = <Manifest[]>(
-      this.items.filter(m => m.isManifest())
+      this.items.filter((m) => m.isManifest())
     ));
   }
 

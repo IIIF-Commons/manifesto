@@ -3,7 +3,7 @@ import {
   Annotation,
   IManifestoOptions,
   JSONLDResource,
-  Utils
+  Utils,
 } from "./internal";
 
 export class AnnotationList extends JSONLDResource {
@@ -27,7 +27,7 @@ export class AnnotationList extends JSONLDResource {
 
   getResources(): Annotation[] {
     const resources = this.getProperty("resources");
-    return resources.map(resource => new Annotation(resource, this.options));
+    return resources.map((resource) => new Annotation(resource, this.options));
   }
 
   load(): Promise<AnnotationList> {
@@ -42,7 +42,7 @@ export class AnnotationList extends JSONLDResource {
         }
 
         Utils.loadManifest(id)
-          .then(data => {
+          .then((data) => {
             this.__jsonld = data;
             this.context = this.getProperty("context");
             this.id = this.getProperty("id");

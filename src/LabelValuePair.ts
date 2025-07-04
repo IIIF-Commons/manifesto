@@ -37,7 +37,7 @@ export class LabelValuePair {
 
   public getValue(
     locale?: string | string[],
-    joinWith: string = "<br/>"
+    joinWith: string = "<br/>",
   ): string | null {
     if (this.value === null) {
       return null;

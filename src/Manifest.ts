@@ -2,7 +2,7 @@ import {
   ViewingHint,
   Behavior,
   ViewingDirection,
-  ServiceProfile
+  ServiceProfile,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   Canvas,
@@ -14,7 +14,7 @@ import {
   Service,
   TreeNode,
   TreeNodeType,
-  Utils
+  Utils,
 } from "./internal";
 
 export class Manifest extends IIIFResource {
@@ -215,7 +215,7 @@ export class Manifest extends IIIFResource {
         return acc;
       };
       const subRanges: Range[] = Array.from(
-        topRange.getRanges().reduce(reducer, new Set())
+        topRange.getRanges().reduce(reducer, new Set()),
       );
       this._allRanges = this._allRanges.concat(subRanges);
     }

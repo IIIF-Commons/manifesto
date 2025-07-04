@@ -2,7 +2,7 @@ import {
   IAccessToken,
   IExternalResourceData,
   IManifestoOptions,
-  Service
+  Service,
 } from "./internal";
 
 export interface IExternalResource {
