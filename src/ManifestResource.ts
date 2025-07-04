@@ -7,12 +7,12 @@ import {
   LabelValuePair,
   PropertyValue,
   IManifestoOptions,
-  IExternalResource
+  IExternalResource,
 } from "./internal";
 import {
   ServiceProfile,
   RenderingFormat,
-  IIIFResourceType
+  IIIFResourceType,
 } from "@iiif/vocabulary/dist-commonjs";
 
 export class ManifestResource extends JSONLDResource {

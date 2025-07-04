@@ -1,7 +1,7 @@
 import {
   Behavior,
   ViewingDirection,
-  ViewingHint
+  ViewingHint,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   IIIFResource,
@@ -9,7 +9,7 @@ import {
   Manifest,
   TreeNode,
   TreeNodeType,
-  Utils
+  Utils,
 } from "./internal";
 
 export class Collection extends IIIFResource {
@@ -27,7 +27,7 @@ export class Collection extends IIIFResource {
       return this._collections;
     }
     return (this._collections = <Collection[]>(
-      this.items.filter(m => m.isCollection())
+      this.items.filter((m) => m.isCollection())
     ));
   }
 
@@ -36,7 +36,7 @@ export class Collection extends IIIFResource {
       return this._manifests;
     }
     return (this._manifests = <Manifest[]>(
-      this.items.filter(m => m.isManifest())
+      this.items.filter((m) => m.isManifest())
     ));
   }
 
@@ -46,7 +46,7 @@ export class Collection extends IIIFResource {
     let collection: Collection | undefined;
 
     for (let i = 0; i < collections.length; i++) {
-      let c: Collection = collections[i];
+      const c: Collection = collections[i];
       if (c.index === collectionIndex) {
         collection = c;
       }
@@ -67,7 +67,7 @@ export class Collection extends IIIFResource {
     let manifest: Manifest | undefined;
 
     for (let i = 0; i < manifests.length; i++) {
-      let m: Manifest = manifests[i];
+      const m: Manifest = manifests[i];
       if (m.index === manifestIndex) {
         manifest = m;
       }

@@ -1,12 +1,12 @@
 import {
   ExternalResourceType,
-  MediaType
+  MediaType,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   Annotation,
   IManifestoOptions,
   ManifestResource,
-  Utils
+  Utils,
 } from "./internal";
 
 export class Resource extends ManifestResource {

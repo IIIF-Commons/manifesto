@@ -4,12 +4,12 @@ import {
   ManifestResource,
   TreeNode,
   TreeNodeType,
-  Utils
+  Utils,
 } from "./internal";
 import {
   Behavior,
   ViewingDirection,
-  ViewingHint
+  ViewingHint,
 } from "@iiif/vocabulary/dist-commonjs";
 
 export class Range extends ManifestResource {
@@ -91,7 +91,7 @@ export class Range extends ManifestResource {
       // For example - if we have http://example.org/canvas#t=1,100 it will extract 1 and 100 as the start and end.
       for (let i = 0; i < this.canvases.length; i++) {
         const canvas: string = this.canvases[i];
-        let temporal: number[] | null = Utils.getTemporalComponent(canvas);
+        const temporal: number[] | null = Utils.getTemporalComponent(canvas);
         if (temporal && temporal.length > 1) {
           if (i === 0) {
             // Note: Cannot guarantee ranges are sequential (fixed above)
@@ -145,7 +145,7 @@ export class Range extends ManifestResource {
       return this._ranges;
     }
 
-    return (this._ranges = <Range[]>this.items.filter(m => m.isRange()));
+    return (this._ranges = <Range[]>this.items.filter((m) => m.isRange()));
   }
 
   getBehavior(): Behavior | null {

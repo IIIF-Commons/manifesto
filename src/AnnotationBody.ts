@@ -1,6 +1,6 @@
 import {
   ExternalResourceType,
-  MediaType
+  MediaType,
 } from "@iiif/vocabulary/dist-commonjs";
 import { IManifestoOptions, ManifestResource, Utils } from "./internal";
 
