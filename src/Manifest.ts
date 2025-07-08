@@ -138,7 +138,6 @@ export class Manifest extends IIIFResource {
   //}
 
   private _parseRanges(r: any, path: string, parentRange?: Range): void {
-    const range: Range = new Range(r, this.options);
     let id: string | null = null;
 
     if (typeof r === "string") {
@@ -151,6 +150,7 @@ export class Manifest extends IIIFResource {
       return;
     }
 
+    const range: Range = new Range(r, this.options);
     range.parentRange = parentRange;
     range.path = path;
 
