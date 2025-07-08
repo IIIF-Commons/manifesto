@@ -1,6 +1,9 @@
 // @todo works, but with these specific workarounds.
 globalThis.window = globalThis.window || {};
 globalThis.fetch = require('node-fetch');
+if (typeof self === 'undefined') {
+    global.self = global;
+}
 
 const Manifesto = require('../dist-umd/manifesto');
 
