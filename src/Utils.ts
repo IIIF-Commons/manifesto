@@ -7,17 +7,17 @@ import {
   JSONLDResource,
   Service,
   StatusCode,
-  TreeNode
+  TreeNode,
 } from "./internal";
 import {
   MediaType,
   ServiceProfile,
-  ServiceType
+  ServiceType,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   OK,
   MOVED_TEMPORARILY,
-  UNAUTHORIZED
+  UNAUTHORIZED,
 } from "@edsilv/http-status-codes/dist-commonjs";
 import "isomorphic-unfetch";
 
@@ -331,11 +331,11 @@ export class Utils {
     return new Promise<any>((resolve, reject) => {
       fetch(url)
         .then(Utils.checkStatus)
-        .then(r => r.json())
-        .then(data => {
+        .then((r) => r.json())
+        .then((data) => {
           resolve(data);
         })
-        .catch(err => {
+        .catch((err) => {
           reject();
         });
     });
@@ -382,7 +382,7 @@ export class Utils {
         .then(() => {
           resolve(resources);
         })
-        ["catch"](error => {
+        ["catch"]((error) => {
           reject(error);
         });
     });
@@ -411,9 +411,8 @@ export class Utils {
       service: Service
     ) => void
   ): Promise<IExternalResource> {
-    const storedAccessToken: IAccessToken | null = await getStoredAccessToken(
-      resource
-    );
+    const storedAccessToken: IAccessToken | null =
+      await getStoredAccessToken(resource);
 
     if (storedAccessToken) {
       await resource.getData(storedAccessToken);
@@ -543,7 +542,7 @@ export class Utils {
 
     if (serviceToTry) {
       lastAttempted = serviceToTry;
-      let kioskInteraction = openContentProviderInteraction(serviceToTry);
+      const kioskInteraction = openContentProviderInteraction(serviceToTry);
       if (kioskInteraction) {
         await userInteractedWithContentProvider(kioskInteraction);
         await Utils.attemptResourceWithToken(
@@ -568,7 +567,7 @@ export class Utils {
 
     if (serviceToTry) {
       lastAttempted = serviceToTry;
-      let contentProviderInteraction = await getContentProviderInteraction(
+      const contentProviderInteraction = await getContentProviderInteraction(
         resource,
         serviceToTry
       );
@@ -589,7 +588,7 @@ export class Utils {
 
     if (serviceToTry) {
       lastAttempted = serviceToTry;
-      let contentProviderInteraction = await getContentProviderInteraction(
+      const contentProviderInteraction = await getContentProviderInteraction(
         resource,
         serviceToTry
       );
@@ -627,7 +626,7 @@ export class Utils {
 
     if (tokenService) {
       // found token service: " + tokenService["@id"]);
-      let tokenMessage: any = await openTokenService(resource, tokenService);
+      const tokenMessage: any = await openTokenService(resource, tokenService);
 
       if (tokenMessage && tokenMessage.accessToken) {
         await resource.getData(tokenMessage);
@@ -678,7 +677,7 @@ export class Utils {
         .then(() => {
           resolve(resources);
         })
-        ["catch"](error => {
+        ["catch"]((error) => {
           reject(error);
         });
     });
@@ -733,15 +732,15 @@ export class Utils {
                           .then(() => {
                             resolve(handleResourceResponse(resource));
                           })
-                          ["catch"](message => {
+                          ["catch"]((message) => {
                             reject(Utils.createInternalServerError(message));
                           });
                       })
-                      ["catch"](message => {
+                      ["catch"]((message) => {
                         reject(Utils.createInternalServerError(message));
                       });
                   })
-                  ["catch"](message => {
+                  ["catch"]((message) => {
                     reject(Utils.createInternalServerError(message));
                   });
               }
@@ -750,7 +749,7 @@ export class Utils {
               resolve(resource);
             }
           })
-          ["catch"](message => {
+          ["catch"]((message) => {
             reject(Utils.createInternalServerError(message));
           });
       } else {
@@ -786,7 +785,7 @@ export class Utils {
                       .then(() => {
                         resolve(handleResourceResponse(resource));
                       })
-                      ["catch"](error => {
+                      ["catch"]((error) => {
                         // if (resource.restrictedService){
                         //     reject(Utils.createRestrictedError());
                         // } else {
@@ -795,7 +794,7 @@ export class Utils {
                       });
                   }
                 })
-                ["catch"](error => {
+                ["catch"]((error) => {
                   reject(Utils.createAuthorizationFailedError());
                 });
             } else {
@@ -812,12 +811,12 @@ export class Utils {
                 .then(() => {
                   resolve(handleResourceResponse(resource));
                 })
-                ["catch"](error => {
+                ["catch"]((error) => {
                   reject(Utils.createAuthorizationFailedError());
                 });
             }
           })
-          ["catch"](error => {
+          ["catch"]((error) => {
             reject(Utils.createAuthorizationFailedError());
           });
       }
@@ -893,12 +892,12 @@ export class Utils {
                       );
                     }
                   })
-                  ["catch"](message => {
+                  ["catch"]((message) => {
                     reject(Utils.createInternalServerError(message));
                   });
               } else {
                 // There was no stored token, but the user might have a cookie that will grant a token
-                getAccessToken(resource, false).then(accessToken => {
+                getAccessToken(resource, false).then((accessToken) => {
                   if (accessToken) {
                     storeAccessToken(
                       resource,
@@ -927,11 +926,11 @@ export class Utils {
                               );
                             }
                           })
-                          ["catch"](message => {
+                          ["catch"]((message) => {
                             reject(Utils.createInternalServerError(message));
                           });
                       })
-                      ["catch"](message => {
+                      ["catch"]((message) => {
                         // not able to store access token
                         reject(Utils.createInternalServerError(message));
                       });
@@ -952,7 +951,7 @@ export class Utils {
                 });
               }
             })
-            ["catch"](message => {
+            ["catch"]((message) => {
               reject(Utils.createInternalServerError(message));
             });
         } else {
@@ -995,7 +994,7 @@ export class Utils {
                   .then(() => {
                     resolve(resource);
                   })
-                  ["catch"](message => {
+                  ["catch"]((message) => {
                     reject(Utils.createInternalServerError(message));
                   });
               })
@@ -1019,7 +1018,7 @@ export class Utils {
                   .then(() => {
                     resolve(resource);
                   })
-                  ["catch"](message => {
+                  ["catch"]((message) => {
                     reject(Utils.createInternalServerError(message));
                   });
               })
@@ -1089,7 +1088,7 @@ export class Utils {
     {
       onlyService = false,
       onlyServices = false,
-      skipParentResources = false
+      skipParentResources = false,
     }: {
       onlyServices?: boolean;
       skipParentResources?: boolean;

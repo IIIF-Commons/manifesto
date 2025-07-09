@@ -2,7 +2,7 @@ import {
   ViewingHint,
   Behavior,
   ViewingDirection,
-  ServiceProfile
+  ServiceProfile,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   Canvas,
@@ -14,7 +14,7 @@ import {
   Service,
   TreeNode,
   TreeNodeType,
-  Utils
+  Utils,
 } from "./internal";
 
 export class Manifest extends IIIFResource {
@@ -138,7 +138,6 @@ export class Manifest extends IIIFResource {
   //}
 
   private _parseRanges(r: any, path: string, parentRange?: Range): void {
-    let range: Range;
     let id: string | null = null;
 
     if (typeof r === "string") {
@@ -151,7 +150,7 @@ export class Manifest extends IIIFResource {
       return;
     }
 
-    range = new Range(r, this.options);
+    const range: Range = new Range(r, this.options);
     range.parentRange = parentRange;
     range.path = path;
 
@@ -256,7 +255,7 @@ export class Manifest extends IIIFResource {
 
     // IxIF mediaSequences overrode sequences, so need to be checked first.
     // deprecate this when presentation 3 ships
-    let items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
+    const items: any = this.__jsonld.mediaSequences || this.__jsonld.sequences;
 
     if (items) {
       for (let i = 0; i < items.length; i++) {

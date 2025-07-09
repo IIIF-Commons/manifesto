@@ -3,7 +3,7 @@ import {
   AnnotationBody,
   IManifestoOptions,
   ManifestResource,
-  Resource
+  Resource,
 } from "./internal";
 
 export class Annotation extends ManifestResource {
