@@ -28,6 +28,7 @@ https://iiif-commons.github.io/manifesto/
 
     git checkout master
     npm version patch
+    npm run docs
     git add .
     git commit -m "Release v1.2.3"
     git tag v1.2.3
