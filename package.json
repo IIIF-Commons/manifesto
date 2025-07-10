@@ -9,7 +9,7 @@
   "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
-    "docs": "rimraf -rf docs && typedoc --tsconfig tsconfig.docs.json --out docs --name manifesto --theme default src/ && touch docs/.nojekyll",
+    "docs": "rimraf -rf docs && typedoc --tsconfig tsconfig.docs.json --out docs --name manifesto --theme default src/",
     "build:esmodule": "tsc -m es6 --outDir dist-esmodule",
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:umd": "webpack",
