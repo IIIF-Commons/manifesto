@@ -7,7 +7,7 @@ import {
   Scene,
   Thumb,
   Thumbnail,
-  Utils
+  Utils,
 } from "./internal";
 
 export class Sequence extends ManifestResource {
@@ -23,7 +23,7 @@ export class Sequence extends ManifestResource {
       return this.items;
     }
 
-    let items = this.__jsonld.canvases || this.__jsonld.elements;
+    const items = this.__jsonld.canvases || this.__jsonld.elements;
 
     if (items) {
       for (let i = 0; i < items.length; i++) {
@@ -148,7 +148,8 @@ export class Sequence extends ManifestResource {
     if (pagingEnabled) {
       const indices: number[] = this.getPagedIndices(canvasIndex);
 
-      const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+      const viewingDirection: ViewingDirection | null =
+        this.getViewingDirection();
 
       if (
         viewingDirection &&
@@ -183,7 +184,8 @@ export class Sequence extends ManifestResource {
         indices = [canvasIndex - 1, canvasIndex];
       }
 
-      const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+      const viewingDirection: ViewingDirection | null =
+        this.getViewingDirection();
 
       if (
         viewingDirection &&
@@ -202,7 +204,8 @@ export class Sequence extends ManifestResource {
     if (pagingEnabled) {
       const indices = this.getPagedIndices(canvasIndex);
 
-      const viewingDirection: ViewingDirection | null = this.getViewingDirection();
+      const viewingDirection: ViewingDirection | null =
+        this.getViewingDirection();
 
       if (
         viewingDirection &&

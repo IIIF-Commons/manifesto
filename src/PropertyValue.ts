@@ -92,21 +92,24 @@ export class PropertyValue extends Array<LocalizedValue> {
     if (Array.isArray(rawVal)) {
       // Collection of IIIF v2 property values
       const parsed = rawVal
-        .map(v => LocalizedValue.parseV2Value(v, defaultLocale))
-        .filter(v => v !== null) as LocalizedValue[];
-      const byLocale = parsed.reduce((acc, lv) => {
-        let loc = lv._locale;
-        if (!loc) {
-          // Cannot use undefined as an object key
-          loc = "none";
-        }
-        if (acc[loc]) {
-          acc[loc].addValue(lv._value);
-        } else {
-          acc[loc] = lv;
-        }
-        return acc;
-      }, {} as { [locale: string]: LocalizedValue });
+        .map((v) => LocalizedValue.parseV2Value(v, defaultLocale))
+        .filter((v) => v !== null) as LocalizedValue[];
+      const byLocale = parsed.reduce(
+        (acc, lv) => {
+          let loc = lv._locale;
+          if (!loc) {
+            // Cannot use undefined as an object key
+            loc = "none";
+          }
+          if (acc[loc]) {
+            acc[loc].addValue(lv._value);
+          } else {
+            acc[loc] = lv;
+          }
+          return acc;
+        },
+        {} as { [locale: string]: LocalizedValue }
+      );
       return new PropertyValue(Object.values(byLocale), defaultLocale);
     } else if (typeof rawVal === "string") {
       return new PropertyValue(
@@ -124,7 +127,7 @@ export class PropertyValue extends Array<LocalizedValue> {
     } else {
       // IIIF v3 property value
       return new PropertyValue(
-        Object.keys(rawVal).map(locale => {
+        Object.keys(rawVal).map((locale) => {
           const val = rawVal[locale];
           if (!Array.isArray(val)) {
             throw new Error(
@@ -155,11 +158,11 @@ export class PropertyValue extends Array<LocalizedValue> {
         locales.push( this._defaultLocale as string );
 
     const allLocales = Array.from(this.values())
-      .map(lv => lv._locale)
-      .filter(l => l !== undefined) as string[];
+      .map((lv) => lv._locale)
+      .filter((l) => l !== undefined) as string[];
     // First, look for a precise match
     for (const userLocale of locales) {
-      const matchingLocale = allLocales.find(l => l === userLocale);
+      const matchingLocale = allLocales.find((l) => l === userLocale);
       if (matchingLocale) {
         return matchingLocale;
       }
@@ -167,7 +170,7 @@ export class PropertyValue extends Array<LocalizedValue> {
     // Look for an inexact match
     for (const userLocale of locales) {
       const matchingLocale = allLocales.find(
-        l => Utils.getInexactLocale(l) === Utils.getInexactLocale(userLocale)
+        (l) => Utils.getInexactLocale(l) === Utils.getInexactLocale(userLocale)
       );
       if (matchingLocale) {
         return matchingLocale;
@@ -188,11 +191,11 @@ export class PropertyValue extends Array<LocalizedValue> {
   setValue(value: string | string[], locale?: string) {
     let existing: LocalizedValue | undefined = undefined;
     if (!locale) {
-      existing = this.find(lv => lv._locale === undefined);
+      existing = this.find((lv) => lv._locale === undefined);
     } else {
       const bestLocale = this.getSuitableLocale([locale]);
       if (bestLocale) {
-        existing = this.find(lv => lv._locale === bestLocale);
+        existing = this.find((lv) => lv._locale === bestLocale);
       }
     }
     if (existing) {
@@ -256,14 +259,14 @@ export class PropertyValue extends Array<LocalizedValue> {
     const matchingLocale = this.getSuitableLocale(locales);
     
     if (matchingLocale) {
-      const val = this.find(lv => lv._locale === matchingLocale)!._value;
+      const val = this.find((lv) => lv._locale === matchingLocale)!._value;
       return Array.isArray(val) ? val : [val];
     }
 
     // If all of the values have a language associated with them, and none match
     // the language preference, the client must select a language and display
     // all of the values associated with that language.
-    const allHaveLang = !this.find(lv => lv._locale === undefined);
+    const allHaveLang = !this.find((lv) => lv._locale === undefined);
     if (allHaveLang) {
       const val = this[0]._value;
       return Array.isArray(val) ? val : [val];
@@ -272,7 +275,7 @@ export class PropertyValue extends Array<LocalizedValue> {
     // If some of the values have a language associated with them, but none
     // match the language preference, the client must display all of the values
     // that do not have a language associated with them.
-    const lv = this.find(lv => lv._locale === undefined);
+    const lv = this.find((lv) => lv._locale === undefined);
     if (lv) {
       return Array.isArray(lv._value) ? lv._value : [lv._value];
     }

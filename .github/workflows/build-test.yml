@@ -1,13 +1,13 @@
 name: NPM build + test
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '18' ]
+        node: [ '20' ]
 
     name: Node ${{ matrix.node }} build
     steps:

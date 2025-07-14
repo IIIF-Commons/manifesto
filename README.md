@@ -2,7 +2,7 @@ README.md is a mess, need to start from manifesto's and re-do!
 
 # manifesto
 
-[![Build Status](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml/badge.svg?branch=master)](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml)
+[![Build Status](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml/badge.svg?branch=main)](https://github.com/IIIF-Commons/manifesto/actions/workflows/build-test.yml)
 
 Forked from [IIIF-Commons/manifesto](https://github.com/IIIF-Commons/manifesto).
 

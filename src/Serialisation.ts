@@ -2,7 +2,7 @@ import {
   Collection,
   IIIFResource,
   IManifestoOptions,
-  Manifest
+  Manifest,
 } from "./internal";
 
 export class Deserialiser {
@@ -93,7 +93,7 @@ export class Deserialiser {
       items = collection.__jsonld.collections;
     } else if (collection.__jsonld.items) {
       items = collection.__jsonld.items.filter(
-        m => m.type.toLowerCase() === "collection"
+        (m) => m.type.toLowerCase() === "collection"
       );
     }
 
@@ -125,7 +125,7 @@ export class Deserialiser {
       items = collection.__jsonld.manifests;
     } else if (collection.__jsonld.items) {
       items = collection.__jsonld.items.filter(
-        m => m.type.toLowerCase() === "manifest"
+        (m) => m.type.toLowerCase() === "manifest"
       );
     }
 
@@ -170,7 +170,9 @@ export class Deserialiser {
         const item: IIIFResource | null = this.parseItem(items[i], options);
         if (!item) return;
         // only add to items if not already parsed from backwards-compatible collections/manifests arrays
-        if (collection.items.filter(m => m.id === (<IIIFResource>item).id)[0]) {
+        if (
+          collection.items.filter((m) => m.id === (<IIIFResource>item).id)[0]
+        ) {
           continue;
         }
         item.index = i;
