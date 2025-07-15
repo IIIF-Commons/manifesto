@@ -4,7 +4,6 @@ import { IIIFResource } from "./IIIFResource";
 import { IManifestoOptions } from "./IManifestoOptions";
 import { Utils } from "./Utils";
 
-
 /**
 Initiates downloading an IIIF manifest json file from URL. Returns a Promise<any>
 to allow subsequent processing on a successful fetch. 

@@ -1,6 +1,6 @@
 import {
   ExternalResourceType,
-  ViewingHint
+  ViewingHint,
 } from "@iiif/vocabulary/dist-commonjs";
 import {
   Annotation,
@@ -13,7 +13,7 @@ import {
   Resource,
   Service,
   Size,
-  Utils
+  Utils,
 } from "./internal";
 // @ts-ignore
 import flatten from "lodash/flatten";
@@ -76,7 +76,7 @@ export class Canvas extends Resource {
           width = resource.getWidth();
         }
         const service = services
-          ? services.find(service => {
+          ? services.find((service) => {
               return (
                 Utils.isImageProfile(service.getProfile()) ||
                 Utils.isImageServiceType(service.getIIIFResourceType())
@@ -111,7 +111,7 @@ export class Canvas extends Resource {
           width = anno.getWidth();
         }
         const service = services
-          ? services.find(service => {
+          ? services.find((service) => {
               return Utils.isImageServiceType(service.getIIIFResourceType());
             })
           : null;
@@ -172,7 +172,7 @@ export class Canvas extends Resource {
       profile = this.externalResource.data.profile;
 
       if (Array.isArray(profile)) {
-        profile = profile.filter(p => p["maxWidth"] ?? p["maxwidth"])[0];
+        profile = profile.filter((p) => p["maxWidth"] ?? p["maxwidth"])[0];
 
         if (profile) {
           maxDimensions = new Size(
@@ -241,16 +241,25 @@ export class Canvas extends Resource {
 
   // Annotations not rendered as part of the Canvas
   // Have non-painting motivations and are listed in Canvas annotations property, not items property
-  getNonContentAnnotations(): Annotation[] {  
-    const annotationPages = ( this.__jsonld.annotations || [] )
-      .filter(annotationPage => annotationPage && annotationPage.type === 'AnnotationPage')
-      .map(annotationPage => new AnnotationPage(annotationPage, this.options)) as AnnotationPage[];  
+  getNonContentAnnotations(): Annotation[] {
+    const annotationPages = (this.__jsonld.annotations || [])
+      .filter(
+        (annotationPage) =>
+          annotationPage && annotationPage.type === "AnnotationPage"
+      )
+      .map(
+        (annotationPage) => new AnnotationPage(annotationPage, this.options)
+      ) as AnnotationPage[];
     if (!annotationPages.length) return [];
 
-    const annotationsNested = annotationPages.map(page => page.getItems()) as Annotation[][];
+    const annotationsNested = annotationPages.map((page) =>
+      page.getItems()
+    ) as Annotation[][];
     const annotationsFlat = flattenDeep(annotationsNested) as Annotation[];
-    
-    return annotationsFlat.map(annotation => new Annotation(annotation, this.options));
+
+    return annotationsFlat.map(
+      (annotation) => new Annotation(annotation, this.options)
+    );
   }
 
   getOtherContent(): Promise<AnnotationList[]> {
@@ -267,7 +276,7 @@ export class Canvas extends Resource {
 
     const otherPromises: Promise<AnnotationList>[] = otherContent
       .filter(
-        otherContent =>
+        (otherContent) =>
           otherContent &&
           canonicalComparison(otherContent["@type"], "sc:AnnotationList")
       )
@@ -279,7 +288,7 @@ export class Canvas extends Resource {
             this.options
           )
       )
-      .map(annotationList => annotationList.load());
+      .map((annotationList) => annotationList.load());
 
     return Promise.all(otherPromises);
   }
@@ -332,12 +341,12 @@ export class Canvas extends Resource {
 
   get imageResources() {
     const resources = flattenDeep([
-      this.getImages().map(i => i.getResource()),
-      this.getContent().map(i => i.getBody())
+      this.getImages().map((i) => i.getResource()),
+      this.getContent().map((i) => i.getBody()),
     ]);
 
     return flatten(
-      resources.map(resource => {
+      resources.map((resource) => {
         switch (resource.getProperty("type").toLowerCase()) {
           case ExternalResourceType.CHOICE:
           case ExternalResourceType.OA_CHOICE:
@@ -345,13 +354,13 @@ export class Canvas extends Resource {
               {
                 images: flatten([
                   resource.getProperty("default"),
-                  resource.getProperty("item")
-                ]).map(r => ({ resource: r }))
+                  resource.getProperty("item"),
+                ]).map((r) => ({ resource: r })),
               },
               this.options
             )
               .getImages()
-              .map(i => i.getResource());
+              .map((i) => i.getResource());
           default:
             return resource;
         }
@@ -369,9 +378,9 @@ export class Canvas extends Resource {
    */
   resourceAnnotation(id) {
     return this.resourceAnnotations.find(
-      anno =>
+      (anno) =>
         anno.getResource().id === id ||
-        flatten(new Array(anno.getBody())).some(body => body.id === id)
+        flatten(new Array(anno.getBody())).some((body) => body.id === id)
     );
   }
 
@@ -391,17 +400,17 @@ export class Canvas extends Resource {
     }
     const fragmentMatch = (on || target).match(/xywh=(.*)$/);
     if (!fragmentMatch) return undefined;
-    return fragmentMatch[1].split(",").map(str => parseInt(str, 10));
+    return fragmentMatch[1].split(",").map((str) => parseInt(str, 10));
   }
 
   get iiifImageResources() {
     return this.imageResources.filter(
-      r => r && r.getServices()[0] && r.getServices()[0].id
+      (r) => r && r.getServices()[0] && r.getServices()[0].id
     );
   }
 
   get imageServiceIds() {
-    return this.iiifImageResources.map(r => r.getServices()[0].id);
+    return this.iiifImageResources.map((r) => r.getServices()[0].id);
   }
 
   get aspectRatio() {

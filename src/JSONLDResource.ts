@@ -24,7 +24,6 @@ export class JSONLDResource {
     return prop;
   }
 
-
   /**
   A function that wraps the getProperty function, which client
   code can use if it is needed to identify when the json value of
@@ -37,19 +36,13 @@ export class JSONLDResource {
   returned getProperty should be parsed as before.
   
   **/
-  getPropertyAsObject(name: string ): any 
-  {
+  getPropertyAsObject(name: string): any {
     let prop = this.getProperty(name);
-    
-    
-    if ( typeof(prop) === 'string')
-        return { "id" : prop ,
-                 "isIRI" : true
-               };
-    else if ( prop === Object(prop))
-        return prop;
-    else{
-        return null;
+
+    if (typeof prop === "string") return { id: prop, isIRI: true };
+    else if (prop === Object(prop)) return prop;
+    else {
+      return null;
     }
   }
 }

@@ -222,27 +222,26 @@ export class Sequence extends ManifestResource {
     return index;
   }
 
-  /** 
-  * @returns Array of Scene instances in the Sequence
-  **/
-  getScenes(): Scene[]{
+  /**
+   * @returns Array of Scene instances in the Sequence
+   **/
+  getScenes(): Scene[] {
     let returnVal: Scene[] = [];
     let low_items = this.__jsonld.elements || this.__jsonld;
-    
-    if (low_items){
-        for (let i=0; i < low_items.length; ++i){
-            let c= low_items[i];
-            if (c.type === 'Scene'){
-            const scene:Scene = new Scene(c, this.options);
-            //scene.index = i;
-            returnVal.push(scene);
-            }         
+
+    if (low_items) {
+      for (let i = 0; i < low_items.length; ++i) {
+        let c = low_items[i];
+        if (c.type === "Scene") {
+          const scene: Scene = new Scene(c, this.options);
+          //scene.index = i;
+          returnVal.push(scene);
         }
+      }
     }
     return returnVal;
   }
-  
-  
+
   getStartCanvasIndex(): number {
     const startCanvas: string = this.getStartCanvas();
 

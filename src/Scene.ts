@@ -1,10 +1,9 @@
-
 import {
   Annotation,
   AnnotationPage,
   IManifestoOptions,
   ManifestResource,
-  Color
+  Color,
 } from "./internal";
 // @ts-ignore
 import flattenDeep from "lodash/flattenDeep";
@@ -13,7 +12,6 @@ export class Scene extends ManifestResource {
   constructor(jsonld: any, options: IManifestoOptions) {
     super(jsonld, options);
   }
-
 
   // Presentation API 3.0
   getContent(): Annotation[] {
@@ -40,22 +38,22 @@ export class Scene extends ManifestResource {
       const a = annotations[i];
       const annotation = new Annotation(a, this.options);
       content.push(annotation);
-    };
+    }
 
     return content;
-  };
-  
+  }
+
   // 3D extension
-  get Content() : Annotation[] { return this.getContent(); }
-  
-  getAnnotationById( searchId: string ) : Annotation | null {
-    for (var anno of this.Content )
-        if (anno.id === searchId ) return anno;
+  get Content(): Annotation[] {
+    return this.getContent();
+  }
+
+  getAnnotationById(searchId: string): Annotation | null {
+    for (var anno of this.Content) if (anno.id === searchId) return anno;
     return null;
   }
 
- 
-  getBackgroundColor() : Color | null {
+  getBackgroundColor(): Color | null {
     // regular expression intended to match strings like
     // "#FF00FF" -- interpreted as three hexadecimal values
     // in range 0-255 . Not that the \w escape matches digits,
@@ -63,25 +61,32 @@ export class Scene extends ManifestResource {
     // currently only supports the form for CSS
     // https://www.w3.org/wiki/CSS/Properties/color/RGB
     // with 6 hexadecimal digits
-    
-    var bgc: string | undefined  = this.getProperty("backgroundColor");
-    if (bgc)
-        return Color.fromCSS( bgc as string );
-    else
-        return null;
-  };
+
+    var bgc: string | undefined = this.getProperty("backgroundColor");
+    if (bgc) return Color.fromCSS(bgc as string);
+    else return null;
+  }
 
   // Annotations not rendered as part of the Canvas
   // Have non-painting motivations and are listed in Canvas annotations property, not items property
-  getNonContentAnnotations(): Annotation[] {  
-    const annotationPages = ( this.__jsonld.annotations || [] )
-      .filter(annotationPage => annotationPage && annotationPage.type === 'AnnotationPage')
-      .map(annotationPage => new AnnotationPage(annotationPage, this.options)) as AnnotationPage[];  
+  getNonContentAnnotations(): Annotation[] {
+    const annotationPages = (this.__jsonld.annotations || [])
+      .filter(
+        (annotationPage) =>
+          annotationPage && annotationPage.type === "AnnotationPage"
+      )
+      .map(
+        (annotationPage) => new AnnotationPage(annotationPage, this.options)
+      ) as AnnotationPage[];
     if (!annotationPages.length) return [];
 
-    const annotationsNested = annotationPages.map(page => page.getItems()) as Annotation[][];
+    const annotationsNested = annotationPages.map((page) =>
+      page.getItems()
+    ) as Annotation[][];
     const annotationsFlat = flattenDeep(annotationsNested) as Annotation[];
-        
-    return annotationsFlat.map(annotation => new Annotation(annotation, this.options));
+
+    return annotationsFlat.map(
+      (annotation) => new Annotation(annotation, this.options)
+    );
   }
 }
