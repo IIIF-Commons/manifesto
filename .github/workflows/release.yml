@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
       - run: npm ci
       - run: npm run build
-      - run: npm run test:3d
+      - run: npm run test
 
   release:
     needs: [build]
