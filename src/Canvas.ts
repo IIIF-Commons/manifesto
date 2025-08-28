@@ -34,7 +34,7 @@ export class Canvas extends Resource {
     const rotation: number = 0;
     let quality: string = "default";
     let width: number | undefined = w;
-    let size: string;
+    const size: string;
 
     // if an info.json has been loaded
     if (
