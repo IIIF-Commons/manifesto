@@ -78,7 +78,7 @@ export class Annotation extends ManifestResource {
   seems to be the use case for this
   **/
   private parseBodiesFromItemsList(rawbodies: any): AnnotationBody[] {
-    let retVal: AnnotationBody[] = [];
+    const retVal: AnnotationBody[] = [];
     for (var bd of [].concat(rawbodies)) {
       retVal.push(this.parseSingletonBody(bd));
     }

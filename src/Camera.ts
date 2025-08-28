@@ -65,10 +65,10 @@ export class Camera extends AnnotationBody {
    * SpecificResource with a PointSelector .
    **/
   getLookAt(): object | PointSelector | SpecificResource | null {
-    let rawObj = this.getPropertyAsObject("lookAt") ?? null;
+    const rawObj = this.getPropertyAsObject("lookAt") ?? null;
     if (rawObj == null) return null;
 
-    let rawType = (rawObj["type"] || rawObj["@type"]) ?? null;
+    const rawType = (rawObj["type"] || rawObj["@type"]) ?? null;
     if (rawType == null) return null;
 
     if (rawType == "Annotation") return rawObj;

@@ -37,7 +37,7 @@ export class JSONLDResource {
   
   **/
   getPropertyAsObject(name: string): any {
-    let prop = this.getProperty(name);
+    const prop = this.getProperty(name);
 
     if (typeof prop === "string") return { id: prop, isIRI: true };
     else if (prop === Object(prop)) return prop;

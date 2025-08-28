@@ -27,7 +27,7 @@ Returns a specific resource representing the TextualBody position if
 present, otherwise null.
 **/
   getPosition(): SpecificResource | null {
-    let rawPosition = this.getPropertyAsObject("position") ?? null;
+    const rawPosition = this.getPropertyAsObject("position") ?? null;
     if (rawPosition == null) return null;
 
     if (rawPosition.type && rawPosition.type == "SpecificResource") {

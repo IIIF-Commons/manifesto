@@ -226,12 +226,12 @@ export class Sequence extends ManifestResource {
    * @returns Array of Scene instances in the Sequence
    **/
   getScenes(): Scene[] {
-    let returnVal: Scene[] = [];
-    let low_items = this.__jsonld.elements || this.__jsonld;
+    const returnVal: Scene[] = [];
+    const low_items = this.__jsonld.elements || this.__jsonld;
 
     if (low_items) {
       for (let i = 0; i < low_items.length; ++i) {
-        let c = low_items[i];
+        const c = low_items[i];
         if (c.type === "Scene") {
           const scene: Scene = new Scene(c, this.options);
           //scene.index = i;

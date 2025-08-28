@@ -64,7 +64,7 @@ export class SpecificResource extends ManifestResource {
     // case of a source of a SpecificResource which is an Annotation target
     if (raw) {
       var containerTypes = ["Scene", "Canvas"];
-      let singleItem = [].concat(raw)[0];
+      const singleItem = [].concat(raw)[0];
       if (containerTypes.includes(singleItem["type"])) return singleItem;
     }
     if (raw) {
