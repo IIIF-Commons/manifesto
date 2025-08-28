@@ -1,9 +1,12 @@
 {
-  "name": "@iiif/3d-manifesto-dev",
-  "version": "0.7.0",
-  "description": "IIIF Presentation API utility library for client and server with 3D extension",
+  "name": "manifesto.js",
+  "version": "4.2.22",
+  "description": "IIIF Presentation API utility library for client and server",
   "main": "./dist-commonjs/index.js",
   "module": "./dist-esmodule/index.js",
+  "browser": "./dist-umd/manifesto.js",
+  "unpkg": "./dist-umd/manifesto.js",
+  "types": "./dist-esmodule/index.d.ts",
   "scripts": {
     "build:commonjs": "tsc",
     "docs": "rimraf -rf docs && typedoc --tsconfig tsconfig.docs.json --out docs --name manifesto --theme default src/",
@@ -11,9 +14,11 @@
     "build:types": "dts-bundle-generator --umd-module-name manifesto -o types/index.d.ts dist-esmodule/index.d.ts",
     "build:umd": "webpack",
     "build:var": "cross-env NODE_WEBPACK_LIBRARY_PATH=dist-var NODE_WEBPACK_LIBRARY_TARGET=var webpack",
-    "build": "npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
-    "clean": "rimraf -rf dist-umd  dist-var types",
-    "lint:all": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
+    "build": "npm run fix && npm run clean && npm run build:commonjs && npm run build:esmodule && npm run build:umd && npm run build:var && npm run build:types",
+    "clean": "rimraf -rf dist-umd dist-commonjs dist-esmodule dist-var types",
+    "lint": "eslint --fix \"./src/**/*.{js,jsx,json,css,ts,tsx}\"",
+    "prettify": "prettier --write \"./src/**/*.{js,jsx,json,css,ts,tsx}\" --ignore-path .prettierignore",
+    "fix": "npm run lint && npm run prettify",
     "prepublishOnly": "npm run build && npm run test",
     "test": "mocha",
     "watch": "npm run build:esmodule -- --watch"
@@ -24,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IIIF-Commons/manifesto-3d.git"
+    "url": "git+https://github.com/iiif-commons/manifesto.git"
   },
   "keywords": [
     "IIIF"
@@ -47,6 +52,7 @@
     "http": "0.0.0",
     "mocha": "^11.7.1",
     "prettier": "^3.6.2",
+    "prettier-check": "^2.0.0",
     "rimraf": "^6.0.1",
     "serve-static": "^2.2.0",
     "ts-loader": "^9",
@@ -67,8 +73,5 @@
   },
   "directories": {
     "test": "test"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
