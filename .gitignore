@@ -1,10 +1,9 @@
-coverage
-npm-debug.log
-node_modules
-dist
-debug.log
 dist-commonjs
 dist-esmodule
 dist-umd
 dist-var
+coverage
+npm-debug.log
+node_modules
+debug.log
 types
