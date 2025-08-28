@@ -44,13 +44,10 @@ const config = {
         rules: [
             {
                 test: /\.ts$/,
-                use: [
-                    { loader: 'ts-loader' }
-                ]
+                loader: 'ts-loader'
             }
         ]
-    },
-    mode: 'development',
+    }
 }
 
 if (process.env.NODE_WEBPACK_LIBRARY_PATH) {
