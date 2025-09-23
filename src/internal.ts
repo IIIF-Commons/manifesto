@@ -1,9 +1,19 @@
 export * from "./JSONLDResource";
+export * from "./Transform";
 export * from "./ManifestResource";
 export * from "./Resource";
 export * from "./IIIFResource";
-export * from "./Annotation";
+export * from "./SpecificResource";
+//export * from "./SpecificResourceForTarget";
+//export * from "./SpecificResourceForBody";
+
 export * from "./AnnotationBody";
+export * from "./Light";
+export * from "./Camera";
+export * from "./TextualBody";
+export * from "./AnnotationBodyParser";
+export * from "./Annotation";
+
 export * from "./AnnotationList";
 export * from "./AnnotationPage";
 export * from "./Canvas";
@@ -21,15 +31,28 @@ export * from "./LanguageMap";
 export * from "./PropertyValue";
 export * from "./Manifest";
 export * from "./ManifestType";
+export * from "./PointSelector";
 export * from "./Range";
 export * from "./Rendering";
+export * from "./Scene";
 export * from "./Sequence";
 export * from "./Serialisation";
 export * from "./Service";
 export * from "./Size";
+
 export * from "./StatusCode";
 export * from "./Thumb";
 export * from "./Thumbnail";
+export * from "./Transform";
+
+export * from "./TranslateTransform";
+export * from "./TransformParser";
 export * from "./TreeNode";
 export * from "./TreeNodeType";
 export * from "./Utils";
+export * from "./TranslateTransform";
+export * from "./RotateTransform";
+export * from "./ScaleTransform";
+export * from "./Color";
+
+export * from "./Geometry3d";

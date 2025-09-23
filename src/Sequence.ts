@@ -4,6 +4,7 @@ import {
   IManifestoOptions,
   Manifest,
   ManifestResource,
+  Scene,
   Thumb,
   Thumbnail,
   Utils,
@@ -219,6 +220,26 @@ export class Sequence extends ManifestResource {
     }
 
     return index;
+  }
+
+  /**
+   * @returns Array of Scene instances in the Sequence
+   **/
+  getScenes(): Scene[] {
+    const returnVal: Scene[] = [];
+    const low_items = this.__jsonld.elements || this.__jsonld;
+
+    if (low_items) {
+      for (let i = 0; i < low_items.length; ++i) {
+        const c = low_items[i];
+        if (c.type === "Scene") {
+          const scene: Scene = new Scene(c, this.options);
+          //scene.index = i;
+          returnVal.push(scene);
+        }
+      }
+    }
+    return returnVal;
   }
 
   getStartCanvasIndex(): number {

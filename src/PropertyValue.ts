@@ -153,6 +153,10 @@ export class PropertyValue extends Array<LocalizedValue> {
     // If any of the values have a language associated with them, the client
     // must display all of the values associated with the language that best
     // matches the language preference.
+
+    if (locales.length == 0 && this._defaultLocale)
+      locales.push(this._defaultLocale as string);
+
     const allLocales = Array.from(this.values())
       .map((lv) => lv._locale)
       .filter((l) => l !== undefined) as string[];
@@ -253,6 +257,7 @@ export class PropertyValue extends Array<LocalizedValue> {
 
     // Try to determine the available locale that best fits the user's preferences
     const matchingLocale = this.getSuitableLocale(locales);
+
     if (matchingLocale) {
       const val = this.find((lv) => lv._locale === matchingLocale)!._value;
       return Array.isArray(val) ? val : [val];

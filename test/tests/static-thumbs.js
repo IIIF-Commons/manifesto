@@ -19,7 +19,8 @@ describe('static thumbs', function() {
         expect(sequence).to.exist;
     });
 
-    it('has thumbnails', function() {
+    // for deprecation: see src/Thumbs.js ; src/Sequence.js getThumbs method
+    it('has thumbnails: uses deprecated method Sequence.getThumbs', function() {
         thumbnails = sequence.getThumbs();
         var thumbnail = thumbnails[0];
         expect(thumbnail.uri).to.equal('https://edsilv.github.io/biiif-workshop/collection/_abyssinian/thumb.jpeg');
