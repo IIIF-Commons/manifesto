@@ -212,6 +212,22 @@ export class Canvas extends Resource {
     return content;
   }
 
+  getAnnotations(): AnnotationPage[] {
+    const annotationPages: AnnotationPage[] = [];
+    const pages = this.__jsonld.annotations;
+
+    if (!pages || !Array.isArray(pages)) {
+      return annotationPages;
+    }
+
+    for (let i = 0; i < pages.length; i++) {
+      const annotationPage = new AnnotationPage(pages[i], this.options);
+      annotationPages.push(annotationPage);
+    }
+
+    return annotationPages;
+  }
+
   getDuration(): number | null {
     return this.getProperty("duration");
   }
