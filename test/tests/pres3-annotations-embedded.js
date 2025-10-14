@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 var manifesto = require('../../dist-commonjs/');
 var manifests = require('../fixtures/manifests');
-var manifest, canvas, annotationPages;
+var manifest, canvas, annotationPages, annotations, annotation, body
 
 describe('#getAnnotations', function() {
   it('manifest loads successfully', function (done) {
@@ -19,7 +19,6 @@ it('has a sequence', function() {
 
 it('has a canvas', function() {
     canvas = sequence.getCanvases()[0];
-    console.log(canvas)
     expect(canvas).to.exist;
 });
 
@@ -34,19 +33,19 @@ it('has a canvas', function() {
   });
 
   it('annotation page contains annotations', function () {
-    var annotations = annotationPages[0].getItems();
+    annotations = annotationPages[0].getItems();
     expect(annotations).to.be.an('array');
     expect(annotations).to.have.lengthOf(1);
   });
 
   it('annotation has commenting motivation', function () {
-    var annotations = annotationPages[0].getItems();
-    var annotation = new manifesto.Annotation(annotations[0]);
+    annotations = annotationPages[0].getItems();
+    annotation = new manifesto.Annotation(annotations[0]);
     expect(annotation.getMotivation()).to.equal('commenting');
   });
 
   it('annotation body has value', function () {
-    var body = annotation.getBody()[0];
+    body = annotation.getBody()[0];
     expect(body.getValue()).to.equal('Göttinger Marktplatz mit Gänseliesel Brunnen');
   });
 
