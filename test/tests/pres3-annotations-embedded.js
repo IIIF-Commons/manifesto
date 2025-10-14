@@ -44,4 +44,13 @@ it('has a canvas', function() {
     var annotation = new manifesto.Annotation(annotations[0]);
     expect(annotation.getMotivation()).to.equal('commenting');
   });
+
+  it('annotation body has value', function () {
+    var body = annotation.getBody()[0];
+    expect(body.getValue()).to.equal('Göttinger Marktplatz mit Gänseliesel Brunnen');
+  });
+
+  it('annotation body has language', function () {
+    expect(body.getLanguage()).to.equal('de');
+  });
 });
