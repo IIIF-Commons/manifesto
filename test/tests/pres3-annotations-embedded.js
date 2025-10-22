@@ -40,7 +40,7 @@ it('has a canvas', function() {
 
   it('annotation has commenting motivation', function () {
     annotations = annotationPages[0].getItems();
-    annotation = new manifesto.Annotation(annotations[0]);
+    annotation = annotations[0];
     expect(annotation.getMotivation()).to.equal('commenting');
   });
 

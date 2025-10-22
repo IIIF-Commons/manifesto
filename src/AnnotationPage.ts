@@ -6,18 +6,18 @@ export class AnnotationPage extends ManifestResource {
   }
 
   getItems(): Annotation[] {
-    const items: Annotation[] = []
+    const items: Annotation[] = [];
     const rawItems = this.getProperty("items");
 
     if (!rawItems || !Array.isArray(rawItems)) {
       return items;
     }
-    
+
     for (let i = 0; i < rawItems.length; i++) {
-      const annotation = new Annotation(i, this.options);
+      const annotation = new Annotation(rawItems[i], this.options);
       items.push(annotation);
     }
 
-    return items
+    return items;
   }
 }
