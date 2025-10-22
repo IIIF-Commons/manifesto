@@ -205,8 +205,7 @@ export class Canvas extends Resource {
 
     for (let i = 0; i < annotations.length; i++) {
       const a = annotations[i];
-      const annotation = new Annotation(a, this.options);
-      content.push(annotation);
+      content.push(a);
     }
 
     return content;
