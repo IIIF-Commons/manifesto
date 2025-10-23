@@ -201,7 +201,7 @@ export class Canvas extends Resource {
       return content;
     }
 
-    const annotations: Annotation[] = annotationPage.getItems();
+    const annotations: Annotation[] = annotationPage.getAnnotations();
 
     for (let i = 0; i < annotations.length; i++) {
       const a = annotations[i];

@@ -33,13 +33,13 @@ it('has a canvas', function() {
   });
 
   it('annotation page contains annotations', function () {
-    annotations = annotationPages[0].getItems();
+    annotations = annotationPages[0].getAnnotations();
     expect(annotations).to.be.an('array');
     expect(annotations).to.have.lengthOf(1);
   });
 
   it('annotation has commenting motivation', function () {
-    annotations = annotationPages[0].getItems();
+    annotations = annotationPages[0].getAnnotations();
     annotation = annotations[0];
     expect(annotation.getMotivation()).to.equal('commenting');
   });

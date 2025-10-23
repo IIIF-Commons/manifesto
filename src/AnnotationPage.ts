@@ -5,7 +5,14 @@ export class AnnotationPage extends ManifestResource {
     super(jsonld, options);
   }
 
-  getItems(): Annotation[] {
+  /**
+   * @deprecated Use getAnnotations() instead
+   */
+  getItems(): any[] {
+    return this.getProperty("items");
+  }
+
+  getAnnotations(): Annotation[] {
     const items: Annotation[] = [];
     const rawItems = this.getProperty("items");
 
