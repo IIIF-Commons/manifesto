@@ -48,15 +48,27 @@ export class IIIFResource extends ManifestResource {
 
     return new PropertyValue([], this.options.locale);
   }
-
+  /**
+   * @deprecated Use getSummary instead
+   */
   getDescription(): PropertyValue {
     var description: any = this.getProperty("description");
-    if (description === undefined) {
-      description = this.getProperty("summary");
-    }
 
     if (description) {
       return PropertyValue.parse(description, this.options.locale);
+    }
+
+    return new PropertyValue([], this.options.locale);
+  }
+
+  getSummary(): PropertyValue {
+    var summary: any = this.getProperty("summary");
+    if (summary === undefined) {
+      summary = this.getProperty("description");
+    }
+
+    if (summary) {
+      return PropertyValue.parse(summary, this.options.locale);
     }
 
     return new PropertyValue([], this.options.locale);
