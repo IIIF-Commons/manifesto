@@ -34,13 +34,6 @@ export class Service extends ManifestResource {
     );
   }
 
-  getSummary(): string | null {
-    return Utils.getLocalisedValue(
-      this.getProperty("summary"),
-      this.options.locale
-    );
-  }
-
   getFailureDescription(): string | null {
     return Utils.getLocalisedValue(
       this.getProperty("failureDescription"),

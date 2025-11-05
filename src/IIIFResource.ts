@@ -53,6 +53,9 @@ export class IIIFResource extends ManifestResource {
    */
   getDescription(): PropertyValue {
     var description: any = this.getProperty("description");
+    if (description === undefined) {
+      description = this.getProperty("summary");
+    }
 
     if (description) {
       return PropertyValue.parse(description, this.options.locale);
