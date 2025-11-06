@@ -40,6 +40,7 @@ importTest('biocrats', './tests/biocrats');
 importTest('book-of-remembrance', './tests/book-of-remembrance');
 importTest('canvas-metadata', './tests/canvas-metadata');
 importTest('cardiganshire', './tests/cardiganshire');
+importTest('checkSummary', './tests/checkSummary');
 importTest('collection-with-thumbnail', './tests/collection-with-thumbnail');
 importTest('correspondance', './tests/correspondance');
 importTest('deep-hierarchy', './tests/deep-hierarchy');
