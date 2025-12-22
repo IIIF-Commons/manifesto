@@ -308,7 +308,17 @@ export class Sequence extends ManifestResource {
   }
 
   getViewingHint(): ViewingHint | null {
-    return this.getProperty("viewingHint");
+    let viewingHint: any = this.getProperty("viewingHint");
+
+    if (Array.isArray(viewingHint)) {
+      viewingHint = viewingHint[0];
+    }
+
+    if (viewingHint) {
+      return viewingHint;
+    }
+
+    return null;
   }
 
   isCanvasIndexOutOfRange(canvasIndex: number): boolean {

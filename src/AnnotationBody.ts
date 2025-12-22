@@ -65,6 +65,14 @@ export class AnnotationBody extends ManifestResource {
     return null;
   }
 
+  getValue(): string | null {
+    return this.getProperty("value");
+  }
+
+  getLanguage(): string | null {
+    return this.getProperty("language");
+  }
+
   getWidth(): number {
     return this.getProperty("width");
   }

@@ -204,15 +204,30 @@ export class Canvas extends Resource {
       return content;
     }
 
-    const annotations: Annotation[] = annotationPage.getItems();
+    const annotations: Annotation[] = annotationPage.getAnnotations();
 
     for (let i = 0; i < annotations.length; i++) {
       const a = annotations[i];
-      const annotation = new Annotation(a, this.options);
-      content.push(annotation);
+      content.push(a);
     }
 
     return content;
+  }
+
+  getAnnotations(): AnnotationPage[] {
+    const annotationPages: AnnotationPage[] = [];
+    const pages = this.__jsonld.annotations;
+
+    if (!pages || !Array.isArray(pages)) {
+      return annotationPages;
+    }
+
+    for (let i = 0; i < pages.length; i++) {
+      const annotationPage = new AnnotationPage(pages[i], this.options);
+      annotationPages.push(annotationPage);
+    }
+
+    return annotationPages;
   }
 
   getDuration(): number | null {
@@ -335,7 +350,17 @@ export class Canvas extends Resource {
   }
 
   getViewingHint(): ViewingHint | null {
-    return this.getProperty("viewingHint");
+    let viewingHint: any = this.getProperty("viewingHint");
+
+    if (Array.isArray(viewingHint)) {
+      viewingHint = viewingHint[0];
+    }
+
+    if (viewingHint) {
+      return viewingHint;
+    }
+
+    return null;
   }
 
   get imageResources() {
