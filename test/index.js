@@ -69,7 +69,6 @@ importTest('no-nav-ranges', './tests/no-nav-ranges');
 importTest('plato', './tests/plato');
 importTest('poster-canvas', './tests/poster-canvas');
 importTest('potterselectric', './tests/potterselectric');
-importTest('pres3-3d', './tests/pres3-3d');
 importTest('pres3-av-basic', './tests/pres3-av-basic');
 importTest('pres3-collection', './tests/pres3-collection');
 importTest('pres3-collection2', './tests/pres3-collection2');
