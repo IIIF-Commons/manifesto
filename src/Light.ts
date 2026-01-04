@@ -17,10 +17,6 @@ export class Light extends AnnotationBody {
     else return new Color([255, 255, 255]); // white light
   }
 
-  get Color(): Color {
-    return this.getColor();
-  }
-
   /**
    * The implementation of the intensity is based on
    * {@link https://github.com/IIIF/3d/blob/main/temp-draft-4.md | temp-draft-4.md }
@@ -50,10 +46,6 @@ export class Light extends AnnotationBody {
     } else return 1.0;
   }
 
-  get Intensity(): number {
-    return this.getIntensity();
-  }
-
   /**
   * As defined in the temp-draft-4.md ( 
   * https://github.com/IIIF/3d/blob/main/temp-draft-4.md#lights ; 12 May 2024)
@@ -78,10 +70,6 @@ export class Light extends AnnotationBody {
     }
   }
 
-  get Angle(): number | undefined {
-    return this.getAngle();
-  }
-
   /**
    * @return : if not null, is either a PointSelector, or an object
    * with an id matching the id of an Annotation instance.
@@ -100,9 +88,6 @@ export class Light extends AnnotationBody {
       return new PointSelector(rawObj);
     }
     throw new Error(`unidentified value of lookAt ${rawType}`);
-  }
-  get LookAt(): object | null {
-    return this.getLookAt();
   }
 
   isAmbientLight(): boolean {

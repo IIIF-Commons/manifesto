@@ -43,13 +43,8 @@ export class Scene extends ManifestResource {
     return content;
   }
 
-  // 3D extension
-  get Content(): Annotation[] {
-    return this.getContent();
-  }
-
   getAnnotationById(searchId: string): Annotation | null {
-    for (var anno of this.Content) if (anno.id === searchId) return anno;
+    for (var anno of this.getContent()) if (anno.id === searchId) return anno;
     return null;
   }
 

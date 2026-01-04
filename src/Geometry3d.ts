@@ -113,7 +113,7 @@ export function lightRelativeRotation(direction: Vector3): Euler {
 **/
 export function eulerFromRotateTransform(transform: RotateTransform): Euler {
   var eulerOrder: IOrder = "XYZ";
-  var rdata: any = transform.Rotation;
+  var rdata: any = transform.getRotation();
 
   return new Euler(
     MathUtils.degToRad(rdata.x),

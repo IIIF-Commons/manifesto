@@ -76,10 +76,6 @@ export class SpecificResource extends ManifestResource {
     throw new Error("cannot resolve Source " + JSON.stringify(raw));
   }
 
-  get Source(): object | AnnotationBody {
-    return this.getSource();
-  }
-
   getSelector(): PointSelector | null {
     const raw = this.getProperty("selector");
     if (raw) {
@@ -95,9 +91,6 @@ export class SpecificResource extends ManifestResource {
     }
     return null;
   }
-  get Selector(): PointSelector | null {
-    return this.getSelector();
-  }
 
   getTransform(): Transform[] {
     var retVal: Transform[] = [];
@@ -107,9 +100,5 @@ export class SpecificResource extends ManifestResource {
       retVal.push(TransformParser.BuildFromJson(transformItem));
     }
     return retVal;
-  }
-
-  get Transform(): Transform[] {
-    return this.getTransform();
   }
 }

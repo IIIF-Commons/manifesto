@@ -68,10 +68,6 @@ export class Annotation extends ManifestResource {
     return bodies;
   }
 
-  get Body() {
-    return this.getBody();
-  }
-
   /**
   auxiliary function to getBody; intended to hande an object that has an element items
   which is a array of annotation- body-like objects. This : https://iiif.io/api/cookbook/recipe/0033-choice/
@@ -143,10 +139,6 @@ export class Annotation extends ManifestResource {
     }
   }
 
-  get Target(): any {
-    return this.getTarget();
-  }
-
   // Retrieves target scope content state annotations
   getScopeContent(): Annotation[] {
     const items = this.getTarget()?.getScope()?.getTarget()?.items;
@@ -158,10 +150,6 @@ export class Annotation extends ManifestResource {
       .flat()
       .filter((item) => item && item.type === "Annotation")
       .map((annotation) => new Annotation(annotation, this.options));
-  }
-
-  get ScopeContent() {
-    return this.getScopeContent();
   }
 
   getResource(): Resource {

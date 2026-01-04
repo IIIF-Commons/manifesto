@@ -29,13 +29,6 @@ export class Camera extends AnnotationBody {
       } else return undefined;
     } else return undefined;
   }
-  /**
-  Full angular size of perspective viewport in vertical direction.
-  Angular unit is degrees
-  **/
-  get FieldOfView(): number | undefined {
-    return this.getFieldOfView();
-  }
 
   /**
   @returns full linear size of orthographic viewport in vertical direction.
@@ -53,10 +46,6 @@ export class Camera extends AnnotationBody {
       if (value) return value;
       else return undefined;
     } else return undefined;
-  }
-
-  get ViewHeight(): number | undefined {
-    return this.getViewHeight();
   }
 
   /**
@@ -80,9 +69,6 @@ export class Camera extends AnnotationBody {
       return null;
     }
   }
-  get LookAt(): object | null {
-    return this.getLookAt();
-  }
 
   /**
   @returns the near plane value, i.e. the minimum distance from the camera at 
@@ -93,12 +79,6 @@ export class Camera extends AnnotationBody {
     if (value) return value;
     else return undefined;
   }
-  /**
-  Near plane value of the camera.
-  **/
-  get Near(): number | undefined {
-    return this.getNear();
-  }
 
   /**
   @returns the far plane value, i.e. the maximum distance from the camera at 
@@ -108,12 +88,6 @@ export class Camera extends AnnotationBody {
     var value = this.getPropertyFromSelfOrSource("far");
     if (value) return value;
     else return undefined;
-  }
-  /**
-  Far plane value of the camera.
-  **/
-  get Far(): number | undefined {
-    return this.getFar();
   }
 
   isPerspectiveCamera(): boolean {
