@@ -34,7 +34,6 @@ export class Canvas extends Resource {
     const rotation: number = 0;
     let quality: string = "default";
     let width: number | undefined = w;
-    const size: string = width + ",";
 
     // if an info.json has been loaded
     if (
@@ -101,7 +100,9 @@ export class Canvas extends Resource {
 
       if (images && images.length) {
         const firstImage: Annotation = images[0];
-        const body: AnnotationBody[] = firstImage.getBody();
+        // Developer note: Since Canvas in Presentation 3 doesn't use
+        // SpecificResource resources in the body, force a cast
+        const body: AnnotationBody[] = firstImage.getBody() as AnnotationBody[];
         const anno: AnnotationBody = body[0];
         const services: Service[] = anno.getServices();
 
@@ -143,6 +144,8 @@ export class Canvas extends Resource {
         }
       }
     }
+
+    const size = width + ",";
 
     // trim off trailing '/'
     if (id && id.endsWith("/")) {
@@ -248,6 +251,29 @@ export class Canvas extends Resource {
 
   getIndex(): number {
     return this.getProperty("index");
+  }
+
+  // Annotations not rendered as part of the Canvas
+  // Have non-painting motivations and are listed in Canvas annotations property, not items property
+  getNonContentAnnotations(): Annotation[] {
+    const annotationPages = (this.__jsonld.annotations || [])
+      .filter(
+        (annotationPage) =>
+          annotationPage && annotationPage.type === "AnnotationPage"
+      )
+      .map(
+        (annotationPage) => new AnnotationPage(annotationPage, this.options)
+      ) as AnnotationPage[];
+    if (!annotationPages.length) return [];
+
+    const annotationsNested = annotationPages.map((page) =>
+      page.getItems()
+    ) as Annotation[][];
+    const annotationsFlat = flattenDeep(annotationsNested) as Annotation[];
+
+    return annotationsFlat.map(
+      (annotation) => new Annotation(annotation, this.options)
+    );
   }
 
   getOtherContent(): Promise<AnnotationList[]> {
