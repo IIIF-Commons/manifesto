@@ -365,10 +365,14 @@ export class Manifest extends IIIFResource {
   get annotationIdMap(): Object {
     if (this._annotationIdMap == null) {
       this._annotationIdMap = {};
-      for (var seq of this.getSequences())
-        for (var scene of seq.getScenes())
-          for (var anno of scene.getContent())
+      for (const seq of this.getSequences()) {
+        for (const scene of seq.getScenes())
+          for (const anno of scene.getContent())
             this._annotationIdMap[anno.id] = anno;
+        for (const canvas of seq.getCanvases())
+          for (const anno of canvas.getContent())
+            this._annotationIdMap[anno.id] = anno;
+      }
     }
     return this._annotationIdMap;
   }
