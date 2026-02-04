@@ -28,6 +28,16 @@ export class LabelValuePair {
     return this.label.getValue(locale || this.defaultLocale);
   }
 
+  public getLabels(locale?: string | string[]): Array<string | null> {
+    if (this.label === null) {
+      return [];
+    }
+    if (Array.isArray(locale) && !locale.length) {
+      locale = undefined;
+    }
+    return this.label.getValues(locale || this.defaultLocale);
+  }
+
   public setLabel(value: string): void {
     if (this.label === null) {
       this.label = new PropertyValue([]);
