@@ -12,7 +12,7 @@ describe('LabelValuePair', function() {
         });
     })
     describe('#getLabels', function() {
-        it('returns an array of language values', function() {
+        it('returns an array of language labels', function() {
             var metadata = manifest.getMetadata().map(m => m.getLabels());
             expect(metadata[0]).to.eql(['date']);
         });
