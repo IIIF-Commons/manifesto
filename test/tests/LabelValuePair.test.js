@@ -11,6 +11,12 @@ describe('LabelValuePair', function() {
             done();
         });
     })
+    describe('#getLabels', function() {
+        it('returns an array of language labels', function() {
+            var metadata = manifest.getMetadata().map(m => m.getLabels());
+            expect(metadata[0]).to.eql(['date']);
+        });
+    });
     describe('#getValues', function() {
         it('returns an array of language values', function() {
             var metadata = manifest.getMetadata().map(m => m.getValues());
@@ -18,5 +24,3 @@ describe('LabelValuePair', function() {
         });
     });
 });
-
-    
