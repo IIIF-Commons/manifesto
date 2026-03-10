@@ -93,4 +93,5 @@ importTest('tankeryshouse', './tests/tankeryshouse');
 importTest('translations', './tests/translations');
 importTest('witnesstopeter', './tests/witnesstopeter');
 importTest('Utils', './tests/Utils.test');
+importTest('v2-label-test', './tests/v2-label-test.js');
 importTest('v3ProviderNoLogo', './tests/v3ProviderNoLogo');
