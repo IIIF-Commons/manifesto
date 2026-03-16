@@ -188,8 +188,10 @@ export class Canvas extends Resource {
     ) {
       maxDimensions = new Size(
         this.externalResource.data.maxWidth,
-        this.externalResource.data.maxHeight ? this.externalResource.data.maxHeight : this.externalResource.data.maxWidth
-      )
+        this.externalResource.data.maxHeight
+          ? this.externalResource.data.maxHeight
+          : this.externalResource.data.maxWidth
+      );
     }
 
     return maxDimensions;
