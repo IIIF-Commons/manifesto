@@ -4,4 +4,6 @@ export interface IExternalResourceData {
   id: string;
   index: number;
   profile: string | any[];
+  maxWidth?: number;
+  maxHeight?: number;
 }

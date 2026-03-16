@@ -160,6 +160,7 @@ export class Canvas extends Resource {
     let maxDimensions: Size | null = null;
     let profile: any;
 
+    // Image API 2
     if (
       this.externalResource &&
       this.externalResource.data &&
@@ -177,6 +178,18 @@ export class Canvas extends Resource {
           );
         }
       }
+    }
+
+    // Image API 3
+    if (
+      this.externalResource &&
+      this.externalResource.data &&
+      this.externalResource.data.maxWidth
+    ) {
+      maxDimensions = new Size(
+        this.externalResource.data.maxWidth,
+        this.externalResource.data.maxHeight ? this.externalResource.data.maxHeight : this.externalResource.data.maxWidth
+      )
     }
 
     return maxDimensions;
