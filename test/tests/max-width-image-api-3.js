@@ -25,15 +25,15 @@ describe('max dimensions', function() {
     });
 
     it('returns max dimensions', function() {
-    canvas.externalResource = {
-        data: {
-        maxWidth: 2000
-        }
-    };
-    var maxDimensions = canvas.getMaxDimensions();
-    expect(maxDimensions).to.exist;
-    expect(maxDimensions.width).to.equal(2000);
-    expect(maxDimensions.height).to.equal(2000);
+        canvas.externalResource = {
+            data: {
+                maxWidth: 2000
+            }
+        };
+        var maxDimensions = canvas.getMaxDimensions();
+        expect(maxDimensions).to.exist;
+        expect(maxDimensions.width).to.equal(2000);
+        expect(maxDimensions.height).to.equal(2000);
     });
 
 });
