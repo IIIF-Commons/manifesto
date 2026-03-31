@@ -43,13 +43,4 @@ describe('choice', function() {
         expect(choices[0].getWidth()).to.equal(2000);
         expect(choices[0].getHeight()).to.equal(1271);
     });
-
-    // it('returns empty array for canvas without choices', function() {
-    //     var nonChoiceCanvas = sequence.getCanvases()[0];
-    //     // use a fixture canvas known to have no choices
-    //     var emptyChoices = nonChoiceCanvas.getChoices();
-    //     // this test would use a different fixture — just illustrating the pattern
-    //     expect(emptyChoices).to.be.an('array');
-    //     expect(emptyChoices.length).to.equal(0);
-    // });
 });
