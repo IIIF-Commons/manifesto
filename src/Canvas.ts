@@ -432,16 +432,18 @@ export class Canvas extends Resource {
 
   getChoices(): AnnotationBody[] {
     const content = this.getContent();
-    
+
     for (const annotation of content) {
-      const body = annotation.getBody();
-      if (body.length && body[0].getProperty("type")?.toLowerCase() === ExternalResourceType.CHOICE) {
-        const items = body[0].getProperty("items");
-        if (items && items.length) {
-          return items.map((item: any) => new AnnotationBody(item, this.options));
+      const body = annotation.getProperty("body");
+      if (body && body.type?.toLowerCase() === ExternalResourceType.CHOICE) {
+        if (body.items && body.items.length) {
+          return body.items.map(
+            (item: any) => new AnnotationBody(item, this.options)
+          );
         }
       }
     }
+
     return [];
   }
 }
