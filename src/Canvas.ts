@@ -429,4 +429,19 @@ export class Canvas extends Resource {
   get aspectRatio() {
     return this.getWidth() / this.getHeight();
   }
+
+  getChoices(): AnnotationBody[] {
+    const content = this.getContent();
+    
+    for (const annotation of content) {
+      const body = annotation.getBody();
+      if (body.length && body[0].getProperty("type")?.toLowerCase() === ExternalResourceType.CHOICE) {
+        const items = body[0].getProperty("items");
+        if (items && items.length) {
+          return items.map((item: any) => new AnnotationBody(item, this.options));
+        }
+      }
+    }
+    return [];
+  }
 }
