@@ -56,4 +56,11 @@ describe('presentation 3', function() {
         var rights = manifest.getRights();
         expect(rights).to.equal('http://example.org/license.html');
     });
+
+    it('returns empty array for canvas without choices', function() {
+        var nonChoiceCanvas = sequence.getCanvases()[0];
+        var emptyChoices = nonChoiceCanvas.getChoices();
+        expect(emptyChoices).to.be.an('array');
+        expect(emptyChoices.length).to.equal(0);
+    });
 });
