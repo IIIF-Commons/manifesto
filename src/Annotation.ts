@@ -23,6 +23,7 @@ export class Annotation extends ManifestResource {
           if (b.items) {
             for (let i = 0; i < b.items.length; i++) {
               // todo: don't ignore that it's a choice. maybe add isChoice() to IAnnotationBody?
+              // When done, can use getBody in getChoices method on Canvas instead of current workaround.
               const c: any = b.items[i];
               bodies.push(new AnnotationBody(c, this.options));
             }
