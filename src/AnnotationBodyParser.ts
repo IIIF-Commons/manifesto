@@ -12,6 +12,7 @@ const LightTypes: string[] = [
   "DirectionalLight",
   "PointLight",
   "SpotLight",
+  "ImageBasedLight"
 ];
 const CameraTypes: string[] = ["PerspectiveCamera", "OrthographicCamera"];
 const DisplayedTypes: string[] = [

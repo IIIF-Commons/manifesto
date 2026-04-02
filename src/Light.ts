@@ -83,6 +83,60 @@ export class Light extends AnnotationBody {
   }
 
   /**
+  * As defined in the draft spec:
+  * https://preview.iiif.io/api/prezi-4/presentation/4.0/model/#profile
+  * this string is a schema or named set of functionality that can further 
+  * clarify the type and/or format of an external resource or service. 
+  *
+  * provisional decision is to return undefined in case that this property 
+  * is accessed in a light that is not an image-based light
+  *
+  * @returns string
+  
+  **/
+  getProfile(): string | undefined {
+    if (this.isImageBasedLight()) {
+      let rawObj = this.getPropertyFromSelfOrSource("environmentMap") ?? null;
+      if (rawObj == null) return undefined;
+
+      return String(rawObj["profile"]);
+    } else {
+      return undefined;
+    }
+  }
+
+  get Profile(): string | undefined {
+    return this.getProfile();
+  }
+
+  /**
+  * As referenced in the draft spec:
+  * https://preview.iiif.io/api/prezi-4/presentation/4.0/model/#environmentMap
+  * this string is a the format of the environment map image. Function is named
+  * to differentiate from the base getFormat which won't work in this case. 
+  *
+  * provisional decision is to return undefined in case that this property 
+  * is accessed in a light that is not an image-based light
+  *
+  * @returns string
+  
+  **/
+  getEnvMapFormat(): string | undefined {
+    if (this.isImageBasedLight()) {
+      let rawObj = this.getPropertyFromSelfOrSource("environmentMap") ?? null;
+      if (rawObj == null) return undefined;
+
+      return String(rawObj["format"]);
+    } else {
+      return undefined;
+    }
+  }
+
+  get EnvMapFormat(): string | undefined {
+    return this.getEnvMapFormat();
+  }
+
+  /**
    * @return : if not null, is either a PointSelector, or an object
    * with an id matching the id of an Annotation instance.
    **/
@@ -119,5 +173,9 @@ export class Light extends AnnotationBody {
 
   isSpotLight(): boolean {
     return Utils.normaliseType(this.getType() || "") === "spotlight";
+  }
+
+  isImageBasedLight(): boolean {
+    return Utils.normaliseType(this.getType() || "") === "imagebasedlight";
   }
 }
