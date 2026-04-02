@@ -97,3 +97,4 @@ importTest('Utils', './tests/Utils.test');
 importTest('v3ProviderNoLogo', './tests/v3ProviderNoLogo');
 importTest('pres3AnnotationsEmbedded', './tests/pres3-annotations-embedded');
 importTest('maxWidthImageApi3', './tests/max-width-image-api-3');
+importTest('choice', './tests/choice');
