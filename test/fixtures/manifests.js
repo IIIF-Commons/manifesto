@@ -65,6 +65,7 @@ module.exports = {
     "pres3AnnotationsEmbedded": "http://localhost:3001/pres3-annotations-embedded.json",
     "maxWidthImageApi3": "http://localhost:3001/max-width-image-api-3.json",
     "choice": "http://localhost:3001/choice.json",
+    "attributionWithoutLabel": "http://localhost:3001/attribution-without-label.json",
 };
 
 //BBoM: http://wellcomelibrary.org/iiif/b18031511/manifest
