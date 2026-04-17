@@ -24,3 +24,18 @@ describe('LabelValuePair', function() {
         });
     });
 });
+
+describe('LabelValuePair without label', function() {
+    beforeEach(function(done) {
+        manifesto.loadManifest(manifests['attributionWithoutLabel']).then(function(data) {
+            manifest = manifesto.parseManifest(data);
+            done();
+        });
+    })
+    describe('#getLabels', function() {
+        it('returns an array of language labels', function() {
+            var attributionLabels = manifest.getRequiredStatement().getLabels();
+            expect(attributionLabels).to.be.empty;
+        });
+    });
+});

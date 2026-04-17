@@ -7,6 +7,8 @@ export class LabelValuePair {
   public resource: any;
 
   constructor(defaultLocale: string) {
+    this.label = null;
+    this.value = null;
     this.defaultLocale = defaultLocale;
   }
 
