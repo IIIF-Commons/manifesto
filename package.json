@@ -66,8 +66,7 @@
   "dependencies": {
     "@edsilv/http-status-codes": "^1.0.3",
     "@iiif/vocabulary": "^1.0.28",
-    "isomorphic-unfetch": "^3.0.0",
-    "lodash": "^4.17.21"
+    "isomorphic-unfetch": "^3.0.0"
   },
   "directories": {
     "test": "test"

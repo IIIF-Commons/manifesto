@@ -15,10 +15,6 @@ import {
   Size,
   Utils,
 } from "./internal";
-// @ts-ignore
-import flatten from "lodash/flatten";
-// @ts-ignore
-import flattenDeep from "lodash/flattenDeep";
 
 export class Canvas extends Resource {
   public ranges: Range[];
@@ -353,22 +349,26 @@ export class Canvas extends Resource {
   }
 
   get imageResources() {
-    const resources = flattenDeep([
-      this.getImages().map((i) => i.getResource()),
-      this.getContent().map((i) => i.getBody()),
-    ]);
+    const resources = (
+      [
+        this.getImages().map((i) => i.getResource()),
+        this.getContent().map((i) => i.getBody()),
+      ] as any[]
+    ).flat(Infinity);
 
-    return flatten(
-      resources.map((resource) => {
+    return resources
+      .map((resource) => {
         switch (resource.getProperty("type").toLowerCase()) {
           case ExternalResourceType.CHOICE:
           case ExternalResourceType.OA_CHOICE:
             return new Canvas(
               {
-                images: flatten([
+                images: [
                   resource.getProperty("default"),
                   resource.getProperty("item"),
-                ]).map((r) => ({ resource: r })),
+                ]
+                  .flat()
+                  .map((r) => ({ resource: r })),
               },
               this.options
             )
@@ -378,11 +378,13 @@ export class Canvas extends Resource {
             return resource;
         }
       })
-    );
+      .flat();
   }
 
   get resourceAnnotations() {
-    return flattenDeep([this.getImages(), this.getContent()]);
+    return (
+      [this.getImages(), this.getContent()] as any[]
+    ).flat(Infinity);
   }
 
   /**
@@ -393,7 +395,7 @@ export class Canvas extends Resource {
     return this.resourceAnnotations.find(
       (anno) =>
         anno.getResource().id === id ||
-        flatten(new Array(anno.getBody())).some((body) => body.id === id)
+        [anno.getBody()].flat().some((body) => body.id === id)
     );
   }
 
