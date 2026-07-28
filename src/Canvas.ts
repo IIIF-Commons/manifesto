@@ -382,9 +382,7 @@ export class Canvas extends Resource {
   }
 
   get resourceAnnotations() {
-    return (
-      [this.getImages(), this.getContent()] as any[]
-    ).flat(Infinity);
+    return ([this.getImages(), this.getContent()] as any[]).flat(Infinity);
   }
 
   /**
