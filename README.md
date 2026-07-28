@@ -26,6 +26,10 @@ https://iiif-commons.github.io/manifesto/
 
 ### Publishing Package
 
+First make sure the main branch represents the state you want to publish (e.g. merge the dev branch into it when ready).
+
+Then run these commands:
+
     git checkout main
     npm version patch
     npm run docs
@@ -33,3 +37,5 @@ https://iiif-commons.github.io/manifesto/
     git commit -m "Release v1.2.3"
     git tag v1.2.3
     git push origin main v1.2.3
+
+When complete, don't forget to merge the main branch back into the dev branch to prepare the next development cycle.
