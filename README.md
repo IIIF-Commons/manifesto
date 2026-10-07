@@ -21,7 +21,7 @@ https://iiif-commons.github.io/manifesto/
 
     git clone https://github.com/iiif-commons/manifesto.git
     npm install
-    npm build
+    npm run build
     npm test
 
 ### Publishing Package
