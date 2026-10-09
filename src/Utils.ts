@@ -1039,7 +1039,7 @@ export class Utils {
     for (let i = 0; i < services.length; i++) {
       const service: Service = services[i];
 
-      if (service.getProfile() === profile) {
+      if (service.getProfile() === profile || service.getIIIFResourceType() === profile) {
         return service;
       }
     }
