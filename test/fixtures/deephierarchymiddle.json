@@ -6,7 +6,7 @@
     "collections": [
         {
             "label": "Events",
-            "@id": "https://digital.library.villanova.edu/Collection/vudl:347702/IIIF",
+            "@id": "https://localhost:3001/Collection/vudl:347702/IIIF",
             "@type": "sc:Collection"
         },
         {
