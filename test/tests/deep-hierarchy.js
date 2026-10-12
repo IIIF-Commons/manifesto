@@ -13,7 +13,7 @@ describe('#loadsTop', function() {
         });
     });
 
-    it('loaded the correct data at index 15', function (done) {
+    it('loads correct data at index 15', function (done) {
         manifest.getCollectionByIndex(15).then(function(data){
             ceili = data;
             ceili.should.be.a("object");
@@ -24,7 +24,7 @@ describe('#loadsTop', function() {
         });
     });
 
-    it('loaded the correct data at index 0', function (done) {
+    it('loads correct data at index 0', function (done) {
         ceili.getCollectionByIndex(0).then(function(data){
             data.should.be.a("object");
             var label = data.getLabel().getValue();
