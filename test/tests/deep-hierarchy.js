@@ -54,3 +54,31 @@ describe('#childLoadFailure', function() {
         }).catch(done);
     });
 });
+
+describe('#missingIndex', function() {
+    var middle;
+
+    before(function() {
+        middle = manifesto.parseManifest(require('../fixtures/deephierarchymiddle.json'));
+    });
+
+    it('getCollectionByIndex rejects when the index does not exist', function (done) {
+        middle.getCollectionByIndex(999).then(function() {
+            done(new Error('expected getCollectionByIndex to reject'));
+        }).catch(function(err) {
+            expect(err).to.be.an.instanceof(Error);
+            expect(err.message).to.equal('Collection index not found');
+            done();
+        }).catch(done);
+    });
+
+    it('getManifestByIndex rejects when the index does not exist', function (done) {
+        middle.getManifestByIndex(999).then(function() {
+            done(new Error('expected getManifestByIndex to reject'));
+        }).catch(function(err) {
+            expect(err).to.be.an.instanceof(Error);
+            expect(err.message).to.equal('Manifest index not found');
+            done();
+        }).catch(done);
+    });
+});
