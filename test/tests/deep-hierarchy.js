@@ -57,6 +57,7 @@ describe('#childLoadFailure', function() {
 
 describe('#missingIndex', function() {
     var middle;
+    var middleId = 'https://digital.library.villanova.edu/Collection/vudl:99258/IIIF';
 
     before(function() {
         middle = manifesto.parseManifest(require('../fixtures/deephierarchymiddle.json'));
@@ -68,6 +69,9 @@ describe('#missingIndex', function() {
         }).catch(function(err) {
             expect(err).to.be.an.instanceof(Error);
             expect(err.message).to.equal('Collection index not found');
+            expect(err.url).to.equal(middleId);
+            expect(err.index).to.equal(999);
+            expect(err.status).to.be.undefined;
             done();
         }).catch(done);
     });
@@ -78,6 +82,9 @@ describe('#missingIndex', function() {
         }).catch(function(err) {
             expect(err).to.be.an.instanceof(Error);
             expect(err.message).to.equal('Manifest index not found');
+            expect(err.url).to.equal(middleId);
+            expect(err.index).to.equal(999);
+            expect(err.status).to.be.undefined;
             done();
         }).catch(done);
     });

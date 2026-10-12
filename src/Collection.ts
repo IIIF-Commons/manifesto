@@ -57,7 +57,10 @@ export class Collection extends IIIFResource {
       // id for collection MUST be dereferenceable
       return <Promise<Collection>>collection.load();
     } else {
-      return Promise.reject(new Error("Collection index not found"));
+      const error = new Error("Collection index not found");
+      (error as any).url = this.id;
+      (error as any).index = collectionIndex;
+      return Promise.reject(error);
     }
   }
 
@@ -77,7 +80,10 @@ export class Collection extends IIIFResource {
       manifest.options.index = manifestIndex;
       return <Promise<Manifest>>manifest.load();
     } else {
-      return Promise.reject(new Error("Manifest index not found"));
+      const error = new Error("Manifest index not found");
+      (error as any).url = this.id;
+      (error as any).index = manifestIndex;
+      return Promise.reject(error);
     }
   }
 
