@@ -204,7 +204,7 @@ export class IIIFResource extends ManifestResource {
 
   load(): Promise<IIIFResource> {
     let that = this;
-    return new Promise<IIIFResource>((resolve) => {
+    return new Promise<IIIFResource>((resolve, reject) => {
       if (that.isLoaded) {
         resolve(that);
       } else {
@@ -217,15 +217,17 @@ export class IIIFResource extends ManifestResource {
           id = that.__jsonld["@id"];
         }
 
-        Utils.loadManifest(id).then(function (data) {
-          that.parentLabel = <string>that.getLabel().getValue(options.locale);
-          const parsed = Deserialiser.parse(data, options);
-          that = Object.assign(that, parsed);
-          //that.parentCollection = options.resource.parentCollection;
-          that.index = <number>options.index;
+        Utils.loadManifest(id)
+          .then(function (data) {
+            that.parentLabel = <string>that.getLabel().getValue(options.locale);
+            const parsed = Deserialiser.parse(data, options);
+            that = Object.assign(that, parsed);
+            //that.parentCollection = options.resource.parentCollection;
+            that.index = <number>options.index;
 
-          resolve(that);
-        });
+            resolve(that);
+          })
+          .catch(reject);
       }
     });
   }
