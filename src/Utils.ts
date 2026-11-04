@@ -117,7 +117,7 @@ export class Utils {
   }
 
   static normaliseUrl(url: string): string {
-    url = url.substr(url.indexOf("://"));
+    url = url.substring(url.indexOf("://"));
 
     if (url.indexOf("#") !== -1) {
       url = url.split("#")[0];
