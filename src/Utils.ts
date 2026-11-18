@@ -323,6 +323,7 @@ export class Utils {
     } else {
       var error = new Error(response.statusText);
       (error as any).response = response;
+      (error as any).status = response.status;
       return Promise.reject(error);
     }
   }
@@ -336,7 +337,9 @@ export class Utils {
           resolve(data);
         })
         .catch((err) => {
-          reject();
+          // Network and JSON errors don't go through checkStatus, so add the url here.
+          err.url = url;
+          reject(err);
         });
     });
   }
