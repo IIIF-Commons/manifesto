@@ -88,6 +88,7 @@ importTest('required-statement', './tests/required-statement');
 importTest('riksarkivetlarge', './tests/riksarkivetlarge');
 importTest('scroll', './tests/scroll');
 // importTest('static-thumbs', './tests/static-thumbs');
+importTest('start-canvas', './tests/start-canvas');
 importTest('storyofwellcome', './tests/storyofwellcome');
 importTest('string', './tests/string');
 importTest('tankeryshouse', './tests/tankeryshouse');

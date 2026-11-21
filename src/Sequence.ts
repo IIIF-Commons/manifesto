@@ -269,7 +269,23 @@ export class Sequence extends ManifestResource {
   }
 
   getStartCanvas(): string {
-    return this.getProperty("startCanvas");
+    const startCanvas = this.getProperty("startCanvas");
+
+    if (startCanvas) {
+      return startCanvas;
+    }
+
+    // Presentation 3: the Manifest's `start` is either a Canvas reference or a
+    // SpecificResource whose `source` is the Canvas.
+    const manifest = <Manifest>this.options.resource;
+    const start = manifest && manifest.getProperty("start");
+
+    if (start) {
+      const source = start.type === "SpecificResource" ? start.source : start;
+      return typeof source === "string" ? source : source && source.id;
+    }
+
+    return startCanvas;
   }
 
   getTotalCanvases(): number {
