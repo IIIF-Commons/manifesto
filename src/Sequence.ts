@@ -222,7 +222,7 @@ export class Sequence extends ManifestResource {
   }
 
   getStartCanvasIndex(): number {
-    const startCanvas: string = this.getStartCanvas();
+    const startCanvas: string | null = this.getStartCanvas();
 
     if (startCanvas) {
       // if there's a startCanvas attribute, loop through the canvases and return the matching index.
@@ -268,7 +268,7 @@ export class Sequence extends ManifestResource {
     return this._thumbnails;
   }
 
-  getStartCanvas(): string {
+  getStartCanvas(): string | null {
     const startCanvas = this.getProperty("startCanvas");
 
     if (startCanvas) {
@@ -282,10 +282,13 @@ export class Sequence extends ManifestResource {
 
     if (start) {
       const source = start.type === "SpecificResource" ? start.source : start;
-      return typeof source === "string" ? source : source && source.id;
+      const id = typeof source === "string" ? source : source && source.id;
+      if (id) {
+        return id;
+      }
     }
 
-    return startCanvas;
+    return null;
   }
 
   getTotalCanvases(): number {

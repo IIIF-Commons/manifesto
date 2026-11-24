@@ -24,7 +24,7 @@ describe('start canvas', function() {
 
     it('defaults to the first canvas without start', function() {
         var sequence = manifesto.parseManifest(presentation3Manifest(undefined)).getSequenceByIndex(0);
-        expect(sequence.getStartCanvas()).to.not.exist;
+        expect(sequence.getStartCanvas()).to.equal(null);
         expect(sequence.getStartCanvasIndex()).to.equal(0);
     });
 
