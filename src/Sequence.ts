@@ -222,7 +222,7 @@ export class Sequence extends ManifestResource {
   }
 
   getStartCanvasIndex(): number {
-    const startCanvas: string = this.getStartCanvas();
+    const startCanvas: string | null = this.getStartCanvas();
 
     if (startCanvas) {
       // if there's a startCanvas attribute, loop through the canvases and return the matching index.
@@ -268,8 +268,27 @@ export class Sequence extends ManifestResource {
     return this._thumbnails;
   }
 
-  getStartCanvas(): string {
-    return this.getProperty("startCanvas");
+  getStartCanvas(): string | null {
+    const startCanvas = this.getProperty("startCanvas");
+
+    if (startCanvas) {
+      return startCanvas;
+    }
+
+    // Presentation 3: the Manifest's `start` is either a Canvas reference or a
+    // SpecificResource whose `source` is the Canvas.
+    const manifest = <Manifest>this.options.resource;
+    const start = manifest && manifest.getProperty("start");
+
+    if (start) {
+      const source = start.type === "SpecificResource" ? start.source : start;
+      const id = typeof source === "string" ? source : source && source.id;
+      if (id) {
+        return id;
+      }
+    }
+
+    return null;
   }
 
   getTotalCanvases(): number {
